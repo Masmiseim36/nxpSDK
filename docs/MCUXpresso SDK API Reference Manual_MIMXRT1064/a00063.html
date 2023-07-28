@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SD Card Driver</title>
+<title>MCUXpresso SDK API Reference Manual: QTMR: Quad Timer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,592 +100,856 @@ $(document).ready(function(){initNavTree('a00063.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SD Card Driver<div class="ingroups"><a class="el" href="a00288.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
+<div class="title">QTMR: Quad Timer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The SDCARD driver provide card initialization/read/write/erase interface.</p>
-<h1><a class="anchor" id="SDCardOperation"></a>
-SD CARD Operation</h1>
-<h2>error log support</h2>
-<p>Lots of error log has been added to sd relate functions, if error occurs during initial/read/write, please enable the error log print functionality with <code>#define</code> SDMMC_ENABLE_LOG_PRINT 1 And rerun the project then user can check what kind of error happened.</p>
-<h2>User configurable</h2>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>_sd_card</div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="a00066.html#a00492">sdmmchost_t</a> *host; </div>
-<div class="line">    <a class="code" href="a00052.html#a00484">sd_usr_param_t</a> usrParam; </div>
-<div class="line">    <span class="keywordtype">bool</span> isHostReady;        </div>
-<div class="line">    <span class="keywordtype">bool</span> noInteralAlign;      </div>
-<div class="line">    uint32_t busClock_Hz;     </div>
-<div class="line">    uint32_t relativeAddress; </div>
-<div class="line">    uint32_t version;         </div>
-<div class="line">    uint32_t flags;           </div>
-<div class="line">    uint8_t internalBuffer[<a class="code" href="a00052.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]; </div>
-<div class="line">    uint32_t ocr;                                                </div>
-<div class="line">    <a class="code" href="a00052.html#a00478">sd_cid_t</a> cid;                                                </div>
-<div class="line">    <a class="code" href="a00052.html#a00479">sd_csd_t</a> csd;                                                </div>
-<div class="line">    <a class="code" href="a00052.html#a00482">sd_scr_t</a> scr;                                                </div>
-<div class="line">    <a class="code" href="a00052.html#a00483">sd_status_t</a> stat;                                            </div>
-<div class="line">    uint32_t blockCount;                                         </div>
-<div class="line">    uint32_t blockSize;                                          </div>
-<div class="line">    <a class="code" href="a00052.html#ga508c3d50863e57dce5fa1b7758972e1b">sd_timing_mode_t</a> currentTiming;                              </div>
-<div class="line">    <a class="code" href="a00052.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength;                         </div>
-<div class="line">    <a class="code" href="a00052.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a> maxCurrent;                                 </div>
-<div class="line">    <a class="code" href="a00052.html#ga27fd895fac89bbc0288543ca0b1e371c">sdmmc_operation_voltage_t</a> operationVoltage;                  </div>
-<div class="line">    <a class="code" href="a00065.html#a00491">sdmmc_osa_mutex_t</a> lock;                                      </div>
-<div class="line">} <a class="code" href="a00063.html#a00477">sd_card_t</a>;</div>
-</div><!-- fragment --><p>Part of The variables above is user configurable,</p>
-<ol type="1">
-<li><p class="startli">host</p>
-<p class="startli">Application need to provide host controller base address and the host's source clock frequency, etc. For example: </p>
-<div class="fragment"><div class="line"><span class="comment">/* allocate dma descriptor buffer for host controller */</span></div>
-<div class="line">s_host.dmaDesBuffer                                      = s_sdmmcHostDmaBuffer;</div>
-<div class="line">s_host.dmaDesBufferWordsNum                              = xxx;</div>
-<div class="line"><span class="comment">/*  */</span></div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;host                                = &amp;s_host;</div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;host-&gt;hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;</div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;host-&gt;hostController.sourceClock_Hz = BOARD_USDHC1ClockConfiguration();</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* allocate resource for sdmmc osa layer */</span></div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;host-&gt;hostEvent     = &amp;s_event;</div>
-</div><!-- fragment --></li>
-<li>sdcard_usr_param_t usrParam</li>
-</ol>
-<div class="fragment"><div class="line"><span class="comment">/* board layer configuration register */</span></div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;usrParam.cd         = &amp;s_cd;</div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;usrParam.pwr        = BOARD_SDCardPowerControl;</div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;usrParam.ioStrength = BOARD_SD_Pin_Config;</div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;usrParam.ioVoltage  = &amp;s_ioVoltage;</div>
-<div class="line">((<a class="code" href="a00063.html#a00477">sd_card_t</a> *)card)-&gt;usrParam.maxFreq    = BOARD_SDMMC_SD_HOST_SUPPORT_SDR104_FREQ;</div>
-<div class="line"></div>
-<div class="line">a. cd-which allow application define the card insert/<span class="keyword">remove</span> callback <span class="keyword">function</span>, redefine the card detect timeout ms and also allow application determine how to detect card.</div>
-<div class="line">b. pwr-which allow application redefine the card power on/off <span class="keyword">function</span>.</div>
-<div class="line">c. ioStrength-which is used to <span class="keywordflow">switch</span> the signal pin configurations include driver strength/speed mode dynamiclly <span class="keywordflow">for</span> different timing(SDR/HS timing) mode, reference the <span class="keyword">function</span> defined sdmmc_config.c</div>
-<div class="line">d. ioVoltage-which allow application <span class="keyword">register</span> io voltage <span class="keywordflow">switch</span> <span class="keyword">function</span> instead of <span class="keyword">using</span> the <span class="keyword">function</span> host driver provided <span class="keywordflow">for</span> SDR/HS200/HS400 timing.</div>
-<div class="line">e. maxFreq-which allow application set the maximum bus clock that the board support.</div>
-</div><!-- fragment --><ol type="1">
-<li><p class="startli">bool noInteralAlign</p>
-<p class="startli">Sdmmc include an address align internal buffer(to use host controller internal DMA), to improve read/write performance while application cannot make sure the data address used to read/write is align, set it to true will achieve a better performance.</p>
-</li>
-<li><p class="startli">sd_timing_mode_t currentTiming</p>
-<p class="startli">It is used to indicate the currentTiming the card is working on, however sdmmc also support preset timing mode, then sdmmc will try to switch to this timing first, if failed, a valid timing will switch to automatically. Generally, user may not set this variable if you don't know what kind of timing the card support, sdmmc will switch to the highest timing which the card support.</p>
-</li>
-<li><p class="startli">sd_driver_strength_t driverStrength</p>
-<p class="startli">Choose a valid card driver strength if application required and call SD_SetDriverStrength in application.</p>
-</li>
-<li><p class="startli">sd_max_current_t maxCurrent</p>
-<p class="startli">Choose a valid card current if application required and call SD_SetMaxCurrent in application.</p>
-</li>
-</ol>
-<h2>Mutual exclusive access support for RTOS</h2>
-<p>SDCARD driver has added mutual exclusive access support for init/deinit/write/read/erase function. Please note that the card init function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line"><a class="code" href="a00063.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a>(card);<span class="comment">/* This function will destroy the created mutex */</span></div>
-<div class="line"><a class="code" href="a00063.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a>(card);</div>
-</div><!-- fragment --><h2>Typical use case</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/sdmmc_examples/ </p>
+<p>The MCUXpresso SDK provides a driver for the QTMR module of MCUXpresso SDK devices. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00477"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a00477">sd_card_t</a></td></tr>
-<tr class="memdesc:a00477"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD card state.  <a href="a00063.html#a00477">More...</a><br/></td></tr>
-<tr class="separator:a00477"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga6fa18202479ec86d33169ee28513ae94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga6fa18202479ec86d33169ee28513ae94">FSL_SD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 1U)) /*2.4.1*/</td></tr>
-<tr class="memdesc:ga6fa18202479ec86d33169ee28513ae94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga6fa18202479ec86d33169ee28513ae94">More...</a><br/></td></tr>
-<tr class="separator:ga6fa18202479ec86d33169ee28513ae94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00486"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a00486">qtmr_config_t</a></td></tr>
+<tr class="memdesc:a00486"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer config structure.  <a href="a00063.html#a00486">More...</a><br/></td></tr>
+<tr class="separator:a00486"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gafeaa6456e370d2eb59f5e139d9f8b00c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00063.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca9fdf7d592b595f8dffd0519979222bc8">kSD_SupportHighCapacityFlag</a> = (1U &lt;&lt; 1U), 
+<tr class="memitem:gac6d08f267b908a7cde4881df86f22c78"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gac6d08f267b908a7cde4881df86f22c78">qtmr_primary_count_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a82276acc1d08d80b29fa586ae3fe603d">kQTMR_ClockCounter0InputPin</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="a00063.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca163a232e42705c297ad363283349cc40">kSD_Support4BitWidthFlag</a> = (1U &lt;&lt; 2U), 
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a3ac60049c157df8139a7e926db1b923a">kQTMR_ClockCounter1InputPin</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00063.html#ggafeaa6456e370d2eb59f5e139d9f8b00cad76278db320cf350e0a21fa35cef47db">kSD_SupportSdhcFlag</a> = (1U &lt;&lt; 3U), 
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78ad0e59d8a4117a8850db9c0a8723cfc98">kQTMR_ClockCounter2InputPin</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00063.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca38bc49f3235ef3245779efcbd0f616ca">kSD_SupportSdxcFlag</a> = (1U &lt;&lt; 4U), 
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78ae80200a156049ee287f0d997c59ef226">kQTMR_ClockCounter3InputPin</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00063.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca9ea1d2e9f73d26c15593a98481eb8132">kSD_SupportVoltage180v</a> = (1U &lt;&lt; 5U), 
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a9240e72f468d64e2cdbe7fc2b9f0b67b">kQTMR_ClockCounter0Output</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00063.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca1d6f3540c4292326a017d8b629021d09">kSD_SupportSetBlockCountCmd</a> = (1U &lt;&lt; 6U), 
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a072bed168beaf44bc8c7acca57984c56">kQTMR_ClockCounter1Output</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00063.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca76d5891295fcaef57bb726e2fde42671">kSD_SupportSpeedClassControlCmd</a> = (1U &lt;&lt; 7U)
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a51ba38ae41469d5ed53b4803f174bf42">kQTMR_ClockCounter2Output</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a70478379b0f446293d8b7df484de649c">kQTMR_ClockCounter3Output</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a4c71c77d70c5a24b4e8f1ef386229558">kQTMR_ClockDivide_1</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78aa1804764d102bbd2ccfeff8000eda66e">kQTMR_ClockDivide_2</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a1b95af06de1beefbc39e2d6566d39438">kQTMR_ClockDivide_4</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a33a7f169f5152d281f1f4d60439e3b1d">kQTMR_ClockDivide_8</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a0f286e5b68c7521941cf0e2909c5bc51">kQTMR_ClockDivide_16</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78aa4601397fa55cb677c65b64ebc7ca869">kQTMR_ClockDivide_32</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78a831d3c0a294d561aafffd9730d728f60">kQTMR_ClockDivide_64</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78ad70531180a310b63317cb4c426ddefdd">kQTMR_ClockDivide_128</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gafeaa6456e370d2eb59f5e139d9f8b00c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD card flags.  <a href="a00063.html#gafeaa6456e370d2eb59f5e139d9f8b00c">More...</a><br/></td></tr>
-<tr class="separator:gafeaa6456e370d2eb59f5e139d9f8b00c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gac6d08f267b908a7cde4881df86f22c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer primary clock source selection.  <a href="a00063.html#gac6d08f267b908a7cde4881df86f22c78">More...</a><br/></td></tr>
+<tr class="separator:gac6d08f267b908a7cde4881df86f22c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6e8b3e68a996911371818cd39153d45"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaa6e8b3e68a996911371818cd39153d45">qtmr_input_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa6e8b3e68a996911371818cd39153d45a91da9d3d2dec949d2fbc696683a2bf48">kQTMR_Counter0InputPin</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa6e8b3e68a996911371818cd39153d45a5cfa9210c1c07adfb38c8e93433f9be4">kQTMR_Counter1InputPin</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa6e8b3e68a996911371818cd39153d45a9b0145605c71dbb24adcf87924f9a563">kQTMR_Counter2InputPin</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa6e8b3e68a996911371818cd39153d45a24c791aa35fb4cf2fb2d623b309d20ab">kQTMR_Counter3InputPin</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaa6e8b3e68a996911371818cd39153d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer input sources selection.  <a href="a00063.html#gaa6e8b3e68a996911371818cd39153d45">More...</a><br/></td></tr>
+<tr class="separator:gaa6e8b3e68a996911371818cd39153d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga397995409e23551319239ec333f00981"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga397995409e23551319239ec333f00981">qtmr_counting_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981ac48116c1f656ee1cabe104f9c2c49843">kQTMR_NoOperation</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981acdbf5f143450aa0a9f3f0ab23baddc6b">kQTMR_PriSrcRiseEdge</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981a44b92eb2c4c5227890f8f39a041301d3">kQTMR_PriSrcRiseAndFallEdge</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981a3ef3ad7ac6a8200fa20df9978bb2ae8d">kQTMR_PriSrcRiseEdgeSecInpHigh</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981ad3e02baca02a32350ca9da6ac7ceb5d8">kQTMR_QuadCountMode</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981aa514bc2e0906a7cbab11373f3dea5e82">kQTMR_PriSrcRiseEdgeSecDir</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981abaec5373ab714b0b58ce2e56f79bbf8a">kQTMR_SecSrcTrigPriCnt</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga397995409e23551319239ec333f00981aac99a0f3873161f9cf61f724f2a8570b">kQTMR_CascadeCount</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga397995409e23551319239ec333f00981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer counting mode selection.  <a href="a00063.html#ga397995409e23551319239ec333f00981">More...</a><br/></td></tr>
+<tr class="separator:ga397995409e23551319239ec333f00981"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7a02ea380b8c2058829accfa51822e9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gab7a02ea380b8c2058829accfa51822e9">qtmr_pwm_out_state_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab7a02ea380b8c2058829accfa51822e9ac1f1720b29f57f6bdf0364709f96a6c2">kQTMR_PwmLow</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab7a02ea380b8c2058829accfa51822e9a74ea9af3309cfad4a8dc7bb86d334677">kQTMR_PwmHigh</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab7a02ea380b8c2058829accfa51822e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer PWM output state.  <a href="a00063.html#gab7a02ea380b8c2058829accfa51822e9">More...</a><br/></td></tr>
+<tr class="separator:gab7a02ea380b8c2058829accfa51822e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf79e17f54c3cf8ed96bb9e7845ca5bc3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaf79e17f54c3cf8ed96bb9e7845ca5bc3">qtmr_output_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a3a0003a83a00acc39a519d540c562472">kQTMR_AssertWhenCountActive</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a0716e351e1601a6f246f253543e3f03c">kQTMR_ClearOnCompare</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a9d03a8a577e26d75ee7fe69315faf1f9">kQTMR_SetOnCompare</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3ae637b16574eb8e2a91a873f871eb0a0a">kQTMR_ToggleOnCompare</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3af61b88d5df6ecf7a701d1381ea81e5be">kQTMR_ToggleOnAltCompareReg</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a4e2267dadc673ed9f31574be79999a0a">kQTMR_SetOnCompareClearOnSecSrcInp</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a3f3c1f9871e91f82842b1cae3bd0ea74">kQTMR_SetOnCompareClearOnCountRoll</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaf79e17f54c3cf8ed96bb9e7845ca5bc3ae2d75e2129f79fe404497e7910cde617">kQTMR_EnableGateClock</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf79e17f54c3cf8ed96bb9e7845ca5bc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer output mode selection.  <a href="a00063.html#gaf79e17f54c3cf8ed96bb9e7845ca5bc3">More...</a><br/></td></tr>
+<tr class="separator:gaf79e17f54c3cf8ed96bb9e7845ca5bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54b990834983f9edd7d0636b78db2a7e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga54b990834983f9edd7d0636b78db2a7e">qtmr_input_capture_edge_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#gga54b990834983f9edd7d0636b78db2a7ea07866622cc0be666818813ab0dc2be5e">kQTMR_NoCapture</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga54b990834983f9edd7d0636b78db2a7ea81a4074fdc9fd23cdc31fce8a567d3f4">kQTMR_RisingEdge</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga54b990834983f9edd7d0636b78db2a7ea9025803f5cbc483bbdd89f0846db2337">kQTMR_FallingEdge</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga54b990834983f9edd7d0636b78db2a7ea593937a67ae2969cdfe81595b2177322">kQTMR_RisingAndFallingEdge</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga54b990834983f9edd7d0636b78db2a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer input capture edge mode, rising edge, or falling edge.  <a href="a00063.html#ga54b990834983f9edd7d0636b78db2a7e">More...</a><br/></td></tr>
+<tr class="separator:ga54b990834983f9edd7d0636b78db2a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae91f0c5f7a204dce2d5cc6b71d1c6885"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gae91f0c5f7a204dce2d5cc6b71d1c6885">qtmr_preload_control_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggae91f0c5f7a204dce2d5cc6b71d1c6885ab3811976a0c8cd3db181c6c4ebca3069">kQTMR_NoPreload</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggae91f0c5f7a204dce2d5cc6b71d1c6885ae32eaef33171ecb9d78f14a615dec69d">kQTMR_LoadOnComp1</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggae91f0c5f7a204dce2d5cc6b71d1c6885adb0a17be2615493630d0417d46a53a0e">kQTMR_LoadOnComp2</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae91f0c5f7a204dce2d5cc6b71d1c6885"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quad Timer input capture edge mode, rising edge, or falling edge.  <a href="a00063.html#gae91f0c5f7a204dce2d5cc6b71d1c6885">More...</a><br/></td></tr>
+<tr class="separator:gae91f0c5f7a204dce2d5cc6b71d1c6885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabec85a2c9b17e3edb8a4c17ae3d4fa41"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gabec85a2c9b17e3edb8a4c17ae3d4fa41">qtmr_debug_action_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggabec85a2c9b17e3edb8a4c17ae3d4fa41ae5ba29aa5fdf66f740155d11670573ad">kQTMR_RunNormalInDebug</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggabec85a2c9b17e3edb8a4c17ae3d4fa41adfeee3fa9d7c79e56a089d4e5f12754b">kQTMR_HaltCounter</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggabec85a2c9b17e3edb8a4c17ae3d4fa41af322d8a7ffa91765fde1077777e3c845">kQTMR_ForceOutToZero</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggabec85a2c9b17e3edb8a4c17ae3d4fa41a582ee8204977e8792431b0a8e1df4bbf">kQTMR_HaltCountForceOutZero</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gabec85a2c9b17e3edb8a4c17ae3d4fa41"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Quad Timer run options when in Debug mode.  <a href="a00063.html#gabec85a2c9b17e3edb8a4c17ae3d4fa41">More...</a><br/></td></tr>
+<tr class="separator:gabec85a2c9b17e3edb8a4c17ae3d4fa41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2f96b9147760841a4614daa46674fb5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gab2f96b9147760841a4614daa46674fb5">qtmr_interrupt_enable_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab2f96b9147760841a4614daa46674fb5ad62e3868b70dfceab5f0efe7508ad549">kQTMR_CompareInterruptEnable</a> = (1U &lt;&lt; 0), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab2f96b9147760841a4614daa46674fb5a60998249ab3a57bedcafe6423fc33cc5">kQTMR_Compare1InterruptEnable</a> = (1U &lt;&lt; 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab2f96b9147760841a4614daa46674fb5a9d2f4a4ad09245fea4bd6449b74365b9">kQTMR_Compare2InterruptEnable</a> = (1U &lt;&lt; 2), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab2f96b9147760841a4614daa46674fb5ad4a0db29d76733779c01466d76c15749">kQTMR_OverflowInterruptEnable</a> = (1U &lt;&lt; 3), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab2f96b9147760841a4614daa46674fb5a8267b0a66e5a77686cb760376c7f8885">kQTMR_EdgeInterruptEnable</a> = (1U &lt;&lt; 4)
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab2f96b9147760841a4614daa46674fb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Quad Timer interrupts.  <a href="a00063.html#gab2f96b9147760841a4614daa46674fb5">More...</a><br/></td></tr>
+<tr class="separator:gab2f96b9147760841a4614daa46674fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73f221be3a1eb45ffd1d8292cf572001"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga73f221be3a1eb45ffd1d8292cf572001">qtmr_status_flags_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#gga73f221be3a1eb45ffd1d8292cf572001a409aa72557c34591ad293136dc57bbd8">kQTMR_CompareFlag</a> = (1U &lt;&lt; 0), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga73f221be3a1eb45ffd1d8292cf572001a6a6cc5fb43d34289b2a0ffe0f7e29c6b">kQTMR_Compare1Flag</a> = (1U &lt;&lt; 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga73f221be3a1eb45ffd1d8292cf572001a9891c08b2e3124af1e79180ee1d052f7">kQTMR_Compare2Flag</a> = (1U &lt;&lt; 2), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga73f221be3a1eb45ffd1d8292cf572001ac3330de0db5003ed7fe15a5f72f6fe73">kQTMR_OverflowFlag</a> = (1U &lt;&lt; 3), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga73f221be3a1eb45ffd1d8292cf572001af4e7b95463c8e1d2f568c7062314be71">kQTMR_EdgeFlag</a> = (1U &lt;&lt; 4)
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga73f221be3a1eb45ffd1d8292cf572001"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Quad Timer flags.  <a href="a00063.html#ga73f221be3a1eb45ffd1d8292cf572001">More...</a><br/></td></tr>
+<tr class="separator:ga73f221be3a1eb45ffd1d8292cf572001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2493eb75ca8a9be865abc69c9c94c756"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#gga2493eb75ca8a9be865abc69c9c94c756aa45014ee1078e4a1471e6a637c9b3fca">kQTMR_Channel_0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga2493eb75ca8a9be865abc69c9c94c756ae9ad347957a75c32c4ee19666b511247">kQTMR_Channel_1</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga2493eb75ca8a9be865abc69c9c94c756a74987baa3ad6b998e75cd16c1df69c26">kQTMR_Channel_2</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga2493eb75ca8a9be865abc69c9c94c756a82e08b122bf226f69d3c1c9cafc9931f">kQTMR_Channel_3</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga2493eb75ca8a9be865abc69c9c94c756"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of channel selection.  <a href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">More...</a><br/></td></tr>
+<tr class="separator:ga2493eb75ca8a9be865abc69c9c94c756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga585585a9d3efed0ad65a4d722a7623e9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga585585a9d3efed0ad65a4d722a7623e9">qtmr_dma_enable_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00063.html#gga585585a9d3efed0ad65a4d722a7623e9a73d036ed01f812c118bc50b27f36cdc7">kQTMR_InputEdgeFlagDmaEnable</a> = (1U &lt;&lt; 0), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga585585a9d3efed0ad65a4d722a7623e9aaef33e58d8247771b5e594c14ca5b571">kQTMR_ComparatorPreload1DmaEnable</a> = (1U &lt;&lt; 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga585585a9d3efed0ad65a4d722a7623e9af414da5b48883e81009734f59b546624">kQTMR_ComparatorPreload2DmaEnable</a> = (1U &lt;&lt; 2)
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga585585a9d3efed0ad65a4d722a7623e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Quad Timer DMA enable.  <a href="a00063.html#ga585585a9d3efed0ad65a4d722a7623e9">More...</a><br/></td></tr>
+<tr class="separator:ga585585a9d3efed0ad65a4d722a7623e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga364220c9fcdf15f102e60c7c76041c06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga364220c9fcdf15f102e60c7c76041c06">QTMR_SetupPwm</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint32_t pwmFreqHz, uint8_t dutyCyclePercent, bool outputPolarity, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:ga364220c9fcdf15f102e60c7c76041c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up Quad timer module for PWM signal output.  <a href="#ga364220c9fcdf15f102e60c7c76041c06">More...</a><br/></td></tr>
+<tr class="separator:ga364220c9fcdf15f102e60c7c76041c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab1b216e8bae644b8027cf8eaa4e2964"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaab1b216e8bae644b8027cf8eaa4e2964">QTMR_SetupInputCapture</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, <a class="el" href="a00063.html#gaa6e8b3e68a996911371818cd39153d45">qtmr_input_source_t</a> capturePin, bool inputPolarity, bool reloadOnCapture, <a class="el" href="a00063.html#ga54b990834983f9edd7d0636b78db2a7e">qtmr_input_capture_edge_t</a> captureMode)</td></tr>
+<tr class="memdesc:gaab1b216e8bae644b8027cf8eaa4e2964"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows the user to count the source clock cycles until a capture event arrives.  <a href="#gaab1b216e8bae644b8027cf8eaa4e2964">More...</a><br/></td></tr>
+<tr class="separator:gaab1b216e8bae644b8027cf8eaa4e2964"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-SDCARD Function</h2></td></tr>
-<tr class="memitem:ga281fb14816d236446ee2d047be0c7155"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga281fb14816d236446ee2d047be0c7155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card on a specific host controller.  <a href="#ga281fb14816d236446ee2d047be0c7155">More...</a><br/></td></tr>
-<tr class="separator:ga281fb14816d236446ee2d047be0c7155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50dee2b5bc071a01480b0ab3671c8524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga50dee2b5bc071a01480b0ab3671c8524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga50dee2b5bc071a01480b0ab3671c8524">More...</a><br/></td></tr>
-<tr class="separator:ga50dee2b5bc071a01480b0ab3671c8524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22154dd3ecedaaf63ed951fb248b0265"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga22154dd3ecedaaf63ed951fb248b0265">SD_CardInit</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga22154dd3ecedaaf63ed951fb248b0265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card.  <a href="#ga22154dd3ecedaaf63ed951fb248b0265">More...</a><br/></td></tr>
-<tr class="separator:ga22154dd3ecedaaf63ed951fb248b0265"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2683393842666aa39ec74898a7ad6e8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga2683393842666aa39ec74898a7ad6e8a">SD_CardDeinit</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga2683393842666aa39ec74898a7ad6e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga2683393842666aa39ec74898a7ad6e8a">More...</a><br/></td></tr>
-<tr class="separator:ga2683393842666aa39ec74898a7ad6e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga47f15fb31bcb60a2eeb474081cde54e4">SD_HostInit</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize the host.  <a href="#ga47f15fb31bcb60a2eeb474081cde54e4">More...</a><br/></td></tr>
-<tr class="separator:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac44a13a36870f276b1f323a5b519bb9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gac44a13a36870f276b1f323a5b519bb9f">SD_HostDeinit</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:gac44a13a36870f276b1f323a5b519bb9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the host.  <a href="#gac44a13a36870f276b1f323a5b519bb9f">More...</a><br/></td></tr>
-<tr class="separator:gac44a13a36870f276b1f323a5b519bb9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75785c0a29f560b0bfd14b572106bda0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga75785c0a29f560b0bfd14b572106bda0">SD_HostDoReset</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga75785c0a29f560b0bfd14b572106bda0"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the host.  <a href="#ga75785c0a29f560b0bfd14b572106bda0">More...</a><br/></td></tr>
-<tr class="separator:ga75785c0a29f560b0bfd14b572106bda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga5e8b2d7768c7d916a1953583035fdbb3">SD_SetCardPower</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, bool enable)</td></tr>
-<tr class="memdesc:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">set card power.  <a href="#ga5e8b2d7768c7d916a1953583035fdbb3">More...</a><br/></td></tr>
-<tr class="separator:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga38c82aa0e0daaec4c6be8ba3acd56da2">SD_PollingCardInsert</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, uint32_t status)</td></tr>
-<tr class="memdesc:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd wait card detect function.  <a href="#ga38c82aa0e0daaec4c6be8ba3acd56da2">More...</a><br/></td></tr>
-<tr class="separator:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga6de9f134ae84e25053647e2c0ba8ef27">SD_IsCardPresent</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd card present check function.  <a href="#ga6de9f134ae84e25053647e2c0ba8ef27">More...</a><br/></td></tr>
-<tr class="separator:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gad9b5c3ecc8acf18ee06ffd4154eb0352">SD_CheckReadOnly</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the card is write-protected.  <a href="#gad9b5c3ecc8acf18ee06ffd4154eb0352">More...</a><br/></td></tr>
-<tr class="separator:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab8b91d51f045d43e32770599a9406e3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gab8b91d51f045d43e32770599a9406e3b">SD_SelectCard</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, bool isSelected)</td></tr>
-<tr class="memdesc:gab8b91d51f045d43e32770599a9406e3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send SELECT_CARD command to set the card to be transfer state or not.  <a href="#gab8b91d51f045d43e32770599a9406e3b">More...</a><br/></td></tr>
-<tr class="separator:gab8b91d51f045d43e32770599a9406e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3537757745005c2b103be314ddfaa7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaf3537757745005c2b103be314ddfaa7b">SD_ReadStatus</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:gaf3537757745005c2b103be314ddfaa7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send ACMD13 to get the card current status.  <a href="#gaf3537757745005c2b103be314ddfaa7b">More...</a><br/></td></tr>
-<tr class="separator:gaf3537757745005c2b103be314ddfaa7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d134e8244b6641352d1a374d0e8b848"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga1d134e8244b6641352d1a374d0e8b848">SD_ReadBlocks</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga1d134e8244b6641352d1a374d0e8b848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads blocks from the specific card.  <a href="#ga1d134e8244b6641352d1a374d0e8b848">More...</a><br/></td></tr>
-<tr class="separator:ga1d134e8244b6641352d1a374d0e8b848"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga9ab9d1eb512dec6e15beb2cee4e9691e">SD_WriteBlocks</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, const uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes blocks of data to the specific card.  <a href="#ga9ab9d1eb512dec6e15beb2cee4e9691e">More...</a><br/></td></tr>
-<tr class="separator:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04e7b25d9776e92ddfcf72063af02418"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga04e7b25d9776e92ddfcf72063af02418">SD_EraseBlocks</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga04e7b25d9776e92ddfcf72063af02418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases blocks of the specific card.  <a href="#ga04e7b25d9776e92ddfcf72063af02418">More...</a><br/></td></tr>
-<tr class="separator:ga04e7b25d9776e92ddfcf72063af02418"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga07178b3047e22e71bd7a3bd60322e7b6">SD_SetDriverStrength</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, <a class="el" href="a00052.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength)</td></tr>
-<tr class="memdesc:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">select card driver strength select card driver strength  <a href="#ga07178b3047e22e71bd7a3bd60322e7b6">More...</a><br/></td></tr>
-<tr class="separator:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a3a34d76af9ee378086a4dcc1259936"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga6a3a34d76af9ee378086a4dcc1259936">SD_SetMaxCurrent</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, <a class="el" href="a00052.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a> maxCurrent)</td></tr>
-<tr class="memdesc:ga6a3a34d76af9ee378086a4dcc1259936"><td class="mdescLeft">&#160;</td><td class="mdescRight">select max current select max operation current  <a href="#ga6a3a34d76af9ee378086a4dcc1259936">More...</a><br/></td></tr>
-<tr class="separator:ga6a3a34d76af9ee378086a4dcc1259936"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33babf402c15dae5d2712793230158a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga33babf402c15dae5d2712793230158a9">SD_PollingCardStatusBusy</a> (<a class="el" href="a00063.html#a00477">sd_card_t</a> *card, uint32_t timeoutMs)</td></tr>
-<tr class="memdesc:ga33babf402c15dae5d2712793230158a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polling card idle status.  <a href="#ga33babf402c15dae5d2712793230158a9">More...</a><br/></td></tr>
-<tr class="separator:ga33babf402c15dae5d2712793230158a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Driver version</h2></td></tr>
+<tr class="memitem:gaa3cc9c79870a53a1419015cd9b03f4a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa3cc9c79870a53a1419015cd9b03f4a3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaa3cc9c79870a53a1419015cd9b03f4a3">FSL_QTMR_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
+<tr class="memdesc:gaa3cc9c79870a53a1419015cd9b03f4a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version. <br/></td></tr>
+<tr class="separator:gaa3cc9c79870a53a1419015cd9b03f4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:gab784ac72bb2bf452ffca29053b05fa7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gab784ac72bb2bf452ffca29053b05fa7c">QTMR_Init</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, const <a class="el" href="a00063.html#a00486">qtmr_config_t</a> *config)</td></tr>
+<tr class="memdesc:gab784ac72bb2bf452ffca29053b05fa7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the Quad Timer clock and configures the peripheral for basic operation.  <a href="#gab784ac72bb2bf452ffca29053b05fa7c">More...</a><br/></td></tr>
+<tr class="separator:gab784ac72bb2bf452ffca29053b05fa7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa15a9d1613394d4715f3fc600626e3cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaa15a9d1613394d4715f3fc600626e3cc">QTMR_Deinit</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
+<tr class="memdesc:gaa15a9d1613394d4715f3fc600626e3cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the counter and gates the Quad Timer clock.  <a href="#gaa15a9d1613394d4715f3fc600626e3cc">More...</a><br/></td></tr>
+<tr class="separator:gaa15a9d1613394d4715f3fc600626e3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f70f9eb710dde4743e8e9346dc41c65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga6f70f9eb710dde4743e8e9346dc41c65">QTMR_GetDefaultConfig</a> (<a class="el" href="a00063.html#a00486">qtmr_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga6f70f9eb710dde4743e8e9346dc41c65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill in the Quad Timer config struct with the default settings.  <a href="#ga6f70f9eb710dde4743e8e9346dc41c65">More...</a><br/></td></tr>
+<tr class="separator:ga6f70f9eb710dde4743e8e9346dc41c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Interrupt Interface</h2></td></tr>
+<tr class="memitem:ga4756ec6b825cde8eecd0287591885985"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga4756ec6b825cde8eecd0287591885985">QTMR_EnableInterrupts</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memdesc:ga4756ec6b825cde8eecd0287591885985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected Quad Timer interrupts.  <a href="#ga4756ec6b825cde8eecd0287591885985">More...</a><br/></td></tr>
+<tr class="separator:ga4756ec6b825cde8eecd0287591885985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7245d99b70c9df88a8ee0756913ac179"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga7245d99b70c9df88a8ee0756913ac179">QTMR_DisableInterrupts</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memdesc:ga7245d99b70c9df88a8ee0756913ac179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected Quad Timer interrupts.  <a href="#ga7245d99b70c9df88a8ee0756913ac179">More...</a><br/></td></tr>
+<tr class="separator:ga7245d99b70c9df88a8ee0756913ac179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe580603d4441b8a2101ca86485c517c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gafe580603d4441b8a2101ca86485c517c">QTMR_GetEnabledInterrupts</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
+<tr class="memdesc:gafe580603d4441b8a2101ca86485c517c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled Quad Timer interrupts.  <a href="#gafe580603d4441b8a2101ca86485c517c">More...</a><br/></td></tr>
+<tr class="separator:gafe580603d4441b8a2101ca86485c517c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status Interface</h2></td></tr>
+<tr class="memitem:ga89d05673c74e2f8ccc6c5cbecdab962c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga89d05673c74e2f8ccc6c5cbecdab962c">QTMR_GetStatus</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
+<tr class="memdesc:ga89d05673c74e2f8ccc6c5cbecdab962c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Quad Timer status flags.  <a href="#ga89d05673c74e2f8ccc6c5cbecdab962c">More...</a><br/></td></tr>
+<tr class="separator:ga89d05673c74e2f8ccc6c5cbecdab962c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac453dce78b2f4079aacbb02d857273ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gac453dce78b2f4079aacbb02d857273ae">QTMR_ClearStatusFlags</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memdesc:gac453dce78b2f4079aacbb02d857273ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the Quad Timer status flags.  <a href="#gac453dce78b2f4079aacbb02d857273ae">More...</a><br/></td></tr>
+<tr class="separator:gac453dce78b2f4079aacbb02d857273ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Read and Write the timer period</h2></td></tr>
+<tr class="memitem:ga1d1fe996963cd527aabb034888e994b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga1d1fe996963cd527aabb034888e994b4">QTMR_SetTimerPeriod</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint16_t ticks)</td></tr>
+<tr class="memdesc:ga1d1fe996963cd527aabb034888e994b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timer period in ticks.  <a href="#ga1d1fe996963cd527aabb034888e994b4">More...</a><br/></td></tr>
+<tr class="separator:ga1d1fe996963cd527aabb034888e994b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9764da43797074b65a4689a6df999cba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga9764da43797074b65a4689a6df999cba">QTMR_SetCompareValue</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint16_t ticks)</td></tr>
+<tr class="memdesc:ga9764da43797074b65a4689a6df999cba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set compare value.  <a href="#ga9764da43797074b65a4689a6df999cba">More...</a><br/></td></tr>
+<tr class="separator:ga9764da43797074b65a4689a6df999cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3db9e42ab0f483438a720139353937f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga3db9e42ab0f483438a720139353937f7">QTMR_SetLoadValue</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint16_t value)</td></tr>
+<tr class="memdesc:ga3db9e42ab0f483438a720139353937f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set load value.  <a href="#ga3db9e42ab0f483438a720139353937f7">More...</a><br/></td></tr>
+<tr class="separator:ga3db9e42ab0f483438a720139353937f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1691975f2406bcaf64a24a065dd2c679"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga1691975f2406bcaf64a24a065dd2c679">QTMR_GetCurrentTimerCount</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
+<tr class="memdesc:ga1691975f2406bcaf64a24a065dd2c679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current timer counting value.  <a href="#ga1691975f2406bcaf64a24a065dd2c679">More...</a><br/></td></tr>
+<tr class="separator:ga1691975f2406bcaf64a24a065dd2c679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Timer Start and Stop</h2></td></tr>
+<tr class="memitem:ga14d9ab0215127155e559a9f98f4fc7f4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga14d9ab0215127155e559a9f98f4fc7f4">QTMR_StartTimer</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, <a class="el" href="a00063.html#ga397995409e23551319239ec333f00981">qtmr_counting_mode_t</a> clockSource)</td></tr>
+<tr class="memdesc:ga14d9ab0215127155e559a9f98f4fc7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the Quad Timer counter.  <a href="#ga14d9ab0215127155e559a9f98f4fc7f4">More...</a><br/></td></tr>
+<tr class="separator:ga14d9ab0215127155e559a9f98f4fc7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1a85cff4fe7e16d497b59d9fea2ad58"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gad1a85cff4fe7e16d497b59d9fea2ad58">QTMR_StopTimer</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
+<tr class="memdesc:gad1a85cff4fe7e16d497b59d9fea2ad58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the Quad Timer counter.  <a href="#gad1a85cff4fe7e16d497b59d9fea2ad58">More...</a><br/></td></tr>
+<tr class="separator:gad1a85cff4fe7e16d497b59d9fea2ad58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Enable and Disable the Quad Timer DMA</h2></td></tr>
+<tr class="memitem:ga73b23acbae47d427ea8513cfb239e32d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga73b23acbae47d427ea8513cfb239e32d">QTMR_EnableDma</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memdesc:ga73b23acbae47d427ea8513cfb239e32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the Quad Timer DMA.  <a href="#ga73b23acbae47d427ea8513cfb239e32d">More...</a><br/></td></tr>
+<tr class="separator:ga73b23acbae47d427ea8513cfb239e32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0645602d837cd4e7ad7e8d80dbf3ffae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga0645602d837cd4e7ad7e8d80dbf3ffae">QTMR_DisableDma</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memdesc:ga0645602d837cd4e7ad7e8d80dbf3ffae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the Quad Timer DMA.  <a href="#ga0645602d837cd4e7ad7e8d80dbf3ffae">More...</a><br/></td></tr>
+<tr class="separator:ga0645602d837cd4e7ad7e8d80dbf3ffae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6829a4d084cf7275d610c31928443867"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga6829a4d084cf7275d610c31928443867">QTMR_SetPwmOutputToIdle</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, bool idleStatus)</td></tr>
+<tr class="memdesc:ga6829a4d084cf7275d610c31928443867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set PWM output in idle status (high or low).  <a href="#ga6829a4d084cf7275d610c31928443867">More...</a><br/></td></tr>
+<tr class="separator:ga6829a4d084cf7275d610c31928443867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30e6d57c776b790a42dffc32f1807344"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00063.html#gab7a02ea380b8c2058829accfa51822e9">qtmr_pwm_out_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga30e6d57c776b790a42dffc32f1807344">QTMR_GetPwmOutputStatus</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
+<tr class="memdesc:ga30e6d57c776b790a42dffc32f1807344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the channel output status.  <a href="#ga30e6d57c776b790a42dffc32f1807344">More...</a><br/></td></tr>
+<tr class="separator:ga30e6d57c776b790a42dffc32f1807344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa79fe21d65270ec7bae480289e9f0d3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gafa79fe21d65270ec7bae480289e9f0d3">QTMR_GetPwmChannelStatus</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
+<tr class="memdesc:gafa79fe21d65270ec7bae480289e9f0d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the PWM channel dutycycle value.  <a href="#gafa79fe21d65270ec7bae480289e9f0d3">More...</a><br/></td></tr>
+<tr class="separator:gafa79fe21d65270ec7bae480289e9f0d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e6a1a6d8fd0593fae5eb49e79b6b038"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga2e6a1a6d8fd0593fae5eb49e79b6b038">QTMR_SetPwmClockMode</a> (TMR_Type *base, <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, <a class="el" href="a00063.html#gac6d08f267b908a7cde4881df86f22c78">qtmr_primary_count_source_t</a> prescaler)</td></tr>
+<tr class="memdesc:ga2e6a1a6d8fd0593fae5eb49e79b6b038"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set the value of the prescaler on QTimer channels.  <a href="#ga2e6a1a6d8fd0593fae5eb49e79b6b038">More...</a><br/></td></tr>
+<tr class="separator:ga2e6a1a6d8fd0593fae5eb49e79b6b038"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00477" id="a00477"></a>
+<a name="a00486" id="a00486"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct sd_card_t</td>
+          <td class="memname">struct qtmr_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Define the card structure including the necessary fields to identify and describe the card. </p>
+<div class="textblock"><p>This structure holds the configuration settings for the Quad Timer peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00063.html#ga6f70f9eb710dde4743e8e9346dc41c65" title="Fill in the Quad Timer config struct with the default settings. ">QTMR_GetDefaultConfig()</a> function and pass a pointer to your config structure instance.</p>
+<p>The config struct can be made const so it resides in flash </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae1d68ff4edbc243d840cae5614d31a68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1d68ff4edbc243d840cae5614d31a68"></a>
-<a class="el" href="a00066.html#a00492">sdmmchost_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ae1d68ff4edbc243d840cae5614d31a68">host</a></td></tr>
-<tr class="memdesc:ae1d68ff4edbc243d840cae5614d31a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host configuration. <br/></td></tr>
-<tr class="separator:ae1d68ff4edbc243d840cae5614d31a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4566720b02d4de772cd3cbcb54eaafb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4566720b02d4de772cd3cbcb54eaafb"></a>
-<a class="el" href="a00052.html#a00484">sd_usr_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ab4566720b02d4de772cd3cbcb54eaafb">usrParam</a></td></tr>
-<tr class="memdesc:ab4566720b02d4de772cd3cbcb54eaafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">user parameter <br/></td></tr>
-<tr class="separator:ab4566720b02d4de772cd3cbcb54eaafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a966fb2f61556afb59ab11f5f634e0578"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a966fb2f61556afb59ab11f5f634e0578"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a966fb2f61556afb59ab11f5f634e0578">isHostReady</a></td></tr>
-<tr class="memdesc:a966fb2f61556afb59ab11f5f634e0578"><td class="mdescLeft">&#160;</td><td class="mdescRight">use this flag to indicate if need host re-init or not <br/></td></tr>
-<tr class="separator:a966fb2f61556afb59ab11f5f634e0578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a089143022f4fcf62251935db4ee7e996"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a089143022f4fcf62251935db4ee7e996"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a089143022f4fcf62251935db4ee7e996">noInteralAlign</a></td></tr>
-<tr class="memdesc:a089143022f4fcf62251935db4ee7e996"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to enable/disable the functionality of the exchange buffer <br/></td></tr>
-<tr class="separator:a089143022f4fcf62251935db4ee7e996"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ae02a01ec2961f9a2374f40d9818c61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ae02a01ec2961f9a2374f40d9818c61"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a9ae02a01ec2961f9a2374f40d9818c61">busClock_Hz</a></td></tr>
-<tr class="memdesc:a9ae02a01ec2961f9a2374f40d9818c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD bus clock frequency united in Hz. <br/></td></tr>
-<tr class="separator:a9ae02a01ec2961f9a2374f40d9818c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa63229571c2375d7bac861ccf49fc38c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa63229571c2375d7bac861ccf49fc38c"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#aa63229571c2375d7bac861ccf49fc38c">relativeAddress</a></td></tr>
-<tr class="memdesc:aa63229571c2375d7bac861ccf49fc38c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative address of the card. <br/></td></tr>
-<tr class="separator:aa63229571c2375d7bac861ccf49fc38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23b8ed9688825316750d697b524c7d18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23b8ed9688825316750d697b524c7d18"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a23b8ed9688825316750d697b524c7d18">version</a></td></tr>
-<tr class="memdesc:a23b8ed9688825316750d697b524c7d18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card version. <br/></td></tr>
-<tr class="separator:a23b8ed9688825316750d697b524c7d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2979044e1c678c4d1f4b55915ea11f9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2979044e1c678c4d1f4b55915ea11f9b"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a2979044e1c678c4d1f4b55915ea11f9b">flags</a></td></tr>
-<tr class="memdesc:a2979044e1c678c4d1f4b55915ea11f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags in _sd_card_flag. <br/></td></tr>
-<tr class="separator:a2979044e1c678c4d1f4b55915ea11f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32f0cae971b2a8785e4efe92877f723f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32f0cae971b2a8785e4efe92877f723f"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a32f0cae971b2a8785e4efe92877f723f">internalBuffer</a> [<a class="el" href="a00052.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]</td></tr>
-<tr class="memdesc:a32f0cae971b2a8785e4efe92877f723f"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal buffer <br/></td></tr>
-<tr class="separator:a32f0cae971b2a8785e4efe92877f723f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dfdb06355545a94755d7b7b8b8bb708"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dfdb06355545a94755d7b7b8b8bb708"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a4dfdb06355545a94755d7b7b8b8bb708">ocr</a></td></tr>
-<tr class="memdesc:a4dfdb06355545a94755d7b7b8b8bb708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw OCR content. <br/></td></tr>
-<tr class="separator:a4dfdb06355545a94755d7b7b8b8bb708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0efb67f15239d1406b0b0f8b91345669"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0efb67f15239d1406b0b0f8b91345669"></a>
-<a class="el" href="a00052.html#a00478">sd_cid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a0efb67f15239d1406b0b0f8b91345669">cid</a></td></tr>
-<tr class="memdesc:a0efb67f15239d1406b0b0f8b91345669"><td class="mdescLeft">&#160;</td><td class="mdescRight">CID. <br/></td></tr>
-<tr class="separator:a0efb67f15239d1406b0b0f8b91345669"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1958a5fde8f395573ccdff37a26aa455"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1958a5fde8f395573ccdff37a26aa455"></a>
-<a class="el" href="a00052.html#a00479">sd_csd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a1958a5fde8f395573ccdff37a26aa455">csd</a></td></tr>
-<tr class="memdesc:a1958a5fde8f395573ccdff37a26aa455"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSD. <br/></td></tr>
-<tr class="separator:a1958a5fde8f395573ccdff37a26aa455"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae47527a4d44dfb1754d97149e71d7744"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae47527a4d44dfb1754d97149e71d7744"></a>
-<a class="el" href="a00052.html#a00482">sd_scr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ae47527a4d44dfb1754d97149e71d7744">scr</a></td></tr>
-<tr class="memdesc:ae47527a4d44dfb1754d97149e71d7744"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCR. <br/></td></tr>
-<tr class="separator:ae47527a4d44dfb1754d97149e71d7744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9b7cf861f3224f3a8f14d9b7c52ca1b"></a>
-<a class="el" href="a00052.html#a00483">sd_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ac9b7cf861f3224f3a8f14d9b7c52ca1b">stat</a></td></tr>
-<tr class="memdesc:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd 512 bit status <br/></td></tr>
-<tr class="separator:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee36dc7f6472b4efb5c8c00fcaeb8a55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee36dc7f6472b4efb5c8c00fcaeb8a55"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#aee36dc7f6472b4efb5c8c00fcaeb8a55">blockCount</a></td></tr>
-<tr class="memdesc:aee36dc7f6472b4efb5c8c00fcaeb8a55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card total block number. <br/></td></tr>
-<tr class="separator:aee36dc7f6472b4efb5c8c00fcaeb8a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11f6303b3585dda87da4b8a26763c752"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11f6303b3585dda87da4b8a26763c752"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a11f6303b3585dda87da4b8a26763c752">blockSize</a></td></tr>
-<tr class="memdesc:a11f6303b3585dda87da4b8a26763c752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card block size. <br/></td></tr>
-<tr class="separator:a11f6303b3585dda87da4b8a26763c752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78e38be0fbd415b66ef4ba9e5b0f8930"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78e38be0fbd415b66ef4ba9e5b0f8930"></a>
-<a class="el" href="a00052.html#ga508c3d50863e57dce5fa1b7758972e1b">sd_timing_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a78e38be0fbd415b66ef4ba9e5b0f8930">currentTiming</a></td></tr>
-<tr class="memdesc:a78e38be0fbd415b66ef4ba9e5b0f8930"><td class="mdescLeft">&#160;</td><td class="mdescRight">current timing mode <br/></td></tr>
-<tr class="separator:a78e38be0fbd415b66ef4ba9e5b0f8930"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf5c5e39b67ad3bb8318c3b3036e8752"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf5c5e39b67ad3bb8318c3b3036e8752"></a>
-<a class="el" href="a00052.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#acf5c5e39b67ad3bb8318c3b3036e8752">driverStrength</a></td></tr>
-<tr class="memdesc:acf5c5e39b67ad3bb8318c3b3036e8752"><td class="mdescLeft">&#160;</td><td class="mdescRight">driver strength <br/></td></tr>
-<tr class="separator:acf5c5e39b67ad3bb8318c3b3036e8752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1071e94c4d0fce611c54e347a97b5b93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1071e94c4d0fce611c54e347a97b5b93"></a>
-<a class="el" href="a00052.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a1071e94c4d0fce611c54e347a97b5b93">maxCurrent</a></td></tr>
-<tr class="memdesc:a1071e94c4d0fce611c54e347a97b5b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">card current limit <br/></td></tr>
-<tr class="separator:a1071e94c4d0fce611c54e347a97b5b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef60a9196a9789f243660bb76f3a0ef2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef60a9196a9789f243660bb76f3a0ef2"></a>
-<a class="el" href="a00052.html#ga27fd895fac89bbc0288543ca0b1e371c">sdmmc_operation_voltage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#aef60a9196a9789f243660bb76f3a0ef2">operationVoltage</a></td></tr>
-<tr class="memdesc:aef60a9196a9789f243660bb76f3a0ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">card operation voltage <br/></td></tr>
-<tr class="separator:aef60a9196a9789f243660bb76f3a0ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a617e4f6ef3604042d7ae2851bd1ae50c"></a>
-<a class="el" href="a00065.html#a00491">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a617e4f6ef3604042d7ae2851bd1ae50c">lock</a></td></tr>
-<tr class="memdesc:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">card access lock <br/></td></tr>
-<tr class="separator:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91dd226537330d518dd5ea567dbf84eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91dd226537330d518dd5ea567dbf84eb"></a>
+<a class="el" href="a00063.html#gac6d08f267b908a7cde4881df86f22c78">qtmr_primary_count_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a91dd226537330d518dd5ea567dbf84eb">primarySource</a></td></tr>
+<tr class="memdesc:a91dd226537330d518dd5ea567dbf84eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the primary count source. <br/></td></tr>
+<tr class="separator:a91dd226537330d518dd5ea567dbf84eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fa6d82bc64478134af68365767a04c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fa6d82bc64478134af68365767a04c3"></a>
+<a class="el" href="a00063.html#gaa6e8b3e68a996911371818cd39153d45">qtmr_input_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a2fa6d82bc64478134af68365767a04c3">secondarySource</a></td></tr>
+<tr class="memdesc:a2fa6d82bc64478134af68365767a04c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the secondary count source. <br/></td></tr>
+<tr class="separator:a2fa6d82bc64478134af68365767a04c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee6ee95482b24267445974cd191870ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee6ee95482b24267445974cd191870ce"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#aee6ee95482b24267445974cd191870ce">enableMasterMode</a></td></tr>
+<tr class="memdesc:aee6ee95482b24267445974cd191870ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Broadcast compare function output to other counters; false no broadcast <br/></td></tr>
+<tr class="separator:aee6ee95482b24267445974cd191870ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a097748c43d8e67d8099d95165c487bf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a097748c43d8e67d8099d95165c487bf3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a097748c43d8e67d8099d95165c487bf3">enableExternalForce</a></td></tr>
+<tr class="memdesc:a097748c43d8e67d8099d95165c487bf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Compare from another counter force state of OFLAG signal false: OFLAG controlled by local counter <br/></td></tr>
+<tr class="separator:a097748c43d8e67d8099d95165c487bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86cd4538de535a7bc94400ff97fd1310"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86cd4538de535a7bc94400ff97fd1310"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a86cd4538de535a7bc94400ff97fd1310">faultFilterCount</a></td></tr>
+<tr class="memdesc:a86cd4538de535a7bc94400ff97fd1310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fault filter count. <br/></td></tr>
+<tr class="separator:a86cd4538de535a7bc94400ff97fd1310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab10a03adaffdc43f77f483072f3ca4f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab10a03adaffdc43f77f483072f3ca4f9"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ab10a03adaffdc43f77f483072f3ca4f9">faultFilterPeriod</a></td></tr>
+<tr class="memdesc:ab10a03adaffdc43f77f483072f3ca4f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fault filter period;value of 0 will bypass the filter. <br/></td></tr>
+<tr class="separator:ab10a03adaffdc43f77f483072f3ca4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc75d450739a90bfd23d56dbe8e1846f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc75d450739a90bfd23d56dbe8e1846f"></a>
+<a class="el" href="a00063.html#gabec85a2c9b17e3edb8a4c17ae3d4fa41">qtmr_debug_action_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#adc75d450739a90bfd23d56dbe8e1846f">debugMode</a></td></tr>
+<tr class="memdesc:adc75d450739a90bfd23d56dbe8e1846f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation in Debug mode. <br/></td></tr>
+<tr class="separator:adc75d450739a90bfd23d56dbe8e1846f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga6fa18202479ec86d33169ee28513ae94"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_SD_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 1U)) /*2.4.1*/</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gafeaa6456e370d2eb59f5e139d9f8b00c"></a>
+<a class="anchor" id="gac6d08f267b908a7cde4881df86f22c78"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00063.html#gac6d08f267b908a7cde4881df86f22c78">qtmr_primary_count_source_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="anchor" id="_sd_card_flag"></a></p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafeaa6456e370d2eb59f5e139d9f8b00ca9fdf7d592b595f8dffd0519979222bc8"></a>kSD_SupportHighCapacityFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support high capacity. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a82276acc1d08d80b29fa586ae3fe603d"></a>kQTMR_ClockCounter0InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 0 input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafeaa6456e370d2eb59f5e139d9f8b00ca163a232e42705c297ad363283349cc40"></a>kSD_Support4BitWidthFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support 4-bit data width. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a3ac60049c157df8139a7e926db1b923a"></a>kQTMR_ClockCounter1InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 1 input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafeaa6456e370d2eb59f5e139d9f8b00cad76278db320cf350e0a21fa35cef47db"></a>kSD_SupportSdhcFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Card is SDHC. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78ad0e59d8a4117a8850db9c0a8723cfc98"></a>kQTMR_ClockCounter2InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 2 input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafeaa6456e370d2eb59f5e139d9f8b00ca38bc49f3235ef3245779efcbd0f616ca"></a>kSD_SupportSdxcFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Card is SDXC. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78ae80200a156049ee287f0d997c59ef226"></a>kQTMR_ClockCounter3InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 3 input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafeaa6456e370d2eb59f5e139d9f8b00ca9ea1d2e9f73d26c15593a98481eb8132"></a>kSD_SupportVoltage180v</em>&nbsp;</td><td class="fielddoc">
-<p>card support 1.8v voltage </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a9240e72f468d64e2cdbe7fc2b9f0b67b"></a>kQTMR_ClockCounter0Output</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 0 output. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafeaa6456e370d2eb59f5e139d9f8b00ca1d6f3540c4292326a017d8b629021d09"></a>kSD_SupportSetBlockCountCmd</em>&nbsp;</td><td class="fielddoc">
-<p>card support cmd23 flag </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a072bed168beaf44bc8c7acca57984c56"></a>kQTMR_ClockCounter1Output</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 1 output. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafeaa6456e370d2eb59f5e139d9f8b00ca76d5891295fcaef57bb726e2fde42671"></a>kSD_SupportSpeedClassControlCmd</em>&nbsp;</td><td class="fielddoc">
-<p>card support speed class control flag </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a51ba38ae41469d5ed53b4803f174bf42"></a>kQTMR_ClockCounter2Output</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 2 output. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a70478379b0f446293d8b7df484de649c"></a>kQTMR_ClockCounter3Output</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 3 output. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a4c71c77d70c5a24b4e8f1ef386229558"></a>kQTMR_ClockDivide_1</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 1 prescaler. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78aa1804764d102bbd2ccfeff8000eda66e"></a>kQTMR_ClockDivide_2</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 2 prescaler. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a1b95af06de1beefbc39e2d6566d39438"></a>kQTMR_ClockDivide_4</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 4 prescaler. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a33a7f169f5152d281f1f4d60439e3b1d"></a>kQTMR_ClockDivide_8</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 8 prescaler. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a0f286e5b68c7521941cf0e2909c5bc51"></a>kQTMR_ClockDivide_16</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 16 prescaler. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78aa4601397fa55cb677c65b64ebc7ca869"></a>kQTMR_ClockDivide_32</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 32 prescaler. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78a831d3c0a294d561aafffd9730d728f60"></a>kQTMR_ClockDivide_64</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 64 prescaler. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac6d08f267b908a7cde4881df86f22c78ad70531180a310b63317cb4c426ddefdd"></a>kQTMR_ClockDivide_128</em>&nbsp;</td><td class="fielddoc">
+<p>IP bus clock divide by 128 prescaler. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gaa6e8b3e68a996911371818cd39153d45"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#gaa6e8b3e68a996911371818cd39153d45">qtmr_input_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa6e8b3e68a996911371818cd39153d45a91da9d3d2dec949d2fbc696683a2bf48"></a>kQTMR_Counter0InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 0 input pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6e8b3e68a996911371818cd39153d45a5cfa9210c1c07adfb38c8e93433f9be4"></a>kQTMR_Counter1InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 1 input pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6e8b3e68a996911371818cd39153d45a9b0145605c71dbb24adcf87924f9a563"></a>kQTMR_Counter2InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 2 input pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6e8b3e68a996911371818cd39153d45a24c791aa35fb4cf2fb2d623b309d20ab"></a>kQTMR_Counter3InputPin</em>&nbsp;</td><td class="fielddoc">
+<p>Use counter 3 input pin. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga397995409e23551319239ec333f00981"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#ga397995409e23551319239ec333f00981">qtmr_counting_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981ac48116c1f656ee1cabe104f9c2c49843"></a>kQTMR_NoOperation</em>&nbsp;</td><td class="fielddoc">
+<p>No operation. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981acdbf5f143450aa0a9f3f0ab23baddc6b"></a>kQTMR_PriSrcRiseEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Count rising edges of primary source. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981a44b92eb2c4c5227890f8f39a041301d3"></a>kQTMR_PriSrcRiseAndFallEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Count rising and falling edges of primary source. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981a3ef3ad7ac6a8200fa20df9978bb2ae8d"></a>kQTMR_PriSrcRiseEdgeSecInpHigh</em>&nbsp;</td><td class="fielddoc">
+<p>Count rise edges of pri SRC while sec inp high active. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981ad3e02baca02a32350ca9da6ac7ceb5d8"></a>kQTMR_QuadCountMode</em>&nbsp;</td><td class="fielddoc">
+<p>Quadrature count mode, uses pri and sec sources. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981aa514bc2e0906a7cbab11373f3dea5e82"></a>kQTMR_PriSrcRiseEdgeSecDir</em>&nbsp;</td><td class="fielddoc">
+<p>Count rising edges of pri SRC; sec SRC specifies dir. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981abaec5373ab714b0b58ce2e56f79bbf8a"></a>kQTMR_SecSrcTrigPriCnt</em>&nbsp;</td><td class="fielddoc">
+<p>Edge of sec SRC trigger primary count until compare. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga397995409e23551319239ec333f00981aac99a0f3873161f9cf61f724f2a8570b"></a>kQTMR_CascadeCount</em>&nbsp;</td><td class="fielddoc">
+<p>Cascaded count mode (up/down) </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab7a02ea380b8c2058829accfa51822e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#gab7a02ea380b8c2058829accfa51822e9">qtmr_pwm_out_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab7a02ea380b8c2058829accfa51822e9ac1f1720b29f57f6bdf0364709f96a6c2"></a>kQTMR_PwmLow</em>&nbsp;</td><td class="fielddoc">
+<p>The output state of PWM channel is low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab7a02ea380b8c2058829accfa51822e9a74ea9af3309cfad4a8dc7bb86d334677"></a>kQTMR_PwmHigh</em>&nbsp;</td><td class="fielddoc">
+<p>The output state of PWM channel is low. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gaf79e17f54c3cf8ed96bb9e7845ca5bc3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#gaf79e17f54c3cf8ed96bb9e7845ca5bc3">qtmr_output_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a3a0003a83a00acc39a519d540c562472"></a>kQTMR_AssertWhenCountActive</em>&nbsp;</td><td class="fielddoc">
+<p>Assert OFLAG while counter is active. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a0716e351e1601a6f246f253543e3f03c"></a>kQTMR_ClearOnCompare</em>&nbsp;</td><td class="fielddoc">
+<p>Clear OFLAG on successful compare. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a9d03a8a577e26d75ee7fe69315faf1f9"></a>kQTMR_SetOnCompare</em>&nbsp;</td><td class="fielddoc">
+<p>Set OFLAG on successful compare. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3ae637b16574eb8e2a91a873f871eb0a0a"></a>kQTMR_ToggleOnCompare</em>&nbsp;</td><td class="fielddoc">
+<p>Toggle OFLAG on successful compare. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3af61b88d5df6ecf7a701d1381ea81e5be"></a>kQTMR_ToggleOnAltCompareReg</em>&nbsp;</td><td class="fielddoc">
+<p>Toggle OFLAG using alternating compare registers. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a4e2267dadc673ed9f31574be79999a0a"></a>kQTMR_SetOnCompareClearOnSecSrcInp</em>&nbsp;</td><td class="fielddoc">
+<p>Set OFLAG on compare, clear on sec SRC input edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3a3f3c1f9871e91f82842b1cae3bd0ea74"></a>kQTMR_SetOnCompareClearOnCountRoll</em>&nbsp;</td><td class="fielddoc">
+<p>Set OFLAG on compare, clear on counter rollover. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf79e17f54c3cf8ed96bb9e7845ca5bc3ae2d75e2129f79fe404497e7910cde617"></a>kQTMR_EnableGateClock</em>&nbsp;</td><td class="fielddoc">
+<p>Enable gated clock output while count is active. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga54b990834983f9edd7d0636b78db2a7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#ga54b990834983f9edd7d0636b78db2a7e">qtmr_input_capture_edge_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga54b990834983f9edd7d0636b78db2a7ea07866622cc0be666818813ab0dc2be5e"></a>kQTMR_NoCapture</em>&nbsp;</td><td class="fielddoc">
+<p>Capture is disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54b990834983f9edd7d0636b78db2a7ea81a4074fdc9fd23cdc31fce8a567d3f4"></a>kQTMR_RisingEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on rising edge (IPS=0) or falling edge (IPS=1) </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54b990834983f9edd7d0636b78db2a7ea9025803f5cbc483bbdd89f0846db2337"></a>kQTMR_FallingEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on falling edge (IPS=0) or rising edge (IPS=1) </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54b990834983f9edd7d0636b78db2a7ea593937a67ae2969cdfe81595b2177322"></a>kQTMR_RisingAndFallingEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on both edges. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae91f0c5f7a204dce2d5cc6b71d1c6885"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#gae91f0c5f7a204dce2d5cc6b71d1c6885">qtmr_preload_control_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae91f0c5f7a204dce2d5cc6b71d1c6885ab3811976a0c8cd3db181c6c4ebca3069"></a>kQTMR_NoPreload</em>&nbsp;</td><td class="fielddoc">
+<p>Never preload. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae91f0c5f7a204dce2d5cc6b71d1c6885ae32eaef33171ecb9d78f14a615dec69d"></a>kQTMR_LoadOnComp1</em>&nbsp;</td><td class="fielddoc">
+<p>Load upon successful compare with value in COMP1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae91f0c5f7a204dce2d5cc6b71d1c6885adb0a17be2615493630d0417d46a53a0e"></a>kQTMR_LoadOnComp2</em>&nbsp;</td><td class="fielddoc">
+<p>Load upon successful compare with value in COMP2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gabec85a2c9b17e3edb8a4c17ae3d4fa41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#gabec85a2c9b17e3edb8a4c17ae3d4fa41">qtmr_debug_action_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabec85a2c9b17e3edb8a4c17ae3d4fa41ae5ba29aa5fdf66f740155d11670573ad"></a>kQTMR_RunNormalInDebug</em>&nbsp;</td><td class="fielddoc">
+<p>Continue with normal operation. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabec85a2c9b17e3edb8a4c17ae3d4fa41adfeee3fa9d7c79e56a089d4e5f12754b"></a>kQTMR_HaltCounter</em>&nbsp;</td><td class="fielddoc">
+<p>Halt counter. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabec85a2c9b17e3edb8a4c17ae3d4fa41af322d8a7ffa91765fde1077777e3c845"></a>kQTMR_ForceOutToZero</em>&nbsp;</td><td class="fielddoc">
+<p>Force output to logic 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabec85a2c9b17e3edb8a4c17ae3d4fa41a582ee8204977e8792431b0a8e1df4bbf"></a>kQTMR_HaltCountForceOutZero</em>&nbsp;</td><td class="fielddoc">
+<p>Halt counter and force output to logic 0. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab2f96b9147760841a4614daa46674fb5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#gab2f96b9147760841a4614daa46674fb5">qtmr_interrupt_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab2f96b9147760841a4614daa46674fb5ad62e3868b70dfceab5f0efe7508ad549"></a>kQTMR_CompareInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Compare interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab2f96b9147760841a4614daa46674fb5a60998249ab3a57bedcafe6423fc33cc5"></a>kQTMR_Compare1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 1 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab2f96b9147760841a4614daa46674fb5a9d2f4a4ad09245fea4bd6449b74365b9"></a>kQTMR_Compare2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 2 interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab2f96b9147760841a4614daa46674fb5ad4a0db29d76733779c01466d76c15749"></a>kQTMR_OverflowInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Timer overflow interrupt. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab2f96b9147760841a4614daa46674fb5a8267b0a66e5a77686cb760376c7f8885"></a>kQTMR_EdgeInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Input edge interrupt. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga73f221be3a1eb45ffd1d8292cf572001"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#ga73f221be3a1eb45ffd1d8292cf572001">qtmr_status_flags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga73f221be3a1eb45ffd1d8292cf572001a409aa72557c34591ad293136dc57bbd8"></a>kQTMR_CompareFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Compare flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga73f221be3a1eb45ffd1d8292cf572001a6a6cc5fb43d34289b2a0ffe0f7e29c6b"></a>kQTMR_Compare1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 1 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga73f221be3a1eb45ffd1d8292cf572001a9891c08b2e3124af1e79180ee1d052f7"></a>kQTMR_Compare2Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 2 flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga73f221be3a1eb45ffd1d8292cf572001ac3330de0db5003ed7fe15a5f72f6fe73"></a>kQTMR_OverflowFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Timer overflow flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga73f221be3a1eb45ffd1d8292cf572001af4e7b95463c8e1d2f568c7062314be71"></a>kQTMR_EdgeFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Input edge flag. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga2493eb75ca8a9be865abc69c9c94c756"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2493eb75ca8a9be865abc69c9c94c756aa45014ee1078e4a1471e6a637c9b3fca"></a>kQTMR_Channel_0</em>&nbsp;</td><td class="fielddoc">
+<p>TMR Channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2493eb75ca8a9be865abc69c9c94c756ae9ad347957a75c32c4ee19666b511247"></a>kQTMR_Channel_1</em>&nbsp;</td><td class="fielddoc">
+<p>TMR Channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2493eb75ca8a9be865abc69c9c94c756a74987baa3ad6b998e75cd16c1df69c26"></a>kQTMR_Channel_2</em>&nbsp;</td><td class="fielddoc">
+<p>TMR Channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2493eb75ca8a9be865abc69c9c94c756a82e08b122bf226f69d3c1c9cafc9931f"></a>kQTMR_Channel_3</em>&nbsp;</td><td class="fielddoc">
+<p>TMR Channel 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga585585a9d3efed0ad65a4d722a7623e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00063.html#ga585585a9d3efed0ad65a4d722a7623e9">qtmr_dma_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga585585a9d3efed0ad65a4d722a7623e9a73d036ed01f812c118bc50b27f36cdc7"></a>kQTMR_InputEdgeFlagDmaEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Input Edge Flag DMA Enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga585585a9d3efed0ad65a4d722a7623e9aaef33e58d8247771b5e594c14ca5b571"></a>kQTMR_ComparatorPreload1DmaEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Comparator Preload Register 1 DMA Enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga585585a9d3efed0ad65a4d722a7623e9af414da5b48883e81009734f59b546624"></a>kQTMR_ComparatorPreload2DmaEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Comparator Preload Register 2 DMA Enable. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga281fb14816d236446ee2d047be0c7155"></a>
+<a class="anchor" id="gab784ac72bb2bf452ffca29053b05fa7c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_Init </td>
+          <td class="memname">void QTMR_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00063.html#a00486">qtmr_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the Quad Timer driver.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to user's Quad Timer config structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa15a9d1613394d4715f3fc600626e3cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6f70f9eb710dde4743e8e9346dc41c65"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00063.html#a00486">qtmr_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the card on a specific host controller, it is consist of host init, card detect, card init function, however user can ignore this high level function, instead of use the low level function, such as SD_CardInit, SD_HostInit, SD_CardDetect.</p>
-<p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00063.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a>(card);</div>
-<div class="line">* <a class="code" href="a00063.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a>(card);</div>
+<p>The default values are: </p>
+<div class="fragment"><div class="line">*    config-&gt;debugMode = <a class="code" href="a00063.html#ggabec85a2c9b17e3edb8a4c17ae3d4fa41ae5ba29aa5fdf66f740155d11670573ad">kQTMR_RunNormalInDebug</a>;</div>
+<div class="line">*    config-&gt;enableExternalForce = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;enableMasterMode = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;faultFilterCount = 0;</div>
+<div class="line">*    config-&gt;faultFilterPeriod = 0;</div>
+<div class="line">*    config-&gt;primarySource = <a class="code" href="a00063.html#ggac6d08f267b908a7cde4881df86f22c78aa1804764d102bbd2ccfeff8000eda66e">kQTMR_ClockDivide_2</a>;</div>
+<div class="line">*    config-&gt;secondarySource = <a class="code" href="a00063.html#ggaa6e8b3e68a996911371818cd39153d45a91da9d3d2dec949d2fbc696683a2bf48">kQTMR_Counter0InputPin</a>;</div>
 <div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da36304fa7f64a74351464b5f16a0765c7" title="host controller not ready ">kStatus_SDMMC_HostNotReady</a></td><td>host is not ready. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027daee037801937ac6781197e7cb2713bab3" title="Go idle failed. ">kStatus_SDMMC_GoIdleFailed</a></td><td>Go idle failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027dac05b576643f7597d46f0a9b8a77c04ab" title="Send Operation Condition failed. ">kStatus_SDMMC_HandShakeOperationConditionFailed</a></td><td>Send operation condition failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da33ce287b896a9b498be7909cf2f7b38e" title="Send CID failed. ">kStatus_SDMMC_AllSendCidFailed</a></td><td>Send CID failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da96b5e73d4dd9eb02bc9bfb6362664136" title="Send relative address failed. ">kStatus_SDMMC_SendRelativeAddressFailed</a></td><td>Send relative address failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da73cec1c7d4346ca37ab6b0818f3a5041" title="Send CSD failed. ">kStatus_SDMMC_SendCsdFailed</a></td><td>Send CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da99077f9e3bb94b11b0169cf07a34e025" title="Select card failed. ">kStatus_SDMMC_SelectCardFailed</a></td><td>Send SELECT_CARD command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da36de73a8df86d5a70b5f2b5c1b3b4598" title="Send SCR failed. ">kStatus_SDMMC_SendScrFailed</a></td><td>Send SCR failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027daeb87568ca0030117ce1bdca2d3fe36df" title="Set bus width failed. ">kStatus_SDMMC_SetDataBusWidthFailed</a></td><td>Set bus width failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027dace05b1fe2c1b30113d51bee8f7cb910c" title="Switch high speed failed. ">kStatus_SDMMC_SwitchBusTimingFailed</a></td><td>Switch high speed failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da7ce8c51a45aad4f51f2dcbddcb7dc233" title="Set block size failed. ">kStatus_SDMMC_SetCardBlockSizeFailed</a></td><td>Set card block size failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to user's Quad Timer config structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga50dee2b5bc071a01480b0ab3671c8524"></a>
+<a class="anchor" id="ga364220c9fcdf15f102e60c7c76041c06"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SD_Deinit </td>
+          <td class="memname"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> QTMR_SetupPwm </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the specific card and host. Please note it is a thread safe function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga22154dd3ecedaaf63ed951fb248b0265"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_CardInit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the card only, make sure the host is ready when call this function, otherwise it will return kStatus_SDMMC_HostNotReady.</p>
-<p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00063.html#ga2683393842666aa39ec74898a7ad6e8a">SD_CardDeinit</a>(card);</div>
-<div class="line">* <a class="code" href="a00063.html#ga22154dd3ecedaaf63ed951fb248b0265">SD_CardInit</a>(card);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da36304fa7f64a74351464b5f16a0765c7" title="host controller not ready ">kStatus_SDMMC_HostNotReady</a></td><td>host is not ready. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027daee037801937ac6781197e7cb2713bab3" title="Go idle failed. ">kStatus_SDMMC_GoIdleFailed</a></td><td>Go idle failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027dac05b576643f7597d46f0a9b8a77c04ab" title="Send Operation Condition failed. ">kStatus_SDMMC_HandShakeOperationConditionFailed</a></td><td>Send operation condition failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da33ce287b896a9b498be7909cf2f7b38e" title="Send CID failed. ">kStatus_SDMMC_AllSendCidFailed</a></td><td>Send CID failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da96b5e73d4dd9eb02bc9bfb6362664136" title="Send relative address failed. ">kStatus_SDMMC_SendRelativeAddressFailed</a></td><td>Send relative address failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da73cec1c7d4346ca37ab6b0818f3a5041" title="Send CSD failed. ">kStatus_SDMMC_SendCsdFailed</a></td><td>Send CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da99077f9e3bb94b11b0169cf07a34e025" title="Select card failed. ">kStatus_SDMMC_SelectCardFailed</a></td><td>Send SELECT_CARD command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da36de73a8df86d5a70b5f2b5c1b3b4598" title="Send SCR failed. ">kStatus_SDMMC_SendScrFailed</a></td><td>Send SCR failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027daeb87568ca0030117ce1bdca2d3fe36df" title="Set bus width failed. ">kStatus_SDMMC_SetDataBusWidthFailed</a></td><td>Set bus width failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027dace05b1fe2c1b30113d51bee8f7cb910c" title="Switch high speed failed. ">kStatus_SDMMC_SwitchBusTimingFailed</a></td><td>Switch high speed failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da7ce8c51a45aad4f51f2dcbddcb7dc233" title="Set block size failed. ">kStatus_SDMMC_SetCardBlockSizeFailed</a></td><td>Set card block size failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2683393842666aa39ec74898a7ad6e8a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">void SD_CardDeinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pwmFreqHz</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the specific card. Please note it is a thread safe function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga47f15fb31bcb60a2eeb474081cde54e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_HostInit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the specific host.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac44a13a36870f276b1f323a5b519bb9f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SD_HostDeinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the host.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga75785c0a29f560b0bfd14b572106bda0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SD_HostDoReset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function reset the specific host.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5e8b2d7768c7d916a1953583035fdbb3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SD_SetCardPower </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>dutyCyclePercent</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The power off operation depend on host or the user define power on function. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-    <tr><td class="paramname">enable</td><td>true is power on, false is power off. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga38c82aa0e0daaec4c6be8ba3acd56da2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_PollingCardInsert </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramname"><em>outputPolarity</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -694,84 +958,105 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Detect card through GPIO, CD, DATA3. </p>
+<p>The function initializes the timer module according to the parameters passed in by the user. The function also sets up the value compare registers to match the PWM signal requirements.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-    <tr><td class="paramname">status</td><td>detect status, kSD_Inserted or kSD_Removed. </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">pwmFreqHz</td><td>PWM signal frequency in Hz </td></tr>
+    <tr><td class="paramname">dutyCyclePercent</td><td>PWM pulse width, value should be between 0 to 100 0=inactive signal(0% duty cycle)... 100=active signal (100% duty cycle) </td></tr>
+    <tr><td class="paramname">outputPolarity</td><td>true: invert polarity of the output signal, false: no inversion </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>Main counter clock in Hz.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns an error if there was error setting up the signal. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6de9f134ae84e25053647e2c0ba8ef27"></a>
+<a class="anchor" id="gaab1b216e8bae644b8027cf8eaa4e2964"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool SD_IsCardPresent </td>
+          <td class="memname">void QTMR_SetupInputCapture </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad9b5c3ecc8acf18ee06ffd4154eb0352"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">bool SD_CheckReadOnly </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function checks if the card is write-protected via the CSD register.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>The specific card. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Card is read only. </td></tr>
-    <tr><td class="paramname">false</td><td>Card isn't read only. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab8b91d51f045d43e32770599a9406e3b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SelectCard </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gaa6e8b3e68a996911371818cd39153d45">qtmr_input_source_t</a>&#160;</td>
+          <td class="paramname"><em>capturePin</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isSelected</em>&#160;</td>
+          <td class="paramname"><em>inputPolarity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reloadOnCapture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga54b990834983f9edd7d0636b78db2a7e">qtmr_input_capture_edge_t</a>&#160;</td>
+          <td class="paramname"><em>captureMode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The count is stored in the capture register.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">capturePin</td><td>Pin through which we receive the input signal to trigger the capture </td></tr>
+    <tr><td class="paramname">inputPolarity</td><td>true: invert polarity of the input signal, false: no inversion </td></tr>
+    <tr><td class="paramname">reloadOnCapture</td><td>true: reload the counter when an input capture occurs, false: no reload </td></tr>
+    <tr><td class="paramname">captureMode</td><td>Specifies which edge of the input signal triggers a capture </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4756ec6b825cde8eecd0287591885985"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -782,78 +1067,36 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">isSelected</td><td>True to set the card into transfer state, false to disselect. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00063.html#gab2f96b9147760841a4614daa46674fb5" title="List of Quad Timer interrupts. ">qtmr_interrupt_enable_t</a> </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf3537757745005c2b103be314ddfaa7b"></a>
+<a class="anchor" id="ga7245d99b70c9df88a8ee0756913ac179"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_ReadStatus </td>
+          <td class="memname">void QTMR_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da7f58bb3e7cb4ef2ea7ae0eedba07470d" title="Send application command failed. ">kStatus_SDMMC_SendApplicationCommandFailed</a></td><td>send application command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1d134e8244b6641352d1a374d0e8b848"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_ReadBlocks </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -862,59 +1105,32 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function reads blocks from the specific card with default block size defined by the SDHC_CARD_DEFAULT_BLOCK_SIZE.</p>
-<p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The buffer to save the data read from card. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>The start block index. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>The number of blocks to read. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da1fd62104d25e38e44cf0f02299397aee" title="Card doesn&#39;t support. ">kStatus_SDMMC_CardNotSupport</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Not support now. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da4bea51bb845aec7597b4eda78449457a" title="Stop transmission failed. ">kStatus_SDMMC_StopTransmissionFailed</a></td><td>Stop transmission failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base addres </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00063.html#gab2f96b9147760841a4614daa46674fb5" title="List of Quad Timer interrupts. ">qtmr_interrupt_enable_t</a> </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9ab9d1eb512dec6e15beb2cee4e9691e"></a>
+<a class="anchor" id="gafe580603d4441b8a2101ca86485c517c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_WriteBlocks </td>
+          <td class="memname">uint32_t QTMR_GetEnabledInterrupts </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -923,57 +1139,422 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function writes blocks to the specific card with default block size 512 bytes.</p>
-<p>Please note,</p>
-<ol type="1">
-<li>It is a thread safe function.</li>
-<li>It is a async write function which means that the card status may still busy after the function return. Application can call function SD_PollingCardStatusBusy to wait card status idle after the write operation.</li>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00063.html#gab2f96b9147760841a4614daa46674fb5" title="List of Quad Timer interrupts. ">qtmr_interrupt_enable_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga89d05673c74e2f8ccc6c5cbecdab962c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t QTMR_GetStatus </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00063.html#ga73f221be3a1eb45ffd1d8292cf572001" title="List of Quad Timer flags. ">qtmr_status_flags_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac453dce78b2f4079aacbb02d857273ae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00063.html#ga73f221be3a1eb45ffd1d8292cf572001" title="List of Quad Timer flags. ">qtmr_status_flags_t</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1d1fe996963cd527aabb034888e994b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_SetTimerPeriod </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ticks</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timers counts from initial value till it equals the count value set here. The counter will then reinitialize to the value specified in the Load register.</p>
+<dl class="section note"><dt>Note</dt><dd><ol type="1">
+<li>This function will write the time period in ticks to COMP1 or COMP2 register depending on the count direction</li>
+<li>User can call the utility macros provided in fsl_common.h to convert to ticks</li>
+<li>This function supports cases, providing only primary source clock without secondary source clock.</li>
 </ol>
+</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The buffer holding the data to be written to the card. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>The start block index. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>The number of blocks to write. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Not support now. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da1fd62104d25e38e44cf0f02299397aee" title="Card doesn&#39;t support. ">kStatus_SDMMC_CardNotSupport</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da4bea51bb845aec7597b4eda78449457a" title="Stop transmission failed. ">kStatus_SDMMC_StopTransmissionFailed</a></td><td>Stop transmission failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">ticks</td><td>Timer period in units of ticks </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga04e7b25d9776e92ddfcf72063af02418"></a>
+<a class="anchor" id="ga9764da43797074b65a4689a6df999cba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_EraseBlocks </td>
+          <td class="memname">void QTMR_SetCompareValue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ticks</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function sets the value used for comparison with the counter value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">ticks</td><td>Timer period in units of ticks. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3db9e42ab0f483438a720139353937f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void QTMR_SetLoadValue </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function sets the value used to initialize the counter after a counter comparison.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">value</td><td>Load register initialization value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1691975f2406bcaf64a24a065dd2c679"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t QTMR_GetCurrentTimerCount </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the real-time timer counting value, in a range from 0 to a timer period.</p>
+<dl class="section note"><dt>Note</dt><dd>User can call the utility macros provided in fsl_common.h to convert ticks to usec or msec</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current counter value in ticks </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga14d9ab0215127155e559a9f98f4fc7f4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void QTMR_StartTimer </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga397995409e23551319239ec333f00981">qtmr_counting_mode_t</a>&#160;</td>
+          <td class="paramname"><em>clockSource</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">clockSource</td><td>Quad Timer clock source </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad1a85cff4fe7e16d497b59d9fea2ad58"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void QTMR_StopTimer </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga73b23acbae47d427ea8513cfb239e32d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_EnableDma </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">mask</td><td>The DMA to enable. This is a logical OR of members of the enumeration <a class="el" href="a00063.html#ga585585a9d3efed0ad65a4d722a7623e9" title="List of Quad Timer DMA enable. ">qtmr_dma_enable_t</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0645602d837cd4e7ad7e8d80dbf3ffae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_DisableDma </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -982,48 +1563,38 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function erases blocks of the specific card with default block size 512 bytes.</p>
-<p>Please note,</p>
-<ol type="1">
-<li>It is a thread safe function.</li>
-<li>It is a async erase function which means that the card status may still busy after the function return. Application can call function SD_PollingCardStatusBusy to wait card status idle after the erase operation.</li>
-</ol>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>The start block index. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>The number of blocks to erase. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00052.html#ggaad393aa3e173d7f081ab4bbc6ba5027da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00263.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">mask</td><td>The DMA to enable. This is a logical OR of members of the enumeration <a class="el" href="a00063.html#ga585585a9d3efed0ad65a4d722a7623e9" title="List of Quad Timer DMA enable. ">qtmr_dma_enable_t</a> </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga07178b3047e22e71bd7a3bd60322e7b6"></a>
+<a class="anchor" id="ga6829a4d084cf7275d610c31928443867"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SetDriverStrength </td>
+          <td class="memname">void QTMR_SetPwmOutputToIdle </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td>
-          <td class="paramname"><em>driverStrength</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>idleStatus</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1032,31 +1603,36 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>When the PWM is set again, the counting needs to be restarted.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">driverStrength</td><td>Driver strength </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">idleStatus</td><td>True: PWM output is high in idle status; false: PWM output is low in idle status. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6a3a34d76af9ee378086a4dcc1259936"></a>
+<a class="anchor" id="ga30e6d57c776b790a42dffc32f1807344"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SetMaxCurrent </td>
+          <td class="memname">static <a class="el" href="a00063.html#gab7a02ea380b8c2058829accfa51822e9">qtmr_pwm_out_state_t</a> QTMR_GetPwmOutputStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a>&#160;</td>
-          <td class="paramname"><em>maxCurrent</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1064,32 +1640,38 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">maxCurrent</td><td>Max current </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Current channel output status. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga33babf402c15dae5d2712793230158a9"></a>
+<a class="anchor" id="gafa79fe21d65270ec7bae480289e9f0d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_PollingCardStatusBusy </td>
+          <td class="memname">uint8_t QTMR_GetPwmChannelStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00477">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>timeoutMs</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1098,19 +1680,51 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function can be used to polling the status from busy to Idle, the function will return if the card status idle or timeout.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">timeoutMs</td><td>polling card status timeout value. </td></tr>
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Operate successfully. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_WaitWriteCompleteFailed</td><td>CMD13 transfer failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_PollingCardIdleFailed,polling</td><td>card DAT0 idle failed. </td></tr>
+<dl class="section return"><dt>Returns</dt><dd>Current channel dutycycle value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2e6a1a6d8fd0593fae5eb49e79b6b038"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_SetPwmClockMode </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gac6d08f267b908a7cde4881df86f22c78">qtmr_primary_count_source_t</a>&#160;</td>
+          <td class="paramname"><em>prescaler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">prescaler</td><td>Set prescaler value </td></tr>
   </table>
   </dd>
 </dl>

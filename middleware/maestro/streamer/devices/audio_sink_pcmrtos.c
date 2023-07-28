@@ -20,6 +20,7 @@
 #include "audio_cfg.h"
 #include "audio_sink_pcmrtos.h"
 #include "audio_sink.h"
+#include "streamer_element_properties.h"
 
 AudioSinkStreamErrorType audiosink_pcmrtos_init_params(ElementAudioSink *audio_sink_ptr)
 {
@@ -90,6 +91,13 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_device(ElementAudioSink *audio_s
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SINK);
 
+    if (audio_sink_ptr == NULL)
+    {
+        STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "Audio SINK element is NULL");
+        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+        return AUDIO_SINK_ERROR_INVALID_ARGS;
+    }
+
     dev_info = OSA_MemoryAllocate(sizeof(PCMSinkDeviceInfo));
     if (!dev_info)
         return AUDIO_SINK_ERROR_OUT_OF_HEAP_MEMORY;
@@ -100,6 +108,15 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_device(ElementAudioSink *audio_s
     dev_info->device_state      = AUDIO_SINK_DEVICE_STATE_OPENED;
     dev_info->pcm_handle        = NULL;
     dev_info->resample          = false;
+
+    if (audio_sink_ptr->refData_element)
+    {
+        if (STREAM_OK != element_set_property(audio_sink_ptr->refData_element,
+                                              PROP_VOICESEEKER_PROC_REFDATA_NUM_BUFFERS, AUDIO_SINK_BUFFER_NUM))
+        {
+            return AUDIO_SINK_FAILED;
+        }
+    }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
 
@@ -112,14 +129,21 @@ AudioSinkStreamErrorType audiosink_pcmrtos_deinit_device(ElementAudioSink *audio
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SINK);
 
+    if (audio_sink_ptr == NULL)
+    {
+        STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "Audio SINK element is NULL");
+        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+        return AUDIO_SINK_ERROR_INVALID_ARGS;
+    }
+
     dev_info = (PCMSinkDeviceInfo *)audio_sink_ptr->device_info;
     if (!dev_info)
         return AUDIO_SINK_FAILED;
 
     dev_info->device_state = AUDIO_SINK_DEVICE_STATE_CLOSED;
 
-    OSA_MemoryFree(dev_info);
-    dev_info = NULL;
+    OSA_MemoryFree(audio_sink_ptr->device_info);
+    audio_sink_ptr->device_info = NULL;
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
 
@@ -240,6 +264,13 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
         dev_info->input_index = 0;
     }
 
+    if (buffer_size < audio_sink_ptr->chunk_size)
+    {
+        /* Add zeros to the end of the buffer to keep the signal the same length - only the last frame is affected */
+        memset(buffer_ptr + buffer_size, 0, audio_sink_ptr->chunk_size - buffer_size);
+        buffer_size = audio_sink_ptr->chunk_size;
+    }
+
     if (buffer_size > 0U)
     {
         if ((audio_sink_ptr->num_channels != audio_sink_ptr->codec_num_channels) ||
@@ -307,6 +338,16 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
             return FLOW_ERROR;
         }
 
+        if (audio_sink_ptr->refData_element)
+        {
+            AudioRefData_t refData = {(uint8_t *)dev_info->audbuf[dev_info->input_index], dev_info->input_size};
+            if (STREAM_OK != element_set_property(audio_sink_ptr->refData_element, PROP_VOICESEEKER_PROC_REFDATA_PUSH,
+                                                  (uintptr_t)&refData))
+            {
+                return FLOW_ERROR;
+            }
+        }
+
         /* Move to the next PCM storage buffer for the next chunk. */
         dev_info->input_size  = 0;
         dev_info->input_index = (dev_info->input_index + 1) % AUDIO_SINK_BUFFER_NUM;
@@ -371,7 +412,15 @@ AudioSinkStreamErrorType audiosink_pcmrtos_start_device(ElementAudioSink *audio_
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SINK);
 
+    if (audio_sink_ptr == NULL)
+    {
+        STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "Device info is NULL");
+        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+        return AUDIO_SINK_ERROR_INVALID_ARGS;
+    }
+
     dev_info = (PCMSinkDeviceInfo *)audio_sink_ptr->device_info;
+
     if (!dev_info)
     {
         audio_sink_ptr->error_element = AUDIO_SINK_FAILED;
@@ -398,6 +447,13 @@ AudioSinkStreamErrorType audiosink_pcmrtos_stop_device(ElementAudioSink *audio_s
     PCMSinkDeviceInfo *dev_info;
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SINK);
+
+    if (audio_sink_ptr == NULL)
+    {
+        STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "Device info is NULL");
+        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+        return AUDIO_SINK_ERROR_INVALID_ARGS;
+    }
 
     dev_info = (PCMSinkDeviceInfo *)audio_sink_ptr->device_info;
     if (!dev_info)

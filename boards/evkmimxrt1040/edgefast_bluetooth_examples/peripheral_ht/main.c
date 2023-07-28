@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,10 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+#include "PWR_Interface.h"
+#endif
 
 #include <peripheral_ht.h>
 
@@ -161,3 +165,27 @@ int main(void)
     for (;;)
         ;
 }
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
+{
+    bool abortIdle = false;
+    uint64_t expectedIdleTimeUs, actualIdleTimeUs;
+    uint32_t irqMask = DisableGlobalIRQ();
+
+    /* Disable and prepare systicks for low power */
+    abortIdle = PWR_SysticksPreProcess((uint32_t)xExpectedIdleTime, &expectedIdleTimeUs);
+
+    if (abortIdle == false)
+    {
+        /* Enter low power with a maximal timeout */
+        actualIdleTimeUs = PWR_EnterLowPower(expectedIdleTimeUs);
+
+        /* Re enable systicks and compensate systick timebase */
+        PWR_SysticksPostProcess(expectedIdleTimeUs, actualIdleTimeUs);
+    }
+
+    /* Exit from critical section */
+    EnableGlobalIRQ(irqMask);
+}
+#endif /* APP_LOWPOWER_ENABLED */

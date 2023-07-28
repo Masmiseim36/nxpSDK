@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP.
+ * Copyright 2021-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -7,7 +7,11 @@
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.
  */
 
-/*
+/*! \addtogroup HAL_TYPES
+ *  @{
+ */
+
+/**
  * @brief hal graphics (gfx) device declaration. Graphics processing devices can be used to perform conversion from one
  * image format to another, resize images, and compose images on top of one another.
  * Examples of graphics devices include the PXP (pixel pipeline) found on many i.MXRT series MCUs.
@@ -19,40 +23,26 @@
 #include "mpp_api_types.h"
 #include "hal_types.h"
 
-/**
- * @brief declare the graphic dev ##name
- */
-#define HAL_GFX_DEV_DECLARE(name) int HAL_GfxDev_##name##_Register();
+/** Name of the graphic device using CPU operations **/
+#define HAL_GFX_DEV_CPU_NAME "gfx_CPU"
 
-/**
- * @brief register the graphic dev ##name
- */
-#define HAL_GFX_DEV_REGISTER(name, ret)                             \
-    {                                                               \
-        ret = HAL_GfxDev_##name##_Register();                       \
-        if (ret != 0)                                               \
-        {                                                           \
-            HAL_LOGE("HAL_GfxDev_%s_Register error %d\n", "##name", ret); \
-            return ret;                                             \
-        }                                                           \
-    }
-
+/** Gfx surface parameters */
 typedef struct _gfx_surface
 {
-    int height;
-    int width;
-    int pitch;
-    /* target rect */
-    int left;
-    int top;
-    int right;
-    int bottom;
-    int swapByte;
-    mpp_pixel_format_t format;
-    void *buf;
-    void *lock; /*the structure is determined by hal and set to null if not use in hal*/
+    int height;                /*!< buffer height */
+    int width;                 /*!< buffer width */
+    int pitch;                 /*!< buffer pitch */
+    int left;                  /*!< left position */
+    int top;                   /*!< top position */
+    int right;                 /*!< right position */
+    int bottom;                /*!< bottom position */
+    int swapByte;              /*!< swap byte per two bytes */
+    mpp_pixel_format_t format; /*!< pixel format */
+    void *buf;                 /*!< buffer */
+    void *lock;                /*!< the structure is determined by hal and set to null if not use in hal*/
 } gfx_surface_t;
 
+/** gfx rotate target*/
 typedef enum _gfx_rotate_target
 {
     kGFXRotateTarget_None = 0,
@@ -60,6 +50,7 @@ typedef enum _gfx_rotate_target
     kGFXRotate_DSTSurface,
 } gfx_rotate_target_t;
 
+/** gfx rotate configuration*/
 typedef struct _gfx_rotate_config
 {
     gfx_rotate_target_t target;
@@ -67,6 +58,14 @@ typedef struct _gfx_rotate_config
 } gfx_rotate_config_t;
 
 typedef struct _gfx_dev gfx_dev_t;
+
+/** @} */
+
+/*! \addtogroup HAL_OPERATIONS
+*  @{
+*/
+
+/** @brief Operation that needs to be implemented by gfx device */
 
 typedef struct
 {
@@ -79,7 +78,7 @@ typedef struct
             hw_buf_desc_t *in_buf, hw_buf_desc_t *out_buf, mpp_memory_policy_t *policy);
     /* blit the source surface to the destination surface */
     int (*blit)(
-        const gfx_dev_t *dev, gfx_surface_t *pSrc, gfx_surface_t *pDst, gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip);
+        const gfx_dev_t *dev, const gfx_surface_t *pSrc, const gfx_surface_t *pDst, const gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip);
     /* draw rect in overlay surface */
     int (*drawRect)(const gfx_dev_t *dev, gfx_surface_t *pOverlay, int x, int y, int w, int h, int color);
     /* draw picture in overlay surface */
@@ -103,12 +102,41 @@ typedef struct
                    mpp_flip_mode_t flip);
 } gfx_dev_operator_t;
 
+
+/*! @brief The mpp callback function prototype */
+typedef int (*mpp_callback_t)(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data);
+
+/** @} */
+
+/*! \addtogroup HAL_TYPES
+ *  @{
+ */
+
 struct _gfx_dev
 {
     /* unique id */
     int id;
     /* operations */
     const gfx_dev_operator_t *ops;
+    /* graphic source surface */
+    gfx_surface_t src;
+    /* graphic destination surface */
+    gfx_surface_t dst;
+    /* callback */
+    mpp_callback_t callback;
+    /* param for the callback */
+    void *user_data;
 };
+
+/*!
+ * @brief Register the graphic device with the CPU operations
+ *
+ * @param[in] dev graphic device to register
+ * @return error code (0: success, otherwise: failure)
+ *
+ */
+int HAL_GfxDev_CPU_Register(gfx_dev_t *dev);
+
+/** @} */
 
 #endif /* _HAL_GRAPHICS_DEV_H_ */

@@ -8,7 +8,7 @@
 #include <string.h>
 #include <porting.h>
 #include "fsl_shell.h"
-#include <sys/printk.h>
+
 #include <sys/byteorder.h>
 
 #include <bluetooth/hci.h>

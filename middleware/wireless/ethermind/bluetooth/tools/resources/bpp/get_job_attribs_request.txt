@@ -8,7 +8,13 @@ s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
 <u:GetJobAttributes xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
 <JobId>12345</JobId>
 <RequestedJobAttributes>
+<JobAttribute>JobId</JobAttribute>
 <JobAttribute>JobState</JobAttribute>
+<JobAttribute>JobName</JobAttribute>
+<JobAttribute>JobOriginatingUserName</JobAttribute>
+<JobAttribute>JobMediaSheetsCompleted</JobAttribute>
+<JobAttribute>NumberOfInterveningJobs</JobAttribute>
+<JobAttribute>OperationStatus</JobAttribute>
 </RequestedJobAttributes>
 </u:GetJobAttributes>
 </s:Body>

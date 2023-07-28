@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Notification Framework</title>
+<title>MCUXpresso SDK API Reference Manual: LPUART eDMA Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,216 +100,190 @@ $(document).ready(function(){initNavTree('a00051.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">Notification Framework</div>  </div>
+<div class="title">LPUART eDMA Driver<div class="ingroups"><a class="el" href="a00271.html">LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the Notifier driver.</p>
-<h1><a class="anchor" id="NotifierOv"></a>
-Notifier Overview</h1>
-<p>The Notifier provides a configuration dynamic change service. Based on this service, applications can switch between pre-defined configurations. The Notifier enables drivers and applications to register callback functions to this framework. Each time that the configuration is changed, drivers and applications receive a notification and change their settings. To simplify, the Notifier only supports the static callback registration. This means that, for applications, all callback functions are collected into a static table and passed to the Notifier.</p>
-<p>These are the steps for the configuration transition.</p>
-<ol type="1">
-<li>Before configuration transition, the Notifier sends a "BEFORE" message to the callback table. When this message is received, IP drivers should check whether any current processes can be stopped and stop them. If the processes cannot be stopped, the callback function returns an error.<br/>
- The Notifier supports two types of transition policies, a graceful policy and a forceful policy. When the graceful policy is used, if some callbacks return an error while sending a "BEFORE" message, the configuration transition stops and the Notifier sends a "RECOVER" message to all drivers that have stopped. Then, these drivers can recover the previous status and continue to work. When the forceful policy is used, drivers are stopped forcefully.</li>
-<li>After the "BEFORE" message is processed successfully, the system switches to the new configuration.</li>
-<li>After the configuration changes, the Notifier sends an "AFTER" message to the callback table to notify drivers that the configuration transition is finished.</li>
-</ol>
-<p>This example shows how to use the Notifier in the Power Manager application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;fsl_notifier.h&quot;</span></div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Definition of the Power Manager callback.</span></div>
-<div class="line"><a class="code" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00051.html#a00424">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
-<div class="line">{</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00249.html#gga06fc87d81c62e9abb8790b6e5713c55ba829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
-<div class="line"></div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">return</span> ret;</div>
-<div class="line">}</div>
-<div class="line"><span class="comment">// Definition of the Power Manager user function.</span></div>
-<div class="line"><a class="code" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
-<div class="line">{</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">}</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line"><span class="comment">// Main function.</span></div>
-<div class="line">int main(<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">// Define a notifier handle.</span></div>
-<div class="line">    <a class="code" href="a00051.html#a00423">notifier_handle_t</a> powerModeHandle;</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Callback configuration.</span></div>
-<div class="line">    user_callback_data_t callbackData0;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00051.html#a00422">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
-<div class="line">                <a class="code" href="a00051.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a>,</div>
-<div class="line">                (<span class="keywordtype">void</span> *)&amp;callbackData0};</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00051.html#a00422">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Power mode configurations.</span></div>
-<div class="line">    power_user_config_t vlprConfig;</div>
-<div class="line">    power_user_config_t stopConfig;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *powerConfigs[] = {&amp;vlprConfig, &amp;stopConfig};</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Definition of a transition to and out the power modes.</span></div>
-<div class="line">    vlprConfig.mode = kAPP_PowerModeVlpr;</div>
-<div class="line">    vlprConfig.enableLowPowerWakeUpOnInterrupt = <span class="keyword">false</span>;</div>
-<div class="line"></div>
-<div class="line">    stopConfig = vlprConfig;</div>
-<div class="line">    stopConfig.mode = kAPP_PowerModeStop;</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Create Notifier handle.</span></div>
-<div class="line">    <a class="code" href="a00051.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a>(&amp;powerModeHandle, powerConfigs, 2U, callbacks, 1U, APP_PowerModeSwitch, NULL);</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    <span class="comment">// Power mode switch.</span></div>
-<div class="line">    NOTIFIER_switchConfig(&amp;powerModeHandle, targetConfigIndex, <a class="code" href="a00051.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>);</div>
-<div class="line">}</div>
-</div><!-- fragment --> <table class="memberdecls">
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00424"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00424">notifier_notification_block_t</a></td></tr>
-<tr class="memdesc:a00424"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00051.html#a00424">More...</a><br/></td></tr>
-<tr class="separator:a00424"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00422"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00422">notifier_callback_config_t</a></td></tr>
-<tr class="memdesc:a00422"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00051.html#a00422">More...</a><br/></td></tr>
-<tr class="separator:a00422"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00423"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00423">notifier_handle_t</a></td></tr>
-<tr class="memdesc:a00423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00051.html#a00423">More...</a><br/></td></tr>
-<tr class="separator:a00423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00321"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00321">lpuart_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00321"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART eDMA handle.  <a href="a00051.html#a00321">More...</a><br/></td></tr>
+<tr class="separator:a00321"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td></tr>
-<tr class="memdesc:gad0b6e919f3ff69992b36a2734a650ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user configuration type.  <a href="#gad0b6e919f3ff69992b36a2734a650ec7">More...</a><br/></td></tr>
-<tr class="separator:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
-<tr class="memdesc:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user function prototype Use this function to execute specific operations in configuration switch.  <a href="#gacb6a6d6f99e6ddfbb96dae53382949b2">More...</a><br/></td></tr>
-<tr class="separator:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00051.html#a00424">notifier_notification_block_t</a> *notify, void *data)</td></tr>
-<tr class="memdesc:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback prototype.  <a href="#gafd1d8cc01c496de8b4cd3990ff85415c">More...</a><br/></td></tr>
-<tr class="separator:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> )(LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transfer callback function.  <a href="#gaed2bf1ac041ea4526ccf5ab0eba4da73">More...</a><br/></td></tr>
+<tr class="separator:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gacac871f1b98f53906b07b2663943c784"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c">kStatus_NOTIFIER_ErrorNotificationBefore</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58">kStatus_NOTIFIER_ErrorNotificationAfter</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gacac871f1b98f53906b07b2663943c784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier error codes.  <a href="a00051.html#gacac871f1b98f53906b07b2663943c784">More...</a><br/></td></tr>
-<tr class="separator:gacac871f1b98f53906b07b2663943c784"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62e961564dc31b8155d128a3f6566409"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8">kNOTIFIER_PolicyForcible</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga62e961564dc31b8155d128a3f6566409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier policies.  <a href="a00051.html#ga62e961564dc31b8155d128a3f6566409">More...</a><br/></td></tr>
-<tr class="separator:ga62e961564dc31b8155d128a3f6566409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94">kNOTIFIER_NotifyRecover</a> = 0x00U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c">kNOTIFIER_NotifyBefore</a> = 0x01U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00">kNOTIFIER_NotifyAfter</a> = 0x02U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification type.  <a href="a00051.html#ga5ee4314c2a52ee0af61985e7163a1be9">More...</a><br/></td></tr>
-<tr class="separator:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad75237e3cea51f8315cf6577b35db91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1">kNOTIFIER_CallbackBefore</a> = 0x01U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc">kNOTIFIER_CallbackAfter</a> = 0x02U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a> = 0x03U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaad75237e3cea51f8315cf6577b35db91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback type, which indicates kinds of notification the callback handles.  <a href="a00051.html#gaad75237e3cea51f8315cf6577b35db91">More...</a><br/></td></tr>
-<tr class="separator:gaad75237e3cea51f8315cf6577b35db91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga9bfcb92913944fb359c4544b4cdee5d3">FSL_LPUART_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
+<tr class="memdesc:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART EDMA driver version.  <a href="#ga9bfcb92913944fb359c4544b4cdee5d3">More...</a><br/></td></tr>
+<tr class="separator:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00051.html#a00423">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00051.html#a00422">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00051.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
-<tr class="memdesc:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Notifier handle.  <a href="#gaa2dfe33b4724d9c1025acdde1b1b3c31">More...</a><br/></td></tr>
-<tr class="separator:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00051.html#a00423">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00051.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> policy)</td></tr>
-<tr class="memdesc:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the configuration according to a pre-defined structure.  <a href="#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">More...</a><br/></td></tr>
-<tr class="separator:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00051.html#a00423">notifier_handle_t</a> *notifierHandle)</td></tr>
-<tr class="memdesc:ga9736632c3beca486ec3f8dab504b839c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the last failed notification callback.  <a href="#ga9736632c3beca486ec3f8dab504b839c">More...</a><br/></td></tr>
-<tr class="separator:ga9736632c3beca486ec3f8dab504b839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+eDMA transactional</h2></td></tr>
+<tr class="memitem:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga4891d980e0e489932e8d3b5c52588c2e">LPUART_TransferCreateHandleEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00051.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00366">edma_handle_t</a> *txEdmaHandle, <a class="el" href="a00021.html#a00366">edma_handle_t</a> *rxEdmaHandle)</td></tr>
+<tr class="memdesc:ga4891d980e0e489932e8d3b5c52588c2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPUART handle which is used in transactional functions.  <a href="#ga4891d980e0e489932e8d3b5c52588c2e">More...</a><br/></td></tr>
+<tr class="separator:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24c9dff9f142243ed5ffb3112a356386"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga24c9dff9f142243ed5ffb3112a356386">LPUART_SendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00050.html#a00434">lpuart_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga24c9dff9f142243ed5ffb3112a356386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using eDMA.  <a href="#ga24c9dff9f142243ed5ffb3112a356386">More...</a><br/></td></tr>
+<tr class="separator:ga24c9dff9f142243ed5ffb3112a356386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga57b356ccc56276a557b3ddf53f6a7c0f">LPUART_ReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00050.html#a00434">lpuart_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using eDMA.  <a href="#ga57b356ccc56276a557b3ddf53f6a7c0f">More...</a><br/></td></tr>
+<tr class="separator:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48033a0651d1e68133bbb73ded3d9309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga48033a0651d1e68133bbb73ded3d9309">LPUART_TransferAbortSendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:ga48033a0651d1e68133bbb73ded3d9309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the sent data using eDMA.  <a href="#ga48033a0651d1e68133bbb73ded3d9309">More...</a><br/></td></tr>
+<tr class="separator:ga48033a0651d1e68133bbb73ded3d9309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaf4160e8481b5d0861fa2f4ea14ccc13e">LPUART_TransferAbortReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the received data using eDMA.  <a href="#gaf4160e8481b5d0861fa2f4ea14ccc13e">More...</a><br/></td></tr>
+<tr class="separator:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga0369d8b3a9238d88f2ef527b2cdbf152">LPUART_TransferGetSendCountEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, uint32_t *count)</td></tr>
+<tr class="memdesc:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes written to the LPUART TX register.  <a href="#ga0369d8b3a9238d88f2ef527b2cdbf152">More...</a><br/></td></tr>
+<tr class="separator:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga433b9163c0d46f0e8b65b5ded880a1f8">LPUART_TransferGetReceiveCountEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, uint32_t *count)</td></tr>
+<tr class="memdesc:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of received bytes.  <a href="#ga433b9163c0d46f0e8b65b5ded880a1f8">More...</a><br/></td></tr>
+<tr class="separator:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga898e2e544106c928c6930605ff59fc43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga898e2e544106c928c6930605ff59fc43">LPUART_TransferEdmaHandleIRQ</a> (LPUART_Type *base, void *lpuartEdmaHandle)</td></tr>
+<tr class="memdesc:ga898e2e544106c928c6930605ff59fc43"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART eDMA IRQ handle function.  <a href="#ga898e2e544106c928c6930605ff59fc43">More...</a><br/></td></tr>
+<tr class="separator:ga898e2e544106c928c6930605ff59fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00424" id="a00424"></a>
+<a name="a00321" id="a00321"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct notifier_notification_block_t</td>
+          <td class="memname">struct _lpuart_edma_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa">targetConfig</a></td></tr>
-<tr class="memdesc:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to target configuration.  <a href="#a2e0b1d4d7e3ebf8f454b55af953e3ffa">More...</a><br/></td></tr>
-<tr class="separator:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a26aef2519eb2f9990e04f2ce961dfc9b">policy</a></td></tr>
-<tr class="memdesc:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure transition policy.  <a href="#a26aef2519eb2f9990e04f2ce961dfc9b">More...</a><br/></td></tr>
-<tr class="separator:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a2ca3b1a52e315e072a8ab48fcc1dd62a">notifyType</a></td></tr>
-<tr class="memdesc:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure notification type.  <a href="#a2ca3b1a52e315e072a8ab48fcc1dd62a">More...</a><br/></td></tr>
-<tr class="separator:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90af06bca6fa1c835176bb2f7baae37c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a90af06bca6fa1c835176bb2f7baae37c">callback</a></td></tr>
+<tr class="memdesc:a90af06bca6fa1c835176bb2f7baae37c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a90af06bca6fa1c835176bb2f7baae37c">More...</a><br/></td></tr>
+<tr class="separator:a90af06bca6fa1c835176bb2f7baae37c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac699f5a5123647eefb2aebb1b1a35c4a">userData</a></td></tr>
+<tr class="memdesc:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART callback function parameter.  <a href="#ac699f5a5123647eefb2aebb1b1a35c4a">More...</a><br/></td></tr>
+<tr class="separator:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6cbb7a1abb602e48f3dcf355ad94ff14">rxDataSizeAll</a></td></tr>
+<tr class="memdesc:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#a6cbb7a1abb602e48f3dcf355ad94ff14">More...</a><br/></td></tr>
+<tr class="separator:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d4461a68ee1f14850ac4d341afb8080"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a1d4461a68ee1f14850ac4d341afb8080">txDataSizeAll</a></td></tr>
+<tr class="memdesc:a1d4461a68ee1f14850ac4d341afb8080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to send out.  <a href="#a1d4461a68ee1f14850ac4d341afb8080">More...</a><br/></td></tr>
+<tr class="separator:a1d4461a68ee1f14850ac4d341afb8080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1748fd406d158b129b40430218be3372"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00021.html#a00366">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a1748fd406d158b129b40430218be3372">txEdmaHandle</a></td></tr>
+<tr class="memdesc:a1748fd406d158b129b40430218be3372"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA TX channel used.  <a href="#a1748fd406d158b129b40430218be3372">More...</a><br/></td></tr>
+<tr class="separator:a1748fd406d158b129b40430218be3372"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa365980412bd8d507718e3bdb6991983"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00021.html#a00366">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aa365980412bd8d507718e3bdb6991983">rxEdmaHandle</a></td></tr>
+<tr class="memdesc:aa365980412bd8d507718e3bdb6991983"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA RX channel used.  <a href="#aa365980412bd8d507718e3bdb6991983">More...</a><br/></td></tr>
+<tr class="separator:aa365980412bd8d507718e3bdb6991983"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a7ffb3be259d932a6a9f7e86aed4cc790">nbytes</a></td></tr>
+<tr class="memdesc:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a7ffb3be259d932a6a9f7e86aed4cc790">More...</a><br/></td></tr>
+<tr class="separator:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17fd779099d5f3707693ac7c1212dc8a"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a17fd779099d5f3707693ac7c1212dc8a">txState</a></td></tr>
+<tr class="memdesc:a17fd779099d5f3707693ac7c1212dc8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a17fd779099d5f3707693ac7c1212dc8a">More...</a><br/></td></tr>
+<tr class="separator:a17fd779099d5f3707693ac7c1212dc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a62eb17faa4b16b47cb7ca6992c9980"></a>
+volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a2a62eb17faa4b16b47cb7ca6992c9980">rxState</a></td></tr>
+<tr class="memdesc:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state. <br/></td></tr>
+<tr class="separator:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a2e0b1d4d7e3ebf8f454b55af953e3ffa"></a>
+<a class="anchor" id="a90af06bca6fa1c835176bb2f7baae37c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>* notifier_notification_block_t::targetConfig</td>
+          <td class="memname"><a class="el" href="a00051.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> lpuart_edma_handle_t::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a26aef2519eb2f9990e04f2ce961dfc9b"></a>
+<a class="anchor" id="ac699f5a5123647eefb2aebb1b1a35c4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00051.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> notifier_notification_block_t::policy</td>
+          <td class="memname">void* lpuart_edma_handle_t::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2ca3b1a52e315e072a8ab48fcc1dd62a"></a>
+<a class="anchor" id="a6cbb7a1abb602e48f3dcf355ad94ff14"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00051.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> notifier_notification_block_t::notifyType</td>
+          <td class="memname">size_t lpuart_edma_handle_t::rxDataSizeAll</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1d4461a68ee1f14850ac4d341afb8080"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t lpuart_edma_handle_t::txDataSizeAll</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1748fd406d158b129b40430218be3372"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00021.html#a00366">edma_handle_t</a>* lpuart_edma_handle_t::txEdmaHandle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa365980412bd8d507718e3bdb6991983"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00021.html#a00366">edma_handle_t</a>* lpuart_edma_handle_t::rxEdmaHandle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7ffb3be259d932a6a9f7e86aed4cc790"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t lpuart_edma_handle_t::nbytes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a17fd779099d5f3707693ac7c1212dc8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t lpuart_edma_handle_t::txState</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -319,403 +293,72 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a name="a00422" id="a00422"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga9bfcb92913944fb359c4544b4cdee5d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct notifier_callback_config_t</td>
+          <td class="memname">#define FSL_LPUART_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration of callbacks. Callbacks of this type are expected to be statically allocated. This structure contains the following application-defined data. callback - pointer to the callback function callbackType - specifies when the callback is called callbackData - pointer to the data passed to the callback. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a116c9dd621ffc21178e769edbd9192e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a116c9dd621ffc21178e769edbd9192e4">callback</a></td></tr>
-<tr class="memdesc:a116c9dd621ffc21178e769edbd9192e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the callback function.  <a href="#a116c9dd621ffc21178e769edbd9192e4">More...</a><br/></td></tr>
-<tr class="separator:a116c9dd621ffc21178e769edbd9192e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">callbackType</a></td></tr>
-<tr class="memdesc:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback type.  <a href="#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">More...</a><br/></td></tr>
-<tr class="separator:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a4e7db701bbf36647da1e6d0f0efe2ebf">callbackData</a></td></tr>
-<tr class="memdesc:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data passed to the callback.  <a href="#a4e7db701bbf36647da1e6d0f0efe2ebf">More...</a><br/></td></tr>
-<tr class="separator:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a116c9dd621ffc21178e769edbd9192e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00051.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> notifier_callback_config_t::callback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad9e6ec8e23a48ef8d97b2f6d16fb68ec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00051.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> notifier_callback_config_t::callbackType</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4e7db701bbf36647da1e6d0f0efe2ebf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* notifier_callback_config_t::callbackData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00423" id="a00423"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct notifier_handle_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Notifier handle structure. Contains data necessary for the Notifier proper function. Stores references to registered configurations, callbacks, information about their numbers, user function, user data, and other internal data. <a class="el" href="a00051.html#gaa2dfe33b4724d9c1025acdde1b1b3c31" title="Creates a Notifier handle. ">NOTIFIER_CreateHandle()</a> must be called to initialize this handle. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a8fd95d668f17b8a7705e2a4ff49f2e16">configsTable</a></td></tr>
-<tr class="memdesc:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to configure table.  <a href="#a8fd95d668f17b8a7705e2a4ff49f2e16">More...</a><br/></td></tr>
-<tr class="separator:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a59bdd44c33254cfd4626f5906d3c0a7a">configsNumber</a></td></tr>
-<tr class="memdesc:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of configurations.  <a href="#a59bdd44c33254cfd4626f5906d3c0a7a">More...</a><br/></td></tr>
-<tr class="separator:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423480d080ea2580628222dc6c492735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#a00422">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a423480d080ea2580628222dc6c492735">callbacksTable</a></td></tr>
-<tr class="memdesc:a423480d080ea2580628222dc6c492735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback table.  <a href="#a423480d080ea2580628222dc6c492735">More...</a><br/></td></tr>
-<tr class="separator:a423480d080ea2580628222dc6c492735"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#acd4e9338f2cd47c46fc0c02886daafbb">callbacksNumber</a></td></tr>
-<tr class="memdesc:acd4e9338f2cd47c46fc0c02886daafbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of callback configurations.  <a href="#acd4e9338f2cd47c46fc0c02886daafbb">More...</a><br/></td></tr>
-<tr class="separator:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a8447a4b6045219363883663f40d300"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6a8447a4b6045219363883663f40d300">errorCallbackIndex</a></td></tr>
-<tr class="memdesc:a6a8447a4b6045219363883663f40d300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of callback returns error.  <a href="#a6a8447a4b6045219363883663f40d300">More...</a><br/></td></tr>
-<tr class="separator:a6a8447a4b6045219363883663f40d300"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae9d6d2cc9c47485863c098c0284a021"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aae9d6d2cc9c47485863c098c0284a021">currentConfigIndex</a></td></tr>
-<tr class="memdesc:aae9d6d2cc9c47485863c098c0284a021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of current configuration.  <a href="#aae9d6d2cc9c47485863c098c0284a021">More...</a><br/></td></tr>
-<tr class="separator:aae9d6d2cc9c47485863c098c0284a021"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f6589fa386e93c40c52ed292da4f47f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a4f6589fa386e93c40c52ed292da4f47f">userFunction</a></td></tr>
-<tr class="memdesc:a4f6589fa386e93c40c52ed292da4f47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">User function.  <a href="#a4f6589fa386e93c40c52ed292da4f47f">More...</a><br/></td></tr>
-<tr class="separator:a4f6589fa386e93c40c52ed292da4f47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a5e90e1dafbe97f2ea5187530ee04af0a">userData</a></td></tr>
-<tr class="memdesc:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User data passed to user function.  <a href="#a5e90e1dafbe97f2ea5187530ee04af0a">More...</a><br/></td></tr>
-<tr class="separator:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a8fd95d668f17b8a7705e2a4ff49f2e16"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>** notifier_handle_t::configsTable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a59bdd44c33254cfd4626f5906d3c0a7a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::configsNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a423480d080ea2580628222dc6c492735"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00051.html#a00422">notifier_callback_config_t</a>* notifier_handle_t::callbacksTable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acd4e9338f2cd47c46fc0c02886daafbb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::callbacksNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6a8447a4b6045219363883663f40d300"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::errorCallbackIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aae9d6d2cc9c47485863c098c0284a021"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::currentConfigIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4f6589fa386e93c40c52ed292da4f47f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00051.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> notifier_handle_t::userFunction</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5e90e1dafbe97f2ea5187530ee04af0a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* notifier_handle_t::userData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gad0b6e919f3ff69992b36a2734a650ec7"></a>
+<a class="anchor" id="gaed2bf1ac041ea4526ccf5ab0eba4da73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void <a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td>
+          <td class="memname">typedef void(* lpuart_edma_transfer_callback_t)(LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reference of the user defined configuration is stored in an array; the notifier switches between these configurations based on this array. </p>
-
-</div>
-</div>
-<a class="anchor" id="gacb6a6d6f99e6ddfbb96dae53382949b2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Before and after this function execution, different notification is sent to registered callbacks. If this function returns any error code, <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">targetConfig</td><td>target Configuration. </td></tr>
-    <tr><td class="paramname">userData</td><td>Refers to other specific data passed to user function. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gafd1d8cc01c496de8b4cd3990ff85415c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00051.html#a00424">notifier_notification_block_t</a> *notify, void *data)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the <a class="el" href="a00051.html#a00422" title="Callback configuration structure. ">notifier_callback_config_t</a> callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see <a class="el" href="a00051.html#a00424" title="notification block passed to the registered callback function. ">notifier_notification_block_t</a>) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">notify</td><td>Notification block. </td></tr>
-    <tr><td class="paramname">data</td><td>Callback data. Refers to the data passed during callback registration. Intended to pass any driver or application data such as internal state information. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gacac871f1b98f53906b07b2663943c784"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Used as return value of Notifier functions. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c"></a>kStatus_NOTIFIER_ErrorNotificationBefore</em>&nbsp;</td><td class="fielddoc">
-<p>An error occurs during send "BEFORE" notification. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58"></a>kStatus_NOTIFIER_ErrorNotificationAfter</em>&nbsp;</td><td class="fielddoc">
-<p>An error occurs during send "AFTER" notification. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga62e961564dc31b8155d128a3f6566409"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Defines whether the user function execution is forced or not. For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results, while kNOTIFIER_PolicyAgreement policy is used to exit <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> when any of the callbacks returns error code. See also <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> description. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964"></a>kNOTIFIER_PolicyAgreement</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> method is exited when any of the callbacks returns error code. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8"></a>kNOTIFIER_PolicyForcible</em>&nbsp;</td><td class="fielddoc">
-<p>The user function is executed regardless of the results. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga5ee4314c2a52ee0af61985e7163a1be9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Used to notify registered callbacks </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94"></a>kNOTIFIER_NotifyRecover</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP to recover to previous work state. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c"></a>kNOTIFIER_NotifyBefore</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP that configuration setting is going to change. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00"></a>kNOTIFIER_NotifyAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP that configuration setting has been changed. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaad75237e3cea51f8315cf6577b35db91"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Used in the callback configuration structure (<a class="el" href="a00051.html#a00422" title="Callback configuration structure. ">notifier_callback_config_t</a>) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
-<ul>
-<li>Before the configuration switch (Callback return value can affect <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
-<li>After an unsuccessful attempt to switch configuration</li>
-<li>After a successful configuration switch </li>
-</ul>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1"></a>kNOTIFIER_CallbackBefore</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles BEFORE notification. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc"></a>kNOTIFIER_CallbackAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles AFTER notification. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005"></a>kNOTIFIER_CallbackBeforeAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles BEFORE and AFTER notification. </p>
-</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa2dfe33b4724d9c1025acdde1b1b3c31"></a>
+<a class="anchor" id="ga4891d980e0e489932e8d3b5c52588c2e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
+          <td class="memname">void LPUART_TransferCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00051.html#a00423">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em>, </td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td>
-          <td class="paramname"><em>configs</em>, </td>
+          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>configsNumber</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#a00422">notifier_callback_config_t</a> *&#160;</td>
-          <td class="paramname"><em>callbacks</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>callbacksNumber</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td>
-          <td class="paramname"><em>userFunction</em>, </td>
+          <td class="paramtype"><a class="el" href="a00051.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00366">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>txEdmaHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00366">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>rxEdmaHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -724,43 +367,42 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This function disables all LPUART interrupts.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>A pointer to the notifier handle. </td></tr>
-    <tr><td class="paramname">configs</td><td>A pointer to an array with references to all configurations which is handled by the Notifier. </td></tr>
-    <tr><td class="paramname">configsNumber</td><td>Number of configurations. Size of the configuration array. </td></tr>
-    <tr><td class="paramname">callbacks</td><td>A pointer to an array of callback configurations. If there are no callbacks to register during Notifier initialization, use NULL value. </td></tr>
-    <tr><td class="paramname">callbacksNumber</td><td>Number of registered callbacks. Size of the callbacks array. </td></tr>
-    <tr><td class="paramname">userFunction</td><td>User function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data passed to user function. </td></tr>
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User data. </td></tr>
+    <tr><td class="paramname">txEdmaHandle</td><td>User requested DMA handle for TX DMA transfer. </td></tr>
+    <tr><td class="paramname">rxEdmaHandle</td><td>User requested DMA handle for RX DMA transfer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An error Code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9ca08c8f6fa9a7bafa9ecbe08603cd97"></a>
+<a class="anchor" id="ga24c9dff9f142243ed5ffb3112a356386"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_SendEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00051.html#a00423">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em>, </td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>configIndex</em>, </td>
+          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td>
-          <td class="paramname"><em>policy</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00050.html#a00434">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -769,40 +411,273 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function sets the system to the target configuration. Before transition, the Notifier sends notifications to all callbacks registered to the callback table. Callbacks are invoked in the following order: All registered callbacks are notified ordered by index in the callbacks array. The same order is used for before and after switch notifications. The notifications before the configuration switch can be used to obtain confirmation about the change from registered callbacks. If any registered callback denies the configuration change, further execution of this function depends on the notifier policy: the configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement). When configuration change is forced, the result of the before switch notifications are ignored. If an agreement is required, if any callback returns an error code, further notifications before switch notifications are cancelled and all already notified callbacks are re-invoked. The index of the callback which returned error code during pre-switch notifications is stored (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it. Regardless of the policies, if any callback returns an error code, an error code indicating in which phase the error occurred is returned when <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits. </p>
+<p>This function sends data using eDMA. This is a non-blocking function, which returns right away. When all data is sent, the send callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>pointer to notifier handle </td></tr>
-    <tr><td class="paramname">configIndex</td><td>Index of the target configuration. </td></tr>
-    <tr><td class="paramname">policy</td><td>Transaction policy, kNOTIFIER_PolicyAgreement or kNOTIFIER_PolicyForcible.</td></tr>
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure. See <a class="el" href="a00050.html#a00434" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others failed. </td></tr>
+    <tr><td class="paramname">kStatus_LPUART_TxBusy</td><td>Previous transfer on going. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9736632c3beca486ec3f8dab504b839c"></a>
+<a class="anchor" id="ga57b356ccc56276a557b3ddf53f6a7c0f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t NOTIFIER_GetErrorCallbackIndex </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_ReceiveEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00051.html#a00423">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em></td><td>)</td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00050.html#a00434">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function returns an index of the last callback that failed during the configuration switch while the last <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> was called. If the last <a class="el" href="a00051.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> call ended successfully value equal to callbacks number is returned. The returned value represents an index in the array of static call-backs.</p>
+<p>This function receives data using eDMA. This is non-blocking function, which returns right away. When all data is received, the receive callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>Pointer to the notifier handle </td></tr>
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
+    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure, see <a class="el" href="a00050.html#a00434" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Callback Index of the last failed callback or value equal to callbacks count. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others fail. </td></tr>
+    <tr><td class="paramname">kStatus_LPUART_RxBusy</td><td>Previous transfer ongoing. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga48033a0651d1e68133bbb73ded3d9309"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LPUART_TransferAbortSendEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function aborts the sent data using eDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf4160e8481b5d0861fa2f4ea14ccc13e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LPUART_TransferAbortReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function aborts the received data using eDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0369d8b3a9238d88f2ef527b2cdbf152"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetSendCountEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gets the number of bytes written to the LPUART TX register by DMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
+    <tr><td class="paramname">count</td><td>Send bytes count. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>No send in progress. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Parameter is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>Get successfully through the parameter <code>count</code>; </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga433b9163c0d46f0e8b65b5ded880a1f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetReceiveCountEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gets the number of received bytes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
+    <tr><td class="paramname">count</td><td>Receive bytes count. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>No receive in progress. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Parameter is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>Get successfully through the parameter <code>count</code>; </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga898e2e544106c928c6930605ff59fc43"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LPUART_TransferEdmaHandleIRQ </td>
+          <td>(</td>
+          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>lpuartEdmaHandle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function handles the LPUART tx complete IRQ request and invoke user callback. It is not set to static so that it can be used in user application. </p>
+<dl class="section note"><dt>Note</dt><dd>This function is used as default IRQ handler by double weak mechanism. If user's specific IRQ handler is implemented, make sure this function is invoked in the handler.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
+    <tr><td class="paramname">lpuartEdmaHandle</td><td>LPUART handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

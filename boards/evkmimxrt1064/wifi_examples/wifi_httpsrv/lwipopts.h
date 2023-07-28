@@ -108,6 +108,10 @@
 #define SNMP_MIB_DEBUG   LWIP_DBG_OFF
 #define DNS_DEBUG        LWIP_DBG_OFF
 
+#define IP6_DEBUG   LWIP_DBG_OFF
+#define ICMP6_DEBUG LWIP_DBG_OFF
+#define DHCP6_DEBUG LWIP_DBG_OFF
+
 #define SYS_LIGHTWEIGHT_PROT 1
 
 /*
@@ -214,7 +218,7 @@
  * MEMP_NUM_SYS_TIMEOUT: the number of simulateously active timeouts.
  * (requires NO_SYS==0)
  */
-#define MEMP_NUM_SYS_TIMEOUT 12
+#define MEMP_NUM_SYS_TIMEOUT 17
 
 /**
  * MEMP_NUM_NETBUF: the number of struct netbufs.
@@ -294,6 +298,20 @@
  * an upper limit on the MSS advertised by the remote host.
  */
 #define TCP_MSS 1460
+
+/*
+   ---------------------------------------
+   ---------- IPv6 options ---------------
+   ---------------------------------------
+*/
+
+/**
+ * LWIP_IPV6==1: Enable IPv6
+ */
+
+#ifdef CONFIG_IPV6
+#define LWIP_IPV6 1
+#endif
 
 /*
    ---------------------------------

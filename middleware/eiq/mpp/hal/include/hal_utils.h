@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP.
+ * Copyright 2022-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -10,11 +10,24 @@
 #ifndef HAL_UTILS_H_
 #define HAL_UTILS_H_
 
+/*! \addtogroup HAL_TYPES
+*  @{
+*/
+
 #include "hal_camera_dev.h"
 #include "hal_display_dev.h"
 #include "hal_static_image.h"
+#include "hal_graphics_dev.h"
 
-/* display setup */
+/** graphics setup */
+typedef int (*graphic_setup_func_t) (gfx_dev_t *);
+typedef struct
+{
+    const char* gfx_dev_name;
+    graphic_setup_func_t gfx_setup_func;
+} hal_graphics_setup_t;
+
+/** display setup */
 typedef int (*display_setup_func_t) (display_dev_t *);
 typedef struct
 {
@@ -22,8 +35,9 @@ typedef struct
     display_setup_func_t display_setup_func;
 } hal_display_setup_t;
 
-/* camera setup */
-typedef int (*camera_setup_func_t)(const char *, camera_dev_t *, _Bool);
+/** camera setup */
+typedef int (*camera_setup_func_t)(const char *, camera_dev_t *);
+
 typedef struct
 {
     const char* camera_name;
@@ -31,10 +45,29 @@ typedef struct
 } hal_camera_setup_t;
 
 int setup_static_image_elt(static_image_t *elt);
-mpp_pixel_format_t hal_fsl_to_mpp_pixeltype(video_pixel_format_t fsl_typ);
 uint32_t calc_checksum(int size_b, void *pbuf);
 
-/* returns the number of bits per pixel per format, unknown format return 0 */
+/** checksum calculation method */
+typedef enum
+{
+    CHECKSUM_TYPE_PISANO,     /*!< checksum computed using Pisano */
+    CHECKSUM_TYPE_CRC_ELCDIF, /*!< checksum computed CRC from ELCDIF */
+} checksum_type_t;
+
+/** computed checksum */
+typedef struct
+{
+    checksum_type_t type;     /*!< checksum calculation method */
+    uint32_t value;           /*!< checksum value */
+} checksum_data_t;
+
+/** @} */
+
+/*! \addtogroup HAL_OPERATIONS
+*  @{
+*/
+
+/** returns the number of bits per pixel per format, unknown format return 0 */
 static inline int get_bitpp(mpp_pixel_format_t type)
 {
     int ret;
@@ -72,5 +105,7 @@ static inline int get_bitpp(mpp_pixel_format_t type)
     }
     return ret;
 }
+
+/** @} */
 
 #endif /* HAL_UTILS_H_ */

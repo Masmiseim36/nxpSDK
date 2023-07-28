@@ -14,9 +14,11 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #include "font.h"
 #include "hal_draw.h"
+#include "mpp_api_types.h"
 
 /*******************************************************************************
  * Definitions
@@ -28,6 +30,9 @@
 #define DECREMENT(X, Y) ((X) - (Y))
 
 #define GET_MSB(a, bits, ofs)  ((((a) >> (8 - (bits))) & ((1 << (bits)) - 1)) << (ofs))
+
+#define BLACK_RGB565    (0x0000)
+#define WHITE_RGB565    (0xFFFF)
 
 /*!
  * @brief GUI font configuration structure
@@ -161,19 +166,50 @@ void hal_draw_rect(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, ui
 {
     uint16_t color16 = ConvRgb888Rgb565(r,g,b);
 
-    /* verticals */
+    /* horizontals */
     for (int i = x; i < x + xsize; i++) {
         hal_draw_pixel(lcd_buf, i, y, color16, width);
-        hal_draw_pixel(lcd_buf, i, y + ysize, color16, width);
+        hal_draw_pixel(lcd_buf, i, y + ysize - 1, color16, width);
     }
-    /* horizontals */
+    /* verticals */
     for (int i = y; i < y + ysize; i++) {
         hal_draw_pixel(lcd_buf, x, i, color16, width);
-        hal_draw_pixel(lcd_buf, x + xsize, i, color16, width);
+        hal_draw_pixel(lcd_buf, x + xsize - 1, i, color16, width);
     }
 }
 
 void hal_draw_pixel(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w)
 {
     pDst[y * (lcd_w) + x] = color;
+}
+
+int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_t format,
+                        mpp_labeled_rect_t *lr)
+{
+    uint32_t xsize, ysize, lw;
+
+    xsize = lr->right - lr->left;
+    ysize = lr->bottom - lr->top;
+
+    /* check rectangle fits in frame */
+    if (    (lr->left < 0) || (lr->top < 0)
+            || (lr->right > width) || (lr->bottom > height)
+            || (lr->left > lr->right) || (lr->top > lr->bottom)
+    )   return MPP_INVALID_PARAM;
+
+    for (lw = 0; lw < lr -> line_width; lw++) {
+      hal_draw_rect((uint16_t *)frame, lr->left + lw, lr->top + lw,
+                       xsize - (lw*2), ysize - (lw*2), lr->line_color.rgb.R,
+                       lr->line_color.rgb.G, lr->line_color.rgb.B, width);
+    }
+
+    /* check label fits in frame */
+    int strxsize = strlen((const char *)lr->label) * FONT_XSize;
+    if (    (lr->left + strxsize > width)
+            || (lr->top + FONT_YSize > height)
+    )   return MPP_INVALID_PARAM;
+
+    hal_draw_text((uint16_t *)frame, WHITE_RGB565, BLACK_RGB565, width,
+                 lr->left, lr->top, (char *)lr->label);
+    return 0;
 }

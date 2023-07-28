@@ -1,5 +1,5 @@
 /**
- *  \file gatt_db_stat_ipspn.h
+ *  \file gatt_db_ipspn.h
  */
 
 /*
@@ -89,7 +89,6 @@ extern UINT16 GATT_SER_IPSPN_IPSP_INST;
 
 /* Characteristic Instances */
 extern UINT16 GATT_CHAR_IPSPN_BATTERY_LVL_INST;
-extern UINT16 GATT_DB_MAX_ATTRIBUTES;
 
 API_RESULT appl_ipspn_add_gaps(void);
 API_RESULT appl_ipspn_add_gatts(void);

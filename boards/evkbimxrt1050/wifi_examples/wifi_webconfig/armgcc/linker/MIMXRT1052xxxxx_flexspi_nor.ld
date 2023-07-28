@@ -58,8 +58,8 @@ SECTIONS
     KEEP(* (.boot_hdr.conf))     /* flash config section */
     . = ALIGN(4);
   } > m_flash_config
-  
-  ivt_begin= ORIGIN(m_flash_config) + LENGTH(m_flash_config);
+
+  ivt_begin = ORIGIN(m_flash_config) + LENGTH(m_flash_config);
 
   .ivt : AT(ivt_begin)
   {
@@ -248,7 +248,7 @@ SECTIONS
     . = ALIGN(8);
     . += STACK_SIZE;
   } > m_data
-  
+
   .mflash_fs :
   {
     KEEP(* (.mflash_fs))

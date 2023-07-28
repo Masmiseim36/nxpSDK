@@ -1,43 +1,98 @@
 var a00080 =
 [
-    [ "wdog_work_mode_t", "a00080.html#a00537", [
-      [ "enableWait", "a00080.html#ac4c03e680f6c2070c50e9cbb7eae64fc", null ],
-      [ "enableStop", "a00080.html#a26f09db30cdfe918931fb6e2ea0545ad", null ],
-      [ "enableDebug", "a00080.html#ac46160e5425428c3f6b2bd7a9103539e", null ]
+    [ "tsc_config_t", "a00080.html#a00538", [
+      [ "enableAutoMeasure", "a00080.html#a7b0a4cf8822101c093825a56db3fd448", null ],
+      [ "measureDelayTime", "a00080.html#aec23bf547c79341a69eb78ca2fe19640", null ],
+      [ "prechargeTime", "a00080.html#a6e0547b1eb74931522ffe3829462ba03", null ],
+      [ "detectionMode", "a00080.html#a3aba4cba39fc56658bdf1ce0f7a6ddaf", null ]
     ] ],
-    [ "wdog_config_t", "a00080.html#a00536", [
-      [ "enableWdog", "a00080.html#a871dc017463d6cc5d31121b40affa1a4", null ],
-      [ "workMode", "a00080.html#a52dd1d98958c48e0a342e3ffe9a1c351", null ],
-      [ "enableInterrupt", "a00080.html#aa749ba919bb8ddf9b52fda7781afa6b5", null ],
-      [ "timeoutValue", "a00080.html#a867555736162830ec456cb98b37431bf", null ],
-      [ "interruptTimeValue", "a00080.html#aac4e0165a8a5674bbd4ac8e7c32d7217", null ],
-      [ "softwareResetExtension", "a00080.html#aa698ca620c05feee0946ee91e1b3374f", null ],
-      [ "enablePowerDown", "a00080.html#a8596d41dfdb0d29a55dfee5e9d707d68", null ],
-      [ "enableTimeOutAssert", "a00080.html#a5e3f1a4dd09bde15aac1ca0e9ad16640", null ]
+    [ "FSL_TSC_DRIVER_VERSION", "a00080.html#ga6266bb792d57f73341a5565bad036f09", null ],
+    [ "tsc_detection_mode_t", "a00080.html#ga654ccd148f43949235e09dc2f0b38189", [
+      [ "kTSC_Detection4WireMode", "a00080.html#gga654ccd148f43949235e09dc2f0b38189a6729342cd2b777d043dc508b21828553", null ],
+      [ "kTSC_Detection5WireMode", "a00080.html#gga654ccd148f43949235e09dc2f0b38189ac30abbb1702e84a2197714d37bc90443", null ]
     ] ],
-    [ "FSL_WDOG_DRIVER_VERSION", "a00080.html#ga5baa4ad349ae3c543938d4ee773df43e", null ],
-    [ "_wdog_interrupt_enable", "a00080.html#ga568a59a02c40c87ed791f569c68e3617", [
-      [ "kWDOG_InterruptEnable", "a00080.html#gga568a59a02c40c87ed791f569c68e3617a8c358d55c0101eaa0a580d867572ec8d", null ]
+    [ "tsc_corrdinate_value_selection_t", "a00080.html#gaaec5b35ab19a0e647e29531ba1abc06d", [
+      [ "kTSC_XCoordinateValueSelection", "a00080.html#ggaaec5b35ab19a0e647e29531ba1abc06dafb5a7d2f1383372497598fc19deeaabf", null ],
+      [ "kTSC_YCoordinateValueSelection", "a00080.html#ggaaec5b35ab19a0e647e29531ba1abc06da9ac47cb685b7fa594b738ccbe3488587", null ]
     ] ],
-    [ "_wdog_status_flags", "a00080.html#ga0b88468681d9540ae2932b8863df21da", [
-      [ "kWDOG_RunningFlag", "a00080.html#gga0b88468681d9540ae2932b8863df21daa36d15132390c05315cadcd7531d16235", null ],
-      [ "kWDOG_PowerOnResetFlag", "a00080.html#gga0b88468681d9540ae2932b8863df21daac5e2f745cea700526fddf869bead3e7f", null ],
-      [ "kWDOG_TimeoutResetFlag", "a00080.html#gga0b88468681d9540ae2932b8863df21daa3e7218cabdb8b98afb859e5e5bb10c2b", null ],
-      [ "kWDOG_SoftwareResetFlag", "a00080.html#gga0b88468681d9540ae2932b8863df21daab8d3e9351b38a6c2070e168e794cbe04", null ],
-      [ "kWDOG_InterruptFlag", "a00080.html#gga0b88468681d9540ae2932b8863df21daac1277a2936555249acf7a516e6af1f78", null ]
+    [ "_tsc_interrupt_signal_mask", "a00080.html#ga655702c8839e0c94717d485d9a10a67d", [
+      [ "kTSC_IdleSoftwareSignalEnable", "a00080.html#gga655702c8839e0c94717d485d9a10a67da4fb712d94c480d0119d469de34503df9", null ],
+      [ "kTSC_ValidSignalEnable", "a00080.html#gga655702c8839e0c94717d485d9a10a67da79fee3ba7ac2615e17955268b640ad57", null ],
+      [ "kTSC_DetectSignalEnable", "a00080.html#gga655702c8839e0c94717d485d9a10a67da7395931f390785e4f0df7acf807e4eb8", null ],
+      [ "kTSC_MeasureSignalEnable", "a00080.html#gga655702c8839e0c94717d485d9a10a67da7967ee367ee2b5eb5ba112a8ad23e1a2", null ]
     ] ],
-    [ "WDOG_GetDefaultConfig", "a00080.html#gaad5ad72d4eaf90ade6be3c976e8bc3f7", null ],
-    [ "WDOG_Init", "a00080.html#ga50d46daf10ab46c6c696e8807c8e913b", null ],
-    [ "WDOG_Deinit", "a00080.html#gaa6667780dc3dcd9579f0689178c3b0d9", null ],
-    [ "WDOG_Enable", "a00080.html#gab4deee569751728b2bd3a74f3c51e51e", null ],
-    [ "WDOG_Disable", "a00080.html#gac50451a963f16a891a365df27305dcca", null ],
-    [ "WDOG_TriggerSystemSoftwareReset", "a00080.html#ga148420ea7de00bc3c60c40abffcdf1cb", null ],
-    [ "WDOG_TriggerSoftwareSignal", "a00080.html#gaedd7386f165e4750bc1aa72544122995", null ],
-    [ "WDOG_EnableInterrupts", "a00080.html#gac10aa3550c0824493f112a02ffd955b1", null ],
-    [ "WDOG_GetStatusFlags", "a00080.html#ga420a7d120956521faf8a40993014d6fa", null ],
-    [ "WDOG_ClearInterruptStatus", "a00080.html#ga45d1ddf1d8f4aeb8a87657f275050594", null ],
-    [ "WDOG_SetTimeoutValue", "a00080.html#ga7744339b66fc64cf4088f0a413e53b08", null ],
-    [ "WDOG_SetInterrputTimeoutValue", "a00080.html#ga18bcb8843c59834b6ae275c58fcf2cd3", null ],
-    [ "WDOG_DisablePowerDownEnable", "a00080.html#ga9c50304e7d819199df178ae26e12f1a8", null ],
-    [ "WDOG_Refresh", "a00080.html#ga1d307a7df8f2b926c306dc8714dda3f5", null ]
+    [ "_tsc_interrupt_mask", "a00080.html#gae3e6f693b301c3ee1789dced536985aa", [
+      [ "kTSC_IdleSoftwareInterruptEnable", "a00080.html#ggae3e6f693b301c3ee1789dced536985aaafefa988bea28a002f6cf24f48da7e92c", null ],
+      [ "kTSC_DetectInterruptEnable", "a00080.html#ggae3e6f693b301c3ee1789dced536985aaae31affb4fc3eac550f1bd68e17c3ecc6", null ],
+      [ "kTSC_MeasureInterruptEnable", "a00080.html#ggae3e6f693b301c3ee1789dced536985aaa414d51fca3d752845bbf8a5c8bc03f8b", null ]
+    ] ],
+    [ "_tsc_interrupt_status_flag_mask", "a00080.html#gab7752acd24c075710a208714af0e80ae", [
+      [ "kTSC_IdleSoftwareFlag", "a00080.html#ggab7752acd24c075710a208714af0e80aea643f3550c610129a163842058abc3a37", null ],
+      [ "kTSC_ValidSignalFlag", "a00080.html#ggab7752acd24c075710a208714af0e80aea85788cd279dcfdf8b7b9a0bfa6728afe", null ],
+      [ "kTSC_DetectSignalFlag", "a00080.html#ggab7752acd24c075710a208714af0e80aea9a36e449f6b8827cd02bcb3b06ecc458", null ],
+      [ "kTSC_MeasureSignalFlag", "a00080.html#ggab7752acd24c075710a208714af0e80aea1523302d45304ca3e4f0b0697e236ff9", null ]
+    ] ],
+    [ "_tsc_adc_status_flag_mask", "a00080.html#ga474a396fee814b822da5f794b6265894", [
+      [ "kTSC_ADCCOCOSignalFlag", "a00080.html#gga474a396fee814b822da5f794b6265894aa326721ecff53505481d4bb5cc622dcc", null ],
+      [ "kTSC_ADCConversionValueFlag", "a00080.html#gga474a396fee814b822da5f794b6265894a170c54ed0d4dea37f973f827fba3d4db", null ]
+    ] ],
+    [ "_tsc_status_flag_mask", "a00080.html#gadbb2ca2b7e62e7a71a6ad4e3fe4d3059", [
+      [ "kTSC_IntermediateStateFlag", "a00080.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059aca961be97cfda3f181ec2ecb32e4f6be", null ],
+      [ "kTSC_DetectFiveWireFlag", "a00080.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059a078984e44f4e84aa4178c41a2913cf5e", null ],
+      [ "kTSC_DetectFourWireFlag", "a00080.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059a9b92797df34e8b13c0d64646c8c6d6cb", null ],
+      [ "kTSC_GlitchThresholdFlag", "a00080.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059a7a3af06b4926a9680fe7e5afbf693b86", null ],
+      [ "kTSC_StateMachineFlag", "a00080.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059ada2c97463a5edd7f32d54a94fcaa8996", null ]
+    ] ],
+    [ "tsc_state_machine_t", "a00080.html#ga639241569cdfa1d3dec8489b1b295d60", [
+      [ "kTSC_IdleState", "a00080.html#gga639241569cdfa1d3dec8489b1b295d60aa8338c396e390d1213c0ada74a58e11d", null ],
+      [ "kTSC_1stPreChargeState", "a00080.html#gga639241569cdfa1d3dec8489b1b295d60a747d661e964edcbe6b1920a4a9ab65e1", null ],
+      [ "kTSC_1stDetectState", "a00080.html#gga639241569cdfa1d3dec8489b1b295d60a74dbd6a1d228a67f0d2a4d47fea110db", null ],
+      [ "kTSC_XMeasureState", "a00080.html#gga639241569cdfa1d3dec8489b1b295d60a06bdb11049b70b1a96c9c38d2cbb4d5e", null ],
+      [ "kTSC_YMeasureState", "a00080.html#gga639241569cdfa1d3dec8489b1b295d60a328b133c01b9129288860a1746c51342", null ],
+      [ "kTSC_2ndPreChargeState", "a00080.html#gga639241569cdfa1d3dec8489b1b295d60aa988480f08c3e6abb90008cde61e13db", null ],
+      [ "kTSC_2ndDetectState", "a00080.html#gga639241569cdfa1d3dec8489b1b295d60afd278a6f3930c424b34b1a70576a89ba", null ]
+    ] ],
+    [ "tsc_glitch_threshold_t", "a00080.html#gad188c5cc2e2fa164ab7d0249e5b5535f", [
+      [ "kTSC_glitchThresholdALT0", "a00080.html#ggad188c5cc2e2fa164ab7d0249e5b5535fa12ee9bea62a7e0fa02c56f70f22e7635", null ],
+      [ "kTSC_glitchThresholdALT1", "a00080.html#ggad188c5cc2e2fa164ab7d0249e5b5535fac7b68d98d8b18c9d1226b9c7c1979715", null ],
+      [ "kTSC_glitchThresholdALT2", "a00080.html#ggad188c5cc2e2fa164ab7d0249e5b5535fa25cd540fd3a16d44d6c29715aa1b085c", null ],
+      [ "kTSC_glitchThresholdALT3", "a00080.html#ggad188c5cc2e2fa164ab7d0249e5b5535fa56b8f534049d71e78da5bbd1e345e035", null ]
+    ] ],
+    [ "tsc_trigger_signal_t", "a00080.html#ga32a9bbd362241a4c81f043138d5a332b", [
+      [ "kTSC_TriggerToChannel0", "a00080.html#gga32a9bbd362241a4c81f043138d5a332ba044700d7ed91f6ac084f22f764b072be", null ],
+      [ "kTSC_TriggerToChannel1", "a00080.html#gga32a9bbd362241a4c81f043138d5a332baca9c985ee553fd68d8bf832ae157e8e3", null ],
+      [ "kTSC_TriggerToChannel2", "a00080.html#gga32a9bbd362241a4c81f043138d5a332baf82ef526f4386c9ac3092d8839bbf16d", null ],
+      [ "kTSC_TriggerToChannel3", "a00080.html#gga32a9bbd362241a4c81f043138d5a332bab0b444b84a625cbc46e9acce58f873be", null ],
+      [ "kTSC_TriggerToChannel4", "a00080.html#gga32a9bbd362241a4c81f043138d5a332ba219bda9e5ba92cfab02bdb9d12ad18b9", null ]
+    ] ],
+    [ "tsc_port_source_t", "a00080.html#ga4a1343fce2e36de727e9750009daec2c", [
+      [ "kTSC_WiperPortSource", "a00080.html#gga4a1343fce2e36de727e9750009daec2ca84f9070ba00dd05e32b44c930cd96397", null ],
+      [ "kTSC_YnlrPortSource", "a00080.html#gga4a1343fce2e36de727e9750009daec2cae72e11f7234158261bfbf3054a9ac04c", null ],
+      [ "kTSC_YpllPortSource", "a00080.html#gga4a1343fce2e36de727e9750009daec2ca66abade21b1b9877765fa7ae9e67e3b0", null ],
+      [ "kTSC_XnurPortSource", "a00080.html#gga4a1343fce2e36de727e9750009daec2ca9098ec18c17eed94f09adcbcf7e858d7", null ],
+      [ "kTSC_XpulPortSource", "a00080.html#gga4a1343fce2e36de727e9750009daec2ca9c2d8b8ed7ab32c31897923281ffa4b5", null ]
+    ] ],
+    [ "tsc_port_mode_t", "a00080.html#ga19f99254c0cfa03239d394841d6ad60e", [
+      [ "kTSC_PortOffMode", "a00080.html#gga19f99254c0cfa03239d394841d6ad60ea3767a7e89a3f1dae76022b95851dc244", null ],
+      [ "kTSC_Port200k_PullUpMode", "a00080.html#gga19f99254c0cfa03239d394841d6ad60ea7f5671b85c86b0a1b2a2675f5733be20", null ],
+      [ "kTSC_PortPullUpMode", "a00080.html#gga19f99254c0cfa03239d394841d6ad60ea2b3ce7b8bf9f190fea54557c2019da91", null ],
+      [ "kTSC_PortPullDownMode", "a00080.html#gga19f99254c0cfa03239d394841d6ad60eabf5232703197bd29d4c1db82cb957afa", null ]
+    ] ],
+    [ "TSC_Init", "a00080.html#gacb3dc8de52498f49e63f0bd5938a62bb", null ],
+    [ "TSC_Deinit", "a00080.html#gad94ec31c78c6ff62527e07db1963148c", null ],
+    [ "TSC_GetDefaultConfig", "a00080.html#ga02026cc5dca98599abf7159eb7666793", null ],
+    [ "TSC_ReturnToIdleStatus", "a00080.html#gaf3f3a9c81859a459dbc159a73a8e3cb1", null ],
+    [ "TSC_StartSenseDetection", "a00080.html#gaa98c9d0b7673855a842b21216c0b9d8a", null ],
+    [ "TSC_StartMeasure", "a00080.html#ga6a4fb96ef78c65fc82c2f43b1ecf52aa", null ],
+    [ "TSC_DropMeasure", "a00080.html#ga1882e5d982c81872e3d83ee89bd50f70", null ],
+    [ "TSC_SoftwareReset", "a00080.html#ga2319254675c93f82a15de02b9dd97271", null ],
+    [ "TSC_GetMeasureValue", "a00080.html#gaf58e0b43903552560b53533bd117b76d", null ],
+    [ "TSC_EnableInterruptSignals", "a00080.html#gade94f3981a3d3a6551e298044178234a", null ],
+    [ "TSC_DisableInterruptSignals", "a00080.html#ga04eee2a60d370c6999118eb404bfb8e9", null ],
+    [ "TSC_EnableInterrupts", "a00080.html#ga8a904d3bd269d266b360bb7c379e5280", null ],
+    [ "TSC_DisableInterrupts", "a00080.html#ga5d88906c4e6be940679fc5a05bf7c107", null ],
+    [ "TSC_GetInterruptStatusFlags", "a00080.html#ga5a6cf0faff2c782db22dfd63fa27cfa1", null ],
+    [ "TSC_ClearInterruptStatusFlags", "a00080.html#gadde562047c2a043235fce4f6aa1d7290", null ],
+    [ "TSC_GetADCStatusFlags", "a00080.html#ga692e396189133651ab1bf843eaca5924", null ],
+    [ "TSC_GetStatusFlags", "a00080.html#gab95070c3d36a9b878a7a0a8fc9870138", null ]
 ];

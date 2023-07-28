@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -130,12 +130,12 @@ Polling Configuration</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00378"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00378">enc_config_t</a></td></tr>
-<tr class="memdesc:a00378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define user configuration structure for ENC module.  <a href="a00023.html#a00378">More...</a><br/></td></tr>
-<tr class="separator:a00378"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00379"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00379">enc_self_test_config_t</a></td></tr>
-<tr class="memdesc:a00379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define configuration structure for self test module.  <a href="a00023.html#a00379">More...</a><br/></td></tr>
-<tr class="separator:a00379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00384"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00384">enc_config_t</a></td></tr>
+<tr class="memdesc:a00384"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define user configuration structure for ENC module.  <a href="a00023.html#a00384">More...</a><br/></td></tr>
+<tr class="separator:a00384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00385"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00385">enc_self_test_config_t</a></td></tr>
+<tr class="memdesc:a00385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define configuration structure for self test module.  <a href="a00023.html#a00385">More...</a><br/></td></tr>
+<tr class="separator:a00385"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -245,22 +245,42 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga0771658dcc0d7fb694a3f6c3df1f7815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for direction of self test generated signal.  <a href="a00023.html#ga0771658dcc0d7fb694a3f6c3df1f7815">More...</a><br/></td></tr>
 <tr class="separator:ga0771658dcc0d7fb694a3f6c3df1f7815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3e644bd53700d46a953149acbae5122"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#gae3e644bd53700d46a953149acbae5122">enc_filter_prescaler_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122a76291ef01adcaa0961982a9007a51589">kENC_FilterPrescalerDiv1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122acd8b815c59baed0c00014970c2a5c928">kENC_FilterPrescalerDiv2</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122a600cb489a542e684ac05bc7cb3f73371">kENC_FilterPrescalerDiv4</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122ae3b740de00d7530dfc52571ebe5acb72">kENC_FilterPrescalerDiv8</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122ad5a6d9b0b50b4e225acb81494ecac252">kENC_FilterPrescalerDiv16</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122a1c4bbfad04d3dc590239b2e9a5f7357c">kENC_FilterPrescalerDiv32</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122aa9a8965e68dd261d402e7bb53160a157">kENC_FilterPrescalerDiv64</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00023.html#ggae3e644bd53700d46a953149acbae5122ad2477df289faffc530f1011259d2f8d7">kENC_FilterPrescalerDiv128</a> = 7U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae3e644bd53700d46a953149acbae5122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define input filter prescaler value.  <a href="a00023.html#gae3e644bd53700d46a953149acbae5122">More...</a><br/></td></tr>
+<tr class="separator:gae3e644bd53700d46a953149acbae5122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and De-initialization</h2></td></tr>
-<tr class="memitem:ga3137a28cb8af9082c19244923faa6c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga3137a28cb8af9082c19244923faa6c7a">ENC_Init</a> (ENC_Type *base, const <a class="el" href="a00023.html#a00378">enc_config_t</a> *config)</td></tr>
+<tr class="memitem:ga3137a28cb8af9082c19244923faa6c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga3137a28cb8af9082c19244923faa6c7a">ENC_Init</a> (ENC_Type *base, const <a class="el" href="a00023.html#a00384">enc_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga3137a28cb8af9082c19244923faa6c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization for the ENC module.  <a href="#ga3137a28cb8af9082c19244923faa6c7a">More...</a><br/></td></tr>
 <tr class="separator:ga3137a28cb8af9082c19244923faa6c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae5541a81fcbffecd6184d3c88eb7ae4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#gae5541a81fcbffecd6184d3c88eb7ae4b">ENC_Deinit</a> (ENC_Type *base)</td></tr>
 <tr class="memdesc:gae5541a81fcbffecd6184d3c88eb7ae4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initialization for the ENC module.  <a href="#gae5541a81fcbffecd6184d3c88eb7ae4b">More...</a><br/></td></tr>
 <tr class="separator:gae5541a81fcbffecd6184d3c88eb7ae4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga812eaa30d800dd8901fada028ef14562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga812eaa30d800dd8901fada028ef14562">ENC_GetDefaultConfig</a> (<a class="el" href="a00023.html#a00378">enc_config_t</a> *config)</td></tr>
+<tr class="memitem:ga812eaa30d800dd8901fada028ef14562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga812eaa30d800dd8901fada028ef14562">ENC_GetDefaultConfig</a> (<a class="el" href="a00023.html#a00384">enc_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga812eaa30d800dd8901fada028ef14562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an available pre-defined settings for ENC's configuration.  <a href="#ga812eaa30d800dd8901fada028ef14562">More...</a><br/></td></tr>
 <tr class="separator:ga812eaa30d800dd8901fada028ef14562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga813809b8cc5b8e3ecde96fa048854a78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga813809b8cc5b8e3ecde96fa048854a78">ENC_DoSoftwareLoadInitialPositionValue</a> (ENC_Type *base)</td></tr>
 <tr class="memdesc:ga813809b8cc5b8e3ecde96fa048854a78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the initial position value to position counter.  <a href="#ga813809b8cc5b8e3ecde96fa048854a78">More...</a><br/></td></tr>
 <tr class="separator:ga813809b8cc5b8e3ecde96fa048854a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba180b2066b162e2e89107622102583f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#gaba180b2066b162e2e89107622102583f">ENC_SetSelfTestConfig</a> (ENC_Type *base, const <a class="el" href="a00023.html#a00379">enc_self_test_config_t</a> *config)</td></tr>
+<tr class="memitem:gaba180b2066b162e2e89107622102583f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#gaba180b2066b162e2e89107622102583f">ENC_SetSelfTestConfig</a> (ENC_Type *base, const <a class="el" href="a00023.html#a00385">enc_self_test_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaba180b2066b162e2e89107622102583f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable and configure the self test function.  <a href="#gaba180b2066b162e2e89107622102583f">More...</a><br/></td></tr>
 <tr class="separator:gaba180b2066b162e2e89107622102583f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga16862bf181ab5cbfab0281f3d95c6001"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga16862bf181ab5cbfab0281f3d95c6001">ENC_EnableWatchdog</a> (ENC_Type *base, bool enable)</td></tr>
@@ -316,7 +336,7 @@ Value Operation</h2></td></tr>
 <tr class="separator:gad7c69f91e436ff10454c22fb7ae5b7e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00378" id="a00378"></a>
+<a name="a00384" id="a00384"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -352,6 +372,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <tr class="memitem:a4061699ed317acca6ad5a796cd8ff634"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a4061699ed317acca6ad5a796cd8ff634">watchdogTimeoutValue</a></td></tr>
 <tr class="memdesc:a4061699ed317acca6ad5a796cd8ff634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watchdog timeout count value.  <a href="#a4061699ed317acca6ad5a796cd8ff634">More...</a><br/></td></tr>
 <tr class="separator:a4061699ed317acca6ad5a796cd8ff634"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49ad7b86094a8dba3342b36e0215b4c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00023.html#gae3e644bd53700d46a953149acbae5122">enc_filter_prescaler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a49ad7b86094a8dba3342b36e0215b4c1">filterPrescaler</a></td></tr>
+<tr class="memdesc:a49ad7b86094a8dba3342b36e0215b4c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input filter prescaler.  <a href="#a49ad7b86094a8dba3342b36e0215b4c1">More...</a><br/></td></tr>
+<tr class="separator:a49ad7b86094a8dba3342b36e0215b4c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28e5850a83a55194a165d0cac8f4add1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a28e5850a83a55194a165d0cac8f4add1">filterCount</a></td></tr>
 <tr class="memdesc:a28e5850a83a55194a165d0cac8f4add1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input Filter Sample Count.  <a href="#a28e5850a83a55194a165d0cac8f4add1">More...</a><br/></td></tr>
 <tr class="separator:a28e5850a83a55194a165d0cac8f4add1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -463,6 +486,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
+<a class="anchor" id="a49ad7b86094a8dba3342b36e0215b4c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00023.html#gae3e644bd53700d46a953149acbae5122">enc_filter_prescaler_t</a> enc_config_t::filterPrescaler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a28e5850a83a55194a165d0cac8f4add1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -567,7 +602,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00379" id="a00379"></a>
+<a name="a00385" id="a00385"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -868,6 +903,45 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
+<a class="anchor" id="gae3e644bd53700d46a953149acbae5122"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00023.html#gae3e644bd53700d46a953149acbae5122">enc_filter_prescaler_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The input filter prescaler value is to prescale the IPBus clock. (Frequency of FILT clock) = (Frequency of IPBus clock) / 2^FILT_PRSC. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122a76291ef01adcaa0961982a9007a51589"></a>kENC_FilterPrescalerDiv1</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122acd8b815c59baed0c00014970c2a5c928"></a>kENC_FilterPrescalerDiv2</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122a600cb489a542e684ac05bc7cb3f73371"></a>kENC_FilterPrescalerDiv4</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 4. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122ae3b740de00d7530dfc52571ebe5acb72"></a>kENC_FilterPrescalerDiv8</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 8. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122ad5a6d9b0b50b4e225acb81494ecac252"></a>kENC_FilterPrescalerDiv16</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 16. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122a1c4bbfad04d3dc590239b2e9a5f7357c"></a>kENC_FilterPrescalerDiv32</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 32. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122aa9a8965e68dd261d402e7bb53160a157"></a>kENC_FilterPrescalerDiv64</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 64. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae3e644bd53700d46a953149acbae5122ad2477df289faffc530f1011259d2f8d7"></a>kENC_FilterPrescalerDiv128</em>&nbsp;</td><td class="fielddoc">
+<p>Input filter prescaler is 128. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga3137a28cb8af9082c19244923faa6c7a"></a>
 <div class="memitem">
@@ -882,7 +956,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00023.html#a00378">enc_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00023.html#a00384">enc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -940,7 +1014,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">void ENC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00023.html#a00378">enc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00023.html#a00384">enc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1011,7 +1085,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00023.html#a00379">enc_self_test_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00023.html#a00385">enc_self_test_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>

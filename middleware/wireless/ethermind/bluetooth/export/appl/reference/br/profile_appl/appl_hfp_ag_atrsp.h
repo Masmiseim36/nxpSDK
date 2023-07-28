@@ -48,7 +48,7 @@
 
 #ifdef HFP_AG_1_0_RSP /* Response as per HFP 1.0 version */
 
-char *at_cmd_option[28] = {
+static const char *at_cmd_option[28U] = {
 "",/* UnUsed - Reserved */
 "",/* UnUsed - Reserved */
 "",/* UnUsed - Reserved */
@@ -80,7 +80,7 @@ char *at_cmd_option[28] = {
 };
 
 
-char *AT_cmd_menu =
+static const char *AT_cmd_menu =
 "------------------------------------------\
 \n 0  -> Return\
 \n 1  -> Send the default command/response\
@@ -117,7 +117,7 @@ char *AT_cmd_menu =
 
 #ifdef HFP_AG_1_5_RSP /* Response as per HFP 1.5 version */
 
-char *at_cmd_option[54] = {
+static const char *at_cmd_option[54U] = {
 "",/* UnUsed - Reserved */
 "",/* UnUsed - Reserved */
 "",/* UnUsed - Reserved */
@@ -175,7 +175,7 @@ char *at_cmd_option[54] = {
 };
 
 
-char *AT_cmd_menu =
+static const char *AT_cmd_menu =
 "------------------------------------------\
 \n 0  -> Return\
 \n 1  -> Send the default command/response\

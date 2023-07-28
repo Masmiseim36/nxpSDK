@@ -15,9 +15,12 @@
 extern "C" {
 #endif /* __cplusplus*/
 
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define MAX_POINTS          100 //maximum number of center priors
+
 /**
  * Process the Nanodet output tensors
  *
@@ -26,7 +29,7 @@ extern "C" {
  *
  * @return: 0 if succeeded, else failed.
  */
-int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data** final_boxes);
+int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data* final_boxes);
 
 
 #if defined(__cplusplus)

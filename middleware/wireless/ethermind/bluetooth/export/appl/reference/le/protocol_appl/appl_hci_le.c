@@ -1,6 +1,6 @@
 
 /**
- *  \file appl_hci.c
+ *  \file appl_hci_le.c
  *
  *  Source File for HCI Command Line Application.
  */
@@ -15,6 +15,7 @@
 #include "appl_smp.h"
 
 #include "appl_service.h"
+#include "appl_gatt_client.h"
 
 #ifdef BT_VENDOR_SPECIFIC_INIT
 #include "vendor_specific_init.h"
@@ -46,10 +47,15 @@ BT_DEVICE_ADDR g_bd_addr;
 UCHAR g_appl_bond_del_flag;
 
 #ifdef APPL_RANDOM_ADDR_SUPPORT_ENABLE
-UCHAR appl_in_rpa_resolution = BT_FALSE;
-UCHAR appl_peer_rpa[BT_BD_ADDR_SIZE];
+static UCHAR appl_in_rpa_resolution = BT_FALSE;
+static UCHAR appl_peer_rpa[BT_BD_ADDR_SIZE];
 void appl_peer_rpa_resolution_handler(SMP_RPA_RESOLV_INFO * rpa_info, UINT16 status);
 #endif /* APPL_RANDOM_ADDR_SUPPORT_ENABLE */
+
+#ifdef NXP_CODE
+tx_power Ble_tx_power;
+UCHAR version_info_array[8] ={0};
+#endif /* NXP_CODE */
 
 /* ----------------------------------------- Static Global Variables */
 static const APPL_HCI_LE_OPCODE_NAME le_opcode_name_table[] =
@@ -159,6 +165,34 @@ static const APPL_HCI_LE_OPCODE_NAME le_opcode_name_table[] =
     { 0x205EU, "HCI_LE_GENERATE_DHKEY_V2_OPCODE" },
     { 0x205FU, "HCI_LE_MODIFY_SLEEP_CLOCK_ACCURACY_OPCODE" },
 #endif /* BT_5_1 */
+#ifdef BT_5_2
+    { 0x2061U, "HCI_LE_READ_ISO_TX_SYNC_OPCODE" },
+    { 0x2062U, "HCI_LE_SET_CIG_PARAMETERS_OPCODE" },
+    { 0x2063U, "HCI_LE_SET_CIG_PARAMETERS_TEST_OPCODE" },
+    { 0x2064U, "HCI_LE_CREATE_CIS_OPCODE" },
+    { 0x2065U, "HCI_LE_REMOVE_CIG_OPCODE" },
+    { 0x2066U, "HCI_LE_ACCEPT_CIS_REQUEST_OPCODE" },
+    { 0x2067U, "HCI_LE_REJECT_CIS_REQUEST_OPCODE" },
+    { 0x2068U, "HCI_LE_CREATE_BIG_OPCODE" },
+    { 0x2069U, "HCI_LE_CREATE_BIG_TEST_OPCODE" },
+    { 0x206AU, "HCI_LE_TERMINATE_BIG_OPCODE" },
+    { 0x206BU, "HCI_LE_BIG_CREATE_SYNC_OPCODE" },
+    { 0x206CU, "HCI_LE_BIG_TERMINATE_SYNC_OPCODE" },
+    { 0x206DU, "HCI_LE_REQUEST_PEER_SCA_OPCODE" },
+    { 0x206EU, "HCI_LE_SETUP_ISO_DATA_PATH_OPCODE" },
+    { 0x206FU, "HCI_LE_REMOVE_ISO_DATA_PATH_OPCODE" },
+    { 0x2070U, "HCI_LE_ISO_TRANSMIT_TEST_OPCODE" },
+    { 0x2071U, "HCI_LE_ISO_RECEIVE_TEST_OPCODE" },
+    { 0x2072U, "HCI_LE_ISO_READ_TEST_COUNTERS_OPCODE" },
+    { 0x2073U, "HCI_LE_ISO_TEST_END_OPCODE" },
+    { 0x2074U, "HCI_LE_SET_HOST_FEATURE_OPCODE" },
+    { 0x2075U, "HCI_LE_READ_ISO_LINK_QUALITY_OPCODE" },
+    { 0x2076U, "HCI_LE_ENHANCED_READ_TRANSMIT_POWER_LEVEL_OPCODE" },
+    { 0x2077U, "HCI_LE_READ_REMOTE_TRANSMIT_POWER_LEVEL_OPCODE" },
+    { 0x2078U, "HCI_LE_SET_PATH_LOSS_REPORTING_PARAMETERS_OPCODE" },
+    { 0x2079U, "HCI_LE_SET_PATH_LOSS_REPORTING_ENABLE_OPCODE" },
+    { 0x207AU, "HCI_LE_SET_TRANSMIT_POWER_REPORTING_ENABLE_OPCODE" },
+#endif /* BT_5_2 */
 };
 
 static const char appl_hci_le_menu[] = "\
@@ -201,7 +235,7 @@ static const char appl_hci_le_menu[] = "\
     41. Write Authenticated Payload Timeout. \n\
 \n\
     50. Receiver Test Command. \n\
-    51. Trasmitter Test Command. \n\
+    51. Transmitter Test Command. \n\
     52. End Test Command. \n\
 \n\
     60. Send data on Fixed chnl. \n\
@@ -211,6 +245,8 @@ static const char appl_hci_le_menu[] = "\
     71. HCI 5.0 LE Commands \n\
 \n\
     72. HCI 5.1 LE Commands \n\
+\n\
+    73. HCI 5.2 LE Commands \n\
 \n\
    100. Display BLE ADV list. \n\
 ";
@@ -289,6 +325,42 @@ static const char appl_bt_5_1_hci_le_menu[] = "\
     16. LE Set Default Periodic Advertising Sync Transfer Parameters \n\
     17. LE Generate DHKey v2 \n\
     18. LE Modify Sleep Clock Accuracy \n";
+
+static const char appl_bt_5_2_hci_le_menu[] = "\
+================ BT 5_2 HCI BLE MENU ============\n\
+    0. Exit \n\
+    1. Refresh \n\n\
+    2. LE Read ISO TX Sync \n\
+    3. LE Set CIG Parameters \n\
+    4. LE Set CIG Parameters Test \n\
+    5. LE Create CIS \n\
+    6. LE Remove CIG \n\
+    7. LE Accept CIS Request \n\
+    8. LE Reject CIS Request \n\
+    9. LE Create BIG \n\
+    10. LE Create BIG Test \n\
+    11. LE Terminate BIG \n\
+    12. LE BIG Create Sync \n\
+    13. LE BIG Terminate Sync \n\
+    14. LE Request Peer SCA \n\
+    15. LE Setup ISO Data Path \n\
+    16. LE Remove ISO Data Path \n\
+    17. LE ISO Transmit Test \n\
+    18. LE ISO Receive Test \n\
+    19. LE ISO Read Test Counters \n\
+    20. LE ISO Test End \n\
+    21. LE Set Host Feature \n\
+    22. LE Read ISO Link Quality \n\
+    23. LE Enhanced Read Transmit Power Level \n\
+    24. LE Read Remote Transmit Power Level \n\
+    25. LE Set Path Loss Reporting Parameters \n\
+    26. LE Set Path Loss Reporting Enable \n\
+    27. LE Set Transmit Power Reporting Enable \n\
+    28. Register Callback Handler for ISO Data \n\
+    29. Send ISO Data \n\
+    30. Read Local Supported Controller Delay \n\
+    31. Read Local Supported Codec \n\
+    32. Read Local Supported Codec Capabilities \n";
 
 /* Global to maintain connection initiation State */
 static UCHAR appl_hci_le_conn_initiated = BT_FALSE;
@@ -669,6 +741,160 @@ void main_hci_5_1_le_operations(void)
 }
 #endif /* BT_5_1 */
 
+#ifdef BT_5_2
+void main_hci_5_2_le_operations(void)
+{
+    int choice, menu_choice;
+
+    BT_LOOP_FOREVER()
+    {
+        CONSOLE_OUT("%s", appl_bt_5_2_hci_le_menu);
+        CONSOLE_OUT("\n Enter your choice : ");
+        CONSOLE_IN("%d", &choice);
+        menu_choice = choice;
+
+        switch (choice)
+        {
+        case 0:
+        case 1:
+            break;
+        case 2:
+            appl_hci_le_read_iso_tx_sync();
+            break;
+
+        case 3:
+            appl_hci_le_set_cig_parameters();
+            break;
+
+        case 4:
+            appl_hci_le_set_cig_parameters_test();
+            break;
+
+        case 5:
+            appl_hci_le_create_cis();
+            break;
+
+        case 6:
+            appl_hci_le_remove_cig();
+            break;
+
+        case 7:
+            appl_hci_le_accept_cis_request();
+            break;
+
+        case 8:
+            appl_hci_le_reject_cis_request();
+            break;
+
+        case 9:
+            appl_hci_le_create_big();
+            break;
+
+        case 10:
+            appl_hci_le_create_big_test();
+            break;
+
+        case 11:
+            appl_hci_le_terminate_big();
+            break;
+
+        case 12:
+            appl_hci_le_big_create_sync();
+            break;
+
+        case 13:
+            appl_hci_le_big_terminate_sync();
+            break;
+
+        case 14:
+            appl_hci_le_request_peer_sca();
+            break;
+
+        case 15:
+            appl_hci_le_setup_iso_data_path();
+            break;
+
+        case 16:
+            appl_hci_le_remove_iso_data_path();
+            break;
+
+        case 17:
+            appl_hci_le_iso_transmit_test();
+            break;
+
+        case 18:
+            appl_hci_le_iso_receive_test();
+            break;
+
+        case 19:
+            appl_hci_le_iso_read_test_counters();
+            break;
+
+        case 20:
+            appl_hci_le_iso_test_end();
+            break;
+
+        case 21:
+            appl_hci_le_set_host_feature();
+            break;
+
+        case 22:
+            appl_hci_le_read_iso_link_quality();
+            break;
+
+        case 23:
+            appl_hci_le_enhanced_read_transmit_power_level();
+            break;
+
+        case 24:
+            appl_hci_le_read_remote_transmit_power_level();
+            break;
+
+        case 25:
+            appl_hci_le_set_path_loss_reporting_parameters();
+            break;
+
+        case 26:
+            appl_hci_le_set_path_loss_reporting_enable();
+            break;
+
+        case 27:
+            appl_hci_le_set_transmit_power_reporting_enable();
+            break;
+
+        case 28:
+            appl_hci_register_iso_data_handle();
+            break;
+
+        case 29:
+            appl_hci_le_iso_write();
+            break;
+
+        case 30:
+            appl_hci_read_local_supported_controller_delay();
+            break;
+
+        case 31:
+            appl_hci_read_local_supported_codecs_ga();
+            break;
+
+        case 32:
+            appl_hci_read_local_supported_codec_capabilities();
+            break;
+
+        default:
+            CONSOLE_OUT("Invalid choice: %d. try again..\n", choice);
+            break;
+        }
+
+        if (0 == menu_choice)
+        {
+            break;
+        }
+    }
+}
+#endif /* BT_5_2 */
+
 void main_hci_le_operations (void)
 {
     int choice, menu_choice;
@@ -900,6 +1126,12 @@ void main_hci_le_operations (void)
             break;
 #endif /* BT_5_1 */
 
+#ifdef BT_5_2
+        case 73:
+            main_hci_5_2_le_operations();
+            break;
+#endif /* BT_5_2 */
+
         /* Display Adv List */
         case 100:
 #ifdef APPL_HCI_LE_HAVE_PEER_ADV_LIST
@@ -923,6 +1155,27 @@ void main_hci_le_operations (void)
     return;
 }
 
+#ifdef NXP_CODE
+void set_le_tx_power(uint8_t *event_data,uint8_t event_datalen)
+{
+        memcpy(&Ble_tx_power,event_data,event_datalen);
+        APPL_TRC("tx_power_max-%X\n",Ble_tx_power.tx_power_max);
+        APPL_TRC("tx_power_min-%X\n",Ble_tx_power.tx_power_min);
+}
+
+void get_le_max_tx_power(uint8_t *event_data)
+{
+        memcpy(event_data,&Ble_tx_power.tx_power_max,1);
+}
+
+void appl_print_fw_rom_version(void)
+{
+    LOG_DEBUG(" \n===================================================================\n");
+    LOG_DEBUG(" \tController Firmware_Version  - %02X.%02X.%02X.%02X / %d.%d.%d.%d\n",version_info_array[0U], version_info_array[1U], version_info_array[2U], version_info_array[3U],version_info_array[0U], version_info_array[1U], version_info_array[2U], version_info_array[3U]);
+    LOG_DEBUG(" \tController      ROM_Version  - %02X.%02X.%02X.%02X / %d.%d.%d.%d\n",version_info_array[4U], version_info_array[5U], version_info_array[6U], version_info_array[7U],version_info_array[4U], version_info_array[5U], version_info_array[6U], version_info_array[7U]);
+    LOG_DEBUG(" \n===================================================================\n");
+}
+#endif /* NXP_CODE */
 
 API_RESULT appl_hci_le_event_indication_callback
            (
@@ -939,21 +1192,23 @@ API_RESULT appl_hci_le_event_indication_callback
     UINT16 connection_handle, value_2;
     UCHAR  status, value_1;
 
+#ifdef BT_5_2
+    UINT32 value_3;
+#endif /* BT_5_2 */
+
     UCHAR    sub_event_code;
     UCHAR    num_reports;
     UCHAR    length_data;
-    UCHAR    peer_addr_type;
+    UCHAR    appl_peer_addr_type;
     UCHAR    clock_accuracy;
     UCHAR    role;
     UCHAR    rssi;
     UINT16   conn_latency;
     UINT16   conn_interval, conn_interval_min, conn_interval_max;
     UINT16   supervision_timeout;
-#ifndef APPL_HCI_LE_HAVE_PEER_ADV_LIST
     UCHAR  * data_param;
-#endif /* APPL_HCI_LE_HAVE_PEER_ADV_LIST */
     UCHAR  * le_feature;
-    UCHAR  * peer_addr;
+    UCHAR  * appl_peer_addr;
     UCHAR  * random_number;
     UINT16   encripted_diversifier;
     BT_DEVICE_ADDR bd_addr;
@@ -1154,7 +1409,7 @@ API_RESULT appl_hci_le_event_indication_callback
                     (BT_IGNORE_RETURN_VALUE) appl_hci_le_init_adv_list();
 #endif /* APPL_HCI_LE_HAVE_PEER_ADV_LIST */
 
-                    APPL_TRC("Enabled Scanning ...\n");
+                    APPL_TRC("Enabled/Disabled Scanning Success...\n");
                 }
             }
 
@@ -1199,13 +1454,66 @@ API_RESULT appl_hci_le_event_indication_callback
                 event_data -= 2U;
             }
 #endif /* PXR */
+#ifdef PXM
+            else if (HCI_READ_RSSI_OPCODE == value_2)
+            {
+                /* Extract Connection Handle */
+                hci_unpack_2_byte_param(&connection_handle, event_data);
+                event_data += 2U;
+
+                /* Extract RSSI */
+                hci_unpack_1_byte_param(&value_1, event_data);
+
+                (BT_IGNORE_RETURN_VALUE)pxm_get_rssi_complete
+                (
+                    status,
+                    connection_handle,
+                    value_1
+                );
+
+                /**
+                 * Re-adjusting the 'event_data' to print
+                 * return parameters below correctly.
+                 */
+                event_data -= 2U;
+            }
+#endif /* PXM */
+
+#ifdef NXP_CODE
+            else if(HCI_LE_READ_TRANSMIT_POWER_OPCODE == value_2)
+            {
+                APPL_TRC("\tLE Tx Power Parameters: ");
+                appl_dump_bytes(event_data, event_datalen - 4U);
+                if (API_SUCCESS == status)
+                {
+                  set_le_tx_power(event_data,event_datalen - 4U);
+                }
+                APPL_TRC("\n");
+            }
+            else if(HCI_VENDOR_READ_VERSION_INFO_OPCODE == value_2)
+            {
+                 if (API_SUCCESS == status)
+                 {
+
+                    hci_unpack_1_byte_param(&version_info_array[0], event_data + 0U);
+                    hci_unpack_1_byte_param(&version_info_array[1], event_data + 1U);
+                    hci_unpack_1_byte_param(&version_info_array[2], event_data + 2U);
+                    hci_unpack_1_byte_param(&version_info_array[3], event_data + 3U);
+                    hci_unpack_1_byte_param(&version_info_array[4], event_data + 4U);
+                    hci_unpack_1_byte_param(&version_info_array[5], event_data + 5U);
+                    hci_unpack_1_byte_param(&version_info_array[6], event_data + 6U);
+                    hci_unpack_1_byte_param(&version_info_array[7], event_data + 7U);
+                    appl_print_fw_rom_version();
+                  }
+            }
+#endif /* NXP_CODE */
             else
             {
                 /* MISRA C-2012 Rule 15.7 */
             }
 
             /* Command Return Parameters */
-            if (4U < event_datalen)
+            if ((4U < event_datalen) && (HCI_READ_LOCAL_NAME_OPCODE != value_2))
             {
                 APPL_TRC("\tLE Return Parameters: ");
                 appl_dump_bytes(event_data, event_datalen - 4U);
@@ -1283,13 +1591,60 @@ API_RESULT appl_hci_le_event_indication_callback
             event_data = event_data + 1U;
             switch (sub_event_code)
             {
+            case HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_SUBEVENT:
+            {
+                APPL_TRC("HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_SUBEVENT\n");
+
+                /* Status */
+                hci_unpack_1_byte_param(&status, event_data);
+                event_data += 1U;
+                APPL_TRC("Status = 0x%02X\n",status);
+                /* Connection_Handle */
+                hci_unpack_2_byte_param(&connection_handle, event_data);
+                event_data += 2U;
+                APPL_TRC("Connection_Handle = 0x%04X\n",connection_handle);
+                /* Service_Data */
+                hci_unpack_2_byte_param(&value_2, event_data);
+                event_data += 2U;
+                APPL_TRC("Service_Data = 0x%04X\n",value_2);
+                /* Sync_Handle */
+                hci_unpack_2_byte_param(&value_2, event_data);
+                event_data += 2U;
+                APPL_TRC("Sync_Handle = 0x%04X\n",value_2);
+                /* Advertising_SID */
+                hci_unpack_1_byte_param(&value_1, event_data);
+                event_data += 1U;
+                APPL_TRC("Advertising_SID = 0x%02X\n",value_1);
+                /* Advertiser_Address_Type */
+                hci_unpack_1_byte_param(&value_1, event_data);
+                event_data += 1U;
+                APPL_TRC("Advertiser_Address_Type = 0x%02X\n",value_1);
+                /* Advertiser_Address */
+                appl_peer_addr = event_data;
+                APPL_TRC("Advertiser_Address = \n");
+                appl_dump_bytes(appl_peer_addr, 6U);
+                event_data += 6U;
+                /* Advertiser_PHY */
+                hci_unpack_1_byte_param(&value_1, event_data);
+                event_data += 1U;
+                APPL_TRC("Advertiser_PHY = 0x%02X\n",value_1);
+                /* Periodic_Advertising_Interval */
+                hci_unpack_2_byte_param(&value_2, event_data);
+                event_data += 2U;
+                APPL_TRC("Periodic_Advertising_Interval = 0x%04X\n",value_2);
+                /* Advertiser_Clock_Accuracy */
+                hci_unpack_1_byte_param(&clock_accuracy, event_data);
+                event_data += 1U;
+                APPL_TRC("Advertiser_Clock_Accuracy = 0x%02X\n",clock_accuracy);
+            }
+            break;
             case HCI_LE_CONNECTION_COMPLETE_SUBEVENT:
                 APPL_TRC("Subevent : HCI_LE_CONNECTION_COMPLETE_SUBEVENT.\n");
                 hci_unpack_1_byte_param(&status, event_data + 0U);
                 hci_unpack_2_byte_param(&connection_handle, event_data + 1U);
                 hci_unpack_1_byte_param(&role, event_data + 3U);
-                hci_unpack_1_byte_param(&peer_addr_type, event_data + 4U);
-                peer_addr = 5U + event_data;
+                hci_unpack_1_byte_param(&appl_peer_addr_type, event_data + 4U);
+                appl_peer_addr = 5U + event_data;
                 hci_unpack_2_byte_param(&conn_interval, event_data + 11U);
                 hci_unpack_2_byte_param(&conn_latency, event_data + 13U);
                 hci_unpack_2_byte_param(&supervision_timeout, event_data + 15U);
@@ -1301,9 +1656,9 @@ API_RESULT appl_hci_le_event_indication_callback
 
 #ifndef APPL_LIMIT_LOGS
                 APPL_TRC("role = 0x%02X\n", role);
-                APPL_TRC("peer_addr_type = 0x%02X\n", peer_addr_type);
-                APPL_TRC("peer_addr = \n");
-                appl_dump_bytes(peer_addr, 6U);
+                APPL_TRC("appl_peer_addr_type = 0x%02X\n", appl_peer_addr_type);
+                APPL_TRC("appl_peer_addr = \n");
+                appl_dump_bytes(appl_peer_addr, 6U);
                 APPL_TRC("conn_interval = 0x%04X\n", conn_interval);
                 APPL_TRC("conn_latency = 0x%04X\n", conn_latency);
                 APPL_TRC("supervision_timeout = 0x%04X\n", supervision_timeout);
@@ -1319,8 +1674,8 @@ API_RESULT appl_hci_le_event_indication_callback
                 fsm_param.data_param = event_data;
                 fsm_param.data_len = event_datalen;
 
-                BT_COPY_BD_ADDR(device_addr.addr, peer_addr);
-                BT_COPY_TYPE(device_addr.type, peer_addr_type);
+                BT_COPY_BD_ADDR(device_addr.addr, appl_peer_addr);
+                BT_COPY_TYPE(device_addr.type, appl_peer_addr_type);
 
                 BT_COPY_BD_ADDR_AND_TYPE(&g_bd_addr, &device_addr);
 
@@ -1328,10 +1683,10 @@ API_RESULT appl_hci_le_event_indication_callback
                 g_appl_bond_del_flag = BT_FALSE;
 
                 retval = device_queue_search_le_remote_addr
-                (
-                    &dq_handle,
-                    &device_addr
-                );
+                         (
+                              &dq_handle,
+                              &device_addr
+                         );
 
                 if (API_SUCCESS == retval)
                 {
@@ -1392,9 +1747,8 @@ API_RESULT appl_hci_le_event_indication_callback
                     hci_unpack_1_byte_param(&length_data, event_data);
                     event_data += 1U;
 
-#ifndef APPL_HCI_LE_HAVE_PEER_ADV_LIST
+                    /* Save the Moved ADV data Pointer to another */
                     data_param = event_data;
-#endif /* APPL_HCI_LE_HAVE_PEER_ADV_LIST */
 
                     event_data += length_data;
                     hci_unpack_1_byte_param(&rssi, event_data);
@@ -1411,6 +1765,15 @@ API_RESULT appl_hci_le_event_indication_callback
                     appl_dump_bytes(data_param, length_data);
                     APPL_TRC("rssi = 0x%02X\n", rssi);
 #endif /* APPL_HCI_LE_HAVE_PEER_ADV_LIST */
+
+                    /* Notify received adv report */
+                    appl_notify_adv_report
+                    (
+                        event_type,
+                        &bd_addr,
+                        data_param,
+                        length_data
+                    );
                 }
 
                 /* Break if the event type is Non Connectable */
@@ -1422,10 +1785,10 @@ API_RESULT appl_hci_le_event_indication_callback
 #ifdef APPL_HCI_LE_HAVE_PEER_ADV_LIST
                 /* Add the incoming ADV device to the List */
                 retval = appl_hci_le_add_peer_adv_report
-                (
-                    adv_report,
-                    event_datalen
-                );
+                         (
+                             adv_report,
+                             event_datalen
+                         );
 
                 if (API_SUCCESS != retval)
                 {
@@ -1470,13 +1833,13 @@ API_RESULT appl_hci_le_event_indication_callback
                 if (BT_FALSE == appl_hci_le_conn_initiated)
                 {
                     retval = appl_service_initiate_conn
-                    (
-                        BT_BD_PUBLIC_ADDRESS_TYPE,
-                        bd_addr.type,
-                        bd_addr.addr,
-                        0x00U,
-                        BT_TRUE
-                    );
+                             (
+                                 BT_BD_PUBLIC_ADDRESS_TYPE,
+                                 bd_addr.type,
+                                 bd_addr.addr,
+                                 0x00U,
+                                 BT_TRUE
+                             );
 
                     if (API_SUCCESS == retval)
                     {
@@ -1649,8 +2012,8 @@ API_RESULT appl_hci_le_event_indication_callback
                 hci_unpack_1_byte_param(&status, event_data);
                 hci_unpack_2_byte_param(&connection_handle, event_data + 1U);
                 hci_unpack_1_byte_param(&role, event_data + 3U);
-                hci_unpack_1_byte_param(&peer_addr_type, event_data + 4U);
-                peer_addr = event_data + 5U;
+                hci_unpack_1_byte_param(&appl_peer_addr_type, event_data + 4U);
+                appl_peer_addr = event_data + 5U;
                 local_resolvable_pvt_addr = event_data + 11U;
                 peer_resolvable_pvt_addr = event_data + 17U;
                 hci_unpack_2_byte_param(&conn_interval, event_data + 23U);
@@ -1664,15 +2027,15 @@ API_RESULT appl_hci_le_event_indication_callback
                  */
                 if (0 != (BT_BD_ADDR_IS_NON_ZERO(peer_resolvable_pvt_addr)))
                 {
-                    peer_addr_type = BT_BD_RANDOM_ADDRESS_TYPE;
-                    BT_COPY_BD_ADDR(peer_addr, peer_resolvable_pvt_addr);
+                    appl_peer_addr_type = BT_BD_RANDOM_ADDRESS_TYPE;
+                    BT_COPY_BD_ADDR(appl_peer_addr, peer_resolvable_pvt_addr);
                 }
                 else
                 {
                     /**
                      * Do Nothing...
-                     * peer_addr_type has the AD type of Peer
-                     * peer_addr has the AD of Peer
+                     * appl_peer_addr_type has the AD type of Peer
+                     * appl_peer_addr has the AD of Peer
                      */
                 }
 
@@ -1680,9 +2043,9 @@ API_RESULT appl_hci_le_event_indication_callback
                 APPL_TRC("connection_handle = 0x%04X\n", connection_handle);
 #ifndef APPL_LIMIT_LOGS
                 APPL_TRC("role = 0x%02X\n", role);
-                APPL_TRC("peer_addr_type = 0x%02X\n", peer_addr_type);
-                APPL_TRC("peer_addr = \n");
-                appl_dump_bytes(peer_addr, 6U);
+                APPL_TRC("appl_peer_addr_type = 0x%02X\n", appl_peer_addr_type);
+                APPL_TRC("appl_peer_addr = \n");
+                appl_dump_bytes(appl_peer_addr, 6U);
                 APPL_TRC("local_resolvable_pvt_addr = \n");
                 appl_dump_bytes(local_resolvable_pvt_addr, 6U);
                 APPL_TRC("peer_resolvable_pvt_addr = \n");
@@ -1697,8 +2060,8 @@ API_RESULT appl_hci_le_event_indication_callback
                 /* reset this irrespective of status */
                 appl_hci_le_conn_initiated = BT_FALSE;
 
-                BT_COPY_BD_ADDR(device_addr.addr, peer_addr);
-                BT_COPY_TYPE(device_addr.type, peer_addr_type);
+                BT_COPY_BD_ADDR(device_addr.addr, appl_peer_addr);
+                BT_COPY_TYPE(device_addr.type, appl_peer_addr_type);
 
                 BT_COPY_BD_ADDR_AND_TYPE(&g_bd_addr, &device_addr);
 
@@ -1786,6 +2149,7 @@ API_RESULT appl_hci_le_event_indication_callback
                 break;
 
             case HCI_LE_EXTENDED_ADVERTISING_REPORT_SUBEVENT:
+#ifndef BT_GAM
                 APPL_TRC("Subevent : HCI_LE_EXTENDED_ADVERTISING_REPORT_SUBEVENT.\n");
 
                 hci_unpack_1_byte_param(&num_report, event_data);
@@ -1862,6 +2226,7 @@ API_RESULT appl_hci_le_event_indication_callback
                     appl_dump_bytes(event_data, value_1);
                     event_data += value_1;
                 }
+#endif /* BT_GAM */
                 break;
 
             case HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_SUBEVENT:
@@ -1869,8 +2234,8 @@ API_RESULT appl_hci_le_event_indication_callback
                 hci_unpack_1_byte_param(&status, event_data + 0U);
                 hci_unpack_2_byte_param(&sync_handle, event_data + 1U);
                 hci_unpack_1_byte_param(&advertising_sid, event_data + 3U);
-                hci_unpack_1_byte_param(&peer_addr_type, event_data + 4U);
-                peer_addr = event_data + 5U;
+                hci_unpack_1_byte_param(&appl_peer_addr_type, event_data + 4U);
+                appl_peer_addr = event_data + 5U;
                 hci_unpack_1_byte_param(&advertiser_phy, event_data + 11U);
                 hci_unpack_2_byte_param(&advertising_interval, event_data + 12U);
                 hci_unpack_1_byte_param(&advertiser_clk_accuy, event_data + 14U);
@@ -1879,15 +2244,16 @@ API_RESULT appl_hci_le_event_indication_callback
                 APPL_TRC("status: 0x%02X\n", status);
                 APPL_TRC("Sync_Handle: 0x%04X\n", sync_handle);
                 APPL_TRC("Periodic_Advertising_ID: 0x%02X\n", advertising_sid);
-                APPL_TRC("Advertiser_Address_Type: 0x%02X\n", peer_addr_type);
+                APPL_TRC("Advertiser_Address_Type: 0x%02X\n", appl_peer_addr_type);
                 APPL_TRC("Advertiser_Address: \n");
-                appl_dump_bytes(peer_addr, BT_BD_ADDR_SIZE);
+                appl_dump_bytes(appl_peer_addr, BT_BD_ADDR_SIZE);
                 APPL_TRC("Advertiser_PHY: 0x%02X\n", advertiser_phy);
                 APPL_TRC("Periodic_Advertising_Interval: 0x%04X\n", advertising_interval);
                 APPL_TRC("Advertiser_Clock_Accuracy: 0x%02X\n", advertiser_clk_accuy);
                 break;
 
             case HCI_LE_PERIODIC_ADVERTISING_REPORT_SUBEVENT:
+#ifndef BT_GAM
                 APPL_TRC("Subevent : HCI_LE_PERIODIC_ADVERTISING_REPORT_SUBEVENT.\n");
                 hci_unpack_2_byte_param(&sync_handle, event_data);
                 event_data += 2U;
@@ -1912,6 +2278,7 @@ API_RESULT appl_hci_le_event_indication_callback
                 APPL_TRC("Data Length: 0x%02X\n", data_length);
                 APPL_TRC("Data:\n");
                 appl_dump_bytes(event_data, data_length);
+#endif /* BT_GAM */
                 break;
 
             case HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_SUBEVENT:
@@ -1945,13 +2312,13 @@ API_RESULT appl_hci_le_event_indication_callback
                 APPL_TRC("Subevent : HCI_LE_SCAN_REQUEST_RECEIVED_SUBEVENT.\n");
                 hci_unpack_1_byte_param(&advertising_handle, event_data + 0U);
                 hci_unpack_1_byte_param(&scanner_address_type, event_data + 1U);
-                peer_addr = event_data + 2U;
+                appl_peer_addr = event_data + 2U;
 
                 /* Print the parameters */
                 APPL_TRC("Advertising Handle: 0x%02X\n", advertising_handle);
                 APPL_TRC("Scanner Address Type: 0x%02X\n", scanner_address_type);
                 APPL_TRC("Scanner Address:\n");
-                appl_dump_bytes(peer_addr, BT_BD_ADDR_SIZE);
+                appl_dump_bytes(appl_peer_addr, BT_BD_ADDR_SIZE);
                 break;
 
             case HCI_LE_CHANNEL_SELECTION_ALGORITHM_SUBEVENT:
@@ -1968,9 +2335,176 @@ API_RESULT appl_hci_le_event_indication_callback
 
 #endif /* BT_5_0 */
 
+#ifdef BT_5_2
+        case HCI_LE_PATH_LOSS_THRESHOLD_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_PATH_LOSS_THRESHOLD_EVENT.\n");
+            hci_unpack_2_byte_param(&connection_handle, event_data + 0);
+            APPL_TRC("Connection Handle: 0x%04X\n", connection_handle);
+            hci_unpack_1_byte_param(&value_1, event_data + 2);
+            APPL_TRC("Current Path Loss: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 3);
+            APPL_TRC("Zone Enterted: 0x%02X\n", value_1);
+            break;
+
+        case HCI_LE_TX_POWER_REPORTING_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_TRANSMIT_POWER_REPORTING_EVENT.\n");
+            hci_unpack_1_byte_param(&status, event_data + 0);
+            APPL_TRC("Status: 0x%02X\n", status);
+            hci_unpack_2_byte_param(&connection_handle, event_data + 1);
+            APPL_TRC("Connection Handle: 0x%04X\n", connection_handle);
+            hci_unpack_1_byte_param(&value_1, event_data + 3);
+            APPL_TRC("Reason: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 4);
+            APPL_TRC("PHY: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 5);
+            APPL_TRC("Transmit Power Level: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 6);
+            APPL_TRC("Transmit Power Level Flag: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 7);
+            APPL_TRC("Delta: 0x%02X\n", value_1);
+            break;
+
+        case HCI_LE_CIS_ESTABLISHED_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_CIS_ESTABLISHED_SUBEVENT.\n");
+            hci_unpack_1_byte_param(&status, event_data + 0);
+            APPL_TRC("Status: 0x%02X\n", status);
+            hci_unpack_2_byte_param(&connection_handle, event_data + 1);
+            APPL_TRC("Connection Handle: 0x%04X\n", connection_handle);
+            hci_unpack_3_byte_param(&value_3, event_data + 3);
+            APPL_TRC("CIG_Sync_Delay: 0x%08X\n", value_3);
+            hci_unpack_3_byte_param(&value_3, event_data + 6);
+            APPL_TRC("CIS_Sync_Delay: 0x%08X\n", value_3);
+            hci_unpack_3_byte_param(&value_3, event_data + 9);
+            APPL_TRC("Transport_Latency_M_To_S: 0x%08X\n", value_3);
+            hci_unpack_3_byte_param(&value_3, event_data + 12);
+            APPL_TRC("Transport_Latency_S_To_M: 0x%08X\n", value_3);
+            hci_unpack_1_byte_param(&value_1, event_data + 15);
+            APPL_TRC("PHY_M_To_S: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 16);
+            APPL_TRC("PHY_S_To_M: 0x%02X\n", value_1);
+            break;
+
+        case HCI_LE_CIS_REQUEST_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_CIS_REQUEST_SUBEVENT.\n");
+            hci_unpack_2_byte_param(&connection_handle, event_data + 0);
+            APPL_TRC("ACL Connection Handle: 0x%04X\n", connection_handle);
+            hci_unpack_2_byte_param(&connection_handle, event_data + 2);
+            APPL_TRC("CIS Connection Handle: 0x%04X\n", connection_handle);
+            hci_unpack_1_byte_param(&value_1, event_data + 4);
+            APPL_TRC("CIG_ID: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 5);
+            APPL_TRC("CIS_ID: 0x%02X\n", value_1);
+            break;
+
+        case HCI_LE_CREATE_BIG_COMPLETE_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_CREATE_BIG_COMPLETE_SUBEVENT.\n");
+            hci_unpack_1_byte_param(&status, event_data + 0);
+            APPL_TRC("Status: 0x%02X\n", status);
+            hci_unpack_1_byte_param(&value_1, event_data + 1);
+            APPL_TRC("BIG_Handle: 0x%02X\n", value_1);
+            hci_unpack_3_byte_param(&value_3, event_data + 2);
+            APPL_TRC("BIG_Sync_Delay: 0x%08X\n", value_3);
+            hci_unpack_3_byte_param(&value_3, event_data + 5);
+            APPL_TRC("Transport_Latency_BIG: 0x%08X\n", value_3);
+            hci_unpack_1_byte_param(&value_1, event_data + 8);
+            APPL_TRC("PHY: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param (&value_1, event_data + 9);
+            APPL_TRC ("NSE: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param (&value_1, event_data + 10);
+            APPL_TRC ("BN: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param (&value_1, event_data + 11);
+            APPL_TRC ("PTO: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param (&value_1, event_data + 12);
+            APPL_TRC ("IRC: 0x%02X\n", value_1);
+            hci_unpack_2_byte_param (&value_2, event_data + 13);
+            APPL_TRC ("Max_PDU: 0x%04X\n", value_2);
+            hci_unpack_2_byte_param (&value_2, event_data + 15);
+            APPL_TRC ("ISO_Inerval: 0x%04X\n", value_2);
+            hci_unpack_1_byte_param(&value_1, event_data + 17);
+            APPL_TRC("Num_BIS: 0x%02X\n", value_1);
+            APPL_TRC("Connection Handles of BISes:");
+            appl_dump_bytes(event_data + 18, (UINT16)(value_1 * 2));
+            break;
+
+        case HCI_LE_TERMINATE_BIG_COMPLETE_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_TERMINATE_BIG_COMPLETE_SUBEVENT.\n");
+            hci_unpack_1_byte_param(&value_1, event_data + 0);
+            APPL_TRC("BIG_Handle: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 1);
+            APPL_TRC("Reason: 0x%02X\n", value_1);
+            break;
+
+        case HCI_LE_BIG_SYNC_ESTABLISHED_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_BIG_SYNC_ESTABLISHED_SUBEVENT.\n");
+            hci_unpack_1_byte_param(&value_1, event_data + 0);
+            APPL_TRC("Status: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 1);
+            APPL_TRC("BIG_Handle: 0x%02X\n", value_1);
+            hci_unpack_3_byte_param(&value_3, event_data + 2);
+            APPL_TRC("Transport_Latency_BIG: 0x%08X\n", value_3);
+            hci_unpack_1_byte_param(&value_1, event_data + 5);
+            APPL_TRC("Num_BIS: 0x%02X\n", value_1);
+
+            APPL_TRC("Connection Handles of BISes in the BIG\n");
+            appl_dump_bytes(event_data + 6, (UINT16)(value_1 * 2));
+            break;
+
+        case HCI_LE_BIG_SYNC_LOST_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_BIG_SYNC_LOST_SUBEVENT.\n");
+            hci_unpack_1_byte_param(&value_1, event_data + 0);
+            APPL_TRC("BIG_Handle: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 1);
+            APPL_TRC("Reason: 0x%02X\n", value_1);
+            break;
+
+        case HCI_LE_REQUEST_PEER_SCA_COMPLETE_SUBEVENT:
+            APPL_TRC("Subevent : HCI_LE_REQUEST_PEER_SCA_COMPLETE_SUBEVENT.\n");
+            hci_unpack_1_byte_param(&value_1, event_data + 0);
+            APPL_TRC("Status: 0x%02X\n", value_1);
+            hci_unpack_2_byte_param(&connection_handle, event_data + 1);
+            APPL_TRC("Connection Handle: 0x%04X\n", connection_handle);
+            hci_unpack_1_byte_param(&value_1, event_data + 3);
+            APPL_TRC("SCA: 0x%02X\n", value_1);
+            break;
+
+        case HCI_LE_BIGINFO_ADVERTISING_REPORT_SUBEVENT:
+#ifndef BT_GAM
+            APPL_TRC("Subevent : HCI_LE_BIGINFO_ADVERTISING_REPORT_SUBEVENT.\n");
+            hci_unpack_2_byte_param(&value_2, event_data + 0);
+            APPL_TRC("Sync Handle: 0x%04X\n", value_2);
+            hci_unpack_1_byte_param(&value_1, event_data + 2);
+            APPL_TRC("Num BIS: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 3);
+            APPL_TRC("NSE: 0x%02X\n", value_1);
+            hci_unpack_2_byte_param(&value_2, event_data + 4);
+            APPL_TRC("ISO Interval: 0x%04X\n", value_2);
+            hci_unpack_1_byte_param(&value_1, event_data + 6);
+            APPL_TRC("BN: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 7);
+            APPL_TRC("PTO: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 8);
+            APPL_TRC("IRC: 0x%02X\n", value_1);
+            hci_unpack_2_byte_param(&value_2, event_data + 9);
+            APPL_TRC("Max PDU: 0x%04X\n", value_2);
+            hci_unpack_3_byte_param(&value_3, event_data + 11);
+            APPL_TRC("SDU Interval: 0x%06X\n", value_3);
+            hci_unpack_2_byte_param(&value_2, event_data + 14);
+            APPL_TRC("Max SDU: 0x%04X\n", value_2);
+            hci_unpack_1_byte_param(&value_1, event_data + 16);
+            APPL_TRC("PHY: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 17);
+            APPL_TRC("Framing: 0x%02X\n", value_1);
+            hci_unpack_1_byte_param(&value_1, event_data + 18);
+            APPL_TRC("Encryption: 0x%02X\n", value_1);
+#endif /* BT_GAM */
+            break;
+#endif /* BT_5_2 */
+
             default:
+#ifndef BT_GAM
                 APPL_TRC("Unknown LE SubEvent Code 0x%02X Received.\n",
                     sub_event_code);
+#endif /* BT_GAM */
                 break;
             }
             break;
@@ -1980,7 +2514,7 @@ API_RESULT appl_hci_le_event_indication_callback
             break;
         }
     }
- 
+
     return retval;
 }
 

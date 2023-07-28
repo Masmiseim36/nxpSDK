@@ -42,7 +42,6 @@ static UCHAR                bpp_attrib_data[BPP_SDP_RECORD_DATA_SIZE];
 static UINT16               bpp_attrib_data_len = BPP_SDP_RECORD_DATA_SIZE;
 static SDP_HANDLE           bpp_sdp_handle;
 static UCHAR                bpp_server_channel;
-/* static UINT16               bpp_l2cap_psm; */
 static BPP_APPL_PARAMS      appl_param;
 static BPP_CONNECT_STRUCT   connect_info;
 static UCHAR                file_name[32U] ;
@@ -50,6 +49,8 @@ static UCHAR                channel_type;
 
 static UCHAR                appl_flag_2_accept_push_without_http = 0U;
 static UINT8                enable_auth;
+
+static UINT8                appl_get_event_rsp_flag = 0x00U;
 
 #ifdef BPP_HAVE_OBEX_AUTHENTICATION
 static APPL_BPP_SER_USER_INFO user_info;
@@ -83,6 +84,7 @@ static const UCHAR bpp_printer_menu[] =
 \t20. Get Referenced Object \n \
 \n \
 \t40. Reject the Reference without HTTP Auth. Header \n \
+\t41. Set Get_Event Response Status \n \
 Your Choice: ";
 
 /* ----------------------------------------- Functions */
@@ -170,6 +172,12 @@ void main_bpp_printer_operations (void)
         case 4:
             LOG_DEBUG ("Enter BPP Server instance:");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_PRINTER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG ("Enter Service Type \n");
             LOG_DEBUG ("    0 -> Direct Printing \n");
@@ -263,6 +271,12 @@ void main_bpp_printer_operations (void)
 
             LOG_DEBUG ("Enter BPP Printer instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_PRINTER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG ("Enter Channel Type \n");
             LOG_DEBUG ("    0 -> Job Channel \n");
@@ -393,7 +407,7 @@ void main_bpp_printer_operations (void)
             scanf ("%d", &handle);
 
             LOG_DEBUG ("Enter peer device address: ");
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             SDP_SET_HANDLE
             (
@@ -417,6 +431,12 @@ void main_bpp_printer_operations (void)
             LOG_DEBUG ("Enter BPP Printer instance: ");
             scanf ("%d", &handle);
 
+            if (BPP_NUM_PRINTER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
             LOG_DEBUG("Enter Channel Type \n 2. Object Channel \n   ");
             scanf ("%d", &input);
 
@@ -434,7 +454,7 @@ void main_bpp_printer_operations (void)
             }
 
             LOG_DEBUG ("Enter peer device address: ");
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             connect_info.bd_addr = bd_addr;
 
@@ -460,6 +480,12 @@ void main_bpp_printer_operations (void)
         case 16:
             LOG_DEBUG ("Enter BPP Client instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_PRINTER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG ("Enter Channel Type \n");
             LOG_DEBUG ("    2 -> Object Channel \n");
@@ -490,6 +516,12 @@ void main_bpp_printer_operations (void)
         case 17:
             LOG_DEBUG ("Enter BPP Client instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_PRINTER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG ("Enter Channel Type \n");
             LOG_DEBUG ("    0 -> Job Channel \n");
@@ -531,6 +563,12 @@ void main_bpp_printer_operations (void)
             bpp_printer_print_appl_instances (BPP_OBJECT_CHANNEL);
             LOG_DEBUG ("Enter BPP Client instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_PRINTER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             BPP_INIT_HEADER_STRUCT (name_info);
             BPP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
@@ -591,6 +629,17 @@ void main_bpp_printer_operations (void)
             LOG_DEBUG("Reject Reference Push without HTTP(0/1)\n");
             scanf("%d", &input);
             appl_flag_2_accept_push_without_http = (UCHAR)input;
+            break;
+
+        case 41:
+            /* This is required for PTS testcase: BPP/PR/DPS/BV-09-I */
+            printf("Set Get_Event response\n");
+            printf("    0 -> None\n");
+            printf("    1 -> Stopped\n");
+            printf("    3 -> Completed\n");
+            scanf("%d", &input);
+            appl_get_event_rsp_flag = (UCHAR)input;
+
             break;
 
         default:
@@ -2335,6 +2384,20 @@ API_RESULT appl_bpp_printer_callback
                 break;
             }
 #endif
+            /**
+             * After sending print stop status.
+             * Send empty response with Status: BPP_CONTINUE_RSP.
+             */
+            if (0x02U == appl_get_event_rsp_flag)
+            {
+                tx_response = BPP_CONTINUE_RSP;
+
+                /* send response */
+                send_response = 1U;
+
+                break;
+            }
+
             if ((NULL != bpp_rx_hdrs->bpp_req_info->body->value) &&
                 (0U != bpp_rx_hdrs->bpp_req_info->body->length))
             {
@@ -2364,16 +2427,55 @@ API_RESULT appl_bpp_printer_callback
             if (0U == sent)
             {
                 bpp_xchg_size = bpp_printer_statusch_instance[handle].max_xchg_size;
-                tx_response = BPP_SUCCESS_RSP;
 
-                /* Create the listing file with path */
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_vfops_create_object_name
-                (
-                    bpp_printer_statusch_instance[handle].path,
-                    (UCHAR *)"get_event_response.txt",
-                    file_object
-                );
+                if (0x01U == appl_get_event_rsp_flag)
+                {
+                    tx_response = BPP_CONTINUE_RSP;
+
+                    /**
+                     * Set to 0x02, to send empty Get response with status BPP_CONTINUE_RSP.
+                     */
+                    appl_get_event_rsp_flag = 0x02U;
+
+                    /* Send the Get Event response with Job state as Stopped */
+
+                    /* Create the listing file with path */
+                    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                    (void)BT_vfops_create_object_name
+                    (
+                        bpp_printer_statusch_instance[handle].path,
+                        (UCHAR *)"get_event_rsp_job_stopped.txt",
+                        file_object
+                    );
+                }
+                else if (0x3U == appl_get_event_rsp_flag)
+                {
+                    tx_response = BPP_CONTINUE_RSP;
+
+                    /* Send the Get Event response with Job state as Completed */
+
+                    /* Create the listing file with path */
+                    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                    (void)BT_vfops_create_object_name
+                    (
+                        bpp_printer_statusch_instance[handle].path,
+                        (UCHAR *)"get_event_rsp_job_completed.txt",
+                        file_object
+                    );
+                }
+                else
+                {
+                    tx_response = BPP_SUCCESS_RSP;
+
+                    /* Create the listing file with path */
+                    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                    (void)BT_vfops_create_object_name
+                    (
+                        bpp_printer_statusch_instance[handle].path,
+                        (UCHAR *)"get_event_response.txt",
+                        file_object
+                    );
+                }
 
                 /* Get the Sample listing from file */
                 retval = BT_fops_file_open ((UCHAR *)file_object, (UCHAR *)"rb", &bpp_tx_fp);

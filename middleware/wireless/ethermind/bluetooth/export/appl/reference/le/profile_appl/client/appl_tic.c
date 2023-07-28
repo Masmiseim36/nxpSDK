@@ -64,9 +64,7 @@ static UCHAR tic_client_menu[] =
    30.  Discover Next DST Change Service\n\
         -- Time with DST --\n\
    31.  Read Time with DST\n\
-  "
-"Your Option?\n\
-";
+Your Option?\n";
 
 /* ------------------------------- Functions */
 
@@ -209,47 +207,47 @@ void tic_profile_operations (void)
 
         case 14:
             /* Year */
-            LOG_DEBUG ("Enter year :");
+            CONSOLE_OUT ("Enter year :");
             CONSOLE_IN ("%u", &choice);
             BT_PACK_LE_2_BYTE(&curr_time_info[APPL_TIC_YEAR_OFFSET],&choice);
 
             /* Month */
-            LOG_DEBUG ("Enter month:");
+            CONSOLE_OUT ("Enter month:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_MONTH_OFFSET] = (UCHAR)choice;
 
             /* Day */
-            LOG_DEBUG ("Enter Day:");
+            CONSOLE_OUT ("Enter Day:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_DAY_OFFSET] = (UCHAR)choice;
 
             /* Hour */
-            LOG_DEBUG ("Enter hour:");
+            CONSOLE_OUT ("Enter hour:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_HOUR_OFFSET] = (UCHAR)choice;
 
             /* Minute */
-            LOG_DEBUG ("Enter minute:");
+            CONSOLE_OUT ("Enter minute:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_MINUTE_OFFSET] = (UCHAR)choice;
 
             /* Second */
-            LOG_DEBUG ("Enter second:");
+            CONSOLE_OUT ("Enter second:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_SECOND_OFFSET] = (UCHAR)choice;
 
             /* Day of week */
-            LOG_DEBUG ("Enter Day of week:");
+            CONSOLE_OUT ("Enter Day of week:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_DOW_OFFSET] = (UCHAR)choice;
 
             /* enter fraction 256 */
-            LOG_DEBUG ("Enter fraction 256:");
+            CONSOLE_OUT ("Enter fraction 256:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_F256_OFFSET] = (UCHAR)choice;
 
             /* Adjust Reason */
-            LOG_DEBUG ("Enter adjust reason:");
+            CONSOLE_OUT ("Enter adjust reason:");
             CONSOLE_IN ("%u", &choice);
             curr_time_info[APPL_TIC_ADJUST_REASON_OFFSET] = (UCHAR)choice;
 
@@ -277,12 +275,12 @@ void tic_profile_operations (void)
 
         case 16:
             /* Timezone */
-            LOG_DEBUG("Enter Timezone: 0x");
+            CONSOLE_OUT("Enter Timezone: 0x");
             CONSOLE_IN("%x", &choice);
             cfg_val[0U] = (UCHAR)choice;
 
             /* DST Offset */
-            LOG_DEBUG("Enter DST Offset: 0x");
+            CONSOLE_OUT("Enter DST Offset: 0x");
             CONSOLE_IN("%x", &choice);
             cfg_val[1U] = (UCHAR)choice;
 
@@ -319,7 +317,7 @@ void tic_profile_operations (void)
             break;
 
         case 21:
-            LOG_DEBUG ("1 (Get Reference Update), 2 (Cancel Reference Update)\n");
+            CONSOLE_OUT ("1 (Get Reference Update), 2 (Cancel Reference Update)\n");
             CONSOLE_IN ("%u", &choice);
             time_update_cp_value = (UCHAR) choice;
             gatt_char_wr
@@ -367,7 +365,7 @@ void tic_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

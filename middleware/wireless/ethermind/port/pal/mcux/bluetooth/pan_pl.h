@@ -48,7 +48,7 @@ void pan_init_pl
          void (* read_cb)(UCHAR *data, UINT16 datalen),
          UCHAR is_nap
      );
-void pan_start_pl (UCHAR dhcp);
+void pan_start_pl (UCHAR have_dhcp);
 void pan_stop_pl(void);
 void pan_write_pl (UCHAR * eth_header, UCHAR * eth_data, UINT16 eth_datalen);
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DCDC: DCDC Converter</title>
+<title>MCUXpresso SDK API Reference Manual: DA7212 Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,532 +101,358 @@ $(document).ready(function(){initNavTree('a00018.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DCDC: DCDC Converter</div>  </div>
+<div class="title">DA7212 Driver<div class="ingroups"><a class="el" href="a00299.html">CODEC Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the DCDC Converter (DCDC) module of MCUXpresso SDK devices.</p>
-<p>The DCDC converter module is a synchronous buck mode DCDC converter. It can produce single outputs for SoC peripherals and external devices with high conversion efficiency. The converter can be operated in continuous or pulsed mode.</p>
-<p>As a module to provide the power for hardware system, the DCDC starts working when the system is powered up before the software takes over the SoC. Some important configuration is done by the board settings. Before the software can access the DCDC's registers, the DCDC is already working normally with the default settings.</p>
-<p>However, if the application needs to improve the DCDC's performance or change the default settings, the DCDC driver would help. The DCDC's register cannot be accessed by software before its initialization (open the clock gate). The user can configure the hardware according to the application guide from reference manual.</p>
-<h1><a class="anchor" id="DCDCFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="DCDCInit"></a>
-Initialization and deinitialization</h2>
-<p>This function group is to enable/disable the operations to DCDC module through the driver.</p>
-<h2><a class="anchor" id="DCDCStatus"></a>
-Status</h2>
-<p>Provides functions to get the DCDC status.</p>
-<h2><a class="anchor" id="DCDCMiscCtrl"></a>
-Misc control</h2>
-<p>Provides functions to set the DCDC's miscellaneous control.</p>
-<h2>Set point mode control</h2>
-<p>Provides functions to initialize/de-initialize DCDC module in set point mode.</p>
-<h1><a class="anchor" id="DCDCAppGuide"></a>
-Application guideline</h1>
-<h2><a class="anchor" id="DCDCModeContinous"></a>
-Continous conduction mode</h2>
-<h2><a class="anchor" id="DCDCModeDiscontinous"></a>
-Discontinous conduction mode</h2>
-<p>/*! </p>
+<p>The da7212 driver provides a codec control interface. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00356"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00356">dcdc_detection_config_t</a></td></tr>
-<tr class="memdesc:a00356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for DCDC detection.  <a href="a00018.html#a00356">More...</a><br/></td></tr>
-<tr class="separator:a00356"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00358"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00358">dcdc_loop_control_config_t</a></td></tr>
-<tr class="memdesc:a00358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for the loop control.  <a href="a00018.html#a00358">More...</a><br/></td></tr>
-<tr class="separator:a00358"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00359"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00359">dcdc_low_power_config_t</a></td></tr>
-<tr class="memdesc:a00359"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for DCDC low power.  <a href="a00018.html#a00359">More...</a><br/></td></tr>
-<tr class="separator:a00359"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00357"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00357">dcdc_internal_regulator_config_t</a></td></tr>
-<tr class="memdesc:a00357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for DCDC internal regulator.  <a href="a00018.html#a00357">More...</a><br/></td></tr>
-<tr class="separator:a00357"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00360"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00360">dcdc_min_power_config_t</a></td></tr>
-<tr class="memdesc:a00360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for min power setting.  <a href="a00018.html#a00360">More...</a><br/></td></tr>
-<tr class="separator:a00360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00370"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00370">da7212_pll_config_t</a></td></tr>
+<tr class="memdesc:a00370"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 pll configuration  <a href="a00018.html#a00370">More...</a><br/></td></tr>
+<tr class="separator:a00370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00367"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00367">da7212_audio_format_t</a></td></tr>
+<tr class="memdesc:a00367"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 audio format  <a href="a00018.html#a00367">More...</a><br/></td></tr>
+<tr class="separator:a00367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00368"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00368">da7212_config_t</a></td></tr>
+<tr class="memdesc:a00368"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 configure structure.  <a href="a00018.html#a00368">More...</a><br/></td></tr>
+<tr class="separator:a00368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00369"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a00369">da7212_handle_t</a></td></tr>
+<tr class="memdesc:a00369"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 codec handler  <a href="a00018.html#a00369">More...</a><br/></td></tr>
+<tr class="separator:a00369"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaead28d0a1704d502fa7e4d83448530d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gaead28d0a1704d502fa7e4d83448530d9">FSL_DCDC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td></tr>
-<tr class="memdesc:gaead28d0a1704d502fa7e4d83448530d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCDC driver version.  <a href="#gaead28d0a1704d502fa7e4d83448530d9">More...</a><br/></td></tr>
-<tr class="separator:gaead28d0a1704d502fa7e4d83448530d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d23d22f57247229df5a71faaaa40229"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3d23d22f57247229df5a71faaaa40229"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga3d23d22f57247229df5a71faaaa40229">DA7212_I2C_HANDLER_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00015.html#ga708be0fda3516367fe0461a5f054118c">CODEC_I2C_MASTER_HANDLER_SIZE</a></td></tr>
+<tr class="memdesc:ga3d23d22f57247229df5a71faaaa40229"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 handle size <br/></td></tr>
+<tr class="separator:ga3d23d22f57247229df5a71faaaa40229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c92b1761ab5869e1d8ccce0acea708e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c92b1761ab5869e1d8ccce0acea708e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga0c92b1761ab5869e1d8ccce0acea708e">DA7212_ADDRESS</a>&#160;&#160;&#160;(0x1A)</td></tr>
+<tr class="memdesc:ga0c92b1761ab5869e1d8ccce0acea708e"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 I2C address. <br/></td></tr>
+<tr class="separator:ga0c92b1761ab5869e1d8ccce0acea708e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b379d89f3fa80c8eb3c16f74c2e6e71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3b379d89f3fa80c8eb3c16f74c2e6e71"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga3b379d89f3fa80c8eb3c16f74c2e6e71">DA7212_HEADPHONE_MAX_VOLUME_VALUE</a>&#160;&#160;&#160;0x3FU</td></tr>
+<tr class="memdesc:ga3b379d89f3fa80c8eb3c16f74c2e6e71"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 volume setting range <br/></td></tr>
+<tr class="separator:ga3b379d89f3fa80c8eb3c16f74c2e6e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gae715f6e4017ad893d5b131cb1b65bd97"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gae715f6e4017ad893d5b131cb1b65bd97">_dcdc_status_flags_t</a> { <a class="el" href="a00018.html#ggae715f6e4017ad893d5b131cb1b65bd97a88bc89752444c6db226ac58686c6dda4">kDCDC_LockedOKStatus</a> = (1U &lt;&lt; 0U)
- }</td></tr>
-<tr class="memdesc:gae715f6e4017ad893d5b131cb1b65bd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCDC status flags.  <a href="a00018.html#gae715f6e4017ad893d5b131cb1b65bd97">More...</a><br/></td></tr>
-<tr class="separator:gae715f6e4017ad893d5b131cb1b65bd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11a431a6377193c7ecb973f72fee13fa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga11a431a6377193c7ecb973f72fee13fa">dcdc_comparator_current_bias_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga11a431a6377193c7ecb973f72fee13faab2be4fb74c74083b5a501e98469237fd">kDCDC_ComparatorCurrentBias50nA</a> = 0U, 
+<tr class="memitem:ga6fc1179abb7621638b81dd23bce89715"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#gga6fc1179abb7621638b81dd23bce89715a81719d1c10c1d21585cc0d85ea0cf96e">kDA7212_Input_AUX</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga11a431a6377193c7ecb973f72fee13faaf11efa682be88fcdc3dade737c672b0b">kDCDC_ComparatorCurrentBias100nA</a> = 1U, 
+&#160;&#160;<a class="el" href="a00018.html#gga6fc1179abb7621638b81dd23bce89715a6791516363f14d9fa82ab6ffed758a8a">kDA7212_Input_MIC1_Dig</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga11a431a6377193c7ecb973f72fee13faabbe35f83fd7ae207e6c513fcfc26cf29">kDCDC_ComparatorCurrentBias200nA</a> = 2U, 
+&#160;&#160;<a class="el" href="a00018.html#gga6fc1179abb7621638b81dd23bce89715a915180fec88d3d30961aa7fc999cf734">kDA7212_Input_MIC1_An</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga11a431a6377193c7ecb973f72fee13faa8a7dafad371962ccbc67385d6f812421">kDCDC_ComparatorCurrentBias400nA</a> = 3U
+&#160;&#160;<a class="el" href="a00018.html#gga6fc1179abb7621638b81dd23bce89715ab6d325e0294e7181d5ef528e4398cc44">kDA7212_Input_MIC2</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga11a431a6377193c7ecb973f72fee13fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current bias of low power comparator.  <a href="a00018.html#ga11a431a6377193c7ecb973f72fee13fa">More...</a><br/></td></tr>
-<tr class="separator:ga11a431a6377193c7ecb973f72fee13fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1ee138d1d60e1357b602b5939890bd7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gab1ee138d1d60e1357b602b5939890bd7">dcdc_over_current_threshold_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00018.html#ggab1ee138d1d60e1357b602b5939890bd7a5ebbf9b57fe2aef4b3a527c098351fc2">kDCDC_OverCurrentThresholdAlt0</a> = 0U, 
+<tr class="memdesc:ga6fc1179abb7621638b81dd23bce89715"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 input source select.  <a href="a00018.html#ga6fc1179abb7621638b81dd23bce89715">More...</a><br/></td></tr>
+<tr class="separator:ga6fc1179abb7621638b81dd23bce89715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfe5b5c29bd85345eeab12ffeccdf8e1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gabfe5b5c29bd85345eeab12ffeccdf8e1">_da7212_play_channel</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1ae5ce9e40caf555725cbc0b29bd07a231">kDA7212_HeadphoneLeft</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#ggab1ee138d1d60e1357b602b5939890bd7ac85f8a7eedeb6716fd01fa9943a928d6">kDCDC_OverCurrentThresholdAlt1</a> = 1U, 
+&#160;&#160;<a class="el" href="a00018.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1a76d31405add593b507463ae599833fa3">kDA7212_HeadphoneRight</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#ggab1ee138d1d60e1357b602b5939890bd7afe4b9daeed02ac875ce992d3b3e48576">kDCDC_OverCurrentThresholdAlt2</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#ggab1ee138d1d60e1357b602b5939890bd7af51b51cf756df6e9753eae157bba3835">kDCDC_OverCurrentThresholdAlt3</a> = 3U
+&#160;&#160;<a class="el" href="a00018.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1ac49a4c8456dd563ebfb512abad314e73">kDA7212_Speaker</a> = 4U
 <br/>
  }</td></tr>
-<tr class="memdesc:gab1ee138d1d60e1357b602b5939890bd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The threshold of over current detection.  <a href="a00018.html#gab1ee138d1d60e1357b602b5939890bd7">More...</a><br/></td></tr>
-<tr class="separator:gab1ee138d1d60e1357b602b5939890bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacea8ce1454590ef280751fc9ae4660e4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gacea8ce1454590ef280751fc9ae4660e4">dcdc_peak_current_threshold_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a7fa50866827a30a4ca98def50c92d93d">kDCDC_PeakCurrentThresholdAlt0</a> = 0U, 
+<tr class="memdesc:gabfe5b5c29bd85345eeab12ffeccdf8e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 play channel  <a href="a00018.html#gabfe5b5c29bd85345eeab12ffeccdf8e1">More...</a><br/></td></tr>
+<tr class="separator:gabfe5b5c29bd85345eeab12ffeccdf8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga594d4eaddd9cb2171bd90c20fbabec4b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#gga594d4eaddd9cb2171bd90c20fbabec4ba00374e7ddbc6f19e104e50c644405d4e">kDA7212_Output_HP</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a020052660522adca4311d50937784da2">kDCDC_PeakCurrentThresholdAlt1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a1a316a1d5d9b1a8dd90a26eade3c9730">kDCDC_PeakCurrentThresholdAlt2</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#ggacea8ce1454590ef280751fc9ae4660e4af9c26a547765bb2b0c26d1d7102ae67c">kDCDC_PeakCurrentThresholdAlt3</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a6ed3f7cd3e9c10b9d80458da6aee5c50">kDCDC_PeakCurrentThresholdAlt4</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a0e40d22916e03c36c2c562b744cf563e">kDCDC_PeakCurrentThresholdAlt5</a> = 5U
+&#160;&#160;<a class="el" href="a00018.html#gga594d4eaddd9cb2171bd90c20fbabec4ba794964f1a59abc4e9651893ab8ad2937">kDA7212_Output_SP</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gacea8ce1454590ef280751fc9ae4660e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The threshold if peak current detection.  <a href="a00018.html#gacea8ce1454590ef280751fc9ae4660e4">More...</a><br/></td></tr>
-<tr class="separator:gacea8ce1454590ef280751fc9ae4660e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5473e4ea54bf7ceb0d994dbbcf135c1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gad5473e4ea54bf7ceb0d994dbbcf135c1">dcdc_count_charging_time_period_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00018.html#ggad5473e4ea54bf7ceb0d994dbbcf135c1ae685b89096384a98737f39b2dde87861">kDCDC_CountChargingTimePeriod8Cycle</a> = 0U, 
+<tr class="memdesc:ga594d4eaddd9cb2171bd90c20fbabec4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 output device select.  <a href="a00018.html#ga594d4eaddd9cb2171bd90c20fbabec4b">More...</a><br/></td></tr>
+<tr class="separator:ga594d4eaddd9cb2171bd90c20fbabec4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09500728ce3e7466ec63c24f194a7096"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga09500728ce3e7466ec63c24f194a7096">_da7212_module</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#gga09500728ce3e7466ec63c24f194a7096ad9a26702fe14d59f3c7af3896a79ec95">kDA7212_ModuleADC</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#ggad5473e4ea54bf7ceb0d994dbbcf135c1a232c187a9f30ef865b1203bc645973fa">kDCDC_CountChargingTimePeriod16Cycle</a> = 1U
+&#160;&#160;<a class="el" href="a00018.html#gga09500728ce3e7466ec63c24f194a7096a69ee48106ddc65d660e106564b26d726">kDA7212_ModuleDAC</a>, 
 <br/>
- }</td></tr>
-<tr class="memdesc:gad5473e4ea54bf7ceb0d994dbbcf135c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The period of counting the charging times in power save mode.  <a href="a00018.html#gad5473e4ea54bf7ceb0d994dbbcf135c1">More...</a><br/></td></tr>
-<tr class="separator:gad5473e4ea54bf7ceb0d994dbbcf135c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2cd4c599e216c88088c4f4e2d3371c6d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga2cd4c599e216c88088c4f4e2d3371c6d">dcdc_count_charging_time_threshold_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6dae17e5a516c544140045c1c6801a9ac4e">kDCDC_CountChargingTimeThreshold32</a> = 0U, 
+&#160;&#160;<a class="el" href="a00018.html#gga09500728ce3e7466ec63c24f194a7096a30a9366493854f9accccf1a509e30bc4">kDA7212_ModuleHeadphone</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6da74e57aeb24c45fc8018bd08b4d1082ce">kDCDC_CountChargingTimeThreshold64</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6da4c99e35bb7538e4aa165c6556ea9ca0e">kDCDC_CountChargingTimeThreshold16</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6daa570ad287107c1b54a846fdae2dd667b">kDCDC_CountChargingTimeThreshold8</a> = 3U
+&#160;&#160;<a class="el" href="a00018.html#gga09500728ce3e7466ec63c24f194a7096a4f11287d5d208e51cd4f7d58a54f58a4">kDA7212_ModuleSpeaker</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga2cd4c599e216c88088c4f4e2d3371c6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The threshold of the counting number of charging times.  <a href="a00018.html#ga2cd4c599e216c88088c4f4e2d3371c6d">More...</a><br/></td></tr>
-<tr class="separator:ga2cd4c599e216c88088c4f4e2d3371c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8035a76b241261c80ef27c1c2baf614b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga8035a76b241261c80ef27c1c2baf614b">dcdc_clock_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga8035a76b241261c80ef27c1c2baf614ba598ff7757e17e93192bb02060b9e17f7">kDCDC_ClockAutoSwitch</a> = 0U, 
+<tr class="memdesc:ga09500728ce3e7466ec63c24f194a7096"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 module.  <a href="a00018.html#ga09500728ce3e7466ec63c24f194a7096">More...</a><br/></td></tr>
+<tr class="separator:ga09500728ce3e7466ec63c24f194a7096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab328276aed167b3f028b627b84a9c326"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#ggab328276aed167b3f028b627b84a9c326aaa36fc0ab185ac10e7ee8a4617f59e97">kDA7212_DACSourceADC</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00018.html#gga8035a76b241261c80ef27c1c2baf614ba9a9fba153517ab7aa481929ab112c7ce">kDCDC_ClockInternalOsc</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00018.html#gga8035a76b241261c80ef27c1c2baf614baa626d594c9a911bd6d8f36852ae535fd">kDCDC_ClockExternalOsc</a> = 2U
+&#160;&#160;<a class="el" href="a00018.html#ggab328276aed167b3f028b627b84a9c326a32553db21f101a6585653a0f603b4585">kDA7212_DACSourceInputStream</a> = 0x3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga8035a76b241261c80ef27c1c2baf614b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Oscillator clock option.  <a href="a00018.html#ga8035a76b241261c80ef27c1c2baf614b">More...</a><br/></td></tr>
-<tr class="separator:ga8035a76b241261c80ef27c1c2baf614b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gab328276aed167b3f028b627b84a9c326"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 functionality.  <a href="a00018.html#gab328276aed167b3f028b627b84a9c326">More...</a><br/></td></tr>
+<tr class="separator:gab328276aed167b3f028b627b84a9c326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37faac44a47580dd5b803a2d2609359c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca8bfef935c6c1b4e9f8ab6a783ba65e92">kDA7212_DACGainMute</a> = 0x7, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca484eb6e188f3ec7b92a3ad1e71ad6cbe">kDA7212_DACGainM72DB</a> = 0x17, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359caf26ca8601f9c6c2ca77487a68bef08dc">kDA7212_DACGainM60DB</a> = 0x1F, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca2ac8ed6017a7a3b4e49be5758b4494c3">kDA7212_DACGainM54DB</a> = 0x27, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca9b14c521981de0ef10907fd061f15e88">kDA7212_DACGainM48DB</a> = 0x2F, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca7f7cdc2b1fb01133c70f59dcd88e8b29">kDA7212_DACGainM42DB</a> = 0x37, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca962467e3eeee640374d1251ba55e54ab">kDA7212_DACGainM36DB</a> = 0x3F, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca37f8a4f380c06d29170af08ec0bd9455">kDA7212_DACGainM30DB</a> = 0x47, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca35b5d452d7ff01bb50c7036dfdc4a3c4">kDA7212_DACGainM24DB</a> = 0x4F, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca88b0f22e91fa5765961f65649d398cd1">kDA7212_DACGainM18DB</a> = 0x57, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca3fb7c057f7a29e43c3198fe71de8d9ee">kDA7212_DACGainM12DB</a> = 0x5F, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca4b1594dfd4b2839cb3e16244d2d4add9">kDA7212_DACGainM6DB</a> = 0x67, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359caa49f74be4c508f1ebaf771268aa59461">kDA7212_DACGain0DB</a> = 0x6F, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca207d817045357758bbe5cd18f3ff7725">kDA7212_DACGain6DB</a> = 0x77, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga37faac44a47580dd5b803a2d2609359ca78e6ab8ae6e4e87b1b15ed80e82acdc2">kDA7212_DACGain12DB</a> = 0x7F
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga37faac44a47580dd5b803a2d2609359c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 volume.  <a href="a00018.html#ga37faac44a47580dd5b803a2d2609359c">More...</a><br/></td></tr>
+<tr class="separator:ga37faac44a47580dd5b803a2d2609359c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95ce2c0556d9642f3133e53f6097fdd3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#gga95ce2c0556d9642f3133e53f6097fdd3a18e44e5377bce7294db432a1e82d508b">kDA7212_BusI2S</a> = 0x0, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga95ce2c0556d9642f3133e53f6097fdd3a5c90ce6d3cbf97f6f36ea37b2715ed3b">kDA7212_BusLeftJustified</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga95ce2c0556d9642f3133e53f6097fdd3a9a78835b4b39c468cf24af8cd1ecd578">kDA7212_BusRightJustified</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga95ce2c0556d9642f3133e53f6097fdd3ac6db42a81b0ab7fc8a773bc88392fb17">kDA7212_BusDSPMode</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga95ce2c0556d9642f3133e53f6097fdd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="a00018.html#ga95ce2c0556d9642f3133e53f6097fdd3">More...</a><br/></td></tr>
+<tr class="separator:ga95ce2c0556d9642f3133e53f6097fdd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fb666a4f56fc1bc022919487515a037"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga5fb666a4f56fc1bc022919487515a037">da7212_sys_clk_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#gga5fb666a4f56fc1bc022919487515a037a5418f800a758518588cfcf97bc11cbec">kDA7212_SysClkSourceMCLK</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga5fb666a4f56fc1bc022919487515a037a91322381925bb3cf69b1bfca9c277bfb">kDA7212_SysClkSourcePLL</a> = 1U &lt;&lt; 14
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga5fb666a4f56fc1bc022919487515a037"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 system clock source  <a href="a00018.html#ga5fb666a4f56fc1bc022919487515a037">More...</a><br/></td></tr>
+<tr class="separator:ga5fb666a4f56fc1bc022919487515a037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga971f3ba35a3d9116393781ea426f132c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga971f3ba35a3d9116393781ea426f132c">da7212_pll_clk_source_t</a> { <a class="el" href="a00018.html#gga971f3ba35a3d9116393781ea426f132ca9f97bdd4ba7ae0086bcc7b0cfbe370c0">kDA7212_PLLClkSourceMCLK</a> = 0U
+ }</td></tr>
+<tr class="memdesc:ga971f3ba35a3d9116393781ea426f132c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 pll clock source.  <a href="a00018.html#ga971f3ba35a3d9116393781ea426f132c">More...</a><br/></td></tr>
+<tr class="separator:ga971f3ba35a3d9116393781ea426f132c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d67062344f0a51e6ac913248b132527"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga1d67062344f0a51e6ac913248b132527">da7212_pll_out_clk_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#gga1d67062344f0a51e6ac913248b132527a94d10bd8eafa96c0b137354bb6a2670c">kDA7212_PLLOutputClk11289600</a> = 11289600U, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#gga1d67062344f0a51e6ac913248b132527a0a1474e7a85354aa8e99b48ea51fb2a0">kDA7212_PLLOutputClk12288000</a> = 12288000U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1d67062344f0a51e6ac913248b132527"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 output clock frequency.  <a href="a00018.html#ga1d67062344f0a51e6ac913248b132527">More...</a><br/></td></tr>
+<tr class="separator:ga1d67062344f0a51e6ac913248b132527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd73a9c763b4c3835514062492201a8e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gacd73a9c763b4c3835514062492201a8e">da7212_master_bits_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00018.html#ggacd73a9c763b4c3835514062492201a8eacf2700e04e95db0583f92597a106367a">kDA7212_MasterBits32PerFrame</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#ggacd73a9c763b4c3835514062492201a8ea4aaccfde0d4dbfc24913e8437d8c6ffb">kDA7212_MasterBits64PerFrame</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#ggacd73a9c763b4c3835514062492201a8eae839316f7659cd0933930ad43f11ff0a">kDA7212_MasterBits128PerFrame</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00018.html#ggacd73a9c763b4c3835514062492201a8eaa20340ec29a73f7043914e43a6e21777">kDA7212_MasterBits256PerFrame</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gacd73a9c763b4c3835514062492201a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">master mode bits per frame  <a href="a00018.html#gacd73a9c763b4c3835514062492201a8e">More...</a><br/></td></tr>
+<tr class="separator:gacd73a9c763b4c3835514062492201a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaca2d591c1f37ac9459f5337656c2e903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gaca2d591c1f37ac9459f5337656c2e903">DA7212_Init</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, <a class="el" href="a00018.html#a00368">da7212_config_t</a> *codecConfig)</td></tr>
+<tr class="memdesc:gaca2d591c1f37ac9459f5337656c2e903"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 initialize function.  <a href="#gaca2d591c1f37ac9459f5337656c2e903">More...</a><br/></td></tr>
+<tr class="separator:gaca2d591c1f37ac9459f5337656c2e903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f91e332b894c7eb33de61f5abf0e3bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga5f91e332b894c7eb33de61f5abf0e3bd">DA7212_ConfigAudioFormat</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, uint32_t masterClock_Hz, uint32_t sampleRate_Hz, uint32_t dataBits)</td></tr>
+<tr class="memdesc:ga5f91e332b894c7eb33de61f5abf0e3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set DA7212 audio format.  <a href="#ga5f91e332b894c7eb33de61f5abf0e3bd">More...</a><br/></td></tr>
+<tr class="separator:ga5f91e332b894c7eb33de61f5abf0e3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga329eba3a6075fcd97e63ccc4013a669e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga329eba3a6075fcd97e63ccc4013a669e">DA7212_SetPLLConfig</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, <a class="el" href="a00018.html#a00370">da7212_pll_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga329eba3a6075fcd97e63ccc4013a669e"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 set PLL configuration This function will enable the GPIO1 FLL clock output function, so user can see the generated fll output clock frequency from WM8904 GPIO1.  <a href="#ga329eba3a6075fcd97e63ccc4013a669e">More...</a><br/></td></tr>
+<tr class="separator:ga329eba3a6075fcd97e63ccc4013a669e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c8f47cd9f8a4490b35d2c731439a267"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga6c8f47cd9f8a4490b35d2c731439a267">DA7212_ChangeHPVolume</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, <a class="el" href="a00018.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a> volume)</td></tr>
+<tr class="memdesc:ga6c8f47cd9f8a4490b35d2c731439a267"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set DA7212 playback volume.  <a href="#ga6c8f47cd9f8a4490b35d2c731439a267">More...</a><br/></td></tr>
+<tr class="separator:ga6c8f47cd9f8a4490b35d2c731439a267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7cbf1d02cfd35123392c0aae6c528f79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga7cbf1d02cfd35123392c0aae6c528f79">DA7212_Mute</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, bool isMuted)</td></tr>
+<tr class="memdesc:ga7cbf1d02cfd35123392c0aae6c528f79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute or unmute DA7212.  <a href="#ga7cbf1d02cfd35123392c0aae6c528f79">More...</a><br/></td></tr>
+<tr class="separator:ga7cbf1d02cfd35123392c0aae6c528f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52f775b79e8de5f489b995d1f4c7fe31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga52f775b79e8de5f489b995d1f4c7fe31">DA7212_ChangeInput</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, <a class="el" href="a00018.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a> DA7212_Input)</td></tr>
+<tr class="memdesc:ga52f775b79e8de5f489b995d1f4c7fe31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the input data source of DA7212.  <a href="#ga52f775b79e8de5f489b995d1f4c7fe31">More...</a><br/></td></tr>
+<tr class="separator:ga52f775b79e8de5f489b995d1f4c7fe31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6cebcf917e9d9ce4f69828c701c6a6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gab6cebcf917e9d9ce4f69828c701c6a6d">DA7212_ChangeOutput</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, <a class="el" href="a00018.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a> DA7212_Output)</td></tr>
+<tr class="memdesc:gab6cebcf917e9d9ce4f69828c701c6a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the output device of DA7212.  <a href="#gab6cebcf917e9d9ce4f69828c701c6a6d">More...</a><br/></td></tr>
+<tr class="separator:gab6cebcf917e9d9ce4f69828c701c6a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8dd935197f63a10d9daf23ac96904416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga8dd935197f63a10d9daf23ac96904416">DA7212_SetChannelVolume</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, uint32_t channel, uint32_t volume)</td></tr>
+<tr class="memdesc:ga8dd935197f63a10d9daf23ac96904416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set module volume.  <a href="#ga8dd935197f63a10d9daf23ac96904416">More...</a><br/></td></tr>
+<tr class="separator:ga8dd935197f63a10d9daf23ac96904416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71c6871ed8dc5bc01201265e0139ae61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga71c6871ed8dc5bc01201265e0139ae61">DA7212_SetChannelMute</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, uint32_t channel, bool isMute)</td></tr>
+<tr class="memdesc:ga71c6871ed8dc5bc01201265e0139ae61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set module mute.  <a href="#ga71c6871ed8dc5bc01201265e0139ae61">More...</a><br/></td></tr>
+<tr class="separator:ga71c6871ed8dc5bc01201265e0139ae61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b83af3d6dec6892ec345c54af419942"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga5b83af3d6dec6892ec345c54af419942">DA7212_SetProtocol</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, <a class="el" href="a00018.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a> protocol)</td></tr>
+<tr class="memdesc:ga5b83af3d6dec6892ec345c54af419942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set protocol for DA7212.  <a href="#ga5b83af3d6dec6892ec345c54af419942">More...</a><br/></td></tr>
+<tr class="separator:ga5b83af3d6dec6892ec345c54af419942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga700245cf97e29af9f3aa3402b032094a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga700245cf97e29af9f3aa3402b032094a">DA7212_SetMasterModeBits</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, uint32_t bitWidth)</td></tr>
+<tr class="memdesc:ga700245cf97e29af9f3aa3402b032094a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set master mode bits per frame for DA7212.  <a href="#ga700245cf97e29af9f3aa3402b032094a">More...</a><br/></td></tr>
+<tr class="separator:ga700245cf97e29af9f3aa3402b032094a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabda1a52e4795473357f4561633e07591"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gabda1a52e4795473357f4561633e07591">DA7212_WriteRegister</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, uint8_t u8Register, uint8_t u8RegisterData)</td></tr>
+<tr class="memdesc:gabda1a52e4795473357f4561633e07591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a register for DA7212.  <a href="#gabda1a52e4795473357f4561633e07591">More...</a><br/></td></tr>
+<tr class="separator:gabda1a52e4795473357f4561633e07591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b445705c324d49effc257f7b3265c92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga5b445705c324d49effc257f7b3265c92">DA7212_ReadRegister</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle, uint8_t u8Register, uint8_t *pu8RegisterData)</td></tr>
+<tr class="memdesc:ga5b445705c324d49effc257f7b3265c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a register value of DA7212.  <a href="#ga5b445705c324d49effc257f7b3265c92">More...</a><br/></td></tr>
+<tr class="separator:ga5b445705c324d49effc257f7b3265c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52aaf202346af12d3932bd467a412f59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga52aaf202346af12d3932bd467a412f59">DA7212_Deinit</a> (<a class="el" href="a00018.html#a00369">da7212_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga52aaf202346af12d3932bd467a412f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit DA7212.  <a href="#ga52aaf202346af12d3932bd467a412f59">More...</a><br/></td></tr>
+<tr class="separator:ga52aaf202346af12d3932bd467a412f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gade63427da706b28f4bc5fb3df32549fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gade63427da706b28f4bc5fb3df32549fc">DCDC_Init</a> (DCDC_Type *base)</td></tr>
-<tr class="memdesc:gade63427da706b28f4bc5fb3df32549fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the access to DCDC registers.  <a href="#gade63427da706b28f4bc5fb3df32549fc">More...</a><br/></td></tr>
-<tr class="separator:gade63427da706b28f4bc5fb3df32549fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6edcfa7b584ed32abeba4aa1ead354b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga6edcfa7b584ed32abeba4aa1ead354b5">DCDC_Deinit</a> (DCDC_Type *base)</td></tr>
-<tr class="memdesc:ga6edcfa7b584ed32abeba4aa1ead354b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the access to DCDC registers.  <a href="#ga6edcfa7b584ed32abeba4aa1ead354b5">More...</a><br/></td></tr>
-<tr class="separator:ga6edcfa7b584ed32abeba4aa1ead354b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:ga0e05ffe0195a4997353dd066266028e2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga0e05ffe0195a4997353dd066266028e2">DCDC_GetstatusFlags</a> (DCDC_Type *base)</td></tr>
-<tr class="memdesc:ga0e05ffe0195a4997353dd066266028e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get DCDC status flags.  <a href="#ga0e05ffe0195a4997353dd066266028e2">More...</a><br/></td></tr>
-<tr class="separator:ga0e05ffe0195a4997353dd066266028e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Misc control</h2></td></tr>
-<tr class="memitem:gad851aa409cd7a30afd61f1033650ddc4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gad851aa409cd7a30afd61f1033650ddc4">DCDC_EnableOutputRangeComparator</a> (DCDC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gad851aa409cd7a30afd61f1033650ddc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the output range comparator.  <a href="#gad851aa409cd7a30afd61f1033650ddc4">More...</a><br/></td></tr>
-<tr class="separator:gad851aa409cd7a30afd61f1033650ddc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2fae2a0e5c2bc54cc47fa4e6cbe53f37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga2fae2a0e5c2bc54cc47fa4e6cbe53f37">DCDC_SetClockSource</a> (DCDC_Type *base, <a class="el" href="a00018.html#ga8035a76b241261c80ef27c1c2baf614b">dcdc_clock_source_t</a> clockSource)</td></tr>
-<tr class="memdesc:ga2fae2a0e5c2bc54cc47fa4e6cbe53f37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the DCDC clock source.  <a href="#ga2fae2a0e5c2bc54cc47fa4e6cbe53f37">More...</a><br/></td></tr>
-<tr class="separator:ga2fae2a0e5c2bc54cc47fa4e6cbe53f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabecb64bff81d824c22e7dd58962496b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gabecb64bff81d824c22e7dd58962496b4">DCDC_GetDefaultDetectionConfig</a> (<a class="el" href="a00018.html#a00356">dcdc_detection_config_t</a> *config)</td></tr>
-<tr class="memdesc:gabecb64bff81d824c22e7dd58962496b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default setting for detection configuration.  <a href="#gabecb64bff81d824c22e7dd58962496b4">More...</a><br/></td></tr>
-<tr class="separator:gabecb64bff81d824c22e7dd58962496b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga88dcfe2c525f75e118e922ba398b4867"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga88dcfe2c525f75e118e922ba398b4867">DCDC_SetDetectionConfig</a> (DCDC_Type *base, const <a class="el" href="a00018.html#a00356">dcdc_detection_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga88dcfe2c525f75e118e922ba398b4867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the DCDC detection.  <a href="#ga88dcfe2c525f75e118e922ba398b4867">More...</a><br/></td></tr>
-<tr class="separator:ga88dcfe2c525f75e118e922ba398b4867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07748a20a7c73fd8be68c4e9ede83535"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga07748a20a7c73fd8be68c4e9ede83535">DCDC_GetDefaultLowPowerConfig</a> (<a class="el" href="a00018.html#a00359">dcdc_low_power_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga07748a20a7c73fd8be68c4e9ede83535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default setting for low power configuration.  <a href="#ga07748a20a7c73fd8be68c4e9ede83535">More...</a><br/></td></tr>
-<tr class="separator:ga07748a20a7c73fd8be68c4e9ede83535"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b9c2837458d92e1924b899f883e0c6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga0b9c2837458d92e1924b899f883e0c6d">DCDC_SetLowPowerConfig</a> (DCDC_Type *base, const <a class="el" href="a00018.html#a00359">dcdc_low_power_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga0b9c2837458d92e1924b899f883e0c6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the DCDC low power.  <a href="#ga0b9c2837458d92e1924b899f883e0c6d">More...</a><br/></td></tr>
-<tr class="separator:ga0b9c2837458d92e1924b899f883e0c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c4e86095eafae5ff4fba2a83eb76444"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga0c4e86095eafae5ff4fba2a83eb76444">DCDC_ResetCurrentAlertSignal</a> (DCDC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga0c4e86095eafae5ff4fba2a83eb76444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset current alert signal.  <a href="#ga0c4e86095eafae5ff4fba2a83eb76444">More...</a><br/></td></tr>
-<tr class="separator:ga0c4e86095eafae5ff4fba2a83eb76444"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57083b91091e830c66f01fb915883721"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga57083b91091e830c66f01fb915883721">DCDC_SetBandgapVoltageTrimValue</a> (DCDC_Type *base, uint32_t trimValue)</td></tr>
-<tr class="memdesc:ga57083b91091e830c66f01fb915883721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the bangap trim value to trim bandgap voltage.  <a href="#ga57083b91091e830c66f01fb915883721">More...</a><br/></td></tr>
-<tr class="separator:ga57083b91091e830c66f01fb915883721"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga18d9f9a178e395a6f8412c60f1af99eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga18d9f9a178e395a6f8412c60f1af99eb">DCDC_GetDefaultLoopControlConfig</a> (<a class="el" href="a00018.html#a00358">dcdc_loop_control_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga18d9f9a178e395a6f8412c60f1af99eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default setting for loop control configuration.  <a href="#ga18d9f9a178e395a6f8412c60f1af99eb">More...</a><br/></td></tr>
-<tr class="separator:ga18d9f9a178e395a6f8412c60f1af99eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0b6cb34a3c948cdc225f8e1cb055e34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gaf0b6cb34a3c948cdc225f8e1cb055e34">DCDC_SetLoopControlConfig</a> (DCDC_Type *base, const <a class="el" href="a00018.html#a00358">dcdc_loop_control_config_t</a> *config)</td></tr>
-<tr class="memdesc:gaf0b6cb34a3c948cdc225f8e1cb055e34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the DCDC loop control.  <a href="#gaf0b6cb34a3c948cdc225f8e1cb055e34">More...</a><br/></td></tr>
-<tr class="separator:gaf0b6cb34a3c948cdc225f8e1cb055e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02d7fde9dea0d6e88559e28f6547c0eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga02d7fde9dea0d6e88559e28f6547c0eb">DCDC_SetMinPowerConfig</a> (DCDC_Type *base, const <a class="el" href="a00018.html#a00360">dcdc_min_power_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga02d7fde9dea0d6e88559e28f6547c0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure for the min power.  <a href="#ga02d7fde9dea0d6e88559e28f6547c0eb">More...</a><br/></td></tr>
-<tr class="separator:ga02d7fde9dea0d6e88559e28f6547c0eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98fb67e98a2393ff32ee5aa8877aded0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga98fb67e98a2393ff32ee5aa8877aded0">DCDC_SetLPComparatorBiasValue</a> (DCDC_Type *base, <a class="el" href="a00018.html#ga11a431a6377193c7ecb973f72fee13fa">dcdc_comparator_current_bias_t</a> biasVaule)</td></tr>
-<tr class="memdesc:ga98fb67e98a2393ff32ee5aa8877aded0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current bias of low power comparator.  <a href="#ga98fb67e98a2393ff32ee5aa8877aded0">More...</a><br/></td></tr>
-<tr class="separator:ga98fb67e98a2393ff32ee5aa8877aded0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga017537be6f0c499b39abf56a6df58dba"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga017537be6f0c499b39abf56a6df58dba">DCDC_LockTargetVoltage</a> (DCDC_Type *base)</td></tr>
-<tr class="memdesc:ga017537be6f0c499b39abf56a6df58dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock target voltage.  <a href="#ga017537be6f0c499b39abf56a6df58dba">More...</a><br/></td></tr>
-<tr class="separator:ga017537be6f0c499b39abf56a6df58dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga18a67ce4a510d87ddb60d049c5a2a413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga18a67ce4a510d87ddb60d049c5a2a413">DCDC_AdjustTargetVoltage</a> (DCDC_Type *base, uint32_t VDDRun, uint32_t VDDStandby)</td></tr>
-<tr class="memdesc:ga18a67ce4a510d87ddb60d049c5a2a413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust the target voltage of VDD_SOC in run mode and low power mode.  <a href="#ga18a67ce4a510d87ddb60d049c5a2a413">More...</a><br/></td></tr>
-<tr class="separator:ga18a67ce4a510d87ddb60d049c5a2a413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga68b8a87cb61c4d6d6f12be19de101122"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga68b8a87cb61c4d6d6f12be19de101122">DCDC_AdjustRunTargetVoltage</a> (DCDC_Type *base, uint32_t VDDRun)</td></tr>
-<tr class="memdesc:ga68b8a87cb61c4d6d6f12be19de101122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust the target voltage of VDD_SOC in run mode.  <a href="#ga68b8a87cb61c4d6d6f12be19de101122">More...</a><br/></td></tr>
-<tr class="separator:ga68b8a87cb61c4d6d6f12be19de101122"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3ac5a0ad9ac0448b6f7d73eb7f53ad97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga3ac5a0ad9ac0448b6f7d73eb7f53ad97">DCDC_AdjustLowPowerTargetVoltage</a> (DCDC_Type *base, uint32_t VDDStandby)</td></tr>
-<tr class="memdesc:ga3ac5a0ad9ac0448b6f7d73eb7f53ad97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust the target voltage of VDD_SOC in low power mode.  <a href="#ga3ac5a0ad9ac0448b6f7d73eb7f53ad97">More...</a><br/></td></tr>
-<tr class="separator:ga3ac5a0ad9ac0448b6f7d73eb7f53ad97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga156e3a02981fc97856c26a98ac5ef8e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga156e3a02981fc97856c26a98ac5ef8e4">DCDC_SetInternalRegulatorConfig</a> (DCDC_Type *base, const <a class="el" href="a00018.html#a00357">dcdc_internal_regulator_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga156e3a02981fc97856c26a98ac5ef8e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the DCDC internal regulator.  <a href="#ga156e3a02981fc97856c26a98ac5ef8e4">More...</a><br/></td></tr>
-<tr class="separator:ga156e3a02981fc97856c26a98ac5ef8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga26e177d70e32f43b64e3fa953efd8571"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga26e177d70e32f43b64e3fa953efd8571">DCDC_EnableImproveTransition</a> (DCDC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga26e177d70e32f43b64e3fa953efd8571"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable to improve the transition from heavy load to light load.  <a href="#ga26e177d70e32f43b64e3fa953efd8571">More...</a><br/></td></tr>
-<tr class="separator:ga26e177d70e32f43b64e3fa953efd8571"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Application guideline</h2></td></tr>
-<tr class="memitem:gab60fd96fbcd6971e217a16bb74ef85e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gab60fd96fbcd6971e217a16bb74ef85e3">DCDC_BootIntoDCM</a> (DCDC_Type *base)</td></tr>
-<tr class="memdesc:gab60fd96fbcd6971e217a16bb74ef85e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boot DCDC into DCM(discontinous conduction mode).  <a href="#gab60fd96fbcd6971e217a16bb74ef85e3">More...</a><br/></td></tr>
-<tr class="separator:gab60fd96fbcd6971e217a16bb74ef85e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7b765330b8a888f7e681cb0f9d6307b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gab7b765330b8a888f7e681cb0f9d6307b">DCDC_BootIntoCCM</a> (DCDC_Type *base)</td></tr>
-<tr class="memdesc:gab7b765330b8a888f7e681cb0f9d6307b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boot DCDC into CCM(continous conduction mode).  <a href="#gab7b765330b8a888f7e681cb0f9d6307b">More...</a><br/></td></tr>
-<tr class="separator:gab7b765330b8a888f7e681cb0f9d6307b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Driver version</h2></td></tr>
+<tr class="memitem:ga6b767b2e541d6394c4265ada63c0dec6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga6b767b2e541d6394c4265ada63c0dec6">FSL_DA7212_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 3))</td></tr>
+<tr class="memdesc:ga6b767b2e541d6394c4265ada63c0dec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.2.3.  <a href="#ga6b767b2e541d6394c4265ada63c0dec6">More...</a><br/></td></tr>
+<tr class="separator:ga6b767b2e541d6394c4265ada63c0dec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00356" id="a00356"></a>
+<a name="a00370" id="a00370"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct dcdc_detection_config_t</td>
+          <td class="memname">struct da7212_pll_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a26388a555904c467f343d5cee515f268"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a26388a555904c467f343d5cee515f268">enableXtalokDetection</a></td></tr>
-<tr class="memdesc:a26388a555904c467f343d5cee515f268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable xtalok detection circuit.  <a href="#a26388a555904c467f343d5cee515f268">More...</a><br/></td></tr>
-<tr class="separator:a26388a555904c467f343d5cee515f268"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade909492fceb456669197dc2375b66e0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ade909492fceb456669197dc2375b66e0">powerDownOverVoltageDetection</a></td></tr>
-<tr class="memdesc:ade909492fceb456669197dc2375b66e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power down over-voltage detection comparator.  <a href="#ade909492fceb456669197dc2375b66e0">More...</a><br/></td></tr>
-<tr class="separator:ade909492fceb456669197dc2375b66e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66c8245327afcaeaea7658dc07cd72f0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a66c8245327afcaeaea7658dc07cd72f0">powerDownLowVlotageDetection</a></td></tr>
-<tr class="memdesc:a66c8245327afcaeaea7658dc07cd72f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power down low-voltage detection comparator.  <a href="#a66c8245327afcaeaea7658dc07cd72f0">More...</a><br/></td></tr>
-<tr class="separator:a66c8245327afcaeaea7658dc07cd72f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6782ff659baff137d41d8945b5ae6e7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a6782ff659baff137d41d8945b5ae6e7c">powerDownOverCurrentDetection</a></td></tr>
-<tr class="memdesc:a6782ff659baff137d41d8945b5ae6e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power down over-current detection.  <a href="#a6782ff659baff137d41d8945b5ae6e7c">More...</a><br/></td></tr>
-<tr class="separator:a6782ff659baff137d41d8945b5ae6e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a260cd48342ce09a1b2c4c79c8d999b2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a260cd48342ce09a1b2c4c79c8d999b2c">powerDownPeakCurrentDetection</a></td></tr>
-<tr class="memdesc:a260cd48342ce09a1b2c4c79c8d999b2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power down peak-current detection.  <a href="#a260cd48342ce09a1b2c4c79c8d999b2c">More...</a><br/></td></tr>
-<tr class="separator:a260cd48342ce09a1b2c4c79c8d999b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab101a2301403aa70d194c5180e18ca3a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ab101a2301403aa70d194c5180e18ca3a">powerDownZeroCrossDetection</a></td></tr>
-<tr class="memdesc:ab101a2301403aa70d194c5180e18ca3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power down the zero cross detection function for discontinuous conductor mode.  <a href="#ab101a2301403aa70d194c5180e18ca3a">More...</a><br/></td></tr>
-<tr class="separator:ab101a2301403aa70d194c5180e18ca3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cbfaed67e0e2e90e77fce311a24e8c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00018.html#gab1ee138d1d60e1357b602b5939890bd7">dcdc_over_current_threshold_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a2cbfaed67e0e2e90e77fce311a24e8c4">OverCurrentThreshold</a></td></tr>
-<tr class="memdesc:a2cbfaed67e0e2e90e77fce311a24e8c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The threshold of over current detection.  <a href="#a2cbfaed67e0e2e90e77fce311a24e8c4">More...</a><br/></td></tr>
-<tr class="separator:a2cbfaed67e0e2e90e77fce311a24e8c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a918a386c698955495c5ae942f8c9d728"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00018.html#gacea8ce1454590ef280751fc9ae4660e4">dcdc_peak_current_threshold_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a918a386c698955495c5ae942f8c9d728">PeakCurrentThreshold</a></td></tr>
-<tr class="memdesc:a918a386c698955495c5ae942f8c9d728"><td class="mdescLeft">&#160;</td><td class="mdescRight">The threshold of peak current detection.  <a href="#a918a386c698955495c5ae942f8c9d728">More...</a><br/></td></tr>
-<tr class="separator:a918a386c698955495c5ae942f8c9d728"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93d832a7b38ce0e5d35cf237ec2e00aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93d832a7b38ce0e5d35cf237ec2e00aa"></a>
+<a class="el" href="a00018.html#ga971f3ba35a3d9116393781ea426f132c">da7212_pll_clk_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a93d832a7b38ce0e5d35cf237ec2e00aa">source</a></td></tr>
+<tr class="memdesc:a93d832a7b38ce0e5d35cf237ec2e00aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll reference clock source <br/></td></tr>
+<tr class="separator:a93d832a7b38ce0e5d35cf237ec2e00aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582daa483484e1b8af88e38a7786a011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a582daa483484e1b8af88e38a7786a011"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a582daa483484e1b8af88e38a7786a011">refClock_HZ</a></td></tr>
+<tr class="memdesc:a582daa483484e1b8af88e38a7786a011"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll reference clock frequency <br/></td></tr>
+<tr class="separator:a582daa483484e1b8af88e38a7786a011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa437baa5261123cd810488ac65e201dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa437baa5261123cd810488ac65e201dd"></a>
+<a class="el" href="a00018.html#ga1d67062344f0a51e6ac913248b132527">da7212_pll_out_clk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#aa437baa5261123cd810488ac65e201dd">outputClock_HZ</a></td></tr>
+<tr class="memdesc:aa437baa5261123cd810488ac65e201dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll output clock frequency <br/></td></tr>
+<tr class="separator:aa437baa5261123cd810488ac65e201dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a26388a555904c467f343d5cee515f268"></a>
+
+</div>
+</div>
+<a name="a00367" id="a00367"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dcdc_detection_config_t::enableXtalokDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ade909492fceb456669197dc2375b66e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_detection_config_t::powerDownOverVoltageDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a66c8245327afcaeaea7658dc07cd72f0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_detection_config_t::powerDownLowVlotageDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6782ff659baff137d41d8945b5ae6e7c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_detection_config_t::powerDownOverCurrentDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a260cd48342ce09a1b2c4c79c8d999b2c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_detection_config_t::powerDownPeakCurrentDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab101a2301403aa70d194c5180e18ca3a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_detection_config_t::powerDownZeroCrossDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2cbfaed67e0e2e90e77fce311a24e8c4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00018.html#gab1ee138d1d60e1357b602b5939890bd7">dcdc_over_current_threshold_t</a> dcdc_detection_config_t::OverCurrentThreshold</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a918a386c698955495c5ae942f8c9d728"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00018.html#gacea8ce1454590ef280751fc9ae4660e4">dcdc_peak_current_threshold_t</a> dcdc_detection_config_t::PeakCurrentThreshold</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00358" id="a00358"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct dcdc_loop_control_config_t</td>
+          <td class="memname">struct da7212_audio_format_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aa585f6efdba3cb2bc66b4c658c0b0e80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#aa585f6efdba3cb2bc66b4c658c0b0e80">enableCommonHysteresis</a></td></tr>
-<tr class="memdesc:aa585f6efdba3cb2bc66b4c658c0b0e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable hysteresis in switching converter common mode analog comparators.  <a href="#aa585f6efdba3cb2bc66b4c658c0b0e80">More...</a><br/></td></tr>
-<tr class="separator:aa585f6efdba3cb2bc66b4c658c0b0e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5a97673aa667b4aeb7549173d4e8516"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ad5a97673aa667b4aeb7549173d4e8516">enableCommonThresholdDetection</a></td></tr>
-<tr class="memdesc:ad5a97673aa667b4aeb7549173d4e8516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the threshold detection for common mode analog comparator.  <a href="#ad5a97673aa667b4aeb7549173d4e8516">More...</a><br/></td></tr>
-<tr class="separator:ad5a97673aa667b4aeb7549173d4e8516"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc343fa7b91648dd8823d261c9cf4ab7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#afc343fa7b91648dd8823d261c9cf4ab7">enableInvertHysteresisSign</a></td></tr>
-<tr class="memdesc:afc343fa7b91648dd8823d261c9cf4ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invert the sign of the hysteresis in DC-DC analog comparators.  <a href="#afc343fa7b91648dd8823d261c9cf4ab7">More...</a><br/></td></tr>
-<tr class="separator:afc343fa7b91648dd8823d261c9cf4ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a547376d7c56bad98ea1effc3a45f84"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a9a547376d7c56bad98ea1effc3a45f84">enableRCThresholdDetection</a></td></tr>
-<tr class="memdesc:a9a547376d7c56bad98ea1effc3a45f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the threshold detection for RC scale circuit.  <a href="#a9a547376d7c56bad98ea1effc3a45f84">More...</a><br/></td></tr>
-<tr class="separator:a9a547376d7c56bad98ea1effc3a45f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a858dc72ad7c5c7d9222a88e38000aeaf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a858dc72ad7c5c7d9222a88e38000aeaf">enableRCScaleCircuit</a></td></tr>
-<tr class="memdesc:a858dc72ad7c5c7d9222a88e38000aeaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Available range is 0~7.  <a href="#a858dc72ad7c5c7d9222a88e38000aeaf">More...</a><br/></td></tr>
-<tr class="separator:a858dc72ad7c5c7d9222a88e38000aeaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82a1dd02ed11c6788782084e2645a388"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a82a1dd02ed11c6788782084e2645a388">complementFeedForwardStep</a></td></tr>
-<tr class="memdesc:a82a1dd02ed11c6788782084e2645a388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Available range is 0~7.  <a href="#a82a1dd02ed11c6788782084e2645a388">More...</a><br/></td></tr>
-<tr class="separator:a82a1dd02ed11c6788782084e2645a388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3b11f4616fc011852a6f06e644c00d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3b11f4616fc011852a6f06e644c00d9"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ae3b11f4616fc011852a6f06e644c00d9">mclk_HZ</a></td></tr>
+<tr class="memdesc:ae3b11f4616fc011852a6f06e644c00d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">master clock frequency <br/></td></tr>
+<tr class="separator:ae3b11f4616fc011852a6f06e644c00d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6724afaf87a4ae3535217ae5dff41e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6724afaf87a4ae3535217ae5dff41e9"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ae6724afaf87a4ae3535217ae5dff41e9">sampleRate</a></td></tr>
+<tr class="memdesc:ae6724afaf87a4ae3535217ae5dff41e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">sample rate <br/></td></tr>
+<tr class="separator:ae6724afaf87a4ae3535217ae5dff41e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accbab6c50b115c5bf9baec30c8d98b64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accbab6c50b115c5bf9baec30c8d98b64"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#accbab6c50b115c5bf9baec30c8d98b64">bitWidth</a></td></tr>
+<tr class="memdesc:accbab6c50b115c5bf9baec30c8d98b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit width <br/></td></tr>
+<tr class="separator:accbab6c50b115c5bf9baec30c8d98b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19793f6a920f5ff213b39025f80e7a97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19793f6a920f5ff213b39025f80e7a97"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a19793f6a920f5ff213b39025f80e7a97">isBclkInvert</a></td></tr>
+<tr class="memdesc:a19793f6a920f5ff213b39025f80e7a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit clock intervet <br/></td></tr>
+<tr class="separator:a19793f6a920f5ff213b39025f80e7a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aa585f6efdba3cb2bc66b4c658c0b0e80"></a>
+
+</div>
+</div>
+<a name="a00368" id="a00368"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dcdc_loop_control_config_t::enableCommonHysteresis</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This feature will improve transient supply ripple and efficiency. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad5a97673aa667b4aeb7549173d4e8516"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_loop_control_config_t::enableCommonThresholdDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="afc343fa7b91648dd8823d261c9cf4ab7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_loop_control_config_t::enableInvertHysteresisSign</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9a547376d7c56bad98ea1effc3a45f84"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_loop_control_config_t::enableRCThresholdDetection</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a858dc72ad7c5c7d9222a88e38000aeaf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dcdc_loop_control_config_t::enableRCScaleCircuit</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable analog circuit of DC-DC converter to respond faster under transient load conditions. </p>
-
-</div>
-</div>
-<a class="anchor" id="a82a1dd02ed11c6788782084e2645a388"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dcdc_loop_control_config_t::complementFeedForwardStep</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Two's complement feed forward step in duty cycle in the switching DC-DC converter. Each time this field makes a transition from 0x0, the loop filter of the DC-DC converter is stepped once by a value proportional to the change. This can be used to force a certain control loop behavior, such as improving response under known heavy load transients. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00359" id="a00359"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct dcdc_low_power_config_t</td>
+          <td class="memname">struct da7212_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a0b5eac5db5131a800abf4d9094239a12"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a0b5eac5db5131a800abf4d9094239a12">enableOverloadDetection</a></td></tr>
-<tr class="memdesc:a0b5eac5db5131a800abf4d9094239a12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the overload detection in power save mode, if current is larger than the overloading threshold (typical value is 50 mA), DCDC will switch to the run mode automatically.  <a href="#a0b5eac5db5131a800abf4d9094239a12">More...</a><br/></td></tr>
-<tr class="separator:a0b5eac5db5131a800abf4d9094239a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ba90c8ec3b353714b1db3e3951b5013"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a5ba90c8ec3b353714b1db3e3951b5013">enableAdjustHystereticValue</a></td></tr>
-<tr class="memdesc:a5ba90c8ec3b353714b1db3e3951b5013"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust hysteretic value in low power from 12.5mV to 25mV.  <a href="#a5ba90c8ec3b353714b1db3e3951b5013">More...</a><br/></td></tr>
-<tr class="separator:a5ba90c8ec3b353714b1db3e3951b5013"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae490cc4c07715bb317d3d67d964a3372"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00018.html#gad5473e4ea54bf7ceb0d994dbbcf135c1">dcdc_count_charging_time_period_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ae490cc4c07715bb317d3d67d964a3372">countChargingTimePeriod</a></td></tr>
-<tr class="memdesc:ae490cc4c07715bb317d3d67d964a3372"><td class="mdescLeft">&#160;</td><td class="mdescRight">The period of counting the charging times in power save mode.  <a href="#ae490cc4c07715bb317d3d67d964a3372">More...</a><br/></td></tr>
-<tr class="separator:ae490cc4c07715bb317d3d67d964a3372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a201277744bf77d5a14a0ed9ecbe3ff54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00018.html#ga2cd4c599e216c88088c4f4e2d3371c6d">dcdc_count_charging_time_threshold_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a201277744bf77d5a14a0ed9ecbe3ff54">countChargingTimeThreshold</a></td></tr>
-<tr class="memdesc:a201277744bf77d5a14a0ed9ecbe3ff54"><td class="mdescLeft">&#160;</td><td class="mdescRight">the threshold of the counting number of charging times during the period that lp_overload_freq_sel sets in power save mode.  <a href="#a201277744bf77d5a14a0ed9ecbe3ff54">More...</a><br/></td></tr>
-<tr class="separator:a201277744bf77d5a14a0ed9ecbe3ff54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63d48e3ee5e54914cc76eeff817c33b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a63d48e3ee5e54914cc76eeff817c33b4">isMaster</a></td></tr>
+<tr class="memdesc:a63d48e3ee5e54914cc76eeff817c33b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">If DA7212 is master, true means master, false means slave.  <a href="#a63d48e3ee5e54914cc76eeff817c33b4">More...</a><br/></td></tr>
+<tr class="separator:a63d48e3ee5e54914cc76eeff817c33b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0df2c7119a0c2e16db9c3bc18c399df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00018.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ac0df2c7119a0c2e16db9c3bc18c399df">protocol</a></td></tr>
+<tr class="memdesc:ac0df2c7119a0c2e16db9c3bc18c399df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio bus format, can be I2S, LJ, RJ or DSP mode.  <a href="#ac0df2c7119a0c2e16db9c3bc18c399df">More...</a><br/></td></tr>
+<tr class="separator:ac0df2c7119a0c2e16db9c3bc18c399df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29cfee6ec8bb4c99b6659686074dcc22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00018.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a29cfee6ec8bb4c99b6659686074dcc22">dacSource</a></td></tr>
+<tr class="memdesc:a29cfee6ec8bb4c99b6659686074dcc22"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 data source.  <a href="#a29cfee6ec8bb4c99b6659686074dcc22">More...</a><br/></td></tr>
+<tr class="separator:a29cfee6ec8bb4c99b6659686074dcc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a6dafa5858a985ed3711c3b427a9a0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a6dafa5858a985ed3711c3b427a9a0b"></a>
+<a class="el" href="a00018.html#a00367">da7212_audio_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a6a6dafa5858a985ed3711c3b427a9a0b">format</a></td></tr>
+<tr class="memdesc:a6a6dafa5858a985ed3711c3b427a9a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio format <br/></td></tr>
+<tr class="separator:a6a6dafa5858a985ed3711c3b427a9a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96c83c71328687c66d5f2647256b2897"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96c83c71328687c66d5f2647256b2897"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a96c83c71328687c66d5f2647256b2897">slaveAddress</a></td></tr>
+<tr class="memdesc:a96c83c71328687c66d5f2647256b2897"><td class="mdescLeft">&#160;</td><td class="mdescRight">device address <br/></td></tr>
+<tr class="separator:a96c83c71328687c66d5f2647256b2897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af81839448e888dfdfd12c37f755dc25d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af81839448e888dfdfd12c37f755dc25d"></a>
+<a class="el" href="a00015.html#a00362">codec_i2c_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#af81839448e888dfdfd12c37f755dc25d">i2cConfig</a></td></tr>
+<tr class="memdesc:af81839448e888dfdfd12c37f755dc25d"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c configuration <br/></td></tr>
+<tr class="separator:af81839448e888dfdfd12c37f755dc25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a545d9de5fb4daa0eeea6e23ddab53e00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a545d9de5fb4daa0eeea6e23ddab53e00"></a>
+<a class="el" href="a00018.html#ga5fb666a4f56fc1bc022919487515a037">da7212_sys_clk_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a545d9de5fb4daa0eeea6e23ddab53e00">sysClkSource</a></td></tr>
+<tr class="memdesc:a545d9de5fb4daa0eeea6e23ddab53e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">system clock source <br/></td></tr>
+<tr class="separator:a545d9de5fb4daa0eeea6e23ddab53e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aece86acd54a2e5dc52e3216ddd7bc262"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aece86acd54a2e5dc52e3216ddd7bc262"></a>
+<a class="el" href="a00018.html#a00370">da7212_pll_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#aece86acd54a2e5dc52e3216ddd7bc262">pll</a></td></tr>
+<tr class="memdesc:aece86acd54a2e5dc52e3216ddd7bc262"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll configuration <br/></td></tr>
+<tr class="separator:aece86acd54a2e5dc52e3216ddd7bc262"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a0b5eac5db5131a800abf4d9094239a12"></a>
+<a class="anchor" id="a63d48e3ee5e54914cc76eeff817c33b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dcdc_low_power_config_t::enableOverloadDetection</td>
+          <td class="memname">bool da7212_config_t::isMaster</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5ba90c8ec3b353714b1db3e3951b5013"></a>
+<a class="anchor" id="ac0df2c7119a0c2e16db9c3bc18c399df"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dcdc_low_power_config_t::enableAdjustHystereticValue</td>
+          <td class="memname"><a class="el" href="a00018.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a> da7212_config_t::protocol</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae490cc4c07715bb317d3d67d964a3372"></a>
+<a class="anchor" id="a29cfee6ec8bb4c99b6659686074dcc22"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00018.html#gad5473e4ea54bf7ceb0d994dbbcf135c1">dcdc_count_charging_time_period_t</a> dcdc_low_power_config_t::countChargingTimePeriod</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a201277744bf77d5a14a0ed9ecbe3ff54"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00018.html#ga2cd4c599e216c88088c4f4e2d3371c6d">dcdc_count_charging_time_threshold_t</a> dcdc_low_power_config_t::countChargingTimeThreshold</td>
+          <td class="memname"><a class="el" href="a00018.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a> da7212_config_t::dacSource</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -636,356 +462,493 @@ Application guideline</h2></td></tr>
 
 </div>
 </div>
-<a name="a00357" id="a00357"></a>
+<a name="a00369" id="a00369"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct dcdc_internal_regulator_config_t</td>
+          <td class="memname">struct da7212_handle_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac44462711fb30cd01799e287a3a4791e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ac44462711fb30cd01799e287a3a4791e">enableLoadResistor</a></td></tr>
-<tr class="memdesc:ac44462711fb30cd01799e287a3a4791e"><td class="mdescLeft">&#160;</td><td class="mdescRight">control the load resistor of the internal regulator of DCDC, the load resistor is connected as default "true", and need set to "false" to disconnect the load resistor.  <a href="#ac44462711fb30cd01799e287a3a4791e">More...</a><br/></td></tr>
-<tr class="separator:ac44462711fb30cd01799e287a3a4791e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7494dc737ae93a739c944037610372b2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a7494dc737ae93a739c944037610372b2">feedbackPoint</a></td></tr>
-<tr class="memdesc:a7494dc737ae93a739c944037610372b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Available range is 0~3.  <a href="#a7494dc737ae93a739c944037610372b2">More...</a><br/></td></tr>
-<tr class="separator:a7494dc737ae93a739c944037610372b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb416840b7dddbcd19845c98aa307703"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb416840b7dddbcd19845c98aa307703"></a>
+<a class="el" href="a00018.html#a00368">da7212_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#aeb416840b7dddbcd19845c98aa307703">config</a></td></tr>
+<tr class="memdesc:aeb416840b7dddbcd19845c98aa307703"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 config pointer <br/></td></tr>
+<tr class="separator:aeb416840b7dddbcd19845c98aa307703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f081eba744a5ca041f6eeb00f3faaf5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f081eba744a5ca041f6eeb00f3faaf5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#a7f081eba744a5ca041f6eeb00f3faaf5">i2cHandle</a> [<a class="el" href="a00018.html#ga3d23d22f57247229df5a71faaaa40229">DA7212_I2C_HANDLER_SIZE</a>]</td></tr>
+<tr class="memdesc:a7f081eba744a5ca041f6eeb00f3faaf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c handle <br/></td></tr>
+<tr class="separator:a7f081eba744a5ca041f6eeb00f3faaf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ac44462711fb30cd01799e287a3a4791e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_internal_regulator_config_t::enableLoadResistor</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7494dc737ae93a739c944037610372b2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dcdc_internal_regulator_config_t::feedbackPoint</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Select the feedback point of the internal regulator. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00360" id="a00360"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct dcdc_min_power_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:adbe01c99b380a3d872f7fd6f787ab7cc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#adbe01c99b380a3d872f7fd6f787ab7cc">enableUseHalfFreqForContinuous</a></td></tr>
-<tr class="memdesc:adbe01c99b380a3d872f7fd6f787ab7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set DCDC clock to half frequency for the continuous mode.  <a href="#adbe01c99b380a3d872f7fd6f787ab7cc">More...</a><br/></td></tr>
-<tr class="separator:adbe01c99b380a3d872f7fd6f787ab7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="adbe01c99b380a3d872f7fd6f787ab7cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dcdc_min_power_config_t::enableUseHalfFreqForContinuous</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaead28d0a1704d502fa7e4d83448530d9"></a>
+<a class="anchor" id="ga6b767b2e541d6394c4265ada63c0dec6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_DCDC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td>
+          <td class="memname">#define FSL_DA7212_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Version 2.3.0. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gae715f6e4017ad893d5b131cb1b65bd97"></a>
+<a class="anchor" id="ga6fc1179abb7621638b81dd23bce89715"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00018.html#gae715f6e4017ad893d5b131cb1b65bd97">_dcdc_status_flags_t</a></td>
+          <td class="memname">enum <a class="el" href="a00018.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae715f6e4017ad893d5b131cb1b65bd97a88bc89752444c6db226ac58686c6dda4"></a>kDCDC_LockedOKStatus</em>&nbsp;</td><td class="fielddoc">
-<p>Indicate DCDC status. </p>
-<p>1'b1: DCDC already settled 1'b0: DCDC is settling. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715a81719d1c10c1d21585cc0d85ea0cf96e"></a>kDA7212_Input_AUX</em>&nbsp;</td><td class="fielddoc">
+<p>Input from AUX. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715a6791516363f14d9fa82ab6ffed758a8a"></a>kDA7212_Input_MIC1_Dig</em>&nbsp;</td><td class="fielddoc">
+<p>Input from MIC1 Digital. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715a915180fec88d3d30961aa7fc999cf734"></a>kDA7212_Input_MIC1_An</em>&nbsp;</td><td class="fielddoc">
+<p>Input from Mic1 Analog. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715ab6d325e0294e7181d5ef528e4398cc44"></a>kDA7212_Input_MIC2</em>&nbsp;</td><td class="fielddoc">
+<p>Input from MIC2. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga11a431a6377193c7ecb973f72fee13fa"></a>
+<a class="anchor" id="gabfe5b5c29bd85345eeab12ffeccdf8e1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00018.html#ga11a431a6377193c7ecb973f72fee13fa">dcdc_comparator_current_bias_t</a></td>
+          <td class="memname">enum <a class="el" href="a00018.html#gabfe5b5c29bd85345eeab12ffeccdf8e1">_da7212_play_channel</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga11a431a6377193c7ecb973f72fee13faab2be4fb74c74083b5a501e98469237fd"></a>kDCDC_ComparatorCurrentBias50nA</em>&nbsp;</td><td class="fielddoc">
-<p>The current bias of low power comparator is 50nA. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabfe5b5c29bd85345eeab12ffeccdf8e1ae5ce9e40caf555725cbc0b29bd07a231"></a>kDA7212_HeadphoneLeft</em>&nbsp;</td><td class="fielddoc">
+<p>headphone left </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga11a431a6377193c7ecb973f72fee13faaf11efa682be88fcdc3dade737c672b0b"></a>kDCDC_ComparatorCurrentBias100nA</em>&nbsp;</td><td class="fielddoc">
-<p>The current bias of low power comparator is 100nA. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabfe5b5c29bd85345eeab12ffeccdf8e1a76d31405add593b507463ae599833fa3"></a>kDA7212_HeadphoneRight</em>&nbsp;</td><td class="fielddoc">
+<p>headphone right </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga11a431a6377193c7ecb973f72fee13faabbe35f83fd7ae207e6c513fcfc26cf29"></a>kDCDC_ComparatorCurrentBias200nA</em>&nbsp;</td><td class="fielddoc">
-<p>The current bias of low power comparator is 200nA. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga11a431a6377193c7ecb973f72fee13faa8a7dafad371962ccbc67385d6f812421"></a>kDCDC_ComparatorCurrentBias400nA</em>&nbsp;</td><td class="fielddoc">
-<p>The current bias of low power comparator is 400nA. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabfe5b5c29bd85345eeab12ffeccdf8e1ac49a4c8456dd563ebfb512abad314e73"></a>kDA7212_Speaker</em>&nbsp;</td><td class="fielddoc">
+<p>speaker channel </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gab1ee138d1d60e1357b602b5939890bd7"></a>
+<a class="anchor" id="ga594d4eaddd9cb2171bd90c20fbabec4b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00018.html#gab1ee138d1d60e1357b602b5939890bd7">dcdc_over_current_threshold_t</a></td>
+          <td class="memname">enum <a class="el" href="a00018.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab1ee138d1d60e1357b602b5939890bd7a5ebbf9b57fe2aef4b3a527c098351fc2"></a>kDCDC_OverCurrentThresholdAlt0</em>&nbsp;</td><td class="fielddoc">
-<p>1A in the run mode, 0.25A in the power save mode. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga594d4eaddd9cb2171bd90c20fbabec4ba00374e7ddbc6f19e104e50c644405d4e"></a>kDA7212_Output_HP</em>&nbsp;</td><td class="fielddoc">
+<p>Output to headphone. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab1ee138d1d60e1357b602b5939890bd7ac85f8a7eedeb6716fd01fa9943a928d6"></a>kDCDC_OverCurrentThresholdAlt1</em>&nbsp;</td><td class="fielddoc">
-<p>2A in the run mode, 0.25A in the power save mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab1ee138d1d60e1357b602b5939890bd7afe4b9daeed02ac875ce992d3b3e48576"></a>kDCDC_OverCurrentThresholdAlt2</em>&nbsp;</td><td class="fielddoc">
-<p>1A in the run mode, 0.2A in the power save mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab1ee138d1d60e1357b602b5939890bd7af51b51cf756df6e9753eae157bba3835"></a>kDCDC_OverCurrentThresholdAlt3</em>&nbsp;</td><td class="fielddoc">
-<p>2A in the run mode, 0.2A in the power save mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga594d4eaddd9cb2171bd90c20fbabec4ba794964f1a59abc4e9651893ab8ad2937"></a>kDA7212_Output_SP</em>&nbsp;</td><td class="fielddoc">
+<p>Output to speaker. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gacea8ce1454590ef280751fc9ae4660e4"></a>
+<a class="anchor" id="ga09500728ce3e7466ec63c24f194a7096"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00018.html#gacea8ce1454590ef280751fc9ae4660e4">dcdc_peak_current_threshold_t</a></td>
+          <td class="memname">enum <a class="el" href="a00018.html#ga09500728ce3e7466ec63c24f194a7096">_da7212_module</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacea8ce1454590ef280751fc9ae4660e4a7fa50866827a30a4ca98def50c92d93d"></a>kDCDC_PeakCurrentThresholdAlt0</em>&nbsp;</td><td class="fielddoc">
-<p>150mA peak current threshold. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096ad9a26702fe14d59f3c7af3896a79ec95"></a>kDA7212_ModuleADC</em>&nbsp;</td><td class="fielddoc">
+<p>module ADC </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacea8ce1454590ef280751fc9ae4660e4a020052660522adca4311d50937784da2"></a>kDCDC_PeakCurrentThresholdAlt1</em>&nbsp;</td><td class="fielddoc">
-<p>250mA peak current threshold. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096a69ee48106ddc65d660e106564b26d726"></a>kDA7212_ModuleDAC</em>&nbsp;</td><td class="fielddoc">
+<p>module DAC </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacea8ce1454590ef280751fc9ae4660e4a1a316a1d5d9b1a8dd90a26eade3c9730"></a>kDCDC_PeakCurrentThresholdAlt2</em>&nbsp;</td><td class="fielddoc">
-<p>350mA peak current threshold. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096a30a9366493854f9accccf1a509e30bc4"></a>kDA7212_ModuleHeadphone</em>&nbsp;</td><td class="fielddoc">
+<p>module headphone </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacea8ce1454590ef280751fc9ae4660e4af9c26a547765bb2b0c26d1d7102ae67c"></a>kDCDC_PeakCurrentThresholdAlt3</em>&nbsp;</td><td class="fielddoc">
-<p>450mA peak current threshold. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacea8ce1454590ef280751fc9ae4660e4a6ed3f7cd3e9c10b9d80458da6aee5c50"></a>kDCDC_PeakCurrentThresholdAlt4</em>&nbsp;</td><td class="fielddoc">
-<p>550mA peak current threshold. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacea8ce1454590ef280751fc9ae4660e4a0e40d22916e03c36c2c562b744cf563e"></a>kDCDC_PeakCurrentThresholdAlt5</em>&nbsp;</td><td class="fielddoc">
-<p>650mA peak current threshold. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096a4f11287d5d208e51cd4f7d58a54f58a4"></a>kDA7212_ModuleSpeaker</em>&nbsp;</td><td class="fielddoc">
+<p>module speaker </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gad5473e4ea54bf7ceb0d994dbbcf135c1"></a>
+<a class="anchor" id="gab328276aed167b3f028b627b84a9c326"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00018.html#gad5473e4ea54bf7ceb0d994dbbcf135c1">dcdc_count_charging_time_period_t</a></td>
+          <td class="memname">enum <a class="el" href="a00018.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad5473e4ea54bf7ceb0d994dbbcf135c1ae685b89096384a98737f39b2dde87861"></a>kDCDC_CountChargingTimePeriod8Cycle</em>&nbsp;</td><td class="fielddoc">
-<p>Eight 32k cycle. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab328276aed167b3f028b627b84a9c326aaa36fc0ab185ac10e7ee8a4617f59e97"></a>kDA7212_DACSourceADC</em>&nbsp;</td><td class="fielddoc">
+<p>DAC source from ADC. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad5473e4ea54bf7ceb0d994dbbcf135c1a232c187a9f30ef865b1203bc645973fa"></a>kDCDC_CountChargingTimePeriod16Cycle</em>&nbsp;</td><td class="fielddoc">
-<p>Sixteen 32k cycle. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab328276aed167b3f028b627b84a9c326a32553db21f101a6585653a0f603b4585"></a>kDA7212_DACSourceInputStream</em>&nbsp;</td><td class="fielddoc">
+<p>DAC source from. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga2cd4c599e216c88088c4f4e2d3371c6d"></a>
+<a class="anchor" id="ga37faac44a47580dd5b803a2d2609359c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00018.html#ga2cd4c599e216c88088c4f4e2d3371c6d">dcdc_count_charging_time_threshold_t</a></td>
+          <td class="memname">enum <a class="el" href="a00018.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2cd4c599e216c88088c4f4e2d3371c6dae17e5a516c544140045c1c6801a9ac4e"></a>kDCDC_CountChargingTimeThreshold32</em>&nbsp;</td><td class="fielddoc">
-<p>0x0: 32. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca8bfef935c6c1b4e9f8ab6a783ba65e92"></a>kDA7212_DACGainMute</em>&nbsp;</td><td class="fielddoc">
+<p>Mute DAC. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2cd4c599e216c88088c4f4e2d3371c6da74e57aeb24c45fc8018bd08b4d1082ce"></a>kDCDC_CountChargingTimeThreshold64</em>&nbsp;</td><td class="fielddoc">
-<p>0x1: 64. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca484eb6e188f3ec7b92a3ad1e71ad6cbe"></a>kDA7212_DACGainM72DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -72db. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2cd4c599e216c88088c4f4e2d3371c6da4c99e35bb7538e4aa165c6556ea9ca0e"></a>kDCDC_CountChargingTimeThreshold16</em>&nbsp;</td><td class="fielddoc">
-<p>0x2: 16. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359caf26ca8601f9c6c2ca77487a68bef08dc"></a>kDA7212_DACGainM60DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -60db. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2cd4c599e216c88088c4f4e2d3371c6daa570ad287107c1b54a846fdae2dd667b"></a>kDCDC_CountChargingTimeThreshold8</em>&nbsp;</td><td class="fielddoc">
-<p>0x3: 8. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca2ac8ed6017a7a3b4e49be5758b4494c3"></a>kDA7212_DACGainM54DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -54db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca9b14c521981de0ef10907fd061f15e88"></a>kDA7212_DACGainM48DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -48db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca7f7cdc2b1fb01133c70f59dcd88e8b29"></a>kDA7212_DACGainM42DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -42db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca962467e3eeee640374d1251ba55e54ab"></a>kDA7212_DACGainM36DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -36db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca37f8a4f380c06d29170af08ec0bd9455"></a>kDA7212_DACGainM30DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -30db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca35b5d452d7ff01bb50c7036dfdc4a3c4"></a>kDA7212_DACGainM24DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -24db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca88b0f22e91fa5765961f65649d398cd1"></a>kDA7212_DACGainM18DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -18db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca3fb7c057f7a29e43c3198fe71de8d9ee"></a>kDA7212_DACGainM12DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -12db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca4b1594dfd4b2839cb3e16244d2d4add9"></a>kDA7212_DACGainM6DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume -6bb. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359caa49f74be4c508f1ebaf771268aa59461"></a>kDA7212_DACGain0DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume +0db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca207d817045357758bbe5cd18f3ff7725"></a>kDA7212_DACGain6DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume +6db. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca78e6ab8ae6e4e87b1b15ed80e82acdc2"></a>kDA7212_DACGain12DB</em>&nbsp;</td><td class="fielddoc">
+<p>DAC volume +12db. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga8035a76b241261c80ef27c1c2baf614b"></a>
+<a class="anchor" id="ga95ce2c0556d9642f3133e53f6097fdd3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00018.html#ga8035a76b241261c80ef27c1c2baf614b">dcdc_clock_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00018.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8035a76b241261c80ef27c1c2baf614ba598ff7757e17e93192bb02060b9e17f7"></a>kDCDC_ClockAutoSwitch</em>&nbsp;</td><td class="fielddoc">
-<p>Automatic clock switch from internal oscillator to external clock. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3a18e44e5377bce7294db432a1e82d508b"></a>kDA7212_BusI2S</em>&nbsp;</td><td class="fielddoc">
+<p>I2S Type. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8035a76b241261c80ef27c1c2baf614ba9a9fba153517ab7aa481929ab112c7ce"></a>kDCDC_ClockInternalOsc</em>&nbsp;</td><td class="fielddoc">
-<p>Use internal oscillator. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3a5c90ce6d3cbf97f6f36ea37b2715ed3b"></a>kDA7212_BusLeftJustified</em>&nbsp;</td><td class="fielddoc">
+<p>Left justified. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8035a76b241261c80ef27c1c2baf614baa626d594c9a911bd6d8f36852ae535fd"></a>kDCDC_ClockExternalOsc</em>&nbsp;</td><td class="fielddoc">
-<p>Use external 24M crystal oscillator. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3a9a78835b4b39c468cf24af8cd1ecd578"></a>kDA7212_BusRightJustified</em>&nbsp;</td><td class="fielddoc">
+<p>Right Justified. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3ac6db42a81b0ab7fc8a773bc88392fb17"></a>kDA7212_BusDSPMode</em>&nbsp;</td><td class="fielddoc">
+<p>DSP mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga5fb666a4f56fc1bc022919487515a037"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00018.html#ga5fb666a4f56fc1bc022919487515a037">da7212_sys_clk_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5fb666a4f56fc1bc022919487515a037a5418f800a758518588cfcf97bc11cbec"></a>kDA7212_SysClkSourceMCLK</em>&nbsp;</td><td class="fielddoc">
+<p>da7212 system clock soure from MCLK </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5fb666a4f56fc1bc022919487515a037a91322381925bb3cf69b1bfca9c277bfb"></a>kDA7212_SysClkSourcePLL</em>&nbsp;</td><td class="fielddoc">
+<p>da7212 system clock soure from pLL </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga971f3ba35a3d9116393781ea426f132c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00018.html#ga971f3ba35a3d9116393781ea426f132c">da7212_pll_clk_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga971f3ba35a3d9116393781ea426f132ca9f97bdd4ba7ae0086bcc7b0cfbe370c0"></a>kDA7212_PLLClkSourceMCLK</em>&nbsp;</td><td class="fielddoc">
+<p>DA7212 PLL clock source from MCLK. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga1d67062344f0a51e6ac913248b132527"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00018.html#ga1d67062344f0a51e6ac913248b132527">da7212_pll_out_clk_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1d67062344f0a51e6ac913248b132527a94d10bd8eafa96c0b137354bb6a2670c"></a>kDA7212_PLLOutputClk11289600</em>&nbsp;</td><td class="fielddoc">
+<p>output 112896000U </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1d67062344f0a51e6ac913248b132527a0a1474e7a85354aa8e99b48ea51fb2a0"></a>kDA7212_PLLOutputClk12288000</em>&nbsp;</td><td class="fielddoc">
+<p>output 12288000U </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gacd73a9c763b4c3835514062492201a8e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00018.html#gacd73a9c763b4c3835514062492201a8e">da7212_master_bits_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8eacf2700e04e95db0583f92597a106367a"></a>kDA7212_MasterBits32PerFrame</em>&nbsp;</td><td class="fielddoc">
+<p>master mode bits32 per frame </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8ea4aaccfde0d4dbfc24913e8437d8c6ffb"></a>kDA7212_MasterBits64PerFrame</em>&nbsp;</td><td class="fielddoc">
+<p>master mode bits64 per frame </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8eae839316f7659cd0933930ad43f11ff0a"></a>kDA7212_MasterBits128PerFrame</em>&nbsp;</td><td class="fielddoc">
+<p>master mode bits128 per frame </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8eaa20340ec29a73f7043914e43a6e21777"></a>kDA7212_MasterBits256PerFrame</em>&nbsp;</td><td class="fielddoc">
+<p>master mode bits256 per frame </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gade63427da706b28f4bc5fb3df32549fc"></a>
+<a class="anchor" id="gaca2d591c1f37ac9459f5337656c2e903"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_Init </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_Init </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00368">da7212_config_t</a> *&#160;</td>
+          <td class="paramname"><em>codecConfig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">codecConfig</td><td>Codec configure structure. This parameter can be NULL, if NULL, set as default settings. The default setting: <div class="fragment"><div class="line">* sgtl_init_t codec_config</div>
+<div class="line">* codec_config.route = kDA7212_RoutePlayback</div>
+<div class="line">* codec_config.bus = <a class="code" href="a00018.html#gga95ce2c0556d9642f3133e53f6097fdd3a18e44e5377bce7294db432a1e82d508b">kDA7212_BusI2S</a></div>
+<div class="line">* codec_config.isMaster = <span class="keyword">false</span></div>
+<div class="line">* </div>
+</div><!-- fragment --> </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6edcfa7b584ed32abeba4aa1ead354b5"></a>
+<a class="anchor" id="ga5f91e332b894c7eb33de61f5abf0e3bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_Deinit </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_ConfigAudioFormat </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>masterClock_Hz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sampleRate_Hz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>dataBits</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">masterClock_Hz</td><td>Master clock frequency in Hz. If DA7212 is slave, use the frequency of master, if DA7212 as master, it should be 1228000 while sample rate frequency is 8k/12K/16K/24K/32K/48K/96K, 11289600 whie sample rate is 11.025K/22.05K/44.1K </td></tr>
+    <tr><td class="paramname">sampleRate_Hz</td><td>Sample rate frequency in Hz. </td></tr>
+    <tr><td class="paramname">dataBits</td><td>How many bits in a word of a audio frame, DA7212 only supports 16/20/24/32 bits. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga0e05ffe0195a4997353dd066266028e2"></a>
+<a class="anchor" id="ga329eba3a6075fcd97e63ccc4013a669e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t DCDC_GetstatusFlags </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetPLLConfig </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00370">da7212_pll_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handler pointer. </td></tr>
+    <tr><td class="paramname">config</td><td>PLL configuration pointer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Mask of asserted status flags. See to "_dcdc_status_flags_t". </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gad851aa409cd7a30afd61f1033650ddc4"></a>
+<a class="anchor" id="ga6c8f47cd9f8a4490b35d2c731439a267"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void DCDC_EnableOutputRangeComparator </td>
+          <td class="memname">void DA7212_ChangeHPVolume </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a>&#160;</td>
+          <td class="paramname"><em>volume</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">volume</td><td>The volume of playback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7cbf1d02cfd35123392c0aae6c528f79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DA7212_Mute </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramname"><em>isMuted</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -993,38 +956,32 @@ Application guideline</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>The output range comparator is disabled by default.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the feature or not. </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">isMuted</td><td>True means mute, false means unmute. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2fae2a0e5c2bc54cc47fa4e6cbe53f37"></a>
+<a class="anchor" id="ga52f775b79e8de5f489b995d1f4c7fe31"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_SetClockSource </td>
+          <td class="memname">void DA7212_ChangeInput </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00018.html#ga8035a76b241261c80ef27c1c2baf614b">dcdc_clock_source_t</a>&#160;</td>
-          <td class="paramname"><em>clockSource</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00018.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a>&#160;</td>
+          <td class="paramname"><em>DA7212_Input</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1035,61 +992,29 @@ Application guideline</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">clockSource</td><td>Clock source for DCDC. See to "dcdc_clock_source_t". </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">DA7212_Input</td><td>Input data source. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gabecb64bff81d824c22e7dd58962496b4"></a>
+<a class="anchor" id="gab6cebcf917e9d9ce4f69828c701c6a6d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_GetDefaultDetectionConfig </td>
+          <td class="memname">void DA7212_ChangeOutput </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00018.html#a00356">dcdc_detection_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default configuration are set according to responding registers' setting when powered on. They are: </p>
-<div class="fragment"><div class="line">*   config-&gt;enableXtalokDetection = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;powerDownOverVoltageDetection = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;powerDownLowVlotageDetection = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;powerDownOverCurrentDetection = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;powerDownPeakCurrentDetection = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;powerDownZeroCrossDetection = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;OverCurrentThreshold = <a class="code" href="a00018.html#ggab1ee138d1d60e1357b602b5939890bd7a5ebbf9b57fe2aef4b3a527c098351fc2">kDCDC_OverCurrentThresholdAlt0</a>;</div>
-<div class="line">*   config-&gt;PeakCurrentThreshold = <a class="code" href="a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a7fa50866827a30a4ca98def50c92d93d">kDCDC_PeakCurrentThresholdAlt0</a>;</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_detection_config_t" </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga88dcfe2c525f75e118e922ba398b4867"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_SetDetectionConfig </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00018.html#a00356">dcdc_detection_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00018.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a>&#160;</td>
+          <td class="paramname"><em>DA7212_Output</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1100,57 +1025,35 @@ Application guideline</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_detection_config_t" </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">DA7212_Output</td><td>Output device of DA7212. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga07748a20a7c73fd8be68c4e9ede83535"></a>
+<a class="anchor" id="ga8dd935197f63a10d9daf23ac96904416"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_GetDefaultLowPowerConfig </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetChannelVolume </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00018.html#a00359">dcdc_low_power_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default configuration are set according to responding registers' setting when powered on. They are: </p>
-<div class="fragment"><div class="line">*   config-&gt;enableOverloadDetection = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;enableAdjustHystereticValue = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;countChargingTimePeriod = <a class="code" href="a00018.html#ggad5473e4ea54bf7ceb0d994dbbcf135c1ae685b89096384a98737f39b2dde87861">kDCDC_CountChargingTimePeriod8Cycle</a>;</div>
-<div class="line">*   config-&gt;countChargingTimeThreshold = <a class="code" href="a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6dae17e5a516c544140045c1c6801a9ac4e">kDCDC_CountChargingTimeThreshold32</a>;</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_low_power_config_t" </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0b9c2837458d92e1924b899f883e0c6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_SetLowPowerConfig </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00018.html#a00359">dcdc_low_power_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>volume</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1161,29 +1064,36 @@ Application guideline</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_low_power_config_t". </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">channel</td><td>shoule be a value of _da7212_channel. </td></tr>
+    <tr><td class="paramname">volume</td><td>volume range 0 - 0x3F mapped to range -57dB - 6dB. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga0c4e86095eafae5ff4fba2a83eb76444"></a>
+<a class="anchor" id="ga71c6871ed8dc5bc01201265e0139ae61"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_ResetCurrentAlertSignal </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetChannelMute </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramname"><em>isMute</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1192,103 +1102,65 @@ Application guideline</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Alert signal is generate by peak current detection.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Switcher to reset signal. True means reset signal. False means don't reset signal. </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">channel</td><td>shoule be a value of _da7212_channel. </td></tr>
+    <tr><td class="paramname">isMute</td><td>true is mute, false is unmute. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga57083b91091e830c66f01fb915883721"></a>
+<a class="anchor" id="ga5b83af3d6dec6892ec345c54af419942"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void DCDC_SetBandgapVoltageTrimValue </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetProtocol </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a>&#160;</td>
+          <td class="paramname"><em>protocol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">protocol</td><td>da7212_protocol_t. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga700245cf97e29af9f3aa3402b032094a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetMasterModeBits </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>trimValue</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">trimValue</td><td>The bangap trim value. Available range is 0U-31U. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga18d9f9a178e395a6f8412c60f1af99eb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_GetDefaultLoopControlConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00018.html#a00358">dcdc_loop_control_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default configuration are set according to responding registers' setting when powered on. They are: </p>
-<div class="fragment"><div class="line">*   config-&gt;enableCommonHysteresis = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;enableCommonThresholdDetection = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;enableInvertHysteresisSign = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;enableRCThresholdDetection = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;enableRCScaleCircuit = 0U;</div>
-<div class="line">*   config-&gt;complementFeedForwardStep = 0U;</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_loop_control_config_t" </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf0b6cb34a3c948cdc225f8e1cb055e34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_SetLoopControlConfig </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00018.html#a00358">dcdc_loop_control_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramname"><em>bitWidth</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1299,29 +1171,35 @@ Application guideline</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_loop_control_config_t". </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">bitWidth</td><td>audio data bitwidth. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga02d7fde9dea0d6e88559e28f6547c0eb"></a>
+<a class="anchor" id="gabda1a52e4795473357f4561633e07591"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_SetMinPowerConfig </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_WriteRegister </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00018.html#a00360">dcdc_min_power_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>u8Register</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>u8RegisterData</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1332,210 +1210,36 @@ Application guideline</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_min_power_config_t". </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">u8Register</td><td>DA7212 register address to be written. </td></tr>
+    <tr><td class="paramname">u8RegisterData</td><td>Data to be written into regsiter </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga98fb67e98a2393ff32ee5aa8877aded0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DCDC_SetLPComparatorBiasValue </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00018.html#ga11a431a6377193c7ecb973f72fee13fa">dcdc_comparator_current_bias_t</a>&#160;</td>
-          <td class="paramname"><em>biasVaule</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">biasVaule</td><td>The current bias of low power comparator. Refer to "dcdc_comparator_current_bias_t". </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga017537be6f0c499b39abf56a6df58dba"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DCDC_LockTargetVoltage </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga18a67ce4a510d87ddb60d049c5a2a413"></a>
+<a class="anchor" id="ga5b445705c324d49effc257f7b3265c92"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_AdjustTargetVoltage </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_ReadRegister </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>VDDRun</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>u8Register</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>VDDStandby</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000001">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00018.html#ga68b8a87cb61c4d6d6f12be19de101122">DCDC_AdjustRunTargetVoltage</a> and <a class="el" href="a00018.html#ga3ac5a0ad9ac0448b6f7d73eb7f53ad97">DCDC_AdjustLowPowerTargetVoltage</a></dd></dl>
-<p>This function is to adjust the target voltage of DCDC output. Change them and finally wait until the output is stabled. Set the target value of run mode the same as low power mode before entering power save mode, because DCDC will switch back to run mode if it detects the current loading is larger than about 50 mA(typical value).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">VDDRun</td><td>Target value in run mode. 25 mV each step from 0x00 to 0x1F. 00 is for 0.8V, 0x1F is for 1.575V. </td></tr>
-    <tr><td class="paramname">VDDStandby</td><td>Target value in low power mode. 25 mV each step from 0x00 to 0x4. 00 is for 0.9V, 0x4 is for 1.0V. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga68b8a87cb61c4d6d6f12be19de101122"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_AdjustRunTargetVoltage </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>VDDRun</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is to adjust the target voltage of DCDC output. Change them and finally wait until the output is stabled. Set the target value of run mode the same as low power mode before entering power save mode, because DCDC will switch back to run mode if it detects the current loading is larger than about 50 mA(typical value).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">VDDRun</td><td>Target value in run mode. 25 mV each step from 0x00 to 0x1F. 00 is for 0.8V, 0x1F is for 1.575V. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3ac5a0ad9ac0448b6f7d73eb7f53ad97"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_AdjustLowPowerTargetVoltage </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>VDDStandby</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is to adjust the target voltage of DCDC output. Change them and finally wait until the output is stabled. Set the target value of run mode the same as low power mode before entering power save mode, because DCDC will switch back to run mode if it detects the current loading is larger than about 50 mA(typical value).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">VDDStandby</td><td>Target value in low power mode. 25 mV each step from 0x00 to 0x4. 00 is for 0.9V, 0x4 is for 1.0V. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga156e3a02981fc97856c26a98ac5ef8e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_SetInternalRegulatorConfig </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00018.html#a00357">dcdc_internal_regulator_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pu8RegisterData</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1546,96 +1250,31 @@ Application guideline</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to "dcdc_internal_regulator_config_t". </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">u8Register</td><td>DA7212 register address to be read. </td></tr>
+    <tr><td class="paramname">pu8RegisterData</td><td>Pointer where the read out value to be stored. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga26e177d70e32f43b64e3fa953efd8571"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DCDC_EnableImproveTransition </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>It is valid while zero cross detection is enabled. If ouput exceeds the threshold, DCDC would return CCM from DCM.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable the feature or not. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab60fd96fbcd6971e217a16bb74ef85e3"></a>
+<a class="anchor" id="ga52aaf202346af12d3932bd467a412f59"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DCDC_BootIntoDCM </td>
+          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_Deinit </td>
           <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00369">da7212_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>pwd_zcd=0x0; pwd_cmp_offset=0x0; dcdc_loopctrl_en_rcscale= 0x5; DCM_set_ctrl=1'b1;</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab7b765330b8a888f7e681cb0f9d6307b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DCDC_BootIntoCCM </td>
-          <td>(</td>
-          <td class="paramtype">DCDC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>pwd_zcd=0x1; pwd_cmp_offset=0x0; dcdc_loopctrl_en_rcscale=0x3;</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DCDC peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
   </table>
   </dd>
 </dl>

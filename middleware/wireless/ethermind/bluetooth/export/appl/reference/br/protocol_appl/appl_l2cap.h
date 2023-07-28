@@ -54,6 +54,9 @@ typedef struct
     UCHAR local_config_done;
     UCHAR remote_config_done;
 
+    /* Waiting for signal */
+    UCHAR waiting_for_signal;
+
     /* State */
     UCHAR state;
     UCHAR valid;
@@ -121,12 +124,14 @@ API_RESULT l2cap_dt_disconnect_cnf
                /* IN */ UINT16  result
            );
 
+#ifdef L2CAP_CHANNEL_DATAWRITE_CALLBACK
 API_RESULT l2cap_dt_data_write_cnf
            (
                /* IN */ UINT16   lcid,
                /* IN */ UCHAR *  data,
                /* IN */ UINT16   datalen
            );
+#endif /* L2CAP_CHANNEL_DATAWRITE_CALLBACK */
 
 API_RESULT l2cap_dt_data_read
            (
@@ -207,7 +212,9 @@ void l2cap_dt_show_channels_index (UCHAR index);
 
 void l2cap_dt_send_data (void);
 void l2cap_dt_send_data_random (void);
+#ifdef BT_UCD
 void l2cap_dt_send_data_ucd(void);
+#endif /* BT_UCD */
 void l2cap_dt_config_option_init (void);
 
 #ifdef BT_UCD
@@ -231,14 +238,14 @@ void l2cap_dt_signal (void);
 void l2cap_dt_wait_for_tx_win_free(void);
 void l2cap_dt_signal_tx_win_free(void);
 
-void l2cap_packet_drop_set_percentage
-     (
-         /* IN */ INT32  percentage
-     );
-
 void main_l2cap_operations (void);
 
 #endif /* BR_EDR_L2CAP */
+
+#ifdef L2CAP_TEST_PACKET_DROP
+UCHAR l2cap_test_packet_drop_tx(UCHAR *header, UCHAR header_len);
+UCHAR l2cap_test_packet_drop_rx(UCHAR *header, UCHAR header_len);
+#endif /* L2CAP_TEST_PACKET_DROP */
 
 #endif /* _H_APPL_L2CAP_ */
 

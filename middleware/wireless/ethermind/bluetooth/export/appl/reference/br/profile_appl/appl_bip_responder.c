@@ -44,8 +44,8 @@ static UCHAR                attachment_file_name[64U];
 static UCHAR                *responder_image_handle;
 static BIP_APPL_PARAMS      appl_param;
 static UCHAR                file_object[BIP_FOLDER_NAME_LEN * 2U];
-UCHAR                       feature_flag;
-BIP_IMAGE_HANDLER           bip_res_img_handle[BIP_IMAGE_HANDLE_SIZE];
+static UCHAR                feature_flag;
+static BIP_IMAGE_HANDLER    bip_res_img_handle[BIP_IMAGE_HANDLE_SIZE];
 static UCHAR                start_date[8U], end_date[8U];
 static UCHAR                file_name[40U];
 static UCHAR                image_thumbnail_name[32U], image_file_name[32U];
@@ -114,6 +114,7 @@ void main_bip_responder_operations (void)
     UINT16      size;
     int         choice, menu_choice, handle, server_ch, val, option, service_type;
     UCHAR       img_type;
+    UINT16      image_thumbnail_name_len=0;
 
     /* For secondary obex connection */
     BIP_REQUEST_STRUCT  req_info;
@@ -124,7 +125,7 @@ void main_bip_responder_operations (void)
 
     BT_LOOP_FOREVER()
     {
-        printf ("%s", bip_responder_menu);
+        LOG_DEBUG ("%s", bip_responder_menu);
         scanf ("%d", &choice);
 
         menu_choice = choice;
@@ -338,7 +339,7 @@ void main_bip_responder_operations (void)
         case 7:
             /* Register Peer BD address */
             LOG_DEBUG("Enter Peer BD Address:");
-            appl_get_bd_addr(bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
             break;
 
         case 8:
@@ -680,11 +681,14 @@ void main_bip_responder_operations (void)
 #endif /* (BIP_NUM_RESPONDER_INSTANCE > 1) */
             /* Reset */
             BT_mem_set (&req_info, 0x00, sizeof (BIP_REQUEST_STRUCT));
+            BT_mem_set(image_thumbnail_name, 0x00, sizeof(image_thumbnail_name));
+            BT_mem_set(bip_res_img_handle, 0, sizeof(bip_res_img_handle));
 
             LOG_DEBUG ("Enter The Image Handle For The Thumbnail: ");
             scanf ("%s", bip_res_img_handle);
             image_handle_info.value = bip_res_img_handle;
-            image_handle_info.length = (UINT16 )(BT_str_n_len(bip_res_img_handle, sizeof(bip_res_img_handle)) + 1U);
+            image_handle_info.length = (UINT16 )(BT_str_n_len(bip_res_img_handle, sizeof(bip_res_img_handle)-1) + 1U);
+            bip_res_img_handle[sizeof(bip_res_img_handle)-1] = '\0';
 
             req_info.image_handle = &image_handle_info;
 
@@ -694,9 +698,9 @@ void main_bip_responder_operations (void)
                          &bip_responder_sec_instances[handle].handle,
                          &req_info
                      );
-
-            BT_str_n_copy((CHAR *)image_thumbnail_name, (CHAR *)bip_res_img_handle, sizeof(image_thumbnail_name));
-            BT_str_n_cat((CHAR *)image_thumbnail_name, "_thumbnail.jpg", (sizeof(image_thumbnail_name) - BT_str_len(image_thumbnail_name)));
+            image_thumbnail_name_len = BT_str_n_len(image_thumbnail_name,sizeof(image_thumbnail_name)-1);
+            BT_str_n_copy((CHAR *)image_thumbnail_name, (CHAR *)bip_res_img_handle, (sizeof(bip_res_img_handle)-1));
+            BT_str_n_cat((CHAR *)image_thumbnail_name, "_thumbnail.jpg", ((sizeof(image_thumbnail_name)-1) - image_thumbnail_name_len));
 
            /**
             * Open file for dumping Get Image Thumbnail
@@ -2458,16 +2462,16 @@ API_RESULT appl_bip_responder_callback
                     /* Increment the count */
                     appl_responder_img_handle_cnt++;
 
+                    image_handle_info.length = BIP_IMAGE_HANDLE_SIZE;
+
                     if(bip_rx_hdrs->bip_req_info->appl_params->store_flag == 1U)
                     {
                         image_handle_info.value = (UCHAR *)"1000001";
-                        image_handle_info.length = BIP_IMAGE_HANDLE_SIZE;
                         LOG_DEBUG("Image Handle: %s\n",image_handle_info.value);
                     }
                     else
                     {
                         image_handle_info.value = (UCHAR *)"0000000";
-                        image_handle_info.length = BIP_IMAGE_HANDLE_SIZE;
                     }
                 }
 
@@ -2624,27 +2628,62 @@ API_RESULT appl_bip_responder_callback
                 /* Send image handle header */
                 BIP_INIT_HEADER_STRUCT (image_handle_info);
 
-                if(0 == BT_str_cmp(bip_rx_hdrs->bip_req_info->image_handle->value,"1000001"))
+                UCHAR handle_value[10U];
+                UINT16 handle_value_len,handle_last_digit;
+                UINT32 handle_number;
+                handle_value_len = BT_str_len(bip_rx_hdrs->bip_req_info->image_handle->value);
+                BT_str_n_copy(handle_value,bip_rx_hdrs->bip_req_info->image_handle->value,handle_value_len);
+                handle_number = appl_str_to_num(handle_value,handle_value_len);
+                handle_last_digit = appl_str_to_num((handle_value + (handle_value_len-1U)),1U);
+
+                /* TODO: Handling when appl_responder_img_handle_cnt > 9 */
+                /*Checking image handles range between 1000001 to max images pushed from initiator (handle count)*/
+                if((handle_number > 1000000U) &&
+                   (handle_number < 1000010U) &&
+                   (appl_responder_img_handle_cnt > handle_last_digit))
                 {
                     if(1U == bip_rx_hdrs->bip_req_info->appl_params->remote_display)
                     {
                         LOG_DEBUG("Next Image is Selected\n");
-                        image_handle_info.value = (UCHAR *)"1000002";
+
+                        /*checking whether next image is there to display or not based on the handle count*/
+                        if((appl_responder_img_handle_cnt - 1) > handle_last_digit)
+                        {
+                            handle_number++;
+                            BT_str_print((CHAR *)handle_value, "%ld", handle_number);
+                            image_handle_info.value = (UCHAR *)handle_value;
+                        }
+                        else
+                        {
+                            LOG_DEBUG("No next image to display\n");
+                            image_handle_info.value = (UCHAR *)"000000";
+                        }
                     }
                     else if(2U == bip_rx_hdrs->bip_req_info->appl_params->remote_display)
                     {
                         LOG_DEBUG("Previous Image is Selected\n");
-                        image_handle_info.value = (UCHAR *)"1000001";
+                        /*checking whether Previous image is there to display or not based on the handle count*/
+                        if(1U < handle_last_digit)
+                        {
+                            handle_number--;
+                            BT_str_print((CHAR *)handle_value, "%ld", handle_number);
+                            image_handle_info.value = (UCHAR *)handle_value;
+                        }
+                        else
+                        {
+                            LOG_DEBUG("No previous image to display\n");
+                            image_handle_info.value = (UCHAR *)"000000";
+                        }
                     }
                     else if(3U == bip_rx_hdrs->bip_req_info->appl_params->remote_display)
                     {
                         LOG_DEBUG("Select Image\n");
-                        image_handle_info.value = (UCHAR *)"1000001";
+                        image_handle_info.value = bip_rx_hdrs->bip_req_info->image_handle->value;
                     }
                     else if(4U == bip_rx_hdrs->bip_req_info->appl_params->remote_display)
                     {
                         LOG_DEBUG("Current Image is Selected\n");
-                        image_handle_info.value = (UCHAR *)"1000001";
+                        image_handle_info.value = bip_rx_hdrs->bip_req_info->image_handle->value;
                     }
                     else
                     {
@@ -2657,7 +2696,7 @@ API_RESULT appl_bip_responder_callback
                 }
                 else
                 {
-                   LOG_DEBUG("Different Handle Selected\n");
+                   LOG_DEBUG("Different/Wrong Handle Selected\n");
                    image_handle_info.value = (UCHAR *)"000000";
                 }
 

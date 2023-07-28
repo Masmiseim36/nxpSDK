@@ -52,6 +52,19 @@ typedef struct _APPL_IPSPR_SENDELT
 }APPL_IPSPR_SENDELT;
 
 /* ----------------------------------------- Macro Defines */
+/* Mappings to Console Output. This is Disabled by default */
+/* #define APPL_IPSPR_CONSOLE_PRINTS */
+
+#ifdef APPL_IPSPR_CONSOLE_PRINTS
+#define APPL_IPSPR_ERR(...)              APPL_ERR(__VA_ARGS__)
+#define APPL_IPSPR_INF(...)              CONSOLE_OUT(__VA_ARGS__)
+#define APPL_IPSPR_TRC(...)              CONSOLE_OUT(__VA_ARGS__)
+#else
+#define APPL_IPSPR_ERR(...)
+#define APPL_IPSPR_INF(...)
+#define APPL_IPSPR_TRC(...)
+#endif /* APPL_IPSPR_CONSOLE_PRINTS */
+
 /* Flag to enable Connection Auto Accept */
 #define APPL_LE_L2CAP_CONN_AUTO_ACCEPT
 
@@ -61,7 +74,7 @@ typedef struct _APPL_IPSPR_SENDELT
 /* Flag to enable sending credits automatically, on receiving a single packet */
 #define APPL_LE_L2CAP_AUTO_SEND_INSTANT_CREDIT
 
-#define APPL_L2CAP_LE_PSM                               LE_PSM_IPSP
+#define APPL_L2CAP_LE_PSM                               IPSP_LE_PSM
 #define APPL_BUFFER_SIZE                                0x0062U
 
 #define APPL_LE_CO_MTU                                  1500U
@@ -92,13 +105,16 @@ extern ATT_HANDLE     appl_gatt_client_handle;
 /* ----------------------------------------- Exported Global Variables */
 
 /* ----------------------------------------- Static Global Variables */
+/* Global Variable for L2CAP CoC TX tracking */
+DECL_STATIC UCHAR  l2cap_cbfc_write_buffer[APPL_LE_L2CAP_CBFC_WRITE_BUF_SIZE];
+DECL_STATIC UINT16 l2cap_cbfc_tx_count;
+DECL_STATIC UINT16 l2cap_cbfc_curr_tx_count;
+DECL_STATIC UINT16 l2cap_cbfc_tx_cnf_count;
+DECL_STATIC UINT16 l2cap_cbfc_tx_data_len;
 
-DECL_STATIC UCHAR l2cap_cbfc_write_buffer[APPL_LE_L2CAP_CBFC_WRITE_BUF_SIZE];
-
-DECL_STATIC UCHAR ipspr_client_menu[] =
-"\n\
+DECL_STATIC UCHAR ipspr_client_menu[] = "\n\
     0 - Exit\n\
-    1 - Refresh\n\n\
+    1 - Refresh\n\
    10 - Discover IPSP Router Service as Primary Service\n\
     -- IPSP L2CAP CoC Channel --\n\
    20 - Connect to IPSP-Node over LE L2CAP CoC\n\
@@ -138,6 +154,7 @@ DECL_STATIC API_RESULT appl_ipspr_data_tx
                            UCHAR         * edata,
                            UINT16        edatalen
                        );
+DECL_STATIC API_RESULT appl_ipspr_data_tx_ext(void);
 
 DECL_STATIC L2CAP_PSM_CBFC appl_ipspr_l2cap_psm =
 {
@@ -206,7 +223,7 @@ void ipspr_notify_gatt_conn (void)
     UINT32 i;
 
     /* Place Holder for connection related handling */
-    LOG_DEBUG("\n[IPSPR]: ACL Connected with IPSP Node\n");
+    CONSOLE_OUT("\n[IPSPR]: ACL Connected with IPSP Node\n");
 
     /* Initialize the queue pointers on each connection */
     appl_ipspr_sendrd = 0U;
@@ -217,12 +234,18 @@ void ipspr_notify_gatt_conn (void)
         appl_ipspr_send[i].buf = NULL;
         appl_ipspr_send[i].len = 0U;
     }
+
+    /* Initialize TX related Globals on each connection */
+    l2cap_cbfc_tx_count      = 0U;
+    l2cap_cbfc_curr_tx_count = 0U;
+    l2cap_cbfc_tx_cnf_count  = 0U;
+    l2cap_cbfc_tx_data_len   = 0U;
 }
 
 void ipspr_notify_gatt_disconn (void)
 {
     /* Place Holder for Disconnection related handling */
-    LOG_DEBUG("\n[IPSPR]: ACL Disconnected with IPSP Node\n");
+    CONSOLE_OUT("\n[IPSPR]: ACL Disconnected with IPSP Node\n");
 }
 
 void ipspr_notify_gatt_servdata (GATT_SERVICE_PARAM * service, UINT16 size)
@@ -235,10 +258,10 @@ void ipspr_notify_gatt_servdata (GATT_SERVICE_PARAM * service, UINT16 size)
      */
     if (BT_TRUE == appl_ipsp_disc_state)
     {
-        LOG_DEBUG("[IPSPR]: Discovered IPSP Service in the Node!!\n");
-        LOG_DEBUG("[IPSPR]: IPSP Node Service Start Handle: 0x%04X\n",
+        CONSOLE_OUT("[IPSPR]: Discovered IPSP Service in the Node!!\n");
+        CONSOLE_OUT("[IPSPR]: IPSP Node Service Start Handle: 0x%04X\n",
         service->range.start_handle);
-        LOG_DEBUG("[IPSPR]: IPSP Node Service End Handle: 0x%04X\n",
+        CONSOLE_OUT("[IPSPR]: IPSP Node Service End Handle: 0x%04X\n",
         service->range.end_handle);
 
         /* Reset the IPSP Discovery State */
@@ -250,7 +273,6 @@ void ipspr_profile_operations (void)
 {
     API_RESULT   retval;
     ATT_UUID     uuid;
-    UINT32       index;
     unsigned int choice, menu_choice;
     static UINT8 first;
 
@@ -272,19 +294,19 @@ void ipspr_profile_operations (void)
 #endif /* IPSP_HAVE_6LO_NIFACE */
 
         /* Un-Register and then Register Again */
-        retval = l2cap_cbfc_unregister_psm(LE_PSM_IPSP);
+        retval = l2cap_cbfc_unregister_psm(IPSP_LE_PSM);
         /* Ignore Failure during Un-register */
 
-        LOG_DEBUG("[IPSPR]: Registering IPSP-Router with L2CAP CoC\n");
+        CONSOLE_OUT("[IPSPR]: Registering IPSP-Router with L2CAP CoC\n");
         retval = l2cap_cbfc_register_psm(&appl_ipspr_l2cap_psm);
 
         if (retval != API_SUCCESS)
         {
-            LOG_DEBUG("[IPSPR]: ERROR!!! retval = 0x%04X", retval);
+            CONSOLE_OUT("[IPSPR]: ERROR!!! retval = 0x%04X", retval);
         }
         else
         {
-            LOG_DEBUG("[IPSPR]: L2CAP CoC Registration SUCCESS!!\n");
+            CONSOLE_OUT("[IPSPR]: L2CAP CoC Registration SUCCESS!!\n");
 
             first = 1U;
         }
@@ -330,11 +352,11 @@ void ipspr_profile_operations (void)
 
             if (API_SUCCESS != retval)
             {
-                LOG_DEBUG("[IPSPR]: L2CAP CoC Connect ERROR!!! retval = 0x%04X\n", retval);
+                CONSOLE_OUT("[IPSPR]: L2CAP CoC Connect ERROR!!! retval = 0x%04X\n", retval);
             }
             else
             {
-                LOG_DEBUG("[IPSPR]: L2CAP CoC Connect SUCCESS!!\n");
+                CONSOLE_OUT("[IPSPR]: L2CAP CoC Connect SUCCESS!!\n");
             }
             break;
 
@@ -343,69 +365,55 @@ void ipspr_profile_operations (void)
 
             if (retval != API_SUCCESS)
             {
-                LOG_DEBUG("[IPSPR]: L2CAP CoC Disconnect ERROR!!! retval = 0x%04X", retval);
+                CONSOLE_OUT("[IPSPR]: L2CAP CoC Disconnect ERROR!!! retval = 0x%04X", retval);
             }
             else
             {
-                LOG_DEBUG("[IPSPR]: L2CAP CoC Disconnect SUCCESS!!\n");
+                CONSOLE_OUT("[IPSPR]: L2CAP CoC Disconnect SUCCESS!!\n");
             }
             break;
 
         case 22:
             {
-                UINT16 l2cap_cbfc_read_len;
-                UINT16 count;
-
-                LOG_DEBUG("Enter the Loop Count of Data Send:\n");
-                CONSOLE_IN("%d", &choice);
-                count = (UINT16)choice;
-
-                LOG_DEBUG("Enter the Length of Data to be sent:\n");
-                CONSOLE_IN("%d", &choice);
-                l2cap_cbfc_read_len = (UINT16)choice;
-
-                if (APPL_LE_L2CAP_CBFC_WRITE_BUF_SIZE < l2cap_cbfc_read_len)
+                if (0 != l2cap_cbfc_tx_count)
                 {
-                    LOG_DEBUG(
+                    CONSOLE_OUT("L2CAP CoC TX in Progress! Try Later\n");
+                    break;
+                }
+
+                CONSOLE_OUT("Enter the Loop Count of Data Send:\n");
+                CONSOLE_IN("%d", &choice);
+                /* Set the global TX count requested by User here */
+                l2cap_cbfc_tx_count = (UINT16)choice;
+
+                /*
+                 * Initialize the TX CNF Count to 0 here.
+                 * Ignore any previous increment in the TX CNF count
+                 * which might have occured due to any data reception from
+                 * the Peer device, prior to staring this Menu triggered
+                 * Data TX validation.
+                 */
+                l2cap_cbfc_tx_cnf_count = 0;
+
+                CONSOLE_OUT("Enter the Length of Data to be sent:\n");
+                CONSOLE_IN("%d", &choice);
+                l2cap_cbfc_tx_data_len = (UINT16)choice;
+
+                if (APPL_LE_L2CAP_CBFC_WRITE_BUF_SIZE < l2cap_cbfc_tx_data_len)
+                {
+                    CONSOLE_OUT(
                     "[IPSPR]: Length %d out of Range(1 to 1024)!!\n",
-                    l2cap_cbfc_read_len);
+                    l2cap_cbfc_tx_data_len);
+
+                    /* Initialize TX related Globals */
+                    l2cap_cbfc_tx_count      = 0U;
+                    l2cap_cbfc_tx_data_len   = 0U;
 
                     break;
                 }
 
-                /**
-                 * Pre-Filling the TX Data Buffer with Incremental Values
-                 * from Buffer Index 2.
-                 * The First 2 Bytes Holds the Count/Index Tag Value of the
-                 * Application Payload.
-                 */
-                for (index = 2U; index < l2cap_cbfc_read_len; index++)
-                {
-                    l2cap_cbfc_write_buffer[index] = (UCHAR)(index - 1U);
-                }
-
-                for (index = 0U; index < count; index++)
-                {
-                    /* Add the Index in the first 2 Octets */
-                    BT_PACK_LE_2_BYTE_VAL (l2cap_cbfc_write_buffer, (index+1U));
-
-                    retval = appl_ipspr_data_tx
-                             (
-                                 &appl_peer_handle,
-                                 appl_le_co_cid,
-                                 l2cap_cbfc_write_buffer,
-                                 (UINT16)l2cap_cbfc_read_len
-                             );
-
-                    if (API_SUCCESS != retval)
-                    {
-                        APPL_ERR(
-                        "[IPSPR]: **ERR** Unable to send data from appl_ipspr_data_tx(), "
-                        "retval = 0x%04X. Queue Full?\n", retval);
-
-                        break;
-                    }
-                }
+                /* Invoke Data Transfer */
+                (BT_IGNORE_RETURN_VALUE)appl_ipspr_data_tx_ext();
             }
             break;
         case 23:
@@ -420,7 +428,7 @@ void ipspr_profile_operations (void)
             }
             break;
         default:
-            LOG_DEBUG("Invalid Option!\n");
+            CONSOLE_OUT("Invalid Option!\n");
             break;
         }
 
@@ -448,11 +456,11 @@ DECL_STATIC API_RESULT ipspr_l2ca_connect_ind_cb
     BT_DEVICE_ADDR bdaddr;
     UCHAR          role;
 
-    LOG_DEBUG(
+    CONSOLE_OUT(
     "[IPSPR]: ipspr_l2ca_connect_ind_cb from Device %02X, lcid %04X, PSM 0x%04X\n",
     (*handle), lcid, psm);
 
-    LOG_DEBUG(
+    CONSOLE_OUT(
     "[IPSPR]: MTU:0x%04X MPS:0x%04X Credit:0x%04X\n", param->mtu, param->mps, param->credit);
 
     appl_peer_handle = (*handle);
@@ -527,14 +535,14 @@ DECL_STATIC API_RESULT ipspr_l2ca_connect_cnf_cb
     BT_DEVICE_ADDR bdaddr, mac;
 #endif /* IPSP_HAVE_6LO_NIFACE */
 
-    LOG_DEBUG(
+    CONSOLE_OUT(
     "[IPSPR]: ipspr_l2ca_connect_cnf_cb from Device %02X, lcid %04X, response 0x%04X\n",
     (*handle), lcid, response);
 
     /* Print MTU, MPS and Credit, on success response */
     if (L2CAP_CONNECTION_SUCCESSFUL == response)
     {
-        LOG_DEBUG(
+        CONSOLE_OUT(
         "[IPSPR]: MTU:0x%04X MPS:0x%04X Credit:0x%04X\n", param->mtu, param->mps, param->credit);
 
         appl_peer_handle = (*handle);
@@ -542,7 +550,7 @@ DECL_STATIC API_RESULT ipspr_l2ca_connect_cnf_cb
         appl_le_co_peer_mtu = param->mtu;
 
 #ifdef IPSP_HAVE_6LO_NIFACE
-        if (LE_PSM_IPSP == appl_ipspr_l2cap_psm.psm)
+        if (IPSP_LE_PSM == appl_ipspr_l2cap_psm.psm)
         {
             /* Get the remote bd address */
             device_queue_get_remote_addr(handle, &bdaddr);
@@ -563,13 +571,13 @@ DECL_STATIC API_RESULT ipspr_l2ca_connect_cnf_cb
 
 DECL_STATIC API_RESULT ipspr_l2ca_disconnect_ind_cb(UINT16 lcid)
 {
-    LOG_DEBUG("[IPSPR]: ipspr_l2ca_disconnect_ind_cb, lcid %04X\n", lcid);
+    CONSOLE_OUT("[IPSPR]: ipspr_l2ca_disconnect_ind_cb, lcid %04X\n", lcid);
 
     /* RESET peer MTU */
     appl_le_co_peer_mtu = 0x0000U;
 
 #ifdef IPSP_HAVE_6LO_NIFACE
-    if (LE_PSM_IPSP == appl_ipspr_l2cap_psm.psm)
+    if (IPSP_LE_PSM == appl_ipspr_l2cap_psm.psm)
     {
         /* Stop the network interface */
         ipsp_stop_pl();
@@ -583,13 +591,13 @@ DECL_STATIC API_RESULT ipspr_l2ca_disconnect_cnf_cb(UINT16 lcid, UINT16 reason)
 {
     BT_IGNORE_UNUSED_PARAM(reason);
 
-    LOG_DEBUG("[IPSPR]: ipspr_l2ca_disconnect_cnf_cb lcid %04X\n", lcid);
+    CONSOLE_OUT("[IPSPR]: ipspr_l2ca_disconnect_cnf_cb lcid %04X\n", lcid);
 
     /* RESET peer MTU */
     appl_le_co_peer_mtu = 0x0000U;
 
 #ifdef IPSP_HAVE_6LO_NIFACE
-    if (LE_PSM_IPSP == appl_ipspr_l2cap_psm.psm)
+    if (IPSP_LE_PSM == appl_ipspr_l2cap_psm.psm)
     {
         /* Stop the network interface */
         ipsp_stop_pl();
@@ -607,7 +615,7 @@ DECL_STATIC API_RESULT ipspr_l2ca_data_read_cb(UINT16 lcid, UINT16 result, UCHAR
     BT_IGNORE_UNUSED_PARAM(result);
 
 #ifdef APPL_IPSPR_HAVE_CB_DBG_PRINTS
-    LOG_DEBUG(
+    CONSOLE_OUT(
     "[IPSPR]: ipspr_l2ca_data_read_cb, lcid %04X, data len %04X, result 0x%04X\n",
     lcid, datalen, result);
 
@@ -648,7 +656,7 @@ DECL_STATIC API_RESULT ipspr_l2ca_low_rx_credit_ind_cb(UINT16 lcid, UINT16 credi
     BT_IGNORE_UNUSED_PARAM(credit);
 
 #ifdef APPL_IPSPR_HAVE_CB_DBG_PRINTS
-    LOG_DEBUG(
+    CONSOLE_OUT(
     "[IPSPR]: ipspr_l2ca_low_rx_credit_ind_cb, lcid %04X, Credit %04X\n",
     lcid, credit);
 #endif /* APPL_IPSPR_HAVE_CB_DBG_PRINTS */
@@ -668,13 +676,12 @@ DECL_STATIC API_RESULT ipspr_l2ca_low_rx_credit_ind_cb(UINT16 lcid, UINT16 credi
 
 DECL_STATIC API_RESULT ipspr_l2ca_tx_credit_ind_cb(UINT16 lcid, UINT16 result, UINT16 credit)
 {
-
     BT_IGNORE_UNUSED_PARAM(credit);
     BT_IGNORE_UNUSED_PARAM(result);
     BT_IGNORE_UNUSED_PARAM(lcid);
 
 #ifdef APPL_IPSPR_HAVE_CB_DBG_PRINTS
-    LOG_DEBUG(
+    CONSOLE_OUT(
     "[IPSPR]: ipspr_l2ca_tx_credit_cb, lcid %04X, Credit %04X\n",
     lcid, credit);
 #endif /* APPL_IPSPR_HAVE_CB_DBG_PRINTS */
@@ -698,7 +705,7 @@ DECL_STATIC API_RESULT ipspr_l2ca_data_write_cb
     BT_IGNORE_UNUSED_PARAM(buffer_len);
 
 #ifdef APPL_IPSPR_HAVE_CB_DBG_PRINTS
-    LOG_DEBUG(
+    CONSOLE_OUT(
     "[IPSPR]: ipspr_l2ca_data_write_cb, lcid %04X, Result %04X\n",
     lcid, result);
 #endif /* APPL_IPSPR_HAVE_CB_DBG_PRINTS */
@@ -722,9 +729,31 @@ DECL_STATIC API_RESULT ipspr_l2ca_data_write_cb
         return API_SUCCESS;
     }
 
+    /* Increment the TX confirmation Counter */
+    l2cap_cbfc_tx_cnf_count++;
+
     /* Move to the Next Queue element */
     appl_ipspr_sendrd++;
     appl_ipspr_sendrd &= (APPL_IPSPR_SEND_QUEUE_SIZE - 1U);
+
+    /* Check if the TX CNF counter matches the TX counter.
+     * If it does, then TX is completed.
+     * Else, trigger for more.
+     */
+    APPL_IPSPR_INF("\nTX:%d, TX CURR:%d, TX CNF:%d\n", l2cap_cbfc_tx_count,
+    l2cap_cbfc_curr_tx_count, l2cap_cbfc_tx_cnf_count);
+
+    if (l2cap_cbfc_tx_cnf_count == l2cap_cbfc_tx_count)
+    {
+        CONSOLE_OUT("Completed Transfer for %d bytes of data for %d count\n",
+        l2cap_cbfc_tx_data_len, l2cap_cbfc_tx_count);
+
+        /* Initialize TX related Globals */
+        l2cap_cbfc_tx_count      = 0U;
+        l2cap_cbfc_curr_tx_count = 0U;
+        l2cap_cbfc_tx_cnf_count  = 0U;
+        l2cap_cbfc_tx_data_len   = 0U;
+    }
 
     if ((appl_ipspr_sendrd != appl_ipspr_sendwr) &&
         (NULL != appl_ipspr_send[appl_ipspr_sendrd].buf))
@@ -747,6 +776,16 @@ DECL_STATIC API_RESULT ipspr_l2ca_data_write_cb
             /* Free the previously allocated memory */
             BT_free_mem(appl_ipspr_send[appl_ipspr_sendrd].buf);
         }
+
+        if (l2cap_cbfc_curr_tx_count < l2cap_cbfc_tx_count)
+        {
+            /* Refill the Queue if there is more data */
+            (BT_IGNORE_RETURN_VALUE)appl_ipspr_data_tx_ext();
+        }
+    }
+    else
+    {
+        /* Empty */
     }
 
     return API_SUCCESS;
@@ -777,6 +816,62 @@ void lel2ca_ipspr_read(UCHAR *edata, UINT16 edatalen)
 }
 #endif /* IPSP_HAVE_6LO_NIFACE */
 
+
+DECL_STATIC API_RESULT appl_ipspr_data_tx_ext(void)
+{
+    UINT32     index;
+    API_RESULT retval;
+
+    /* Initialize */
+    retval = API_SUCCESS;
+
+    /**
+     * Pre-Filling the TX Data Buffer with Incremental Values
+     * from Buffer Index 2.
+     * The First 2 Bytes Holds the Count/Index Tag Value of the
+     * Application Payload.
+     */
+    for (index = 2U; index < l2cap_cbfc_tx_data_len; index++)
+    {
+        l2cap_cbfc_write_buffer[index] = (UCHAR)(index - 1U);
+    }
+
+    for (index = 0U; index < l2cap_cbfc_tx_count; index++)
+    {
+        /* Add the Current Count Index in the first 2 Octets */
+        BT_PACK_LE_2_BYTE_VAL
+        (
+            l2cap_cbfc_write_buffer,
+            (l2cap_cbfc_curr_tx_count + index + 1U)
+        );
+
+        retval = appl_ipspr_data_tx
+                 (
+                     &appl_peer_handle,
+                     appl_le_co_cid,
+                     l2cap_cbfc_write_buffer,
+                     (UINT16)l2cap_cbfc_tx_data_len
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_IPSPR_ERR(
+            "[IPSPR]: **ERR** Unable to send data from appl_ipspr_data_tx(), "
+            "retval = 0x%04X. Queue Full?\n", retval);
+
+            break;
+        }
+    }
+
+    /**
+     * Hold the Currnt Count value, try triggering next set
+     * from the Write confirmation Callback
+     */
+    l2cap_cbfc_curr_tx_count += (UINT16)index;
+
+    return retval;
+}
+
 DECL_STATIC API_RESULT appl_ipspr_data_tx
                        (
                            DEVICE_HANDLE * device_handle,
@@ -799,7 +894,7 @@ DECL_STATIC API_RESULT appl_ipspr_data_tx
      */
     if (NULL != appl_ipspr_send[appl_ipspr_sendwr].buf)
     {
-        APPL_ERR (
+        APPL_IPSPR_ERR (
         "[IPSPR]: **ERR** L2CAP CoC Send Queue Full![Queue Size: %d]\n",
         APPL_IPSPR_SEND_QUEUE_SIZE);
 
@@ -815,7 +910,7 @@ DECL_STATIC API_RESULT appl_ipspr_data_tx
 
     if (NULL == buf)
     {
-        APPL_ERR(
+        APPL_IPSPR_ERR(
         "[IPSPR]: **ERR** Failed to allocate buffer of length %d\n", edatalen);
 
         return retval;
@@ -855,7 +950,7 @@ DECL_STATIC API_RESULT appl_ipspr_data_tx
              * If So, Assign a specific Error Code?
              */
             /* Write Failed */
-            APPL_ERR(
+            APPL_IPSPR_ERR(
             "[IPSPR]: **ERR** L2CAP Channel Data Write failed - 0x%04x\n",
             retval);
 

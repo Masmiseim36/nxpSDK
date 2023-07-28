@@ -36,9 +36,9 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCPU_MIMXRT1021DAG5A \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DMCUXPRESSO_SDK \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -51,6 +51,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -62,8 +63,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCPU_MIMXRT1021DAG5A \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DMCUXPRESSO_SDK \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -76,6 +77,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -85,7 +87,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -99,6 +100,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -107,7 +109,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DMCUXPRESSO_SDK \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -121,6 +122,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")

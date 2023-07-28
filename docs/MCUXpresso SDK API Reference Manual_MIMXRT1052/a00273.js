@@ -1,7 +1,9 @@
 var a00273 =
 [
-    [ "FSL_LPI2C_FREERTOS_DRIVER_VERSION", "a00273.html#gabe1b685d26560cdb8a3eccf81d013a3f", null ],
-    [ "LPI2C_RTOS_Init", "a00273.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c", null ],
-    [ "LPI2C_RTOS_Deinit", "a00273.html#gacacb0612bfdcd7913be1cef8ad19fb9c", null ],
-    [ "LPI2C_RTOS_Transfer", "a00273.html#gab5359e4f864d7f21eebcab8d3229e963", null ]
+    [ "FSL_DMAMUX_DRIVER_VERSION", "a00273.html#ga52b927e4f978ddf42faf0acf6de3df57", null ],
+    [ "DMAMUX_Init", "a00273.html#ga850545ac61a004df8ca312db2ca9db73", null ],
+    [ "DMAMUX_Deinit", "a00273.html#gab663257d094b9b7b6fa1b894fbf8000b", null ],
+    [ "DMAMUX_EnableChannel", "a00273.html#gaecac68802d961c31a06389caa97387f5", null ],
+    [ "DMAMUX_DisableChannel", "a00273.html#ga4d68cf7796e4a6a9cd0c4289712ca120", null ],
+    [ "DMAMUX_SetSource", "a00273.html#gab4cfa329d636dc52dffb7fedef84367e", null ]
 ];

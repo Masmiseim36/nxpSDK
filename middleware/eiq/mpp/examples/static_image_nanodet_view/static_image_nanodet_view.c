@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,13 +37,15 @@
 /* utility functions */
 #include "models/utils.h"
 #include "models/nanodet_m_320_quant_int8_cm7/nanodet_labels.h"
+#include "models/nanodet_m_320_quant_int8_cm7/nanodet_m_output_postproc.h"
+
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 #define MAX_LABEL_RECTS 10
-#define NUM_BOXES_MAX 100   /* Nanodet max bounding boxes */
+#define NUM_BOXES_MAX   MIN(APP_MAX_BOXES, MAX_POINTS)  /* Nanodet max bounding boxes */
 
 typedef struct _user_data_t {
     int inference_frame_num;
@@ -53,7 +55,7 @@ typedef struct _user_data_t {
     /* detected boxes */
     box_data  boxes[NUM_BOXES_MAX];
     /* detected boxes count */
-    int count;
+    int detected_count;
     uint32_t accessing; /* boolean protecting access */
 } user_data_t;
 
@@ -79,25 +81,81 @@ typedef struct _user_data_t {
 #error "ERROR: An inference engine must be selected"
 #endif
 
-#include "models/nanodet_m_320_quant_int8_cm7/nanodet_m_output_postproc.h"
-
 #include "images/skigirl_COCO_320_320_bgra.h"
 
+/*
+ * SWAP_DIMS = 1 if source/display dims are reversed
+ * SWAP_DIMS = 0 if source/display have the same orientation
+ */
+#define SWAP_DIMS (((APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_90) || (APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_270)) ? 1 : 0)
+
+/* display small and large dims */
 #define DISPLAY_SMALL_DIM MIN(APP_DISPLAY_WIDTH, APP_DISPLAY_HEIGHT)
+#define DISPLAY_LARGE_DIM MAX(APP_DISPLAY_WIDTH, APP_DISPLAY_HEIGHT)
 
-#define CROP_TOP 0
-#define CROP_LEFT 0
-#define CROP_SIZE SRC_IMAGE_WIDTH
+#define MODEL_ASPECT_RATIO   (1.0f * MODEL_WIDTH / MODEL_HEIGHT)
+/* output is displayed in landscape mode */
+#define DISPLAY_ASPECT_RATIO (1.0f * DISPLAY_LARGE_DIM / DISPLAY_SMALL_DIM)
+/* camera aspect ratio */
+#define CAMERA_ASPECT_RATIO  (1.0f * APP_CAMERA_WIDTH / APP_CAMERA_HEIGHT)
 
+/* label rect line width */
 #define RECT_LINE_WIDTH 2
-/* The detection zone rectangle is a square in the top left corner of the display */
-/* The square length is the display smallest dimension minus the rectangle line width */
-#define DETECTION_ZONE_RECT_TOP 0
-#define DETECTION_ZONE_RECT_LEFT 0
-#define DETECTION_ZONE_RECT_LENGTH DISPLAY_SMALL_DIM - RECT_LINE_WIDTH
 
-#define MODEL_WIDTH  320
-#define MODEL_HEIGHT 320
+/*
+ * The detection zone is a rectangle that has the same shape as the model input.
+ * The rectangle dimensions are calculated based on the display small dim and respecting the model aspect ratio
+ * The detection zone width and height depend on the display_aspect_ratio compared to the model aspect_ratio:
+ * if the display_aspect_ratio >= model_aspect_ratio then :
+ *                  (width, height) = (display_small_dim * model_aspect_ratio, display_small_dim)
+ * if the display_aspect_ratio < model_aspect_ratio then :
+ *                  (width, height) = (display_small_dim, display_small_dim / model_aspect_ratio)
+ *
+ * */
+#define DETECTION_ZONE_RECT_HEIGHT ((DISPLAY_ASPECT_RATIO >= MODEL_ASPECT_RATIO) ? \
+		DISPLAY_SMALL_DIM : (DISPLAY_SMALL_DIM / MODEL_ASPECT_RATIO))
+#define DETECTION_ZONE_RECT_WIDTH  ((DISPLAY_ASPECT_RATIO >= MODEL_ASPECT_RATIO) ? \
+		(DISPLAY_SMALL_DIM * MODEL_ASPECT_RATIO) : DISPLAY_SMALL_DIM)
+
+/* detection zone top/left offsets */
+#define DETECTION_ZONE_RECT_TOP  (DISPLAY_SMALL_DIM - DETECTION_ZONE_RECT_HEIGHT)/2
+#define DETECTION_ZONE_RECT_LEFT 0
+
+/*
+ *  The computation of the crop size(width and height) and the crop top/left depends on the detection
+ *  zone dims and offsets and on the source-display scaling factor SF which is calculated differently
+ *  depending on 2 constraints:
+ *           * Constraint 1: display aspect ratio compared to the source aspect ratio.
+ *           * Constraint 2: SWAP_DIMS value.
+ * if the display_aspect_ratio < source_aspect_ratio :
+ *            - SWAP_DIMS = 0: SF = APP_DISPLAY_WIDTH / SRC_IMAGE_WIDTH
+ *            - SWAP_DIMS = 1: SF = APP_DISPLAY_HEIGHT / SRC_IMAGE_HEIGHT
+ * if the display_aspect_ratio >= source_aspect_ratio:
+ *            - SWAP_DIMS = 0: SF = APP_DISPLAY_HEIGHT / SRC_IMAGE_HEIGHT
+ *            - SWAP_DIMS = 1: SF = APP_DISPLAY_WIDTH / SRC_IMAGE_WIDTH
+ * the crop dims and offsets are calculated in the following way:
+ * CROP_SIZE_TOP = DETECTION_ZONE_RECT_HEIGHT / SF
+ * CROP_SIZE_LEFT = DETECTION_ZONE_RECT_WIDTH / SF
+ * CROP_TOP = DETECTION_ZONE_RECT_HEIGHT / SF
+ * CROP_LEFT = DETECTION_ZONE_RECT_LEFT / SF
+ * */
+#if ((DISPLAY_LARGE_DIM * SRC_IMAGE_HEIGHT) < (DISPLAY_SMALL_DIM * SRC_IMAGE_WIDTH))
+#define CROP_SIZE_TOP   ((DETECTION_ZONE_RECT_HEIGHT * SRC_IMAGE_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+#define CROP_SIZE_LEFT  ((DETECTION_ZONE_RECT_WIDTH * SRC_IMAGE_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+
+#define CROP_TOP  ((DETECTION_ZONE_RECT_TOP * SRC_IMAGE_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+#define CROP_LEFT ((DETECTION_ZONE_RECT_LEFT * SRC_IMAGE_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+#else   /* DISPLAY_ASPECT_RATIO() >= SOURCE_ASPECT_RATIO() */
+#define CROP_SIZE_TOP   ((DETECTION_ZONE_RECT_HEIGHT * SRC_IMAGE_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+#define CROP_SIZE_LEFT  ((DETECTION_ZONE_RECT_WIDTH * SRC_IMAGE_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+
+#define CROP_TOP  ((DETECTION_ZONE_RECT_TOP * SRC_IMAGE_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+#define CROP_LEFT ((DETECTION_ZONE_RECT_LEFT * SRC_IMAGE_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+#endif  /* DISPLAY_ASPECT_RATIO() < SOURCE_ASPECT_RATIO() */
+
+/* Detected boxes offsets */
+#define BOXES_OFFSET_LEFT DETECTION_ZONE_RECT_LEFT
+#define BOXES_OFFSET_TOP  DETECTION_ZONE_RECT_TOP
 
 #define STATS_PRINT_PERIOD_MS 1000
 
@@ -143,23 +201,23 @@ int main()
 }
 
 /* Translate boxes into labeled rectangles using display characteristics */
-void boxes_to_rects(box_data* boxes[], uint32_t num_boxes, uint32_t max_boxes, mpp_labeled_rect_t *rects) {
+void boxes_to_rects(box_data boxes[], uint32_t num_boxes, uint32_t max_boxes, mpp_labeled_rect_t *rects) {
 
     uint32_t box_counter = 1;
 
     /* other rectangles show detected objects */
     for (uint32_t i = 0; i < num_boxes && box_counter < max_boxes; i++) {
-        if (!boxes[i])
+        if (boxes[i].area == 0)
             continue;
         /* input tensor preview is scaled and moved to fit on screen, and so its bounding boxes */
-        rects[box_counter].left = (int)((boxes[i]->left * DISPLAY_SMALL_DIM)/ MODEL_WIDTH) + CROP_TOP;
-        rects[box_counter].right = (int)((boxes[i]->right * DISPLAY_SMALL_DIM)/ MODEL_WIDTH) + CROP_TOP;
-        rects[box_counter].bottom = (int)((boxes[i]->bottom * DISPLAY_SMALL_DIM)/MODEL_HEIGHT) + CROP_LEFT;
-        rects[box_counter].top = (int)((boxes[i]->top * DISPLAY_SMALL_DIM)/MODEL_HEIGHT) + CROP_LEFT;
+        rects[box_counter].left = (int)((boxes[i].left * DETECTION_ZONE_RECT_WIDTH)/ MODEL_WIDTH) + BOXES_OFFSET_TOP;
+        rects[box_counter].right = (int)((boxes[i].right * DETECTION_ZONE_RECT_WIDTH)/ MODEL_WIDTH) + BOXES_OFFSET_TOP;
+        rects[box_counter].bottom = (int)((boxes[i].bottom * DETECTION_ZONE_RECT_HEIGHT)/MODEL_HEIGHT) + BOXES_OFFSET_LEFT;
+        rects[box_counter].top = (int)((boxes[i].top * DETECTION_ZONE_RECT_HEIGHT)/MODEL_HEIGHT) + BOXES_OFFSET_LEFT;
         rects[box_counter].line_width = RECT_LINE_WIDTH;
         rects[box_counter].line_color.rgb.B = 0xff;
         uint8_t label_size = sizeof(rects[box_counter].label);
-        strncpy((char *) rects[box_counter].label, nanodet_labels[boxes[i]->label], label_size-1);
+        strncpy((char *) rects[box_counter].label, nanodet_labels[boxes[i].label], label_size-1);
         rects[box_counter].label[label_size-1] = '\0';  /* in case label has been truncated */
 
         box_counter++;
@@ -169,7 +227,6 @@ void boxes_to_rects(box_data* boxes[], uint32_t num_boxes, uint32_t max_boxes, m
 int mpp_event_listener(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data) {
     status_t ret;
     const mpp_inference_cb_param_t *inf_output;
-    box_data* finalboxes[NUM_BOXES_MAX];
 
     /* user_data handle contains application private data */
     user_data_t *app_priv = (user_data_t *)user_data;
@@ -178,32 +235,31 @@ int mpp_event_listener(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data
     case MPP_EVENT_INFERENCE_OUTPUT_READY:
         /* cast evt_data pointer to correct structure matching the event */
         inf_output = (const mpp_inference_cb_param_t *) evt_data;
-        ret = NANODET_ProcessOutput(inf_output, finalboxes);
-        if (ret != kStatus_Success)
-            PRINTF("mpp_event_listener: process output error!");
 
         /* check that we can modify the user data (not accessed by other task) */
         if (Atomic_CompareAndSwap_u32(&app_priv->accessing, 1, 0) == ATOMIC_COMPARE_AND_SWAP_SUCCESS)
         {
-            app_priv->count = 1;
-            /* copy results */
+            ret = NANODET_ProcessOutput(inf_output, app_priv->boxes);
+            if (ret != kStatus_Success)
+                PRINTF("mpp_event_listener: process output error!");
+            app_priv->detected_count = 0;
+            /* count valid results */
             for (uint32_t i = 0; i < NUM_BOXES_MAX; i++)
             {
-                if (!finalboxes[i])
-                    continue;
-                app_priv->boxes[app_priv->count] = *(finalboxes[i]);
-                app_priv->count++;
+                if (app_priv->boxes[i].score > 0)
+                    app_priv->detected_count++;
             }
             /* end of modification of user data */
             __atomic_store_n(&app_priv->accessing, 0, __ATOMIC_SEQ_CST);
         }
 
-        if ( (app_priv->mp != NULL) && (app_priv->elem != 0) && (app_priv->labels != NULL) ){
+        if ( (app_priv->mp != NULL) && (app_priv->elem != 0) ){
             mpp_element_params_t params;
-            params.labels.detected_count = app_priv->count;
+            /* detected_count contains at least the detection zone box */
+            params.labels.detected_count = app_priv->detected_count + 1;
             params.labels.max_count = MAX_LABEL_RECTS;
             params.labels.rectangles = app_priv->labels;
-            boxes_to_rects(finalboxes, NUM_BOXES_MAX, MAX_LABEL_RECTS, params.labels.rectangles);
+            boxes_to_rects(app_priv->boxes, NUM_BOXES_MAX, MAX_LABEL_RECTS, params.labels.rectangles);
             mpp_element_update(app_priv->mp, app_priv->elem, &params);
         }
 
@@ -255,7 +311,7 @@ static void app_task(void *params)
     img_params.format = SRC_IMAGE_FORMAT;
     img_params.width = SRC_IMAGE_WIDTH;
     img_params.height = SRC_IMAGE_HEIGHT;
-    mpp_static_img_add(mp, &img_params, image_data);
+    mpp_static_img_add(mp, &img_params, (void *)image_data);
 
     /* split the pipeline into 2 branches */
     mpp_t mp_split;
@@ -271,23 +327,24 @@ static void app_task(void *params)
     /* First do crop + resize + color convert */
     mpp_element_params_t elem_params;
     memset(&elem_params, 0, sizeof(elem_params));
+    /* pick default device from the first listed and supported by Hw */
+    elem_params.convert.dev_name = NULL;
+    /* set output buffer dims */
+    elem_params.convert.out_buf.width = MODEL_WIDTH;
+    elem_params.convert.out_buf.height = MODEL_HEIGHT;
     /* color convert */
     elem_params.convert.pixel_format = MPP_PIXEL_RGB;
     elem_params.convert.ops = MPP_CONVERT_COLOR;
-    /* resize */
-    elem_params.convert.height = MODEL_HEIGHT;
-    elem_params.convert.width  = MODEL_WIDTH;
-    elem_params.convert.ops |= MPP_CONVERT_SCALE;
     /* crop center of image */
     elem_params.convert.crop.top = CROP_TOP;
-    elem_params.convert.crop.bottom = CROP_TOP + CROP_SIZE - 1;
+    elem_params.convert.crop.bottom = CROP_TOP + CROP_SIZE_TOP - 1;
     elem_params.convert.crop.left = CROP_LEFT;
-    elem_params.convert.crop.right = CROP_LEFT + CROP_SIZE - 1;
-    elem_params.convert.out_area.top = 0;
-    elem_params.convert.out_area.bottom = MODEL_HEIGHT - 1;
-    elem_params.convert.out_area.left = 0;
-    elem_params.convert.out_area.right = MODEL_WIDTH - 1;
+    elem_params.convert.crop.right = CROP_LEFT + CROP_SIZE_LEFT - 1;
     elem_params.convert.ops |= MPP_CONVERT_CROP;
+    /* resize: scaling parameters */
+    elem_params.convert.scale.width = MODEL_WIDTH;
+    elem_params.convert.scale.height = MODEL_HEIGHT;
+    elem_params.convert.ops |= MPP_CONVERT_SCALE;
 
     ret = mpp_element_add(mp_split, MPP_ELEMENT_CONVERT, &elem_params, NULL);
     if (ret ) {
@@ -338,18 +395,25 @@ static void app_task(void *params)
     }
 
     /* On the main branch of the pipeline, send the frame to the display */
-    /* First do color-convert + rotate */
+    /* First do color-convert */
     memset(&elem_params, 0, sizeof(elem_params));
+    /* pick default device from the first listed and supported by Hw */
+    elem_params.convert.dev_name = NULL;
+    /* set output buffer dims */
+    elem_params.convert.out_buf.width =  (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH);
+    elem_params.convert.out_buf.height = (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT);
     elem_params.convert.pixel_format = APP_DISPLAY_FORMAT;
-    if (APP_DISPLAY_WIDTH < APP_DISPLAY_HEIGHT) {
-        /* display in portrait => scale to display width */
-        elem_params.convert.width = APP_DISPLAY_WIDTH;
-        elem_params.convert.height = APP_DISPLAY_WIDTH * SRC_IMAGE_HEIGHT / SRC_IMAGE_WIDTH;
+    /* scaling parameters */
+    if ((DISPLAY_LARGE_DIM * SRC_IMAGE_HEIGHT) < (DISPLAY_SMALL_DIM * SRC_IMAGE_WIDTH)) {
+    	elem_params.convert.scale.width =  (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH);
+    	elem_params.convert.scale.height = (SWAP_DIMS ? (APP_DISPLAY_HEIGHT * SRC_IMAGE_HEIGHT / SRC_IMAGE_WIDTH) :
+    			(APP_DISPLAY_WIDTH * SRC_IMAGE_HEIGHT / SRC_IMAGE_WIDTH));
     } else {
-        /* display in landscape => scale to display height */
-        elem_params.convert.height = APP_DISPLAY_HEIGHT;
-        elem_params.convert.width  = APP_DISPLAY_HEIGHT * SRC_IMAGE_WIDTH / SRC_IMAGE_HEIGHT;
+    	elem_params.convert.scale.height = (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT);
+    	elem_params.convert.scale.width  = (SWAP_DIMS ? (APP_DISPLAY_WIDTH * SRC_IMAGE_WIDTH / SRC_IMAGE_HEIGHT) :
+    			(APP_DISPLAY_HEIGHT * SRC_IMAGE_WIDTH / SRC_IMAGE_HEIGHT));
     }
+
     elem_params.convert.ops = MPP_CONVERT_COLOR | MPP_CONVERT_SCALE;
     ret = mpp_element_add(mp, MPP_ELEMENT_CONVERT, &elem_params, NULL);
 
@@ -367,20 +431,11 @@ static void app_task(void *params)
     elem_params.labels.detected_count = 1;
     elem_params.labels.rectangles = user_data.labels;
 
-    /* first */
-    if ((APP_CAMERA_DISPLAY_ROTATE != ROTATE_0) &&
-        (APP_CAMERA_DISPLAY_ROTATE != ROTATE_180)) {
-        /* camera and display have different orientation */
-        user_data.labels[0].top    = DETECTION_ZONE_RECT_LEFT;
-        user_data.labels[0].left   = DETECTION_ZONE_RECT_TOP;
-        user_data.labels[0].bottom = DETECTION_ZONE_RECT_LEFT + DETECTION_ZONE_RECT_LENGTH;
-        user_data.labels[0].right  = DETECTION_ZONE_RECT_TOP + DETECTION_ZONE_RECT_LENGTH;
-    } else {
-        user_data.labels[0].top    = DETECTION_ZONE_RECT_TOP;
-        user_data.labels[0].left   = DETECTION_ZONE_RECT_LEFT;
-        user_data.labels[0].bottom = DETECTION_ZONE_RECT_TOP + DETECTION_ZONE_RECT_LENGTH;
-        user_data.labels[0].right  = DETECTION_ZONE_RECT_LEFT + DETECTION_ZONE_RECT_LENGTH;
-    }
+    /* first add detection zone box */
+    user_data.labels[0].top    = DETECTION_ZONE_RECT_TOP;
+    user_data.labels[0].left   = DETECTION_ZONE_RECT_LEFT;
+    user_data.labels[0].bottom = DETECTION_ZONE_RECT_TOP + DETECTION_ZONE_RECT_HEIGHT;
+    user_data.labels[0].right  = DETECTION_ZONE_RECT_LEFT + DETECTION_ZONE_RECT_WIDTH;
     user_data.labels[0].line_width = RECT_LINE_WIDTH;
     user_data.labels[0].line_color.rgb.G = 0xff;
     strcpy((char *)user_data.labels[0].label, "Detection zone");
@@ -390,6 +445,22 @@ static void app_task(void *params)
     if (ret) {
         PRINTF("Failed to add element LABELED_RECTANGLE (0x%x)\r\n", ret);
         goto err;
+    }
+
+    /* then rotate if needed */
+    if (APP_DISPLAY_LANDSCAPE_ROTATE != ROTATE_0) {
+    	memset(&elem_params, 0, sizeof(elem_params));
+    	/* set output buffer dims */
+    	elem_params.convert.out_buf.width = APP_DISPLAY_WIDTH;
+    	elem_params.convert.out_buf.height = APP_DISPLAY_HEIGHT;
+    	elem_params.convert.angle = APP_DISPLAY_LANDSCAPE_ROTATE;
+    	elem_params.convert.ops = MPP_CONVERT_ROTATE;
+    	ret = mpp_element_add(mp, MPP_ELEMENT_CONVERT, &elem_params, NULL);
+
+    	if (ret) {
+    		PRINTF("Failed to add element CONVERT\r\n");
+    		goto err;
+    	}
     }
 
     mpp_display_params_t disp_params;
@@ -431,10 +502,14 @@ static void app_task(void *params)
 
         if (Atomic_CompareAndSwap_u32(&user_data.accessing, 1, 0))
         {
-            /* ignore rectangle of the Detection zone (user_data.boxes[0]) */
-            for (i = 1; i < user_data.count; i++)
-                PRINTF("nanodet : box %d label %s score %d(%%)\r\n", i,
-                        nanodet_labels[user_data.boxes[i].label], (int)(user_data.boxes[i].score * 100.0f));
+            for (i = 0; i < NUM_BOXES_MAX; i++)
+            {
+                if (user_data.boxes[i].area > 0)
+                {
+                    PRINTF("nanodet : box %d label %s score %d(%%)\r\n", i,
+                            nanodet_labels[user_data.boxes[i].label], (int)(user_data.boxes[i].score * 100.0f));
+                }
+            }
             __atomic_store_n(&user_data.accessing, 0, __ATOMIC_SEQ_CST);
         }
     }

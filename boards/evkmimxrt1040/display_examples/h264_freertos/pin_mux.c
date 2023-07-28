@@ -1,6 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
- * All rights reserved.
+ * Copyright 2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,16 +12,18 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v9.0
+product: Pins v13.1
 processor: MIMXRT1042xxxxB
 package_id: MIMXRT1042XJM5B
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 0.14.2
+board: MIMXRT1040-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
 #include "fsl_common.h"
 #include "fsl_iomuxc.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -48,13 +49,13 @@ BOARD_InitPins:
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: C8, peripheral: LCDIF, signal: 'lcdif_data, 00', pin_signal: GPIO_B0_04, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: A8, peripheral: LCDIF, signal: 'lcdif_data, 01', pin_signal: GPIO_B0_05, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
+  - {pin_num: A8, peripheral: LCDIF, signal: 'lcdif_data, 01', pin_signal: GPIO_B0_05, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: B8, peripheral: LCDIF, signal: 'lcdif_data, 02', pin_signal: GPIO_B0_06, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: A9, peripheral: LCDIF, signal: 'lcdif_data, 03', pin_signal: GPIO_B0_07, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: A10, peripheral: LCDIF, signal: 'lcdif_data, 04', pin_signal: GPIO_B0_08, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
+  - {pin_num: A10, peripheral: LCDIF, signal: 'lcdif_data, 04', pin_signal: GPIO_B0_08, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: C9, peripheral: LCDIF, signal: 'lcdif_data, 05', pin_signal: GPIO_B0_09, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
@@ -62,13 +63,13 @@ BOARD_InitPins:
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: B9, peripheral: LCDIF, signal: 'lcdif_data, 07', pin_signal: GPIO_B0_11, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: D10, peripheral: LCDIF, signal: 'lcdif_data, 08', pin_signal: GPIO_B0_12, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
+  - {pin_num: D10, peripheral: LCDIF, signal: 'lcdif_data, 08', pin_signal: GPIO_B0_12, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: C10, peripheral: LCDIF, signal: 'lcdif_data, 09', pin_signal: GPIO_B0_13, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: C11, peripheral: LCDIF, signal: 'lcdif_data, 10', pin_signal: GPIO_B0_14, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
+  - {pin_num: C11, peripheral: LCDIF, signal: 'lcdif_data, 10', pin_signal: GPIO_B0_14, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: D11, peripheral: LCDIF, signal: 'lcdif_data, 11', pin_signal: GPIO_B0_15, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
+  - {pin_num: D11, peripheral: LCDIF, signal: 'lcdif_data, 11', pin_signal: GPIO_B0_15, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: A11, peripheral: LCDIF, signal: 'lcdif_data, 12', pin_signal: GPIO_B1_00, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
@@ -78,7 +79,7 @@ BOARD_InitPins:
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: E10, peripheral: LCDIF, signal: 'lcdif_data, 15', pin_signal: GPIO_B1_03, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: D8, peripheral: LCDIF, signal: lcdif_enable, pin_signal: GPIO_B0_01, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
+  - {pin_num: D8, peripheral: LCDIF, signal: lcdif_enable, pin_signal: GPIO_B0_01, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: E8, peripheral: LCDIF, signal: lcdif_hsync, pin_signal: GPIO_B0_02, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
@@ -88,13 +89,13 @@ BOARD_InitPins:
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
   - {pin_num: L12, peripheral: GPIO1, signal: 'gpio_io, 19', pin_signal: GPIO_AD_B1_03, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: F13, peripheral: GPIO2, signal: 'gpio_io, 28', pin_signal: GPIO_B1_12, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
+  - {pin_num: F13, peripheral: GPIO2, signal: 'gpio_io, 28', pin_signal: GPIO_B1_12, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0, slew_rate: Fast}
-  - {pin_num: K3, peripheral: USDHC1, signal: usdhc_clk, pin_signal: GPIO_SD_B0_01, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
+  - {pin_num: K3, peripheral: USDHC1, signal: usdhc_clk, pin_signal: GPIO_SD_B0_01, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
     pull_keeper_select: Keeper, pull_keeper_enable: Disable, open_drain: Disable, speed: MHZ_100, drive_strength: R0, slew_rate: Fast}
-  - {pin_num: H3, peripheral: USDHC1, signal: usdhc_cmd, pin_signal: GPIO_SD_B0_00, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
+  - {pin_num: H3, peripheral: USDHC1, signal: usdhc_cmd, pin_signal: GPIO_SD_B0_00, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0, slew_rate: Fast}
-  - {pin_num: J3, peripheral: USDHC1, signal: 'usdhc_data, 0', pin_signal: GPIO_SD_B0_02, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
+  - {pin_num: J3, peripheral: USDHC1, signal: 'usdhc_data, 0', pin_signal: GPIO_SD_B0_02, identifier: '', software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0, slew_rate: Fast}
   - {pin_num: J2, peripheral: USDHC1, signal: 'usdhc_data, 1', pin_signal: GPIO_SD_B0_03, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0, slew_rate: Fast}
@@ -104,6 +105,8 @@ BOARD_InitPins:
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0, slew_rate: Fast}
   - {pin_num: E13, peripheral: USDHC1, signal: usdhc_vselect, pin_signal: GPIO_B1_14, software_input_on: Disable, hysteresis_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm,
     pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_4, slew_rate: Fast}
+  - {pin_num: K11, peripheral: GPIO1, signal: 'gpio_io, 18', pin_signal: GPIO_AD_B1_02, direction: OUTPUT, gpio_init_state: 'true', software_input_on: Disable, hysteresis_enable: Disable,
+    pull_up_down_config: Pull_Down_100K_Ohm, pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -116,8 +119,18 @@ BOARD_InitPins:
 void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           
 
+  /* GPIO configuration of SPDIF_OUT on GPIO_AD_B1_02 (pin K11) */
+  gpio_pin_config_t SPDIF_OUT_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 1U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_B1_02 (pin K11) */
+  GPIO_PinInit(GPIO1, 18U, &SPDIF_OUT_config);
+
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_12_LPUART1_TX, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_LPUART1_RX, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_02_GPIO1_IO18, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_03_GPIO1_IO19, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_B0_00_LCD_CLK, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_B0_01_LCD_ENABLE, 0U); 
@@ -158,6 +171,7 @@ void BOARD_InitPins(void) {
     );
   IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_12_LPUART1_TX, 0x10B0U); 
   IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B0_13_LPUART1_RX, 0x10B0U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B1_02_GPIO1_IO18, 0x10B0U); 
   IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B1_03_GPIO1_IO19, 0x10B0U); 
   IOMUXC_SetPinConfig(IOMUXC_GPIO_B0_00_LCD_CLK, 0x01B0B0U); 
   IOMUXC_SetPinConfig(IOMUXC_GPIO_B0_01_LCD_ENABLE, 0x01B0B0U); 

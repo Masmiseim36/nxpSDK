@@ -1,0 +1,43 @@
+
+# The source block assign file name to identifiers
+sources {
+    myBootImageFile = extern (0);
+    myUserDataFile = extern (1);
+}
+
+# The section block specifies the sequence of boot commands to be written to the SB file
+section (0) {
+
+    #1. Prepare 1st MMC Card option block.
+    #   8bit DDR, High Speed, Boot partition 1 selected for access.
+    #   Fast boot config: Boot partition 1, 8bit DDR, ACK.
+    load 0xC1121625 > 0x100;
+    load 0x00000000 > 0x104;
+
+    #2. Configure MMC Card.
+    enable mmccard 0x100;
+
+    #3. Erase blocks at Boot partion 1 as needed.
+    erase mmccard 0x400..0x14000;
+
+    #4. Program Boot Image to MMC Card Boot partion 1.
+    load mmccard myBootImageFile > 0x400;
+
+    #5. Program Efuse according the fast boot config.(optional if use GPIO instead of Efuse)
+    #load fuse 0x000006B3 > 0x05;
+
+    #6 Prepare 2nd MMC Card option block.
+    #  8bit DDR, High Speed, User data area is selected for access.
+    load 0xC0001600 > 0x100;
+    load 0x00000000 > 0x104;
+
+    #7. Re-configure MMC Card 
+    enable mmccard 0x100;
+
+    #8. Erase blocks at User data area as needed.
+    erase mmccard 0x8000..0x100000;
+
+    #9. Program User Data file to User data area.
+    load mmccard myUserDataFile > 0x8000;
+
+}

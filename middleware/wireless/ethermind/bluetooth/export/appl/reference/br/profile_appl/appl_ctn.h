@@ -83,8 +83,8 @@ API_RESULT appl_ctn_cce_callback
                CTN_HANDLE_INFO * ctn_handle,
                UINT8             event_type,
                UINT16            event_result,
-               CTN_HEADERS     * event_data,
-               UINT16            event_datalen
+               CTN_HEADERS     * event_header,
+               UINT16            event_hdrlen
            );
 
 void appl_ctn_cce_sdp_callback

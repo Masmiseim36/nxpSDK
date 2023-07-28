@@ -328,7 +328,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/flash/mflash/mimxrt1052;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -620,6 +620,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -671,6 +681,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -684,16 +704,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1099,7 +1109,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/flash/mflash/mimxrt1052;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1135,7 +1145,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1391,6 +1401,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1442,6 +1462,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1455,16 +1485,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1870,7 +1890,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/flash/mflash/mimxrt1052;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1906,7 +1926,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2162,6 +2182,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2213,6 +2243,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2226,16 +2266,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2641,7 +2671,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=64487424, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/flash/mflash/mimxrt1052;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/littlefs;../../../../../devices/MIMXRT1052/utilities;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -2677,7 +2707,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2933,6 +2963,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2984,6 +3024,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2997,16 +3047,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>

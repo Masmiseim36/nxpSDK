@@ -37,7 +37,8 @@ extern "C" {
  * includes
  ******************************************************************************/
 #if defined (LPC_ENET) || defined (LPC_WIFI)
-#include "jsmn.h"
+// P&T MW team to fix this properly when re-enabling example in SDK
+//#include "jsmn.h"
 #endif
 #if defined (LPC_WIFI)
 #   include "iot_wifi.h"
@@ -81,9 +82,10 @@ extern int SetGetFlag_GPstorage(U32 *p_val, GpStorageMode_t mode, HLSE_OBJECT_HA
 extern int GetHandle_GPstorage(HLSE_OBJECT_INDEX index);
 #endif
 
-#if defined (LPC_ENET) || defined (LPC_WIFI)
-extern int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s);
-#endif
+// P&T MW team to fix this properly when re-enabling example in SDK
+//#if defined (LPC_ENET) || defined (LPC_WIFI)
+//extern int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s);
+//#endif
 #ifdef __cplusplus
 }
 #endif

@@ -45,6 +45,13 @@ API_RESULT gatt_db_hid_gatt_char_handler
                GATT_DB_HANDLE    * handle,
                GATT_DB_PARAMS    * params
            );
+API_RESULT appl_mouse_hid_report_handler(APPL_HANDLE * appl_handle);
+API_RESULT appl_keyboard_hid_report_handler(APPL_HANDLE * appl_handle);
+API_RESULT appl_notify_hid_report
+           (
+               APPL_HANDLE     * hndl,
+               ATT_ATTR_HANDLE attr_hndl
+           );
 void appl_hid_handle_ind_complete
      (
          APPL_HANDLE * handle,

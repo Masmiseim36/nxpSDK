@@ -1,10 +1,8 @@
 /*
-* Copyright 2022 NXP
-*
-* NXP Confidential. This software is owned or controlled by NXP and may only
-* be used strictly in accordance with the applicable license terms found in
-* file LICENSE.txt
-*/
+ * Copyright 2022-2023 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 
 #ifndef AFE_VOICESEEKER_H_

@@ -1,47 +1,33 @@
 var a00078 =
 [
-    [ "trng_statistical_check_limit_t", "a00078.html#a00525", [
-      [ "maximum", "a00078.html#a8ab9b19ce415bf6823de58a1bbf6cb66", null ],
-      [ "minimum", "a00078.html#aa3400c3e1329406d70f62165f8e4c4f0", null ]
+    [ "spdif_edma_transfer_t", "a00078.html#a00539", [
+      [ "leftData", "a00078.html#aa90fd5f547b7e42f7b978e33b4f45fe4", null ],
+      [ "rightData", "a00078.html#ae12876ab6641bb3dacad39a873b0c9b7", null ],
+      [ "dataSize", "a00078.html#acdffc956f6414bb01b68cd78c660c2fd", null ]
     ] ],
-    [ "trng_config_t", "a00078.html#a00524", [
-      [ "lock", "a00078.html#a5350c101fa633dcebef81476a2ca81b2", null ],
-      [ "clockMode", "a00078.html#a2f0603394bb7074023fe0f42b36cd235", null ],
-      [ "ringOscDiv", "a00078.html#a14de599122f62cc47ab0beed10940e06", null ],
-      [ "sampleMode", "a00078.html#ac0d23238419cd87722c357754bdffc5c", null ],
-      [ "entropyDelay", "a00078.html#aad6e0857e5ce9f472da8d40a1c1c3638", null ],
-      [ "sampleSize", "a00078.html#a63ad878804f8ce9c1a6c68ec51c45f21", null ],
-      [ "sparseBitLimit", "a00078.html#aa13e97aea012bac044c8b468b96a346a", null ],
-      [ "retryCount", "a00078.html#a3a5a504af9df6ac82e14c1a50c018986", null ],
-      [ "longRunMaxLimit", "a00078.html#a8931a55ae0023f04ac89d136047493b6", null ],
-      [ "monobitLimit", "a00078.html#ac3e3d53ec411f36076baa8a602ea7e1e", null ],
-      [ "runBit1Limit", "a00078.html#a690b392b63f4ed4dabe11f42339d2ca6", null ],
-      [ "runBit2Limit", "a00078.html#a7c457b56026bf08724e4dfb0e9347ced", null ],
-      [ "runBit3Limit", "a00078.html#a03cfe0feba7d20ef1bb67b6d774f689a", null ],
-      [ "runBit4Limit", "a00078.html#aeb24ae2dc10008e0093887501f653019", null ],
-      [ "runBit5Limit", "a00078.html#a64f977e88bb179f321bf325b016b6df7", null ],
-      [ "runBit6PlusLimit", "a00078.html#a1ef1a1672daaeb22f465f1400ac4e33a", null ],
-      [ "pokerLimit", "a00078.html#aa5c11626ca0892f8be5e88a39892b518", null ],
-      [ "frequencyCountLimit", "a00078.html#a75840750418fdffabbae7ba0d66709d6", null ]
+    [ "spdif_edma_handle_t", "a00078.html#a00345", [
+      [ "dmaLeftHandle", "a00078.html#abaebb5b00fd7e2733feb64e2ff36e2c2", null ],
+      [ "dmaRightHandle", "a00078.html#a7df62c301a4541752492b4dd164647e5", null ],
+      [ "nbytes", "a00078.html#a64d0df1456c3e227075740856ef9792f", null ],
+      [ "count", "a00078.html#aedfc50de1e80ffc1273b396f81f5cf1d", null ],
+      [ "state", "a00078.html#ad700ba370c26b2036b787957a1087a0b", null ],
+      [ "callback", "a00078.html#abbcd30fd76c97a3670339683f8266a7c", null ],
+      [ "userData", "a00078.html#a758b44ed074c2b55ccff4bdb529ef4fd", null ],
+      [ "leftTcd", "a00078.html#a493e0c269cf6231f9054d97f2ff964a1", null ],
+      [ "rightTcd", "a00078.html#a3ea754fe27bc481382b2af29b50d3dd7", null ],
+      [ "spdifQueue", "a00078.html#aa396de6181b67e4dd2320b3779d07371", null ],
+      [ "transferSize", "a00078.html#a2a45d44b5687f7c3c9c8e7e53ebfb2b1", null ],
+      [ "queueUser", "a00078.html#a31a9b6442126197212d54afe343e1448", null ],
+      [ "queueDriver", "a00078.html#a5655c70181b1e6e307e5f399cf53721b", null ]
     ] ],
-    [ "FSL_TRNG_DRIVER_VERSION", "a00078.html#ga0d809ab2bf96ed21a28c531679c1cffe", null ],
-    [ "trng_sample_mode_t", "a00078.html#ga6743806ab1ae5e2511aed3f8a30814c8", [
-      [ "kTRNG_SampleModeVonNeumann", "a00078.html#gga6743806ab1ae5e2511aed3f8a30814c8af9f812a5ba8dddf6800fe42db487f5e7", null ],
-      [ "kTRNG_SampleModeRaw", "a00078.html#gga6743806ab1ae5e2511aed3f8a30814c8a2411d65d49169b9244b0c975442ff898", null ],
-      [ "kTRNG_SampleModeVonNeumannRaw", "a00078.html#gga6743806ab1ae5e2511aed3f8a30814c8a12725a856bdf7ea64e16156fc1f6792c", null ]
-    ] ],
-    [ "trng_clock_mode_t", "a00078.html#ga20c19c3f8b8f14572d91b034cd8f8387", [
-      [ "kTRNG_ClockModeRingOscillator", "a00078.html#gga20c19c3f8b8f14572d91b034cd8f8387a10eb7dda9879280deaab08f87158ebbc", null ],
-      [ "kTRNG_ClockModeSystem", "a00078.html#gga20c19c3f8b8f14572d91b034cd8f8387a066582671741cf64617d6cde5d929937", null ]
-    ] ],
-    [ "trng_ring_osc_div_t", "a00078.html#gaaa7094b265c437185a9ba211962ae925", [
-      [ "kTRNG_RingOscDiv0", "a00078.html#ggaaa7094b265c437185a9ba211962ae925a557465d3f4d88b544fcf818085032b51", null ],
-      [ "kTRNG_RingOscDiv2", "a00078.html#ggaaa7094b265c437185a9ba211962ae925af420c1e0c4bd6a0a181464866ae70764", null ],
-      [ "kTRNG_RingOscDiv4", "a00078.html#ggaaa7094b265c437185a9ba211962ae925ad03f20e54add497bca2cab5084e409d8", null ],
-      [ "kTRNG_RingOscDiv8", "a00078.html#ggaaa7094b265c437185a9ba211962ae925a207ca5ecd9403ce8299085a1bf2f9ca2", null ]
-    ] ],
-    [ "TRNG_GetDefaultConfig", "a00078.html#ga3f90793dd83a0ac2249fdcb8fa762c6a", null ],
-    [ "TRNG_Init", "a00078.html#gaefef4539a93045832f10d28f094d26ea", null ],
-    [ "TRNG_Deinit", "a00078.html#gacdcc7542e374e611c888008a227b878c", null ],
-    [ "TRNG_GetRandomData", "a00078.html#gaac12716aedb0b05e8be3e96433c8ad56", null ]
+    [ "FSL_SPDIF_EDMA_DRIVER_VERSION", "a00078.html#ga0d52f502d4b64dc5587a12289e6738e4", null ],
+    [ "spdif_edma_callback_t", "a00078.html#ga301f2d0b9a199636f3c105f26ebe0f57", null ],
+    [ "SPDIF_TransferTxCreateHandleEDMA", "a00078.html#ga9b81a6190c5cc57120dae24864d17b78", null ],
+    [ "SPDIF_TransferRxCreateHandleEDMA", "a00078.html#ga997c6e8067aabb31c06d62dda8e18201", null ],
+    [ "SPDIF_TransferSendEDMA", "a00078.html#ga8f6d1ca1ea0d14799cc268bc0d403b52", null ],
+    [ "SPDIF_TransferReceiveEDMA", "a00078.html#ga6a9055e2562ac1a740005a235add28d2", null ],
+    [ "SPDIF_TransferAbortSendEDMA", "a00078.html#ga427c4b16d4f1fdea087e2ee2bb515565", null ],
+    [ "SPDIF_TransferAbortReceiveEDMA", "a00078.html#ga258da7096dcb32609e5bf8a6ca862ff7", null ],
+    [ "SPDIF_TransferGetSendCountEDMA", "a00078.html#gac8a656d32c96ce22f86298daf8702449", null ],
+    [ "SPDIF_TransferGetReceiveCountEDMA", "a00078.html#ga2372914f14224175a5d10130ce56b779", null ]
 ];

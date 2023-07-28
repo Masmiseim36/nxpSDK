@@ -12,6 +12,7 @@
 
 /* ----------------------------------------- Header File Inclusion */
 #include "appl_opp.h"
+#include "appl_utils.h"
 
 #ifdef OPP
 
@@ -37,7 +38,6 @@ static UINT32                 opp_xchg_size;
 static UCHAR                  appl_push_error;
 static UCHAR                  appl_pull_error;
 static UCHAR                  file_object[OPP_FOLDER_NAME_LEN * 2U];
-/* static UCHAR                  object_name[OPP_OBJECT_NAME_LEN];*/
 
 static UCHAR        wait_count;
 
@@ -118,6 +118,12 @@ void main_opp_server_operations (void)
             LOG_DEBUG ("Enter OPP Server instance:");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_SERVER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
             /* OPP application instance handle */
             phandle = &opp_server_instance[handle].handle;
 
@@ -157,6 +163,12 @@ void main_opp_server_operations (void)
 
             LOG_DEBUG ("Enter OPP Server instance: ");
             scanf ("%d", &handle);
+
+            if (OPP_NUM_SERVER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             /* OPP applicaion instance handle */
             phandle = &opp_server_instance[handle].handle;
@@ -203,7 +215,13 @@ void main_opp_server_operations (void)
             LOG_DEBUG ("Enter OPP Server instance: ");
             scanf ("%d", &handle);
 
-            LOG_DEBUG ("Disconnecting Transport with OPP Server\n");
+            if (OPP_NUM_SERVER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            printf ("Disconnecting Transport with OPP Server\n");
             retval = BT_opp_server_transport_close (&opp_server_instance[handle].handle);
             LOG_DEBUG ("Retval - 0x%04X\n", retval);
             break;
@@ -211,7 +229,7 @@ void main_opp_server_operations (void)
         case 20:
             LOG_DEBUG ("Enter the path: ");
             scanf("%s", path);
-            EM_fops_list_directory(path);
+            (void)BT_fops_list_directory(path);
             break;
 
         default:
@@ -254,7 +272,7 @@ API_RESULT appl_opp_server_callback
 
 #ifndef APPL_OPP_ACCEPT_OTHER_FILE_TYPES
     UCHAR      opp_obj_type_str_len;
-#endif
+#endif /* APPL_OPP_ACCEPT_OTHER_FILE_TYPES */
 
     UINT32 length;
     UINT16 actual;
@@ -306,6 +324,23 @@ API_RESULT appl_opp_server_callback
             LOG_DEBUG("Result = 0x%04X\n", event_result);
 
             BT_mem_set (opp_server_instance[i].bd_addr, 0x00, BT_BD_ADDR_SIZE);
+
+            if (NULL != opp_rx_fp)
+            {
+                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                (void)BT_fops_file_close(opp_rx_fp);
+                opp_rx_fp = NULL;
+                opp_push_started = 0U;
+
+                (BT_IGNORE_RETURN_VALUE)BT_fops_object_delete(file_object);
+            }
+
+            if (NULL != opp_tx_fp)
+            {
+                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_close(opp_tx_fp);
+                opp_tx_fp = NULL;
+            }
 
             opp_server_print_appl_instances ();
             break;
@@ -418,7 +453,16 @@ API_RESULT appl_opp_server_callback
                                       opp_rx_hdrs->opp_req_info->type->length
                                   ))
                     {
-                        BT_str_n_copy(rx_object_type, OPP_OBJECT_TYPE_VMAG, sizeof(OPP_OBJECT_TYPE_VMAG));
+                        BT_str_n_copy(rx_object_type, OPP_OBJECT_TYPE_VMSG, sizeof(OPP_OBJECT_TYPE_VMSG));
+                    }
+                    else if (0 == BT_mem_cmp
+                                  (
+                                      opp_rx_hdrs->opp_req_info->type->value,
+                                      OPP_TYPE_HDR_VNOTE,
+                                      opp_rx_hdrs->opp_req_info->type->length
+                                  ))
+                    {
+                        BT_str_n_copy(rx_object_type, OPP_OBJECT_TYPE_VNOTE, sizeof(OPP_OBJECT_TYPE_VNOTE));
                     }
 #ifdef APPL_OPP_ACCEPT_OTHER_FILE_TYPES
                     else

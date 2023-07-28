@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -44,7 +44,6 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
@@ -52,13 +51,14 @@ void BOARD_InitBootPins(void);
 void BOARD_InitPins(void);
 
 /* GPIO_AD_B0_12 (coord K14), UART1_TXD */
-#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_PERIPHERAL                    LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_SIGNAL                             TX   /*!< LPUART1 signal: TX */
+/* Routed pin properties */
+#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_PERIPHERAL                    LPUART1   /*!< Peripheral name */
+#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_SIGNAL                             TX   /*!< Signal name */
 
 /* GPIO_AD_B0_13 (coord L14), UART1_RXD */
-#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_PERIPHERAL                    LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_SIGNAL                             RX   /*!< LPUART1 signal: RX */
-
+/* Routed pin properties */
+#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_PERIPHERAL                    LPUART1   /*!< Peripheral name */
+#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_SIGNAL                             RX   /*!< Signal name */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -67,199 +67,238 @@ void BOARD_InitPins(void);
 void BOARD_InitDEBUG_UARTPins(void);
 
 /* GPIO_EMC_09 (coord C2), SEMC_A0 */
-#define BOARD_INITSDRAMPINS_SEMC_A0_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A0_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A0_CHANNEL                                   0U   /*!< SEMC ADDR channel: 00 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A0_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A0_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A0_CHANNEL                                   0U   /*!< Signal channel */
 
 /* GPIO_EMC_10 (coord G1), SEMC_A1 */
-#define BOARD_INITSDRAMPINS_SEMC_A1_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A1_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A1_CHANNEL                                   1U   /*!< SEMC ADDR channel: 01 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A1_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A1_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A1_CHANNEL                                   1U   /*!< Signal channel */
 
 /* GPIO_EMC_11 (coord G3), SEMC_A2 */
-#define BOARD_INITSDRAMPINS_SEMC_A2_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A2_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A2_CHANNEL                                   2U   /*!< SEMC ADDR channel: 02 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A2_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A2_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A2_CHANNEL                                   2U   /*!< Signal channel */
 
 /* GPIO_EMC_12 (coord H1), SEMC_A3 */
-#define BOARD_INITSDRAMPINS_SEMC_A3_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A3_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A3_CHANNEL                                   3U   /*!< SEMC ADDR channel: 03 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A3_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A3_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A3_CHANNEL                                   3U   /*!< Signal channel */
 
 /* GPIO_EMC_13 (coord A6), SEMC_A4 */
-#define BOARD_INITSDRAMPINS_SEMC_A4_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A4_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A4_CHANNEL                                   4U   /*!< SEMC ADDR channel: 04 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A4_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A4_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A4_CHANNEL                                   4U   /*!< Signal channel */
 
 /* GPIO_EMC_14 (coord B6), SEMC_A5 */
-#define BOARD_INITSDRAMPINS_SEMC_A5_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A5_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A5_CHANNEL                                   5U   /*!< SEMC ADDR channel: 05 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A5_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A5_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A5_CHANNEL                                   5U   /*!< Signal channel */
 
 /* GPIO_EMC_15 (coord B1), SEMC_A6 */
-#define BOARD_INITSDRAMPINS_SEMC_A6_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A6_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A6_CHANNEL                                   6U   /*!< SEMC ADDR channel: 06 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A6_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A6_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A6_CHANNEL                                   6U   /*!< Signal channel */
 
 /* GPIO_EMC_16 (coord A5), SEMC_A7 */
-#define BOARD_INITSDRAMPINS_SEMC_A7_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A7_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A7_CHANNEL                                   7U   /*!< SEMC ADDR channel: 07 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A7_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A7_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A7_CHANNEL                                   7U   /*!< Signal channel */
 
 /* GPIO_EMC_17 (coord A4), SEMC_A8 */
-#define BOARD_INITSDRAMPINS_SEMC_A8_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A8_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A8_CHANNEL                                   8U   /*!< SEMC ADDR channel: 08 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A8_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A8_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A8_CHANNEL                                   8U   /*!< Signal channel */
 
 /* GPIO_EMC_18 (coord B2), SEMC_A9 */
-#define BOARD_INITSDRAMPINS_SEMC_A9_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A9_SIGNAL                                  ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A9_CHANNEL                                   9U   /*!< SEMC ADDR channel: 09 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A9_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A9_SIGNAL                                  ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A9_CHANNEL                                   9U   /*!< Signal channel */
 
 /* GPIO_EMC_23 (coord G2), SEMC_A10 */
-#define BOARD_INITSDRAMPINS_SEMC_A10_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A10_SIGNAL                                 ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A10_CHANNEL                                 10U   /*!< SEMC ADDR channel: 10 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A10_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A10_SIGNAL                                 ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A10_CHANNEL                                 10U   /*!< Signal channel */
 
 /* GPIO_EMC_19 (coord B4), SEMC_A11 */
-#define BOARD_INITSDRAMPINS_SEMC_A11_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A11_SIGNAL                                 ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A11_CHANNEL                                 11U   /*!< SEMC ADDR channel: 11 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A11_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A11_SIGNAL                                 ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A11_CHANNEL                                 11U   /*!< Signal channel */
 
 /* GPIO_EMC_20 (coord A3), SEMC_A12 */
-#define BOARD_INITSDRAMPINS_SEMC_A12_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_A12_SIGNAL                                 ADDR   /*!< SEMC signal: ADDR */
-#define BOARD_INITSDRAMPINS_SEMC_A12_CHANNEL                                 12U   /*!< SEMC ADDR channel: 12 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_A12_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_A12_SIGNAL                                 ADDR   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_A12_CHANNEL                                 12U   /*!< Signal channel */
 
 /* GPIO_EMC_21 (coord C1), SEMC_BA0 */
-#define BOARD_INITSDRAMPINS_SEMC_BA0_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_BA0_SIGNAL                                   BA   /*!< SEMC signal: BA */
-#define BOARD_INITSDRAMPINS_SEMC_BA0_CHANNEL                                  0U   /*!< SEMC BA channel: 0 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_BA0_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_BA0_SIGNAL                                   BA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_BA0_CHANNEL                                  0U   /*!< Signal channel */
 
 /* GPIO_EMC_22 (coord F1), SEMC_BA1 */
-#define BOARD_INITSDRAMPINS_SEMC_BA1_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_BA1_SIGNAL                                   BA   /*!< SEMC signal: BA */
-#define BOARD_INITSDRAMPINS_SEMC_BA1_CHANNEL                                  1U   /*!< SEMC BA channel: 1 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_BA1_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_BA1_SIGNAL                                   BA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_BA1_CHANNEL                                  1U   /*!< Signal channel */
 
 /* GPIO_EMC_24 (coord D3), SEMC_CAS */
-#define BOARD_INITSDRAMPINS_SEMC_CAS_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_CAS_SIGNAL                             semc_cas   /*!< SEMC signal: semc_cas */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_CAS_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_CAS_SIGNAL                             semc_cas   /*!< Signal name */
 
 /* GPIO_EMC_27 (coord A2), SEMC_CKE */
-#define BOARD_INITSDRAMPINS_SEMC_CKE_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_CKE_SIGNAL                             semc_cke   /*!< SEMC signal: semc_cke */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_CKE_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_CKE_SIGNAL                             semc_cke   /*!< Signal name */
 
 /* GPIO_EMC_26 (coord B3), SEMC_CLK */
-#define BOARD_INITSDRAMPINS_SEMC_CLK_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_CLK_SIGNAL                             semc_clk   /*!< SEMC signal: semc_clk */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_CLK_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_CLK_SIGNAL                             semc_clk   /*!< Signal name */
 
 /* GPIO_EMC_00 (coord E3), SEMC_D0 */
-#define BOARD_INITSDRAMPINS_SEMC_D0_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D0_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D0_CHANNEL                                   0U   /*!< SEMC DATA channel: 00 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D0_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D0_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D0_CHANNEL                                   0U   /*!< Signal channel */
 
 /* GPIO_EMC_01 (coord F3), SEMC_D1 */
-#define BOARD_INITSDRAMPINS_SEMC_D1_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D1_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D1_CHANNEL                                   1U   /*!< SEMC DATA channel: 01 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D1_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D1_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D1_CHANNEL                                   1U   /*!< Signal channel */
 
 /* GPIO_EMC_02 (coord F4), SEMC_D2 */
-#define BOARD_INITSDRAMPINS_SEMC_D2_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D2_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D2_CHANNEL                                   2U   /*!< SEMC DATA channel: 02 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D2_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D2_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D2_CHANNEL                                   2U   /*!< Signal channel */
 
 /* GPIO_EMC_03 (coord G4), SEMC_D3 */
-#define BOARD_INITSDRAMPINS_SEMC_D3_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D3_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D3_CHANNEL                                   3U   /*!< SEMC DATA channel: 03 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D3_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D3_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D3_CHANNEL                                   3U   /*!< Signal channel */
 
 /* GPIO_EMC_04 (coord F2), SEMC_D4 */
-#define BOARD_INITSDRAMPINS_SEMC_D4_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D4_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D4_CHANNEL                                   4U   /*!< SEMC DATA channel: 04 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D4_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D4_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D4_CHANNEL                                   4U   /*!< Signal channel */
 
 /* GPIO_EMC_05 (coord G5), SEMC_D5 */
-#define BOARD_INITSDRAMPINS_SEMC_D5_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D5_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D5_CHANNEL                                   5U   /*!< SEMC DATA channel: 05 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D5_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D5_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D5_CHANNEL                                   5U   /*!< Signal channel */
 
 /* GPIO_EMC_06 (coord H5), SEMC_D6 */
-#define BOARD_INITSDRAMPINS_SEMC_D6_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D6_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D6_CHANNEL                                   6U   /*!< SEMC DATA channel: 06 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D6_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D6_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D6_CHANNEL                                   6U   /*!< Signal channel */
 
 /* GPIO_EMC_07 (coord H4), SEMC_D7 */
-#define BOARD_INITSDRAMPINS_SEMC_D7_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D7_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D7_CHANNEL                                   7U   /*!< SEMC DATA channel: 07 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D7_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D7_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D7_CHANNEL                                   7U   /*!< Signal channel */
 
 /* GPIO_EMC_30 (coord C6), SEMC_D8 */
-#define BOARD_INITSDRAMPINS_SEMC_D8_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D8_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D8_CHANNEL                                   8U   /*!< SEMC DATA channel: 08 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D8_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D8_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D8_CHANNEL                                   8U   /*!< Signal channel */
 
 /* GPIO_EMC_31 (coord C5), SEMC_D9 */
-#define BOARD_INITSDRAMPINS_SEMC_D9_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D9_SIGNAL                                  DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D9_CHANNEL                                   9U   /*!< SEMC DATA channel: 09 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D9_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D9_SIGNAL                                  DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D9_CHANNEL                                   9U   /*!< Signal channel */
 
 /* GPIO_EMC_32 (coord D5), SEMC_D10 */
-#define BOARD_INITSDRAMPINS_SEMC_D10_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D10_SIGNAL                                 DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D10_CHANNEL                                 10U   /*!< SEMC DATA channel: 10 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D10_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D10_SIGNAL                                 DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D10_CHANNEL                                 10U   /*!< Signal channel */
 
 /* GPIO_EMC_33 (coord C4), SEMC_D11 */
-#define BOARD_INITSDRAMPINS_SEMC_D11_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D11_SIGNAL                                 DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D11_CHANNEL                                 11U   /*!< SEMC DATA channel: 11 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D11_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D11_SIGNAL                                 DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D11_CHANNEL                                 11U   /*!< Signal channel */
 
 /* GPIO_EMC_34 (coord D4), SEMC_D12 */
-#define BOARD_INITSDRAMPINS_SEMC_D12_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D12_SIGNAL                                 DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D12_CHANNEL                                 12U   /*!< SEMC DATA channel: 12 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D12_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D12_SIGNAL                                 DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D12_CHANNEL                                 12U   /*!< Signal channel */
 
 /* GPIO_EMC_35 (coord E5), SEMC_D13 */
-#define BOARD_INITSDRAMPINS_SEMC_D13_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D13_SIGNAL                                 DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D13_CHANNEL                                 13U   /*!< SEMC DATA channel: 13 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D13_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D13_SIGNAL                                 DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D13_CHANNEL                                 13U   /*!< Signal channel */
 
 /* GPIO_EMC_36 (coord C3), SEMC_D14 */
-#define BOARD_INITSDRAMPINS_SEMC_D14_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D14_SIGNAL                                 DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D14_CHANNEL                                 14U   /*!< SEMC DATA channel: 14 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D14_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D14_SIGNAL                                 DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D14_CHANNEL                                 14U   /*!< Signal channel */
 
 /* GPIO_EMC_37 (coord E4), SEMC_D15 */
-#define BOARD_INITSDRAMPINS_SEMC_D15_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_D15_SIGNAL                                 DATA   /*!< SEMC signal: DATA */
-#define BOARD_INITSDRAMPINS_SEMC_D15_CHANNEL                                 15U   /*!< SEMC DATA channel: 15 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_D15_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_D15_SIGNAL                                 DATA   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_D15_CHANNEL                                 15U   /*!< Signal channel */
 
 /* GPIO_EMC_08 (coord H3), SEMC_DM0 */
-#define BOARD_INITSDRAMPINS_SEMC_DM0_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_DM0_SIGNAL                                   DM   /*!< SEMC signal: DM */
-#define BOARD_INITSDRAMPINS_SEMC_DM0_CHANNEL                                  0U   /*!< SEMC DM channel: 0 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_DM0_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_DM0_SIGNAL                                   DM   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_DM0_CHANNEL                                  0U   /*!< Signal channel */
 
 /* GPIO_EMC_38 (coord D6), SEMC_DM1 */
-#define BOARD_INITSDRAMPINS_SEMC_DM1_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_DM1_SIGNAL                                   DM   /*!< SEMC signal: DM */
-#define BOARD_INITSDRAMPINS_SEMC_DM1_CHANNEL                                  1U   /*!< SEMC DM channel: 1 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_DM1_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_DM1_SIGNAL                                   DM   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_DM1_CHANNEL                                  1U   /*!< Signal channel */
 
 /* GPIO_EMC_25 (coord D2), SEMC_RAS */
-#define BOARD_INITSDRAMPINS_SEMC_RAS_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_RAS_SIGNAL                             semc_ras   /*!< SEMC signal: semc_ras */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_RAS_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_RAS_SIGNAL                             semc_ras   /*!< Signal name */
 
 /* GPIO_EMC_28 (coord D1), SEMC_WE */
-#define BOARD_INITSDRAMPINS_SEMC_WE_PERIPHERAL                              SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_WE_SIGNAL                               semc_we   /*!< SEMC signal: semc_we */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_WE_PERIPHERAL                              SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_WE_SIGNAL                               semc_we   /*!< Signal name */
 
 /* GPIO_EMC_29 (coord E1), SEMC_CS0 */
-#define BOARD_INITSDRAMPINS_SEMC_CS0_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_CS0_SIGNAL                                   CS   /*!< SEMC signal: CS */
-#define BOARD_INITSDRAMPINS_SEMC_CS0_CHANNEL                                  0U   /*!< SEMC CS channel: 0 */
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_CS0_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_CS0_SIGNAL                                   CS   /*!< Signal name */
+#define BOARD_INITSDRAMPINS_SEMC_CS0_CHANNEL                                  0U   /*!< Signal channel */
 
 /* GPIO_EMC_39 (coord B7), SEMC_DQS */
-#define BOARD_INITSDRAMPINS_SEMC_DQS_PERIPHERAL                             SEMC   /*!< Device name: SEMC */
-#define BOARD_INITSDRAMPINS_SEMC_DQS_SIGNAL                             semc_dqs   /*!< SEMC signal: semc_dqs */
-
+/* Routed pin properties */
+#define BOARD_INITSDRAMPINS_SEMC_DQS_PERIPHERAL                             SEMC   /*!< Peripheral name */
+#define BOARD_INITSDRAMPINS_SEMC_DQS_SIGNAL                             semc_dqs   /*!< Signal name */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -268,33 +307,43 @@ void BOARD_InitDEBUG_UARTPins(void);
 void BOARD_InitSDRAMPins(void);
 
 /* GPIO_SD_B0_05 (coord J2), SD1_D3 */
-#define BOARD_INITUSDHCPINS_SD1_D3_PERIPHERAL                             USDHC1   /*!< Device name: USDHC1 */
-#define BOARD_INITUSDHCPINS_SD1_D3_SIGNAL                             usdhc_data   /*!< USDHC1 signal: usdhc_data */
-#define BOARD_INITUSDHCPINS_SD1_D3_CHANNEL                                    3U   /*!< USDHC1 usdhc_data channel: 3 */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD1_D3_PERIPHERAL                             USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD1_D3_SIGNAL                             usdhc_data   /*!< Signal name */
+#define BOARD_INITUSDHCPINS_SD1_D3_CHANNEL                                    3U   /*!< Signal channel */
 
 /* GPIO_SD_B0_04 (coord H2), SD1_D2 */
-#define BOARD_INITUSDHCPINS_SD1_D2_PERIPHERAL                             USDHC1   /*!< Device name: USDHC1 */
-#define BOARD_INITUSDHCPINS_SD1_D2_SIGNAL                             usdhc_data   /*!< USDHC1 signal: usdhc_data */
-#define BOARD_INITUSDHCPINS_SD1_D2_CHANNEL                                    2U   /*!< USDHC1 usdhc_data channel: 2 */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD1_D2_PERIPHERAL                             USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD1_D2_SIGNAL                             usdhc_data   /*!< Signal name */
+#define BOARD_INITUSDHCPINS_SD1_D2_CHANNEL                                    2U   /*!< Signal channel */
 
 /* GPIO_SD_B0_03 (coord K1), SD1_D1/J24[5]/SPI_MISO */
-#define BOARD_INITUSDHCPINS_SD1_D1_PERIPHERAL                             USDHC1   /*!< Device name: USDHC1 */
-#define BOARD_INITUSDHCPINS_SD1_D1_SIGNAL                             usdhc_data   /*!< USDHC1 signal: usdhc_data */
-#define BOARD_INITUSDHCPINS_SD1_D1_CHANNEL                                    1U   /*!< USDHC1 usdhc_data channel: 1 */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD1_D1_PERIPHERAL                             USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD1_D1_SIGNAL                             usdhc_data   /*!< Signal name */
+#define BOARD_INITUSDHCPINS_SD1_D1_CHANNEL                                    1U   /*!< Signal channel */
 
 /* GPIO_SD_B0_02 (coord J1), SD1_D0/J24[4]/SPI_MOSI/PWM */
-#define BOARD_INITUSDHCPINS_SD1_D0_PERIPHERAL                             USDHC1   /*!< Device name: USDHC1 */
-#define BOARD_INITUSDHCPINS_SD1_D0_SIGNAL                             usdhc_data   /*!< USDHC1 signal: usdhc_data */
-#define BOARD_INITUSDHCPINS_SD1_D0_CHANNEL                                    0U   /*!< USDHC1 usdhc_data channel: 0 */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD1_D0_PERIPHERAL                             USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD1_D0_SIGNAL                             usdhc_data   /*!< Signal name */
+#define BOARD_INITUSDHCPINS_SD1_D0_CHANNEL                                    0U   /*!< Signal channel */
 
 /* GPIO_SD_B0_00 (coord J4), SD1_CMD/J24[6] */
-#define BOARD_INITUSDHCPINS_SD1_CMD_PERIPHERAL                            USDHC1   /*!< Device name: USDHC1 */
-#define BOARD_INITUSDHCPINS_SD1_CMD_SIGNAL                             usdhc_cmd   /*!< USDHC1 signal: usdhc_cmd */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD1_CMD_PERIPHERAL                            USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD1_CMD_SIGNAL                             usdhc_cmd   /*!< Signal name */
 
 /* GPIO_SD_B0_01 (coord J3), SD1_CLK/J24[3] */
-#define BOARD_INITUSDHCPINS_SD1_CLK_PERIPHERAL                            USDHC1   /*!< Device name: USDHC1 */
-#define BOARD_INITUSDHCPINS_SD1_CLK_SIGNAL                             usdhc_clk   /*!< USDHC1 signal: usdhc_clk */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD1_CLK_PERIPHERAL                            USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD1_CLK_SIGNAL                             usdhc_clk   /*!< Signal name */
 
+/* GPIO_B1_14 (coord C14), SD0_VSELECT */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD0_VSELECT_PERIPHERAL                        USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD0_VSELECT_SIGNAL                     usdhc_vselect   /*!< Signal name */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -303,33 +352,39 @@ void BOARD_InitSDRAMPins(void);
 void BOARD_InitUSDHCPins(void);
 
 /* GPIO_SD_B1_08 (coord P3), FlexSPI_D0_A */
-#define BOARD_INITQSPIPINS_FlexSPI_D0_A_PERIPHERAL                       FLEXSPI   /*!< Device name: FLEXSPI */
-#define BOARD_INITQSPIPINS_FlexSPI_D0_A_SIGNAL                   FLEXSPI_A_DATA0   /*!< FLEXSPI signal: FLEXSPI_A_DATA0 */
+/* Routed pin properties */
+#define BOARD_INITQSPIPINS_FlexSPI_D0_A_PERIPHERAL                       FLEXSPI   /*!< Peripheral name */
+#define BOARD_INITQSPIPINS_FlexSPI_D0_A_SIGNAL                   FLEXSPI_A_DATA0   /*!< Signal name */
 
 /* GPIO_SD_B1_09 (coord N4), FlexSPI_D1_A */
-#define BOARD_INITQSPIPINS_FlexSPI_D1_A_PERIPHERAL                       FLEXSPI   /*!< Device name: FLEXSPI */
-#define BOARD_INITQSPIPINS_FlexSPI_D1_A_SIGNAL                   FLEXSPI_A_DATA1   /*!< FLEXSPI signal: FLEXSPI_A_DATA1 */
+/* Routed pin properties */
+#define BOARD_INITQSPIPINS_FlexSPI_D1_A_PERIPHERAL                       FLEXSPI   /*!< Peripheral name */
+#define BOARD_INITQSPIPINS_FlexSPI_D1_A_SIGNAL                   FLEXSPI_A_DATA1   /*!< Signal name */
 
 /* GPIO_SD_B1_10 (coord P4), FlexSPI_D2_A */
-#define BOARD_INITQSPIPINS_FlexSPI_D2_A_PERIPHERAL                       FLEXSPI   /*!< Device name: FLEXSPI */
-#define BOARD_INITQSPIPINS_FlexSPI_D2_A_SIGNAL                   FLEXSPI_A_DATA2   /*!< FLEXSPI signal: FLEXSPI_A_DATA2 */
+/* Routed pin properties */
+#define BOARD_INITQSPIPINS_FlexSPI_D2_A_PERIPHERAL                       FLEXSPI   /*!< Peripheral name */
+#define BOARD_INITQSPIPINS_FlexSPI_D2_A_SIGNAL                   FLEXSPI_A_DATA2   /*!< Signal name */
 
 /* GPIO_SD_B1_11 (coord P5), FlexSPI_D3_A */
-#define BOARD_INITQSPIPINS_FlexSPI_D3_A_PERIPHERAL                       FLEXSPI   /*!< Device name: FLEXSPI */
-#define BOARD_INITQSPIPINS_FlexSPI_D3_A_SIGNAL                   FLEXSPI_A_DATA3   /*!< FLEXSPI signal: FLEXSPI_A_DATA3 */
+/* Routed pin properties */
+#define BOARD_INITQSPIPINS_FlexSPI_D3_A_PERIPHERAL                       FLEXSPI   /*!< Peripheral name */
+#define BOARD_INITQSPIPINS_FlexSPI_D3_A_SIGNAL                   FLEXSPI_A_DATA3   /*!< Signal name */
 
 /* GPIO_SD_B1_07 (coord L4), FlexSPI_CLK */
-#define BOARD_INITQSPIPINS_FlexSPI_CLK_PERIPHERAL                        FLEXSPI   /*!< Device name: FLEXSPI */
-#define BOARD_INITQSPIPINS_FlexSPI_CLK_SIGNAL                     FLEXSPI_A_SCLK   /*!< FLEXSPI signal: FLEXSPI_A_SCLK */
+/* Routed pin properties */
+#define BOARD_INITQSPIPINS_FlexSPI_CLK_PERIPHERAL                        FLEXSPI   /*!< Peripheral name */
+#define BOARD_INITQSPIPINS_FlexSPI_CLK_SIGNAL                     FLEXSPI_A_SCLK   /*!< Signal name */
 
 /* GPIO_SD_B1_06 (coord L3), FlexSPI_SS0 */
-#define BOARD_INITQSPIPINS_FlexSPI_SS0_PERIPHERAL                        FLEXSPI   /*!< Device name: FLEXSPI */
-#define BOARD_INITQSPIPINS_FlexSPI_SS0_SIGNAL                    FLEXSPI_A_SS0_B   /*!< FLEXSPI signal: FLEXSPI_A_SS0_B */
+/* Routed pin properties */
+#define BOARD_INITQSPIPINS_FlexSPI_SS0_PERIPHERAL                        FLEXSPI   /*!< Peripheral name */
+#define BOARD_INITQSPIPINS_FlexSPI_SS0_SIGNAL                    FLEXSPI_A_SS0_B   /*!< Signal name */
 
 /* GPIO_SD_B1_05 (coord N3), FlexSPI_DQS */
-#define BOARD_INITQSPIPINS_FlexSPI_DQS_PERIPHERAL                        FLEXSPI   /*!< Device name: FLEXSPI */
-#define BOARD_INITQSPIPINS_FlexSPI_DQS_SIGNAL                      FLEXSPI_A_DQS   /*!< FLEXSPI signal: FLEXSPI_A_DQS */
-
+/* Routed pin properties */
+#define BOARD_INITQSPIPINS_FlexSPI_DQS_PERIPHERAL                        FLEXSPI   /*!< Peripheral name */
+#define BOARD_INITQSPIPINS_FlexSPI_DQS_SIGNAL                      FLEXSPI_A_DQS   /*!< Signal name */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

@@ -69,7 +69,7 @@ void bpc_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT1
                 break;
 
             default:
-                /* LOG_DEBUG("Invalid...\n"); */
+                /* CONSOLE_OUT("Invalid...\n"); */
                 break;
         }
 
@@ -91,7 +91,7 @@ void bpc_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT1
                             break;
 
                         default:
-                            /* LOG_DEBUG("Invalid...\n"); */
+                            /* CONSOLE_OUT("Invalid...\n"); */
                             break;
                     }
 
@@ -222,7 +222,7 @@ void bpc_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

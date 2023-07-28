@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-/* Copyright 2021 NXP
+/* Copyright 2021,2023 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -124,6 +124,12 @@
 #endif // MBEDTLS_RSA_ALT
 #endif //  SSS_HAVE_RSA
 
+#endif //  SSS_HAVE_MBEDTLS_ALT
+
+#if SSS_HAVE_MBEDTLS_ALT
+#ifndef MBEDTLS_ECDH_LEGACY_CONTEXT
+    #define MBEDTLS_ECDH_LEGACY_CONTEXT
+#endif // MBEDTLS_ECDH_LEGACY_CONTEXT
 #endif //  SSS_HAVE_MBEDTLS_ALT
 
 
@@ -403,6 +409,26 @@
 #if defined(MBEDTLS_GCM_CRYPT_ALT)
     #undef MBEDTLS_GCM_CRYPT_ALT
 #endif // MBEDTLS_GCM_CRYPT_ALT
+#endif //  defined(CPU_MIMXRT1176DVMAA_cm7)
+
+#endif //  SSS_HAVE_MBEDTLS_ALT
+
+#if SSS_HAVE_MBEDTLS_ALT
+#if defined(CPU_MIMXRT1176DVMAA_cm7)
+
+#if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+    #undef MBEDTLS_ECP_DP_CURVE25519_ENABLED
+#endif // MBEDTLS_ECP_DP_CURVE25519_ENABLED
+#endif //  defined(CPU_MIMXRT1176DVMAA_cm7)
+
+#endif //  SSS_HAVE_MBEDTLS_ALT
+
+#if SSS_HAVE_MBEDTLS_ALT
+#if defined(CPU_MIMXRT1176DVMAA_cm7)
+
+#if defined(MBEDTLS_ECP_DP_CURVE448_ENABLED)
+    #undef MBEDTLS_ECP_DP_CURVE448_ENABLED
+#endif // MBEDTLS_ECP_DP_CURVE448_ENABLED
 #endif //  defined(CPU_MIMXRT1176DVMAA_cm7)
 
 #endif //  SSS_HAVE_MBEDTLS_ALT

@@ -60,6 +60,17 @@
  * This Flag is disabled by default.
  */
 /* #define APPL_HTS_HAVE_DATA_DUMP */
+
+/**
+ * This Flag enables the application to initiate Link Disconnection
+ * when the HTS measurement Notification count reaches a Threshold value.
+ * This is typically needed in some of the compliance Testcase where
+ * the compliance tester requires Server to disconnect the channel when
+ * available measurements are transfered.
+ *
+ * This flag is disabled by default.
+ */
+/* #define APPL_HTS_DISCONN_ON_MSRMT_TX_COMPLETE */
 /* --------------------------------------------- External Global Variables */
 
 /* --------------------------------------------- Exported Global Variables */
@@ -116,6 +127,9 @@ static UCHAR intrm_temp_obs_data[APPL_IM_TEMPERATURE_MEASUREMENT_LENGTH * APPL_I
     0x00U, 0xB0U, 0x63U, 0x37U, 0xFBU
 };
 
+#ifdef APPL_HTS_DISCONN_ON_MSRMT_TX_COMPLETE
+static UCHAR appl_hts_msrmt_count;
+#endif /* APPL_HTS_DISCONN_ON_MSRMT_TX_COMPLETE */
 /* --------------------------------------------- Functions */
 
 void appl_hts_init(void)
@@ -151,9 +165,6 @@ void appl_hts_init(void)
 
     APPL_TRC(
     "[HTS APPL]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for Temperature */
@@ -585,30 +596,60 @@ void appl_timer_expiry_handler (void *data_param, UINT16 datalen)
         timer_handle = BT_TIMER_HANDLE_INIT_VAL;
     }
 
-    retval = BT_start_timer
-             (
-                 &timer_handle,
-                 appl_msrmt_intrvl,
-                 appl_timer_expiry_handler,
-                 &fsm_param.handle,
-                 sizeof(fsm_param.handle)
-             );
+#ifdef APPL_HTS_DISCONN_ON_MSRMT_TX_COMPLETE
+    appl_hts_msrmt_count++;
 
-    APPL_TRC (
-    "[HTS]: Temperature Measurement Timer %p Started, retval 0x%04X\n",
-    timer_handle, retval);
+    if (3 == appl_hts_msrmt_count)
+    {
+        retval = BT_hci_disconnect
+                 (
+                     APPL_GET_CONNECTION_HANDLE(fsm_param.handle),
+                     0x13U
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_ERR(
+            "Failed to Disconnect Connection Handle 0x%04X with DevId 0x%02X\n",
+            APPL_GET_CONNECTION_HANDLE(fsm_param.handle),
+            APPL_GET_DEVICE_HANDLE(fsm_param.handle));
+        }
+        else
+        {
+            APPL_TRC(
+            "Disconnected Connection Handle 0x%04X with DevId 0x%02X\n",
+            APPL_GET_CONNECTION_HANDLE(fsm_param.handle),
+            APPL_GET_DEVICE_HANDLE(fsm_param.handle));
+        }
+    }
+    else
+#endif /* APPL_HTS_DISCONN_ON_MSRMT_TX_COMPLETE */
+    {
+        retval = BT_start_timer
+                 (
+                     &timer_handle,
+                     appl_msrmt_intrvl,
+                     appl_timer_expiry_handler,
+                     &fsm_param.handle,
+                     sizeof(fsm_param.handle)
+                 );
+
+        APPL_TRC(
+        "[HTS]: Temperature Measurement Timer %p Started, retval 0x%04X\n",
+        timer_handle, retval);
 
 #ifdef APPL_FSM_SUPPORT
-    /* Post Measurement Indication to APPL FSM */
-    fsm_post_event
-    (
-         APPL_FSM_ID,
-         ev_appl_measurement_ind,
-         &fsm_param
-    );
+        /* Post Measurement Indication to APPL FSM */
+        fsm_post_event
+        (
+            APPL_FSM_ID,
+            ev_appl_measurement_ind,
+            &fsm_param
+        );
 #else /* APPL_FSM_SUPPORT */
-    APPL_SEND_MEASUREMENT(&fsm_param.handle);
+        APPL_SEND_MEASUREMENT(&fsm_param.handle);
 #endif /* APPL_FSM_SUPPORT */
+    }
 }
 
 
@@ -616,12 +657,16 @@ void appl_hts_server_reinitialize(void)
 {
     ATT_VALUE         value;
 
+    /* MISRA C - 2012 Rule 9.1 */
+    BT_mem_set(&value, 0,sizeof(ATT_VALUE));
+
     appl_temp_db_handle.char_id = (UCHAR)GATT_CHAR_HTS_MSRMT_INTERVAL_INST;
 
     /* Get Temperature Measurement Interval from DB */
     (BT_IGNORE_RETURN_VALUE) BT_gatt_db_get_char_val(&appl_temp_db_handle, &value);
 
-    if (0x02U == value.len)
+    if ((0x02U == value.len) &&
+        (NULL != value.val))
     {
         BT_UNPACK_LE_2_BYTE(&appl_msrmt_intrvl, value.val);
 
@@ -656,26 +701,28 @@ void appl_hts_server_reinitialize(void)
         msrmt_intrvl_timer_handle = BT_TIMER_HANDLE_INIT_VAL;
     }
 
-    if (BT_FALSE != appl_service_get_gap_proc_state())
-    {
+#ifdef APPL_HTS_DISCONN_ON_MSRMT_TX_COMPLETE
+    /* Set the Measurement Transfer Count */
+    appl_hts_msrmt_count = 0;
+#endif /* APPL_HTS_DISCONN_ON_MSRMT_TX_COMPLETE */
+
 #if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
-        if (BT_TRUE == APPL_IS_GAP_PERIPHERAL_ROLE())
-        {
-            /* Configure and Enable Advertising */
-            appl_service_configure_adv(APPL_GAP_PROC_NORMAL, HCI_ADV_IND, 0x00U, 0x00U, NULL, 0x00U);
-            appl_service_enable_adv(0x01U);
-        }
+    if (BT_TRUE == APPL_IS_GAP_PERIPHERAL_ROLE())
+    {
+        /* Configure and Enable Advertising */
+        appl_service_configure_adv(APPL_GAP_PROC_NORMAL, HCI_ADV_IND, 0x00U, 0x00U, NULL, 0x00U);
+        appl_service_enable_adv(0x01U);
+    }
 #endif /* ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL)) */
 
 #if ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL))
-        if (BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE())
-        {
-            /* Configure and Enable Scanning */
-            appl_service_configure_scan(APPL_GAP_PROC_NORMAL, 0x00U, 0x00U, 0x00U);
-            appl_service_enable_scan(0x01U);
-        }
-#endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
+    if (BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE())
+    {
+        /* Configure and Enable Scanning */
+        appl_service_configure_scan(APPL_GAP_PROC_NORMAL, 0x00U, 0x00U, 0x00U);
+        appl_service_enable_scan(0x01U);
     }
+#endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
 }
 
 void appl_send_temperature_measurement (APPL_HANDLE    * handle)
@@ -772,8 +819,8 @@ void appl_hts_handle_mtu_update_complete
          UINT16      mtu
      )
 {
-    CONSOLE_OUT(
-    "\n[HTS]: Updated MTU is %d for Appl Handle 0x%02X", mtu, *handle);
+    APPL_TRC("\n[HTS]: Updated MTU is %d for Appl Handle 0x%02X\n",
+    mtu, *handle);
 }
 
 #endif /* (defined ATT && defined HTS) */

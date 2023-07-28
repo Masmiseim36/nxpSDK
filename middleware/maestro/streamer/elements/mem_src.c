@@ -9,7 +9,7 @@
 
 /*!
  * @file    mem_src.c
- * @brief   This file implement the memory source fucntions
+ * @brief   This file implement the memory source functions
  */
 
 /*
@@ -18,6 +18,7 @@
 #include <string.h>
 #include "streamer_element.h"
 #include "mem_src.h"
+#include "audio_sink.h"
 #include "pipeline.h"
 #include "streamer_element_properties.h"
 
@@ -411,8 +412,29 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
             event_create_eos(&event);
             pad_push_event(pad, &event);
 
-            STREAMER_FUNC_EXIT(DBG_MEMSRC);
-            return STREAM_OK;
+            StreamElement *memsrc_ele     = (StreamElement *)memsrc;
+            Pipeline *pipeline            = ELEMENT_PARENT_PIPELINE(memsrc_ele);
+            PipelineHandle pipelineHandle = (PipelineHandle)pipeline;
+            if (!get_repeat_pipeline(pipelineHandle))
+            {
+                STREAMER_FUNC_EXIT(DBG_MEMSRC);
+                return STREAM_OK;
+            }
+
+            /* Set pointer to read data to buffer */
+            if (memsrc->mem_type == RAW_DATA)
+            {
+                memset(buf.buffer + sizeof(RawPacketHeader), 0, length);
+                buf.size = sizeof(RawPacketHeader) + length;
+            }
+            else if (memsrc->mem_type == AUDIO_DATA)
+            {
+                /* Set pointer to read data to buffer */
+                memset(buf.buffer + sizeof(AudioPacketHeader), 0, length);
+                buf.size = sizeof(AudioPacketHeader) + length;
+            }
+
+            buf.offset = offset;
         }
         else if (ret == FLOW_UNEXPECTED)
         {
@@ -422,23 +444,40 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
             send_msg_element((StreamElement *)memsrc, MSG_EOS, 0);
             return STREAM_OK;
         }
-        else if (ret != FLOW_ERROR)
-        {
-            /* No error then forward the data */
-            /* push data to peer sink pad */
-            if (pad_push(pad, &buf) != FLOW_OK)
-            {
-                STREAMER_LOG_ERR(DBG_MEMSRC, ERRCODE_GENERAL_ERROR, "[MemSRC]Flow not ok\n");
-                STREAMER_FUNC_EXIT(DBG_MEMSRC);
-                return STREAM_ERR_GENERAL;
-            }
-        }
-        else
+        else if (ret == FLOW_ERROR)
         {
             STREAMER_LOG_ERR(DBG_MEMSRC, ERRCODE_GENERAL_ERROR, "[MemSRC] Streamer general error\n");
             STREAMER_FUNC_EXIT(DBG_MEMSRC);
             return STREAM_ERR_GENERAL;
         }
+
+        /* Update audio packet header values as values may have been changed in the AUDIO_PROC element as part of a
+         * crossover preset */
+        if (memsrc->mem_type == AUDIO_DATA)
+        {
+            AudioPacketHeader *pkt_hdr = NULL;
+            /* set data type id */
+            pkt_hdr                  = (AudioPacketHeader *)buf.buffer;
+            pkt_hdr->sample_rate     = memsrc->sample_rate;
+            pkt_hdr->bits_per_sample = memsrc->bit_width;
+            pkt_hdr->num_channels    = memsrc->num_channels;
+            AUDIO_FORMAT(pkt_hdr)    = AUDIO_SET_FORMAT(0, 0, 1, memsrc->bit_width);
+            pkt_hdr->chunk_size      = memsrc->chunk_size;
+        }
+
+        /* No error then forward the data */
+        /* push data to peer sink pad */
+        if (pad_push(pad, &buf) != FLOW_OK)
+        {
+            STREAMER_LOG_ERR(DBG_MEMSRC, ERRCODE_GENERAL_ERROR, "[MemSRC]Flow not ok\n");
+            STREAMER_FUNC_EXIT(DBG_MEMSRC);
+            return STREAM_ERR_GENERAL;
+        }
+    }
+    else
+    {
+        // Due to forcing a context switch
+        OSA_TimeDelay(1);
     }
 
     STREAMER_FUNC_EXIT(DBG_MEMSRC);
@@ -520,29 +559,32 @@ static uint8_t memsrc_handle_src_event(StreamPad *pad, StreamEvent *event)
 
             STREAMER_LOG_DEBUG(DBG_MEMSRC, "[MemSRC]seek from %d to %d\n", memsrc->read_position, offset);
             /* First check if it is byte seekable */
-            if (DATA_FORMAT_BYTES == format)
+            if (offset != 0)
             {
-                /* If the offset specified is more than the size of the file
-                 * then restrict the offset to the file size. When file src
-                 * thread will start giving data agin it will generate an EOS.
-                 */
-                if (offset > memsrc->size && memsrc->size > 0)
+                if (DATA_FORMAT_BYTES == format)
                 {
-                    STREAMER_LOG_WARN(DBG_MEMSRC, ERRCODE_INTERNAL,
-                                      "[MemSRC]Offset more than the memsrc size: "
-                                      "offset=%d size=%d\n",
-                                      offset, memsrc->size);
-                    offset = memsrc->size;
+                    /* If the offset specified is more than the size of the file
+                     * then restrict the offset to the file size. When file src
+                     * thread will start giving data agin it will generate an EOS.
+                     */
+                    if (offset > memsrc->size && memsrc->size > 0)
+                    {
+                        STREAMER_LOG_WARN(DBG_MEMSRC, ERRCODE_INTERNAL,
+                                          "[MemSRC]Offset more than the memsrc size: "
+                                          "offset=%d size=%d\n",
+                                          offset, memsrc->size);
+                        offset = memsrc->size;
 
-                    /* Return false as this offset position is not possible. */
-                    ret = false;
+                        /* Return false as this offset position is not possible. */
+                        ret = false;
+                    }
                 }
-            }
-            else
-            {
-                /* Seek not supported, return with an error */
-                ret = false;
-                break;
+                else
+                {
+                    /* Seek not supported, return with an error */
+                    ret = false;
+                    break;
+                }
             }
 
             event_create_flush_start(&flush_event);
@@ -725,23 +767,11 @@ static uint8_t memsrc_src_activate_push(StreamPad *pad, uint8_t active)
         {
             AudioPacketHeader *pkt_hdr = NULL;
             pkt_hdr                    = (AudioPacketHeader *)memsrc->buffer;
-            /*
-            pkt_hdr->sample_rate     = memsrc->sample_rate;
-            pkt_hdr->bits_per_sample = memsrc->bit_width;
-            pkt_hdr->num_channels    = memsrc->num_channels;
-            AUDIO_FORMAT(pkt_hdr)    = AUDIO_SET_FORMAT(0, 0, 1, memsrc->bit_width);
-            pkt_hdr->chunk_size      = memsrc->chunk_size;
-            pkt_hdr->id = AUDIO_DATA;*/
-
-            // FIXME: These are constantly defined to facilitate a PoC
-            pkt_hdr->sample_rate     = 96000;
-            pkt_hdr->bits_per_sample = 32;
-            pkt_hdr->num_channels    = 8;
-            pkt_hdr->format          = 0;
-            pkt_hdr->chunk_size      = 1024;
-            pkt_hdr->endian          = 0;
-            pkt_hdr->sign            = 1;
-
+            pkt_hdr->sample_rate       = memsrc->sample_rate;
+            pkt_hdr->bits_per_sample   = memsrc->bit_width;
+            pkt_hdr->num_channels      = memsrc->num_channels;
+            AUDIO_FORMAT(pkt_hdr)      = AUDIO_SET_FORMAT(0, 0, 1, memsrc->bit_width);
+            pkt_hdr->chunk_size        = memsrc->chunk_size;
             /* Init header data */
             pkt_hdr->id = AUDIO_DATA;
         }
@@ -757,6 +787,12 @@ static uint8_t memsrc_src_activate_push(StreamPad *pad, uint8_t active)
     }
     else
     {
+        /* reset */
+        memsrc->size          = 0;
+        memsrc->end_of_stream = false;
+        memsrc->read_position = 0;
+
+        /* Free the chunk buffer */
         if (memsrc->buffer)
         {
             OSA_MemoryFree(memsrc->buffer);
@@ -824,6 +860,7 @@ static uint8_t memsrc_src_activate_pull(StreamPad *pad, uint8_t active)
         STREAMER_LOG_DEBUG(DBG_MEMSRC, "[MemSRC]Deactivate pull mode: %s\n", "memsrc");
 
         /* reset */
+        memsrc->size          = 0;
         memsrc->end_of_stream = false;
         memsrc->read_position = 0;
 
@@ -911,9 +948,48 @@ static int32_t memsrc_set_property(StreamElement *element_ptr, uint16_t prop, ui
             ret = memsrc_set_push_chunk_size((ElementHandle)element_ptr, val);
             break;
 
+        case PROP_MEMSRC_SET_SAMPLE_RATE:
+            STREAMER_LOG_DEBUG(DBG_FILESRC, "set sample rate:%d\n", val);
+            if (val <= 0 || val > 96000)
+            {
+                ret = STREAM_ERR_INVALID_ARGS;
+            }
+            else
+            {
+                ElementMemSrc *src = (ElementMemSrc *)element_ptr;
+                src->sample_rate   = (uint32_t)val;
+            }
+            break;
+
+        case PROP_MEMSRC_SET_NUM_CHANNELS:
+            STREAMER_LOG_DEBUG(DBG_FILESRC, "set number of channels:%d\n", val);
+            if (val <= 0 || val > 8)
+            {
+                ret = STREAM_ERR_INVALID_ARGS;
+            }
+            else
+            {
+                ElementMemSrc *src = (ElementMemSrc *)element_ptr;
+                src->num_channels  = (uint8_t)val;
+            }
+            break;
+
+        case PROP_MEMSRC_SET_BIT_WIDTH:
+            STREAMER_LOG_DEBUG(DBG_FILESRC, "set bit width:%d\n", val);
+            if (val <= 0 || val > 32 || val % 8 != 0)
+            {
+                ret = STREAM_ERR_INVALID_ARGS;
+            }
+            else
+            {
+                ElementMemSrc *src = (ElementMemSrc *)element_ptr;
+                src->bit_width     = (uint8_t)val;
+            }
+            break;
+
         case PROP_MEMSRC_SET_MEM_TYPE:
             STREAMER_LOG_DEBUG(DBG_MEMSRC, "set mem type:%d\n", val);
-            if (val < 0 || val > 1)
+            if (val > 1)
             {
                 ret = STREAM_ERR_INVALID_ARGS;
             }

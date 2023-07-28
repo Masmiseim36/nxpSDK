@@ -1,85 +1,81 @@
 var a00073 =
 [
-    [ "snvs_hp_rtc_datetime_t", "a00073.html#a00516", [
-      [ "year", "a00073.html#ad208ce2822d4237a24aa334378163d8e", null ],
-      [ "month", "a00073.html#aeae304d30957ee76f2ae1549118ea383", null ],
-      [ "day", "a00073.html#a01d05e21af560f5185d63247d88b4c07", null ],
-      [ "hour", "a00073.html#a424370e8df7047b5dcab236e52a396f2", null ],
-      [ "minute", "a00073.html#a94effdb46795404af3432392f35e2353", null ],
-      [ "second", "a00073.html#acbb250fa88138295346c157310a47db8", null ]
+    [ "sgtl_audio_format_t", "a00073.html#a00529", [
+      [ "mclk_HZ", "a00073.html#ae0edadf6baf0a743e4765421ad2abc3f", null ],
+      [ "sampleRate", "a00073.html#a47b2d7178ab3a15a56b8972b2d2eac29", null ],
+      [ "bitWidth", "a00073.html#a78334148115e196b31db9b1a302a4941", null ],
+      [ "sclkEdge", "a00073.html#a9cdfd73fb1b74ee97d94e2e183af5a00", null ]
     ] ],
-    [ "snvs_hp_rtc_config_t", "a00073.html#a00515", [
-      [ "rtcCalEnable", "a00073.html#aadf858054f534311eca1fe14c2d3e11a", null ],
-      [ "rtcCalValue", "a00073.html#ac916583f19d243eb891aa156b6ccd56a", null ],
-      [ "periodicInterruptFreq", "a00073.html#a7ffad480a30cb609a32c67cdd4f9e34c", null ]
+    [ "sgtl_config_t", "a00073.html#a00530", [
+      [ "route", "a00073.html#a8c4ed2bb6162b218a0aa8077d9bab4aa", null ],
+      [ "bus", "a00073.html#a1991cd986722d22c8964f08bc9d8c21d", null ],
+      [ "master_slave", "a00073.html#a4daf6a63ca5b405aac9332ca477c3501", null ],
+      [ "format", "a00073.html#af41c4ad8e8dfb29b4fde75d76f9f43c8", null ],
+      [ "slaveAddress", "a00073.html#abdee01c708fa6a6beaf93e371347c590", null ],
+      [ "i2cConfig", "a00073.html#a0552d0239f157964cdc500d73350d11d", null ]
     ] ],
-    [ "FSL_SNVS_HP_DRIVER_VERSION", "a00073.html#gaaf7c8c47c4f4124f31c7f48ae5715b75", null ],
-    [ "SNVS_MAKE_HP_SV_FLAG", "a00073.html#gaab7985efdc9188a91c4753aca3e61e26", null ],
-    [ "snvs_hp_interrupts_t", "a00073.html#gaee130efedfe6119670086a1c6c712384", [
-      [ "kSNVS_RTC_AlarmInterrupt", "a00073.html#ggaee130efedfe6119670086a1c6c712384a1e479f0d0f6b4d039d2e9bcda6e21396", null ],
-      [ "kSNVS_RTC_PeriodicInterrupt", "a00073.html#ggaee130efedfe6119670086a1c6c712384a58b00c8a408e2f99fa186401a3936176", null ]
+    [ "sgtl_handle_t", "a00073.html#a00531", [
+      [ "config", "a00073.html#a2187719e2579f70c815eff00bd8d7b98", null ],
+      [ "i2cHandle", "a00073.html#aee64ef7e3a76d06780a73c63d68d2a98", null ]
     ] ],
-    [ "snvs_hp_status_flags_t", "a00073.html#gadc5f336a077a73ae307e7ae8943e51bf", [
-      [ "kSNVS_RTC_AlarmInterruptFlag", "a00073.html#ggadc5f336a077a73ae307e7ae8943e51bfa19082779de5fd8c7bfaa92039eaf986c", null ],
-      [ "kSNVS_RTC_PeriodicInterruptFlag", "a00073.html#ggadc5f336a077a73ae307e7ae8943e51bfa17d3484ae7d03f9c858096a685b1a3e3", null ],
-      [ "kSNVS_ZMK_ZeroFlag", "a00073.html#ggadc5f336a077a73ae307e7ae8943e51bfa279f722517f638849505663da580be1c", null ],
-      [ "kSNVS_OTPMK_ZeroFlag", "a00073.html#ggadc5f336a077a73ae307e7ae8943e51bfa4e7eae7a06f5e55366e49452e420b600", null ]
+    [ "FSL_SGTL5000_DRIVER_VERSION", "a00073.html#gacb25f9b960a10309cc4b9b2cb0f0c063", null ],
+    [ "CHIP_ID", "a00073.html#gab0aa3e54cd2934b67b9882957456c391", null ],
+    [ "SGTL5000_HEADPHONE_MAX_VOLUME_VALUE", "a00073.html#ga5b4c16e15a52d1a940e4d47bf3574752", null ],
+    [ "SGTL5000_I2C_ADDR", "a00073.html#ga58ceb20f920b2b006c74eeeae992830a", null ],
+    [ "SGTL_I2C_HANDLER_SIZE", "a00073.html#ga5a006451f9e990a4d3255ed7265ff1ad", null ],
+    [ "SGTL_I2C_BITRATE", "a00073.html#ga7bf82c8b0e6415457b6f42f50af4230d", null ],
+    [ "sgtl_module_t", "a00073.html#gaf78d5250d200a4cc76a60dcff249a4d3", [
+      [ "kSGTL_ModuleADC", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3aeff780e31f47de5bd4ae4f7c2247a943", null ],
+      [ "kSGTL_ModuleDAC", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3ac97955a1a57467c8a7a93629468c0ae5", null ],
+      [ "kSGTL_ModuleDAP", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3a6db304a2a1838b8733167b535efd1cc6", null ],
+      [ "kSGTL_ModuleHP", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3a7c3ca8ea568a0109f5858469734f1f22", null ],
+      [ "kSGTL_ModuleI2SIN", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3a5eec6607385362c2f1f67574f98bab7f", null ],
+      [ "kSGTL_ModuleI2SOUT", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3ad549fbd25f776da2e48029e7defb136d", null ],
+      [ "kSGTL_ModuleLineIn", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3a3cf24e3ca184744b13ce10adb648afcd", null ],
+      [ "kSGTL_ModuleLineOut", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3a04e0f93df81aacf8114308d95703248f", null ],
+      [ "kSGTL_ModuleMicin", "a00073.html#ggaf78d5250d200a4cc76a60dcff249a4d3a4d7e27445f7842c7d420a3621ac73e72", null ]
     ] ],
-    [ "snvs_hp_sv_status_flags_t", "a00073.html#ga6c646413eb25a7b7a32ee3d20bec13ad", [
-      [ "kSNVS_LP_ViolationFlag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13adab386522ef551593be1d1e0a3285a003d", null ],
-      [ "kSNVS_ZMK_EccFailFlag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13ada72ba4e4d6a1d251e2d2f7360dec9c05a", null ],
-      [ "kSNVS_LP_SoftwareViolationFlag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13adad4b177ee0c5f8c3fd5ba9a9f86fcf5ad", null ],
-      [ "kSNVS_FatalSoftwareViolationFlag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13adacfd1c986d4df4e3726c737eaa07b22dc", null ],
-      [ "kSNVS_SoftwareViolationFlag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13ada69247198a66b059e1a6827e058031271", null ],
-      [ "kSNVS_Violation0Flag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13ada64006780a5a990440d4dbd1546e15fd4", null ],
-      [ "kSNVS_Violation1Flag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13ada690af4c92ba5760b03ff840b95acaaa3", null ],
-      [ "kSNVS_Violation2Flag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13adaf4f88b8dc3de81668fef973ea25712d5", null ],
-      [ "kSNVS_Violation4Flag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13ada12a565f3112032d80289d45237d42bb3", null ],
-      [ "kSNVS_Violation5Flag", "a00073.html#gga6c646413eb25a7b7a32ee3d20bec13adae89fe10f0c5b86b00f9f4efdfddd6ce5", null ]
+    [ "sgtl_route_t", "a00073.html#ga78ef5545b50946b6d168203283c20820", [
+      [ "kSGTL_RouteBypass", "a00073.html#gga78ef5545b50946b6d168203283c20820a1ea39c5bbafcc616613e8755b70573e9", null ],
+      [ "kSGTL_RoutePlayback", "a00073.html#gga78ef5545b50946b6d168203283c20820ad379b8e67ddbbb27bc44c6d6f3cf7c0e", null ],
+      [ "kSGTL_RoutePlaybackandRecord", "a00073.html#gga78ef5545b50946b6d168203283c20820ae11f7c67b7d1ab7e4dce3d927be7da00", null ],
+      [ "kSGTL_RoutePlaybackwithDAP", "a00073.html#gga78ef5545b50946b6d168203283c20820ae79c7286d52a67b618e4e23a1f1306b6", null ],
+      [ "kSGTL_RoutePlaybackwithDAPandRecord", "a00073.html#gga78ef5545b50946b6d168203283c20820a53052344996dc1f90cf6457e2b81eb18", null ],
+      [ "kSGTL_RouteRecord", "a00073.html#gga78ef5545b50946b6d168203283c20820a0c28a072be0500106b9b32a16f05f000", null ]
     ] ],
-    [ "snvs_hp_ssm_state_t", "a00073.html#ga3a06a2c2a5797755a7cf3eea163ce808", [
-      [ "kSNVS_SSMInit", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808ae7830884d8e5020ccd5e20ae293dad15", null ],
-      [ "kSNVS_SSMHardFail", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808af29e28c3c6dfb9f644ce8de542651ac9", null ],
-      [ "kSNVS_SSMSoftFail", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808a60a24f4c76cb3ddb67f746eac3bedc25", null ],
-      [ "kSNVS_SSMInitInter", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808ab91ee8c742d743ff48b1536df21f249e", null ],
-      [ "kSNVS_SSMCheck", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808adec7dce6f5a46ff1f877f170518f1544", null ],
-      [ "kSNVS_SSMNonSecure", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808ac673a58e61c466f38a3e8660b0b281f6", null ],
-      [ "kSNVS_SSMTrusted", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808ac76e8c274dc67c9be07a1134f8e92a64", null ],
-      [ "kSNVS_SSMSecure", "a00073.html#gga3a06a2c2a5797755a7cf3eea163ce808aab8b6a11c429d8657470496b724f9204", null ]
+    [ "sgtl_protocol_t", "a00073.html#ga9bd346f7776a687fe345e336127e5426", [
+      [ "kSGTL_BusI2S", "a00073.html#gga9bd346f7776a687fe345e336127e5426ab56aded98ae08bb3dd4c431e036eb9b7", null ],
+      [ "kSGTL_BusLeftJustified", "a00073.html#gga9bd346f7776a687fe345e336127e5426a99d80a1bbb2ca42f8d8b9ded7d0fe156", null ],
+      [ "kSGTL_BusRightJustified", "a00073.html#gga9bd346f7776a687fe345e336127e5426a742196d31e1ede4eb6d0b1bd6afcdc50", null ],
+      [ "kSGTL_BusPCMA", "a00073.html#gga9bd346f7776a687fe345e336127e5426aae65c2ae38164483661ce81683e2cf6d", null ],
+      [ "kSGTL_BusPCMB", "a00073.html#gga9bd346f7776a687fe345e336127e5426a165348d47026247f859a40813f449cfd", null ],
+      [ "kSGTL_HeadphoneLeft", "a00073.html#ggafb24d298ddd4bc4ff61aa333f07a574aa4438d9d23b966a384697ac3959ec180c", null ],
+      [ "kSGTL_HeadphoneRight", "a00073.html#ggafb24d298ddd4bc4ff61aa333f07a574aa7c3a64195b071d4d17957f2de39a45a7", null ],
+      [ "kSGTL_LineoutLeft", "a00073.html#ggafb24d298ddd4bc4ff61aa333f07a574aaea79ecce1f81bf12000fcf64671502ea", null ],
+      [ "kSGTL_LineoutRight", "a00073.html#ggafb24d298ddd4bc4ff61aa333f07a574aabe25d4199f174f03f271a2ac335904bb", null ],
+      [ "kSGTL_RecordSourceLineIn", "a00073.html#gga39b4e25c4e8f5fed29720be17a532fa8a358889525fbd4a6d5998c17a2382ac16", null ],
+      [ "kSGTL_RecordSourceMic", "a00073.html#gga39b4e25c4e8f5fed29720be17a532fa8a3c1289899ca6bdbe2ee24346890a19e2", null ],
+      [ "kSGTL_PlaySourceLineIn", "a00073.html#gga4efaf4e07364d6302f598569aa7e55dcad99308b50ee139be94b584a66d999caf", null ],
+      [ "kSGTL_PlaySourceDAC", "a00073.html#gga4efaf4e07364d6302f598569aa7e55dca9c7fa540632ee8e4c733fb4ccebc8601", null ]
     ] ],
-    [ "SNVS_HP_Init", "a00073.html#gada84c18b75cc202b407834f56a8e7f80", null ],
-    [ "SNVS_HP_Deinit", "a00073.html#ga805de8a4dd37cd65e384b9fae9d7e4c7", null ],
-    [ "SNVS_HP_RTC_Init", "a00073.html#ga694fb339332f988476e2d0749cd95bf5", null ],
-    [ "SNVS_HP_RTC_Deinit", "a00073.html#gace39a108e8e1e08120f25f020ef7ba20", null ],
-    [ "SNVS_HP_RTC_GetDefaultConfig", "a00073.html#gad5bc52a7456da293cd0286832462e7fd", null ],
-    [ "SNVS_HP_RTC_SetDatetime", "a00073.html#ga25785442a761c5e674f40079c92c839f", null ],
-    [ "SNVS_HP_RTC_GetDatetime", "a00073.html#gadfb1241d346995a130f3e2e046bb0d54", null ],
-    [ "SNVS_HP_RTC_SetAlarm", "a00073.html#ga10fcc3d2cef1b0bfe722c9a51f4ed7cb", null ],
-    [ "SNVS_HP_RTC_GetAlarm", "a00073.html#ga7e0d74a5e589f7c845e4fe4003622c63", null ],
-    [ "SNVS_HP_RTC_TimeSynchronize", "a00073.html#gafdf4a1b2c66ed56d524c803a78a2fcab", null ],
-    [ "SNVS_HP_RTC_EnableInterrupts", "a00073.html#gae719f60ac8585937d91c55ed1b469692", null ],
-    [ "SNVS_HP_RTC_DisableInterrupts", "a00073.html#gaa41a91bf279a1d7ecd75239468e75ed2", null ],
-    [ "SNVS_HP_RTC_GetEnabledInterrupts", "a00073.html#gac719942dfcd56e8d34b62e21b34587b6", null ],
-    [ "SNVS_HP_RTC_GetStatusFlags", "a00073.html#gaf2a0b49399456cf266a7a1a8a1a473ff", null ],
-    [ "SNVS_HP_RTC_ClearStatusFlags", "a00073.html#ga0b9b860ebeb5100ec7b6c98f7952b63c", null ],
-    [ "SNVS_HP_RTC_StartTimer", "a00073.html#ga3c5f394b407a9aa9e0ba0a0b90bf7906", null ],
-    [ "SNVS_HP_RTC_StopTimer", "a00073.html#gad0d3010ff1f3db29207b195c198a6947", null ],
-    [ "SNVS_HP_EnableMasterKeySelection", "a00073.html#gae869c337512ca629a0e601b982970272", null ],
-    [ "SNVS_HP_ProgramZeroizableMasterKey", "a00073.html#ga21a7a39709ab3afa624b8c0f15aefcaa", null ],
-    [ "SNVS_HP_ChangeSSMState", "a00073.html#gaff088b89f9ffbb75c2a5ed6b5431349b", null ],
-    [ "SNVS_HP_SetSoftwareFatalSecurityViolation", "a00073.html#ga60171bee768766e8726752083a943dad", null ],
-    [ "SNVS_HP_SetSoftwareSecurityViolation", "a00073.html#ga22c3f9b30bdd4ef8d0f4c43595b11f0c", null ],
-    [ "SNVS_HP_GetSSMState", "a00073.html#gadb8b240108f145a3e4cfbebb1f80ccc1", null ],
-    [ "SNVS_HP_ResetLP", "a00073.html#ga10de6343eb48b6f2e9cbca3288ab77c6", null ],
-    [ "SNVS_HP_EnableHighAssuranceCounter", "a00073.html#gaaa1b29ca892f37019e83d84a470a1a76", null ],
-    [ "SNVS_HP_StartHighAssuranceCounter", "a00073.html#gab35e6350cc3d48196260798917b93f34", null ],
-    [ "SNVS_HP_SetHighAssuranceCounterInitialValue", "a00073.html#ga34a0f9c4dccca6c816d2c77d7f6dfe06", null ],
-    [ "SNVS_HP_LoadHighAssuranceCounter", "a00073.html#ga78d44b44b57abe52f6fbea79ecb4b3f1", null ],
-    [ "SNVS_HP_GetHighAssuranceCounter", "a00073.html#ga52a4800b22c38b167715e18c18e75682", null ],
-    [ "SNVS_HP_ClearHighAssuranceCounter", "a00073.html#ga2f3b01557d29b8bc99971e262ca329a7", null ],
-    [ "SNVS_HP_LockHighAssuranceCounter", "a00073.html#gad3122ce2343b9b002443dc8488531bde", null ],
-    [ "SNVS_HP_GetStatusFlags", "a00073.html#gaa234622984c7a3657ec79b069636f87a", null ],
-    [ "SNVS_HP_ClearStatusFlags", "a00073.html#ga7723e8246eb379ee772bb5f6b6c67cf7", null ],
-    [ "SNVS_HP_GetSecurityViolationStatusFlags", "a00073.html#gab5a306cceca268d2bfc90274f5673dab", null ],
-    [ "SNVS_HP_ClearSecurityViolationStatusFlags", "a00073.html#gaf4a86a4006295c944a470bb986aaaedf", null ]
+    [ "sgtl_sclk_edge_t", "a00073.html#ga1d2c82787cda907a0ac8646e11171db8", [
+      [ "kSGTL_SclkValidEdgeRising", "a00073.html#gga1d2c82787cda907a0ac8646e11171db8aa89baee03025ca12e2fd8eb03909724c", null ],
+      [ "kSGTL_SclkValidEdgeFailling", "a00073.html#gga1d2c82787cda907a0ac8646e11171db8a0e8f446d380d7f3c859b68ffe5a64a08", null ]
+    ] ],
+    [ "SGTL_Init", "a00073.html#ga5dd1b8225b23f6e47c4abed5bf74709f", null ],
+    [ "SGTL_SetDataRoute", "a00073.html#ga1ef9c339bf1ac795d7e5f3c42cebafb7", null ],
+    [ "SGTL_SetProtocol", "a00073.html#ga8087efbfa0ae9c2644d6191f441d9df0", null ],
+    [ "SGTL_SetMasterSlave", "a00073.html#ga872cb128c9d0445c60dee6dbc044c7b3", null ],
+    [ "SGTL_SetVolume", "a00073.html#ga88af855c5959f6d814bd8f8327e168d5", null ],
+    [ "SGTL_GetVolume", "a00073.html#ga6d0af6998eff44ee5765988e05d68434", null ],
+    [ "SGTL_SetMute", "a00073.html#ga4c3a087636393265417c9435b6fc57c2", null ],
+    [ "SGTL_EnableModule", "a00073.html#ga51bf307e712104f5942d4cf64c60e624", null ],
+    [ "SGTL_DisableModule", "a00073.html#ga26a3dba16af7a79e072f71d179dc00e6", null ],
+    [ "SGTL_Deinit", "a00073.html#ga27221640262b10948a03f3178e379814", null ],
+    [ "SGTL_ConfigDataFormat", "a00073.html#ga120c853dc3a86f5c70c4fbef309b6ef5", null ],
+    [ "SGTL_SetPlay", "a00073.html#ga3052a63c17bdfdfeac94d1011434af5d", null ],
+    [ "SGTL_SetRecord", "a00073.html#gaf929ad37a6dd584cd5f17d52560ef7df", null ],
+    [ "SGTL_WriteReg", "a00073.html#ga1f0eb0cad0476f34f65811b99d58752f", null ],
+    [ "SGTL_ReadReg", "a00073.html#gad044b5a578bac8480229730d610f22b6", null ],
+    [ "SGTL_ModifyReg", "a00073.html#ga43f1ac7cec503ad6e6ea178b6fb691ac", null ]
 ];

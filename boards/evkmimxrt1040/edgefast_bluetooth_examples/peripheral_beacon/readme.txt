@@ -2,16 +2,16 @@ Overview
 ========
 Application demonstrating the BLE Peripheral role, This application implements types of beacon applications .
 Beacon: A simple application demonstrating the BLE Broadcaster role functionality by advertising Company Identifier, Beacon Identifier, UUID, A, B, C, RSSI.
-Eddystone : The Eddystone Configuration Service runs as a GATT service on the beacon while it is connectable and allows configuration of the advertised data, the broadcast power levels, and the advertising intervals. 
+Eddystone : The Eddystone Configuration Service runs as a GATT service on the beacon while it is connectable and allows configuration of the advertised data, the broadcast power levels, and the advertising intervals.
 iBeacon: This simple application demonstrates the BLE Broadcaster role functionality by advertising an Apple iBeacon.
 
 
 Toolchain supported
 ===================
-- MCUXpresso  11.7.0
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
+- MCUXpresso  11.8.0
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
 
 Hardware requirements
 =====================
@@ -19,60 +19,43 @@ Hardware requirements
 - evkmimxrt1040 board
 - Personal Computer
 - One of the following modules:
-  - AzureWave AW-AM457-uSD
-  - AzureWave AW-CM358-uSD
-  - K32W061
+  - AzureWave AW-CM358MA.M2
+  - AzureWave AW-CM510MA.M2
+  - Embedded Artists 1XK M.2 Module (EAR00385)
+  - Embedded Artists 1ZM M.2 Module (EAR00364)
+
 
 Board settings
 ==============
+Before building the example application select Wi-Fi module macro in the app_bluetooth_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+If you want use the AzureWave WIFI_IW416_BOARD_AW_AM510MA, please change the macro to WIFI_IW416_BOARD_AW_AM510MA.
+If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358MA, please change the macro to WIFI_88W8987_BOARD_AW_CM358MA.
+If you want to use Embedded Artists Type 1XK module (EAR00385), please change the macro to WIFI_IW416_BOARD_MURATA_1XK_M2.
+If you want to use Embedded Artists Type 1ZM module (EAR00364), please change the macro to WIFI_88W8987_BOARD_MURATA_1ZM_M2.
 
-Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-  - J4  2-3: 3.3V VIO
 
-The hardware should be reworked according to the hardware rework guide for evkmimxrt1040 and AW-AM457-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
-The pin connect for UART HCI as the following table,
-------------------------------------------------------------------------------------
-PIN NAME | AW-AM457-USD |   I.MXRT1040   | PIN NAME OF RT1040 | GPIO NAME OF RT1040
-------------------------------------------------------------------------------------
-UART_TXD |  J10(pin 4)  |   J16(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
-UART_RXD |  J10(pin 2)  |   J16(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
-UART_RTS |  J10(pin 6)  |   J33(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
-UART_CTS |  J10(pin 8)  |   J33(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
-GND      |  J6(pin 7)   |   J32(pin 7)   |    GND             | GND
-------------------------------------------------------------------------------------
+Jumper settings for RT1040 (enables external 5V supply):
+connect J45 with external power
+SW6 2-3
+J40 1-2
 
-Jumper settings for AzureWave AW-CM358-uSD Module:
-  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
 
-The hardware should be reworked according to the hardware rework guide for evkmimxrt1040 and AW-CM358-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
-The pin connect for UART HCI as the following table,
-------------------------------------------------------------------------------------
-PIN NAME | AW-CM358-USD |   I.MXRT1040   | PIN NAME OF RT1040 | GPIO NAME OF RT1040
-------------------------------------------------------------------------------------
-UART_TXD |  J10(pin 4)  |   J16(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
-UART_RXD |  J10(pin 2)  |   J16(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
-UART_RTS |  J10(pin 6)  |   J33(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
-UART_CTS |  J10(pin 8)  |   J33(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
-GND      |  J6(pin 7)   |   J32(pin 7)   |    GND             | GND
-------------------------------------------------------------------------------------
+Murata Solution Board settings
+Embedded Artists M.2 module resource page: https://www.embeddedartists.com/m2
+Embedded Artists 1XK module datasheet: https://www.embeddedartists.com/doc/ds/1XK_M2_Datasheet.pdf
+Embedded Artists 1ZM module datasheet: https://www.embeddedartists.com/doc/ds/1ZM_M2_Datasheet.pdf
 
-For K32W061, the readme located in <sdk>/middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/k32w061 explains how to flash the transceiver image and the hardware rework required.
-The pin connect for UART HCI as the following table,
-------------------------------------------------------------------------------------
-PIN NAME | DK6 (K32W061) |   I.MXRT1040   | PIN NAME OF RT1040 | GPIO NAME OF RT1040
-------------------------------------------------------------------------------------
-UART_TXD |  PIO(pin 8)   |   J16(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
-UART_RXD |  PIO(pin 9)   |   J16(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
-UART_RTS |  PIO(pin 6)   |   J33(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
-UART_CTS |  PIO(pin 7)   |   J33(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
-------------------------------------------------------------------------------------
+
+AzureWave Solution Board settings
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1040 with Direct Murata M.2 Module in document Hardware Rework Guide for EdgeFast BT PAL.
+
 
 Note:
-After downloaded binary into qspiflash and boot from qspiflash directly, 
-please reset the board by pressing SW9 or power off and on the board to run the application.
+To ensure that the LITTLEFS flash region has been cleaned,
+all flash sectors need to be erased before downloading example code.
+After downloaded binary into qspiflash and boot from qspiflash directly,
+please reset the board by pressing SW7 or power off and on the board to run the application.
+the SW5 is user button,please do role switch by pressing this button on the board.
 Prepare the Demo
 ================
 
@@ -93,7 +76,7 @@ Prepare the Demo
 
 Running the demo
 ================
-Form the app_config.h file we can select witch application is starting. Default Beacon (#define BEACON_APP 1) application is starting. 
+Form the app_bluetooth_config.h file we can select witch application is starting. Default Beacon (#define BEACON_APP 1) application is starting.
 To start the Eddystone set #define EDDYSTONE 1 and others to 0. To start the iBeacon set #define IBEACON_APP 1 and others to 0.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If BEACON_APP is 1 (and IBEACON_APP and EDDYSTONE are set to 0) the Beacon application is started.

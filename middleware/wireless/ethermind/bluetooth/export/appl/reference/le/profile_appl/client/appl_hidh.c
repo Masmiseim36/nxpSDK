@@ -41,6 +41,7 @@ extern ATT_HANDLE appl_gatt_client_handle;
 
 /* ----------------------------------------- Static Global Variables */
 void hidh_initialize(void);
+void hidh_init_service_instance(void);
 void appl_select_hid_service_instances(void);
 API_RESULT hidh_find_free_hndl_range_inst
            (
@@ -65,9 +66,12 @@ static ATT_ATTR_HANDLE hids_boot_mus_in_report_ccc_hdl[APPL_MAX_SERVICE_INSTANCE
 static ATT_ATTR_HANDLE hids_proto_mode_hdl[APPL_MAX_SERVICE_INSTANCES];
 static ATT_ATTR_HANDLE hids_hid_cp_hdl[APPL_MAX_SERVICE_INSTANCES];
 
+static ATT_ATTR_HANDLE appl_hids_curr_rd_attr_hndl;
+
 DECL_STATIC ATT_HANDLE_RANGE appl_hid_serv_range[APPL_MAX_SERVICE_INSTANCES];
 DECL_STATIC UCHAR service_count;
 DECL_STATIC UCHAR appl_cur_service_inst;
+DECL_STATIC UCHAR appl_hidh_disc_state = BT_FALSE;
 
 static const UCHAR hidh_client_menu[] =
 "\n\
@@ -113,6 +117,22 @@ Your Option?\n\
 
 /* ------------------------------- Functions */
 
+void hidh_init_service_instance(void)
+{
+    UINT32 k;
+
+    /* Find the Free element in the given array */
+    for (k = 0U; k < APPL_MAX_SERVICE_INSTANCES; k++)
+    {
+        appl_hid_serv_range[k].start_handle = APPL_HID_GATT_HANDLE_INIT_VAL;
+        appl_hid_serv_range[k].end_handle   = APPL_HID_GATT_HANDLE_INIT_VAL;
+    }
+
+    /* Reset the associated Globals */
+    service_count         = 0U;
+    appl_cur_service_inst = 0U;
+}
+
 void hidh_initialize(void)
 {
     UINT32 k;
@@ -137,6 +157,12 @@ void hidh_initialize(void)
         hids_boot_kb_in_report_ccc_hdl[k]   = APPL_HID_GATT_HANDLE_INIT_VAL;
         hids_boot_mus_in_report_ccc_hdl[k]  = APPL_HID_GATT_HANDLE_INIT_VAL;
     }
+
+    /* Reset the associated Globals */
+    appl_hids_curr_rd_attr_hndl = APPL_HID_GATT_HANDLE_INIT_VAL;
+
+    /* Initialize the HID Service Instance List */
+    hidh_init_service_instance();
 }
 
 void hidh_notify_gatt_conn (void)
@@ -265,7 +291,7 @@ void hidh_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT
 
                 }
 
-                /* Check for External Report reference  Descriptor and populalte it*/
+                /* Check for External Report reference  Descriptor and populate it*/
                 for (j = 0U; j < characteristic->desc_index; j++)
                 {
                     if (APPL_HID_EXT_REPORT_REF_DESC_UUID ==
@@ -461,27 +487,80 @@ void hidh_notify_gatt_servdata (GATT_SERVICE_PARAM * service, UINT16 size)
 
     BT_IGNORE_UNUSED_PARAM(size);
 
-    retval = hidh_find_free_hndl_range_inst(&i);
-
-    if (API_SUCCESS == retval)
+    /**
+     * Save the Service Discovery Handle only when Dedicated HIDH Discovery
+     * was Initiated from the Menu Option here.
+     */
+    if (BT_TRUE == appl_hidh_disc_state)
     {
-        /* Populate the incoming Service Handle Range in the free index */
-        appl_hid_serv_range[i].start_handle = service->range.start_handle;
-        appl_hid_serv_range[i].end_handle = service->range.end_handle;
+        retval = hidh_find_free_hndl_range_inst(&i);
 
-        /* Increment the HID Service Count For each Handle Range Discovered */
-        service_count++;
+        if ((API_SUCCESS == retval) && (GATT_HID_SERVICE == service->uuid.uuid_16))
+        {
+            /* Populate the incoming Service Handle Range in the free index */
+            appl_hid_serv_range[i].start_handle = service->range.start_handle;
+            appl_hid_serv_range[i].end_handle = service->range.end_handle;
+
+            /* Increment the HID Service Count For each Handle Range Discovered */
+            service_count++;
+        }
+        else
+        {
+            APPL_ERR ("[HIDH]: **ERR** Max Service Instances cache limit reached!\n");
+        }
+    }
+}
+
+void hidh_parse_read_data(UCHAR * data, UINT16 datalen)
+{
+    ATT_READ_BLOB_REQ_PARAM read_blob_req_param;
+    API_RESULT              retval;
+    UINT16                  curr_mtu;
+
+    BT_IGNORE_UNUSED_PARAM(data);
+
+    /* Initialize */
+    retval = API_SUCCESS;
+
+    /* Access the Local MTU for the current ATT_HANDLE */
+    retval = BT_att_access_mtu
+             (
+                 &appl_gatt_client_handle,
+                 &curr_mtu
+             );
+
+    /**
+     * Check if incoming datalen is around Max ATT data for the
+     * current ATT Bearer's negotiated MTU.
+     * If the datalen matches the negotiated ATT MTU, then there
+     * is possibility more data for the corresponding Attribute Handle.
+     * Use the Read Blob Request to fetch any remaining data if present.
+     */
+    if ((API_SUCCESS == retval) && (curr_mtu <= (datalen + 1U)))
+    {
+        read_blob_req_param.handle = appl_hids_curr_rd_attr_hndl;
+        read_blob_req_param.offset = datalen;
+
+        gatt_char_read_long
+        (
+            &appl_gatt_client_handle,
+            read_blob_req_param.handle,
+            read_blob_req_param.offset
+        );
     }
 }
 
 void hidh_profile_operations (void)
 {
-    UINT32   choice, menu_choice;
-    UCHAR    ccc_value[10U];
-    UCHAR    cp_operation[2U];
-    UCHAR    proto_mode[2U];
-    UINT16   length;
-    ATT_UUID uuid;
+    UINT32                  choice, menu_choice;
+    UCHAR                   ccc_value[10U];
+    UCHAR                   cp_operation[2U];
+    UCHAR                   proto_mode[2U];
+    UINT16                  length;
+    ATT_UUID                uuid;
+
+    /* Set the HIDH Discovery State to True once inside HIDH Menu */
+    appl_hidh_disc_state = BT_TRUE;
 
     BT_LOOP_FOREVER()
     {
@@ -518,11 +597,14 @@ void hidh_profile_operations (void)
             break;
 
         case 12:
+            /* Select the HID Instance */
+            appl_select_hid_service_instances();
+
             gatt_discover_char
             (
                 &appl_gatt_client_handle,
-                0x0001U,
-                0xFFFFU,
+                appl_hid_serv_range[appl_cur_service_inst].start_handle,
+                appl_hid_serv_range[appl_cur_service_inst].end_handle,
                 0x0000U,
                 1U
             );
@@ -538,6 +620,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_report_map_hdl[appl_cur_service_inst];
             break;
 
         case 14:
@@ -550,6 +635,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_ext_report_ref_desc_hdl[appl_cur_service_inst];
             break;
 
         case 15:
@@ -562,6 +650,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_input_report_hdl[appl_cur_service_inst];
             break;
 
         case 16:
@@ -574,6 +665,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_input_report_ref_hdl[appl_cur_service_inst];
             break;
 
         case 17:
@@ -586,6 +680,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_input_report_ccc_hdl[appl_cur_service_inst];
             break;
 
         case 18:
@@ -598,6 +695,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_output_report_hdl[appl_cur_service_inst];
             break;
 
         case 19:
@@ -610,6 +710,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_output_report_ref_hdl[appl_cur_service_inst];
             break;
 
         case 20:
@@ -622,6 +725,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_feature_report_hdl[appl_cur_service_inst];
             break;
 
         case 21:
@@ -634,6 +740,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_feature_report_ref_hdl[appl_cur_service_inst];
             break;
 
         case 22:
@@ -646,6 +755,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_hid_info_hdl[appl_cur_service_inst];
             break;
 
         case 23:
@@ -658,6 +770,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_boot_kb_in_report_hdl[appl_cur_service_inst];
             break;
 
         case 24:
@@ -670,6 +785,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_boot_kb_in_report_ccc_hdl[appl_cur_service_inst];
             break;
 
         case 25:
@@ -682,6 +800,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_boot_kb_out_report_hdl[appl_cur_service_inst];
             break;
 
         case 26:
@@ -694,6 +815,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_boot_mus_in_report_hdl[appl_cur_service_inst];
             break;
 
         case 27:
@@ -706,6 +830,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_boot_mus_in_report_ccc_hdl[appl_cur_service_inst];
             break;
 
         case 28:
@@ -718,6 +845,9 @@ void hidh_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+
+            /* Store the Read Attribute Handle in global */
+            appl_hids_curr_rd_attr_hndl = hids_proto_mode_hdl[appl_cur_service_inst];
             break;
 
         case 29:
@@ -850,7 +980,7 @@ void hidh_profile_operations (void)
             break;
 
         case 37:
-            LOG_DEBUG ("Select Control Point Operation. 0 (Suspend), 1 (Exit Suspend)\n");
+            CONSOLE_OUT ("Select Control Point Operation. 0 (Suspend), 1 (Exit Suspend)\n");
             CONSOLE_IN ("%u", &choice);
 
             cp_operation[0U] = (UCHAR)choice;
@@ -867,7 +997,7 @@ void hidh_profile_operations (void)
             break;
 
         case 38:
-            LOG_DEBUG ("1 (Enable), 0 (Disable)\n");
+            CONSOLE_OUT ("1 (Enable), 0 (Disable)\n");
             CONSOLE_IN ("%u", &choice);
 
             ccc_value[0U] = (UCHAR)choice;
@@ -884,7 +1014,7 @@ void hidh_profile_operations (void)
             break;
 
         case 39:
-            LOG_DEBUG ("1 (Enable), 0 (Disable)\n");
+            CONSOLE_OUT ("1 (Enable), 0 (Disable)\n");
             CONSOLE_IN ("%u", &choice);
 
             ccc_value[0U] = (UCHAR)choice;
@@ -901,7 +1031,7 @@ void hidh_profile_operations (void)
             break;
 
         case 40:
-            LOG_DEBUG ("1 (Enable), 0 (Disable)\n");
+            CONSOLE_OUT ("1 (Enable), 0 (Disable)\n");
             CONSOLE_IN ("%u", &choice);
 
             ccc_value[0U] = (UCHAR)choice;
@@ -932,17 +1062,20 @@ void hidh_profile_operations (void)
 #ifdef SPC
            spc_profile_operations ();
 #else
-           LOG_DEBUG("\nSPC is not enabled!!!\n");
+           CONSOLE_OUT("\nSPC is not enabled!!!\n");
 #endif /* SPC */
            break;
 
         default:
-           LOG_DEBUG("Invalid Choice\n");
+           CONSOLE_OUT("Invalid Choice\n");
            break;
         }
 
         if (0 == menu_choice)
         {
+            /* Reset the HIDH Discovery State to False when out of HIDH Menu */
+            appl_hidh_disc_state = BT_FALSE;
+
             /* return */
             break;
         }

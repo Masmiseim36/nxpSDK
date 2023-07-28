@@ -5,10 +5,10 @@ external flash device.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
@@ -66,6 +66,3 @@ The log below shows the output of the hello world demo in the terminal window:
 
 ***NOR Flash All Pages Read/Write Success!***
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Known issue
-The MCUX release target and armgcc flexspi_nor_release run fail.

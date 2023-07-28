@@ -12,6 +12,7 @@
 
 /* ----------------------------------------- Header File Inclusion */
 #include "appl_sap_server.h"
+#include "appl_utils.h"
 
 #ifdef SAP_SERVER
 /* ----------------------------------------- Exported Global Variables */
@@ -35,9 +36,7 @@ Your Option -> \0";
 void main_sap_server_operations(void)
 {
     int choice, menu_choice;
-    /* UCHAR pin_len = 0U; */
     API_RESULT retval = 0U;
-    /* UCHAR passwd[256U]; */
     UCHAR * response;
     UCHAR i;
 
@@ -57,7 +56,7 @@ void main_sap_server_operations(void)
             break;
 
         case 2: /* Start SIM Access Server */
-            retval = BT_sap_server_start(sap_server_appl_cb);
+            retval = BT_sap_server_start(appl_sap_server_appl_cb);
             if(API_SUCCESS == retval)
             {
                 LOG_DEBUG("SIM Access Server Started Successfully\n");
@@ -194,7 +193,7 @@ void main_sap_server_operations(void)
 }
 
 
-API_RESULT sap_server_appl_cb
+API_RESULT appl_sap_server_appl_cb
            (
                UCHAR    event_type,
                UINT16   event_result,

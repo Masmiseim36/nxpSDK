@@ -11,17 +11,6 @@
 #define _AUDIO_CFG_H_
 
 /*
- * Audio Decoders
- */
-#define CASCFG_NUM_OF_PING_PONG_BUFFER 2
-#define CASCFG_ENABLE_MP3_CODEC        1
-#define CASCFG_ENABLE_OPUS_CODEC       1
-#define CASCFG_ENABLE_OGG_OPUS         1
-#define CASCFG_ENABLE_AAC_CODEC        1
-#define CASCFG_ENABLE_WAV_CODEC        1
-#define CASCFG_ENABLE_FLAC_CODEC       1
-
-/*
  * Metadata Configuration
  */
 #define CASCFG_META_DEFAULT_ARTIST_NAME "Unknown Artist"

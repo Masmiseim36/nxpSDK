@@ -10,6 +10,13 @@
 #ifndef _H_GATT_DB_
 #define _H_GATT_DB_
 
+#define APPL_MANUFACTURER_NAME "NXP"
+extern unsigned char appl_manufacturer_name_ext[];
+
+#if ((defined BASIC) && (defined GATT_DB))
+#include "gatt_db_basic.h"
+#endif
+
 #if ((defined BPS) && (defined GATT_DB))
 #include "gatt_db_bps.h"
 #endif
@@ -52,6 +59,10 @@
 
 #if ((defined PASS) && (defined GATT_DB))
 #include "gatt_db_pass.h"
+#endif
+
+#if ((defined PTS) && (defined GATT_DB))
+#include "gatt_db_pts.h"
 #endif
 
 #if ((defined PXR) && (defined GATT_DB))

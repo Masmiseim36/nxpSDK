@@ -107,7 +107,7 @@ UINT  _ux_hcd_ehci_isochronous_endpoint_create(UX_HCD_EHCI *hcd_ehci, UX_ENDPOIN
 #else
 
 UX_DEVICE                       *device;
-UX_EHCI_HSISO_ED                *ed;
+UX_EHCI_HSISO_ED                *ed = NULL;
 UX_EHCI_PERIODIC_LINK_POINTER   itd;
 UX_EHCI_ED                      *ed_list;
 UX_EHCI_ED                      *ed_anchor;
@@ -132,9 +132,11 @@ ULONG                           max_packet_size;
 ULONG                           max_trans_size;
 ULONG                           mult;
 ULONG                           io;
-UINT                            i;
+UINT                            i = 0;
 UINT                            status;
 
+
+    itd.itd_ptr = NULL;
 
     /* Get the pointer to the device.  */
     device =  endpoint -> ux_endpoint_device;
@@ -490,10 +492,11 @@ UINT                            status;
 
                 /* Add to load.  */
                 ed_anchor -> REF_AS.ANCHOR.ux_ehci_ed_microframe_load[i] = (USHORT)(ed_anchor -> REF_AS.ANCHOR.ux_ehci_ed_microframe_load[i] + 188u);
+
+                /* Increment SSplit count.  */
+                ed_anchor -> REF_AS.ANCHOR.ux_ehci_ed_microframe_ssplit_count[i] ++;
             }
 
-            /* Increment SSplit count.  */
-            ed_anchor -> REF_AS.ANCHOR.ux_ehci_ed_microframe_ssplit_count[i] ++;
         }
 
     }

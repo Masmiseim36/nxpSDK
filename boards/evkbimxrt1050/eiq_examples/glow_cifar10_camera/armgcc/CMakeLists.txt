@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -47,7 +55,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../camera_support.c"
 "${ProjDirPath}/../camera_support.h"
 "${ProjDirPath}/../source/cifar10.h"
-"${ProjDirPath}/../source/cifar10.o"
 "${ProjDirPath}/../source/cifar10.weights.bin"
 "${ProjDirPath}/../source/cifar10.weights.txt"
 "${ProjDirPath}/../source/glow_cifar10_camera.c"
@@ -69,7 +76,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../gui_print
     ${ProjDirPath}/../source
     ${ProjDirPath}/../board
@@ -77,102 +84,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1052
-    ${SdkRootDirPath}/components/video/camera/device
-    ${SdkRootDirPath}/components/video/camera
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/components/video/camera/receiver
-    ${SdkRootDirPath}/components/video/camera/device/sccb
-    ${SdkRootDirPath}/components/video/camera/device/ov7725
-    ${SdkRootDirPath}/components/video/camera/device/mt9m114
-    ${SdkRootDirPath}/components/video/i2c
-    ${SdkRootDirPath}/components/video/camera/receiver/csi
-    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
-    ${SdkRootDirPath}/components/video/display/dc
-    ${SdkRootDirPath}/components/video/display/dc/elcdif
-    ${SdkRootDirPath}/middleware/eiq
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/devices/MIMXRT1052/xip
-    ${SdkRootDirPath}/boards/evkbimxrt1050/xip
-    ${SdkRootDirPath}/CMSIS/DSP
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(utility_debug_console_MIMXRT1052)
-
-include(utility_assert_MIMXRT1052)
-
-include(device_MIMXRT1052_CMSIS_MIMXRT1052)
-
-include(utilities_misc_utilities_MIMXRT1052)
-
-include(device_MIMXRT1052_system_MIMXRT1052)
-
-include(driver_camera-device-common_MIMXRT1052)
-
-include(driver_camera-common_MIMXRT1052)
-
-include(driver_video-common_MIMXRT1052)
-
-include(driver_camera-receiver-common_MIMXRT1052)
-
-include(driver_camera-device-sccb_MIMXRT1052)
-
-include(driver_camera-device-ov7725_MIMXRT1052)
-
-include(driver_camera-device-mt9m114_MIMXRT1052)
-
-include(driver_video-i2c_MIMXRT1052)
-
-include(driver_camera-receiver-csi_MIMXRT1052)
-
-include(driver_csi_MIMXRT1052)
-
-include(driver_elcdif_MIMXRT1052)
-
-include(driver_pxp_MIMXRT1052)
-
-include(driver_dc-fb-common_MIMXRT1052)
-
-include(driver_dc-fb-elcdif_MIMXRT1052)
-
-include(driver_igpio_MIMXRT1052)
-
-include(driver_lpi2c_MIMXRT1052)
-
-include(middleware_eiq_glow_MIMXRT1052)
-
-include(component_lists_MIMXRT1052)
-
-include(component_lpuart_adapter_MIMXRT1052)
-
-include(component_serial_manager_MIMXRT1052)
-
-include(driver_common_MIMXRT1052)
-
-include(component_serial_manager_uart_MIMXRT1052)
-
-include(driver_lpuart_MIMXRT1052)
-
-include(device_MIMXRT1052_startup_MIMXRT1052)
-
-include(driver_clock_MIMXRT1052)
-
-include(driver_iomuxc_MIMXRT1052)
-
-include(driver_xip_device_MIMXRT1052)
-
-include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
-
-include(CMSIS_DSP_Source_MIMXRT1052)
-
-include(CMSIS_Include_core_cm_MIMXRT1052)
-
+include(${SdkRootDirPath}/devices/MIMXRT1052/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -182,6 +95,15 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../source/cifar10.o)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../source/cifar10.o)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPSPI CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: ENET CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,70 +99,102 @@ $(document).ready(function(){initNavTree('a00277.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LPSPI CMSIS Driver<div class="ingroups"><a class="el" href="a00275.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
+<div class="title">ENET CMSIS Driver<div class="ingroups"><a class="el" href="a00025.html">ENET: Ethernet MAC Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the LPSPI Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<h1><a class="anchor" id="LPSPIFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="LPSPIGetVersionOps"></a>
-LPSPI CMSIS GetVersion Operation</h2>
-<p>This function group will return the DSPI CMSIS Driver version to user.</p>
-<h2><a class="anchor" id="LPSPIGetCapOps"></a>
-LPSPI CMSIS GetCapabilities Operation</h2>
-<p>This function group will return the capabilities of this driver.</p>
-<h2><a class="anchor" id="LPSPIInitResetOps"></a>
-LPSPI CMSIS Initialize and Uninitialize Operation</h2>
-<p>This function will initialize and uninitialize the instance in master mode or slave mode. And this API must be called before you configure an instance or after you Deinit an instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
-<h2><a class="anchor" id="LPSPITransOps"></a>
-LPSPI Transfer Operation</h2>
-<p>This function group controls the transfer, master send/receive data, and slave send/receive data.</p>
-<h2><a class="anchor" id="LPSPIStatusOps"></a>
-LPSPI Status Operation</h2>
-<p>This function group gets the LPSPI transfer status.</p>
-<h2><a class="anchor" id="LPSPIControlOps"></a>
-LPSPI CMSIS Control Operation</h2>
-<p>This function can select instance as master mode or slave mode, set baudrate for master mode transfer, get current baudrate of master mode transfer,set transfer data bits and set other control command.</p>
-<h1><a class="anchor" id="LPSPITpyUC"></a>
+<p>This section describes the programming interface of the ENET Cortex Microcontroller Software Interface Standard (CMSIS) driver. This driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<p>The ENET CMSIS driver includes transactional APIs.</p>
+<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
+<h1><a class="anchor" id="ENETTpyUC"></a>
 Typical use case</h1>
-<h2><a class="anchor" id="LPSPIMasterOps"></a>
-Master Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t masterRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t masterTxData[TRANSFER_SIZE] = {0U};</div>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ENET_SignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_RX_FRAME)</div>
+<div class="line">    {</div>
+<div class="line">        uint32_t size;</div>
+<div class="line">        uint32_t len;</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/*DSPI master init*/</span></div>
-<div class="line">Driver_SPI0.Initialize(DSPI_MasterSignalEvent_t);</div>
-<div class="line">Driver_SPI0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">Driver_SPI0.Control(ARM_SPI_MODE_MASTER, TRANSFER_BAUDRATE);</div>
+<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
+<div class="line">        size =  EXAMPLE_ENET.GetRxFrameSize();</div>
+<div class="line">        <span class="comment">/* Call ENET_ReadFrame when there is a received frame. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (size != 0)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">/* Received valid frame. Deliver the rx buffer with the size equal to length. */</span></div>
+<div class="line">            uint8_t *data = (uint8_t *)malloc(size);</div>
+<div class="line">            <span class="keywordflow">if</span> (data)</div>
+<div class="line">            {</div>
+<div class="line">                len = EXAMPLE_ENET.ReadFrame(data, size);</div>
+<div class="line">                <span class="keywordflow">if</span> (size == len)</div>
+<div class="line">                {</div>
+<div class="line">                    <span class="comment">/* Increase the received frame numbers. */</span></div>
+<div class="line">                    <span class="keywordflow">if</span> (g_rxIndex &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
+<div class="line">                    {</div>
+<div class="line">                        g_rxIndex++;</div>
+<div class="line">                    }                        </div>
+<div class="line">                }</div>
+<div class="line">                free(data);                             </div>
+<div class="line">            }</div>
+<div class="line">         }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_TX_FRAME)</div>
+<div class="line">    {</div>
+<div class="line">        g_testTxNum ++;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* Start master transfer */</span></div>
-<div class="line">Driver_SPI0.Transfer(masterTxData, masterRxData, TRANSFER_SIZE);</div>
+<div class="line">    <span class="comment">/* Initialize the ENET module. */</span></div>
+<div class="line">    EXAMPLE_ENET.Initialize(ENET_SignalEvent_t);</div>
+<div class="line">    EXAMPLE_ENET.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">    EXAMPLE_ENET.SetMacAddress((ARM_ETH_MAC_ADDR *)g_macAddr); </div>
+<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONFIGURE, linkInfo.speed &lt;&lt; ARM_ETH_MAC_SPEED_Pos  |</div>
+<div class="line">                 linkInfo.duplex &lt;&lt; ARM_ETH_MAC_DUPLEX_Pos | ARM_ETH_MAC_ADDRESS_BROADCAST);  </div>
+<div class="line">    EXAMPLE_ENET_PHY.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">    EXAMPLE_ENET_PHY.SetMode(ARM_ETH_PHY_AUTO_NEGOTIATE);</div>
+<div class="line">      EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_RX, 1);</div>
+<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_TX, 1);</div>
+<div class="line">    <span class="keywordflow">if</span> (EXAMPLE_ENET_PHY.GetLinkState() == ARM_ETH_LINK_UP)</div>
+<div class="line">    {</div>
+<div class="line">        linkInfo = EXAMPLE_ENET_PHY.GetLinkInfo();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        <a class="code" href="a00294.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;\r\nPHY Link down, please check the cable connection and link partner setting.\r\n&quot;</span>);</div>
+<div class="line">    }</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* Master power off */</span></div>
-<div class="line">Driver_SPI0.PowerControl(ARM_POWER_OFF);</div>
+<div class="line">    <span class="comment">/* Build broadcast for sending. */</span></div>
+<div class="line">    ENET_BuildBroadCastFrame();</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* Master uninitialize */</span></div>
-<div class="line">Driver_SPI0.Uninitialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPSPISlaveOps"></a>
-Slave Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t slaveRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t slaveTxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*DSPI slave init*/</span></div>
-<div class="line">Driver_SPI2.Initialize(DSPI_SlaveSignalEvent_t);</div>
-<div class="line">Driver_SPI2.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">Driver_SPI2.Control(ARM_SPI_MODE_SLAVE, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Start slave transfer */</span></div>
-<div class="line">Driver_SPI2.Transfer(slaveTxData, slaveRxData, TRANSFER_SIZE);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* slave power off */</span></div>
-<div class="line">Driver_SPI2.PowerControl(ARM_POWER_OFF);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* slave uninitialize */</span></div>
-<div class="line">Driver_SPI2.Uninitialize();</div>
+<div class="line">    <span class="keywordflow">while</span> (1)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">/* Check the total number of received number. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (g_rxCheckIdx != g_rxIndex)</div>
+<div class="line">        {</div>
+<div class="line">            <a class="code" href="a00294.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame has been successfuly received!\r\n&quot;</span>, g_rxIndex);</div>
+<div class="line">            g_rxCheckIdx = g_rxIndex;</div>
+<div class="line">        }          </div>
+<div class="line">        <span class="keywordflow">if</span> ( g_testTxNum &amp;&amp; (g_txCheckIdx != g_testTxNum))</div>
+<div class="line">        {</div>
+<div class="line">            g_txCheckIdx = g_testTxNum;</div>
+<div class="line">            <a class="code" href="a00294.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame transmitted success!\r\n&quot;</span>, g_txCheckIdx);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (txnumber &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
+<div class="line">        {</div>
+<div class="line">            txnumber ++;</div>
+<div class="line">            <span class="comment">/* Send a multicast frame when the PHY is link up. */</span></div>
+<div class="line">            <span class="keywordflow">if</span> (EXAMPLE_ENET.SendFrame(&amp;g_frame[0], ENET_DATA_LENGTH, ARM_ETH_MAC_TX_FRAME_EVENT) == ARM_DRIVER_OK)</div>
+<div class="line">            {</div>
+<div class="line">                <span class="keywordflow">for</span> (uint32_t count = 0; count &lt; 0x3FF; count++)</div>
+<div class="line">                {</div>
+<div class="line">                    __ASM(<span class="stringliteral">&quot;nop&quot;</span>);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">else</span></div>
+<div class="line">            {</div>
+<div class="line">                <a class="code" href="a00294.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot; \r\nTransmit frame failed!\r\n&quot;</span>);</div>
+<div class="line">            }</div>
+<div class="line">         }</div>
+<div class="line">    }</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

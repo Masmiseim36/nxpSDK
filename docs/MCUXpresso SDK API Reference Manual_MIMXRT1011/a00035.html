@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: KPP: KeyPad Port Driver</title>
+<title>MCUXpresso SDK API Reference Manual: FLEXSPI eDMA Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,139 +100,203 @@ $(document).ready(function(){initNavTree('a00035.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">KPP: KeyPad Port Driver</div>  </div>
+<div class="title">FLEXSPI eDMA Driver<div class="ingroups"><a class="el" href="a00034.html">FLEXSPI: Flexible Serial Peripheral Interface Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the KeyPad Port block of MCUXpresso SDK devices.</p>
-<h1>KPP: KeyPad Port Driver</h1>
-<h2>KPP Initialization Operation</h2>
-<p>The KPP Initialize is to initialize for common configure: gate the KPP clock, configure columns, and rows features. The KPP Deinitialize is to ungate the clock.</p>
-<h2>KPP Basic Operation</h2>
-<p>The KPP provide the function to enable/disable interrupts. The KPP provide key press scanning function KPP_keyPressScanning. This API should be called by the Interrupt handler in application. KPP still provides functions to get and clear status flags.</p>
-<h1><a class="anchor" id="KPPTpyUC"></a>
-Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00329"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00329">kpp_config_t</a></td></tr>
-<tr class="memdesc:a00329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP status.  <a href="a00035.html#a00329">More...</a><br/></td></tr>
-<tr class="separator:a00329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00261"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00261">flexspi_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00261"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00035.html#a00261">More...</a><br/></td></tr>
+<tr class="separator:a00261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga18c417694a255c05206b53e1d882d9c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga18c417694a255c05206b53e1d882d9c3"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a> )(FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:ga18c417694a255c05206b53e1d882d9c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI eDMA transfer callback function for finish and error. <br/></td></tr>
+<tr class="separator:ga18c417694a255c05206b53e1d882d9c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00035.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2">kKPP_keyDepressInterrupt</a> = KPP_KPSR_KDIE_MASK, 
+<tr class="memitem:gad06198fd35b6b1f821b671f6d836c3d4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4">flexspi_edma_transfer_nsize_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4aac495b3503a41ac7ed4de613633acd6e">kFLEXPSI_EDMAnSize1Bytes</a> = 0x1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00035.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df">kKPP_keyReleaseInterrupt</a> = KPP_KPSR_KRIE_MASK
+&#160;&#160;<a class="el" href="a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4a8f37b34be5953a3ca359ec23140c63d3">kFLEXPSI_EDMAnSize2Bytes</a> = 0x2U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of interrupts supported by the peripheral.  <a href="a00035.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">More...</a><br/></td></tr>
-<tr class="separator:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00035.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b">kKPP_ClearKeyDepressSyncChain</a> = KPP_KPSR_KDSC_MASK, 
+&#160;&#160;<a class="el" href="a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4aa682f158980e25274dd2588392c6e94d">kFLEXPSI_EDMAnSize4Bytes</a> = 0x4U, 
 <br/>
-&#160;&#160;<a class="el" href="a00035.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5">kKPP_SetKeyReleasesSyncChain</a> = KPP_KPSR_KRSS_MASK
+&#160;&#160;<a class="el" href="a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4add962c3ad735e00107a4df51ded158ec">kFLEXPSI_EDMAnSize8Bytes</a> = 0x8U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4aedff211dd9ab9868632e0c3a8fe231fa">kFLEXPSI_EDMAnSize32Bytes</a> = 0x20U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0c44e479c6d310cf4d9a701c09f73485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP synchronize chain operation.  <a href="a00035.html#ga0c44e479c6d310cf4d9a701c09f73485">More...</a><br/></td></tr>
-<tr class="separator:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gad06198fd35b6b1f821b671f6d836c3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA transfer configuration  <a href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4">More...</a><br/></td></tr>
+<tr class="separator:gad06198fd35b6b1f821b671f6d836c3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga35c20878a9d0b578ca2bbf50d98666a8">FSL_KPP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00208.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td></tr>
-<tr class="memdesc:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP driver version 2.0.0.  <a href="#ga35c20878a9d0b578ca2bbf50d98666a8">More...</a><br/></td></tr>
-<tr class="separator:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa636d92d25b3e2c9055df861b900886f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gaa636d92d25b3e2c9055df861b900886f">FSL_FLEXSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 3))</td></tr>
+<tr class="memdesc:gaa636d92d25b3e2c9055df861b900886f"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI EDMA driver version.  <a href="#gaa636d92d25b3e2c9055df861b900886f">More...</a><br/></td></tr>
+<tr class="separator:gaa636d92d25b3e2c9055df861b900886f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and De-initialization</h2></td></tr>
-<tr class="memitem:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga773203cef9b50a6c5864f78c05cb0c83">KPP_Init</a> (KPP_Type *base, <a class="el" href="a00035.html#a00329">kpp_config_t</a> *configure)</td></tr>
-<tr class="memdesc:ga773203cef9b50a6c5864f78c05cb0c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP initialize.  <a href="#ga773203cef9b50a6c5864f78c05cb0c83">More...</a><br/></td></tr>
-<tr class="separator:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga910f3aec15296a1d993f9b4963a152fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga910f3aec15296a1d993f9b4963a152fd">KPP_Deinit</a> (KPP_Type *base)</td></tr>
-<tr class="memdesc:ga910f3aec15296a1d993f9b4963a152fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the KPP module and gates the clock.  <a href="#ga910f3aec15296a1d993f9b4963a152fd">More...</a><br/></td></tr>
-<tr class="separator:ga910f3aec15296a1d993f9b4963a152fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-KPP Basic Operation</h2></td></tr>
-<tr class="memitem:ga4d8bc3929af0678c182047884c50f7db"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga4d8bc3929af0678c182047884c50f7db">KPP_EnableInterrupts</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:ga4d8bc3929af0678c182047884c50f7db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the interrupt.  <a href="#ga4d8bc3929af0678c182047884c50f7db">More...</a><br/></td></tr>
-<tr class="separator:ga4d8bc3929af0678c182047884c50f7db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7de1f02a42c4176605cf7053f78baab"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gaa7de1f02a42c4176605cf7053f78baab">KPP_DisableInterrupts</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:gaa7de1f02a42c4176605cf7053f78baab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the interrupt.  <a href="#gaa7de1f02a42c4176605cf7053f78baab">More...</a><br/></td></tr>
-<tr class="separator:gaa7de1f02a42c4176605cf7053f78baab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga7e0b699fd3ac19ce1bbb95418871ab3e">KPP_GetStatusFlag</a> (KPP_Type *base)</td></tr>
-<tr class="memdesc:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the KPP interrupt event status.  <a href="#ga7e0b699fd3ac19ce1bbb95418871ab3e">More...</a><br/></td></tr>
-<tr class="separator:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gad5f48c3a6027700e16a3f9bf477fa7e6">KPP_ClearStatusFlag</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears KPP status flag.  <a href="#gad5f48c3a6027700e16a3f9bf477fa7e6">More...</a><br/></td></tr>
-<tr class="separator:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga7a240001a7a2b5fb84754a9a75afcb86">KPP_SetSynchronizeChain</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set KPP synchronization chain.  <a href="#ga7a240001a7a2b5fb84754a9a75afcb86">More...</a><br/></td></tr>
-<tr class="separator:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga636803e3b1c99ec6dc9756548d9ef7b9">KPP_keyPressScanning</a> (KPP_Type *base, uint8_t *data, uint32_t clockSrc_Hz)</td></tr>
-<tr class="memdesc:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keypad press scanning.  <a href="#ga636803e3b1c99ec6dc9756548d9ef7b9">More...</a><br/></td></tr>
-<tr class="separator:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+FLEXSPI eDMA Transactional</h2></td></tr>
+<tr class="memitem:ga73da3b504891554a3f5306c61d544035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga73da3b504891554a3f5306c61d544035">FLEXSPI_TransferCreateHandleEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00035.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a> callback, void *userData, <a class="el" href="a00019.html#a00310">edma_handle_t</a> *txDmaHandle, <a class="el" href="a00019.html#a00310">edma_handle_t</a> *rxDmaHandle)</td></tr>
+<tr class="memdesc:ga73da3b504891554a3f5306c61d544035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FLEXSPI handle for transfer which is used in transactional functions and set the callback.  <a href="#ga73da3b504891554a3f5306c61d544035">More...</a><br/></td></tr>
+<tr class="separator:ga73da3b504891554a3f5306c61d544035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab00370842d3c81263d34b672f0b2105b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gab00370842d3c81263d34b672f0b2105b">FLEXSPI_TransferUpdateSizeEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4">flexspi_edma_transfer_nsize_t</a> nsize)</td></tr>
+<tr class="memdesc:gab00370842d3c81263d34b672f0b2105b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update FLEXSPI EDMA transfer source data transfer size(SSIZE) and destination data transfer size(DSIZE).  <a href="#gab00370842d3c81263d34b672f0b2105b">More...</a><br/></td></tr>
+<tr class="separator:gab00370842d3c81263d34b672f0b2105b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2048a6a5bf9b8522297e3aea525bd4d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga2048a6a5bf9b8522297e3aea525bd4d4">FLEXSPI_TransferEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, <a class="el" href="a00034.html#a00341">flexspi_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga2048a6a5bf9b8522297e3aea525bd4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfers FLEXSPI data using an eDMA non-blocking method.  <a href="#ga2048a6a5bf9b8522297e3aea525bd4d4">More...</a><br/></td></tr>
+<tr class="separator:ga2048a6a5bf9b8522297e3aea525bd4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7cfea2cf3ddab6b2615906345a473f11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga7cfea2cf3ddab6b2615906345a473f11">FLEXSPI_TransferAbortEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:ga7cfea2cf3ddab6b2615906345a473f11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the transfer data using eDMA.  <a href="#ga7cfea2cf3ddab6b2615906345a473f11">More...</a><br/></td></tr>
+<tr class="separator:ga7cfea2cf3ddab6b2615906345a473f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6edf877e695b01269c5a652ba6e4bd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gaa6edf877e695b01269c5a652ba6e4bd4">FLEXSPI_TransferGetTransferCountEDMA</a> (FLEXSPI_Type *base, flexspi_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memdesc:gaa6edf877e695b01269c5a652ba6e4bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the transferred counts of transfer.  <a href="#gaa6edf877e695b01269c5a652ba6e4bd4">More...</a><br/></td></tr>
+<tr class="separator:gaa6edf877e695b01269c5a652ba6e4bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00329" id="a00329"></a>
+<a name="a00261" id="a00261"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct kpp_config_t</td>
+          <td class="memname">struct _flexspi_edma_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#affe1c0fe7c98a7bbd90e5da557a77029">activeRow</a></td></tr>
-<tr class="memdesc:affe1c0fe7c98a7bbd90e5da557a77029"><td class="mdescLeft">&#160;</td><td class="mdescRight">The row number: bit 7 ~ 0 represents the row 7 ~ 0.  <a href="#affe1c0fe7c98a7bbd90e5da557a77029">More...</a><br/></td></tr>
-<tr class="separator:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17262e678dbf479fc6fea48e685e94be"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a17262e678dbf479fc6fea48e685e94be">activeColumn</a></td></tr>
-<tr class="memdesc:a17262e678dbf479fc6fea48e685e94be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The column number: bit 7 ~ 0 represents the column 7 ~ 0.  <a href="#a17262e678dbf479fc6fea48e685e94be">More...</a><br/></td></tr>
-<tr class="separator:a17262e678dbf479fc6fea48e685e94be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a3f6f88fe9bcaf13690da0506e52f8bd9">interrupt</a></td></tr>
-<tr class="memdesc:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP interrupt source.  <a href="#a3f6f88fe9bcaf13690da0506e52f8bd9">More...</a><br/></td></tr>
-<tr class="separator:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d0d98f2c483c09c5332d82d4811e1e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00019.html#a00310">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a3d0d98f2c483c09c5332d82d4811e1e5">txDmaHandle</a></td></tr>
+<tr class="memdesc:a3d0d98f2c483c09c5332d82d4811e1e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA handler for FLEXSPI Tx.  <a href="#a3d0d98f2c483c09c5332d82d4811e1e5">More...</a><br/></td></tr>
+<tr class="separator:a3d0d98f2c483c09c5332d82d4811e1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ea3c9da9a52a5a86aea6bfdf597464c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00019.html#a00310">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a2ea3c9da9a52a5a86aea6bfdf597464c">rxDmaHandle</a></td></tr>
+<tr class="memdesc:a2ea3c9da9a52a5a86aea6bfdf597464c"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA handler for FLEXSPI Rx.  <a href="#a2ea3c9da9a52a5a86aea6bfdf597464c">More...</a><br/></td></tr>
+<tr class="separator:a2ea3c9da9a52a5a86aea6bfdf597464c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a735f036ea3a12686df32463d71d135db"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a735f036ea3a12686df32463d71d135db">transferSize</a></td></tr>
+<tr class="memdesc:a735f036ea3a12686df32463d71d135db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes need to transfer.  <a href="#a735f036ea3a12686df32463d71d135db">More...</a><br/></td></tr>
+<tr class="separator:a735f036ea3a12686df32463d71d135db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59a42210dd29144ff40f14dc2f8c3a45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4">flexspi_edma_transfer_nsize_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a59a42210dd29144ff40f14dc2f8c3a45">nsize</a></td></tr>
+<tr class="memdesc:a59a42210dd29144ff40f14dc2f8c3a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA SSIZE/DSIZE in each transfer.  <a href="#a59a42210dd29144ff40f14dc2f8c3a45">More...</a><br/></td></tr>
+<tr class="separator:a59a42210dd29144ff40f14dc2f8c3a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac19ce5f377eaa98f681f52522fe38ea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aac19ce5f377eaa98f681f52522fe38ea">nbytes</a></td></tr>
+<tr class="memdesc:aac19ce5f377eaa98f681f52522fe38ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#aac19ce5f377eaa98f681f52522fe38ea">More...</a><br/></td></tr>
+<tr class="separator:aac19ce5f377eaa98f681f52522fe38ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a320bc95b94f27763636e906dfa8fd482"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a320bc95b94f27763636e906dfa8fd482">count</a></td></tr>
+<tr class="memdesc:a320bc95b94f27763636e906dfa8fd482"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer data count in a DMA request.  <a href="#a320bc95b94f27763636e906dfa8fd482">More...</a><br/></td></tr>
+<tr class="separator:a320bc95b94f27763636e906dfa8fd482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53cdf0a6ba8c3b69128d11fb31c6d064"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a53cdf0a6ba8c3b69128d11fb31c6d064">state</a></td></tr>
+<tr class="memdesc:a53cdf0a6ba8c3b69128d11fb31c6d064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal state for FLEXSPI eDMA transfer.  <a href="#a53cdf0a6ba8c3b69128d11fb31c6d064">More...</a><br/></td></tr>
+<tr class="separator:a53cdf0a6ba8c3b69128d11fb31c6d064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5169aca6ccaf34647525e4c6c6161580"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00035.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a5169aca6ccaf34647525e4c6c6161580">completionCallback</a></td></tr>
+<tr class="memdesc:a5169aca6ccaf34647525e4c6c6161580"><td class="mdescLeft">&#160;</td><td class="mdescRight">A callback function called after the eDMA transfer is finished.  <a href="#a5169aca6ccaf34647525e4c6c6161580">More...</a><br/></td></tr>
+<tr class="separator:a5169aca6ccaf34647525e4c6c6161580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5de6ceb6916611757b5fea0dcb1b2bc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5de6ceb6916611757b5fea0dcb1b2bc0"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a5de6ceb6916611757b5fea0dcb1b2bc0">userData</a></td></tr>
+<tr class="memdesc:a5de6ceb6916611757b5fea0dcb1b2bc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">User callback parameter. <br/></td></tr>
+<tr class="separator:a5de6ceb6916611757b5fea0dcb1b2bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="affe1c0fe7c98a7bbd90e5da557a77029"></a>
+<a class="anchor" id="a3d0d98f2c483c09c5332d82d4811e1e5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t kpp_config_t::activeRow</td>
+          <td class="memname"><a class="el" href="a00019.html#a00310">edma_handle_t</a>* flexspi_edma_handle_t::txDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a17262e678dbf479fc6fea48e685e94be"></a>
+<a class="anchor" id="a2ea3c9da9a52a5a86aea6bfdf597464c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t kpp_config_t::activeColumn</td>
+          <td class="memname"><a class="el" href="a00019.html#a00310">edma_handle_t</a>* flexspi_edma_handle_t::rxDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3f6f88fe9bcaf13690da0506e52f8bd9"></a>
+<a class="anchor" id="a735f036ea3a12686df32463d71d135db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t kpp_config_t::interrupt</td>
+          <td class="memname">size_t flexspi_edma_handle_t::transferSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A logical OR of "kpp_interrupt_enable_t". </p>
+
+</div>
+</div>
+<a class="anchor" id="a59a42210dd29144ff40f14dc2f8c3a45"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4">flexspi_edma_transfer_nsize_t</a> flexspi_edma_handle_t::nsize</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aac19ce5f377eaa98f681f52522fe38ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t flexspi_edma_handle_t::nbytes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a320bc95b94f27763636e906dfa8fd482"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t flexspi_edma_handle_t::count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a53cdf0a6ba8c3b69128d11fb31c6d064"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t flexspi_edma_handle_t::state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5169aca6ccaf34647525e4c6c6161580"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00035.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a> flexspi_edma_handle_t::completionCallback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -240,12 +304,12 @@ KPP Basic Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga35c20878a9d0b578ca2bbf50d98666a8"></a>
+<a class="anchor" id="gaa636d92d25b3e2c9055df861b900886f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_KPP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00208.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td>
+          <td class="memname">#define FSL_FLEXSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -253,63 +317,75 @@ KPP Basic Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga405aea9bdb57ab7a5a7d0aecdc0edc72"></a>
+<a class="anchor" id="gad06198fd35b6b1f821b671f6d836c3d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00035.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This enumeration uses one-bot encoding to allow a logical OR of multiple members. Members usually map to interrupt enable bits in one or more peripheral registers. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2"></a>kKPP_keyDepressInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad depress interrupt source. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df"></a>kKPP_keyReleaseInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad release interrupt source. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga0c44e479c6d310cf4d9a701c09f73485"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00035.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a></td>
+          <td class="memname">enum <a class="el" href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4">flexspi_edma_transfer_nsize_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b"></a>kKPP_ClearKeyDepressSyncChain</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad depress interrupt status. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad06198fd35b6b1f821b671f6d836c3d4aac495b3503a41ac7ed4de613633acd6e"></a>kFLEXPSI_EDMAnSize1Bytes</em>&nbsp;</td><td class="fielddoc">
+<p>Source/Destination data transfer size is 1 byte every time. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5"></a>kKPP_SetKeyReleasesSyncChain</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad release interrupt status. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad06198fd35b6b1f821b671f6d836c3d4a8f37b34be5953a3ca359ec23140c63d3"></a>kFLEXPSI_EDMAnSize2Bytes</em>&nbsp;</td><td class="fielddoc">
+<p>Source/Destination data transfer size is 2 bytes every time. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad06198fd35b6b1f821b671f6d836c3d4aa682f158980e25274dd2588392c6e94d"></a>kFLEXPSI_EDMAnSize4Bytes</em>&nbsp;</td><td class="fielddoc">
+<p>Source/Destination data transfer size is 4 bytes every time. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad06198fd35b6b1f821b671f6d836c3d4add962c3ad735e00107a4df51ded158ec"></a>kFLEXPSI_EDMAnSize8Bytes</em>&nbsp;</td><td class="fielddoc">
+<p>Source/Destination data transfer size is 8 bytes every time. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad06198fd35b6b1f821b671f6d836c3d4aedff211dd9ab9868632e0c3a8fe231fa"></a>kFLEXPSI_EDMAnSize32Bytes</em>&nbsp;</td><td class="fielddoc">
+<p>Source/Destination data transfer size is 32 bytes every time. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga773203cef9b50a6c5864f78c05cb0c83"></a>
+<a class="anchor" id="ga73da3b504891554a3f5306c61d544035"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void KPP_Init </td>
+          <td class="memname">void FLEXSPI_TransferCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramtype">FLEXSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00035.html#a00329">kpp_config_t</a> *&#160;</td>
-          <td class="paramname"><em>configure</em>&#160;</td>
+          <td class="paramtype">flexspi_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00035.html#ga18c417694a255c05206b53e1d882d9c3">flexspi_edma_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00019.html#a00310">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>txDmaHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00019.html#a00310">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -318,256 +394,41 @@ KPP Basic Operation</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function ungates the KPP clock and initializes KPP. This function must be called before calling any other KPP driver functions.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">configure</td><td>The KPP configuration structure pointer. </td></tr>
+    <tr><td class="paramname">base</td><td>FLEXSPI peripheral base address </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to flexspi_edma_handle_t structure </td></tr>
+    <tr><td class="paramname">callback</td><td>FLEXSPI callback, NULL means no callback. </td></tr>
+    <tr><td class="paramname">userData</td><td>User callback function data. </td></tr>
+    <tr><td class="paramname">txDmaHandle</td><td>User requested DMA handle for TX DMA transfer. </td></tr>
+    <tr><td class="paramname">rxDmaHandle</td><td>User requested DMA handle for RX DMA transfer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga910f3aec15296a1d993f9b4963a152fd"></a>
+<a class="anchor" id="gab00370842d3c81263d34b672f0b2105b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void KPP_Deinit </td>
+          <td class="memname">void FLEXSPI_TransferUpdateSizeEDMA </td>
           <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the KPP clock. As a result, the KPP module doesn't work after calling this function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4d8bc3929af0678c182047884c50f7db"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramtype">FLEXSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP interrupts to enable. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa7de1f02a42c4176605cf7053f78baab"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">flexspi_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP interrupts to disable. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7e0b699fd3ac19ce1bbb95418871ab3e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint16_t KPP_GetStatusFlag </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of the KPP. Application can use the enum type in the "kpp_interrupt_enable_t" to get the right status of the related event. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad5f48c3a6027700e16a3f9bf477fa7e6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_ClearStatusFlag </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP mask to be cleared. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7a240001a7a2b5fb84754a9a75afcb86"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_SetSynchronizeChain </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP mask to be cleared. This is a logical OR of the enumeration :: kpp_sync_operation_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga636803e3b1c99ec6dc9756548d9ef7b9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void KPP_keyPressScanning </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>clockSrc_Hz</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4">flexspi_edma_transfer_nsize_t</a>&#160;</td>
+          <td class="paramname"><em>nsize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -576,12 +437,142 @@ KPP Basic Operation</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function will scanning all columns and rows. so all scanning data will be stored in the data pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">data</td><td>KPP key press scanning data. The data buffer should be prepared with length at least equal to KPP_KEYPAD_COLUMNNUM_MAX * KPP_KEYPAD_ROWNUM_MAX. the data pointer is recommended to be a array like uint8_t data[KPP_KEYPAD_COLUMNNUM_MAX]. for example the data[2] = 4, that means in column 1 row 2 has a key press event. </td></tr>
-    <tr><td class="paramname">clockSrc_Hz</td><td>Source clock. </td></tr>
+    <tr><td class="paramname">base</td><td>FLEXSPI peripheral base address </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to flexspi_edma_handle_t structure </td></tr>
+    <tr><td class="paramname">nsize</td><td>FLEXSPI DMA transfer data transfer size(SSIZE/DSIZE), by default the size is kFLEXPSI_EDMAnSize1Bytes(one byte). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00035.html#gad06198fd35b6b1f821b671f6d836c3d4" title="eDMA transfer configuration ">flexspi_edma_transfer_nsize_t</a> . </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2048a6a5bf9b8522297e3aea525bd4d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXSPI_TransferEDMA </td>
+          <td>(</td>
+          <td class="paramtype">FLEXSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">flexspi_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00341">flexspi_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function writes/receives data to/from the FLEXSPI transmit/receive FIFO. This function is non-blocking. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>FLEXSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to flexspi_edma_handle_t structure </td></tr>
+    <tr><td class="paramname">xfer</td><td>FLEXSPI transfer structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_FLEXSPI_Busy</td><td>FLEXSPI is busy transfer. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The watermark configuration is invalid, the watermark should be power of 2 to do successfully EDMA transfer. </td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>FLEXSPI successfully start edma transfer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7cfea2cf3ddab6b2615906345a473f11"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FLEXSPI_TransferAbortEDMA </td>
+          <td>(</td>
+          <td class="paramtype">FLEXSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">flexspi_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function aborts the transfer data using eDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>FLEXSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to flexspi_edma_handle_t structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa6edf877e695b01269c5a652ba6e4bd4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXSPI_TransferGetTransferCountEDMA </td>
+          <td>(</td>
+          <td class="paramtype">FLEXSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">flexspi_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>FLEXSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to flexspi_edma_handle_t structure. </td></tr>
+    <tr><td class="paramname">count</td><td>Bytes transfer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is not a non-blocking transaction currently in progress. </td></tr>
   </table>
   </dd>
 </dl>

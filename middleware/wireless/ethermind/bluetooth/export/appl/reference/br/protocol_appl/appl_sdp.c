@@ -146,7 +146,7 @@ void appl_sdp_open (void)
         BT_mem_set(bd_addr, 0, BT_BD_ADDR_SIZE);
 
         printf("Enter BD_ADDR: ");
-        appl_get_bd_addr(bd_addr);
+        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
         SDP_SET_HANDLE(appl_sdp_handle, bd_addr, appl_sdp_callback);
 
         printf("Initiating SDP Open ... \n");
@@ -241,7 +241,7 @@ void appl_ss_req(void)
 
         /* Create SDP Connection */
         printf("Enter BD_ADDR: ");
-        appl_get_bd_addr(bd_addr);
+        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
         SDP_SET_HANDLE(appl_sdp_handle, bd_addr, appl_sdp_callback);
         APPL_SET_SDP_OP (APPL_SDP_OP_SS_REQ);
 
@@ -350,7 +350,7 @@ void appl_sa_req(void)
 
         /* Create SDP Connection */
         printf("Enter BD_ADDR: ");
-        appl_get_bd_addr(bd_addr);
+        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
         SDP_SET_HANDLE(appl_sdp_handle, bd_addr, appl_sdp_callback);
         APPL_SET_SDP_OP (APPL_SDP_OP_SA_REQ);
 
@@ -465,7 +465,7 @@ void appl_ssa_req(void)
 
         /* Create SDP Connection */
         printf("Enter BD_ADDR: ");
-        appl_get_bd_addr(bd_addr);
+        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
         SDP_SET_HANDLE(appl_sdp_handle, bd_addr, appl_sdp_callback);
         APPL_SET_SDP_OP (APPL_SDP_OP_SSA_REQ);
 

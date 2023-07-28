@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -71,94 +79,20 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/rtos/azure-rtos
-    ${SdkRootDirPath}/components/osa
-    ${SdkRootDirPath}/middleware/usb
-    ${SdkRootDirPath}/devices/MIMXRT1011/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1011
-    ${SdkRootDirPath}/devices/MIMXRT1011/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1011/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1010/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(middleware_azure_rtos_ux_sp_MIMXRT1011)
+include(${SdkRootDirPath}/devices/MIMXRT1011/all_lib_device.cmake)
 
-include(component_osa_thread_MIMXRT1011)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/usbx ${SdkRootDirPath}/rtos/azure-rtos/build/libusbx)
 
-include(middleware_usb_phy_MIMXRT1011)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ${SdkRootDirPath}/rtos/azure-rtos/build/libnetxduo)
 
-include(driver_clock_MIMXRT1011)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ${SdkRootDirPath}/rtos/azure-rtos/build/libfilex)
 
-include(driver_common_MIMXRT1011)
-
-include(device_MIMXRT1011_CMSIS_MIMXRT1011)
-
-include(utility_debug_console_MIMXRT1011)
-
-include(component_lpuart_adapter_MIMXRT1011)
-
-include(component_serial_manager_MIMXRT1011)
-
-include(component_lists_MIMXRT1011)
-
-include(component_serial_manager_uart_MIMXRT1011)
-
-include(driver_lpuart_MIMXRT1011)
-
-include(device_MIMXRT1011_startup_MIMXRT1011)
-
-include(driver_iomuxc_MIMXRT1011)
-
-include(utility_assert_MIMXRT1011)
-
-include(driver_igpio_MIMXRT1011)
-
-include(driver_xip_device_MIMXRT1011)
-
-include(driver_xip_board_evkmimxrt1010_MIMXRT1011)
-
-include(middleware_azure_rtos_ux_template_MIMXRT1011)
-
-include(middleware_azure_rtos_nxd_sp_MIMXRT1011)
-
-include(middleware_azure_rtos_nxd_template_MIMXRT1011)
-
-include(middleware_azure_rtos_fx_sp_MIMXRT1011)
-
-include(middleware_azure_rtos_fx_template_MIMXRT1011)
-
-include(middleware_azure_rtos_tx_sp_MIMXRT1011)
-
-include(middleware_azure_rtos_tx_template_MIMXRT1011)
-
-include(CMSIS_Include_core_cm_MIMXRT1011)
-
-include(middleware_usb_common_header_MIMXRT1011)
-
-include(component_osa_MIMXRT1011)
-
-include(utilities_misc_utilities_MIMXRT1011)
-
-include(device_MIMXRT1011_system_MIMXRT1011)
-
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ./CMakeFiles/libfilex)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ./CMakeFiles/libnetxduo)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/usbx ./CMakeFiles/libusbx)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ${SdkRootDirPath}/rtos/azure-rtos/build/libthreadx)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -177,4 +111,6 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/usbx_host_hid_mouse.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/usbx_host_hid_mouse.bin")
 

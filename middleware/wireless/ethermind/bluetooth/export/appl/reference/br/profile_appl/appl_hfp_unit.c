@@ -90,7 +90,7 @@ static const char hfp_unit_options[] = "\n\
 \n\
 Your Choice : ";
 
-char hfp_unit_1_5_options[] = "\n\
+static const char hfp_unit_1_5_options[] = "\n\
 -------------- HFP UNIT (1.5) Menu ---------------\n\
     0.  Exit \n\
     1.  Refresh \n\n\
@@ -107,7 +107,7 @@ char hfp_unit_1_5_options[] = "\n\
 Your Choice : ";
 
 #ifdef HFP_UNIT_1_6
-char hfp_unit_1_6_options[] = "\n\
+static const char hfp_unit_1_6_options[] = "\n\
 -------------- HFP UNIT (1.6) Menu ---------------\n\
     0 .  Exit \n\
     1 .  Refresh \n\n\
@@ -165,9 +165,8 @@ DECL_STATIC UCHAR hfp_unit_local_supported_hf_indicators[APPL_HFP_UNIT_HF_INDICA
 
 /* Peer supported HF indicators */
 DECL_STATIC UCHAR hfp_unit_peer_hf_ind_count;
-HFP_UNIT_BIND_READ_RESULT  hfp_unit_peer_hf_ind_list_info[HFP_UNIT_MAX_HF_INDICATOR_COUNT];
-HFP_UNIT_BIND_READ_RESULT *hfp_unit_peer_hf_ind_read_info;
-UCHAR                      hfp_unit_peer_hf_ind_read_info_len;
+DECL_STATIC HFP_UNIT_BIND_READ_RESULT  hfp_unit_peer_hf_ind_list_info[HFP_UNIT_MAX_HF_INDICATOR_COUNT];
+DECL_STATIC HFP_UNIT_BIND_READ_RESULT *hfp_unit_peer_hf_ind_read_info;
 
 #endif /* HFP_UNIT_1_7 */
 
@@ -345,10 +344,10 @@ void main_hfp_unit_operations (void)
 
     printf("%s\n", hfp_unit_options);
 
-    api_retval = API_SUCCESS;
 
     BT_LOOP_FOREVER()
     {
+        api_retval = API_SUCCESS;
         LOG_DEBUG("\n< ");
         scanf("%u", &choice);
         LOG_DEBUG("\n");
@@ -367,7 +366,7 @@ void main_hfp_unit_operations (void)
 
         case 2: /* Register BD_ADDR of peer device */
             LOG_DEBUG("Please enter BD ADDR of Audio Gateway\n");
-            appl_get_bd_addr(appl_peer_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_peer_bd_addr);
             break;
 
         case 3:/* Get Registered BD_ADDR of peer device */
@@ -386,14 +385,21 @@ void main_hfp_unit_operations (void)
 
             LOG_DEBUG("> API RETVAL BT_hfp_unit_init : 0x%04X\n",api_retval);
 
-            if (API_SUCCESS == api_retval)
+            if (API_SUCCESS != api_retval)
+            {
+                printf("> FAILED. Reason = 0x%04X\n", api_retval);
+            }
+            else
             {
                 LOG_DEBUG("> HFP_UNIT Init Successful\n");
 
+                BT_mem_set(&appl_speaker_volume[0], 0, sizeof(appl_speaker_volume[0]));
+                BT_mem_set(&appl_microphone_gain[0], 0, sizeof(appl_microphone_gain[0]));
+
                 for (i = 0U; i < HFP_UNIT_MAX_CONNECTIONS; i++)
                 {
-                    BT_str_n_copy(&appl_speaker_volume[i][0U], APPL_HFU_INITIAL_GAIN, sizeof(appl_speaker_volume[i]));
-                    BT_str_n_copy(&appl_microphone_gain[i][0U], APPL_HFU_INITIAL_GAIN, sizeof(appl_microphone_gain[i]));
+                    BT_str_n_copy(&appl_speaker_volume[i][0U], APPL_HFU_INITIAL_GAIN, (sizeof(appl_speaker_volume[i]) - 1));
+                    BT_str_n_copy(&appl_microphone_gain[i][0U], APPL_HFU_INITIAL_GAIN, (sizeof(appl_microphone_gain[i]) - 1));
                 }
             }
             break;
@@ -828,14 +834,26 @@ void main_hfp_unit_operations (void)
         case 30:/* Dial with number */
             LOG_DEBUG("Enter the number to dial : ");
             scanf("%s",dialeddigits);
-            api_retval = BT_hfp_unit_dial
-                         (
-                             g_hfp_unit_handle,
-                             dialeddigits,
-                             (UCHAR)BT_str_len(dialeddigits)
-                         );
 
-            LOG_DEBUG("> API RETVAL BT_hfp_unit_dial: 0x%04X\n", api_retval);
+            for (i = 0U; i < BT_str_len(dialeddigits); i++)
+            {
+                if ((11U < BT_str_len(dialeddigits)) ||
+                    !((dialeddigits[i] >= '0') && (dialeddigits[i] <= '9')))
+                {
+                    printf ("Invalid Dial Number Entered\n");
+                    break;
+                }
+                else
+                {
+                    api_retval = BT_hfp_unit_dial
+                                 (
+                                     g_hfp_unit_handle,
+                                     dialeddigits,
+                                     (UCHAR)BT_str_len(dialeddigits)
+                                 );
+                     LOG_DEBUG("> API RETVAL BT_hfp_unit_dial: 0x%04X\n", api_retval);
+                }
+            }
             break;
 
         case 31: /* Memory Dialing */
@@ -1459,16 +1477,17 @@ void main_hfp_unit_operations (void)
     return;
 }
 
-/*create sco connection with custom eSCO parameter set using command 27*/
-void appl_hfpunit_create_eSCO_connection()
+/* Create sco connection with custom eSCO parameter set using command 27 */
+void appl_hfpunit_create_eSCO_connection(void)
 {
     API_RESULT retval;
     UINT16 hci_handle;
     HCI_SCO_IN_PARAMS esco_params;
-    /*
-    * Establish Synchronous Connection with selected setting
-    * with AG
-    */
+
+    /**
+     * Establish Synchronous Connection with selected setting
+     * with AG
+     */
     retval = BT_hci_get_acl_connection_handle
                  (
                      appl_peer_bd_addr,
@@ -1494,7 +1513,7 @@ void appl_hfpunit_create_eSCO_connection()
         }
 }
 
-void appl_hfpunit_change_esco_config()
+void appl_hfpunit_change_esco_config(void)
 {
 #ifdef BR_EDR_HCI
     int read_val;
@@ -1525,7 +1544,7 @@ void appl_hfpunit_change_esco_config()
     esco_params.rtx_effort = rtx_effort;
 
     /* Update the eSCO channel paramters for Default mSBC Codec */
-    appl_hci_set_esco_channel_parameters
+    (BT_IGNORE_RETURN_VALUE)appl_hci_set_esco_channel_parameters
     (
         BT_TRUE,
         &esco_params
@@ -2716,9 +2735,15 @@ API_RESULT appl_callback_registered_with_hfu
 #ifdef HCI_ENH_SCO
             HCI_ENH_SCO_PARAMS hfp_unit_enh_esco_param;
 #endif /* HCI_ENH_SCO */
-            printf("\n> Event        : HFP_UNIT_BCS_IND\n");
-            printf("> Instance     : 0x%02X\n", (unsigned int) handle);
-            printf("> Event result : 0x%04X\n",result);
+            LOG_DEBUG("\n> Event        : HFP_UNIT_BCS_IND\n");
+            LOG_DEBUG("> Instance     : 0x%02X\n", (unsigned int) handle);
+            LOG_DEBUG("> Event result : 0x%04X\n",result);
+
+            /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+            BT_mem_set(&hfp_unit_esco_param, 0, sizeof(HCI_SCO_IN_PARAMS));
+#ifdef HCI_ENH_SCO
+            BT_mem_set(&hfp_unit_enh_esco_param, 0, sizeof(HCI_ENH_SCO_PARAMS));
+#endif /* HCI_ENH_SCO */
 
             /* Get Codec ID from event buffer */
             esco_codec_id = data_to_app->buffer[data_to_app->parser_resp->param->start_of_value_index] - '0';
@@ -2741,14 +2766,14 @@ API_RESULT appl_callback_registered_with_hfu
             }
             else if (HFP_UNIT_CODEC_ID_MSBC == esco_codec_id)
             {
-                printf ("Codec Selection: mSBC\n");
+                LOG_DEBUG ("Codec Selection: mSBC\n");
 #ifdef HCI_ENH_SCO
                 appl_hci_get_enh_esco_channel_parameters(&hfp_unit_enh_esco_param);
                 hfp_unit_enh_esco_param.tx_coding_frmt.coding_format     = LMP_CODING_FRMT_MSBC;
                 hfp_unit_enh_esco_param.rx_coding_frmt.coding_format     = LMP_CODING_FRMT_MSBC;
                 hfp_unit_enh_esco_param.input_coding_frmt.coding_format  = LMP_CODING_FRMT_MSBC;
                 hfp_unit_enh_esco_param.output_coding_frmt.coding_format = LMP_CODING_FRMT_MSBC;
-                appl_hci_set_enh_esco_channel_parameters(&hfp_unit_enh_esco_param);
+                (BT_IGNORE_RETURN_VALUE)appl_hci_set_enh_esco_channel_parameters(&hfp_unit_enh_esco_param);
 #endif /* HCI_ENH_SCO */
                 hfp_unit_esco_param.voice_setting = appl_hfp_esco_params[1U]->voice_setting;
                 /* Update the eSCO channel parameters for mSBC Codec */
@@ -2787,7 +2812,6 @@ API_RESULT appl_callback_registered_with_hfu
             LOG_DEBUG("> Event result : 0x%04X\n",result);
 
             hfp_unit_peer_hf_ind_read_info = (HFP_UNIT_BIND_READ_RESULT *)data;
-            hfp_unit_peer_hf_ind_read_info_len = (UCHAR)data_len;
 
             LOG_DEBUG ("Updated HF Indicator Info:\n");
             LOG_DEBUG ("    ID    : 0x%04x\n", hfp_unit_peer_hf_ind_read_info->hf_ind_id);
@@ -2977,7 +3001,6 @@ void appl_hfu_sdp_cb
 
                 /* Close SDP */
                 (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_sdp_handle);
-                retval = API_FAILURE; /* return; */
             }
             else
             {
@@ -3008,8 +3031,6 @@ void appl_hfu_sdp_cb
 
                     /* Close SDP */
                     (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_sdp_handle);
-
-                    retval = API_FAILURE; /* return; */
                 }
                 /* SDP operation to continue */
             }
@@ -3045,7 +3066,6 @@ void appl_hfu_sdp_cb
                 LOG_DEBUG("> ** FAILED to get Remote SERVER CHANNEL\n");
 
                 (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_sdp_handle);
-                retval = API_FAILURE; /* return; */
             }
             else
             {

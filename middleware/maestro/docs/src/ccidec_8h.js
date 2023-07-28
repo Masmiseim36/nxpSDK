@@ -2,6 +2,7 @@ var ccidec_8h =
 [
     [ "CCIDecInfo", "structCCIDecInfo.html", "structCCIDecInfo" ],
     [ "decoder_callback_FunctionTable_t", "structdecoder__callback__FunctionTable__t.html", "structdecoder__callback__FunctionTable__t" ],
+    [ "NUM_OF_PING_PONG_BUFFER", "ccidec_8h.html#a452453d875c4e50b6433e7ae80a20393", null ],
     [ "pfnReadCallback", "ccidec_8h.html#aeda3b7b0b13e87e469c6288fa9ec96fb", null ],
     [ "pfnSeekCallback", "ccidec_8h.html#a25ee6935525c0409a4f9214da4d80522", null ],
     [ "pfnFtellCallback", "ccidec_8h.html#ac6d9df9742efc10aee076120b1bdbb6a", null ],

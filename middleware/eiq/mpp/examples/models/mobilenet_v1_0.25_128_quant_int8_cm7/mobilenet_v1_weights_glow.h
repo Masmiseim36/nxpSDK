@@ -1,6 +1,6 @@
 /*
  * Copyright 2017 The TensorFlow Authors
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * Apache 2.0 License
@@ -34,6 +34,9 @@
     To install GLOW with NXP's cmsis-nn library use the following link:
     https://www.nxp.com/design/software/development-software/eiq-ml-development-environment/eiq-inference-with-glow-nn:eIQ-Glow
  */
+
+#define MODEL_WIDTH       128
+#define MODEL_HEIGHT      128
 
 unsigned char mobilenet_v1_weights_bin[] = {
   0xdf, 0x6a, 0xc0, 0xff, 0xc3, 0x13, 0x01, 0x00, 0x45, 0x19, 0x03, 0x00,

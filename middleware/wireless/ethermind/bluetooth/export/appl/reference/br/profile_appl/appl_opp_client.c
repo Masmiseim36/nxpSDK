@@ -36,11 +36,10 @@ static OPP_REQUEST_STRUCT     opp_req_info;
 static OPP_HEADER_STRUCT      name_info, body_info, type_info;
 
 static UCHAR                  file_name[32U], file_object[128U];
-static UCHAR                  object_type[32U];
-static UCHAR                  object_name[OPP_OBJECT_NAME_LEN];
-
 static UINT16                 file_name_len;
-static UINT16                 object_type_len;
+
+static UINT8                  cur_obj_index;
+static UINT8                  total_num_objects;
 
 static BT_fops_file_handle    opp_rx_fp;
 static BT_fops_file_handle    fp;
@@ -49,6 +48,9 @@ static UINT32                 remaining, sent;
 static UINT32                 opp_xchg_size;
 
 static UCHAR wait_count;
+
+/*To store details of multiple files when pushing multiple objects*/
+static OPP_APP_MULTIPLE_OBJECTS objects_to_push[OPP_MAX_NUM_OBJECTS];
 
 static const UCHAR opp_client_menu[] =
 " \n \
@@ -77,6 +79,9 @@ static const UCHAR opp_client_menu[] =
 \n \
 Your Choice: ";
 
+/* ----------------------------------------- Function declarations */
+void opp_open_file_initiate_transfer(OPP_HANDLE handle);
+
 /* ----------------------------------------- Functions */
 
 void main_opp_client_operations (void)
@@ -90,14 +95,14 @@ void main_opp_client_operations (void)
     UINT16 actual;
     UCHAR more;
 
-    int choice, menu_choice, handle, server_ch, val;
+    int choice, menu_choice, handle, server_ch, val, file_count;
 
     retval = API_SUCCESS;
     more = 0U;
 
     BT_LOOP_FOREVER()
     {
-        printf ("%s", opp_client_menu);
+        LOG_DEBUG ("%s", opp_client_menu);
         scanf ("%d", &choice);
         menu_choice = choice;
 
@@ -138,6 +143,12 @@ void main_opp_client_operations (void)
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
+
             /* OPP applicaion instance handle */
             phandle = &opp_client_instance[handle].handle;
 
@@ -168,6 +179,12 @@ void main_opp_client_operations (void)
 
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
+
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
 
             /* OPP applicaion instance handle */
             phandle = &opp_client_instance[handle].handle;
@@ -214,7 +231,7 @@ void main_opp_client_operations (void)
             LOG_DEBUG("Enter OPP Server's BD Address: ");
 
             /* Read the BD_ADDR of Remote Device */
-            appl_get_bd_addr(oppc_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(oppc_bd_addr);
 
             retval = BT_hci_create_connection
                      (
@@ -282,6 +299,12 @@ void main_opp_client_operations (void)
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
+
             connect_info.bd_addr = oppc_bd_addr;
 
 #ifdef OBEX_OVER_L2CAP
@@ -312,6 +335,12 @@ void main_opp_client_operations (void)
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
+
             LOG_DEBUG ("Disconnecting OPP Client Instance %d\n", handle);
             retval = BT_opp_client_disconnect (&opp_client_instance[handle].handle);
             LOG_DEBUG ("Retval - 0x%04X\n", retval);
@@ -320,6 +349,12 @@ void main_opp_client_operations (void)
         case 17:
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
+
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG ("Disconnecting Transport with OPP Server\n");
             retval = BT_opp_client_transport_close (&opp_client_instance[handle].handle);
@@ -332,150 +367,92 @@ void main_opp_client_operations (void)
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
+
             OPP_INIT_HEADER_STRUCT (type_info);
             OPP_INIT_HEADER_STRUCT (name_info);
             OPP_INIT_HEADER_STRUCT (body_info);
 
-            LOG_DEBUG ("Specify Type Header? (1/0): ");
-            scanf ("%d", &choice);
-            if (0 != choice)
+            cur_obj_index = 0;
+            for (i = 0U; i < OPP_MAX_NUM_OBJECTS; i++)
             {
-                LOG_DEBUG("Enter the Object Type:\n");
-                LOG_DEBUG("    1-> text/x-vcard\n");
-                LOG_DEBUG("    2-> text/x-vcalender\n");
-                LOG_DEBUG("    3-> text/x-vmsg\n");
-                scanf("%d", &val);
-                if (1 == val)
+                BT_mem_set(objects_to_push[i].file_name, '\0', OPP_MAX_OBJECT_NAME_LEN);
+                BT_mem_set(objects_to_push[i].object_type, '\0', OPP_MAX_OBJECT_TYPE_LEN);
+                objects_to_push[i].file_name_len = 0;
+                objects_to_push[i].object_type_len = 0;
+            }
+
+            LOG_DEBUG("Enter number of files to push (Max 5): \n");
+            scanf("%d",&file_count);
+
+            if (file_count > OPP_MAX_NUM_OBJECTS)
+            {
+                file_count = OPP_MAX_NUM_OBJECTS;
+            }
+
+            for(i = 0U; i < file_count; i++)
+            {
+                LOG_DEBUG ("Is Type Header present for object %d? (1 or 0): ",i + 1);
+                scanf ("%d", &choice);
+
+                if (0 != choice)
                 {
-                    BT_str_n_copy(object_type, OPP_TYPE_HDR_VCARD, sizeof(OPP_TYPE_HDR_VCARD));
+                    LOG_DEBUG("Enter the Object Type:\n");
+                    LOG_DEBUG("    1-> text/x-vcard\n");
+                    LOG_DEBUG("    2-> text/x-vcalender\n");
+                    LOG_DEBUG("    3-> text/x-vmsg\n");
+                    LOG_DEBUG("    4-> text/x-vnote\n");
+                    scanf("%d", &val);
+                    if (1 == val)
+                    {
+                        BT_str_n_copy(objects_to_push[i].object_type, OPP_TYPE_HDR_VCARD, sizeof(OPP_TYPE_HDR_VCARD));
+                    }
+                    else if (2 == val)
+                    {
+                        BT_str_n_copy(objects_to_push[i].object_type, OPP_TYPE_HDR_VCALENDER, sizeof(OPP_TYPE_HDR_VCALENDER));
+                    }
+                    else if (3 == val)
+                    {
+                        BT_str_n_copy(objects_to_push[i].object_type, OPP_TYPE_HDR_VMSG, sizeof(OPP_TYPE_HDR_VMSG));
+                    }
+                    else if (4 == val)
+                    {
+                        BT_str_n_copy(objects_to_push[i].object_type, OPP_TYPE_HDR_VNOTE, sizeof(OPP_TYPE_HDR_VNOTE));
+                    }
+                    else
+                    {
+                        LOG_DEBUG("Invalid Choice, Try Again\n");
+                        break;
+                    }
+
+                    objects_to_push[i].object_type_len = (UINT16)BT_str_n_len(objects_to_push[i].object_type,
+                                                                              sizeof(objects_to_push[i].object_type));
+
                 }
-                else if (2 == val)
+
+                BT_mem_set(objects_to_push[i].file_name, 0, sizeof(objects_to_push[i].file_name));
+                LOG_DEBUG ("Enter the Object %d name to be sent: ", i + 1);
+                scanf ("%s", objects_to_push[i].file_name);
+
+                objects_to_push[i].file_name_len = (UINT16)BT_str_n_len(objects_to_push[i].file_name,
+                                                    sizeof(objects_to_push[i].file_name)) + 1U /* NULL Char */;
+
+                if (OPP_OBJECT_NAME_LEN < objects_to_push[i].file_name_len)
                 {
-                    BT_str_n_copy(object_type, OPP_TYPE_HDR_VCALENDER, sizeof(OPP_TYPE_HDR_VCALENDER));
+                    LOG_DEBUG ("\nMax object name length limit error, this object can not be pushed.\n");
+                    continue;
                 }
-                else if (3 == val)
-                {
-                    BT_str_n_copy(object_type, OPP_TYPE_HDR_VMSG, sizeof(OPP_TYPE_HDR_VMSG));
-                }
-                else
-                {
-                    LOG_DEBUG("Invalid Choice, Try Again\n");
-                    break;
-                }
-
-                /* Fill type hdr values */
-                type_info.value = object_type;
-                object_type_len = (UINT16)BT_str_n_len(object_type, sizeof(object_type));
-                type_info.length = (UINT16)(object_type_len + 1U);
             }
 
-            LOG_DEBUG ("Enter the object name to be sent: ");
-            scanf ("%s", file_name);
-            file_name_len = (UINT16)BT_str_n_len(file_name, sizeof(file_name));
+            total_num_objects = (UINT8)file_count;
 
-            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-            (void)BT_vfops_create_object_name
-            (
-                (UCHAR *)OPP_ROOT_FOLDER_BASE,
-                file_name,
-                file_object
-            );
-
-            /* Fill name hdr values */
-            name_info.value = file_name;
-            name_info.length = (UINT16)(file_name_len + 1U);
-
-            fsize = 0U;
-            remaining = 0U;
-            sent = 0U;
-            opp_xchg_size = opp_client_instance[handle].max_xchg_size;
-
-            /* Open the file to be sent */
-            retval = BT_fops_file_open (file_object, (UCHAR *)"rb", &fp);
-            if ((API_SUCCESS == retval) && (NULL != fp))
-            {
-                /* Get the file size */
-                (BT_IGNORE_RETURN_VALUE) BT_fops_file_size(fp, &fsize);
-
-                remaining = fsize;
-            }
-            else
-            {
-                LOG_DEBUG ("Failed to open file\n");
-                break;
-            }
-
-            /* Fill body hdr values */
-            if (remaining > opp_xchg_size)
-            {
-                body_info.length = (UINT16)opp_xchg_size;
-                more = 0x01U;
-            }
-            else if (0U != remaining)
-            {
-                body_info.length = (UINT16)remaining;
-                more = 0x00U;
-            }
-            else
-            {
-                /* MISRA C-2012 Rule 15.7 */
-            }
-
-            if (0U != body_info.length)
-            {
-                body_info.value = BT_alloc_mem (body_info.length);
-            }
-
-            if (NULL != body_info.value)
-            {
-                (BT_IGNORE_RETURN_VALUE) BT_fops_file_read
-                    (body_info.value, body_info.length, fp, &actual);
-            }
-
-            /* Update the hdrs  for put request */
-            opp_req_info.obj_len_info = remaining; /* Object Size */
-            opp_req_info.name = &name_info;
-            opp_req_info.body = &body_info;
-            if (NULL != type_info.value)
-            {
-                opp_req_info.type = &type_info;
-            }
-
-            /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
-            actual = 0U;
-
-            LOG_DEBUG ("Requesting to Push object...\n");
-            retval = BT_opp_client_push_object
-                     (
-                         &opp_client_instance[handle].handle,
-                         &opp_req_info,
-                         more,
-                         &actual
-                     );
-            LOG_DEBUG ("Retval - 0x%04X\n", retval);
-
-            /* Update object size sent & remaining to send */
-            (BT_IGNORE_RETURN_VALUE) BT_fops_file_seek(fp, actual, SEEK_SET);
-            sent += actual;
-            remaining = fsize - sent;
-
-            /* If operation has failed or completed, perform cleanup */
-            if ((API_SUCCESS != retval) || (0U == remaining))
-            {
-                /* Reset the variables */
-                sent = 0U;
-                fsize = 0U;
-
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(fp);
-                fp = NULL;
-            }
-
-            if (NULL != body_info.value)
-            {
-                BT_free_mem (body_info.value);
-                body_info.value = NULL;
-            }
+            /* Start from the first object */
+            cur_obj_index = 0;
+            opp_open_file_initiate_transfer((OPP_HANDLE) handle);
             break;
 
         case 21:
@@ -484,6 +461,11 @@ void main_opp_client_operations (void)
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
 
             OPP_INIT_HEADER_STRUCT (type_info);
             BT_mem_set(&opp_req_info, 0, sizeof(OPP_REQUEST_STRUCT));
@@ -520,14 +502,27 @@ void main_opp_client_operations (void)
             LOG_DEBUG ("Enter OPP Client instance: ");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
+
             BT_mem_set(&opp_req_info, 0, sizeof(OPP_REQUEST_STRUCT));
             OPP_INIT_HEADER_STRUCT (type_info);
             OPP_INIT_HEADER_STRUCT (name_info);
             OPP_INIT_HEADER_STRUCT (body_info);
 
+            BT_mem_set(file_name, 0, sizeof(file_name));
             LOG_DEBUG ("Enter the object name to be sent: ");
             scanf ("%s", file_name);
-            file_name_len = (UINT16)BT_str_n_len(file_name, sizeof(file_name));
+            file_name_len = (UINT16)BT_str_n_len(file_name, sizeof(file_name)) + 1U /* NULL Char */;
+
+            if (OPP_OBJECT_NAME_LEN < file_name_len)
+            {
+                LOG_DEBUG ("\nMax object name length limit error\n");
+                break;
+            }
 
             /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
             (void)BT_vfops_create_object_name
@@ -539,7 +534,7 @@ void main_opp_client_operations (void)
 
             /* Fill name hdr values */
             name_info.value = file_name;
-            name_info.length = (UINT16)(file_name_len + 1U);
+            name_info.length = (UINT16)(file_name_len);
 
             fsize = 0U;
             remaining = 0U;
@@ -643,6 +638,12 @@ void main_opp_client_operations (void)
             LOG_DEBUG ("Enter OPP Client instance to Abort: ");
             scanf ("%d", &handle);
 
+            if (OPP_NUM_CLIENT_INSTANCE <= handle)
+            {
+                LOG_DEBUG ("Invalid Application Instance\n");
+                break;
+            }
+
             LOG_DEBUG ("aborting the push operation.. \n");
             retval = BT_opp_client_abort(&opp_client_instance[handle].handle);
             LOG_DEBUG ("Retval - 0x%04X\n", retval);
@@ -661,6 +662,133 @@ void main_opp_client_operations (void)
     }
 
     return;
+}
+
+void opp_open_file_initiate_transfer(OPP_HANDLE handle)
+{
+    API_RESULT retval = API_SUCCESS;
+
+    UINT16 actual = 0;
+    UCHAR more = 0;
+
+    fsize = 0U;
+    remaining = 0U;
+    sent = 0U;
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+TRY_NEXT_OBJECT:
+    /* Open the file to be sent */
+    (void)BT_vfops_create_object_name
+    (
+        (UCHAR*)OPP_ROOT_FOLDER_BASE,
+        objects_to_push[cur_obj_index].file_name,
+        file_object
+    );
+
+    retval = BT_fops_file_open(file_object, (UCHAR*)"rb", &fp);
+    if ((API_SUCCESS == retval) && (NULL != fp))
+    {
+        /* Get the file size */
+        (BT_IGNORE_RETURN_VALUE)BT_fops_file_size(fp, &fsize);
+
+        remaining = fsize;
+    }
+    else
+    {
+        LOG_DEBUG("Failed to open file %d, file name is %s\n", cur_obj_index + 1,
+            objects_to_push[cur_obj_index].file_name);
+        cur_obj_index++;
+        if (cur_obj_index < total_num_objects)
+        {
+            LOG_DEBUG("Proceeding with %d \n", cur_obj_index + 1);
+            goto TRY_NEXT_OBJECT;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    /* Fill name hdr values */
+    name_info.value = objects_to_push[cur_obj_index].file_name;
+    name_info.length = (UINT16)(objects_to_push[cur_obj_index].file_name_len);
+
+    /* Fill type hdr values */
+    type_info.value = objects_to_push[cur_obj_index].object_type;
+    type_info.length = (UINT16)(objects_to_push[cur_obj_index].object_type_len + 1U);
+
+    opp_xchg_size = opp_client_instance[handle].max_xchg_size;
+
+    /* Fill body hdr values */
+    if (remaining > opp_xchg_size)
+    {
+        body_info.length = (UINT16)opp_xchg_size;
+        more = 0x01U;
+    }
+    else if (0U != remaining)
+    {
+        body_info.length = (UINT16)remaining;
+        more = 0x00U;
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+        body_info.length = 0U;
+        more = 0x00U;
+    }
+    if (0U != body_info.length)
+    {
+        body_info.value = BT_alloc_mem(body_info.length);
+    }
+
+    if (NULL != body_info.value)
+    {
+        (BT_IGNORE_RETURN_VALUE)BT_fops_file_read
+        (body_info.value, body_info.length, fp, &actual);
+    }
+
+    /* Update the hdrs  for put request */
+    opp_req_info.obj_len_info = remaining; /* Object Size */
+    opp_req_info.name = &name_info;
+    opp_req_info.body = &body_info;
+    if (NULL != type_info.value)
+    {
+        opp_req_info.type = &type_info;
+    }
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    actual = 0U;
+
+    LOG_DEBUG("Requesting to Push object...\n");
+    retval = BT_opp_client_push_object
+    (
+        &opp_client_instance[handle].handle,
+        &opp_req_info,
+        more,
+        &actual
+    );
+    LOG_DEBUG("Retval - 0x%04X\n", retval);
+    /* Update object size sent & remaining to send */
+    (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, actual, SEEK_SET);
+    sent += actual;
+    remaining = fsize - sent;
+
+    /* If operation has failed or completed, perform cleanup */
+    if ((API_SUCCESS != retval) || (0U == remaining))
+    {
+        /* Reset the variables */
+        sent = 0U;
+        fsize = 0U;
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void)BT_fops_file_close(fp);
+        fp = NULL;
+    }
+
+    if (NULL != body_info.value)
+    {
+        BT_free_mem(body_info.value);
+        body_info.value = NULL;
+    }
 }
 
 API_RESULT appl_opp_client_callback
@@ -712,11 +840,25 @@ API_RESULT appl_opp_client_callback
         {
             if (opp_client_instance[i].handle == handle)
             {
-                BT_mem_set (opp_client_instance[i].bd_addr, 0x00, BT_BD_ADDR_SIZE);
+                BT_mem_set(opp_client_instance[i].bd_addr, 0x00, BT_BD_ADDR_SIZE);
             }
         }
 
-        opp_client_print_appl_instances ();
+        if (NULL != opp_rx_fp)
+        {
+            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+            (BT_IGNORE_RETURN_VALUE)BT_fops_file_close(opp_rx_fp);
+            opp_rx_fp = NULL;
+        }
+
+        if (NULL != fp)
+        {
+            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+            (BT_IGNORE_RETURN_VALUE)BT_fops_file_close(fp);
+            fp = NULL;
+        }
+
+        opp_client_print_appl_instances();
         break;
 
     case OPP_CLIENT_CONNECT_CNF:
@@ -726,10 +868,10 @@ API_RESULT appl_opp_client_callback
         LOG_DEBUG("Result = 0x%04X\n", event_result);
 
         LOG_DEBUG("Peer Address " BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER "\n",
-        BT_DEVICE_ADDR_ONLY_PRINT_STR (opp_rx_hdrs->opp_connect_info->bd_addr));
+            BT_DEVICE_ADDR_ONLY_PRINT_STR(opp_rx_hdrs->opp_connect_info->bd_addr));
 
-        LOG_DEBUG ("MAX Tx. Size: %d\n",
-        opp_rx_hdrs->opp_connect_info->max_tx_size);
+        LOG_DEBUG("MAX Tx. Size: %d\n",
+            opp_rx_hdrs->opp_connect_info->max_tx_size);
 
         /* Get the Handle parameters */
         for (i = 0U; i < OPP_NUM_CLIENT_INSTANCE; i++)
@@ -750,7 +892,7 @@ API_RESULT appl_opp_client_callback
             }
         }
 
-        opp_client_print_appl_instances ();
+        opp_client_print_appl_instances();
         break;
 
     case OPP_CLIENT_DISCONNECT_CNF:
@@ -759,18 +901,32 @@ API_RESULT appl_opp_client_callback
         LOG_DEBUG("OPP Client Instance: %d\n", handle);
         LOG_DEBUG("Result = 0x%04X\n", event_result);
 
-        opp_client_print_appl_instances ();
+        if (NULL != opp_rx_fp)
+        {
+            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+            (BT_IGNORE_RETURN_VALUE)BT_fops_file_close(opp_rx_fp);
+            opp_rx_fp = NULL;
+        }
+
+        if (NULL != fp)
+        {
+            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+            (BT_IGNORE_RETURN_VALUE)BT_fops_file_close(fp);
+            fp = NULL;
+        }
+
+        opp_client_print_appl_instances();
         break;
 
     case OPP_CLIENT_PUSH_OBJECT_CNF:
-        LOG_DEBUG("\n");
-        LOG_DEBUG("Received OPP_CLIENT_PUSH_OBJECT_CNF\n");
-        LOG_DEBUG("OPP Client Instance: %d\n", handle);
-        LOG_DEBUG("Result = 0x%04X\n", event_result);
 
-        if ((OPP_SUCCESS_RSP != event_result) &&
-            (OPP_CONTINUE_RSP != event_result))
+        if (OPP_CONTINUE_RSP != event_result)
         {
+            LOG_DEBUG("\n");
+            LOG_DEBUG("Received OPP_CLIENT_PUSH_OBJECT_CNF\n");
+            LOG_DEBUG("OPP Client Instance: %d\n", handle);
+            LOG_DEBUG("Result = 0x%04X\n", event_result);
+            
             /* Reset the variables */
             sent = 0U;
             fsize = 0U;
@@ -778,12 +934,25 @@ API_RESULT appl_opp_client_callback
             /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
             (void)BT_fops_file_close(fp);
             fp = NULL;
+            cur_obj_index++;
+
+            LOG_DEBUG("Object transfer for Object %d completed \n", cur_obj_index);
+
+            /* Start the next object transfer if there are more objects */
+            if (cur_obj_index < total_num_objects)
+            {
+                LOG_DEBUG("Starting Object transfer for Object %d\n", cur_obj_index + 1);
+                opp_open_file_initiate_transfer(handle);
+            }
+            else
+            {
+                LOG_DEBUG("Object transfer operation for the given objects completed.\n");
+            }
             break;
         }
-
-        if (OPP_SUCCESS_RSP == event_result)
+        else
         {
-            break;
+            LOG_DEBUG("*");
         }
 
         /* Fill body hdr values */
@@ -938,7 +1107,7 @@ API_RESULT appl_opp_client_callback
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)OPP_ROOT_RX_FOLDER_BASE,
-                    (UCHAR *)object_name,
+                    (UCHAR *)OPP_OBJECT_VCARD,
                     file_object
                 );
 
@@ -1047,6 +1216,15 @@ API_RESULT appl_opp_client_callback
             /* Update object size sent & remaining to send */
             sent += actual;
             remaining = fsize - sent;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                /* In Ideal case, should not reach here */
+                LOG_DEBUG("read length = %d, actual sent = %d\n", body_info.length, actual);
+                LOG_DEBUG("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
 
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))

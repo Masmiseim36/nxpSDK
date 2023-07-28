@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP
+ * Copyright 2021-2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -125,11 +125,12 @@ typedef enum {
 
 /** The convert operations selector flags */
 typedef enum {
-    MPP_CONVERT_NONE = 0,           /*!< no frame conversion */
-    MPP_CONVERT_ROTATE = 1,         /*!< frame rotation and flip */
-    MPP_CONVERT_SCALE = (1 << 1),   /*!< frame scaling */
-    MPP_CONVERT_COLOR = (1 << 2),   /*!< frame color conversion */
-    MPP_CONVERT_CROP = (1 << 3),    /*!< frame crop */
+    MPP_CONVERT_NONE = 0,              /*!< no frame conversion */
+    MPP_CONVERT_ROTATE = 1,            /*!< frame rotation and flip */
+    MPP_CONVERT_SCALE = (1 << 1),      /*!< scaling from input_frame toward output window */
+    MPP_CONVERT_COLOR = (1 << 2),      /*!< frame color conversion */
+    MPP_CONVERT_CROP = (1 << 3),       /*!< input frame crop */
+    MPP_CONVERT_OUT_WINDOW = (1 << 4), /*!< output window */
 } mpp_convert_ops_t;
 
 /** Pixel format */
@@ -281,6 +282,18 @@ typedef struct {
     int right;
 } mpp_area_t;
 
+/** Image dimensions */
+typedef struct {
+    unsigned int width;
+    unsigned int height;
+} mpp_dims_t;
+
+/** Image position */
+typedef struct {
+    int top;
+    int left;
+} mpp_position_t;
+
 /** Model parameters */
 typedef struct {
     uint64_t constant_weight_MemSize;  /*!< model constant weights memory size */
@@ -310,14 +323,15 @@ union {
     } labels;
     /** Convert element's parameters */
     struct {
-        unsigned int width;                 /*!< output image width */
-        unsigned int height;                /*!< output image height */
+        mpp_dims_t out_buf;                 /*!< output buffer dimensions */
         mpp_pixel_format_t pixel_format;    /*!< new pixel format */
         mpp_rotate_degree_t angle;          /*!< rotation angle */
         mpp_flip_mode_t flip;               /*!< flip mode */
         mpp_area_t crop;                    /*!< input crop area */
-        mpp_area_t out_area;                /*!< output window area */
+        mpp_position_t out_window;          /*!< output window position */
+        mpp_dims_t scale;                   /*!< scaling dimensions */
         mpp_convert_ops_t ops;              /*!< operation selector mask */
+        const char* dev_name;               /*!< device name used for graphics */
     } convert;
     /** Resize element's parameters */
     struct {

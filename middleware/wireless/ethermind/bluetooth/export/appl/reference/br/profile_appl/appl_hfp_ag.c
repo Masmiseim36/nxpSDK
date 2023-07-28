@@ -62,6 +62,8 @@ DECL_STATIC CHAR * appl_rsp_table[] = {
 
 void appl_hfag_read_pl(UCHAR * rsp, UINT16 rsplen);
 void appl_hfag_call_status_pl(UCHAR status);
+UCHAR appl_hfag_get_inbandring_status(void);
+void appl_hfag_callend_timeout_handler(void * args, UINT16 size);
 
 static const char hfp_ag_menu[] = "\n\
 -------- HFP AG Menu ------- \n\
@@ -107,22 +109,22 @@ static const char hfp_ag_menu[] = "\n\
 \n\
 Your Option -> \0";
 
-static HFP_AG_EVENT_NOTIFY_CB appl_cb_ptr;
-static UCHAR hfu_bd_addr[BT_BD_ADDR_SIZE];
-static UCHAR appl_hfp_ag_state;
-static UCHAR hfp_ag_local_supported_features[6U];
-static UINT16 hfp_ag_local_supported_features_ext;
-static UINT8 hfp_ag_server_channel;
+DECL_STATIC HFP_AG_EVENT_NOTIFY_CB appl_cb_ptr;
+DECL_STATIC UCHAR hfu_bd_addr[BT_BD_ADDR_SIZE];
+DECL_STATIC UCHAR appl_hfp_ag_state;
+DECL_STATIC UCHAR hfp_ag_local_supported_features[6U];
+DECL_STATIC UINT16 hfp_ag_local_supported_features_ext;
+DECL_STATIC UINT8 appl_hfp_ag_server_channel;
 
 /* HFU server channel */
-static UINT8 hfp_ag_peer_server_channel;
+DECL_STATIC UINT8 hfp_ag_peer_server_channel;
 
 /* SDP Handle */
-DECL_STATIC SDP_HANDLE sdp_handle;
+DECL_STATIC SDP_HANDLE hfp_ag_sdp_handle;
 
 /* For PTS testing */
-CHAR     appl_hfp_ag_data[128U];
-UINT16   appl_hfp_ag_datalen;
+DECL_STATIC CHAR     appl_hfp_ag_data[128U];
+DECL_STATIC UINT16   appl_hfp_ag_datalen;
 
 /*
 *  Default Voice Settings to be used for Wideband Speech Synchronous Connection:
@@ -289,6 +291,10 @@ void main_hfp_ag_operations (void)
     UCHAR  str[5] = "";
     UINT16 length,i;
 
+    /* Init */
+    /* MISRA C-2012 Rule 9.1 */
+    read_val = 0;
+
     BT_LOOP_FOREVER()
     {
         retval = API_SUCCESS;
@@ -334,7 +340,7 @@ void main_hfp_ag_operations (void)
                 BT_str_print(appl_hfag_phnum_tag, "%s", "+918067064000");
 
                 /* Init the network simulator interface */
-                hfp_ag_init_pl(appl_hfag_read_pl, appl_hfag_call_status_pl);
+                hfp_ag_init_pl(appl_hfag_read_pl, appl_hfag_call_status_pl, appl_hfag_get_inbandring_status);
 
                 break;
 
@@ -370,16 +376,16 @@ void main_hfp_ag_operations (void)
 
             case 10: /* Register BD_ADDR of HFU */
                 LOG_DEBUG ("Enter HFP Unit Bluetooth Device Address: ");
-                appl_get_bd_addr(hfu_bd_addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(hfu_bd_addr);
                 appl_handle_retval_from_hfag(retval);
                 break;
 
             case 11: /* Get HFU's SDP record */
                 /* Set the SDP Handle */
-                SDP_SET_HANDLE(sdp_handle,hfu_bd_addr,appl_hfag_sdp_cb);
+                SDP_SET_HANDLE(hfp_ag_sdp_handle,hfu_bd_addr,appl_hfag_sdp_cb);
 
                 /* Call SDP open */
-                retval = BT_sdp_open(&sdp_handle);
+                retval = BT_sdp_open(&hfp_ag_sdp_handle);
 
                 LOG_DEBUG("> API RETVAL BT_sdp_open : 0x%04X\n",retval);
                 break;
@@ -453,7 +459,7 @@ void main_hfp_ag_operations (void)
                 LOG_DEBUG("Select CVSD SCO parameter set (0-D0, 1-D1): ");
                 scanf("%d", &choice);
                 appl_hfag_esco_params[0U] = &appl_hfag_sco_cvsd_params[choice];
-
+                appl_hfag_codec = 1U;
                 /* Update the SCO channel paramters for Default CVSD Codec */
                 (BT_IGNORE_RETURN_VALUE) appl_hci_set_esco_channel_parameters
                 (
@@ -467,7 +473,7 @@ void main_hfp_ag_operations (void)
                 LOG_DEBUG("Select CVSD eSCO parameter set (0-Default, 1-S1, 2-S2, 3-S3, 4-S4): ");
                 scanf("%d", &choice);
                 appl_hfag_esco_params[0U] = &appl_hfag_esco_cvsd_params[choice];
-
+                appl_hfag_codec = 1U;
                 /* Update the eSCO channel paramters for Default CVSD Codec */
                 (BT_IGNORE_RETURN_VALUE) appl_hci_set_esco_channel_parameters
                 (
@@ -480,7 +486,7 @@ void main_hfp_ag_operations (void)
                 LOG_DEBUG("Select mSBC eSCO parameter set (0-Default, 1-T1, 2-T2): ");
                 scanf("%d", &choice);
                 appl_hfag_esco_params[1U] = &appl_hfag_esco_msbc_params[choice];
-
+                appl_hfag_codec = 2U;
                 /* Update the eSCO channel paramters for Default mSBC Codec */
                 (BT_IGNORE_RETURN_VALUE) appl_hci_set_esco_channel_parameters
                 (
@@ -489,11 +495,11 @@ void main_hfp_ag_operations (void)
                 );
                 break;
 
-            case 19U:
+            case 19:
                 appl_hfpag_change_esco_config();
                 break;
 
-            case 20U:
+            case 20:
                 appl_hfp_ag_send_data();
                 break;
 
@@ -523,8 +529,11 @@ void main_hfp_ag_operations (void)
 
             case 42:
                 LOG_DEBUG("Enter ECNR support (1-Yes, 0-No): ");
-                scanf("%d", &choice);
-                appl_hfag_nrec = (UCHAR)choice;
+                retval = appl_validate_params(&read_val,1U,0U,1U);
+                if (API_SUCCESS == retval)
+                {
+                    appl_hfag_nrec = (UCHAR)read_val;
+                }
                 break;
 
             case 43:
@@ -564,19 +573,23 @@ void main_hfp_ag_operations (void)
 
             case 61:
                 LOG_DEBUG("Enter Default Codec (1 - CVSD, 2 - mSBC):");
-                scanf("%d", &choice);
-
-                if (appl_hfag_codec != choice)
+                retval = appl_validate_params(&choice,1U,1U,2U);
+                if (API_SUCCESS == retval)
                 {
-                    appl_hfag_codec = (UCHAR)choice;
-                    appl_hfag_codec_negotiate = 1U;
+                    if ((appl_hfag_codec != choice) &&
+                        (choice > 0) &&
+                        (choice <= 2))
+                    {
+                        appl_hfag_codec = (UCHAR)choice;
+                        appl_hfag_codec_negotiate = 1U;
 
-                    /* Update the eSCO channel paramters for the Codec */
-                    (BT_IGNORE_RETURN_VALUE) appl_hci_set_esco_channel_parameters
-                    (
-                        BT_TRUE,
-                        appl_hfag_esco_params[choice - 1U]
-                    );
+                        /* Update the eSCO channel paramters for the Codec */
+                        (BT_IGNORE_RETURN_VALUE) appl_hci_set_esco_channel_parameters
+                        (
+                            BT_TRUE,
+                            appl_hfag_esco_params[choice - 1U]
+                        );
+                    }
                 }
                 break;
 
@@ -585,14 +598,18 @@ void main_hfp_ag_operations (void)
                 LOG_DEBUG("1. Enhanced Safety\n");
                 LOG_DEBUG("2. Battery Level\n");
                 LOG_DEBUG("Enter option: ");
-                scanf("%d", &choice);
+                retval = appl_validate_params(&choice,1U,1U,2U);
                 choice--;
-
-                LOG_DEBUG("Enter Activation (1-Enable, 0-Disable): ");
-                scanf("%d", &read_val);
-                appl_hfag_bind[choice] = (UCHAR)read_val;
-
-                appl_send_rsp(HFAG_BIND_READ, &choice);
+                if (API_SUCCESS == retval)
+                {
+		            LOG_DEBUG("Enter Activation (1-Enable, 0-Disable): ");
+                    retval = appl_validate_params(&read_val,1U,0U,1U);
+                    if ((API_SUCCESS == retval) && (choice <= 1))
+                    {
+                        appl_hfag_bind[choice] = (UCHAR)read_val;
+                        appl_send_rsp(HFAG_BIND_READ, &choice);
+                    }
+                }
 
                 break;
 
@@ -604,10 +621,12 @@ void main_hfp_ag_operations (void)
                 }
 
                 LOG_DEBUG("Enter Speaker Gain (0-15): ");
-                scanf("%d", &read_val);
-                appl_hfag_vgs = (UCHAR)read_val;
-
-                appl_send_rsp(HFAG_VGS, NULL);
+                retval = appl_validate_params(&read_val,2U,0U,15U);
+                if (API_SUCCESS == retval)
+                {
+                    appl_hfag_vgs = (UCHAR)read_val;
+                    appl_send_rsp(HFAG_VGS, NULL);
+                }
                 break;
 
             case 64:
@@ -618,10 +637,12 @@ void main_hfp_ag_operations (void)
                 }
 
                 LOG_DEBUG("Enter Speaker Gain (0-15): ");
-                scanf("%d", &read_val);
-                appl_hfag_vgm = (UCHAR)read_val;
-
-                appl_send_rsp(HFAG_VGM, NULL);
+                retval = appl_validate_params(&read_val,2U,0U,15U);
+                if (API_SUCCESS == retval)
+                {
+                    appl_hfag_vgm = (UCHAR)read_val;
+                    appl_send_rsp(HFAG_VGM, NULL);
+                }
                 break;
 
             case 65:
@@ -1358,11 +1379,11 @@ void appl_start_hfp_ag (void)
                      (
                          hfp_ag_record_handle,
                          PROTOCOL_DESC_LIST,
-                         &hfp_ag_server_channel
+                         &appl_hfp_ag_server_channel
                      );
         LOG_DEBUG("[Appl] HFP AG Get Server Channel %02x\n",api_retval);
 
-        api_retval = BT_hfp_ag_start(hfp_ag_server_channel);
+        api_retval = BT_hfp_ag_start(appl_hfp_ag_server_channel);
 
         if(API_SUCCESS == api_retval)
         {
@@ -1422,7 +1443,7 @@ void appl_hfag_sdp_cb
         /* Implies that SDP open wa successful but service search failed */
         if(command == SDP_ServiceSearchAttributeResponse)
         {
-            (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&sdp_handle);
+            (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_ag_sdp_handle);
             retval = API_FAILURE; /*  return; */
         }
     }
@@ -1440,7 +1461,7 @@ void appl_hfag_sdp_cb
                 LOG_DEBUG("> ** FAILED to Allocate memory for SDP Query\n");
 
                 /* Close SDP */
-                (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&sdp_handle);
+                (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_ag_sdp_handle);
                 /* return; */
             }
             else
@@ -1450,7 +1471,7 @@ void appl_hfag_sdp_cb
                 /* Do Service Search Request */
                 retval = BT_sdp_servicesearchattributerequest
                          (
-                             &sdp_handle,
+                             &hfp_ag_sdp_handle,
                              &uuid,
                              num_uuids,
                              attrib_id,
@@ -1471,7 +1492,7 @@ void appl_hfag_sdp_cb
                     LOG_DEBUG("> Closing SDP Connection\n");
 
                     /* Close SDP */
-                    (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&sdp_handle);
+                    (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_ag_sdp_handle);
 
                     /* return; */
                 }
@@ -1504,7 +1525,7 @@ void appl_hfag_sdp_cb
 
                 LOG_DEBUG("> ** FAILED to get Remote SERVER CHANNEL\n");
 
-                (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&sdp_handle);
+                (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_ag_sdp_handle);
                 /* return; */
             }
             else
@@ -1536,7 +1557,7 @@ void appl_hfag_sdp_cb
                 BT_free_mem(data);
 
                 /* Close SDP */
-                (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&sdp_handle);
+                (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_ag_sdp_handle);
             }
 
             break;
@@ -1549,7 +1570,7 @@ void appl_hfag_sdp_cb
             /* Free allocated memory for attribute data */
             BT_free_mem(data);
 
-            (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&sdp_handle);
+            (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hfp_ag_sdp_handle);
 
             break;
 
@@ -1573,7 +1594,7 @@ void appl_hfp_ag_send_data(void)
     LOG_DEBUG ("Enter AT cmd/rsp string\n");
     scanf("%s", ag_rsp_data);
 
-    BT_str_n_copy (appl_hfp_ag_data, HFP_CR_LF, sizeof(appl_hfp_ag_data));
+    BT_str_n_copy (appl_hfp_ag_data, HFP_CR_LF, BT_str_len(HFP_CR_LF));
     BT_str_n_cat (appl_hfp_ag_data, ag_rsp_data, (sizeof(appl_hfp_ag_data) - BT_str_len(appl_hfp_ag_data)));
     BT_str_n_cat (appl_hfp_ag_data, HFP_CR_LF, (sizeof(appl_hfp_ag_data) - BT_str_len(appl_hfp_ag_data)));
 
@@ -1741,7 +1762,7 @@ void appl_hfpag_change_esco_config(void)
     esco_params.rtx_effort = rtx_effort;
 
     /* Update the eSCO channel paramters for Default mSBC Codec */
-    appl_hci_set_esco_channel_parameters
+    (BT_IGNORE_RETURN_VALUE)appl_hci_set_esco_channel_parameters
     (
         BT_TRUE,
         &esco_params
@@ -1753,7 +1774,7 @@ void appl_hfpag_change_esco_config(void)
 }
 
 /*command to create eSCO connection with custom eSCO parameter set using command 19*/
-void appl_hfpag_create_eSCO_connection()
+void appl_hfpag_create_eSCO_connection(void)
 {
     API_RESULT retval;
     UINT16 hci_handle;
@@ -1792,10 +1813,11 @@ void appl_hfag_open_voice_channel(UCHAR codec)
     API_RESULT retval;
     UINT16 hci_handle;
     HCI_SCO_IN_PARAMS hfp_ag_esco_param;
-    /*
-    * Establish Synchronous Connection with selected setting
-    * with AG
-    */
+
+    /**
+     * Establish Synchronous Connection with selected setting
+     * with AG
+     */
     retval = BT_hci_get_acl_connection_handle
              (
                  hfu_bd_addr,
@@ -1804,7 +1826,7 @@ void appl_hfag_open_voice_channel(UCHAR codec)
 
     if (API_SUCCESS == retval)
     {
-        /*get default eSCO parameter set */
+        /* get default eSCO parameter set */
         appl_hci_get_esco_channel_parameters(&hfp_ag_esco_param);
 
         hfp_ag_esco_param.voice_setting = appl_hfag_esco_params[codec]->voice_setting;
@@ -1932,6 +1954,12 @@ void appl_hfag_callend_timeout_handler(void * args, UINT16 size)
 void appl_hfag_call_status_pl(UCHAR status)
 {
     BT_timer_handle tmr_handle;
+    API_RESULT retval;
+    UINT16 hci_sco_handles[HCI_MAX_SCO_CHANNELS];
+    UCHAR num_of_sco_handles;
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    BT_mem_set(hci_sco_handles, 0, sizeof(UINT16)*HCI_MAX_SCO_CHANNELS);
 
     switch (status)
     {
@@ -1940,7 +1968,13 @@ void appl_hfag_call_status_pl(UCHAR status)
         break;
 
     case 0x01U: /* Call Active */
-        /* if (!appl_hfag_inband) */
+        retval = BT_hci_get_sco_connection_handle
+                    (
+                        hfu_bd_addr,
+                        hci_sco_handles,
+                        &num_of_sco_handles
+                    );
+        if (HCI_NO_ACTIVE_SCO_CONNECTION == retval)
         {
             if (0U != appl_hfag_codec_negotiate)
             {
@@ -1954,7 +1988,7 @@ void appl_hfag_call_status_pl(UCHAR status)
         break;
 
     case 0x02U: /* Call Incoming */
-        if (0U != appl_hfag_inband)
+        if (1U == appl_hfag_inband)
         {
             if (0U != appl_hfag_codec_negotiate)
             {
@@ -1982,6 +2016,11 @@ void appl_hfag_call_status_pl(UCHAR status)
         LOG_DEBUG("Invalid Status: 0x%02X\n", status);
         break;
     }
+}
+
+UCHAR appl_hfag_get_inbandring_status(void)
+{
+    return appl_hfag_inband;
 }
 
 #endif /* HFP_AG */

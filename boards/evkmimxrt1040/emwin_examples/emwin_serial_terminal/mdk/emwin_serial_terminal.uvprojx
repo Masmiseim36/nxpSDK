@@ -329,7 +329,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1042XJM5B, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1042XJM5B, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../common;../../../../../devices/MIMXRT1042/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../components/video;../../../../../components/gt911;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1042xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1121,6 +1121,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -1256,6 +1266,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -1279,6 +1299,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -1780,7 +1805,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1042XJM5B, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1042XJM5B, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../common;../../../../../devices/MIMXRT1042/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console_lite;../../../../../components/video;../../../../../components/gt911;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1042;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1816,7 +1841,7 @@
             <ScatterFile>MIMXRT1042xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2572,6 +2597,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -2707,6 +2742,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -2730,6 +2775,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>

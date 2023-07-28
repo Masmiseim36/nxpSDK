@@ -13,12 +13,12 @@
 /* ----------------------------------------- Header File Inclusion */
 #include "appl_ftp.h"
 #include "ftp_pl.h"
+#include "appl_utils.h"
 
 #ifdef FTP
 /* ----------------------------------------- External Global Variables */
 
 /* ----------------------------------------- Exported Global Variables */
-UCHAR ftp_get_folderlisting_name[] = "GET_FOLDER_LISTING.txt";
 
 /* ----------------------------------------- Static Global Variables */
 static FTP_INSTANCE  ftp_server_instance[FTP_NUM_SERVER_INSTANCE];
@@ -650,29 +650,28 @@ API_RESULT appl_ftp_server_callback
                     ftp_rx_hdrs->ftp_req_info->name->value,
                     file_object
                 );
-                /* Open the file to be sent */
-                retval = BT_fops_file_open (file_object, (UCHAR *)"rb", &ftp_rx_fp);
-                if ((API_SUCCESS != retval) || (NULL == ftp_rx_fp))
-                {
-                    LOG_DEBUG ("Failed to open Delete Object file\n");
-                    tx_response = OBEX_NOT_FOUND_RSP;
-                    break;
-                }
+
                 retval = BT_fops_get_file_attributes
                          (
                              file_object,
                              &file_attribute
                          );
 
-                if ((API_SUCCESS == retval) &&
-                    (BT_FOPS_MASK_READONLY == (file_attribute & BT_FOPS_MASK_READONLY)))
+                if (API_SUCCESS != retval)
                 {
-                    LOG_DEBUG ("object cannot be deleted : %s",object_name);
-                    tx_response = OBEX_UNAUTHORIZED_RSP;
+                    tx_response = OBEX_NOT_FOUND_RSP;
                 }
                 else
                 {
-                   (BT_IGNORE_RETURN_VALUE) BT_fops_object_delete(file_object);
+                    if (BT_FOPS_MASK_READONLY == (file_attribute & BT_FOPS_MASK_READONLY))
+                    {
+                        printf ("object cannot be deleted : %s",object_name);
+                        tx_response = OBEX_UNAUTHORIZED_RSP;
+                    }
+                    else
+                    {
+                       (BT_IGNORE_RETURN_VALUE) BT_fops_object_delete(file_object);
+                    }
                 }
             }
             break;

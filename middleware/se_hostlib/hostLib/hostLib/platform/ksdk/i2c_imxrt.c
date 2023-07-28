@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include "board.h"
+#include "se_board_config.h"
 #if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && FSL_FEATURE_SOC_LPI2C_COUNT > 0
 #include "i2c_a7.h"
 #include "fsl_clock.h"
@@ -37,33 +38,6 @@
 #define DELAY_LPI2C_US            (0)
 
 #define LPI2C_LOG_PRINTF(...) do { printf("\r\n[%04d] ",__LINE__); printf(__VA_ARGS__); } while (0)
-
-#if defined(CPU_MIMXRT1062DVL6A) /* TODO: Should be board specific */
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#   define LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#   define LPI2C_CLOCK_SOURCE_DIVIDER (0U)
-/* Get frequency of lpi2c clock */
-#   define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-
-#   define AX_I2CM              LPI2C1
-#   define AX_LPI2C_CLK_SRC       LPI2C_CLOCK_FREQUENCY
-#   define AX_I2CM_IRQN         LPI2C1_IRQn
-#   define USE_LIP2C            1
-#elif defined(CPU_MIMXRT1176DVMAA_cm7) /* TODO: Should be board specific */
-/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#   define LPI2C_CLOCK_SOURCE_SELECT (0U)
-/* Clock divider for master lpi2c clock source */
-#   define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
-/* Get frequency of lpi2c clock */
-#   define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))
-// #   define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-
-#   define AX_I2CM              (LPI2C_Type *)LPI2C1_BASE
-#   define AX_LPI2C_CLK_SRC       LPI2C_CLOCK_FREQUENCY
-#   define AX_I2CM_IRQN         LPI2C1_IRQn
-#   define USE_LIP2C            1
-#endif
 
 // #define LPI2C_DEBUG
 

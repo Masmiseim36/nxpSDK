@@ -41,7 +41,7 @@
 /* PXR Database Signature */
 /* NOTE: Currently having a dummy signature where
  * - the 2 Upper Bytes are 0x1234
- * - the 2 Lower Bytes are PXR UUID(0x1804)
+ * - the 2 Lower Bytes are Transmit Power UUID(0x1804)
  * Application can have any logic for choosing 4Bytes of signature
  */
 #ifdef GATT_DB_HAVE_DB_SIGNATURE

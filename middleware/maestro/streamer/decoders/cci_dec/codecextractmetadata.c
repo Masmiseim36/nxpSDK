@@ -38,7 +38,7 @@ int32_t ccidec_extract_meta_data(audio_stream_type_t stream_type, file_meta_data
             ret = (uint8_t)codec_extract_metadata_wave(meta_data, ctx);
             break;
 #endif
-#ifdef CASCFG_ENABLE_MP3_CODEC
+#ifdef MP3_DEC
         case STREAM_TYPE_MP3:
             ret = (uint8_t)codec_extract_metadata_mp3(meta_data, ctx);
             break;

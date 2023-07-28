@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
+ * Copyright 2019-2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -11,10 +11,9 @@
 extern "C" {
 #endif /* __cplusplus*/
 
-/*!
- * @addtogroup gprintf
- * @{
- */
+/*! \addtogroup HAL_TYPES
+*  @{
+*/
 
 /*******************************************************************************
  * Definitions
@@ -22,9 +21,15 @@ extern "C" {
 /*! @brief Local text buffer size. */
 #define GUI_PRINTF_BUF_SIZE 64
 
+/** @} */
+
 /*******************************************************************************
  * API
  ******************************************************************************/
+
+/*! \addtogroup HAL_OPERATIONS
+*  @{
+*/
 
 /*!
  * @brief Draws text stored in label pointer to LCD buffer.
@@ -44,6 +49,7 @@ extern "C" {
  */
 void GUI_DrawText(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
                     int x, int y, const char *label);
+/** @} */
 
 #if defined(__cplusplus)
 }

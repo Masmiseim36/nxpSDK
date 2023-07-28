@@ -81,20 +81,34 @@ static GATT_DB_HANDLE  appl_feature_hid_report_db_handle;
 static GATT_DB_HANDLE  appl_hid_cp_db_handle;
 static GATT_DB_HANDLE  appl_hid_info_db_handle;
 static GATT_DB_HANDLE  appl_hid_db_handle;
-static GATT_DB_HANDLE  appl_boot_kb_ip_report_db_handle;
-static GATT_DB_HANDLE  appl_boot_kb_op_db_handle;
+static GATT_DB_HANDLE  appl_kb_ip_report_db_handle;
+static GATT_DB_HANDLE  appl_kb_op_db_handle;
 static GATT_DB_HANDLE  appl_scan_interval_window_db_handle;
 static GATT_DB_HANDLE  appl_scan_refresh_db_handle;
 
-static ATT_ATTR_HANDLE appl_hid_report_input_hndl;
-static ATT_ATTR_HANDLE appl_hid_boot_mouse_input_hndl;
-static ATT_ATTR_HANDLE appl_hid_boot_kbd_input_hndl;
+static ATT_ATTR_HANDLE appl_keyboard_hid_report_hndl;
+static ATT_ATTR_HANDLE appl_keyboard_ip_report_hndl;
+static ATT_ATTR_HANDLE appl_mouse_hid_report_hndl;
+static ATT_ATTR_HANDLE appl_mouse_ip_report_hndl;
+
 static UCHAR           mouse_event_index;
 static UCHAR           kbd_event_index;
-static UCHAR           appl_boot_mouse_input;
-static UCHAR           appl_boot_keyboard_input;
-static UCHAR           appl_report_input;
+
+static UCHAR           appl_keyboard_hid_report;
+static UCHAR           appl_keyboard_input_report;
+static UCHAR           appl_mouse_hid_report;
+static UCHAR           appl_mouse_ip_report;
+
 static UCHAR           appl_bat_lvl;
+
+static GATT_DB_HANDLE  appl_hid_mouse_proto_mode_db_handle;
+static GATT_DB_HANDLE  appl_hid_mouse_report_map_db_handle;
+static GATT_DB_HANDLE  appl_hid_mouse_ip_hid_report_db_handle;
+static GATT_DB_HANDLE  appl_hid_mouse_op_hid_report_db_handle;
+static GATT_DB_HANDLE  appl_hid_mouse_feature_hid_report_db_handle;
+static GATT_DB_HANDLE  appl_hid_mouse_cp_db_handle;
+static GATT_DB_HANDLE  appl_hid_mouse_hid_info_db_handle;
+static GATT_DB_HANDLE  appl_hid_mouse_in_db_handle;
 
 /* Protocol Mode */
 /* TODO: Not maintaining per bonded peer device */
@@ -155,11 +169,29 @@ void appl_hid_init(void)
 #endif /* GATT_DB_DYNAMIC */
 
 #ifdef GATT_DB_DYNAMIC
+    /**
+     * APPLICATION NOTE:
+     * =================
+     * Total number of attributes added by each of the mentioned services
+     * listed below are as follows:
+     * GAP Service :  6 Attributes
+     * GATT Service:  4 Attributes
+     * DIS Service :  5 Attributes
+     * BAS Service :  5 Attributes
+     * HID Keyboard: 25 Attributes
+     * HID Mouse   : 23 Attributes
+     * SCPS Service:  6 Attributes
+     * Totally 74 Attributes get added.
+     *
+     * The current DIS service used in constructing the HID database has
+     * only 2 Characteristics in it, placed as sample reference.
+     */
     (BT_IGNORE_RETURN_VALUE) appl_hid_add_gaps();
     (BT_IGNORE_RETURN_VALUE) appl_hid_add_gatts();
     (BT_IGNORE_RETURN_VALUE) appl_hid_add_dis();
     (BT_IGNORE_RETURN_VALUE) appl_hid_add_bas();
-    (BT_IGNORE_RETURN_VALUE) appl_hid_add_hid();
+    (BT_IGNORE_RETURN_VALUE) appl_hid_add_hid_keyboard();
+    (BT_IGNORE_RETURN_VALUE) appl_hid_add_hid_mouse();
     (BT_IGNORE_RETURN_VALUE) appl_add_scps();
 
 #ifdef GATT_DB_HAVE_DB_SIGNATURE
@@ -173,60 +205,93 @@ void appl_hid_init(void)
     APPL_TRC(
     "[HID]: GATT Database Registration Status: 0x%04X\n",
     retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for Protocol Mode */
     appl_proto_mode_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_proto_mode_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_proto_mode_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_PROTO_MODE_INST;
+    appl_proto_mode_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_proto_mode_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_PROTO_MODE_INST;;
 
     /* Populate the GATT DB HANDLE for Report Map */
     appl_hid_report_map_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_hid_report_map_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_hid_report_map_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_REPORT_MAP_INST;
+    appl_hid_report_map_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_hid_report_map_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_REPORT_MAP_INST;
 
     /* Populate the GATT DB HANDLE for Input HID Report */
     appl_ip_hid_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_ip_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_ip_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_REPORT_INST0;
+    appl_ip_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_ip_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_REPORT_INST0;
 
     /* Populate the GATT DB HANDLE for Output HID Report */
     appl_op_hid_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_op_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_op_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_REPORT_INST1;
+    appl_op_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_op_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_REPORT_INST1;
 
     /* Populate the GATT DB HANDLE for feature HID Report */
     appl_feature_hid_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_feature_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_feature_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_REPORT_INST2;
+    appl_feature_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_feature_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_REPORT_INST2;
 
     /* Populate the GATT DB HANDLE for HID control point */
     appl_hid_cp_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_hid_cp_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_hid_cp_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_CNTRL_PNT_INST;
+    appl_hid_cp_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_hid_cp_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_CNTRL_PNT_INST;
 
     /* Populate the GATT DB HANDLE for HID Information */
     appl_hid_info_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_hid_info_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_hid_info_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_INFO_INST;
-
-    /* Populate the GATT DB HANDLE for BootMouseInputReport */
-    appl_hid_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_hid_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_hid_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_IN_INST;
+    appl_hid_info_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_hid_info_db_handle.char_id = (UCHAR)GATT_CHAR_HID_KEYBOARD_HID_INFO_INST;
 
     /* Populate the GATT DB HANDLE for BootKeyboardInputReport */
-    appl_boot_kb_ip_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_boot_kb_ip_report_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_boot_kb_ip_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KBD_IN_INST;
+    appl_kb_ip_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_kb_ip_report_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_kb_ip_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_KBD_IN_INST;
 
     /* Populate the GATT DB HANDLE for BootKeyboardOutputReport */
-    appl_boot_kb_op_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
-    appl_boot_kb_op_db_handle.service_id = (UCHAR)GATT_SER_HID_INST;
-    appl_boot_kb_op_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KBD_OUT_INST;
+    appl_kb_op_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_kb_op_db_handle.service_id = (UCHAR)GATT_SER_HID_KEYBOARD_INST;
+    appl_kb_op_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_KEYBOARD_KBD_OUT_INST;
+
+    /* GATT DB handle population for 2nd Instance */
+    /* Populate the GATT DB HANDLE for Protocol Mode of 2nd instance */
+    appl_hid_mouse_proto_mode_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_proto_mode_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_proto_mode_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_PROTO_MODE_INST;
+
+    /* Populate the GATT DB HANDLE for Report Map of 2nd instance */
+    appl_hid_mouse_report_map_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_report_map_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_report_map_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_REPORT_MAP_INST;
+
+    /* Populate the GATT DB HANDLE for Input HID Report of 2nd instance */
+    appl_hid_mouse_ip_hid_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_ip_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_ip_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_REPORT_INST0;
+
+    /* Populate the GATT DB HANDLE for Output HID Report of 2nd instance */
+    appl_hid_mouse_op_hid_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_op_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_op_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_REPORT_INST1;
+
+    /* Populate the GATT DB HANDLE for feature HID Report of 2nd instance */
+    appl_hid_mouse_feature_hid_report_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_feature_hid_report_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_feature_hid_report_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_REPORT_INST2;
+
+    /* Populate the GATT DB HANDLE for HID control point of 2nd instance */
+    appl_hid_mouse_cp_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_cp_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_cp_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_CNTRL_PNT_INST;
+
+    /* Populate the GATT DB HANDLE for HID Information of 2nd instance */
+    appl_hid_mouse_hid_info_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_hid_info_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_hid_info_db_handle.char_id    = (UCHAR)GATT_CHAR_HID_MOUSE_HID_INFO_INST;
+
+    /* Populate the GATT DB HANDLE for Boot Mouse Input of 2nd instance */
+    appl_hid_mouse_in_db_handle.device_id = DEVICE_HANDLE_INIT_VAL;
+    appl_hid_mouse_in_db_handle.service_id = (UCHAR)GATT_SER_HID_MOUSE_INST;
+    appl_hid_mouse_in_db_handle.char_id = (UCHAR)GATT_CHAR_HID_MOUSE_IN_INST;
 
     /* Populate the GATT DB HANDLE for ScanIntervalWindow */
     appl_scan_interval_window_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
@@ -288,20 +353,20 @@ void appl_hid_connect(DEVICE_HANDLE  * dq_handle)
     value.val = &appl_hid_mouse_proto_mode[0U];
 
     /* Update Protocol Mode Value with Report Mode */
-    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_PROTO_MODE_INST;
+    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_KEYBOARD_PROTO_MODE_INST;
     retval = BT_gatt_db_set_char_val
              (
                  &appl_hid_db_handle,
                  &value
              );
 
-    /* If HID Mouse Input Report is configured, initiate transfer */
-    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_REPORT_INST0;
+    /* If HID Input Report is configured, initiate transfer */
+    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_KEYBOARD_REPORT_INST0;
 
     retval = BT_gatt_db_get_char_val_hndl
              (
                   &appl_hid_db_handle,
-                  &appl_hid_report_input_hndl
+                  &appl_keyboard_hid_report_hndl
              );
     retval = BT_gatt_db_get_char_cli_cnfg(&appl_hid_db_handle,&value);
     if (API_SUCCESS != retval)
@@ -321,15 +386,82 @@ void appl_hid_connect(DEVICE_HANDLE  * dq_handle)
     "[HID]: Fetched Client Configuration (0x%04X) for Device (0x%02X) with "
     "result 0x%04X\n", cli_cnfg, (*dq_handle), retval);
 
-    /* If HID Boot Mouse Input Report is configured, initiate transfer */
+    /* If BootKeyboardInputReport is configured, initiate transfer */
+    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_KEYBOARD_KBD_IN_INST;
+
+    retval = BT_gatt_db_get_char_val_hndl
+    (
+        &appl_hid_db_handle,
+        &appl_keyboard_ip_report_hndl
+    );
+    retval = BT_gatt_db_get_char_cli_cnfg(&appl_hid_db_handle, &value);
+    if (API_SUCCESS != retval)
+    {
+        cli_cnfg = 0x0000U;
+    }
+    else
+    {
+        BT_UNPACK_LE_2_BYTE(&cli_cnfg, value.val);
+    }
+    if (0U != cli_cnfg)
+    {
+        appl_manage_trasnfer(appl_hid_db_handle, cli_cnfg);
+    }
+
+    APPL_TRC(
+    "[HID]: Fetched Client Configuration (0x%04X) for Device (0x%02X) with "
+    "result 0x%04X\n", cli_cnfg, (*dq_handle), retval);
+
+    /* For 2nd Instance */
+    value.len = 1U;
+    value.val = &appl_hid_mouse_proto_mode[0U];
+
+    /* Update Protocol Mode Value with Report Mode */
+    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_MOUSE_PROTO_MODE_INST;
+    retval = BT_gatt_db_set_char_val
+    (
+        &appl_hid_db_handle,
+        &value
+    );
+
+    /* If HID Input Report is configured, initiate transfer */
+    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_MOUSE_REPORT_INST0;
+
+    retval = BT_gatt_db_get_char_val_hndl
+    (
+        &appl_hid_db_handle,
+        &appl_mouse_hid_report_hndl
+    );
+    retval = BT_gatt_db_get_char_cli_cnfg(&appl_hid_db_handle, &value);
+    if (API_SUCCESS != retval)
+    {
+        cli_cnfg = 0x0000U;
+    }
+    else
+    {
+        BT_UNPACK_LE_2_BYTE(&cli_cnfg, value.val);
+    }
+
+    if (0U != cli_cnfg)
+    {
+        appl_manage_trasnfer(appl_hid_db_handle, cli_cnfg);
+    }
+
+    APPL_TRC(
+    "[HID]: Fetched Client Configuration (0x%04X) for Device (0x%02X) with "
+    "result 0x%04X\n", cli_cnfg, (*dq_handle), retval);
+
+    /* If BootMouseInputReport is configured, initiate transfer */
     appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_MOUSE_IN_INST;
 
     retval = BT_gatt_db_get_char_val_hndl
              (
-                  &appl_hid_db_handle,
-                  &appl_hid_boot_mouse_input_hndl
+                 &appl_hid_db_handle,
+                 &appl_mouse_ip_report_hndl
              );
-    retval = BT_gatt_db_get_char_cli_cnfg(&appl_hid_db_handle,&value);
+
+    retval = BT_gatt_db_get_char_cli_cnfg(&appl_hid_db_handle, &value);
+
     if (API_SUCCESS != retval)
     {
         cli_cnfg = 0x0000U;
@@ -341,34 +473,7 @@ void appl_hid_connect(DEVICE_HANDLE  * dq_handle)
 
     if (0U != cli_cnfg)
     {
-        appl_manage_trasnfer (appl_hid_db_handle,cli_cnfg);
-    }
-
-    APPL_TRC(
-    "[HID]: Fetched Client Configuration (0x%04X) for Device (0x%02X) with "
-    "result 0x%04X\n", cli_cnfg, (*dq_handle), retval);
-
-    /* If HID Boot Keyboard Input Report is configured, initiate transfer */
-    appl_hid_db_handle.char_id = (UCHAR)GATT_CHAR_HID_KBD_IN_INST;
-
-    retval = BT_gatt_db_get_char_val_hndl
-             (
-                  &appl_hid_db_handle,
-                  &appl_hid_boot_kbd_input_hndl
-             );
-    retval = BT_gatt_db_get_char_cli_cnfg(&appl_hid_db_handle,&value);
-    if (API_SUCCESS != retval)
-    {
-        cli_cnfg = 0x0000U;
-    }
-    else
-    {
-        BT_UNPACK_LE_2_BYTE(&cli_cnfg, value.val);
-    }
-
-    if (0U != cli_cnfg)
-    {
-        appl_manage_trasnfer (appl_hid_db_handle,cli_cnfg);
+        appl_manage_trasnfer(appl_hid_db_handle, cli_cnfg);
     }
 
     APPL_TRC(
@@ -407,17 +512,21 @@ void appl_manage_trasnfer (GATT_DB_HANDLE handle, UINT16 config)
 
         if (GATT_CLI_CNFG_NOTIFICATION == config)
         {
-            if (GATT_CHAR_HID_MOUSE_IN_INST == handle.char_id)
+            if (GATT_CHAR_HID_KEYBOARD_REPORT_INST0 == handle.char_id)
             {
-                appl_boot_mouse_input = BT_TRUE;
+                appl_keyboard_hid_report = BT_TRUE;
             }
-            else if (GATT_CHAR_HID_KBD_IN_INST == handle.char_id)
+            else if (GATT_CHAR_HID_KEYBOARD_KBD_IN_INST == handle.char_id)
             {
-                appl_boot_keyboard_input = BT_TRUE;
+                appl_keyboard_input_report = BT_TRUE;
             }
-            else if (GATT_CHAR_HID_REPORT_INST0 == handle.char_id)
+            else if (GATT_CHAR_HID_MOUSE_REPORT_INST0 == handle.char_id)
             {
-                appl_report_input = BT_TRUE;
+                appl_mouse_hid_report = BT_TRUE;
+            }
+            else if (GATT_CHAR_HID_MOUSE_IN_INST == handle.char_id)
+            {
+                appl_mouse_ip_report = BT_TRUE;
             }
             else
             {
@@ -447,6 +556,7 @@ void appl_manage_trasnfer (GATT_DB_HANDLE handle, UINT16 config)
                              &appl_handle,
                              sizeof (appl_handle)
                          );
+
                 APPL_TRC(
                 "[HID]: Boot Mouse event Timer %p Started, result 0x%04X!\n",
                 timer_handle, retval);
@@ -454,17 +564,21 @@ void appl_manage_trasnfer (GATT_DB_HANDLE handle, UINT16 config)
         }
         else if (GATT_CLI_CNFG_DEFAULT == config)
         {
-            if (GATT_CHAR_HID_MOUSE_IN_INST == handle.char_id)
+            if (GATT_CHAR_HID_KEYBOARD_REPORT_INST0 == handle.char_id)
             {
-                appl_boot_mouse_input = BT_FALSE;
+                appl_keyboard_hid_report = BT_FALSE;
             }
-            else if (GATT_CHAR_HID_KBD_IN_INST == handle.char_id)
+            else if (GATT_CHAR_HID_KEYBOARD_KBD_IN_INST == handle.char_id)
             {
-                appl_boot_keyboard_input = BT_FALSE;
+                appl_keyboard_input_report = BT_FALSE;
             }
-            else if (GATT_CHAR_HID_REPORT_INST0 == handle.char_id)
+            else if (GATT_CHAR_HID_MOUSE_REPORT_INST0 == handle.char_id)
             {
-                appl_report_input = BT_FALSE;
+                appl_mouse_hid_report = BT_FALSE;
+            }
+            else if (GATT_CHAR_HID_MOUSE_IN_INST == handle.char_id)
+            {
+                appl_mouse_ip_report = BT_FALSE;
             }
             else
             {
@@ -503,7 +617,8 @@ API_RESULT appl_manage_wwr (GATT_DB_HANDLE * handle, GATT_DB_PARAMS * params)
 
     appl_get_handle_from_device_handle (handle->device_id,&appl_handle);
 
-    if (GATT_CHAR_HID_PROTO_MODE_INST == handle->char_id)
+    if ((GATT_CHAR_HID_KEYBOARD_PROTO_MODE_INST == handle->char_id) ||
+        (GATT_CHAR_HID_MOUSE_PROTO_MODE_INST == handle->char_id))
     {
         /* Verify and Save Protocol Mode */
         if ((1U == params->value.len) &&
@@ -540,8 +655,8 @@ void appl_timer_expiry_handler (void *data, UINT16 datalen)
     /* Restart timer to simulate HID Boot Mouse events */
     if (BT_TIMER_HANDLE_INIT_VAL != timer_handle)
     {
-        APPL_TRC(
-        "[HID]: Boot Mouse event Timeout Occurred: %p\n", timer_handle);
+      /* APPL_TRC(
+        "[HID]: Boot Mouse event Timeout Occurred: %p\n", timer_handle); */
 
         timer_handle = BT_TIMER_HANDLE_INIT_VAL;
     }
@@ -567,9 +682,9 @@ void appl_timer_expiry_handler (void *data, UINT16 datalen)
     APPL_SEND_MEASUREMENT(&fsm_param.handle);
 #endif /* APPL_FSM_SUPPORT */
 
-    APPL_TRC(
+  /*APPL_TRC(
     "[HID]: Boot Mouse event Timer %p Started, result 0x%04X!\n",
-    timer_handle, retval);
+    timer_handle, retval); */
 }
 
 
@@ -611,12 +726,16 @@ void appl_send_hid_event (APPL_HANDLE    * handle)
     if (APPL_HID_BOOT_MOUSE_EVENT_COUNT == mouse_event_index)
     {
         mouse_event_index = 0U;
+    }
+
+    if (APPL_HID_BOOT_KBD_EVENT_COUNT == kbd_event_index)
+    {
         kbd_event_index = 0U;
     }
 
-    if (0U != appl_boot_mouse_input)
+    if (0U != appl_mouse_ip_report)
     {
-        hndl_val_param.handle =  appl_hid_boot_mouse_input_hndl;
+        hndl_val_param.handle = appl_mouse_ip_report_hndl;
         hndl_val_param.value.val = (&appl_hid_boot_mouse_event_make[(APPL_HID_BOOT_MOUSE_REPORT_LENGTH * mouse_event_index++) + APPL_BOOT_EVENT_OFFSET]);
         hndl_val_param.value.len = APPL_HID_BOOT_MOUSE_REPORT_LENGTH;
 
@@ -645,10 +764,10 @@ void appl_send_hid_event (APPL_HANDLE    * handle)
         }
     }
 
-    if (0U != appl_boot_keyboard_input)
+    if (0U != appl_keyboard_input_report)
     {
         /* Send Make Event */
-        hndl_val_param.handle =  appl_hid_boot_kbd_input_hndl;
+        hndl_val_param.handle = appl_keyboard_ip_report_hndl;
         hndl_val_param.value.val = (&appl_hid_boot_kbd_event_make[(APPL_HID_BOOT_KBD_REPORT_LENGTH * kbd_event_index++) + APPL_BOOT_EVENT_OFFSET]);
         hndl_val_param.value.len = APPL_HID_BOOT_KBD_REPORT_LENGTH;
 
@@ -692,76 +811,153 @@ void appl_send_hid_event (APPL_HANDLE    * handle)
         }
     }
 
-    if (0U != appl_report_input)
+    /* Both the instances are having Input HIDReport characteritsic */
+    if (0U != appl_mouse_hid_report)
     {
-        hndl_val_param.handle =  appl_hid_report_input_hndl;
+        retval = appl_mouse_hid_report_handler(handle);
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 
-        /* Send Mouse Event */
-        if (APPL_HID_BOOT_KBD_EVENT_COUNT > kbd_event_index)
+    if (0U != appl_keyboard_hid_report)
+    {
+        retval = appl_keyboard_hid_report_handler(handle);
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
+}
+
+API_RESULT appl_mouse_hid_report_handler(APPL_HANDLE * appl_handle)
+{
+    API_RESULT retval;
+
+    retval = appl_notify_hid_report
+             (
+                 appl_handle,
+                 appl_mouse_hid_report_hndl
+             );
+
+    APPL_TRC(
+    "[HID]: appl_mouse_hid_report_handler Status: 0x%04X\n", retval);
+
+    return retval;
+}
+
+API_RESULT appl_keyboard_hid_report_handler(APPL_HANDLE * appl_handle)
+{
+    API_RESULT retval;
+
+    retval = appl_notify_hid_report
+             (
+                 appl_handle,
+                 appl_keyboard_hid_report_hndl
+             );
+
+    APPL_TRC(
+    "[HID]: appl_keyboard_hid_report_handler Status: 0x%04X\n", retval);
+
+    return retval;
+}
+
+API_RESULT appl_notify_hid_report
+           (
+               APPL_HANDLE * hndl,
+               ATT_ATTR_HANDLE attr_hndl
+           )
+{
+    API_RESULT retval;
+    ATT_HANDLE_VALUE_PAIR hndl_val_param;
+
+    retval = API_SUCCESS;
+
+    hndl_val_param.handle = attr_hndl;
+
+    /* Send Key board Event */
+    if ((APPL_HID_BOOT_KBD_EVENT_COUNT > kbd_event_index) &&
+        (appl_keyboard_hid_report_hndl == attr_hndl))
+    {
+        /* Send Keyboard Event */
+        hndl_val_param.value.val = (appl_hid_boot_kbd_event_make +
+            (APPL_HID_BOOT_KBD_REPORT_LENGTH * kbd_event_index++));
+        hndl_val_param.value.len = APPL_HID_BOOT_KBD_REPORT_LENGTH;
+
+        retval = BT_att_send_hndl_val_ntf
+                 (
+                     &APPL_GET_ATT_INSTANCE(*hndl),
+                     &hndl_val_param
+                 );
+
+        if (API_SUCCESS != retval)
         {
-            /* Send Keyboard Event */
-            hndl_val_param.value.val = (appl_hid_boot_kbd_event_make+
-                            (APPL_HID_BOOT_KBD_REPORT_LENGTH*kbd_event_index++));
-            hndl_val_param.value.len = APPL_HID_BOOT_KBD_REPORT_LENGTH;
-
-            retval = BT_att_send_hndl_val_ntf
-                     (
-                         &APPL_GET_ATT_INSTANCE(*handle),
-                         &hndl_val_param
-                      );
-            if (API_SUCCESS != retval)
-            {
-                APPL_ERR("[HID]: **ERR** Failed to send Mouse make event, reason 0x%04X",
-                retval);
-            }
-
-            /* Send Break Event */
-            hndl_val_param.value.val = (appl_hid_boot_kbd_event_make+
-                            (APPL_HID_BOOT_KBD_REPORT_LENGTH*kbd_event_index++));
-
-            retval = BT_att_send_hndl_val_ntf
-                     (
-                         &APPL_GET_ATT_INSTANCE(*handle),
-                         &hndl_val_param
-                      );
-            if (API_SUCCESS != retval)
-            {
-                APPL_ERR("[HID]: **ERR** Failed to send Mouse make event, reason 0x%04X",
-                retval);
-            }
+            APPL_ERR("[HID]: **ERR** Failed to send Keyboard event, reason 0x%04X",
+            retval);
         }
-        else
+
+        /* Send Break Event */
+        hndl_val_param.value.val = (appl_hid_boot_kbd_event_make +
+            (APPL_HID_BOOT_KBD_REPORT_LENGTH * kbd_event_index++));
+
+        retval = BT_att_send_hndl_val_ntf
+                 (
+                     &APPL_GET_ATT_INSTANCE(*hndl),
+                     &hndl_val_param
+                 );
+
+        if (API_SUCCESS != retval)
         {
-            hndl_val_param.value.val = (appl_hid_boot_mouse_event_make+
-                        (APPL_HID_BOOT_MOUSE_REPORT_LENGTH*mouse_event_index++));
-            hndl_val_param.value.len = APPL_HID_BOOT_MOUSE_REPORT_LENGTH;
-
-            retval = BT_att_send_hndl_val_ntf
-                     (
-                         &APPL_GET_ATT_INSTANCE(*handle),
-                         &hndl_val_param
-                      );
-            if (API_SUCCESS != retval)
-            {
-                APPL_ERR("[HID]: **ERR** Failed to send Mouse make event, reason 0x%04X",
-                retval);
-            }
-
-            hndl_val_param.value.val = (appl_hid_boot_mouse_event_make+
-                            (APPL_HID_BOOT_MOUSE_REPORT_LENGTH*mouse_event_index++));
-
-            retval = BT_att_send_hndl_val_ntf
-                     (
-                         &APPL_GET_ATT_INSTANCE(*handle),
-                         &hndl_val_param
-                      );
-            if (API_SUCCESS != retval)
-            {
-                APPL_ERR("[HID]: **ERR** Failed to send Mouse make event, reason 0x%04X",
-                retval);
-            }
+            APPL_ERR("[HID]: **ERR** Failed to send Keyboard event, reason 0x%04X",
+            retval);
         }
     }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
+
+    if ((APPL_HID_BOOT_MOUSE_EVENT_COUNT > mouse_event_index) &&
+        (appl_mouse_hid_report_hndl == attr_hndl))
+    {
+        hndl_val_param.value.val = (appl_hid_boot_mouse_event_make +
+            (APPL_HID_BOOT_MOUSE_REPORT_LENGTH * mouse_event_index++));
+        hndl_val_param.value.len = APPL_HID_BOOT_MOUSE_REPORT_LENGTH;
+
+        retval = BT_att_send_hndl_val_ntf
+                 (
+                     &APPL_GET_ATT_INSTANCE(*hndl),
+                     &hndl_val_param
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_ERR("[HID]: **ERR** Failed to send Mouse event, reason 0x%04X",
+            retval);
+        }
+
+        hndl_val_param.value.val = (appl_hid_boot_mouse_event_make +
+            (APPL_HID_BOOT_MOUSE_REPORT_LENGTH * mouse_event_index++));
+
+        retval = BT_att_send_hndl_val_ntf
+                 (
+                     &APPL_GET_ATT_INSTANCE(*hndl),
+                     &hndl_val_param
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_ERR("[HID]: **ERR** Failed to send Mouse event, reason 0x%04X",
+            retval);
+        }
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
+
+    return retval;
 }
 
 void appl_hid_handle_ind_complete
@@ -798,7 +994,7 @@ void appl_hid_handle_mtu_update_complete
      )
 {
     APPL_TRC("\n[HID]: Updated MTU is %d for Appl Handle 0x%02X\n",
-        mtu, *handle);
+    mtu, *handle);
 }
 #endif /* (defined ATT && defined HID) */
 

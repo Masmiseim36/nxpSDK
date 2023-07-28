@@ -24,6 +24,7 @@
 
 /* ----------------------------------------- Static Global Variables */
 /* Main A2DP Application Menu */
+#ifdef AVDTP_ASSISTIVE_MODE
 static const char a2dp_main_menu[] = " \n\
 --------------- A2DP Menu ---------------------- \n\n\
   0.  Exit. \n\
@@ -65,6 +66,48 @@ static const char a2dp_main_menu[] = " \n\
   70. AVDTP Set Signalling msg reject rsp params. \n\
  \n\
 Your Option -> ";
+#else /* AVDTP_ASSISTIVE_MODE */
+static const char a2dp_main_menu[] = " \n\
+--------------- A2DP Menu ---------------------- \n\n\
+  0.  Exit. \n\
+  1.  Refresh. \n\
+ \n\
+  2.  A2DP Initialize. \n\
+  3.  A2DP Shutdown. \n\
+ \n\
+  4.  A2DP Register Codec. \n\
+ \n\
+  5.  A2DP Connect. \n\
+  6.  A2DP Start. \n\
+  7.  A2DP Suspend. \n\
+  8.  A2DP Reconfigure. \n\
+  9.  A2DP Disconnect. \n\
+ \n\
+  10. AVDTP Connect. \n\
+  11. AVDTP Discover. \n\
+  12. AVDTP Get Capabilities. \n\
+  13. AVDTP Get All Capabilities. \n\
+  14. AVDTP Disconnect. \n\
+  \n\
+  15. A2DP Set Initial Delay Report. \n\
+  16. A2DP Send Delay Report. \n\
+  \n\
+  17. Create ACL connection\n\
+  18. Release ACL connection\n\
+  19. Register Peer BD Address\n\
+ \n\
+  20. A2DP Set Media MTU. \n\
+ \n\
+  30. A2DP Set Content Protection header. \n\
+ \n\
+  40. A2DP Show Instances. \n\
+ \n\
+  50. Write Flush Timeout. \n\
+ \n\
+  70. AVDTP Set Signalling msg reject rsp params. \n\
+ \n\
+Your Option -> ";
+#endif
 
 /* HCI ACL Connection List */
 static HCI_CONNECTION_LIST appl_a2dp_acl_list [BT_MAX_REMOTE_DEVICES];
@@ -114,28 +157,33 @@ static A2DP_MEDIA_CHANNEL_PARAMS appl_a2dp_media_ch_params;
 #endif /* AVDTP_ASSISTIVE_MODE */
 
 #ifdef AVDTP_HAVE_CONTENT_PROTECTION
-UCHAR * cp_ie_buf = NULL;
-UCHAR   cp_ie_buf_len = 0U;
-UCHAR   a2dp_cp_header [1U];
-UINT16  a2dp_cp_header_len;
+static UCHAR * cp_ie_buf = NULL;
+static UCHAR   cp_ie_buf_len = 0U;
+static UCHAR   a2dp_cp_header [1U];
+static UINT16  a2dp_cp_header_len;
 #endif /* AVDTP_HAVE_CONTENT_PROTECTION */
 
 #ifdef A2DP_SINK
+
+#ifdef INCLUDE_JPL
 static JPL_PARAM jpl_param;
 static UCHAR * appl_a2dp_jpl_pof;
 static UINT16 appl_a2dp_jpl_poflen;
+#endif /* INCLUDE_JPL */
 
 /* Current instance being played back */
 static UCHAR appl_a2dp_playback_instance;
 
 static void appl_a2dp_jpl_configure(UCHAR * codec_ie);
 
+#ifdef INCLUDE_JPL
 static API_RESULT jpl_callback_handle
                   (
                       /* IN */ UCHAR   event_type,
                       /* IN */ UCHAR * event_data,
                       /* IN */ UINT16  event_datalen
                   );
+#endif /* INCLUDE_JPL */
 
 static void a2dp_pl_snk_callback
             (
@@ -168,11 +216,13 @@ static UCHAR a2dp_src_buffer[A2DP_SRC_MAX_BUFFER_SIZE];
 static UCHAR pcm_to_send[A2DP_SRC_SBC_BLOCK_MAX];
 
 /* Synchronization for thread */
-BT_DEFINE_MUTEX (a2dp_src_th_mutex)
-BT_DEFINE_COND (a2dp_src_th_cond)
+BT_DEFINE_MUTEX_TYPE (static, a2dp_src_th_mutex)
+BT_DEFINE_COND_TYPE (static, a2dp_src_th_cond)
 
+#ifdef INCLUDE_SBC
 /* SBC Encoder Input/Output Structure */
 static SBC_ENCODER_IO_STRUCT a2dp_sbc_encoder_io;
+#endif /* INCLUDE_SBC */
 
 /* Size of PCM Data used for encoding one SBC frame */
 static UINT16 appl_a2dp_pcm_datalen;
@@ -181,7 +231,7 @@ static UINT16 appl_a2dp_pcm_datalen;
 static UCHAR appl_a2dp_sbc_encoder_state;
 
 /* A2dp state */
-static UCHAR appl_a2dp_state;
+static UCHAR appl_a2dp_state = APPL_A2DP_INVALID_STATE;
 
 /* Buffer for converting UCHAR pcm stream to UINT16 pcm samples */
 static UINT16 appl_a2dp_pcm_data_le [SBC_BLOCK_MAX >> 1U];
@@ -275,7 +325,7 @@ void main_a2dp_operations (void)
     API_RESULT retval;
     UCHAR indx;
     UINT16 hci_handle;
-    appl_a2dp_state = APPL_A2DP_INVALID_STATE;
+
 #ifdef A2DP_SINK
 #ifdef JPL_USE_APP_MEMORY
     JPL_BUFFERS buffer;
@@ -354,8 +404,10 @@ void main_a2dp_operations (void)
             (BT_IGNORE_RETURN_VALUE) BT_avdtp_callback_register (appl_a2dp_avdtp_notify_cb);
 
 #ifdef A2DP_SINK
+#ifdef INCLUDE_JPL
             /* Initialize JPL */
             (BT_IGNORE_RETURN_VALUE) BT_jpl_init(jpl_callback_handle);
+#endif /* INCLUDE_JPL */
 
 #ifdef JPL_USE_APP_MEMORY
             buffer.sbc = a2dp_alloc_buffer_pl(A2DP_SBC_BUFFER);
@@ -387,6 +439,8 @@ void main_a2dp_operations (void)
                     {
                         appl_a2dp_free_instance ((UCHAR)choice);
                     }
+
+                    appl_a2dp_state = APPL_A2DP_INVALID_STATE;
                 }
             }
             else
@@ -1027,7 +1081,7 @@ void appl_a2dp_connect (void)
 
         if (ret < 0)
         {
-            retval = API_FAILURE; /* return; */
+            LOG_DEBUG ("Failed to read Codec IE Configuration\n");
         }
         else
         {
@@ -1108,11 +1162,10 @@ void appl_a2dp_connect (void)
                 )
 
 #ifdef AVDTP_HAVE_CONTENT_PROTECTION
-            if (AVDTP_INVALID_CP_TYPE != appl_a2dp_instance[indx].sep_cap.cp_cap[0U].cp_type)
-            {
+                
                 /* Set Content Protection in the Configuration */
                 printf("Want to Enable CONTENT_PROTECTION: SCMS_T(0/1)\n"); fflush(stdout);
-                printf("\n>-*** NOTE: Check if the peer support for Content Protection in its Capabability Response ***-<\n");
+                printf("\n>-*** NOTE: Check if the peer support for Content Protection in its Capability Response ***-<\n");
                 scanf("%x", &choice);
                 if (0 != choice)
                 {
@@ -1142,7 +1195,6 @@ void appl_a2dp_connect (void)
                         cp_ie_buf_len
                     );
                 }
-            }
 #endif /* AVDTP_HAVE_CONTENT_PROTECTION */
 
                 /**
@@ -1534,25 +1586,21 @@ void appl_a2dp_set_cp_header (void)
             {
                 switch (choice)
                 {
-                    case 1U:
-                        a2dp_cp_header [0U] = AVDTP_SCMS_T_COPY_NOT_ALLOWED;
-                    break;
                     case 2U:
                         a2dp_cp_header [0U] = AVDTP_SCMS_T_COPY_ONCE_ONLY;
                     break;
                     case 3U:
                         a2dp_cp_header [0U] = AVDTP_SCMS_T_COPY_UNLIMITED;
                     break;
-
-                    default:
-                        LOG_DEBUG("Invalid Option: %d\n", choice);
+                    default: /* 1U */
+                        a2dp_cp_header[0U] = AVDTP_SCMS_T_COPY_NOT_ALLOWED;
                     break;
                 }
 
                 a2dp_cp_header_len = 0x01U;
 
                 /* A2DP Set the Content Protection Header*/
-                printf("A2DP Set CP Header ... "); fflush (stdout);
+                LOG_DEBUG("A2DP Set CP Header ... "); fflush (stdout);
                 retval = BT_a2dp_set_cp_header
                          (
                              appl_a2dp_instance[indx].a2dp_instance,
@@ -1590,7 +1638,6 @@ API_RESULT appl_a2dp_notify_cb
     UCHAR codec_type;
     UCHAR role;
     UCHAR i;
-    UINT16 acl_handle;
     API_RESULT retval;
 
 #ifdef A2DP_1_3
@@ -1606,9 +1653,6 @@ API_RESULT appl_a2dp_notify_cb
     role          = appl_a2dp_instance[codec_instance].role;
     codec_ie      = NULL;
     retval = API_SUCCESS;
-
-    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
-    acl_handle    = 0U;
 
 #ifdef A2DP_1_3
     delay_report_data = 0x00U;
@@ -1645,7 +1689,7 @@ API_RESULT appl_a2dp_notify_cb
 
             /* Set Application Stream State to FALSE */
             appl_a2dp_instance[codec_instance].stream_state = APPL_A2DP_STREAM_FALSE;
-
+#ifdef APPL_A2DP_SET_AUTO_FLUSH_TIMEOUT
             if (AVDTP_CODEC_AUDIO_SBC == appl_a2dp_instance[codec_instance].codec_type)
             {
                 /*
@@ -1655,11 +1699,13 @@ API_RESULT appl_a2dp_notify_cb
                  */
                 if (AVDTP_SEP_SOURCE == appl_a2dp_instance[codec_instance].role)
                 {
+                    UINT16 acl_handle = 0;
                     LOG_DEBUG("Updating flush timeout...\n");
                     (BT_IGNORE_RETURN_VALUE) BT_hci_get_acl_connection_handle(appl_a2dp_instance[codec_instance].bd_addr, &acl_handle);
                     (BT_IGNORE_RETURN_VALUE) BT_hci_write_automatic_flush_timeout(acl_handle, 0x40U);
                 }
             }
+#endif /* APPL_A2DP_SET_AUTO_FLUSH_TIMEOUT */
         }
 #ifdef AVDTP_HAVE_CONTENT_PROTECTION
         else
@@ -1667,7 +1713,8 @@ API_RESULT appl_a2dp_notify_cb
             appl_a2dp_instance[codec_instance].cp_type = AVDTP_INVALID_CP_TYPE;
         }
 #endif /* AVDTP_HAVE_CONTENT_PROTECTION */
-
+        /* show instances */
+        appl_a2dp_show_instance();
         break;
 
     case A2DP_CONNECT_IND:
@@ -1717,7 +1764,7 @@ API_RESULT appl_a2dp_notify_cb
                 appl_a2dp_reconfigure (codec_instance);
             }
 #endif /* 0 */
-
+#ifdef APPL_A2DP_SET_AUTO_FLUSH_TIMEOUT
             /*
              * Set flush timeout for the source role - The timeout is for 48KHz sampling rate audio.
              * The application can make this setting dynamic if the source has a dynamic
@@ -1725,12 +1772,15 @@ API_RESULT appl_a2dp_notify_cb
              */
             if (AVDTP_SEP_SOURCE == appl_a2dp_instance[codec_instance].role)
             {
+                UINT16 acl_handle = 0;
                 LOG_DEBUG("Updating flush timeout...\n");
                 (BT_IGNORE_RETURN_VALUE) BT_hci_get_acl_connection_handle(appl_a2dp_instance[codec_instance].bd_addr, &acl_handle);
                 (BT_IGNORE_RETURN_VALUE) BT_hci_write_automatic_flush_timeout(acl_handle, 0x40U);
             }
+#endif //APPL_A2DP_SET_AUTO_FLUSH_TIMEOUT
         }
-
+        /* show instances */
+        appl_a2dp_show_instance();
         break;
 
     case A2DP_START_CNF:
@@ -1805,8 +1855,10 @@ API_RESULT appl_a2dp_notify_cb
                 if ((AVDTP_SEP_SINK == role) &&
                     (AVDTP_CODEC_AUDIO_SBC == appl_a2dp_instance[codec_instance].codec_type))
                 {
+#ifdef INCLUDE_JPL
                     /* Start JPL */
                     (BT_IGNORE_RETURN_VALUE) BT_jpl_start(&jpl_param);
+#endif /* INCLUDE_JPL */
                 }
 #endif /* A2DP_SINK */
             }
@@ -1960,8 +2012,11 @@ API_RESULT appl_a2dp_notify_cb
                 if ((AVDTP_SEP_SINK == role) &&
                     (AVDTP_CODEC_AUDIO_SBC == appl_a2dp_instance[codec_instance].codec_type))
                 {
+#ifdef INCLUDE_JPL
+
                     /* Start JPL */
                     (BT_IGNORE_RETURN_VALUE) BT_jpl_start(&jpl_param);
+#endif /* INCLUDE_JPL */
                 }
 #endif /* A2DP_SINK */
             }
@@ -2060,8 +2115,10 @@ API_RESULT appl_a2dp_notify_cb
                 if ((AVDTP_SEP_SINK == role) &&
                     (AVDTP_CODEC_AUDIO_SBC == appl_a2dp_instance[codec_instance].codec_type))
                 {
+#ifdef INCLUDE_JPL
                     /* Stop JPL */
                     (BT_IGNORE_RETURN_VALUE) BT_jpl_stop();
+#endif /* INCLUDE_JPL */
                 }
 #endif /* A2DP_SINK */
             }
@@ -2124,8 +2181,10 @@ API_RESULT appl_a2dp_notify_cb
                 if ((AVDTP_SEP_SINK == role) &&
                     (AVDTP_CODEC_AUDIO_SBC == appl_a2dp_instance[codec_instance].codec_type))
                 {
+#ifdef INCLUDE_JPL
                     /* Stop JPL */
                     (BT_IGNORE_RETURN_VALUE) BT_jpl_stop();
+#endif /* INCLUDE_JPL */
                 }
 #endif /* A2DP_SINK */
             }
@@ -2158,8 +2217,10 @@ API_RESULT appl_a2dp_notify_cb
         /* Get Codec Type */
         codec_type = appl_a2dp_instance[codec_instance].codec_type;
 
-#ifdef  A2DP_1_3
+        /* Init */
         a2dp_dev_info = NULL;
+
+#ifdef  A2DP_1_3
         if (NULL != event_data)
         {
             a2dp_dev_info = (A2DP_DEVICE_INFO *)event_data;
@@ -2188,7 +2249,8 @@ API_RESULT appl_a2dp_notify_cb
         );
 
 #ifdef AVDTP_HAVE_CONTENT_PROTECTION
-        if (AVDTP_CONTENT_PROTECTION_TYPE_SCMS_T == a2dp_dev_info->cp_type)
+        if ((NULL != a2dp_dev_info) &&
+            (AVDTP_CONTENT_PROTECTION_TYPE_SCMS_T == a2dp_dev_info->cp_type))
         {
             printf("Content Protection Type:SCMS_T\n");
             appl_a2dp_instance[codec_instance].cp_type = AVDTP_CONTENT_PROTECTION_TYPE_SCMS_T;
@@ -2236,8 +2298,10 @@ API_RESULT appl_a2dp_notify_cb
 #ifdef A2DP_SINK
                 if (AVDTP_SEP_SINK == role)
                 {
+#ifdef INCLUDE_JPL
                     /* Stop JPL */
                     (BT_IGNORE_RETURN_VALUE) BT_jpl_stop();
+#endif /* INCLUDE_JPL */
                 }
 #endif /* A2DP_SINK */
             }
@@ -2271,8 +2335,10 @@ API_RESULT appl_a2dp_notify_cb
 #ifdef A2DP_SINK
                 if (AVDTP_SEP_SINK == role)
                 {
+#ifdef INCLUDE_JPL
                     /* Stop JPL */
                     (BT_IGNORE_RETURN_VALUE) BT_jpl_stop();
+#endif /* INCLUDE_JPL */
                 }
 #endif /* A2DP_SINK */
             }
@@ -2348,13 +2414,14 @@ API_RESULT appl_a2dp_notify_cb
 
 #ifdef AVDTP_HAVE_CONTENT_PROTECTION
             /* Check the content Protection is enabled */
-            if (AVDTP_CONTENT_PROTECTION_TYPE_SCMS_T  == appl_a2dp_instance[codec_instance].cp_type)
+            if (AVDTP_CONTENT_PROTECTION_TYPE_SCMS_T == appl_a2dp_instance[codec_instance].cp_type)
             {
                 /* Skip the content proection header */
                 data += 1U;
             }
 #endif /* AVDTP_HAVE_CONTENT_PROTECTION */
 
+#ifdef INCLUDE_JPL
             /**
              * Add SBC media frames to JPL.
              *
@@ -2372,6 +2439,7 @@ API_RESULT appl_a2dp_notify_cb
             {
                 LOG_DEBUG("JPL Add Frames Failed - 0x%04X\n", retval);
             }
+#endif /* INCLUDE_JPL */
         }
 
         break;
@@ -2829,7 +2897,7 @@ API_RESULT appl_a2dp_avdtp_notify_cb
     UCHAR * rsp_buf;
     UCHAR * codec_ie;
     API_RESULT retval;
-    UINT16 count, codec_ie_len;
+    UINT16 count, codec_ie_len, i;
     AVDTP_SEP_CAP sep_cap;
     AVDTP_SEP_INFO sep_info;
 
@@ -2876,7 +2944,8 @@ API_RESULT appl_a2dp_avdtp_notify_cb
                         0x00,
                         BT_BD_ADDR_SIZE
                     );
-					break;
+
+                    break;
                 }
             }
         }
@@ -2904,6 +2973,8 @@ API_RESULT appl_a2dp_avdtp_notify_cb
                         0x00,
                         BT_BD_ADDR_SIZE
                     );
+
+                    break;
                 }
             }
         }
@@ -3113,54 +3184,19 @@ API_RESULT appl_a2dp_avdtp_notify_cb
             codec_ie_len
         );
 
-        for (count = 0U; count < A2DP_MAX_CODECS; count ++)
-        {
-            if (BT_FALSE == BT_BD_ADDR_IS_NON_ZERO(appl_a2dp_instance[count].bd_addr))
-            {
-                /* Save BD_ADDR */
-                BT_COPY_BD_ADDR
-                (
-                    appl_a2dp_instance[count].bd_addr,
-                    avdtp_handle->bd_addr
-                );
-                break;
-            }
-        }
-
 #ifdef AVDTP_HAVE_CONTENT_PROTECTION
-        if (A2DP_MAX_CODECS > count)
+        if (AVDTP_INVALID_CP_TYPE != sep_cap.cp_cap[0U].cp_type)
         {
-            if (AVDTP_INVALID_CP_TYPE != sep_cap.cp_cap[0U].cp_type)
+            printf("\tContent Protection Type:0x%04x\n", sep_cap.cp_cap[0U].cp_type);
+            printf("\tCP_IE Length:0x%02x\n", sep_cap.cp_cap[0U].cp_ie_len);
+            if (0U != sep_cap.cp_cap[0U].cp_ie_len)
             {
-                printf("\tContent Protection Type:0x%04x\n", sep_cap.cp_cap[0U].cp_type);
-                printf("\tCP_IE Length:0x%02x\n", sep_cap.cp_cap[0U].cp_ie_len);
-                if (0U != sep_cap.cp_cap[0U].cp_ie_len)
+                printf("\tCP_IE:");
+                for (i = 0U; i < sep_cap.cp_cap[0U].cp_ie_len; i++)
                 {
-                    printf("\tCP_IE:");
-                    for (count = 0U; count < sep_cap.cp_cap[0U].cp_ie_len; count++)
-                    {
-                        printf("0x%02x ", sep_cap.cp_cap[0U].cp_ie[count]);
-                    }
-                    printf("\n");
+                    printf("0x%02x ", sep_cap.cp_cap[0U].cp_ie[i]);
                 }
-
-                AVDTP_SET_SEP_CP_CAPABILITY
-                (
-                    (appl_a2dp_instance[count].sep_cap.cp_cap[0U]),
-                    sep_cap.cp_cap[0U].cp_type,
-                    cp_ie_buf,
-                    cp_ie_buf_len
-                );
-            }
-            else
-            {
-                AVDTP_SET_SEP_CP_CAPABILITY
-                (
-                    (appl_a2dp_instance[count].sep_cap.cp_cap[0U]),
-                    AVDTP_INVALID_CP_TYPE,
-                    cp_ie_buf,
-                    cp_ie_buf_len
-                );
+                printf("\n");
             }
         }
 #endif /* AVDTP_HAVE_CONTENT_PROTECTION */
@@ -3509,7 +3545,7 @@ INT32 appl_a2dp_read_sbc_configuration
 
     #ifdef APPL_A2DP_DEFAULT_CONFIG
             BT_str_print(config_buf, "%s", "JOINT_STEREO");
-            printf("\nEnter Channel Mode: %s", config_buf);
+            LOG_DEBUG("\nEnter Channel Mode: %s", config_buf);
     #else /* APPL_A2DP_DEFAULT_CONFIG */
             LOG_DEBUG("\nEnter the Channel Mode (MONO, DUAL, STEREO, JOINT_STEREO): ");
             scanf("%s", config_buf);
@@ -3696,9 +3732,9 @@ INT32 appl_a2dp_read_sbc_configuration
             maxbitpool= 35;
             printf("\nMax Bitpool: %d", maxbitpool);
     #else /* APPL_A2DP_DEFAULT_CONFIG */
-            LOG_DEBUG("\nEnter the Minimum Bitpool (2-250): ");
+            printf("\nEnter the Minimum Bitpool (2-250): ");
             scanf("%d", &minbitpool);
-            LOG_DEBUG("\nEnter the Maximum Bitpool (2-250): ");
+            printf("\nEnter the Maximum Bitpool (2-250): ");
             scanf("%d", &maxbitpool);
     #endif /* APPL_A2DP_DEFAULT_CONFIG */
     #endif /* 0 */
@@ -3706,7 +3742,7 @@ INT32 appl_a2dp_read_sbc_configuration
         else
         {
             (BT_IGNORE_RETURN_VALUE) sscanf(config_buf, "%d", &maxbitpool);
-            LOG_DEBUG("Read Configuration: SBC Bitpool -> %d\n", maxbitpool);
+            printf("Read Configuration: SBC Bitpool -> %d\n", maxbitpool);
         }
 
         if ((option >= A2DP_SBC_BITPOOL_MIN) &&
@@ -4241,6 +4277,7 @@ INT32 appl_a2dp_read_mpeg24_configuration
 #ifdef A2DP_SOURCE
 void appl_a2dp_src_prepare (void)
 {
+#ifdef INCLUDE_SBC
     API_RESULT retval;
     UINT16 samples_per_sec;
     UCHAR number_of_channels;
@@ -4455,6 +4492,8 @@ void appl_a2dp_src_prepare (void)
             appl_a2dp_pcm_datalen
         );
     }
+
+#endif /* INCLUDE_SBC */
 
     return;
 }
@@ -4680,6 +4719,8 @@ API_RESULT a2dp_encode_n_send
            )
 {
     API_RESULT        retval;
+
+#ifdef INCLUDE_SBC
     UINT16            count;
     UINT16            sbc_datalen;
     UCHAR             i;
@@ -4786,7 +4827,14 @@ API_RESULT a2dp_encode_n_send
         }
 #endif /* A2DP_SUPPORT_MULTIPLE_MEDIA_FRAME_WRITE */
     }
+#else /* INCLUDE_SBC */
+    /* Init */
+    retval = API_SUCCESS;
 
+    BT_IGNORE_UNUSED_PARAM(a2dp_instance);
+    BT_IGNORE_UNUSED_PARAM(pcm_data);
+    BT_IGNORE_UNUSED_PARAM(pcm_datalen);
+#endif /* INCLUDE_SBC */
     return retval;
 }
 
@@ -6183,6 +6231,7 @@ void appl_avdtp_set_sig_msg_reject_rsp_params(void)
 static void appl_a2dp_jpl_configure(UCHAR* codec_ie)
 {
     API_RESULT retval;
+#ifdef INCLUDE_SBC
     SBC_CODEC_PARAM * codec_param;
     UINT16 wav_sf;
 
@@ -6366,10 +6415,17 @@ static void appl_a2dp_jpl_configure(UCHAR* codec_ie)
             );
         }
     }
+#else /* INCLUDE_SBC */
+    BT_IGNORE_UNUSED_PARAM(codec_ie);
 
+    /* Init */
+    retval = API_SUCCESS;
+
+#endif /* INCLUDE_SBC */
     return;
 }
 
+#ifdef INCLUDE_JPL
 static API_RESULT jpl_callback_handle
        (
            /* IN */ UCHAR   event_type,
@@ -6398,6 +6454,7 @@ static API_RESULT jpl_callback_handle
 
     return API_SUCCESS;
 }
+#endif /* INCLUDE_JPL */
 
 static void a2dp_pl_snk_callback
        (
@@ -6414,7 +6471,9 @@ static void a2dp_pl_snk_callback
 
     /* do */
     {
+#ifdef INCLUDE_SBC
         retval = BT_jpl_remove_frames(appl_a2dp_jpl_pof, appl_a2dp_jpl_poflen);
+#endif /* INCLUDE_SBC */
     }/* while (JPL_ERR_MORE_PCM_FRAMES_AVAILABLE == retval); */
 
     BT_IGNORE_UNUSED_PARAM(retval);

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FLEXRAM: on-chip RAM manager</title>
+<title>MCUXpresso SDK API Reference Manual: CACHE: ARMV7-M7 CACHE Memory Controller</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,316 +98,125 @@ $(document).ready(function(){initNavTree('a00256.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FLEXRAM: on-chip RAM manager</div>  </div>
+<div class="title">CACHE: ARMV7-M7 CACHE Memory Controller</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the FLEXRAM module of MCUXpresso SDK devices.</p>
-<p>The FLEXRAM module intergrates the ITCM, DTCM, and OCRAM controllers, and supports parameterized RAM array and RAM array portioning.</p>
-<p>This example code shows how to allocate RAM using the FLEXRAM driver.</p>
-<p>Refer to the driver examples codes located at <em>&lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/flexram.</em> </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the CACHE Controller of MCUXpresso SDK devices.</p>
+<p>The CACHE driver is created to help the user more easily operate the cache memory. The APIs for basic operations are including the following three levels:</p>
+<p>1L. The L1 cache driver API. This level provides the level 1 caches controller drivers. The L1 caches are mainly integrated in the Core memory system, Cortex-M7 L1 caches, etc. For our Cortex-M4 series platforms, the L1 cache is the local memory controller (LMEM) which is not integrated in the Cortex-M4 processer memory system.</p>
+<p>2L. The L2 cache driver API. This level provides the level 2 cache controller drivers. The L2 cache could be integrated in the CORE memory system or an external L2 cache memory, PL310, etc.</p>
+<p>3L. The combined cache driver API. This level provides many APIs for combined L1 and L2 cache maintain operations. This is provided for MCUXpresso SDK drivers (DMA, ENET, USDHC, etc) which should do the cache maintenance in their transactional APIs.</p>
+<h1><a class="anchor" id="CACHEFuncGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="L1CACHEMaintainOperation"></a>
+L1 CACHE Operation</h2>
+<p>The L1 CACHE has both code cache and data cache. This function group provides independent two groups API for both code cache and data cache. There are Enable/Disable APIs for code cache and data cache control and cache maintenance operations as Invalidate/Clean/CleanInvalidate by all and by address range.</p>
+<h2><a class="anchor" id="L2CACHEMaintainOperation"></a>
+L2 CACHE Operation</h2>
+<p>The L2 CACHE does not divide the cache to data and code. Instead, this function group provides one group cache maintenance operations as Enable/Disable/Invalidate/Clean/CleanInvalidate by all and by address range. Except the maintenance operation APIs, the L2 CACHE has it's initialization/configure API. The user can use the default configure parameter by calling L2CACHE_GetDefaultConfig() or changing the parameters as they wish. Then, call L2CACHE_Init to do the L2 CACHE initialization. After initialization, the L2 cache can then be enabled.</p>
+<p>Note: For the core external l2 Cache, the SoC usually has the control bit to select the SRAM to use as L2 Cache or normal SRAM. Make sure this selection is right when you use the L2 CACHE feature. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga753afc4abc676bea1fd173785f3e4df1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga753afc4abc676bea1fd173785f3e4df1">FLEXRAM_ECC_ERROR_DETAILED_INFO</a>&#160;&#160;&#160;0U /* Define to zero means get raw ECC error information, which needs parse it by user. */</td></tr>
-<tr class="memdesc:ga753afc4abc676bea1fd173785f3e4df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ECC error detailed information.  <a href="#ga753afc4abc676bea1fd173785f3e4df1">More...</a><br/></td></tr>
-<tr class="separator:ga753afc4abc676bea1fd173785f3e4df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga4caf8d8f829279fba122163d961608a4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00256.html#gga4caf8d8f829279fba122163d961608a4af3fc6642323a8ada0f6777d7f4a6376e">kFLEXRAM_Read</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#gga4caf8d8f829279fba122163d961608a4a385ea6c35cc58d010f554655fd135a2a">kFLEXRAM_Write</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4caf8d8f829279fba122163d961608a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flexram write/read selection.  <a href="a00256.html#ga4caf8d8f829279fba122163d961608a4">More...</a><br/></td></tr>
-<tr class="separator:ga4caf8d8f829279fba122163d961608a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96a58e29e8dbf2b5bdeb775cba46556e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556eaba5c335068cfa8f481899ecef329e079">kFLEXRAM_OCRAMAccessError</a> = FLEXRAM_INT_STATUS_OCRAM_ERR_STATUS_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556eaf37a97aa3a38990b880d359dae93a8fa">kFLEXRAM_DTCMAccessError</a> = FLEXRAM_INT_STATUS_DTCM_ERR_STATUS_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556ea676a0b6358eb31b6623c4499556af51d">kFLEXRAM_ITCMAccessError</a> = FLEXRAM_INT_STATUS_ITCM_ERR_STATUS_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556eaa952a181d9000982402d3001c9a3814b">kFLEXRAM_InterruptStatusAll</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga96a58e29e8dbf2b5bdeb775cba46556e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt status flag mask.  <a href="a00256.html#ga96a58e29e8dbf2b5bdeb775cba46556e">More...</a><br/></td></tr>
-<tr class="separator:ga96a58e29e8dbf2b5bdeb775cba46556e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa473aadf12ac43c4288d5a8f951721a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00256.html#ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323">kFLEXRAM_TCMAccessFastMode</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011">kFLEXRAM_TCMAccessWaitMode</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa473aadf12ac43c4288d5a8f951721a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM TCM access mode.  <a href="a00256.html#gaa473aadf12ac43c4288d5a8f951721a7">More...</a><br/></td></tr>
-<tr class="separator:gaa473aadf12ac43c4288d5a8f951721a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab48899087cc647f0f791ed0c459adc53"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00256.html#ggab48899087cc647f0f791ed0c459adc53a74b5c142ac9edb5583e8889b9af4a6c0">kFLEXRAM_TCMSize32KB</a> = 32 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#ggab48899087cc647f0f791ed0c459adc53a47c4472f61015f0328f058f0a5202da1">kFLEXRAM_TCMSize64KB</a> = 64 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#ggab48899087cc647f0f791ed0c459adc53ab431382e96926968904f185135c85783">kFLEXRAM_TCMSize128KB</a> = 128 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#ggab48899087cc647f0f791ed0c459adc53a4955cd2b2ae58ff9e1f4035f6fc07912">kFLEXRAM_TCMSize256KB</a> = 256 * 1024U, 
-<br/>
-&#160;&#160;<a class="el" href="a00256.html#ggab48899087cc647f0f791ed0c459adc53ac58032229d029c46cc94ac7b4d143c3e">kFLEXRAM_TCMSize512KB</a> = 512 * 1024U
-<br/>
- }</td></tr>
-<tr class="memdesc:gab48899087cc647f0f791ed0c459adc53"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM TCM support size.  <a href="a00256.html#gab48899087cc647f0f791ed0c459adc53">More...</a><br/></td></tr>
-<tr class="separator:gab48899087cc647f0f791ed0c459adc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga955668a7e7f3642c356afec976af4760"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga955668a7e7f3642c356afec976af4760">FLEXRAM_SetTCMReadAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00256.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> mode)</td></tr>
-<tr class="memdesc:ga955668a7e7f3642c356afec976af4760"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module sets TCM read access mode.  <a href="#ga955668a7e7f3642c356afec976af4760">More...</a><br/></td></tr>
-<tr class="separator:ga955668a7e7f3642c356afec976af4760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga315d028e5ef0e55ae3ba711b5d45978d">FLEXRAM_SetTCMWriteAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00256.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> mode)</td></tr>
-<tr class="memdesc:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module set TCM write access mode.  <a href="#ga315d028e5ef0e55ae3ba711b5d45978d">More...</a><br/></td></tr>
-<tr class="separator:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2de915fd7534b8355f320aef9b8571b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gad2de915fd7534b8355f320aef9b8571b">FLEXRAM_EnableForceRamClockOn</a> (FLEXRAM_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gad2de915fd7534b8355f320aef9b8571b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module force ram clock on.  <a href="#gad2de915fd7534b8355f320aef9b8571b">More...</a><br/></td></tr>
-<tr class="separator:gad2de915fd7534b8355f320aef9b8571b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gae7b4a4bc48727db1cdc7851d2eb33d25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gae7b4a4bc48727db1cdc7851d2eb33d25">FSL_FLEXRAM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00249.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 2U, 0U))</td></tr>
-<tr class="memdesc:gae7b4a4bc48727db1cdc7851d2eb33d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#gae7b4a4bc48727db1cdc7851d2eb33d25">More...</a><br/></td></tr>
-<tr class="separator:gae7b4a4bc48727db1cdc7851d2eb33d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gac954b8be2bb59a983a9594c59e4b4fa5">FSL_CACHE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="memdesc:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">cache driver version 2.0.4.  <a href="#gac954b8be2bb59a983a9594c59e4b4fa5">More...</a><br/></td></tr>
+<tr class="separator:gac954b8be2bb59a983a9594c59e4b4fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and de-initialization</h2></td></tr>
-<tr class="memitem:gad8bd4333a61ae64e6ad396bf1c4e4f8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gad8bd4333a61ae64e6ad396bf1c4e4f8a">FLEXRAM_Init</a> (FLEXRAM_Type *base)</td></tr>
-<tr class="memdesc:gad8bd4333a61ae64e6ad396bf1c4e4f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module initialization function.  <a href="#gad8bd4333a61ae64e6ad396bf1c4e4f8a">More...</a><br/></td></tr>
-<tr class="separator:gad8bd4333a61ae64e6ad396bf1c4e4f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60031f87389fb038eb0236d06780e328"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga60031f87389fb038eb0236d06780e328"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga60031f87389fb038eb0236d06780e328">FLEXRAM_Deinit</a> (FLEXRAM_Type *base)</td></tr>
-<tr class="memdesc:ga60031f87389fb038eb0236d06780e328"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the FLEXRAM. <br/></td></tr>
-<tr class="separator:ga60031f87389fb038eb0236d06780e328"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Control for cortex-m7 L1 cache</h2></td></tr>
+<tr class="memitem:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaea07bb3879fa96b03f1ecaa6bf821c74"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gaea07bb3879fa96b03f1ecaa6bf821c74">L1CACHE_EnableICache</a> (void)</td></tr>
+<tr class="memdesc:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gaea07bb3879fa96b03f1ecaa6bf821c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa6d1a14a0499342890eee0e104c8d96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafa6d1a14a0499342890eee0e104c8d96"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gafa6d1a14a0499342890eee0e104c8d96">L1CACHE_DisableICache</a> (void)</td></tr>
+<tr class="memdesc:gafa6d1a14a0499342890eee0e104c8d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gafa6d1a14a0499342890eee0e104c8d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabce0ccbe1684fef7eff231f3704025b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabce0ccbe1684fef7eff231f3704025b6"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gabce0ccbe1684fef7eff231f3704025b6">L1CACHE_InvalidateICache</a> (void)</td></tr>
+<tr class="memdesc:gabce0ccbe1684fef7eff231f3704025b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate cortex-m7 L1 instruction cache. <br/></td></tr>
+<tr class="separator:gabce0ccbe1684fef7eff231f3704025b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf66ed6d9a7b881ef98707861484d7530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gaf66ed6d9a7b881ef98707861484d7530">L1CACHE_InvalidateICacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gaf66ed6d9a7b881ef98707861484d7530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate cortex-m7 L1 instruction cache by range.  <a href="#gaf66ed6d9a7b881ef98707861484d7530">More...</a><br/></td></tr>
+<tr class="separator:gaf66ed6d9a7b881ef98707861484d7530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52d071c691c4ce9ead828e086f07f457"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga52d071c691c4ce9ead828e086f07f457"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga52d071c691c4ce9ead828e086f07f457">L1CACHE_EnableDCache</a> (void)</td></tr>
+<tr class="memdesc:ga52d071c691c4ce9ead828e086f07f457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:ga52d071c691c4ce9ead828e086f07f457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6eb154e5afc3a877aad4155cb90bca9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae6eb154e5afc3a877aad4155cb90bca9"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gae6eb154e5afc3a877aad4155cb90bca9">L1CACHE_DisableDCache</a> (void)</td></tr>
+<tr class="memdesc:gae6eb154e5afc3a877aad4155cb90bca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gae6eb154e5afc3a877aad4155cb90bca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad6bb45d3f9feb8ed2a63b174d204f277"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gad6bb45d3f9feb8ed2a63b174d204f277">L1CACHE_InvalidateDCache</a> (void)</td></tr>
+<tr class="memdesc:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gad6bb45d3f9feb8ed2a63b174d204f277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1dcfc930ee90724a807f69428a1f269"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1dcfc930ee90724a807f69428a1f269"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gab1dcfc930ee90724a807f69428a1f269">L1CACHE_CleanDCache</a> (void)</td></tr>
+<tr class="memdesc:gab1dcfc930ee90724a807f69428a1f269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:gab1dcfc930ee90724a807f69428a1f269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49c6ba08328943022264442f6ce2c090"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga49c6ba08328943022264442f6ce2c090"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga49c6ba08328943022264442f6ce2c090">L1CACHE_CleanInvalidateDCache</a> (void)</td></tr>
+<tr class="memdesc:ga49c6ba08328943022264442f6ce2c090"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates cortex-m7 L1 data cache. <br/></td></tr>
+<tr class="separator:ga49c6ba08328943022264442f6ce2c090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9baff800f4d60a09efc4e4ce309dd583"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga9baff800f4d60a09efc4e4ce309dd583">L1CACHE_InvalidateDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga9baff800f4d60a09efc4e4ce309dd583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates cortex-m7 L1 data cache by range.  <a href="#ga9baff800f4d60a09efc4e4ce309dd583">More...</a><br/></td></tr>
+<tr class="separator:ga9baff800f4d60a09efc4e4ce309dd583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad120776b1a7f2f3f21b2bf017dbab095"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gad120776b1a7f2f3f21b2bf017dbab095">L1CACHE_CleanDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gad120776b1a7f2f3f21b2bf017dbab095"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans cortex-m7 L1 data cache by range.  <a href="#gad120776b1a7f2f3f21b2bf017dbab095">More...</a><br/></td></tr>
+<tr class="separator:gad120776b1a7f2f3f21b2bf017dbab095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4837708efaec2927416b268d75412361"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga4837708efaec2927416b268d75412361">L1CACHE_CleanInvalidateDCacheByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga4837708efaec2927416b268d75412361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates cortex-m7 L1 data cache by range.  <a href="#ga4837708efaec2927416b268d75412361">More...</a><br/></td></tr>
+<tr class="separator:ga4837708efaec2927416b268d75412361"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:gabafedc98f7b19727c15b519fbb5622cc"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gabafedc98f7b19727c15b519fbb5622cc">FLEXRAM_GetInterruptStatus</a> (FLEXRAM_Type *base)</td></tr>
-<tr class="memdesc:gabafedc98f7b19727c15b519fbb5622cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module gets interrupt status.  <a href="#gabafedc98f7b19727c15b519fbb5622cc">More...</a><br/></td></tr>
-<tr class="separator:gabafedc98f7b19727c15b519fbb5622cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94fad29c4ce4f80e99127a86b964880a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga94fad29c4ce4f80e99127a86b964880a">FLEXRAM_ClearInterruptStatus</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga94fad29c4ce4f80e99127a86b964880a"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module clears interrupt status.  <a href="#ga94fad29c4ce4f80e99127a86b964880a">More...</a><br/></td></tr>
-<tr class="separator:ga94fad29c4ce4f80e99127a86b964880a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9846b45b429edc61e13d7643040f758c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga9846b45b429edc61e13d7643040f758c">FLEXRAM_EnableInterruptStatus</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga9846b45b429edc61e13d7643040f758c"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module enables interrupt status.  <a href="#ga9846b45b429edc61e13d7643040f758c">More...</a><br/></td></tr>
-<tr class="separator:ga9846b45b429edc61e13d7643040f758c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2af91e45db0c0ed8b36ccc536b75e68d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga2af91e45db0c0ed8b36ccc536b75e68d">FLEXRAM_DisableInterruptStatus</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga2af91e45db0c0ed8b36ccc536b75e68d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module disable interrupt status.  <a href="#ga2af91e45db0c0ed8b36ccc536b75e68d">More...</a><br/></td></tr>
-<tr class="separator:ga2af91e45db0c0ed8b36ccc536b75e68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupts</h2></td></tr>
-<tr class="memitem:ga047368992e49cf1771c6e22a451d681e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga047368992e49cf1771c6e22a451d681e">FLEXRAM_EnableInterruptSignal</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga047368992e49cf1771c6e22a451d681e"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module enables interrupt.  <a href="#ga047368992e49cf1771c6e22a451d681e">More...</a><br/></td></tr>
-<tr class="separator:ga047368992e49cf1771c6e22a451d681e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga557f1b09ff66836a1b884818a5d7ea33"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga557f1b09ff66836a1b884818a5d7ea33">FLEXRAM_DisableInterruptSignal</a> (FLEXRAM_Type *base, uint32_t status)</td></tr>
-<tr class="memdesc:ga557f1b09ff66836a1b884818a5d7ea33"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module disables interrupt.  <a href="#ga557f1b09ff66836a1b884818a5d7ea33">More...</a><br/></td></tr>
-<tr class="separator:ga557f1b09ff66836a1b884818a5d7ea33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Unified Cache Control for all caches (cortex-m7 L1 cache + l2 pl310)</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp15e7a9b463a20c013988f37a2d8c9ee1"></a>Mainly used for many drivers for easy cache operation. </p>
+</td></tr>
+<tr class="memitem:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga00cdccb5c53201a747f2a3e2009f43cc">ICACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates all instruction caches by range.  <a href="#ga00cdccb5c53201a747f2a3e2009f43cc">More...</a><br/></td></tr>
+<tr class="separator:ga00cdccb5c53201a747f2a3e2009f43cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gab5c47d7193562d7a763b1bc1bd91b28c">DCACHE_InvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidates all data caches by range.  <a href="#gab5c47d7193562d7a763b1bc1bd91b28c">More...</a><br/></td></tr>
+<tr class="separator:gab5c47d7193562d7a763b1bc1bd91b28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga893959336987f85910fe98ab9f7f8648"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#ga893959336987f85910fe98ab9f7f8648">DCACHE_CleanByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:ga893959336987f85910fe98ab9f7f8648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans all data caches by range.  <a href="#ga893959336987f85910fe98ab9f7f8648">More...</a><br/></td></tr>
+<tr class="separator:ga893959336987f85910fe98ab9f7f8648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac20095b525889cf55c105658877c2c84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00256.html#gac20095b525889cf55c105658877c2c84">DCACHE_CleanInvalidateByRange</a> (uint32_t address, uint32_t size_byte)</td></tr>
+<tr class="memdesc:gac20095b525889cf55c105658877c2c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans and Invalidates all data caches by range.  <a href="#gac20095b525889cf55c105658877c2c84">More...</a><br/></td></tr>
+<tr class="separator:gac20095b525889cf55c105658877c2c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae7b4a4bc48727db1cdc7851d2eb33d25"></a>
+<a class="anchor" id="gac954b8be2bb59a983a9594c59e4b4fa5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXRAM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00249.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 2U, 0U))</td>
+          <td class="memname">#define FSL_CACHE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga753afc4abc676bea1fd173785f3e4df1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FLEXRAM_ECC_ERROR_DETAILED_INFO&#160;&#160;&#160;0U /* Define to zero means get raw ECC error information, which needs parse it by user. */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga4caf8d8f829279fba122163d961608a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4caf8d8f829279fba122163d961608a4af3fc6642323a8ada0f6777d7f4a6376e"></a>kFLEXRAM_Read</em>&nbsp;</td><td class="fielddoc">
-<p>read </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4caf8d8f829279fba122163d961608a4a385ea6c35cc58d010f554655fd135a2a"></a>kFLEXRAM_Write</em>&nbsp;</td><td class="fielddoc">
-<p>write </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga96a58e29e8dbf2b5bdeb775cba46556e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556eaba5c335068cfa8f481899ecef329e079"></a>kFLEXRAM_OCRAMAccessError</em>&nbsp;</td><td class="fielddoc">
-<p>OCRAM accesses unallocated address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556eaf37a97aa3a38990b880d359dae93a8fa"></a>kFLEXRAM_DTCMAccessError</em>&nbsp;</td><td class="fielddoc">
-<p>DTCM accesses unallocated address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556ea676a0b6358eb31b6623c4499556af51d"></a>kFLEXRAM_ITCMAccessError</em>&nbsp;</td><td class="fielddoc">
-<p>ITCM accesses unallocated address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga96a58e29e8dbf2b5bdeb775cba46556eaa952a181d9000982402d3001c9a3814b"></a>kFLEXRAM_InterruptStatusAll</em>&nbsp;</td><td class="fielddoc">
-<p>all the interrupt status mask </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaa473aadf12ac43c4288d5a8f951721a7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00256.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Fast access mode expected to be finished in 1-cycle; Wait access mode expected to be finished in 2-cycle. Wait access mode is a feature of the flexram and it should be used when the CPU clock is too fast to finish TCM access in 1-cycle. Normally, fast mode is the default mode, the efficiency of the TCM access will better. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323"></a>kFLEXRAM_TCMAccessFastMode</em>&nbsp;</td><td class="fielddoc">
-<p>fast access mode </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011"></a>kFLEXRAM_TCMAccessWaitMode</em>&nbsp;</td><td class="fielddoc">
-<p>wait access mode </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gab48899087cc647f0f791ed0c459adc53"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53a74b5c142ac9edb5583e8889b9af4a6c0"></a>kFLEXRAM_TCMSize32KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 32KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53a47c4472f61015f0328f058f0a5202da1"></a>kFLEXRAM_TCMSize64KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 64KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53ab431382e96926968904f185135c85783"></a>kFLEXRAM_TCMSize128KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 128KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53a4955cd2b2ae58ff9e1f4035f6fc07912"></a>kFLEXRAM_TCMSize256KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 256KB. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab48899087cc647f0f791ed0c459adc53ac58032229d029c46cc94ac7b4d143c3e"></a>kFLEXRAM_TCMSize512KB</em>&nbsp;</td><td class="fielddoc">
-<p>TCM total size be 512KB. </p>
-</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad8bd4333a61ae64e6ad396bf1c4e4f8a"></a>
+<a class="anchor" id="gaf66ed6d9a7b881ef98707861484d7530"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void FLEXRAM_Init </td>
+          <td class="memname">void L1CACHE_InvalidateICacheByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabafedc98f7b19727c15b519fbb5622cc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t FLEXRAM_GetInterruptStatus </td>
-          <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga94fad29c4ce4f80e99127a86b964880a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void FLEXRAM_ClearInterruptStatus </td>
-          <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -415,23 +224,19 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status to be cleared. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 I-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9846b45b429edc61e13d7643040f758c"></a>
+<a class="anchor" id="ga9baff800f4d60a09efc4e4ce309dd583"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -439,16 +244,16 @@ Interrupts</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_EnableInterruptStatus </td>
+          <td class="memname">static void L1CACHE_InvalidateDCacheByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -464,15 +269,16 @@ Interrupts</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status to be enabled. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2af91e45db0c0ed8b36ccc536b75e68d"></a>
+<a class="anchor" id="gad120776b1a7f2f3f21b2bf017dbab095"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -480,16 +286,16 @@ Interrupts</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_DisableInterruptStatus </td>
+          <td class="memname">static void L1CACHE_CleanDCacheByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -505,15 +311,16 @@ Interrupts</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status to be disabled. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be cleaned. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga047368992e49cf1771c6e22a451d681e"></a>
+<a class="anchor" id="ga4837708efaec2927416b268d75412361"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -521,16 +328,16 @@ Interrupts</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_EnableInterruptSignal </td>
+          <td class="memname">static void L1CACHE_CleanInvalidateDCacheByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -546,32 +353,30 @@ Interrupts</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status interrupt to be enabled. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the memory to be clean and invalidated. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>The memory size. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The start address and size_byte should be 32-byte(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE) aligned. The startAddr here will be forced to align to L1 D-cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga557f1b09ff66836a1b884818a5d7ea33"></a>
+<a class="anchor" id="ga00cdccb5c53201a747f2a3e2009f43cc"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_DisableInterruptSignal </td>
+          <td class="memname">void ICACHE_InvalidateByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -579,40 +384,34 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">status</td><td>Status interrupt to be disabled. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga955668a7e7f3642c356afec976af4760"></a>
+<a class="anchor" id="gab5c47d7193562d7a763b1bc1bd91b28c"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_SetTCMReadAccessMode </td>
+          <td class="memname">void DCACHE_InvalidateByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00256.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -620,40 +419,34 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Access mode. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be invalidated. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga315d028e5ef0e55ae3ba711b5d45978d"></a>
+<a class="anchor" id="ga893959336987f85910fe98ab9f7f8648"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_SetTCMWriteAccessMode </td>
+          <td class="memname">void DCACHE_CleanByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00256.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -661,40 +454,34 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Access mode. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gad2de915fd7534b8355f320aef9b8571b"></a>
+<a class="anchor" id="gac20095b525889cf55c105658877c2c84"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void FLEXRAM_EnableForceRamClockOn </td>
+          <td class="memname">void DCACHE_CleanInvalidateByRange </td>
           <td>(</td>
-          <td class="paramtype">FLEXRAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size_byte</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -702,19 +489,16 @@ Interrupts</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Both cortex-m7 L1 cache line and L2 PL310 cache line length is 32-byte.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FLEXRAM base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable or disable clock force on. </td></tr>
+    <tr><td class="paramname">address</td><td>The physical address. </td></tr>
+    <tr><td class="paramname">size_byte</td><td>size of the memory to be cleaned and invalidated. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>address and size should be aligned to cache line size 32-Byte due to the cache operation unit is one cache line. The startAddr here will be forced to align to the cache line size if startAddr is not aligned. For the size_byte, application should make sure the alignment or make sure the right operation order if the size_byte is not aligned. </dd></dl>
 
 </div>
 </div>

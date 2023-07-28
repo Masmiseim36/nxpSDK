@@ -88,7 +88,8 @@ void nwsim_operations(void);
 void nwsim_init
      (
          void (* read_cb)(UCHAR *rsp, UINT16 rsplen),
-         void (* call_control_cb)(UCHAR status)
+         void (* call_control_cb)(UCHAR status),
+         UCHAR(* get_inbandring_status)(void)
      );
 void nwsim_start (UINT16 sf);
 void nwsim_stop(void);

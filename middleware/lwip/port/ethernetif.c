@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020,2022 NXP
+ * Copyright 2016-2020,2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -116,6 +116,11 @@ static QueueHandle_t extcb_queue = NULL;
 static TaskHandle_t ethernetif_rx_task = NULL;
 
 #endif /* #if ETH_DO_RX_IN_SEPARATE_TASK */
+
+#if ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1))
+static netif_status_callback_fn ipv6_valid_state_user_cb;
+#endif /* ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1)) */
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -361,6 +366,7 @@ void ethernetif_probe_link(struct netif *netif_)
 static void probe_link_cyclic(void *netif_)
 {
     sys_timeout(ETH_LINK_POLLING_INTERVAL_MS, probe_link_cyclic, netif_);
+
     ethernetif_probe_link(netif_);
 }
 #endif /* ETH_LINK_POLLING_INTERVAL_MS > 0 */
@@ -381,6 +387,11 @@ static void extcb(struct netif *cb_netif, netif_nsc_reason_t reason, const netif
 
 err_enum_t ethernetif_wait_linkup(struct netif *netif_, long timeout_ms)
 {
+    return ethernetif_wait_linkup_array(&netif_, 1, timeout_ms);
+}
+
+err_enum_t ethernetif_wait_linkup_array(struct netif **netif_array, int netif_array_len, long timeout_ms)
+{
 #ifdef SDK_OS_FREE_RTOS
 
     TickType_t timeout_ticks =
@@ -392,9 +403,12 @@ err_enum_t ethernetif_wait_linkup(struct netif *netif_, long timeout_ms)
     LWIP_ASSERT("This function must not be called concurrently.", NULL == extcb_queue);
 
     /* Be fast if condition is already met */
-    if (netif_is_link_up(netif_))
+    for (int i = 0; i < netif_array_len; i++)
     {
-        return ERR_OK;
+        if (netif_is_link_up(netif_array[i]))
+        {
+            return ERR_OK;
+        }
     }
 
     extcb_queue = xQueueCreate(ETH_WAIT_QUEUE_MSG_CNT, sizeof(struct extcb_msg));
@@ -410,7 +424,18 @@ err_enum_t ethernetif_wait_linkup(struct netif *netif_, long timeout_ms)
     UNLOCK_TCPIP_CORE();
 
     /* Event might occur before CB was registered, so check it to prevent eternal wait for message. */
-    if (!netif_is_link_up(netif_))
+    bool netif_is_up = false;
+
+    for (int i = 0; i < netif_array_len; i++)
+    {
+        if (netif_is_link_up(netif_array[i]))
+        {
+            netif_is_up = true;
+            break;
+        }
+    }
+
+    if (!netif_is_up)
     {
         do
         {
@@ -418,17 +443,19 @@ err_enum_t ethernetif_wait_linkup(struct netif *netif_, long timeout_ms)
 
             if (xQueueReceive(extcb_queue, &msg, timeout_ticks) == pdPASS)
             {
-                if ((msg.cb_netif == netif_) && (msg.reason & LWIP_NSC_LINK_CHANGED))
+                for (int i = 0; i < netif_array_len; i++)
                 {
-                    if (netif_is_link_up(netif_))
+                    if ((msg.cb_netif == netif_array[i]) && (msg.reason & LWIP_NSC_LINK_CHANGED))
                     {
-                        ret = ERR_OK;
+                        if (netif_is_link_up(netif_array[i]))
+                        {
+                            ret = ERR_OK;
+                        }
                     }
                 }
             }
             else
             {
-                // timeout
                 ret = ERR_TIMEOUT;
             }
         } while (ret == ERR_INPROGRESS);
@@ -453,7 +480,7 @@ err_enum_t ethernetif_wait_linkup(struct netif *netif_, long timeout_ms)
 
     LWIP_ASSERT("Timeout too long.", timeout_ms <= (UINT32_MAX / 2));
 
-    do
+    while (true)
     {
         /* PHY polling is done in check timeouts so do it during wait. */
         sys_check_timeouts();
@@ -468,9 +495,14 @@ err_enum_t ethernetif_wait_linkup(struct netif *netif_, long timeout_ms)
             }
         }
 
-    } while (!netif_is_link_up(netif_));
-
-    return ERR_OK;
+        for (int i = 0; i < netif_array_len; i++)
+        {
+            if (netif_is_link_up(netif_array[i]))
+            {
+                return ERR_OK;
+            }
+        }
+    }
 
 #endif /* defined(SDK_OS_FREE_RTOS) */
 }
@@ -572,6 +604,51 @@ err_enum_t ethernetif_wait_ipv4_valid(struct netif *netif_, long timeout_ms)
 
 #endif /*(defined(SDK_OS_FREE_RTOS) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1)) || \
        (!defined(SDK_OS_FREE_RTOS))*/
+
+#if ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1))
+
+static void ipv6_valid_state_cb(struct netif* netif_, netif_nsc_reason_t reason, const netif_ext_callback_args_t* args)
+{
+    u8_t new_state;
+
+    if ((reason & LWIP_NSC_IPV6_SET) != 0)
+    {
+        /*
+         * Previous state of the changed address is not known,
+         * so just fire the callback to be sure event (if any) is not missed
+         */
+        ipv6_valid_state_user_cb(netif_);
+    }
+    else if ((reason & LWIP_NSC_IPV6_ADDR_STATE_CHANGED) != 0)
+    {
+        new_state = netif_ip6_addr_state(netif_, args->ipv6_addr_state_changed.addr_index);
+
+        if ((new_state & IP6_ADDR_VALID) != (args->ipv6_addr_state_changed.old_state & IP6_ADDR_VALID))
+        {
+            ipv6_valid_state_user_cb(netif_);
+        }
+    }
+}
+
+void set_ipv6_valid_state_cb(netif_status_callback_fn callback_fn)
+{
+    static netif_ext_callback_t cb_mem;
+
+    LWIP_ASSERT_CORE_LOCKED();
+
+    if (ipv6_valid_state_user_cb != NULL)
+    {
+        netif_remove_ext_callback(&cb_mem);
+        ipv6_valid_state_user_cb = NULL;
+    }
+
+    if (callback_fn != NULL)
+    {
+        ipv6_valid_state_user_cb = callback_fn;
+        netif_add_ext_callback(&cb_mem, ipv6_valid_state_cb);
+    }
+}
+#endif /* ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1)) */
 
 void ethernetif_pbuf_free_safe(struct pbuf *p)
 {

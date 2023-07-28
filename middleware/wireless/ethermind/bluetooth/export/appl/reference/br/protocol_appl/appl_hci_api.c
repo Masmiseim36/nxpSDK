@@ -1129,20 +1129,25 @@ void appl_hci_read_default_link_policy_settings ( void )
 
 void appl_hci_write_default_link_policy_settings ( void )
 {
-	UINT16  input_option;
-
-    UINT32 read_val;
+    int        choice;
+	UINT16     input_option;
+    UINT32     read_val;
     API_RESULT retval;
 
+    /* Initialize */
     read_val = 0x05U;
 
     printf("Select Default Link Policy Setting(0/1)\n");
-    scanf("%d", &input_option);
+    scanf("%d", &choice);
+
+    input_option = (UINT16)choice;
 
     if (0 != input_option)
     {
         printf("Enter the Default Link Policy Setting Value(in Hex)\n");
-        scanf("%x", &read_val);
+        scanf("%x", &choice);
+
+        read_val = (UINT32)choice;
     }
 
     printf("\n");
@@ -1509,28 +1514,41 @@ void appl_hci_read_scan_enable ( void )
 }
 
 
-void appl_hci_write_scan_enable ( void )
+API_RESULT appl_hci_write_scan_enable ( void )
 {
-    unsigned int read_val;
+    UCHAR read_str[5] = "";
     API_RESULT retval;
-    UCHAR      scan_enable;
+    UINT16 length,i=0;
+    UCHAR read_val;
 
-    printf("Enter Scan Enable (in Hex) = "); fflush(stdout);
-    scanf("%x", &read_val);
-    scan_enable = (UCHAR)read_val;
+    BT_mem_set(read_str, 0x0, 5U);
 
-    printf("\n");
-    printf("Initiating HCI Write Scan Enable ... "); fflush(stdout);
-    retval = BT_hci_write_scan_enable ( scan_enable );
-    if (API_SUCCESS != retval)
+    printf("Enter Scan Enable (0,1,2,3...) = "); fflush(stdout);
+    scanf ("%s", read_str);
+    length = (UINT16)BT_str_len (read_str);
+
+    if ((1U < length) || !((read_str[i] >= '0') && (read_str[i] <= '9')))
     {
-        printf("FAILED !! Error Code = 0x%04x\n", retval);
+        printf ("Invalid option\n");
+        retval = API_FAILURE;
     }
     else
     {
-        printf("Successfully started.\n");
-        printf("Please wait for Command Complete.\n");
+        read_val = (UCHAR)appl_str_to_num(read_str,length);
+        printf("\n");
+        printf("Initiating HCI Write Scan Enable ... "); fflush(stdout);
+        retval = BT_hci_write_scan_enable (read_val);
+        if (API_SUCCESS != retval)
+        {
+            printf("FAILED !! Error Code = 0x%04x\n", retval);
+        }
+        else
+        {
+            printf("Successfully started.\n");
+            printf("Please wait for Command Complete.\n");
+        }
     }
+    return retval;
 }
 
 
@@ -1617,7 +1635,7 @@ void appl_hci_get_connection_details ( void )
             hci_conn_list[i].bd_addr[0U], hci_conn_list[i].bd_addr[1U],
             hci_conn_list[i].bd_addr[2U], hci_conn_list[i].bd_addr[3U],
             hci_conn_list[i].bd_addr[4U], hci_conn_list[i].bd_addr[5U]);
-            printf("  ACL Handle = 0x%04X\n", hci_conn_list[i].acl_handle);
+            printf("  Connection Handle = 0x%04X\n", hci_conn_list[i].acl_handle);
             printf("  SCO Handles = ");
             for (j = 0U; j < HCI_MAX_SCO_CHANNELS; j ++)
             {
@@ -2060,4 +2078,5 @@ void appl_hci_write_secure_connections_test_mode (void)
     }
 }
 #endif /* BT_BRSC_TEST */
+
 

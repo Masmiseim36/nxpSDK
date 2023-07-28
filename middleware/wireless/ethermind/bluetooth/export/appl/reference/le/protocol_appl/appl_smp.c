@@ -15,7 +15,7 @@
 #include "appl_gatt_client.h"
 #include "appl_gatt_server.h"
 #include "appl_utils.h"
-
+#include "appl_hci_le.h"
 #include "appl_service.h"
 
 #ifdef AES_CMAC_UTIL
@@ -29,6 +29,9 @@
 #ifdef SMP
 
 /* --------------------------------------------- External Global Variables */
+/* Enable this if to validate strict key size over LE Encryption for CTKD */
+/* #define APPL_SMP_VALIDATE_KEYSIZE_FOR_CTKD */
+
 /* Application compilation switch to enable deterministic PASSKEY support */
 /* #define APPL_SMP_UPDATE_PASSKEY */
 
@@ -37,16 +40,20 @@
 
 /**
  * Application compilation switch to enable auto confirmation of Numeric
- * Comparison Value
+ * Comparison Value.
+ * This flag is disabled by default.
+ * The Numeric Comparison Confirmation Mode can be configured through menu
+ * option. This can be switched dynamically between automatic or manual
+ * confirmation of Numeric key value.
  */
-#define APPL_SMP_NC_AUTO_REPLY
+/* #define APPL_SMP_NC_AUTO_REPLY */
 
 /**
  * The below piece of flag is needed only for SMP LESC OOB Testcases
  * while testing against PTS v 7.6.1.
  */
 /* Application compilation switch to enable */
-/* #define APPL_SMP_SUPPORT_REVERSE_INPUT_STRING */
+#define APPL_SMP_SUPPORT_REVERSE_INPUT_STRING
 
 #if ((defined HCI_LE_PRIVACY_1_2_SUPPORT) && (defined HCI_LE_SET_PRIVACY_MODE_SUPPORT))
 /**
@@ -63,7 +70,6 @@
  *
  * This feature is dependant on:
  *   1. HCI_LE_PRIVACY_1_2_SUPPORT -> For Addition into the Resolving list
- *   2. HCI_LE_SET_PRIVACY_MODE_SUPPORT -> For setting the privacy mode
  *
  * This feature is disabled by default.
  * It is observed in few controllers that, after a device is added to a
@@ -73,7 +79,7 @@
  *   2. the Host has not enabled the address resolution.
  */
 /* #define APPL_SMP_AUTO_ADD_TO_RSLV_LIST */
-#endif /* ((defined HCI_LE_PRIVACY_1_2_SUPPORT) && (defined HCI_LE_SET_PRIVACY_MODE_SUPPORT)) */
+#endif /* defined HCI_LE_PRIVACY_1_2_SUPPORT */
 
 /* --------------------------------------------- External Global Variables */
 #ifdef APPL_SMP_AUTO_FILL_BD_ADDR
@@ -85,6 +91,9 @@ extern BT_DEVICE_ADDR g_bd_addr;
 /* --------------------------------------------- Static Global Variables */
 /* Application automatic SMP handling identifier */
 DECL_STATIC UCHAR automatic_mode = SMP_TRUE;
+
+/* Application automatic SMP numeric key comparison identifier */
+DECL_STATIC UCHAR nc_automatic_mode = SMP_TRUE;
 
 /* Application SMP pairable mode */
 DECL_STATIC UCHAR pairable_mode = SMP_TRUE;
@@ -120,6 +129,11 @@ DECL_STATIC UCHAR signature[sizeof(sign_create_counter) + SMP_SIGN_MAC_SIZE];
 #endif /* SMP_DATA_SIGNING */
 
 DECL_STATIC SMP_KEY_DIST peer_key_info;
+DECL_STATIC SMP_KEY_DIST local_key_info;
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+DECL_STATIC UCHAR peer_keys;
+DECL_STATIC UCHAR local_keys;
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 DECL_STATIC UCHAR        appl_user_irk[SMP_IRK_SIZE];
 
@@ -133,7 +147,7 @@ UCHAR appl_smp_lesc_test_f5_T[16];
 #endif /* SMP_TBX_TEST_LESC_FUNCTIONS */
 
 #ifdef SMP_TBX_TEST_LESC_FUNCTIONS
-static const UCHAR appl_smp_menu[] = "\n\
+DECL_STATIC DECL_CONST UCHAR appl_smp_menu[] = "\n\
 ============== SMP MENU ================\n\
  0.  Exit.\n\
  1.  Refresh.\n\
@@ -149,6 +163,7 @@ static const UCHAR appl_smp_menu[] = "\n\
  20. Register SMP Callback \n\
  21. Set Automatic Mode \n\
  22. Set Pairable Mode \n\
+ 23. Set NC Automatic Mode \n\
  \n\
  30. Create Resolvable Private Address \n\
  31. Resolve Private Address \n\
@@ -168,12 +183,13 @@ static const UCHAR appl_smp_menu[] = "\n\
  75. Test LESC h6 func \n\
  \n\
  100. Enable Cross Transport Inputs \n\
+ 101. Authenticate Remote Device on BREDR \n\
  \n\
  200. Initiate Disconnection \n\
  \n\
 Enter Your Choice: ";
 #else /* SMP_TBX_TEST_LESC_FUNCTIONS */
-static const UCHAR appl_smp_menu[] = "\n\
+DECL_STATIC DECL_CONST UCHAR appl_smp_menu[] = "\n\
 ============== SMP MENU ================\n\
  0.  Exit.\n\
  1.  Refresh.\n\
@@ -189,6 +205,7 @@ static const UCHAR appl_smp_menu[] = "\n\
  20. Register SMP Callback \n\
  21. Set Automatic Mode \n\
  22. Set Pairable Mode \n\
+ 23. Set NC Automatic Mode \n\
  \n\
  30. Create Resolvable Private Address \n\
  31. Resolve Private Address \n\
@@ -201,13 +218,15 @@ static const UCHAR appl_smp_menu[] = "\n\
  61. Verify Signed Data \n\
  \n\
  100. Enable Cross transport inputs \n\
+ 101. Authenticate Remote Device on BREDR \n\
  \n\
+ 199. Initiate Connection \n\
  200. Initiate Disconnection \n\
  \n\
 Enter Your Choice: ";
 #endif /* SMP_TBX_TEST_LESC_FUNCTIONS */
 
-static const UCHAR appl_smp_pl_menu[] = "\n\
+DECL_STATIC DECL_CONST UCHAR appl_smp_pl_menu[] = "\n\
 ============= SMP PL MENU ==============\n\
  0.  Exit.\n\
  1.  Refresh.\n\
@@ -318,8 +337,11 @@ void appl_smp_lesc_oob_data_complete(SMP_LESC_OOB_DATA_PL * appl_lesc_oob)
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
 void appl_smp_lesc_xtxp_ltk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp)
 {
+    API_RESULT retval;
     SMP_BD_HANDLE bd_handle;
     SMP_AUTH_INFO auth_info;
+    UCHAR lkey[BT_LINK_KEY_SIZE];
+    UCHAR lkey_type;
 
     APPL_TRC("\n LTK of the device is ...\n");
     appl_dump_bytes(xtxp->ltk, SMP_LTK_SIZE);
@@ -333,16 +355,40 @@ void appl_smp_lesc_xtxp_ltk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp)
     appl_smp_bd_addr.addr[3], appl_smp_bd_addr.addr[4], appl_smp_bd_addr.addr[5],
     appl_smp_bd_addr.type);
 
-    (BT_IGNORE_RETURN_VALUE) BT_smp_add_device(&appl_smp_bd_addr, &bd_handle);
+    retval = BT_sm_get_device_link_key_and_type(appl_smp_bd_addr.addr, lkey, &lkey_type);
 
-    auth_info.bonding = SMP_BONDING;
-    auth_info.pair_mode = SMP_LESC_MODE;
-    auth_info.security = SMP_SEC_LEVEL_3;
-    (BT_IGNORE_RETURN_VALUE) BT_smp_update_ltk(&bd_handle, xtxp->ltk, 16U, &auth_info);
+    if ((API_SUCCESS == retval) &&
+        ((HCI_LINK_KEY_AUTHENTICATED_P_256 == lkey_type) ||
+        (HCI_LINK_KEY_UNAUTHENTICATED_P_256 == lkey_type)))
+    {
+        (BT_IGNORE_RETURN_VALUE)BT_smp_add_device(&appl_smp_bd_addr, &bd_handle);
+
+        auth_info.bonding = SMP_BONDING;
+        auth_info.pair_mode = SMP_LESC_MODE;
+        auth_info.security = (HCI_LINK_KEY_AUTHENTICATED_P_256 == lkey_type)?
+            SMP_SEC_LEVEL_2: SMP_SEC_LEVEL_1;
+
+        /* Update the keys */
+        BT_mem_copy(peer_key_info.enc_info, xtxp->ltk, 16U);
+        (BT_IGNORE_RETURN_VALUE)BT_smp_update_security_info
+        (
+            &bd_handle,
+            &auth_info,
+            16U,
+            local_keys,
+            peer_keys,
+            &peer_key_info
+        );
+    }
 }
 
 void appl_smp_lesc_xtxp_lk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp)
 {
+    API_RESULT retval;
+    SMP_BD_HANDLE bd_handle;
+    SMP_AUTH_INFO auth;
+    UCHAR type;
+
     APPL_TRC("\n LK of the device is ...\n");
     appl_dump_bytes(xtxp->lk, SMP_LK_SIZE);
 
@@ -354,10 +400,25 @@ void appl_smp_lesc_xtxp_lk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp)
     appl_smp_bd_addr.addr[0], appl_smp_bd_addr.addr[1], appl_smp_bd_addr.addr[2],
     appl_smp_bd_addr.addr[3], appl_smp_bd_addr.addr[4], appl_smp_bd_addr.addr[5]);
 
-#ifdef CLASSIC_SEC_MANAGER
-    (BT_IGNORE_RETURN_VALUE) BT_sm_add_device(appl_smp_bd_addr.addr);
-    (BT_IGNORE_RETURN_VALUE) BT_sm_set_device_link_key(appl_smp_bd_addr.addr, xtxp->lk);
-#endif /* CLASSIC_SEC_MANAGER */
+    /* Get the BD handle */
+    (BT_IGNORE_RETURN_VALUE)BT_smp_get_bd_handle(&g_bd_addr, &bd_handle);
+
+    /* Initialize */
+    BT_mem_set(&auth, 0x00, sizeof(SMP_AUTH_INFO));
+
+    retval = BT_smp_get_device_security_info
+             (
+                 &bd_handle,
+                 &auth
+             );
+    if (API_SUCCESS == retval)
+    {
+        type = (SMP_SEC_LEVEL_2 == auth.security) ?
+            HCI_LINK_KEY_AUTHENTICATED_P_256 : HCI_LINK_KEY_UNAUTHENTICATED_P_256;
+
+        (BT_IGNORE_RETURN_VALUE) BT_sm_add_device(appl_smp_bd_addr.addr);
+        (BT_IGNORE_RETURN_VALUE) BT_sm_set_device_link_key_and_type(appl_smp_bd_addr.addr, xtxp->lk, &type);
+    }
 }
 
 void appl_smp_lesc_txp_key_gen_complete (SMP_LESC_LK_LTK_GEN_PL * appl_txp_key)
@@ -381,13 +442,13 @@ void appl_smp_lesc_txp_key_gen_complete (SMP_LESC_LK_LTK_GEN_PL * appl_txp_key)
 #define IS_UPPER(c) (('A' <= (c)) && ('F' >= (c)))
 #define IS_LOWER(c) (('a' <= (c)) && ('f' >= (c)))
 #define IS_ALPHA(c) IS_LOWER(c) || IS_UPPER(c)
-API_RESULT appl_smp_strtoarray
-           (
-               /* IN */  UCHAR  * data,
-               /* IN */  UINT16   data_length,
-               /* OUT */ UINT8  * output_array,
-               /* IN */  UINT16   output_array_len
-           )
+DECL_STATIC API_RESULT appl_smp_strtoarray
+                       (
+                           /* IN */  UCHAR  * data,
+                           /* IN */  UINT16   data_length,
+                           /* OUT */ UINT8  * output_array,
+                           /* IN */  UINT16   output_array_len
+                       )
 {
     INT32  index;
     UINT8  c0, c1;
@@ -410,12 +471,12 @@ API_RESULT appl_smp_strtoarray
 
     /* Process from end */
     output_index = output_array_len - 1U;
-    for (index = data_length - 1U; index >= 0U; index -= 2U)
+    for (index = data_length - 1; index >= 0; index -= 2)
     {
-        if (0U != index)
+        if (0 != index)
         {
             c1 = data[index];
-            c0 = data[index - 1U];
+            c0 = data[index - 1];
         }
         else
         {
@@ -481,8 +542,11 @@ void smp_pl_operations(void)
     UCHAR iocap, oob, keys, ekeysize;
 
 #ifdef SMP_HAVE_OOB_SUPPORT
-    SMP_OOB_DATA oob_val;
+    SMP_OOB_DATA oob_val = {0U};
     UCHAR         i;
+
+    /* MISRA C-2012 Rule 9.1 */
+    BT_mem_set(&oob_val, 0x0, sizeof(SMP_OOB_DATA));
 #endif /* SMP_HAVE_OOB_SUPPORT */
 
     BT_LOOP_FOREVER()
@@ -506,16 +570,14 @@ void smp_pl_operations(void)
 #ifdef SMP_HAVE_OOB_SUPPORT
                 CONSOLE_OUT ("Enter peer device handle for OOB capability: ");
                 CONSOLE_IN("%u", &read_val);
-#endif /* SMP_HAVE_OOB_SUPPORT */
 
-                (BT_IGNORE_RETURN_VALUE) BT_smp_get_local_capability_pl(&iocap, &keys, &ekeysize);
-
-#ifdef SMP_HAVE_OOB_SUPPORT
                 bd_handle = (SMP_BD_HANDLE)read_val;
                 smp_get_peer_oob_availability_pl (&bd_handle, &oob);
 #else /* SMP_HAVE_OOB_SUPPORT */
                 oob = 0x00U;
 #endif /* SMP_HAVE_OOB_SUPPORT */
+
+                (BT_IGNORE_RETURN_VALUE) BT_smp_get_local_capability_pl(&iocap, &keys, &ekeysize);
 
                 APPL_TRC ("IO Capability : 0x%02X\n", iocap);
                 APPL_TRC ("OOB : 0x%02X\n", oob);
@@ -569,7 +631,7 @@ void smp_pl_operations(void)
             case 6:
 #ifdef SMP_HAVE_OOB_SUPPORT
                 CONSOLE_OUT ("Enter peer BD Address: ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 CONSOLE_OUT ("Enter peer BD Type: ");
                 CONSOLE_IN("%u", &read_val);
@@ -635,14 +697,15 @@ void smp_pl_operations(void)
 #endif /* SMP_LESC */
                 }
 
-                retval = BT_smp_add_device_pl(&bd_addr);
+                /* Remove device if already added */
+                BT_smp_remove_device_pl(&bd_addr);
 
+                retval = BT_smp_add_device_pl(&bd_addr);
                 APPL_TRC("\n Adding Device to PL List returned 0x%04X.\n",retval);
 
                 if (API_SUCCESS == retval)
                 {
                     retval = BT_smp_set_oob_data_pl (&bd_addr, (UCHAR)read_val, &oob_val, NULL, NULL);
-
                     APPL_TRC("Peer OOB Data Setting returned 0x%04X.\n",retval);
                 }
 
@@ -656,7 +719,12 @@ void smp_pl_operations(void)
                 APPL_TRC("Enter Encryption Key Size (7 < keysize < 16): \n");
                 CONSOLE_IN("%u", &read_val);
 
-                (BT_IGNORE_RETURN_VALUE) BT_smp_set_max_encryption_key_size_pl ((UCHAR)read_val);
+                retval = BT_smp_set_max_encryption_key_size_pl ((UCHAR)read_val);
+
+                if (API_SUCCESS != retval)
+                {
+                    CONSOLE_OUT ("Invalid parameter\n");
+                }
                 break;
 
             case 8:
@@ -686,7 +754,7 @@ void smp_pl_operations(void)
 
             case 10:
                 APPL_TRC("Enter BD_ADDR: ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 APPL_TRC("Enter bd_addr type : ");
                 CONSOLE_IN("%u", &read_val);
@@ -793,7 +861,7 @@ void smp_pl_operations(void)
             case 30:
 #ifdef SMP_HAVE_OOB_SUPPORT
                 CONSOLE_OUT ("Enter peer BD Address: ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 APPL_TRC("Enter bd_addr type : ");
                 CONSOLE_IN("%u", &read_val);
@@ -809,7 +877,7 @@ void smp_pl_operations(void)
             case 31:
 #ifdef SMP_HAVE_OOB_SUPPORT
                 CONSOLE_OUT ("Enter peer BD Address: ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 APPL_TRC("Enter bd_addr type : ");
                 CONSOLE_IN("%u", &read_val);
@@ -865,7 +933,7 @@ void smp_pl_operations(void)
                     g_appl_xtx_mode = (0x01U == (UCHAR) read_val) ? BT_TRUE : BT_FALSE;
                 }
             #else
-                CONSOLE_OUT("\SMP_LESC_CROSS_TXP_KEY_GEN feature flag is not defined.\n");
+                CONSOLE_OUT("\nSMP_LESC_CROSS_TXP_KEY_GEN feature flag is not defined.\n");
             #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
                 break;
 
@@ -885,7 +953,7 @@ void smp_pl_operations(void)
                      * entire block is protected by a flag.
                      */
                     /* fscanf(stdin, "%99[^\n]%*c", test_byte); */
-                    CONSOLE_IN("%99[^\n]%*c", test_byte);
+                    CONSOLE_IN("%s", test_byte);
 
                     len = (UINT16)BT_str_len(test_byte);
 
@@ -929,17 +997,14 @@ void smp_pl_operations(void)
 
 void main_smp_operations(void)
 {
-    unsigned int  choice, menu_choice;
-    unsigned int  read_val;
+    int  choice, menu_choice;
+    int  read_val;
 
     UINT32        read_passkey;
     API_RESULT    retval;
 
     SMP_KEY_DIST  * key_info;
     SMP_BD_ADDR   bd_addr;
-#ifdef APPL_SMP_PARALLEL_AUTH
-    SMP_BD_ADDR   bd_addr_1;
-#endif /* APPL_SMP_PARALLEL_AUTH */
     SMP_BD_HANDLE bd_handle;
     SMP_AUTH_INFO auth;
 
@@ -954,6 +1019,9 @@ void main_smp_operations(void)
 #ifdef SMP_LESC
     UCHAR ntf_val;
 #endif /* SMP_LESC */
+
+    /* MISRA C-2012 Rule 9.1 */
+    read_val = 0;
 
     BT_LOOP_FOREVER()
     {
@@ -975,7 +1043,7 @@ void main_smp_operations(void)
             case 2:
 #ifndef APPL_SMP_AUTO_FILL_BD_ADDR
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 CONSOLE_OUT("\n0 - Public\n1 - Random\n");
                 CONSOLE_OUT("Enter BD_ADDR type : ");
@@ -984,20 +1052,6 @@ void main_smp_operations(void)
 #else /* APPL_SMP_AUTO_FILL_BD_ADDR */
                 BT_COPY_BD_ADDR_AND_TYPE(&bd_addr,&g_bd_addr);
 #endif /* APPL_SMP_AUTO_FILL_BD_ADDR */
-
-#ifdef APPL_SMP_PARALLEL_AUTH
-#ifndef APPL_SMP_AUTO_FILL_BD_ADDR
-                CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(bd_addr_1.addr);
-
-                CONSOLE_OUT("\n0 - Public\n1 - Random\n");
-                CONSOLE_OUT("Enter BD_ADDR type : ");
-                CONSOLE_IN("%u", &read_val);
-                bd_addr_1.type = (UCHAR) read_val;
-#else /* APPL_SMP_AUTO_FILL_BD_ADDR */
-                BT_COPY_BD_ADDR_AND_TYPE(&bd_addr_1,&g_bd_addr);
-#endif /* APPL_SMP_AUTO_FILL_BD_ADDR */
-#endif /* APPL_SMP_PARALLEL_AUTH */
 
 #ifdef HAVE_SMP_REPEAT_TRACKING
                 /* Check if repeat attempt tracking is on */
@@ -1012,26 +1066,65 @@ void main_smp_operations(void)
                 CONSOLE_OUT("0 - Legacy LE SMP Procedure\n");
                 CONSOLE_OUT("1 - LE Secure Connections Mode\n");
                 CONSOLE_OUT("Enter SMP Pairing Mode :");
-                CONSOLE_IN("%u", &read_val);
+                /* read value,max_strlength,min_menuoption,max_menuoption */
+                retval = appl_validate_params(&read_val,1U,0U,1U);
+                if (API_SUCCESS == retval)
+                {
+                    /* Call SMP LE Secure Connetions Mode Setting API here */
+                    auth.pair_mode = (UCHAR)((read_val)?SMP_LESC_MODE:SMP_LEGACY_MODE);
 
-                /* Call SMP LE Secure Connetions Mode Setting API here */
-                auth.pair_mode = (UCHAR)((read_val)?SMP_LESC_MODE:SMP_LEGACY_MODE);
+                    /**
+                     * Update the Default pairing mode related global to the value
+                     * selected by User.
+                     */
+                    g_appl_pair_mode = auth.pair_mode;
+                }
+                else
+                {
+                    break;
+                }
+
 #endif /* SMP_LESC */
 
                 CONSOLE_OUT(" 0 - Encryption Only/Unauthenticated (Without MITM)\n");
                 CONSOLE_OUT(" 1 - Authenticated (With MITM)\n");
                 CONSOLE_OUT("Enter Security level required : ");
-                CONSOLE_IN("%u", &read_val);
-                auth.security = (UCHAR) ((read_val)?SMP_SEC_LEVEL_2: SMP_SEC_LEVEL_1);
+                retval = appl_validate_params(&read_val,1U,0U,1U);
+                if (API_SUCCESS == retval)
+                {
+                    auth.security = (UCHAR) ((read_val)?SMP_SEC_LEVEL_2: SMP_SEC_LEVEL_1);
+                }
+                else
+                {
+                    break;
+                }
 
                 CONSOLE_OUT("\n0 - non-Bonding\n1 - Bonding\n");
                 CONSOLE_OUT("Enter Bonding type : ");
-                CONSOLE_IN("%u", &read_val);
-                auth.bonding = (UCHAR) read_val;
+                retval = appl_validate_params(&read_val,1U,0U,1U);
+                if (API_SUCCESS == retval)
+                {
+                    auth.bonding = (UCHAR) read_val;
+                }
+                else
+                {
+                    break;
+                }
 
                 CONSOLE_OUT("Enter Encryption Key size required : ");
-                CONSOLE_IN("%u", &read_val);
-                auth.ekey_size = (UCHAR)read_val;
+                #ifndef SMP_NO_PARAM_CHECK
+                    retval = appl_validate_params(&read_val,2U,SMP_MIN_ENCRYPTION_KEY_SIZE,SMP_MAX_ENCRYPTION_KEY_SIZE);
+                #else
+                    CONSOLE_IN("%u", &read_val);
+                #endif
+                if (API_SUCCESS == retval)
+                {
+                    auth.ekey_size = (UCHAR)read_val;
+                }
+                else
+                {
+                    break;
+                }
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
                 if (BT_TRUE == appl_smp_xtxp_enable)
@@ -1053,8 +1146,8 @@ void main_smp_operations(void)
                 }
                 else
                 {
-                    auth.transport = 2U;
-                    auth.xtx_info = 0U;
+                    auth.transport = SMP_LINK_LE;
+                    auth.xtx_info = SMP_XTX_DISABLE;
                 }
 
                 /* Get the BD handle */
@@ -1086,24 +1179,12 @@ void main_smp_operations(void)
 
                 CONSOLE_OUT ("BT_smp_authenticate, Retval - 0x%04X\n", retval);
 
-#ifdef APPL_SMP_PARALLEL_AUTH
-                /* Get the BD handle */
-                BT_smp_get_bd_handle (&bd_addr_1, &bd_handle);
-
-                retval = BT_smp_authenticate
-                         (
-                             &bd_handle,
-                             &auth
-                         );
-
-                CONSOLE_OUT ("BT_smp_authenticate, Retval - 0x%04X\n", retval);
-#endif /* APPL_SMP_PARALLEL_AUTH */
                 break;
 
             case 3:
 #ifndef APPL_SMP_AUTO_FILL_BD_ADDR
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 CONSOLE_OUT("\n0 - Public\n1 - Random\n");
                 CONSOLE_OUT("Enter BD_ADDR type : ");
@@ -1121,6 +1202,12 @@ void main_smp_operations(void)
 
                 /* Call SMP LE Secure Connetions Mode Setting API here */
                 auth.pair_mode = (UCHAR)((read_val)?SMP_LESC_MODE:SMP_LEGACY_MODE);
+
+                /**
+                 * Update the Default pairing mode related global to the value
+                 * selected by User.
+                 */
+                g_appl_pair_mode = auth.pair_mode;
 #endif /* SMP_LESC */
 
                 CONSOLE_OUT(" 0 - Encryption Only/Unauthenticated (Without MITM)\n");
@@ -1138,8 +1225,41 @@ void main_smp_operations(void)
                 CONSOLE_IN("%x", &read_val);
                 auth.param = (UCHAR)read_val;
 
+                CONSOLE_OUT("Enter Encryption Key size required : ");
+                CONSOLE_IN("%u", &read_val);
+                auth.ekey_size = (UCHAR)read_val;
+
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+                if (BT_TRUE == appl_smp_xtxp_enable)
+                {
+                    CONSOLE_OUT("Enter transport (1-BREDR, 2-BLE): ");
+                    CONSOLE_IN("%u", &read_val);
+                    auth.transport = (UCHAR)read_val;
+
+                    CONSOLE_OUT("Enter Cross Transport KeyGen (0-No, 1-Yes): ");
+                    CONSOLE_IN("%u", &read_val);
+                    auth.xtx_info = (read_val) ? SMP_XTX_KEYGEN_MASK : SMP_XTX_DISABLE;
+                    auth.xtx_info |= SMP_XTX_H7_MASK;
+
+#ifdef SMP_ENABLE_BLURTOOTH_VU_UPDATE
+                    CONSOLE_OUT("Enter role requirement of local device (0-Master, 1-Slave): ");
+                    CONSOLE_IN("%u", &read_val);
+                    auth.role = (UCHAR)read_val;
+#endif /* SMP_ENABLE_BLURTOOTH_VU_UPDATE */
+                }
+                else
+                {
+                    auth.transport = SMP_LINK_LE;
+                    auth.xtx_info = SMP_XTX_DISABLE;
+                }
+
                 /* Get the BD handle */
-                (BT_IGNORE_RETURN_VALUE) BT_smp_get_bd_handle (&bd_addr, &bd_handle);
+                (BT_IGNORE_RETURN_VALUE)BT_smp_get_link_handle(&bd_addr, &bd_handle, auth.transport);
+#else /* SMP_LESC_CROSS_TXP_KEY_GEN */
+
+                /* Get the BD handle */
+                (BT_IGNORE_RETURN_VALUE)BT_smp_get_bd_handle(&bd_addr, &bd_handle);
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
                 retval = BT_smp_authentication_request_reply
                          (
@@ -1154,7 +1274,7 @@ void main_smp_operations(void)
 #ifdef SMP_HAVE_ENCRYPT_API
 #ifndef APPL_SMP_AUTO_FILL_BD_ADDR
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 CONSOLE_OUT("\n0 - Public\n1 - Random\n");
                 CONSOLE_OUT("Enter BD_ADDR type : ");
@@ -1203,7 +1323,7 @@ void main_smp_operations(void)
             case 10:
 #ifndef APPL_SMP_AUTO_FILL_BD_ADDR
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 CONSOLE_OUT("Enter BD_ADDR type (0: Public, 1: Random): ");
                 CONSOLE_IN("%u", &read_val);
@@ -1250,7 +1370,7 @@ void main_smp_operations(void)
 #ifdef SMP_LESC
 #ifndef APPL_SMP_AUTO_FILL_BD_ADDR
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 CONSOLE_OUT("Enter BD_ADDR type (0: Public, 1: Random): ");
                 CONSOLE_IN("%u", &read_val);
@@ -1295,6 +1415,20 @@ void main_smp_operations(void)
                 pairable_mode = (UCHAR)read_val;
                 break;
 
+            case 23:
+                CONSOLE_OUT("Enter Numeric Key Comparison mode (0: Manual, 1: Automatic) : ");
+                CONSOLE_IN("%d", &read_val);
+
+                /* Set the NC Mode */
+                nc_automatic_mode = (1U == (UCHAR)read_val) ? SMP_TRUE : SMP_FALSE;
+
+                /* Check for NC and Auto Mode states */
+                if ((SMP_TRUE == nc_automatic_mode) && (SMP_FALSE == automatic_mode))
+                {
+                    printf("Use Option 21 to set Automatic mode\n");
+                }
+                break;
+
             case 30:
                 CONSOLE_OUT("Choose default IRK [1 - Yes, 0 - No]\n");
                 CONSOLE_IN("%d", &choice);
@@ -1317,7 +1451,7 @@ void main_smp_operations(void)
 
             case 31:
                 CONSOLE_OUT("Enter BD_ADDR: ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 CONSOLE_OUT("Enter IRK (16 octets): ");
                 for (i = 0U; i < SMP_IRK_SIZE; i++)
@@ -1331,7 +1465,7 @@ void main_smp_operations(void)
 
             case 40:
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(bd_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                 APPL_TRC("Enter bd_addr type : ");
                 CONSOLE_IN("%u", &read_val);
@@ -1484,12 +1618,52 @@ void main_smp_operations(void)
                 BT_IGNORE_UNUSED_PARAM(appl_smp_xtxp_enable);
                 break;
 
+            case 101:
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+                {
+                    /* Get the BD handle */
+                    retval = BT_smp_get_link_handle(&g_bd_addr, &bd_handle, SMP_LINK_BREDR);
+
+                    if (API_SUCCESS == retval)
+                    {
+                        auth.security = 0x00U;
+                        auth.bonding = 0x00U;
+                        auth.pair_mode = 0x00U;
+                        auth.transport = SMP_LINK_BREDR;
+                        auth.ekey_size = SMP_MAX_ENCRYPTION_KEY_SIZE;
+#ifdef SMP_ENABLE_BLURTOOTH_VU_UPDATE
+                        auth.role = BT_DEVICE_ROLE_MASTER;
+#endif /* SMP_ENABLE_BLURTOOTH_VU_UPDATE */
+                        auth.xtx_info = SMP_XTX_KEYGEN_MASK | SMP_XTX_H7_MASK;
+
+                        retval = BT_smp_authenticate
+                        (
+                            &bd_handle,
+                            &auth
+                        );
+                        CONSOLE_OUT("BT_smp_authenticate, Retval - 0x%04X\n", retval);
+                    }
+                }
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+                break;
+
+            case 199:
+                CONSOLE_OUT("Enter BD_ADDR : ");
+                appl_get_bd_addr(bd_addr.addr);
+
+                CONSOLE_OUT("Enter BD_ADDR type (0: Public, 1: Random): ");
+                CONSOLE_IN("%u", &read_val);
+                bd_addr.type = (UCHAR)read_val;
+
+                appl_hci_le_connect(&bd_addr, 0x00U);
+                break;
+
             case 200:
                 {
                     UINT16         conn_handle;
 #ifndef APPL_SMP_AUTO_FILL_BD_ADDR
                     CONSOLE_OUT("Enter BD_ADDR : ");
-                    appl_get_bd_addr(bd_addr.addr);
+                    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
                     CONSOLE_OUT("Enter BD_ADDR type (0: Public, 1: Random): ");
                     CONSOLE_IN("%u", &read_val);
@@ -1661,7 +1835,7 @@ API_RESULT appl_smp_initiate_pairing (void)
 
 #ifndef APPL_SMP_AUTO_FILL_BD_ADDR
     CONSOLE_OUT("Enter BD_ADDR : ");
-    appl_get_bd_addr(bd_addr.addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
     CONSOLE_OUT("\n0 - Public\n1 - Random\n");
     CONSOLE_OUT("Enter BD_ADDR type : ");
@@ -1732,7 +1906,6 @@ API_RESULT appl_smp_cb
     UCHAR    ltk_null;
 
     SMP_KEY_DIST * key_info;
-    SMP_KEY_DIST local_key_info;
     SMP_AUTH_INFO * auth;
     SMP_AUTH_INFO info;
     SMP_BD_ADDR bdaddr;
@@ -1760,13 +1933,22 @@ API_RESULT appl_smp_cb
 
     SMP_KEY_DIST  p_key_info;
     UCHAR         p_keys;
+    UCHAR         req_pair_mode;
+    UCHAR         link_type, role;
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     appl_handle = 0U;
+    link_type = DQ_LINK_ANY;
 
     /* Get the BD Address from handle */
     BT_INIT_BD_ADDR(&bdaddr);
-    (BT_IGNORE_RETURN_VALUE) BT_smp_get_bd_addr (bd_handle, &bdaddr);
+    (BT_IGNORE_RETURN_VALUE)BT_smp_get_bd_addr (bd_handle, &bdaddr);
+
+    /* Get the Link Type */
+    device_queue_get_link_type(&link_type, bd_handle);
+
+    /* Set device role from HCI */
+    BT_hci_get_device_role(&bdaddr, link_type, &role);
 
 #ifndef DONT_USE_STANDARD_IO
     bd_addr = bdaddr.addr;
@@ -1774,6 +1956,15 @@ API_RESULT appl_smp_cb
 #endif /* DONT_USE_STANDARD_IO */
     switch(event)
     {
+    case SMP_AUTHENTICATION_ERROR:
+        APPL_TRC("\nRecvd SMP_AUTHENTICATION_ERROR\n");
+        APPL_TRC("BD Address : %02X %02X %02X %02X %02X %02X\n",
+        bd_addr[0U],bd_addr[1U],bd_addr[2U],bd_addr[3U],bd_addr[4U],bd_addr[5U]);
+        APPL_TRC("BD addr type : %s\n",
+        (0U == bd_addr_type)? "Public Address": "Random Address");
+        APPL_TRC("Status : %04X\n", status);
+        break;
+
     case SMP_AUTHENTICATION_COMPLETE:
         APPL_TRC("\nRecvd SMP_AUTHENTICATION_COMPLETE\n");
         APPL_TRC("BD Address : %02X %02X %02X %02X %02X %02X\n",
@@ -1855,12 +2046,6 @@ API_RESULT appl_smp_cb
                     else
 #endif /* CLASSIC_SEC_MANAGER */
                     {
-                        if (16U != auth->ekey_size)
-                        {
-                            APPL_ERR("EncKey Size check failed for LinkKey generation.\n");
-                            break;
-                        }
-
                         retval = BT_smp_get_device_keys
                                  (
                                      bd_handle,
@@ -1874,9 +2059,22 @@ API_RESULT appl_smp_cb
                         }
                         else
                         {
-                            /* Save the BD Address */
-                            BT_COPY_BD_ADDR(appl_smp_bd_addr.addr, &p_key_info.id_addr_info[1]);
-                            appl_smp_bd_addr.type = p_key_info.id_addr_info[0];
+                            if (16U != auth->ekey_size)
+                            {
+#ifdef APPL_SMP_VALIDATE_KEYSIZE_FOR_CTKD
+                                APPL_ERR("EncKey Size check failed for LinkKey generation.\n");
+                                break;
+#else /* APPL_SMP_VALIDATE_KEYSIZE_FOR_CTKD */
+                                BT_smp_get_raw_lesc_ltk(bd_handle, p_key_info.enc_info);
+#endif /* APPL_SMP_VALIDATE_KEYSIZE_FOR_CTKD */
+                            }
+
+                            /* Save the Identity BD Address if valid */
+                            if (SMP_DIST_MASK_ID_KEY & p_keys)
+                            {
+                                BT_COPY_BD_ADDR(appl_smp_bd_addr.addr, &p_key_info.id_addr_info[1]);
+                                appl_smp_bd_addr.type = p_key_info.id_addr_info[0];
+                            }
 
                             (BT_IGNORE_RETURN_VALUE) BT_smp_get_lk_from_ltk_pl
                             (
@@ -2010,19 +2208,61 @@ API_RESULT appl_smp_cb
             }
         }
 
+        /*
+         * Post service connection only if Authentication or Encryption
+         * successfuly for BLE connection
+         */
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+        if ((API_SUCCESS == status) &&
+            ((NULL == event_data) ||
+             (SMP_LINK_BREDR != auth->transport)))
+#else /* SMP_LESC_CROSS_TXP_KEY_GEN */
+         if ((API_SUCCESS == status) &&
+             (NULL == event_data))
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+        {
 #ifdef APPL_FSM_SUPPORT
-        /* Post Transport Configuration Ind from SMP */
-        appl_fsm_post_event
-        (
-             ev_appl_transport_configuration_ind,
-             (void *)(&fsm_param)
-        );
+            /* Post Transport Configuration Ind from SMP */
+            appl_fsm_post_event
+            (
+                ev_appl_transport_configuration_ind,
+                (void *)(&fsm_param)
+            );
 #else
-        fsm_param.handle = appl_handle;
-
-        appl_service_connect(&fsm_param.handle);
+            fsm_param.handle = appl_handle;
+            appl_service_connect(&fsm_param.handle);
 #endif /* APPL_FSM_SUPPORT */
+        }
+        break;
 
+    case SMP_AUTHENTICATION_RESPONSE:
+        APPL_TRC("\nRecvd SMP_AUTHENTICATION_RESPONSE\n");
+        APPL_TRC("BD Address : %02X %02X %02X %02X %02X %02X\n",
+        bd_addr[0U],bd_addr[1U],bd_addr[2U],bd_addr[3U],bd_addr[4U],bd_addr[5U]);
+        APPL_TRC("BD addr type : %s\n",
+        (0U == bd_addr_type)? "Public Address": "Random Address");
+
+        auth = (SMP_AUTH_INFO *)event_data;
+
+        APPL_TRC("Authentication type : %s\n",
+        (SMP_SEC_LEVEL_2 == (auth->security & 0x0FU))?  "With MITM":
+        "Encryption Only (without MITM)");
+
+        APPL_TRC("Bonding type : %s\n",
+        (auth->bonding)? "Bonding": "Non-Bonding");
+
+        APPL_TRC("Encryption Key size : %d\n", auth->ekey_size);
+
+#ifdef SMP_LESC
+        APPL_TRC("Pairing Mode : %s\n",
+        (SMP_LESC_MODE == (auth->pair_mode))? "LE SEC Pairing Mode":
+        "LEGACY Pairing Mode");
+
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+        APPL_TRC("Transport : 0x%02X\n", auth->transport);
+        APPL_TRC("Cross Transport Info : 0x%02X\n", auth->xtx_info);
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+#endif /* SMP_LESC */
         break;
 
     case SMP_AUTHENTICATION_REQUEST:
@@ -2041,11 +2281,34 @@ API_RESULT appl_smp_cb
         APPL_TRC("Bonding type : %s\n",
         (auth->bonding)? "Bonding": "Non-Bonding");
 
+        APPL_TRC("Encryption Key size : %d\n", auth->ekey_size);
+
 #ifdef SMP_LESC
         APPL_TRC("Pairing Mode : %s\n",
         (SMP_LESC_MODE == (auth->pair_mode))? "LE SEC Pairing Mode":
         "LEGACY Pairing Mode");
 
+        /* Copy the requested pair mode */
+        req_pair_mode = auth->pair_mode;
+
+        /**
+         * Choose the Pairing Mode based on what is configured by the
+         * application.
+         */
+        (auth->pair_mode) = g_appl_pair_mode;
+#endif /* SMP_LESC */
+
+        /* Check if automatic mode is set */
+        if (SMP_TRUE != automatic_mode)
+        {
+            APPL_TRC("Automatic Mode is False\n");
+            break;
+        }
+
+        /* Accept Authentication */
+        auth->param = SMP_ERROR_NONE;
+
+#ifdef SMP_LESC
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
         APPL_TRC("Transport : 0x%02X\n", auth->transport);
         APPL_TRC("Cross Transport Info : 0x%02X\n", auth->xtx_info);
@@ -2054,6 +2317,7 @@ API_RESULT appl_smp_cb
         {
             auth->xtx_info = SMP_XTX_DISABLE;
         }
+#ifdef SMP_SAVE_REMOTE_IOCAP
         else
         {
             SMP_IOCAPS le_iocaps;
@@ -2074,39 +2338,53 @@ API_RESULT appl_smp_cb
                     }
                 }
             }
+        }
+#endif /* SMP_SAVE_REMOTE_IOCAP */
 
-            if (SMP_XTX_DISABLE != auth->xtx_info)
+        if (SMP_XTX_DISABLE != auth->xtx_info)
+        {
+            /* Is transport on BR/EDR? */
+            if (SMP_LINK_BREDR == auth->transport)
             {
-                /* Enable H7 support if Cross transport keygen is requested */
-                if (0U != (auth->xtx_info & SMP_XTX_KEYGEN_MASK))
+                UCHAR lk[BT_LINK_KEY_SIZE];
+                UCHAR lk_type;
+
+                /* Check if P256 authentication on BR/EDR link */
+                retval = BT_sm_get_device_link_key_and_type(bd_addr, lk, &lk_type);
+
+                if ((API_SUCCESS != retval) ||
+                    ((HCI_LINK_KEY_UNAUTHENTICATED_P_256 != lk_type) &&
+                    (HCI_LINK_KEY_AUTHENTICATED_P_256 != lk_type)))
                 {
-                    auth->xtx_info |= SMP_XTX_H7_MASK;
+                    auth->xtx_info = SMP_XTX_DISABLE;
+                }
+            }
+            else
+            {
+                /* Is LE Secure connection requested on BLE link */
+                if (SMP_LESC_MODE != auth->pair_mode)
+                {
+                    auth->xtx_info = SMP_XTX_DISABLE;
                 }
             }
         }
+
+        /* Enable H7 support if Cross transport keygen is requested */
+        if (0U != (auth->xtx_info & SMP_XTX_KEYGEN_MASK))
+        {
+            auth->xtx_info |= SMP_XTX_H7_MASK;
+        }
+
+        if (SMP_LINK_BREDR == auth->transport)
+        {
+            if (SMP_XTX_DISABLE == auth->xtx_info)
+            {
+                /* auth->param = SMP_ERROR_CT_KEY_GEN_NOT_ALLOWED; */
+            }
+        }
+        else
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 #endif /* SMP_LESC */
-
-        APPL_TRC("Encryption Key size : %d\n", auth->ekey_size);
-
-#ifdef SMP_LESC
-        /**
-         * Choose the Pairing Mode based on what is configured by the
-         * application.
-         */
-        (auth->pair_mode) = g_appl_pair_mode;
-#endif /* SMP_LESC */
-
-#ifdef BT_SECURITY_VU_VALIDATION
-        if (BT_SECURITY_VU_UNEXPECTED_PUBKEY == BT_security_vu_get())
-        {
-            /* Update to legcy mode to check vulnerability */
-            (auth->pair_mode) = SMP_LEGACY_MODE;
-        }
-#endif /* BT_SECURITY_VU_VALIDATION */
-
-        /* Check if automatic mode is set */
-        if(SMP_TRUE == automatic_mode)
         {
             /* Get the application handle reference */
             (BT_IGNORE_RETURN_VALUE) appl_get_handle_from_device_handle (*bd_handle,&appl_handle);
@@ -2162,7 +2440,7 @@ API_RESULT appl_smp_cb
                      *  is called.
                      */
                     /* Check if bonded */
-                    if (SMP_BONDING == info.bonding)
+                    if ((SMP_BONDING == info.bonding) && (BT_DEVICE_ROLE_SLAVE == role))
                     {
                         /**
                          * The application logic choosen here is to delete the
@@ -2195,9 +2473,6 @@ API_RESULT appl_smp_cb
                 }
             }
 
-            /* Accept Authentication */
-            auth->param = SMP_ERROR_NONE;
-
 #ifndef SMP_STORAGE
             /* If storage not supported, make no-bonding */
             auth->bonding = SMP_BONDING_NONE;
@@ -2220,14 +2495,19 @@ API_RESULT appl_smp_cb
             /* Check if Application has set Secure Connections only mode */
             if (SMP_PL_LESC_STRICT == BT_smp_get_lesc_policy_pl())
             {
-                if (SMP_LESC_MODE != auth->pair_mode)
+                /* If requested pair mode is not LESC then send failure */
+                if (SMP_LESC_MODE != req_pair_mode)
                 {
                     /* Set error if incoming request is not LESC */
                     auth->param = SMP_ERROR_AUTHENTICATION_REQUIREMENTS;
                 }
                 else
                 {
-                    if (SMP_MAX_ENCRYPTION_KEY_SIZE != auth->ekey_size)
+                    /**
+                     * If local role is Master, then this would be Slave Security Request
+                     * and ekey_size in that case would be set to 0x07.
+                     */
+                    if ((SMP_MAX_ENCRYPTION_KEY_SIZE != auth->ekey_size) && (BT_DEVICE_ROLE_SLAVE == role))
                     {
                         /* Set error if incoming request is not with MAX key size */
                         auth->param = SMP_ERROR_ENCRYPTION_KEY_SIZE;
@@ -2236,30 +2516,38 @@ API_RESULT appl_smp_cb
             }
 #endif /* SMP_LESC */
 
-            APPL_TRC("\n\nSending +ve Authentication request reply.\n");
-            retval = BT_smp_authentication_request_reply
-                     (
-                         bd_handle,
-                         auth
-                     );
+#ifdef BT_SECURITY_VU_VALIDATION
+            if (BT_SECURITY_VU_UNEXPECTED_PUBKEY == BT_security_vu_get())
+            {
+                /* Update to legcy mode to check vulnerability */
+                (auth->pair_mode) = SMP_LEGACY_MODE;
+            }
+#endif /* BT_SECURITY_VU_VALIDATION */
+        }
 
-            APPL_TRC ("BT_smp_authentication_request_reply, Retval - 0x%04X\n", retval);
+        APPL_TRC("\n\nSending +ve Authentication request reply.\n");
+        retval = BT_smp_authentication_request_reply
+                 (
+                     bd_handle,
+                     auth
+                 );
+
+        APPL_TRC("BT_smp_authentication_request_reply, Retval - 0x%04X\n", retval);
 
 #ifdef APPL_FSM_SUPPORT
-            /* Notify application state machine */
-            fsm_param.handle = appl_handle;
-            fsm_param.data_param = NULL;
-            fsm_param.data_len = 0U;
-            fsm_param.direction = 0x01U;
+        /* Notify application state machine */
+        fsm_param.handle = appl_handle;
+        fsm_param.data_param = NULL;
+        fsm_param.data_len = 0U;
+        fsm_param.direction = 0x01U;
 
-            /* Post Transport Configuration Request for SMP */
-            appl_fsm_post_event
-            (
-                 ev_appl_transport_configuration_req,
-                 (void *)(&fsm_param)
-            );
+        /* Post Transport Configuration Request for SMP */
+        appl_fsm_post_event
+        (
+            ev_appl_transport_configuration_req,
+            (void *)(&fsm_param)
+        );
 #endif /* APPL_FSM_SUPPORT */
-        }
         break;
 
     case SMP_PASSKEY_ENTRY_REQUEST:
@@ -2319,6 +2607,11 @@ API_RESULT appl_smp_cb
         APPL_TRC("Local keys negotiated - 0x%02X\n", kx_param->keys);
         APPL_TRC("Encryption Key Size negotiated - 0x%02X\n",
                 kx_param->ekey_size);
+
+        /* Save the local key distribution information */
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+        local_keys = kx_param->keys;
+#endif
 
         /* Check if automatic mode is set */
         if(SMP_TRUE == automatic_mode)
@@ -2473,7 +2766,6 @@ API_RESULT appl_smp_cb
         }
         break;
 
-
     case SMP_RESOLVABLE_PVT_ADDR_CREATE_CNF:
         APPL_TRC("\nEvent   : SMP_RESOLVABLE_PVT_ADDR_CREATE_CNF\n");
         APPL_TRC("Status : %04X\n", status);
@@ -2594,6 +2886,9 @@ API_RESULT appl_smp_cb
         key_info = kx_param->keys_info;
 
         /* Store the peer keys */
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+        peer_keys = kx_param->keys;
+#endif
         BT_mem_copy (&peer_key_info, key_info, sizeof (SMP_KEY_DIST));
 
         APPL_TRC ("Encryption Info:\n");
@@ -2620,8 +2915,7 @@ API_RESULT appl_smp_cb
         APPL_TRC("Numeric Code : %06u\n", (*((UINT32 *)event_data) % 1000000U));
 
         /* If Automatic Mode , Accept the Key Comparison request */
-#ifdef APPL_SMP_NC_AUTO_REPLY
-        if (BT_TRUE == automatic_mode)
+        if ((SMP_TRUE == automatic_mode) && (SMP_TRUE == nc_automatic_mode))
         {
             smp_accept = SMP_NUM_COMP_CNF_POSITIVE;
 
@@ -2631,7 +2925,6 @@ API_RESULT appl_smp_cb
                          (void *)&smp_accept
                      );
         }
-#endif /* APPL_SMP_NC_AUTO_REPLY */
         break;
 
     case SMP_KEY_PRESS_NOTIFICATION_EVENT:
@@ -3314,4 +3607,5 @@ void appl_smp_lesc_test_funcs_complete
 #endif /* SMP_TBX_TEST_LESC_FUNCTIONS */
 
 #endif /* SMP */
+
 

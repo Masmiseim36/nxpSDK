@@ -331,9 +331,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, USB_STACK_BM, PRINTF_ADVANCED_ENABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1011/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <ScatterFile>MIMXRT1011xxxxx_flexspi_nor_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --legacyalign --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --legacyalign --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,3912</DisabledWarnings>
           </LDads>
@@ -375,12 +375,37 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -420,37 +445,82 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
-              <FileName>clock_config.c</FileName>
+              <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.c</FilePath>
             </File>
             <File>
-              <FileName>clock_config.h</FileName>
+              <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.c</FileName>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_iomuxc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -540,78 +610,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -632,10 +637,55 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source/fsl_usb_disk</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_usb_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usb_disk_bm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -680,52 +730,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>ff.c</FileName>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_usb_disk</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_usb_disk.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_usb_disk_bm.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk_bm.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -773,16 +803,6 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>evkmimxrt1010_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../xip/evkmimxrt1010_flexspi_nor_config.c</FilePath>
@@ -792,35 +812,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1010_flexspi_nor_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1239,9 +1239,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, USB_STACK_BM, PRINTF_ADVANCED_ENABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, PRINTF_ADVANCED_ENABLE=1, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../middleware/usb/host/class;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1011/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../middleware/usb/host/class;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1275,7 +1275,7 @@
             <ScatterFile>MIMXRT1011xxxxx_flexspi_nor_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --legacyalign --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --legacyalign --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,3912</DisabledWarnings>
           </LDads>
@@ -1283,12 +1283,37 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1328,37 +1353,82 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
-              <FileName>clock_config.c</FileName>
+              <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.c</FilePath>
             </File>
             <File>
-              <FileName>clock_config.h</FileName>
+              <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.c</FileName>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_iomuxc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1448,78 +1518,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -1540,10 +1545,55 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source/fsl_usb_disk</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_usb_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usb_disk_bm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1588,52 +1638,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>ff.c</FileName>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_usb_disk</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_usb_disk.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_usb_disk_bm.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk_bm.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1681,16 +1711,6 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>evkmimxrt1010_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../xip/evkmimxrt1010_flexspi_nor_config.c</FilePath>
@@ -1700,35 +1720,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1010_flexspi_nor_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
           </Files>
         </Group>

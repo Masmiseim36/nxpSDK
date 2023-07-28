@@ -31,7 +31,7 @@ UINT16 GATT_CHAR_RSCS_RSC_MSRMNT_INST;
 UINT16 GATT_CHAR_RSCS_RSC_FEATURE_INST;
 UINT16 GATT_CHAR_RSCS_SNSR_LOC_INST;
 UINT16 GATT_CHAR_RSCS_SC_CNTRL_PNT_INST;
-UINT16 GATT_DB_MAX_ATTRIBUTES;
+
 /* --------------------------------------------- Static Global Variables */
 
 /* --------------------------------------------- Functions */
@@ -468,16 +468,14 @@ API_RESULT appl_rscs_add_dis(void)
         GATT_SER_RSCS_DEV_INFO_INST  = service_handle;
         /* ManufacturerName */
         {
-            /* Mindtree Limited */
-            UCHAR manufacturer_name[] = { 'M', 'i', 'n', 'd', 't', 'r', 'e', 'e', ' ', 'L', 'i', 'm', 'i', 't', 'e', 'd' };
             char_uuid.uuid_format     = ATT_16_BIT_UUID_FORMAT;
             char_uuid.uuid.uuid_16    = GATT_MANUFACTURER_NAME_CHARACTERISTIC;
 
             perm                      = GATT_DB_PERM_READ;
             property                  = GATT_DB_CHAR_READ_PROPERTY;
 
-            char_value.val            = manufacturer_name;
-            char_value.len            = sizeof(manufacturer_name);
+            char_value.val            = appl_manufacturer_name_ext;
+            char_value.len            = sizeof(APPL_MANUFACTURER_NAME);
             char_value.actual_len     = char_value.len;
 
             retval = BT_gatt_db_add_characteristic
@@ -727,8 +725,8 @@ API_RESULT appl_rscs_add_dis(void)
 
         /* PnPID */
         {
-            /* Vendor: 0x006A[Mindtree], Product: 0x014D, Version: 0x100 */
-            UCHAR pnp_id[]         = { 0x01U, 0x6AU, 0x00U, 0x4DU, 0x01U, 0x00U, 0x01U };
+            /* Vendor: 0x0025[NXP], Product: 0x0000, Version: 0x0001 */
+            UCHAR pnp_id[]         = { 0x01U, 0x25U, 0x00U, 0x00U, 0x00U, 0x01U, 0x00U };
             char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
             char_uuid.uuid.uuid_16 = GATT_PNP_ID_CHARACTERISTIC;
 

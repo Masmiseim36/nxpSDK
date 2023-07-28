@@ -367,7 +367,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --legacyalign --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --legacyalign --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,3912</DisabledWarnings>
           </LDads>
@@ -1370,7 +1370,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --legacyalign --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --legacyalign --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,3912</DisabledWarnings>
           </LDads>

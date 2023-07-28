@@ -18,5 +18,8 @@ var struct__ElementAudioProc =
     [ "proc_func", "struct__ElementAudioProc.html#a5ea1afda6d9962f1846d2a78ca695aec", null ],
     [ "deinit_func", "struct__ElementAudioProc.html#aeb5049e58d41d0623594488cce22adec", null ],
     [ "arg_ptr", "struct__ElementAudioProc.html#a71edaa78c4285a723f86a7cacd9feb05", null ],
-    [ "initialized", "struct__ElementAudioProc.html#a4edd8d6d47ea0e551d96833632a7b69f", null ]
+    [ "initialized", "struct__ElementAudioProc.html#a4edd8d6d47ea0e551d96833632a7b69f", null ],
+    [ "refdata_set_num_buff_func", "struct__ElementAudioProc.html#a4768be9f006b7eaec00dae8006828eb3", null ],
+    [ "refdata_push_func", "struct__ElementAudioProc.html#ad7b57587dc49302a7cf831d93cdaa4af", null ],
+    [ "set_debugging_func", "struct__ElementAudioProc.html#ae987f20558d9bf2538e48d0bc59179ef", null ]
 ];

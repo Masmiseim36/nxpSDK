@@ -73,9 +73,10 @@
 /**************************************************************************/
 VOID  _ux_hcd_ehci_register_write(UX_HCD_EHCI *hcd_ehci, ULONG ehci_register, ULONG value)
 {
+    volatile ULONG *reg_ptr = (volatile ULONG *)(hcd_ehci -> ux_hcd_ehci_base + ehci_register);
 
-    /* Write to the specified EHCI register.  */    
-    *(hcd_ehci -> ux_hcd_ehci_base + ehci_register) =  value;
+    /* Write to the specified EHCI register.  */
+    *reg_ptr = value;
 
     /* Return to caller.  */
     return;

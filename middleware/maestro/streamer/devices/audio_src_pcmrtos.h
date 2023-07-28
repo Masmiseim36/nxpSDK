@@ -23,9 +23,32 @@
  * @brief Audio source buffer number
  *
  */
-#ifndef AUDIO_SRC_BUFFER_NUM
-#define AUDIO_SRC_BUFFER_NUM 2
+#if !defined(AUDIO_SRC_BUFFER_NUM)
+#if defined(SAI_XFER_QUEUE_SIZE)
+#define AUDIO_SRC_BUFFER_NUM (SAI_XFER_QUEUE_SIZE + 1)
+#elif defined(I2S_NUM_BUFFERS)
+#define AUDIO_SRC_BUFFER_NUM (I2S_NUM_BUFFERS + 1)
+#else
+#define AUDIO_SRC_BUFFER_NUM (3)
 #endif
+#endif
+
+/*
+ *  @brief Structure used for the synchronization
+ *
+ */
+typedef struct _AudioSrcBufferQueue_T
+{
+#if AUDIO_SRC_BUFFER_NUM >= 4
+    int8_t buffer_idx[AUDIO_SRC_BUFFER_NUM];
+#else
+    int8_t buffer_idx[5]; // More than SAI_XFER_QUEUE_SIZE or I2S_NUM_BUFFERS
+#endif
+    int8_t read_idx;
+    int8_t write_idx;
+    int8_t size;
+} AudioSrcBufferQueue_t;
+
 /**
  * @brief Buffer size alignment
  *
@@ -46,6 +69,7 @@ typedef struct _PCMRtosDeviceInfo
     uint8_t device_state;                      /*!< @brief Device state */
     bool init_params_done;                     /*!< @brief Initialization done flag */
     bool continuous_read;                      /*!< @brief Continuous read flag */
+    AudioSrcBufferQueue_t buffer_queue;        /*!< @brief Queue of the requested audio buffer index */
 } PCMRtosDeviceInfo;
 
 /**

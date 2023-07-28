@@ -131,9 +131,6 @@ void appl_pass_init(void)
 
     APPL_TRC(
     "[PASS]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for PASS Alert Status, Ringer Setting, Control Point */
@@ -940,7 +937,8 @@ void appl_pass_handle_mtu_update_complete
          UINT16      mtu
      )
 {
-    CONSOLE_OUT("\n [PASS] Updated MTU is %d for Appl Handle 0x%02X", mtu, *handle);
+    APPL_TRC("\n[PASS]: Updated MTU is %d for Appl Handle 0x%02X\n",
+    mtu, *handle);
 }
 
 #endif /* (defined ATT && defined PASS) */

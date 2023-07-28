@@ -1,4 +1,5 @@
 /*
+ * AWS IoT Device SDK for Embedded C V202009.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -19,32 +20,32 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef SHADOW_CONFIG_H_
-#define SHADOW_CONFIG_H_
+#ifndef SHADOW_CONFIG_H
+#define SHADOW_CONFIG_H
 
 /**************************************************/
 /******* DO NOT CHANGE the following order ********/
 /**************************************************/
 
-/* Logging related header files are required to be included in the following order:
+/* Include logging header files and define logging macros in the following order:
  * 1. Include the header file "logging_levels.h".
- * 2. Define LIBRARY_LOG_NAME and  LIBRARY_LOG_LEVEL.
- * 3. Include the header file "logging_stack.h".
+ * 2. Define the LIBRARY_LOG_NAME and LIBRARY_LOG_LEVEL macros depending on
+ * the logging configuration for MQTT.
+ * 3. Include the header file "logging_stack.h", if logging is enabled for MQTT.
  */
 
-/* Include header that defines log levels. */
 #include "logging_levels.h"
 
-/* Configure name and log level for the Shadow library. */
+/* Logging configuration for the MQTT library. */
 #ifndef LIBRARY_LOG_NAME
-    #define LIBRARY_LOG_NAME     "SHADOW"
+#define LIBRARY_LOG_NAME "SHADOW"
 #endif
+
 #ifndef LIBRARY_LOG_LEVEL
-    #define LIBRARY_LOG_LEVEL    LOG_INFO
+#define LIBRARY_LOG_LEVEL LOG_INFO
 #endif
 
-#include "logging_stack.h"
-
+#include "logging.h"
 /************ End of logging configuration ****************/
 
-#endif /* ifndef SHADOW_CONFIG_H_ */
+#endif /* ifndef SHADOW_CONFIG_H */

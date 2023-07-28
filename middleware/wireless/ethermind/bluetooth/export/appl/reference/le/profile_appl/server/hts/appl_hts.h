@@ -79,6 +79,11 @@ API_RESULT gatt_db_hts_gatt_char_handler
                GATT_DB_HANDLE    * handle,
                GATT_DB_PARAMS    * params
            );
+API_RESULT gatt_db_hts_battery_level_handler
+           (
+               GATT_DB_HANDLE    * handle,
+               GATT_DB_PARAMS    * params
+           );
 
 #ifdef GATT_DB_HAVE_REGISTERATION_SUPPORT
 void appl_hts_gatt_db_register(void);

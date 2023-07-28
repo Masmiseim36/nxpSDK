@@ -1,5 +1,6 @@
 var audio__src__pcmrtos_8h =
 [
+    [ "AudioSrcBufferQueue_t", "structAudioSrcBufferQueue__t.html", "structAudioSrcBufferQueue__t" ],
     [ "PCMRtosDeviceInfo", "structPCMRtosDeviceInfo.html", "structPCMRtosDeviceInfo" ],
     [ "AUDIO_SRC_BUFFER_NUM", "audio__src__pcmrtos_8h.html#ab9a8ab8c8e0e183965442c5c0455bf20", null ],
     [ "SIZE_ALIGNMENT", "audio__src__pcmrtos_8h.html#a61589bfa46f6bdffede912fa9eee6915", null ],

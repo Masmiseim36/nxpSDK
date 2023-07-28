@@ -32,6 +32,7 @@ DECL_STATIC lfs_t * lfs;
 /* Storage File Handle array */
 DECL_STATIC lfs_file_t * fp[STORAGE_NUM_TYPES];
 DECL_STATIC lfs_file_t lfs_file[STORAGE_NUM_TYPES];
+
 #endif /* CONFIG_BT_SETTINGS */
 
 /* Storage File Name array */
@@ -68,7 +69,7 @@ static bool s_nvLoadData;
 static osa_semaphore_handle_t g_nvWriteBack;
 static OSA_SEMAPHORE_HANDLE_DEFINE(g_nvWriteBackHandle);
 static volatile bool g_nvWriteBackState[STORAGE_NUM_TYPES];
-#endif
+#endif /* STORAGE_IDLE_TASK_SYNC_ENABLE */
 
 #if ((((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS)) &&\
       ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))) ||\

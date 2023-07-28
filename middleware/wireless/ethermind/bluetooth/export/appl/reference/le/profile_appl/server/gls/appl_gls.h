@@ -16,6 +16,7 @@
 /* ----------------------------------------- Header File Inclusion */
 #include "appl_le.h"
 #include "appl_utils.h"
+#include "BT_racp.h"
 
 #ifdef GLS
 #include "gatt_db.h"
@@ -24,16 +25,14 @@
 #include "BT_racp.h"
 #endif /* BT_RACP */
 
-/* #define APPL_GLS_SINGLE_BOND_SUPPORT */
-
-#define APPL_RECORD_TRNSFER_INTERVAL               3
-#define APPL_UPDATE_RECORD_INTERVAL                15
-#define APPL_GLUCOSE_MEASUREMENT_LENGTH            18
-#define APPL_GLUCOSE_MEASUREMENT_CONTEXT_LENGTH    17
-#define APPL_GLUCOSE_MEASUREMENT_COUNT             9
-#define APPL_GLUCOSE_MEASUREMENT_CONTEXT_COUNT     2
-#define APPL_STORED_RECORD_COUNT                   9
-#define APPL_CONTEXT_INFORMATION_FLAG_MASK         0x10
+#define APPL_RECORD_TRNSFER_INTERVAL               3U
+#define APPL_UPDATE_RECORD_INTERVAL                15U
+#define APPL_GLUCOSE_MEASUREMENT_LENGTH            18U
+#define APPL_GLUCOSE_MEASUREMENT_CONTEXT_LENGTH    17U
+#define APPL_GLUCOSE_MEASUREMENT_COUNT             9U
+#define APPL_GLUCOSE_MEASUREMENT_CONTEXT_COUNT     2U
+#define APPL_STORED_RECORD_COUNT                   9U
+#define APPL_CONTEXT_INFORMATION_FLAG_MASK         0x10U
 
 /* --------------------------------------------- Global Definitions */
 typedef struct appl_gl_racp_req_param
@@ -182,6 +181,11 @@ void appl_gls_gatt_db_register(void);
 #else
 #define appl_gls_gatt_db_register()
 #endif /* GATT_DB_HAVE_REGISTERATION_SUPPORT */
+void appl_gls_update_multi_bond_flag(UCHAR flag);
+void appl_gls_update_target_addr_flag(UCHAR flag);
+void appl_reset_gls_adv_data_to_default_value(void);
+void appl_gls_set_target_address_in_adv_data(UCHAR offset);
+void appl_gls_timer_expiry_hndlr(void* data, UINT16 datalen);
 
 /* Profile handling */
 /* Profile Initialization */

@@ -15,8 +15,8 @@
 #include "fsl_debug_console.h"
 #include "fsl_sai_edma.h"
 #include "fsl_codec_common.h"
-#if defined DEMO_CODEC_WM8960
 #include "fsl_wm8960.h"
+#if defined DEMO_CODEC_WM8960
 #else
 #include "fsl_cs42448.h"
 #endif
@@ -96,6 +96,9 @@
 #define PLAY_COUNT  (100)
 #ifndef DEMO_CODEC_INIT_DELAY_MS
 #define DEMO_CODEC_INIT_DELAY_MS (1000U)
+#endif
+#ifndef DEMO_CODEC_VOLUME
+#define DEMO_CODEC_VOLUME 100U
 #endif
 /*******************************************************************************
  * Prototypes
@@ -319,7 +322,11 @@ int main(void)
     {
         assert(false);
     }
-
+    if (CODEC_SetVolume(&s_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        assert(false);
+    }
     /* delay for codec output stable */
     DelayMS(DEMO_CODEC_INIT_DELAY_MS);
 

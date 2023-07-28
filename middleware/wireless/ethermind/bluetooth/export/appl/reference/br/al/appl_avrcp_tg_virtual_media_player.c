@@ -13,6 +13,7 @@
 /* ----------------------------------------- Header File Inclusion */
 #include "appl_avrcp_tg_virtual_media_player.h"
 #include "BT_avrcp_api.h"
+#include "appl_utils.h"
 
 #ifdef AVRCP_TG
 
@@ -59,7 +60,6 @@ UCHAR                                  change_media_elem_attr_flag = 0U;
 UINT16                      addressed_player_id;
 UINT16                      browsed_player_id;
 UINT16                      current_player_id;
-UINT16                      player_change_flag;
 
 UINT32  media_attr_ids [APPL_AVRCP_MAX_ATTR_COUNT] =
 {
@@ -238,7 +238,7 @@ API_RESULT appl_mp_read_company_id_list(void)
         for (i = 0U; i < company_id_list.no_ids; i++)
         {
             (BT_IGNORE_RETURN_VALUE) BT_fops_file_get_formatted (fptr, "%x", &read_val, NULL);
-            company_id_list.company_id_list[i] = read_val;
+            company_id_list.c_id_list[i] = read_val;
         }
 
         /* Close the file */
@@ -263,7 +263,7 @@ API_RESULT appl_mp_display_company_id_list(void)
     LOG_DEBUG ("== Company ID List(%d) ==\n", company_id_list.no_ids);
     for (i = 0U; i < company_id_list.no_ids; i++)
     {
-        LOG_DEBUG ("  - 0x%06x\n", company_id_list.company_id_list[i]);
+        LOG_DEBUG ("  - 0x%06x\n", company_id_list.c_id_list[i]);
     }
 
     return retval;
@@ -300,7 +300,7 @@ API_RESULT appl_mp_read_event_id_list(void)
         {
             (BT_IGNORE_RETURN_VALUE) BT_fops_file_get_formatted (fptr, "%x", &read_val, NULL);
 
-            event_id_list.event_id_list[i] = (UCHAR )read_val;
+            event_id_list.e_id_list[i] = (UCHAR )read_val;
         }
 
         /* Close the file */
@@ -326,7 +326,7 @@ API_RESULT appl_mp_display_event_id_list(void)
     LOG_DEBUG ("== Event ID List(%d) ==\n", event_id_list.no_ids);
     for (i = 0U; i < event_id_list.no_ids; i++)
     {
-        LOG_DEBUG ("  - 0x%02x\n", event_id_list.event_id_list[i]);
+        LOG_DEBUG ("  - 0x%02x\n", event_id_list.e_id_list[i]);
     }
 
     return retval;
@@ -2141,6 +2141,30 @@ UCHAR appl_mp_get_registered_player_event_tl (UCHAR event_id)
     }
 
     return avrcp_tl;
+}
+
+/* Get the avrcp_reg_status for registered event */
+UCHAR appl_mp_get_registered_player_event_reg_status (UCHAR event_id)
+{
+    UCHAR       avrcp_reg_status;
+
+    avrcp_reg_status = 0xFFU;
+
+    if (APPL_AVRCP_MAX_PLAYER_EVENT_COUNT >= event_id)
+    {
+        avrcp_reg_status = registered_event_list[event_id-1U].reg_status;
+    }
+
+    return avrcp_reg_status;
+}
+
+/* Un register event */
+void appl_mp_un_register_player_event_reg_status (UCHAR event_id)
+{
+    if (APPL_AVRCP_MAX_PLAYER_EVENT_COUNT >= event_id)
+    {
+        registered_event_list[event_id-1U].reg_status = 0x00U;
+    }
 }
 
 #endif /* AVRCP_TG */

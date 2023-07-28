@@ -7,5 +7,6 @@ var structPCMRtosDeviceInfo =
     [ "buff_index", "structPCMRtosDeviceInfo.html#a324659f477b0e43749ea000fdddf9663", null ],
     [ "device_state", "structPCMRtosDeviceInfo.html#a3e4a82ab36427634cd3d5ab7322a60d4", null ],
     [ "init_params_done", "structPCMRtosDeviceInfo.html#ae1b590894eb6d573dd9ff37fe1cb8ed8", null ],
-    [ "continuous_read", "structPCMRtosDeviceInfo.html#a15be35d426ed7f14250847be593b9b6e", null ]
+    [ "continuous_read", "structPCMRtosDeviceInfo.html#a15be35d426ed7f14250847be593b9b6e", null ],
+    [ "buffer_queue", "structPCMRtosDeviceInfo.html#a5f8a9bd5b17142a7e4400afad7689259", null ]
 ];

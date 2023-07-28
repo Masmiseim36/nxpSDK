@@ -1,27 +1,24 @@
 var a00045 =
 [
-    [ "ocotp_timing_t", "a00045.html#a00343", [
-      [ "wait", "a00045.html#acd8c4f8763dcb388f62bfa50d6e97a64", null ],
-      [ "relax", "a00045.html#a9fea8ef8e47c7341a275e2dae68efa0e", null ],
-      [ "strobe_prog", "a00045.html#a8e99b30121ba46182baae7906e68ca21", null ],
-      [ "strobe_read", "a00045.html#abef3ec7b5191795eba9de0374b4e15cc", null ]
+    [ "lpuart_edma_handle_t", "a00045.html#a00271", [
+      [ "callback", "a00045.html#a90af06bca6fa1c835176bb2f7baae37c", null ],
+      [ "userData", "a00045.html#ac699f5a5123647eefb2aebb1b1a35c4a", null ],
+      [ "rxDataSizeAll", "a00045.html#a6cbb7a1abb602e48f3dcf355ad94ff14", null ],
+      [ "txDataSizeAll", "a00045.html#a1d4461a68ee1f14850ac4d341afb8080", null ],
+      [ "txEdmaHandle", "a00045.html#a1748fd406d158b129b40430218be3372", null ],
+      [ "rxEdmaHandle", "a00045.html#aa365980412bd8d507718e3bdb6991983", null ],
+      [ "nbytes", "a00045.html#a7ffb3be259d932a6a9f7e86aed4cc790", null ],
+      [ "txState", "a00045.html#a17fd779099d5f3707693ac7c1212dc8a", null ],
+      [ "rxState", "a00045.html#a2a62eb17faa4b16b47cb7ca6992c9980", null ]
     ] ],
-    [ "FSL_OCOTP_DRIVER_VERSION", "a00045.html#ga211ad512cb6afc3a8649a61c4f887dd5", [
-      [ "kStatus_OCOTP_AccessError", "a00045.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a6133e2fb03bd09bc490982251048c8de", null ],
-      [ "kStatus_OCOTP_CrcFail", "a00045.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a6c5aa99c2965029cf80feaf36cd0763a", null ],
-      [ "kStatus_OCOTP_ReloadError", "a00045.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8aa1a3a69603c6973128021852a03cf9ce", null ],
-      [ "kStatus_OCOTP_ProgramFail", "a00045.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8ae3aafd3ae27db94a954965038445d240", null ],
-      [ "kStatus_OCOTP_Locked", "a00045.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a3a38a5c2c3c0f0146c9b773e855812a6", null ]
-    ] ],
-    [ "OCOTP_Init", "a00045.html#ga54480b3c489116b8cb76053b16f02c89", null ],
-    [ "OCOTP_Deinit", "a00045.html#gaafffa3b5fe3f1f69f077e88ba5a7e107", null ],
-    [ "OCOTP_CheckBusyStatus", "a00045.html#gaa3040092099624ec476dd81bd022712c", null ],
-    [ "OCOTP_CheckErrorStatus", "a00045.html#gaf0ee0166ccd35b0273d468b7eb72c954", null ],
-    [ "OCOTP_ClearErrorStatus", "a00045.html#gad9294be0c39be4dfaa1eea436ac85171", null ],
-    [ "OCOTP_ReloadShadowRegister", "a00045.html#ga7a7b1cd03383fafde15157a06fdda557", null ],
-    [ "OCOTP_ReadFuseShadowRegister", "a00045.html#gaecc991ccf4be0c49286fb13cba97e389", null ],
-    [ "OCOTP_ReadFuseShadowRegisterExt", "a00045.html#gaa1b0f813fa5ca43225d71d9218c48a28", null ],
-    [ "OCOTP_WriteFuseShadowRegister", "a00045.html#ga43636ab96125958c9a14fe82c176e33e", null ],
-    [ "OCOTP_WriteFuseShadowRegisterWithLock", "a00045.html#ga4f837c7b4a66ffe3153f2975fd5c6388", null ],
-    [ "OCOTP_GetVersion", "a00045.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5", null ]
+    [ "FSL_LPUART_EDMA_DRIVER_VERSION", "a00045.html#ga9bfcb92913944fb359c4544b4cdee5d3", null ],
+    [ "lpuart_edma_transfer_callback_t", "a00045.html#gaed2bf1ac041ea4526ccf5ab0eba4da73", null ],
+    [ "LPUART_TransferCreateHandleEDMA", "a00045.html#ga4891d980e0e489932e8d3b5c52588c2e", null ],
+    [ "LPUART_SendEDMA", "a00045.html#ga24c9dff9f142243ed5ffb3112a356386", null ],
+    [ "LPUART_ReceiveEDMA", "a00045.html#ga57b356ccc56276a557b3ddf53f6a7c0f", null ],
+    [ "LPUART_TransferAbortSendEDMA", "a00045.html#ga48033a0651d1e68133bbb73ded3d9309", null ],
+    [ "LPUART_TransferAbortReceiveEDMA", "a00045.html#gaf4160e8481b5d0861fa2f4ea14ccc13e", null ],
+    [ "LPUART_TransferGetSendCountEDMA", "a00045.html#ga0369d8b3a9238d88f2ef527b2cdbf152", null ],
+    [ "LPUART_TransferGetReceiveCountEDMA", "a00045.html#ga433b9163c0d46f0e8b65b5ded880a1f8", null ],
+    [ "LPUART_TransferEdmaHandleIRQ", "a00045.html#ga898e2e544106c928c6930605ff59fc43", null ]
 ];

@@ -1,6 +1,6 @@
 /*
  * Copyright 2017 The TensorFlow Authors
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * Apache 2.0 License
@@ -15,6 +15,9 @@
 // It was created using the command
 // (with additional modification for alignment specification):
 // xxd -i mobilenet_v1_0.25_128_quant_int8.rtm > mobilenet_model_data_dvrt.h
+
+#define MODEL_WIDTH       128
+#define MODEL_HEIGHT      128
 
 unsigned char model_data[] __attribute__((aligned(8)))= {
   0x30, 0x00, 0x00, 0x00, 0x52, 0x54, 0x4d, 0x78, 0x00, 0x00, 0x26, 0x00,

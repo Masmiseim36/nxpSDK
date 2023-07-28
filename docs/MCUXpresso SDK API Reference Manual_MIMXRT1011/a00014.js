@@ -1,111 +1,76 @@
 var a00014 =
 [
-    [ "da7212_pll_config_t", "a00014.html#a00283", [
-      [ "source", "a00014.html#a93d832a7b38ce0e5d35cf237ec2e00aa", null ],
-      [ "refClock_HZ", "a00014.html#a582daa483484e1b8af88e38a7786a011", null ],
-      [ "outputClock_HZ", "a00014.html#aa437baa5261123cd810488ac65e201dd", null ]
+    [ "cs42888_audio_format_t", "a00014.html#a00291", [
+      [ "mclk_HZ", "a00014.html#a5fd01de40f2d61eaded45b58910eb9e6", null ],
+      [ "sampleRate", "a00014.html#a606f22140a1a18f014cfd854233716fc", null ],
+      [ "bitWidth", "a00014.html#a5a375f48e508232d89ae87f4af47e166", null ]
     ] ],
-    [ "da7212_audio_format_t", "a00014.html#a00280", [
-      [ "mclk_HZ", "a00014.html#ae3b11f4616fc011852a6f06e644c00d9", null ],
-      [ "sampleRate", "a00014.html#ae6724afaf87a4ae3535217ae5dff41e9", null ],
-      [ "bitWidth", "a00014.html#accbab6c50b115c5bf9baec30c8d98b64", null ],
-      [ "isBclkInvert", "a00014.html#a19793f6a920f5ff213b39025f80e7a97", null ]
+    [ "cs42888_config_t", "a00014.html#a00292", [
+      [ "bus", "a00014.html#abe4fb7d060b3749d089f212afee66edd", null ],
+      [ "format", "a00014.html#a390b84d16170a8a88a1630f4a4f0de19", null ],
+      [ "ADCMode", "a00014.html#a3b112c12d31e8259d8d4a36846071cde", null ],
+      [ "DACMode", "a00014.html#a46fa77d87faddef0d9704c0de69b2423", null ],
+      [ "master", "a00014.html#a95951482c89e8729513dc7521ae44ba0", null ],
+      [ "i2cConfig", "a00014.html#a6beacc97fe94cc05574adc3944660dd3", null ],
+      [ "slaveAddress", "a00014.html#abdef2c13001f11f5d4148af1b0196567", null ],
+      [ "reset", "a00014.html#a9c476b216744897cc8a3fc401e0e6dca", null ]
     ] ],
-    [ "da7212_config_t", "a00014.html#a00281", [
-      [ "isMaster", "a00014.html#a63d48e3ee5e54914cc76eeff817c33b4", null ],
-      [ "protocol", "a00014.html#ac0df2c7119a0c2e16db9c3bc18c399df", null ],
-      [ "dacSource", "a00014.html#a29cfee6ec8bb4c99b6659686074dcc22", null ],
-      [ "format", "a00014.html#a6a6dafa5858a985ed3711c3b427a9a0b", null ],
-      [ "slaveAddress", "a00014.html#a96c83c71328687c66d5f2647256b2897", null ],
-      [ "i2cConfig", "a00014.html#af81839448e888dfdfd12c37f755dc25d", null ],
-      [ "sysClkSource", "a00014.html#a545d9de5fb4daa0eeea6e23ddab53e00", null ],
-      [ "pll", "a00014.html#aece86acd54a2e5dc52e3216ddd7bc262", null ]
+    [ "cs42888_handle_t", "a00014.html#a00293", [
+      [ "config", "a00014.html#ae6a321c3fa8d47e83f09996125b06794", null ],
+      [ "i2cHandle", "a00014.html#a561ab054fec522adeab35c07bb6cab34", null ]
     ] ],
-    [ "da7212_handle_t", "a00014.html#a00282", [
-      [ "config", "a00014.html#aeb416840b7dddbcd19845c98aa307703", null ],
-      [ "i2cHandle", "a00014.html#a7f081eba744a5ca041f6eeb00f3faaf5", null ]
+    [ "FSL_CS42888_DRIVER_VERSION", "a00014.html#ga469630e0b22b4bc480718055fd9bdff1", null ],
+    [ "CS42888_I2C_HANDLER_SIZE", "a00014.html#ga953230c47c19e6eb63913ae2b64e1ae5", null ],
+    [ "CS42888_ID", "a00014.html#ga8996629a1d0330f394495461ceb4957b", null ],
+    [ "CS42888_AOUT_MAX_VOLUME_VALUE", "a00014.html#gac06d214143119255ed45dd4f3b7ab627", null ],
+    [ "CS42888_CACHEREGNUM", "a00014.html#gaa8dd0b96c875487380daa23f03192594", null ],
+    [ "CS42888_I2C_ADDR", "a00014.html#ga3758dc010c2ce784b57cf530610bee26", null ],
+    [ "CS42888_I2C_BITRATE", "a00014.html#ga129d78d2efcbc77435255429dc0baef4", null ],
+    [ "cs42888_reset", "a00014.html#ga5fe323798009a9b45302adece010e3e0", null ],
+    [ "cs42888_func_mode", "a00014.html#ga8c91ddffd81be7163def41721270971c", [
+      [ "kCS42888_ModeMasterSSM", "a00014.html#gga8c91ddffd81be7163def41721270971ca57b2cc424116839aeec3d1c2e53bfff4", null ],
+      [ "kCS42888_ModeMasterDSM", "a00014.html#gga8c91ddffd81be7163def41721270971ca11b7086a5f9cfc75f35718710815780c", null ],
+      [ "kCS42888_ModeMasterQSM", "a00014.html#gga8c91ddffd81be7163def41721270971ca2d0f655396420774935b01b1b01b315a", null ],
+      [ "kCS42888_ModeSlave", "a00014.html#gga8c91ddffd81be7163def41721270971caa6dd80e639d0173bafda96b4df37c96a", null ]
     ] ],
-    [ "FSL_DA7212_DRIVER_VERSION", "a00014.html#ga6b767b2e541d6394c4265ada63c0dec6", null ],
-    [ "DA7212_I2C_HANDLER_SIZE", "a00014.html#ga3d23d22f57247229df5a71faaaa40229", null ],
-    [ "DA7212_ADDRESS", "a00014.html#ga0c92b1761ab5869e1d8ccce0acea708e", null ],
-    [ "DA7212_HEADPHONE_MAX_VOLUME_VALUE", "a00014.html#ga3b379d89f3fa80c8eb3c16f74c2e6e71", null ],
-    [ "da7212_Input_t", "a00014.html#ga6fc1179abb7621638b81dd23bce89715", [
-      [ "kDA7212_Input_AUX", "a00014.html#gga6fc1179abb7621638b81dd23bce89715a81719d1c10c1d21585cc0d85ea0cf96e", null ],
-      [ "kDA7212_Input_MIC1_Dig", "a00014.html#gga6fc1179abb7621638b81dd23bce89715a6791516363f14d9fa82ab6ffed758a8a", null ],
-      [ "kDA7212_Input_MIC1_An", "a00014.html#gga6fc1179abb7621638b81dd23bce89715a915180fec88d3d30961aa7fc999cf734", null ],
-      [ "kDA7212_Input_MIC2", "a00014.html#gga6fc1179abb7621638b81dd23bce89715ab6d325e0294e7181d5ef528e4398cc44", null ]
+    [ "cs42888_module_t", "a00014.html#gac57c7f67724dbc1ad4db339c1591ac26", [
+      [ "kCS42888_ModuleDACPair1", "a00014.html#ggac57c7f67724dbc1ad4db339c1591ac26a0c3edb05c683d99b43b1afffa92c7745", null ],
+      [ "kCS42888_ModuleDACPair2", "a00014.html#ggac57c7f67724dbc1ad4db339c1591ac26a12297793c9f7de6c5df5dd506ba81600", null ],
+      [ "kCS42888_ModuleDACPair3", "a00014.html#ggac57c7f67724dbc1ad4db339c1591ac26a45072abfadea932906a4e536dbb7d5a4", null ],
+      [ "kCS42888_ModuleDACPair4", "a00014.html#ggac57c7f67724dbc1ad4db339c1591ac26a3d1833e1a30aa83df7c3174ff3ab63a9", null ],
+      [ "kCS42888_ModuleADCPair1", "a00014.html#ggac57c7f67724dbc1ad4db339c1591ac26a9e6ae9226aa29208f3fde450a3a2ae69", null ],
+      [ "kCS42888_ModuleADCPair2", "a00014.html#ggac57c7f67724dbc1ad4db339c1591ac26a3863290d03b58c95e2ae8824fe99aac6", null ]
     ] ],
-    [ "_da7212_play_channel", "a00014.html#gabfe5b5c29bd85345eeab12ffeccdf8e1", [
-      [ "kDA7212_HeadphoneLeft", "a00014.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1ae5ce9e40caf555725cbc0b29bd07a231", null ],
-      [ "kDA7212_HeadphoneRight", "a00014.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1a76d31405add593b507463ae599833fa3", null ],
-      [ "kDA7212_Speaker", "a00014.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1ac49a4c8456dd563ebfb512abad314e73", null ]
+    [ "cs42888_bus_t", "a00014.html#ga420482576c736d6016bc7cb40966ae76", [
+      [ "kCS42888_BusLeftJustified", "a00014.html#gga420482576c736d6016bc7cb40966ae76a7685b48742dd9b6a928673cb716dc496", null ],
+      [ "kCS42888_BusI2S", "a00014.html#gga420482576c736d6016bc7cb40966ae76aeef13df8577ef9bfde4a8390d5b0ccd9", null ],
+      [ "kCS42888_BusRightJustified", "a00014.html#gga420482576c736d6016bc7cb40966ae76a4d55c55bf343966060e2a1a756445629", null ],
+      [ "kCS42888_BusOL1", "a00014.html#gga420482576c736d6016bc7cb40966ae76a7c862e2ffab7396a543b9a07df682c7d", null ],
+      [ "kCS42888_BusOL2", "a00014.html#gga420482576c736d6016bc7cb40966ae76a440e9e0d3ebd0431de4690b05bffcf5f", null ],
+      [ "kCS42888_BusTDM", "a00014.html#gga420482576c736d6016bc7cb40966ae76af1ae036e2e350aabfe39cd29bace6d32", null ],
+      [ "kCS42888_AOUT1", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55a40c873d24063247f27786a37ae99f4e5", null ],
+      [ "kCS42888_AOUT2", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55a4e25320a6e1770c4782c0776bd6708e2", null ],
+      [ "kCS42888_AOUT3", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55a3635f95f2c41320a933acb215a07ea1e", null ],
+      [ "kCS42888_AOUT4", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55ad9aedebf8ecd41a35099a221194985ae", null ],
+      [ "kCS42888_AOUT5", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55a5433074d6d61dc9a342dd07880ad8013", null ],
+      [ "kCS42888_AOUT6", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55a5523459f137c68559e45279689b3c9d1", null ],
+      [ "kCS42888_AOUT7", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55a4c5575ba57cca766bc4f8a1971065b5a", null ],
+      [ "kCS42888_AOUT8", "a00014.html#ggafa231099d07583c3ed0981e0bb665f55a317c6f4677e7331aeee1270eefd18981", null ]
     ] ],
-    [ "da7212_Output_t", "a00014.html#ga594d4eaddd9cb2171bd90c20fbabec4b", [
-      [ "kDA7212_Output_HP", "a00014.html#gga594d4eaddd9cb2171bd90c20fbabec4ba00374e7ddbc6f19e104e50c644405d4e", null ],
-      [ "kDA7212_Output_SP", "a00014.html#gga594d4eaddd9cb2171bd90c20fbabec4ba794964f1a59abc4e9651893ab8ad2937", null ]
-    ] ],
-    [ "_da7212_module", "a00014.html#ga09500728ce3e7466ec63c24f194a7096", [
-      [ "kDA7212_ModuleADC", "a00014.html#gga09500728ce3e7466ec63c24f194a7096ad9a26702fe14d59f3c7af3896a79ec95", null ],
-      [ "kDA7212_ModuleDAC", "a00014.html#gga09500728ce3e7466ec63c24f194a7096a69ee48106ddc65d660e106564b26d726", null ],
-      [ "kDA7212_ModuleHeadphone", "a00014.html#gga09500728ce3e7466ec63c24f194a7096a30a9366493854f9accccf1a509e30bc4", null ],
-      [ "kDA7212_ModuleSpeaker", "a00014.html#gga09500728ce3e7466ec63c24f194a7096a4f11287d5d208e51cd4f7d58a54f58a4", null ]
-    ] ],
-    [ "da7212_dac_source_t", "a00014.html#gab328276aed167b3f028b627b84a9c326", [
-      [ "kDA7212_DACSourceADC", "a00014.html#ggab328276aed167b3f028b627b84a9c326aaa36fc0ab185ac10e7ee8a4617f59e97", null ],
-      [ "kDA7212_DACSourceInputStream", "a00014.html#ggab328276aed167b3f028b627b84a9c326a32553db21f101a6585653a0f603b4585", null ]
-    ] ],
-    [ "da7212_volume_t", "a00014.html#ga37faac44a47580dd5b803a2d2609359c", [
-      [ "kDA7212_DACGainMute", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca8bfef935c6c1b4e9f8ab6a783ba65e92", null ],
-      [ "kDA7212_DACGainM72DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca484eb6e188f3ec7b92a3ad1e71ad6cbe", null ],
-      [ "kDA7212_DACGainM60DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359caf26ca8601f9c6c2ca77487a68bef08dc", null ],
-      [ "kDA7212_DACGainM54DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca2ac8ed6017a7a3b4e49be5758b4494c3", null ],
-      [ "kDA7212_DACGainM48DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca9b14c521981de0ef10907fd061f15e88", null ],
-      [ "kDA7212_DACGainM42DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca7f7cdc2b1fb01133c70f59dcd88e8b29", null ],
-      [ "kDA7212_DACGainM36DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca962467e3eeee640374d1251ba55e54ab", null ],
-      [ "kDA7212_DACGainM30DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca37f8a4f380c06d29170af08ec0bd9455", null ],
-      [ "kDA7212_DACGainM24DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca35b5d452d7ff01bb50c7036dfdc4a3c4", null ],
-      [ "kDA7212_DACGainM18DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca88b0f22e91fa5765961f65649d398cd1", null ],
-      [ "kDA7212_DACGainM12DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca3fb7c057f7a29e43c3198fe71de8d9ee", null ],
-      [ "kDA7212_DACGainM6DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca4b1594dfd4b2839cb3e16244d2d4add9", null ],
-      [ "kDA7212_DACGain0DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359caa49f74be4c508f1ebaf771268aa59461", null ],
-      [ "kDA7212_DACGain6DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca207d817045357758bbe5cd18f3ff7725", null ],
-      [ "kDA7212_DACGain12DB", "a00014.html#gga37faac44a47580dd5b803a2d2609359ca78e6ab8ae6e4e87b1b15ed80e82acdc2", null ]
-    ] ],
-    [ "da7212_protocol_t", "a00014.html#ga95ce2c0556d9642f3133e53f6097fdd3", [
-      [ "kDA7212_BusI2S", "a00014.html#gga95ce2c0556d9642f3133e53f6097fdd3a18e44e5377bce7294db432a1e82d508b", null ],
-      [ "kDA7212_BusLeftJustified", "a00014.html#gga95ce2c0556d9642f3133e53f6097fdd3a5c90ce6d3cbf97f6f36ea37b2715ed3b", null ],
-      [ "kDA7212_BusRightJustified", "a00014.html#gga95ce2c0556d9642f3133e53f6097fdd3a9a78835b4b39c468cf24af8cd1ecd578", null ],
-      [ "kDA7212_BusDSPMode", "a00014.html#gga95ce2c0556d9642f3133e53f6097fdd3ac6db42a81b0ab7fc8a773bc88392fb17", null ]
-    ] ],
-    [ "da7212_sys_clk_source_t", "a00014.html#ga5fb666a4f56fc1bc022919487515a037", [
-      [ "kDA7212_SysClkSourceMCLK", "a00014.html#gga5fb666a4f56fc1bc022919487515a037a5418f800a758518588cfcf97bc11cbec", null ],
-      [ "kDA7212_SysClkSourcePLL", "a00014.html#gga5fb666a4f56fc1bc022919487515a037a91322381925bb3cf69b1bfca9c277bfb", null ]
-    ] ],
-    [ "da7212_pll_clk_source_t", "a00014.html#ga971f3ba35a3d9116393781ea426f132c", [
-      [ "kDA7212_PLLClkSourceMCLK", "a00014.html#gga971f3ba35a3d9116393781ea426f132ca9f97bdd4ba7ae0086bcc7b0cfbe370c0", null ]
-    ] ],
-    [ "da7212_pll_out_clk_t", "a00014.html#ga1d67062344f0a51e6ac913248b132527", [
-      [ "kDA7212_PLLOutputClk11289600", "a00014.html#gga1d67062344f0a51e6ac913248b132527a94d10bd8eafa96c0b137354bb6a2670c", null ],
-      [ "kDA7212_PLLOutputClk12288000", "a00014.html#gga1d67062344f0a51e6ac913248b132527a0a1474e7a85354aa8e99b48ea51fb2a0", null ]
-    ] ],
-    [ "da7212_master_bits_t", "a00014.html#gacd73a9c763b4c3835514062492201a8e", [
-      [ "kDA7212_MasterBits32PerFrame", "a00014.html#ggacd73a9c763b4c3835514062492201a8eacf2700e04e95db0583f92597a106367a", null ],
-      [ "kDA7212_MasterBits64PerFrame", "a00014.html#ggacd73a9c763b4c3835514062492201a8ea4aaccfde0d4dbfc24913e8437d8c6ffb", null ],
-      [ "kDA7212_MasterBits128PerFrame", "a00014.html#ggacd73a9c763b4c3835514062492201a8eae839316f7659cd0933930ad43f11ff0a", null ],
-      [ "kDA7212_MasterBits256PerFrame", "a00014.html#ggacd73a9c763b4c3835514062492201a8eaa20340ec29a73f7043914e43a6e21777", null ]
-    ] ],
-    [ "DA7212_Init", "a00014.html#gaca2d591c1f37ac9459f5337656c2e903", null ],
-    [ "DA7212_ConfigAudioFormat", "a00014.html#ga5f91e332b894c7eb33de61f5abf0e3bd", null ],
-    [ "DA7212_SetPLLConfig", "a00014.html#ga329eba3a6075fcd97e63ccc4013a669e", null ],
-    [ "DA7212_ChangeHPVolume", "a00014.html#ga6c8f47cd9f8a4490b35d2c731439a267", null ],
-    [ "DA7212_Mute", "a00014.html#ga7cbf1d02cfd35123392c0aae6c528f79", null ],
-    [ "DA7212_ChangeInput", "a00014.html#ga52f775b79e8de5f489b995d1f4c7fe31", null ],
-    [ "DA7212_ChangeOutput", "a00014.html#gab6cebcf917e9d9ce4f69828c701c6a6d", null ],
-    [ "DA7212_SetChannelVolume", "a00014.html#ga8dd935197f63a10d9daf23ac96904416", null ],
-    [ "DA7212_SetChannelMute", "a00014.html#ga71c6871ed8dc5bc01201265e0139ae61", null ],
-    [ "DA7212_SetProtocol", "a00014.html#ga5b83af3d6dec6892ec345c54af419942", null ],
-    [ "DA7212_SetMasterModeBits", "a00014.html#ga700245cf97e29af9f3aa3402b032094a", null ],
-    [ "DA7212_WriteRegister", "a00014.html#gabda1a52e4795473357f4561633e07591", null ],
-    [ "DA7212_ReadRegister", "a00014.html#ga5b445705c324d49effc257f7b3265c92", null ],
-    [ "DA7212_Deinit", "a00014.html#ga52aaf202346af12d3932bd467a412f59", null ]
+    [ "CS42888_Init", "a00014.html#gaaedecae1ab48066f40067f938b45e246", null ],
+    [ "CS42888_Deinit", "a00014.html#ga9f3f2e2ab36b350ac9e7687ac068c924", null ],
+    [ "CS42888_SetProtocol", "a00014.html#ga9909a32fcd8fb65497a0971169f02b6f", null ],
+    [ "CS42888_SetFuncMode", "a00014.html#ga7eec024331e152d41eb21b4de0dcb50b", null ],
+    [ "CS42888_SelectFunctionalMode", "a00014.html#ga206dde5ac0fb4ad77ce3b3e68a5f03e0", null ],
+    [ "CS42888_SetAOUTVolume", "a00014.html#ga213cbbee89c91489164c8ab704ff468b", null ],
+    [ "CS42888_SetAINVolume", "a00014.html#gae86544adbe99c855a60db68b11e40960", null ],
+    [ "CS42888_GetAOUTVolume", "a00014.html#ga2e5e55bf98bd6af70483e36d94f5c173", null ],
+    [ "CS42888_GetAINVolume", "a00014.html#gafc22378afb83464ee651b35187aa57c0", null ],
+    [ "CS42888_SetMute", "a00014.html#ga55964f9ec6f7f9dd0f066a2aa50187ab", null ],
+    [ "CS42888_SetChannelMute", "a00014.html#gaf995fa288cfd403c1dcdc7286edcdb48", null ],
+    [ "CS42888_SetModule", "a00014.html#ga2664a02181180546f17d0ec2a35f227b", null ],
+    [ "CS42888_ConfigDataFormat", "a00014.html#ga1cc19dbe338c5dac380a6d4f8747b7e9", null ],
+    [ "CS42888_WriteReg", "a00014.html#gaac05142d661f4cc16706b59f5bb6c03d", null ],
+    [ "CS42888_ReadReg", "a00014.html#ga7d6fae89e3f167613b9aeabe65380918", null ],
+    [ "CS42888_ModifyReg", "a00014.html#ga9338f9003a76f3d7f71156f49e7ce293", null ]
 ];

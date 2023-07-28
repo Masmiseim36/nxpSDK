@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,7 +9,7 @@
 #include <string.h>
 #include <porting.h>
 #include "fsl_shell.h"
-#include <sys/printk.h>
+
 #include <sys/byteorder.h>
 
 #include <bluetooth/hci.h>

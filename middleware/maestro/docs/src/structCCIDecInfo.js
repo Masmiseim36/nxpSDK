@@ -6,7 +6,7 @@ var structCCIDecInfo =
     [ "filesrc_buffer_idx", "structCCIDecInfo.html#a144281dc1f3002ced4364d459eebed27", null ],
     [ "filesrc_size", "structCCIDecInfo.html#a3532c8f7e3b21e068237e2105d0fdbc9", null ],
     [ "filesrc_offset", "structCCIDecInfo.html#a3f053f529fdb27b779c74df2925865a4", null ],
-    [ "packed_buffer", "structCCIDecInfo.html#aba8cd1c59d70863c9a01f6919542d172", null ],
+    [ "packed_buffer", "structCCIDecInfo.html#a4bf289ef031f2accef1b21eb0b553464", null ],
     [ "dec_frame_size", "structCCIDecInfo.html#a2de4239591c8acc4cc07a2a4c092b347", null ],
     [ "unaligned_filesrc_buffer", "structCCIDecInfo.html#a760a8b5590350b33de6de498ee8900da", null ],
     [ "unaligned_packed_buffer", "structCCIDecInfo.html#a27545a9eecfc933c698204a569a61c3d", null ],

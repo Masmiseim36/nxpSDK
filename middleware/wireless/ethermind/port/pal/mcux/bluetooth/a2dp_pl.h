@@ -84,5 +84,5 @@ void a2dp_setup_pl_ext
 void a2dp_start_pl_ext (UCHAR ep);
 void a2dp_stop_pl_ext (UCHAR ep);
 void a2dp_write_pl_ext (UCHAR ep, UCHAR * m_data, UINT16 m_datalen);
-
+void LC3_Codec_Start(UCHAR ep);
 #endif /* _H_A2DP_PL_*/

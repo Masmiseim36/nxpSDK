@@ -1,10 +1,8 @@
 /*
-* Copyright 2020-2022 NXP
-*
-* NXP Confidential. This software is owned or controlled by NXP and may only
-* be used strictly in accordance with the applicable license terms found in
-* file LICENSE.txt
-*/
+ * Copyright 2020-2023 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /**
 @file
@@ -37,7 +35,7 @@ typedef enum { _1CHAN = 1, _2CHAN, _3CHAN} NumberOfChannel_en;
 
 /*****  Input audio (size, sampling rate, channel number)  *****/
 
-// Clarifications : 
+// Clarifications :
 //     - a SAMPLE can have 1, 2 or N channels (N defined by VIT_MAX_NUMBER_OF_CHANNEL here after)
 
 #define VIT_SAMPLES_PER_10MS_FRAME        160                 // corresponds to 10ms @16kHz
@@ -58,7 +56,7 @@ typedef enum
     VIT_INVALID_MODEL                   = 7,                  ///< Model not supported
     VIT_INVALID_API_VERSION             = 8,                  ///< wrong API version
     VIT_INVALID_STATE                   = 9,                  ///< State machine error
-    VIT_INVALID_DEVICE                  = 10,                 ///< VIT not running on expected Device 
+    VIT_INVALID_DEVICE                  = 10,                 ///< VIT not running on expected Device
     VIT_SYSTEM_ERROR                    = 11,                 ///< System error
     VIT_ERROR_UNDEFINED                 = 12,                 ///< Unknow error
     VIT_DUMMY_ERROR                     = PL_MAXENUM
@@ -66,7 +64,7 @@ typedef enum
 
 
 #define VIT_API_VERSION_MAJOR 2
-#define VIT_API_VERSION_MINOR 0
+#define VIT_API_VERSION_MINOR 2
 #define VIT_API_VERSION       ((VIT_API_VERSION_MAJOR<<16) | (VIT_API_VERSION_MINOR<<8))
 
 /****************************************************************************************/
@@ -111,8 +109,8 @@ typedef enum
 */
 typedef enum
 {
-    VIT_MODEL_IN_ROM   = 0,                // Flash memory
-    VIT_MODEL_IN_RAM,                      // can be on chip RAM or external RAM
+    VIT_MODEL_IN_SLOW_MEM   = 0,                // Low speed Flash memory
+    VIT_MODEL_IN_FAST_MEM,                      // can be on chip RAM or external RAM, High speed Flash memory
     VIT_DUMMY_LOCATION = PL_MAXENUM
 }VIT_Model_Location_en;
 
@@ -128,6 +126,8 @@ typedef enum
     VIT_IMXRT1170,                             // I.MXRT1170 : VIT running on Cortex-M7
     VIT_IMXRT500,                              // I.MXRT500  : VIT running on FusionF1
     VIT_IMXRT600,                              // I.MXRT600  : VIT running on HIFI4
+    VIT_RW610,                                 // RW610      : VIT running on Cortex-M33-noDSP
+    VIT_LPC55S69,                              // LPC55S69   : VIT running on Cortex-M33+PowerQuad
     VIT_IMX8MMINIM4,                           // I.MX8MINI  : VIT running on Cortex-M4
     VIT_IMX8MPLUSM7,                           // I.MX8PLUS  : VIT running on Cortex-M7
     VIT_IMX8MA53,                              // I.MX8MA53  : VIT running on Cortex-A (i.MX8MPlus and i.MX8MMini)
@@ -139,7 +139,7 @@ typedef enum
 
 /* VIT Detection Status
  *    Status returned by VIT_Process() API.
- *    Indicates if the Wake Word or a Voice Command has been detected on the frame processed 
+ *    Indicates if the Wake Word or a Voice Command has been detected on the frame processed
  */
 typedef enum
 {
@@ -207,7 +207,7 @@ typedef struct
 {
     PL_UINT32                     VIT_LIB_Release;
     VIT_OperatingMode_en          VIT_Features_Supported;            // List of features supported by VIT
-    PL_UINT16                     NumberOfChannels_Supported;        // Number of Channels supported by the VIT lib 
+    PL_UINT16                     NumberOfChannels_Supported;        // Number of Channels supported by the VIT lib
 } VIT_LibInfo_st;
 
 
@@ -218,7 +218,7 @@ typedef struct
     PL_UINT32                     VIT_LIB_Release;
     VIT_OperatingMode_en          VIT_Features_Supported;            // List of features supported by VIT
     VIT_OperatingMode_en          VIT_Features_Selected;             // List of features enabled
-    PL_UINT16                     NumberOfChannels_Supported;        // Number of Channels supported by the VIT lib 
+    PL_UINT16                     NumberOfChannels_Supported;        // Number of Channels supported by the VIT lib
     VIT_DeviceId_en               Device_Selected;
     PL_UINT16                     VIT_Sequencer_Slot;
     PL_BOOL                       LPVAD_EventDetected;
@@ -234,24 +234,47 @@ typedef struct
 /****************************************************************************************/
 
 /**
-* @brief Set the VIT model address.
+* @brief Set the VIT model address 
 *
 * This function is used to pass the VIT Model address to the VIT Lib
 *
-* @param pVITModelGroup     Pointer to the VIT Model
+* @param pVITModel          Pointer to the VIT Model
 * @param Location           Memory location of the VIT Model (ROM or RAM)
 *
 * @return VIT_SUCCESS                  Succeeded
 * @return VIT_INVALID_MODEL            Wrong Model provided
 * @return VIT_INVALID_NULLADDRESS      pVITModel is NULL
 * @return VIT_INVALID_ARGUMENT         VITModel address is not well aligned or location is not correct
-* @return VIT_INVALID_DEVICE           VIT can not run on this device
 *
 * @note The VIT_SetModel function shall be called first.
 */
 VIT_ReturnStatus_en VIT_SetModel (const PL_UINT8* pVITModel, VIT_Model_Location_en Location);
 
 
+
+/**
+* @brief Set the VIT model address when VIT instance is already created
+*
+* This function is used to update the VIT Model
+*     restrictions :
+*              - new model shall be located in the same memory region as the original model (registered via VIT_SetModel())
+*              - new model shall address same language as the original model
+*              - new model shall be smaller (shorter command list) than the original model
+*  
+* @param phInstance         Pointer to the instance handle
+* @param pVITModel          Pointer to the VIT Model
+* @param Location           Memory location of the VIT Model (ROM or RAM)
+*
+* @return VIT_SUCCESS                  Succeeded
+* @return VIT_INVALID_MODEL            Wrong Model provided
+* @return VIT_INVALID_NULLADDRESS      phInstance or pVITModel is NULL
+* @return VIT_INVALID_ARGUMENT         VITModel address is not well aligned - Model size, language or location is not correct
+*
+* @note The VIT_GetControlParameters function can be called at any time during processing; as soon as VIT instance is created
+*/
+VIT_ReturnStatus_en VIT_SetModelUpdate( VIT_Handle_t* phInstance,
+                                        const PL_UINT8* pVITModel,
+                                        VIT_Model_Location_en Location);
 
 /**
 * @brief Retrieve the memory requirements of the VIT module.
@@ -333,7 +356,7 @@ VIT_ReturnStatus_en VIT_GetInstanceHandle(VIT_Handle_t           *phInstance,
 * @pre   phInstance should be valid handle.
 * @pre   pControlParams should be allocated by caller.
 * @post  pControlParams will be filled with the values given in the last successful call to
-*        the VIT_SetControlParameters function. 
+*        the VIT_SetControlParameters function.
 *
 * @return VIT_SUCCESS                  Succeeded
 * @return VIT_INVALID_NULLADDRESS      When phInstance or pControlParams is NULL
@@ -456,7 +479,7 @@ VIT_ReturnStatus_en VIT_GetStatusParameters( VIT_Handle_t           phInstance,
 * This function returns the Wakeword Id and string (when present in model) detected by the VIT instance.
 * The function shall be called only when VIT_Process() is informing that a Wakeword is detected (*pVIT_DetectionResults==VIT_WW_DETECTED)
 * The function will return VIT_INVALID_STATE if the calling sequence is not followed (i.e VIT_GetWakeWordFound() to be called after VIT_Process()
-* only if a Wakeword has been detected). 
+* only if a Wakeword has been detected).
 *
 * @param phInstance                   Instance handle
 *
@@ -482,7 +505,7 @@ VIT_ReturnStatus_en VIT_GetWakeWordFound     ( VIT_Handle_t         pVIT_Instanc
 * This function returns the Voice Command Id and string (when present in model) detected by the VIT instance.
 * The function shall be called only when VIT_Process() is informing that a Voice Command is detected (*pVIT_DetectionResults==VIT_VC_DETECTED)
 * The function will return VIT_INVALID_STATE if the calling sequence is not followed (i.e VIT_GetVoiceCommandFound() to be called after VIT_Process()
-* only if a command has been detected). 
+* only if a command has been detected).
 *
 * @param phInstance                   Instance handle
 *
@@ -507,7 +530,7 @@ VIT_ReturnStatus_en VIT_GetVoiceCommandFound ( VIT_Handle_t         pVIT_Instanc
 *
 * This function returns different information of the VIT model regitered within VIT lib (registration done via VIT_SetModel()).
 * The function shall be called only when VIT_SetModel() is informing that the model is correct.
-* The function will return VIT_INVALID_STATE if the calling sequence is not followed (i.e VIT_SetModel() to be called first). 
+* The function will return VIT_INVALID_STATE if the calling sequence is not followed (i.e VIT_SetModel() to be called first).
 *
 * @pre   pModel_Info should be allocated by caller.
 * @post  pModel_Info will be filled with

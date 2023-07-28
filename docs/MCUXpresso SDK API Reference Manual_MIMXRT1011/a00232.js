@@ -1,24 +1,27 @@
 var a00232 =
 [
-    [ "HAL_CODEC_DA7212_HANDLER_SIZE", "a00232.html#ga173dfeeef7902d45872dda51415e491c", null ],
-    [ "HAL_CODEC_DA7212_Init", "a00232.html#gad2878812173fd02ba209f366d37a037f", null ],
-    [ "HAL_CODEC_DA7212_Deinit", "a00232.html#gab08612c5e25aebc93b1b0eac7a035d44", null ],
-    [ "HAL_CODEC_DA7212_SetFormat", "a00232.html#ga9249dc767a2179dd2b666e3c59648318", null ],
-    [ "HAL_CODEC_DA7212_SetVolume", "a00232.html#ga6269832c9c20f767210bd9a92f772bc5", null ],
-    [ "HAL_CODEC_DA7212_SetMute", "a00232.html#gacc5832132f03f70a25ff8341b2eb4bd2", null ],
-    [ "HAL_CODEC_DA7212_SetPower", "a00232.html#gad8d264496a300cde89479476a976b836", null ],
-    [ "HAL_CODEC_DA7212_SetRecord", "a00232.html#gaf50862b15148b0253f69e8ba98ee79e9", null ],
-    [ "HAL_CODEC_DA7212_SetRecordChannel", "a00232.html#ga1c26c8c2e37e902ceca4d7293a372f27", null ],
-    [ "HAL_CODEC_DA7212_SetPlay", "a00232.html#ga6e685671791b6ba58bd1e2585e04d823", null ],
-    [ "HAL_CODEC_DA7212_ModuleControl", "a00232.html#ga08647e657d0303daf67c64e7656bdac7", null ],
-    [ "HAL_CODEC_Init", "a00232.html#gafe47075da9b829e30e618a86ac2cc9c6", null ],
-    [ "HAL_CODEC_Deinit", "a00232.html#ga6728d97d2c909d8bff9fee477b0cd9e9", null ],
-    [ "HAL_CODEC_SetFormat", "a00232.html#gaaf073d16e55b2da18b4b801acd03454b", null ],
-    [ "HAL_CODEC_SetVolume", "a00232.html#ga17769c66cf7b5c0f01041e7f36f4c89c", null ],
-    [ "HAL_CODEC_SetMute", "a00232.html#ga6e3171b042e6150ac410abced6123feb", null ],
-    [ "HAL_CODEC_SetPower", "a00232.html#gad630677f451ca311d9f149d34da70637", null ],
-    [ "HAL_CODEC_SetRecord", "a00232.html#ga78612feccab62150fb8ee1ef9eb4b6ed", null ],
-    [ "HAL_CODEC_SetRecordChannel", "a00232.html#gad96c5638cbc67a85bfdb44aa1eee435b", null ],
-    [ "HAL_CODEC_SetPlay", "a00232.html#ga10228c6005d118872915a0412c466a7d", null ],
-    [ "HAL_CODEC_ModuleControl", "a00232.html#gab2e790a1ed09bc9a6b910d94180e5bd4", null ]
+    [ "FSL_SRC_DRIVER_VERSION", "a00232.html#gab27a1d7efba9d270e93527f1d2c54605", null ],
+    [ "_src_reset_status_flags", "a00232.html#gaf647f7dbfbed8b1612675ab132cfa244", [
+      [ "kSRC_WarmBootIndicationFlag", "a00232.html#ggaf647f7dbfbed8b1612675ab132cfa244a1ec8e8b05164a48af564b20d8a3f667a", null ],
+      [ "kSRC_TemperatureSensorResetFlag", "a00232.html#ggaf647f7dbfbed8b1612675ab132cfa244a35d666ccd943a593bc1af289e6233adb", null ],
+      [ "kSRC_JTAGSoftwareResetFlag", "a00232.html#ggaf647f7dbfbed8b1612675ab132cfa244abc557d5e2e199f9727744af4b181602b", null ],
+      [ "kSRC_JTAGGeneratedResetFlag", "a00232.html#ggaf647f7dbfbed8b1612675ab132cfa244a8a43d19a82614c4c1d571dad1f492628", null ],
+      [ "kSRC_WatchdogResetFlag", "a00232.html#ggaf647f7dbfbed8b1612675ab132cfa244abce52ce03031bdb1b0d76576daf418df", null ]
+    ] ],
+    [ "src_warm_reset_bypass_count_t", "a00232.html#ga5b40161d6cf7c90a651afd9047b6bedd", [
+      [ "kSRC_WarmResetWaitAlways", "a00232.html#gga5b40161d6cf7c90a651afd9047b6beddae2e8afc71fab41ccbac78e6a8d69ff62", null ],
+      [ "kSRC_WarmResetWaitClk16", "a00232.html#gga5b40161d6cf7c90a651afd9047b6beddad20bc2e2d97c95046d65940f111e9584", null ],
+      [ "kSRC_WarmResetWaitClk32", "a00232.html#gga5b40161d6cf7c90a651afd9047b6bedda8c3d2f6cd0c0f36da9a342e3c3eb77f8", null ],
+      [ "kSRC_WarmResetWaitClk64", "a00232.html#gga5b40161d6cf7c90a651afd9047b6bedda5bbedec3e30404b252af1b02af0042c0", null ]
+    ] ],
+    [ "SRC_EnableWDOGReset", "a00232.html#gac96321bdff82d5abc821d061323447df", null ],
+    [ "SRC_SetWarmResetBypassCount", "a00232.html#ga855481246b5b5a4227d7d04f034ceaaa", null ],
+    [ "SRC_EnableWarmReset", "a00232.html#ga627a1af6de292a91078ce42a1d8976e6", null ],
+    [ "SRC_GetBootModeWord1", "a00232.html#ga34abd9ece8bad43b617ced6e018af08c", null ],
+    [ "SRC_GetBootModeWord2", "a00232.html#gab850f1217901abfd78a35096a3b30d64", null ],
+    [ "SRC_SetWarmBootIndication", "a00232.html#gae7bdfcb753a5abc9428de4c6169410b4", null ],
+    [ "SRC_GetResetStatusFlags", "a00232.html#gac15086ff9e2d490efc95b8a5577cbae6", null ],
+    [ "SRC_ClearResetStatusFlags", "a00232.html#ga36d75f094528c8d5e37a77b4d45b617e", null ],
+    [ "SRC_SetGeneralPurposeRegister", "a00232.html#ga8c2062f093d4a0d164354ac7a2f4b3e2", null ],
+    [ "SRC_GetGeneralPurposeRegister", "a00232.html#ga8c5e46dd8c4e1bd20aa737cfef532ab1", null ]
 ];

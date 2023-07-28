@@ -1,33 +1,24 @@
 var a00048 =
 [
-    [ "pit_config_t", "a00048.html#a00356", [
-      [ "enableRunInDebug", "a00048.html#ade3a74504e1c6ecf10eb1f30fe5c0921", null ]
+    [ "lpuart_edma_handle_t", "a00048.html#a00282", [
+      [ "callback", "a00048.html#a90af06bca6fa1c835176bb2f7baae37c", null ],
+      [ "userData", "a00048.html#ac699f5a5123647eefb2aebb1b1a35c4a", null ],
+      [ "rxDataSizeAll", "a00048.html#a6cbb7a1abb602e48f3dcf355ad94ff14", null ],
+      [ "txDataSizeAll", "a00048.html#a1d4461a68ee1f14850ac4d341afb8080", null ],
+      [ "txEdmaHandle", "a00048.html#a1748fd406d158b129b40430218be3372", null ],
+      [ "rxEdmaHandle", "a00048.html#aa365980412bd8d507718e3bdb6991983", null ],
+      [ "nbytes", "a00048.html#a7ffb3be259d932a6a9f7e86aed4cc790", null ],
+      [ "txState", "a00048.html#a17fd779099d5f3707693ac7c1212dc8a", null ],
+      [ "rxState", "a00048.html#a2a62eb17faa4b16b47cb7ca6992c9980", null ]
     ] ],
-    [ "FSL_PIT_DRIVER_VERSION", "a00048.html#ga55a6c6a9b7ee34302c636f9496d0ea2f", null ],
-    [ "pit_chnl_t", "a00048.html#ga7628036278f539e87bd3f76795917737", [
-      [ "kPIT_Chnl_0", "a00048.html#gga7628036278f539e87bd3f76795917737a771abd65f098ad80d8f693e0b97a7e76", null ],
-      [ "kPIT_Chnl_1", "a00048.html#gga7628036278f539e87bd3f76795917737ac7733ad1c04ea00e2f7890a3c737cb7b", null ],
-      [ "kPIT_Chnl_2", "a00048.html#gga7628036278f539e87bd3f76795917737ad12ab59290845fcaebd2d9f01ae2f561", null ],
-      [ "kPIT_Chnl_3", "a00048.html#gga7628036278f539e87bd3f76795917737a4666db554c10bce47cfa628e8bb4ab93", null ]
-    ] ],
-    [ "pit_interrupt_enable_t", "a00048.html#gaa7063bba27d49c1195a3369b88a85bcd", [
-      [ "kPIT_TimerInterruptEnable", "a00048.html#ggaa7063bba27d49c1195a3369b88a85bcda98c517b7246326afb50c93fe515916e0", null ]
-    ] ],
-    [ "pit_status_flags_t", "a00048.html#ga83e319df67d942ffb2988f55803eebbb", [
-      [ "kPIT_TimerFlag", "a00048.html#gga83e319df67d942ffb2988f55803eebbba6792e6d30409cb5054b3f12c4e735cc0", null ]
-    ] ],
-    [ "PIT_Init", "a00048.html#ga51eb6396276b3f1ec564bd1879c97c06", null ],
-    [ "PIT_Deinit", "a00048.html#ga1f9b6d5e9e463844f85e31102458c1fc", null ],
-    [ "PIT_GetDefaultConfig", "a00048.html#gae7dc830a1a71ec7597ba78ccc76abfb6", null ],
-    [ "PIT_SetTimerChainMode", "a00048.html#gabe6831cfb502ca058f15fcf065cd13de", null ],
-    [ "PIT_EnableInterrupts", "a00048.html#ga157360547de18885d6a783d2b510d87e", null ],
-    [ "PIT_DisableInterrupts", "a00048.html#ga12d03e0905453194bd5c3560996eb976", null ],
-    [ "PIT_GetEnabledInterrupts", "a00048.html#ga9ecb3ef65be040e9002a0277b13bb8e3", null ],
-    [ "PIT_GetStatusFlags", "a00048.html#ga503619dd8ee2244edd12da3e27fa13e2", null ],
-    [ "PIT_ClearStatusFlags", "a00048.html#gadc0f51c2e1b91fb0c529d752b71477e6", null ],
-    [ "PIT_SetTimerPeriod", "a00048.html#ga944e9c9bd6848d861a9eb17b617d72f7", null ],
-    [ "PIT_GetCurrentTimerCount", "a00048.html#ga1ffacaa2e8582f59194436ebc6de2db9", null ],
-    [ "PIT_StartTimer", "a00048.html#ga3f6b9762079e4ce2de6799e030b14964", null ],
-    [ "PIT_StopTimer", "a00048.html#ga32f1b8ca9cf0fc82ef192890e97899b8", null ],
-    [ "PIT_GetLifetimeTimerCount", "a00048.html#gaadfcf653873f3c881b316f6b9d9ca79c", null ]
+    [ "FSL_LPUART_EDMA_DRIVER_VERSION", "a00048.html#ga9bfcb92913944fb359c4544b4cdee5d3", null ],
+    [ "lpuart_edma_transfer_callback_t", "a00048.html#gaed2bf1ac041ea4526ccf5ab0eba4da73", null ],
+    [ "LPUART_TransferCreateHandleEDMA", "a00048.html#ga4891d980e0e489932e8d3b5c52588c2e", null ],
+    [ "LPUART_SendEDMA", "a00048.html#ga24c9dff9f142243ed5ffb3112a356386", null ],
+    [ "LPUART_ReceiveEDMA", "a00048.html#ga57b356ccc56276a557b3ddf53f6a7c0f", null ],
+    [ "LPUART_TransferAbortSendEDMA", "a00048.html#ga48033a0651d1e68133bbb73ded3d9309", null ],
+    [ "LPUART_TransferAbortReceiveEDMA", "a00048.html#gaf4160e8481b5d0861fa2f4ea14ccc13e", null ],
+    [ "LPUART_TransferGetSendCountEDMA", "a00048.html#ga0369d8b3a9238d88f2ef527b2cdbf152", null ],
+    [ "LPUART_TransferGetReceiveCountEDMA", "a00048.html#ga433b9163c0d46f0e8b65b5ded880a1f8", null ],
+    [ "LPUART_TransferEdmaHandleIRQ", "a00048.html#ga898e2e544106c928c6930605ff59fc43", null ]
 ];

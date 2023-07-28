@@ -198,7 +198,7 @@ static OSA_MSGQ_HANDLE_DEFINE(free_att_tx_meta_data_handle, CONFIG_BT_CONN_TX_MA
 static struct bt_att_tx_meta_data *tx_meta_data_alloc(size_t timeout)
 {
 	osa_status_t ret;
-	struct bt_att_tx_meta_data *data;
+	struct bt_att_tx_meta_data *data = NULL;
 	ret = OSA_MsgQGet(free_att_tx_meta_data, &data, timeout);
 	assert(KOSA_StatusSuccess == ret);
 
@@ -331,6 +331,7 @@ static int chan_send(struct bt_att_chan *chan, struct net_buf *buf)
 	return err;
 }
 
+#if 0
 /* In case of success the ownership of the buffer is transferred to the stack
  * which takes care of releasing it when it completes transmitting to the
  * controller.
@@ -373,6 +374,7 @@ static int chan_send_cb(struct bt_att_chan *chan, struct net_buf *buf,
 
 	return err;
 }
+#endif
 
 static bool att_chan_matches_chan_opt(struct bt_att_chan *chan, enum bt_att_chan_opt chan_opt)
 {
@@ -795,6 +797,7 @@ static int bt_att_chan_send(struct bt_att_chan *chan, struct net_buf *buf)
 	return chan_send(chan, buf);
 }
 
+#if 0
 static void att_send_process(struct bt_att *att)
 {
 	struct bt_att_chan *chan, *tmp, *prev = NULL;
@@ -820,7 +823,9 @@ static void att_send_process(struct bt_att *att)
 		prev = chan;
 	}
 }
+#endif
 
+#if 0
 static void bt_att_chan_send_rsp(struct bt_att_chan *chan, struct net_buf *buf)
 {
 	int err;
@@ -831,6 +836,7 @@ static void bt_att_chan_send_rsp(struct bt_att_chan *chan, struct net_buf *buf)
 		net_buf_put(&chan->tx_queue, buf);
 	}
 }
+#endif
 
 static void send_err_rsp(struct bt_att_chan *chan, uint8_t req, uint16_t handle,
 			 uint8_t err)
@@ -3862,6 +3868,7 @@ static void att_timeout(struct k_work *work)
 	bt_att_disconnected(&chan->chan.chan);
 }
 
+#if (defined(CONFIG_BT_EATT) && (CONFIG_BT_EATT > 0))
 static struct bt_att_chan *att_get_fixed_chan(struct bt_conn *conn)
 {
 	struct bt_l2cap_chan *chan;
@@ -3871,6 +3878,7 @@ static struct bt_att_chan *att_get_fixed_chan(struct bt_conn *conn)
 
 	return ATT_CHAN(chan);
 }
+#endif /* CONFIG_BT_EATT */
 
 static void att_chan_attach(struct bt_att *att, struct bt_att_chan *chan)
 {

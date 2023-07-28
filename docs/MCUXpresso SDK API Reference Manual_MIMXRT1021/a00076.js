@@ -1,43 +1,22 @@
 var a00076 =
 [
-    [ "wdog_work_mode_t", "a00076.html#a00507", [
-      [ "enableWait", "a00076.html#ac4c03e680f6c2070c50e9cbb7eae64fc", null ],
-      [ "enableStop", "a00076.html#a26f09db30cdfe918931fb6e2ea0545ad", null ],
-      [ "enableDebug", "a00076.html#ac46160e5425428c3f6b2bd7a9103539e", null ]
+    [ "tempmon_config_t", "a00076.html#a00512", [
+      [ "frequency", "a00076.html#a207108996ebfd8421548f96bd4d3afaf", null ],
+      [ "highAlarmTemp", "a00076.html#a7d970f8778383bb43e202e1cb3d45691", null ],
+      [ "panicAlarmTemp", "a00076.html#ad5fca8b29572f08204642e2ed8d9dbce", null ],
+      [ "lowAlarmTemp", "a00076.html#a129a45c78e03e2b25ba4c403636b6b01", null ]
     ] ],
-    [ "wdog_config_t", "a00076.html#a00506", [
-      [ "enableWdog", "a00076.html#a871dc017463d6cc5d31121b40affa1a4", null ],
-      [ "workMode", "a00076.html#a52dd1d98958c48e0a342e3ffe9a1c351", null ],
-      [ "enableInterrupt", "a00076.html#aa749ba919bb8ddf9b52fda7781afa6b5", null ],
-      [ "timeoutValue", "a00076.html#a867555736162830ec456cb98b37431bf", null ],
-      [ "interruptTimeValue", "a00076.html#aac4e0165a8a5674bbd4ac8e7c32d7217", null ],
-      [ "softwareResetExtension", "a00076.html#aa698ca620c05feee0946ee91e1b3374f", null ],
-      [ "enablePowerDown", "a00076.html#a8596d41dfdb0d29a55dfee5e9d707d68", null ],
-      [ "enableTimeOutAssert", "a00076.html#a5e3f1a4dd09bde15aac1ca0e9ad16640", null ]
+    [ "FSL_TEMPMON_DRIVER_VERSION", "a00076.html#ga8c820cc4dbb86ea6a99e674e7f8ff1ba", null ],
+    [ "tempmon_alarm_mode", "a00076.html#ga2d8a033ed3d80771d8417dbf68bfd58b", [
+      [ "kTEMPMON_HighAlarmMode", "a00076.html#gga2d8a033ed3d80771d8417dbf68bfd58ba6c34f34b411e7f880a5782d0329f732f", null ],
+      [ "kTEMPMON_PanicAlarmMode", "a00076.html#gga2d8a033ed3d80771d8417dbf68bfd58ba3cafbb2449dbb58abb5ef078907ba6b0", null ],
+      [ "kTEMPMON_LowAlarmMode", "a00076.html#gga2d8a033ed3d80771d8417dbf68bfd58ba3b1e1531c3d0529cba956f38568140f5", null ]
     ] ],
-    [ "FSL_WDOG_DRIVER_VERSION", "a00076.html#ga5baa4ad349ae3c543938d4ee773df43e", null ],
-    [ "_wdog_interrupt_enable", "a00076.html#ga568a59a02c40c87ed791f569c68e3617", [
-      [ "kWDOG_InterruptEnable", "a00076.html#gga568a59a02c40c87ed791f569c68e3617a8c358d55c0101eaa0a580d867572ec8d", null ]
-    ] ],
-    [ "_wdog_status_flags", "a00076.html#ga0b88468681d9540ae2932b8863df21da", [
-      [ "kWDOG_RunningFlag", "a00076.html#gga0b88468681d9540ae2932b8863df21daa36d15132390c05315cadcd7531d16235", null ],
-      [ "kWDOG_PowerOnResetFlag", "a00076.html#gga0b88468681d9540ae2932b8863df21daac5e2f745cea700526fddf869bead3e7f", null ],
-      [ "kWDOG_TimeoutResetFlag", "a00076.html#gga0b88468681d9540ae2932b8863df21daa3e7218cabdb8b98afb859e5e5bb10c2b", null ],
-      [ "kWDOG_SoftwareResetFlag", "a00076.html#gga0b88468681d9540ae2932b8863df21daab8d3e9351b38a6c2070e168e794cbe04", null ],
-      [ "kWDOG_InterruptFlag", "a00076.html#gga0b88468681d9540ae2932b8863df21daac1277a2936555249acf7a516e6af1f78", null ]
-    ] ],
-    [ "WDOG_GetDefaultConfig", "a00076.html#gaad5ad72d4eaf90ade6be3c976e8bc3f7", null ],
-    [ "WDOG_Init", "a00076.html#ga50d46daf10ab46c6c696e8807c8e913b", null ],
-    [ "WDOG_Deinit", "a00076.html#gaa6667780dc3dcd9579f0689178c3b0d9", null ],
-    [ "WDOG_Enable", "a00076.html#gab4deee569751728b2bd3a74f3c51e51e", null ],
-    [ "WDOG_Disable", "a00076.html#gac50451a963f16a891a365df27305dcca", null ],
-    [ "WDOG_TriggerSystemSoftwareReset", "a00076.html#ga148420ea7de00bc3c60c40abffcdf1cb", null ],
-    [ "WDOG_TriggerSoftwareSignal", "a00076.html#gaedd7386f165e4750bc1aa72544122995", null ],
-    [ "WDOG_EnableInterrupts", "a00076.html#gac10aa3550c0824493f112a02ffd955b1", null ],
-    [ "WDOG_GetStatusFlags", "a00076.html#ga420a7d120956521faf8a40993014d6fa", null ],
-    [ "WDOG_ClearInterruptStatus", "a00076.html#ga45d1ddf1d8f4aeb8a87657f275050594", null ],
-    [ "WDOG_SetTimeoutValue", "a00076.html#ga7744339b66fc64cf4088f0a413e53b08", null ],
-    [ "WDOG_SetInterrputTimeoutValue", "a00076.html#ga18bcb8843c59834b6ae275c58fcf2cd3", null ],
-    [ "WDOG_DisablePowerDownEnable", "a00076.html#ga9c50304e7d819199df178ae26e12f1a8", null ],
-    [ "WDOG_Refresh", "a00076.html#ga1d307a7df8f2b926c306dc8714dda3f5", null ]
+    [ "TEMPMON_Init", "a00076.html#gad74d3cd12c87cd031afefa47a40c4ffa", null ],
+    [ "TEMPMON_Deinit", "a00076.html#ga9300a134aeda04212a2e84d1ccdb3e4a", null ],
+    [ "TEMPMON_GetDefaultConfig", "a00076.html#gad39681b64944bdc56124fc4dcd66a81e", null ],
+    [ "TEMPMON_StartMeasure", "a00076.html#gab591e289ffce94b52811b716f9e00fbb", null ],
+    [ "TEMPMON_StopMeasure", "a00076.html#ga430b69c227f54ee17e8c1f4db14fdf35", null ],
+    [ "TEMPMON_GetCurrentTemperature", "a00076.html#gafd97504a28d73d0ffbd8cd4c8f0810b8", null ],
+    [ "TEMPMON_SetTempAlarm", "a00076.html#gab78940fbc3cc7a3b8e3562a5981803ca", null ]
 ];

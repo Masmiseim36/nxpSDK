@@ -10,8 +10,8 @@
  */
 
 /* ------------------------------- Header File Inclusion */
-#include "appl_rscs.h"
-#include "appl_rscs_mops.h"
+#include "appl_service.h"
+#include "appl_service_mops.h"
 
 #if (defined ATT && defined RSCS)
 #ifdef APPL_MENU_OPS

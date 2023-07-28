@@ -67,8 +67,8 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
     BOARD_InitBootPeripherals();
+    BOARD_InitDebugConsole();
 
 	if (xTaskCreate(sbengine_main_task, "sbengine", 8196, NULL, configMAX_PRIORITIES / 2, NULL) != pdPASS)
 	{

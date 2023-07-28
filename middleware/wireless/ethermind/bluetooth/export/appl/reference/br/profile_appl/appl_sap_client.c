@@ -80,7 +80,7 @@ void main_sap_client_operations(void)
 
         case 2: /* Register BD_ADDR of peer device */
             LOG_DEBUG("Please enter BD ADDR of SAP Server\n");
-            appl_get_bd_addr(appl_sap_server_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_sap_server_bd_addr);
             break;
 
         case 3:/* Get Registered BD_ADDR of peer device */
@@ -186,7 +186,7 @@ void main_sap_client_operations(void)
             break;
 
         case 20: /* Start SIM Access Client */
-            retval = BT_sap_client_start(sap_client_appl_cb);
+            retval = BT_sap_client_start(appl_sap_client_appl_cb);
             if(API_SUCCESS == retval)
             {
                 LOG_DEBUG("SIM Access Client Started Successfully\n");
@@ -306,7 +306,7 @@ void main_sap_client_operations(void)
 }
 
 
-API_RESULT sap_client_appl_cb
+API_RESULT appl_sap_client_appl_cb
            (
                UCHAR    event_type,
                UINT16   event_result,
@@ -463,12 +463,9 @@ API_RESULT sap_client_appl_cb
                             break;
                         }
                         case SAP_STATUS_CHANGE_CARD_RESET:
-                        {
-                            (BT_IGNORE_RETURN_VALUE) BT_sap_client_trasfer_atr();
-                            break;
-                        }
                         case SAP_STATUS_CHANGE_CARD_NOT_ACCESSIBLE:
                         {
+			    (BT_IGNORE_RETURN_VALUE) BT_sap_client_trasfer_atr();
                             break;
                         }
                         case SAP_STATUS_CHANGE_CARD_REMOVED:
@@ -586,6 +583,9 @@ API_RESULT sap_client_appl_cb
                     }
 
                     LOG_DEBUG("ResultCode: %02x\n", result_code);
+
+                    LOG_DEBUG("Client requests for ATR from SIM\n");
+                    (BT_IGNORE_RETURN_VALUE) BT_sap_client_trasfer_atr();
                 break;
 
                 case SAP_MSG_RESET_SIM_RESP:
@@ -595,6 +595,38 @@ API_RESULT sap_client_appl_cb
                         data
                     );
                     LOG_DEBUG("MsgID: RESET_SIM_RESP\n");
+                    LOG_DEBUG("No_of_PARAMs: %02X\n",
+                    sap_msg.no_of_parameters);
+
+                    LOG_DEBUG("PARAM ID: ResultCode\n");
+
+                    LOG_DEBUG("PARAM Len: %04X\n",
+                    sap_msg.param[0U].param_length);
+
+                    temp = &data[8U];
+
+                    result_code = 0U;
+
+                    for(i = sap_msg.param[0U].param_length - 1; i >= 0; i--)
+                    {
+                        result_code |= (*temp) << (8U * i);
+                        temp++;
+                    }
+
+                    LOG_DEBUG("ResultCode: %02x\n", result_code);
+
+		    LOG_DEBUG("Client requests for ATR from SIM\n");
+                    (BT_IGNORE_RETURN_VALUE) BT_sap_client_trasfer_atr();
+                break;
+
+                case SAP_MSG_TRANSFER_CARD_READER_STATUS_RESP:
+                    (BT_IGNORE_RETURN_VALUE) BT_sap_parse_message
+                    (
+                        &sap_msg,
+                        data
+                    );
+
+                    LOG_DEBUG("MsgID: SAP_MSG_TRANSFER_CARD_READER_STATUS_RESP\n");
                     LOG_DEBUG("No_of_PARAMs: %02X\n",
                     sap_msg.no_of_parameters);
 

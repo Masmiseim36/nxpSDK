@@ -35,12 +35,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1024DAG5A \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
+    -DMCUXPRESSO_SDK \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSDK_OS_FREE_RTOS \
-    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -53,6 +52,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -63,11 +63,10 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1024DAG5A \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
+    -DMCUXPRESSO_SDK \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSDK_OS_FREE_RTOS \
-    -DMCUXPRESSO_SDK \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -80,17 +79,17 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
     -DDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -104,16 +103,16 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -127,6 +126,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")

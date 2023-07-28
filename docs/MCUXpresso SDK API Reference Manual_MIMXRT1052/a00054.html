@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: OCOTP: On Chip One-Time Programmable controller.</title>
+<title>MCUXpresso SDK API Reference Manual: LPUART FreeRTOS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,168 +99,139 @@ $(document).ready(function(){initNavTree('a00054.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">OCOTP: On Chip One-Time Programmable controller.</div>  </div>
+<div class="title">LPUART FreeRTOS Driver<div class="ingroups"><a class="el" href="a00284.html">LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the OCOTP module of MCUXpresso SDK devices.</p>
-<p>This section contains information describing the requirements for the on-chip eFuse OTP controller along with details about the block functionality and implementation.</p>
-<h1><a class="anchor" id="OCOTPFunc"></a>
-OCOTP function group</h1>
-<p>The OCOTP driver support operaing API to allow read and write the fuse map.</p>
-<h2><a class="anchor" id="OCOTPInit"></a>
-Initialization and de-initialization</h2>
-<p>The funciton <a class="el" href="a00054.html#ga54480b3c489116b8cb76053b16f02c89" title="Initializes OCOTP controller. ">OCOTP_Init()</a> is to initialize the OCOTP with peripheral base address and source clock frequency.</p>
-<p>The function <a class="el" href="a00054.html#gaafffa3b5fe3f1f69f077e88ba5a7e107" title="De-initializes OCOTP controller. ">OCOTP_Deinit()</a> is to de-initialize the OCOTP controller with peripheral base address.</p>
-<h2><a class="anchor" id="OCOTPReadWrite"></a>
-Read and Write operation</h2>
-<p>The function <a class="el" href="a00054.html#ga7a7b1cd03383fafde15157a06fdda557" title="Reload the shadow register. ">OCOTP_ReloadShadowRegister()</a> is to reload the value from the fuse map. this API should be called firstly before reading the register.</p>
-<p>The <a class="el" href="a00054.html#gaecc991ccf4be0c49286fb13cba97e389" title="Read the fuse shadow register with the fuse addess. ">OCOTP_ReadFuseShadowRegister()</a> is to read the value from a given address, if operation is success, a known value will be return, othwise, a value of 0xBADABADA will be returned.</p>
-<p>The function <a class="el" href="a00054.html#ga43636ab96125958c9a14fe82c176e33e" title="Write the fuse shadow register with the fuse addess and data. ">OCOTP_WriteFuseShadowRegister()</a> will write a specific value to a known address. please check the return status o make sure whether the access to register is success.</p>
-<h1><a class="anchor" id="OCOTPExample"></a>
-OCOTP example</h1>
-<p>This example shows how to get the controller version using API. Due to the eFuse is One-Time programmable, example will only print the information of OCOTP controller version. If more operations are needed, please using the API to implement the write and read operation.</p>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/ocotp </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00447"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a00447">ocotp_timing_t</a></td></tr>
-<tr class="memdesc:a00447"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="a00054.html#a00447">More...</a><br/></td></tr>
-<tr class="separator:a00447"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaf3520ff6d43011872bab77edd27d4de3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00054.html#ggaf3520ff6d43011872bab77edd27d4de3a6133e2fb03bd09bc490982251048c8de">kStatus_OCOTP_AccessError</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 0), 
-<br/>
-&#160;&#160;<a class="el" href="a00054.html#ggaf3520ff6d43011872bab77edd27d4de3a6c5aa99c2965029cf80feaf36cd0763a">kStatus_OCOTP_CrcFail</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00054.html#ggaf3520ff6d43011872bab77edd27d4de3aa1a3a69603c6973128021852a03cf9ce">kStatus_OCOTP_ReloadError</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00054.html#ggaf3520ff6d43011872bab77edd27d4de3ae3aafd3ae27db94a954965038445d240">kStatus_OCOTP_ProgramFail</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00054.html#ggaf3520ff6d43011872bab77edd27d4de3a3a38a5c2c3c0f0146c9b773e855812a6">kStatus_OCOTP_Locked</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 4)
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf3520ff6d43011872bab77edd27d4de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">_ocotp_status Error codes for the OCOTP driver.  <a href="a00054.html#gaf3520ff6d43011872bab77edd27d4de3">More...</a><br/></td></tr>
-<tr class="separator:gaf3520ff6d43011872bab77edd27d4de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga54480b3c489116b8cb76053b16f02c89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga54480b3c489116b8cb76053b16f02c89">OCOTP_Init</a> (OCOTP_Type *base, uint32_t srcClock_Hz)</td></tr>
-<tr class="memdesc:ga54480b3c489116b8cb76053b16f02c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes OCOTP controller.  <a href="#ga54480b3c489116b8cb76053b16f02c89">More...</a><br/></td></tr>
-<tr class="separator:ga54480b3c489116b8cb76053b16f02c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gaafffa3b5fe3f1f69f077e88ba5a7e107">OCOTP_Deinit</a> (OCOTP_Type *base)</td></tr>
-<tr class="memdesc:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes OCOTP controller.  <a href="#gaafffa3b5fe3f1f69f077e88ba5a7e107">More...</a><br/></td></tr>
-<tr class="separator:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3040092099624ec476dd81bd022712c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gaa3040092099624ec476dd81bd022712c">OCOTP_CheckBusyStatus</a> (OCOTP_Type *base)</td></tr>
-<tr class="memdesc:gaa3040092099624ec476dd81bd022712c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checking the BUSY bit in CTRL register.  <a href="#gaa3040092099624ec476dd81bd022712c">More...</a><br/></td></tr>
-<tr class="separator:gaa3040092099624ec476dd81bd022712c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gaf0ee0166ccd35b0273d468b7eb72c954">OCOTP_CheckErrorStatus</a> (OCOTP_Type *base)</td></tr>
-<tr class="memdesc:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checking the ERROR bit in CTRL register.  <a href="#gaf0ee0166ccd35b0273d468b7eb72c954">More...</a><br/></td></tr>
-<tr class="separator:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9294be0c39be4dfaa1eea436ac85171"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gad9294be0c39be4dfaa1eea436ac85171">OCOTP_ClearErrorStatus</a> (OCOTP_Type *base)</td></tr>
-<tr class="memdesc:gad9294be0c39be4dfaa1eea436ac85171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the error bit if this bit is set.  <a href="#gad9294be0c39be4dfaa1eea436ac85171">More...</a><br/></td></tr>
-<tr class="separator:gad9294be0c39be4dfaa1eea436ac85171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a7b1cd03383fafde15157a06fdda557"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga7a7b1cd03383fafde15157a06fdda557">OCOTP_ReloadShadowRegister</a> (OCOTP_Type *base)</td></tr>
-<tr class="memdesc:ga7a7b1cd03383fafde15157a06fdda557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reload the shadow register.  <a href="#ga7a7b1cd03383fafde15157a06fdda557">More...</a><br/></td></tr>
-<tr class="separator:ga7a7b1cd03383fafde15157a06fdda557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecc991ccf4be0c49286fb13cba97e389"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gaecc991ccf4be0c49286fb13cba97e389">OCOTP_ReadFuseShadowRegister</a> (OCOTP_Type *base, uint32_t address)</td></tr>
-<tr class="memdesc:gaecc991ccf4be0c49286fb13cba97e389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the fuse shadow register with the fuse addess.  <a href="#gaecc991ccf4be0c49286fb13cba97e389">More...</a><br/></td></tr>
-<tr class="separator:gaecc991ccf4be0c49286fb13cba97e389"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gaa1b0f813fa5ca43225d71d9218c48a28">OCOTP_ReadFuseShadowRegisterExt</a> (OCOTP_Type *base, uint32_t address, uint32_t *data, uint8_t fuseWords)</td></tr>
-<tr class="memdesc:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the fuse shadow register from the fuse addess.  <a href="#gaa1b0f813fa5ca43225d71d9218c48a28">More...</a><br/></td></tr>
-<tr class="separator:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43636ab96125958c9a14fe82c176e33e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga43636ab96125958c9a14fe82c176e33e">OCOTP_WriteFuseShadowRegister</a> (OCOTP_Type *base, uint32_t address, uint32_t data)</td></tr>
-<tr class="memdesc:ga43636ab96125958c9a14fe82c176e33e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the fuse shadow register with the fuse addess and data.  <a href="#ga43636ab96125958c9a14fe82c176e33e">More...</a><br/></td></tr>
-<tr class="separator:ga43636ab96125958c9a14fe82c176e33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga4f837c7b4a66ffe3153f2975fd5c6388">OCOTP_WriteFuseShadowRegisterWithLock</a> (OCOTP_Type *base, uint32_t address, uint32_t data, bool lock)</td></tr>
-<tr class="memdesc:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the fuse shadow register and lock it.  <a href="#ga4f837c7b4a66ffe3153f2975fd5c6388">More...</a><br/></td></tr>
-<tr class="separator:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5">OCOTP_GetVersion</a> (OCOTP_Type *base)</td></tr>
-<tr class="memdesc:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the OCOTP controller version from the register.  <a href="#ga38c12a5cb815d9330cd8f2c04e8e1ec5">More...</a><br/></td></tr>
-<tr class="separator:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00454"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a00454">lpuart_rtos_config_t</a></td></tr>
+<tr class="memdesc:a00454"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART RTOS configuration structure.  <a href="a00054.html#a00454">More...</a><br/></td></tr>
+<tr class="separator:a00454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga211ad512cb6afc3a8649a61c4f887dd5">FSL_OCOTP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
-<tr class="memdesc:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP driver version.  <a href="#ga211ad512cb6afc3a8649a61c4f887dd5">More...</a><br/></td></tr>
-<tr class="separator:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae78d379ef6bde2ad08e1fe64f1f09bf5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gae78d379ef6bde2ad08e1fe64f1f09bf5">FSL_LPUART_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
+<tr class="memdesc:gae78d379ef6bde2ad08e1fe64f1f09bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART FreeRTOS driver version.  <a href="#gae78d379ef6bde2ad08e1fe64f1f09bf5">More...</a><br/></td></tr>
+<tr class="separator:gae78d379ef6bde2ad08e1fe64f1f09bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+LPUART RTOS Operation</h2></td></tr>
+<tr class="memitem:ga5be9370b1fa0187c194475769e7138fc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga5be9370b1fa0187c194475769e7138fc">LPUART_RTOS_Init</a> (lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, const <a class="el" href="a00054.html#a00454">lpuart_rtos_config_t</a> *cfg)</td></tr>
+<tr class="memdesc:ga5be9370b1fa0187c194475769e7138fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an LPUART instance for operation in RTOS.  <a href="#ga5be9370b1fa0187c194475769e7138fc">More...</a><br/></td></tr>
+<tr class="separator:ga5be9370b1fa0187c194475769e7138fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga057e59dcc578ef4b303850bcd90ca50e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga057e59dcc578ef4b303850bcd90ca50e">LPUART_RTOS_Deinit</a> (lpuart_rtos_handle_t *handle)</td></tr>
+<tr class="memdesc:ga057e59dcc578ef4b303850bcd90ca50e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes an LPUART instance for operation.  <a href="#ga057e59dcc578ef4b303850bcd90ca50e">More...</a><br/></td></tr>
+<tr class="separator:ga057e59dcc578ef4b303850bcd90ca50e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+LPUART transactional Operation</h2></td></tr>
+<tr class="memitem:ga275e067e13ecc77dde83d2d7938c038e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga275e067e13ecc77dde83d2d7938c038e">LPUART_RTOS_Send</a> (lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:ga275e067e13ecc77dde83d2d7938c038e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data in the background.  <a href="#ga275e067e13ecc77dde83d2d7938c038e">More...</a><br/></td></tr>
+<tr class="separator:ga275e067e13ecc77dde83d2d7938c038e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0561f87122863c6e9b20f8991a73a0fb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga0561f87122863c6e9b20f8991a73a0fb">LPUART_RTOS_Receive</a> (lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t length, size_t *received)</td></tr>
+<tr class="memdesc:ga0561f87122863c6e9b20f8991a73a0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data.  <a href="#ga0561f87122863c6e9b20f8991a73a0fb">More...</a><br/></td></tr>
+<tr class="separator:ga0561f87122863c6e9b20f8991a73a0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e211e0c1a2c93d9bdd73d6ca4639a10"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga3e211e0c1a2c93d9bdd73d6ca4639a10">LPUART_RTOS_SetRxTimeout</a> (lpuart_rtos_handle_t *handle, uint32_t rx_timeout_constant_ms, uint32_t rx_timeout_multiplier_ms)</td></tr>
+<tr class="memdesc:ga3e211e0c1a2c93d9bdd73d6ca4639a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set RX timeout in runtime.  <a href="#ga3e211e0c1a2c93d9bdd73d6ca4639a10">More...</a><br/></td></tr>
+<tr class="separator:ga3e211e0c1a2c93d9bdd73d6ca4639a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2317ff04710f0f4a2dc7d219f850c85"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gad2317ff04710f0f4a2dc7d219f850c85">LPUART_RTOS_SetTxTimeout</a> (lpuart_rtos_handle_t *handle, uint32_t tx_timeout_constant_ms, uint32_t tx_timeout_multiplier_ms)</td></tr>
+<tr class="memdesc:gad2317ff04710f0f4a2dc7d219f850c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set TX timeout in runtime.  <a href="#gad2317ff04710f0f4a2dc7d219f850c85">More...</a><br/></td></tr>
+<tr class="separator:gad2317ff04710f0f4a2dc7d219f850c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00447" id="a00447"></a>
+<a name="a00454" id="a00454"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct ocotp_timing_t</td>
+          <td class="memname">struct lpuart_rtos_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Note that, these value are used for calcalating the read/write timings. And the values should statisfy below rules:</p>
-<p>Tsp_rd=(WAIT+1)/ipg_clk_freq should be &gt;= 150ns; Tsp_pgm=(RELAX+1)/ipg_clk_freq should be &gt;= 100ns; Trd = ((STROBE_READ+1)- 2*(RELAX_READ+1)) /ipg_clk_freq, The Trd is required to be larger than 40 ns. Tpgm = ((STROBE_PROG+1)- 2*(RELAX_PROG+1)) /ipg_clk_freq; The Tpgm should be configured within the range of 9000 ns &lt; Tpgm &lt; 11000 ns; </p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:acd8c4f8763dcb388f62bfa50d6e97a64"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#acd8c4f8763dcb388f62bfa50d6e97a64">wait</a></td></tr>
-<tr class="memdesc:acd8c4f8763dcb388f62bfa50d6e97a64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait time value to fill in the TIMING register.  <a href="#acd8c4f8763dcb388f62bfa50d6e97a64">More...</a><br/></td></tr>
-<tr class="separator:acd8c4f8763dcb388f62bfa50d6e97a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fea8ef8e47c7341a275e2dae68efa0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a9fea8ef8e47c7341a275e2dae68efa0e">relax</a></td></tr>
-<tr class="memdesc:a9fea8ef8e47c7341a275e2dae68efa0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relax time value to fill in the TIMING register.  <a href="#a9fea8ef8e47c7341a275e2dae68efa0e">More...</a><br/></td></tr>
-<tr class="separator:a9fea8ef8e47c7341a275e2dae68efa0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e99b30121ba46182baae7906e68ca21"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a8e99b30121ba46182baae7906e68ca21">strobe_prog</a></td></tr>
-<tr class="memdesc:a8e99b30121ba46182baae7906e68ca21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe program time value to fill in the TIMING register.  <a href="#a8e99b30121ba46182baae7906e68ca21">More...</a><br/></td></tr>
-<tr class="separator:a8e99b30121ba46182baae7906e68ca21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abef3ec7b5191795eba9de0374b4e15cc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#abef3ec7b5191795eba9de0374b4e15cc">strobe_read</a></td></tr>
-<tr class="memdesc:abef3ec7b5191795eba9de0374b4e15cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe read time value to fill in the TIMING register.  <a href="#abef3ec7b5191795eba9de0374b4e15cc">More...</a><br/></td></tr>
-<tr class="separator:abef3ec7b5191795eba9de0374b4e15cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf5491a7b9c911ead3f256fc61357f65"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf5491a7b9c911ead3f256fc61357f65"></a>
+LPUART_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#abf5491a7b9c911ead3f256fc61357f65">base</a></td></tr>
+<tr class="memdesc:abf5491a7b9c911ead3f256fc61357f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART base address. <br/></td></tr>
+<tr class="separator:abf5491a7b9c911ead3f256fc61357f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5209f6a860555957f5d75940b2132ae5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5209f6a860555957f5d75940b2132ae5"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a5209f6a860555957f5d75940b2132ae5">srcclk</a></td></tr>
+<tr class="memdesc:a5209f6a860555957f5d75940b2132ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART source clock in Hz. <br/></td></tr>
+<tr class="separator:a5209f6a860555957f5d75940b2132ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86b9316f7c8bc63e672f7efd09bbb86a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86b9316f7c8bc63e672f7efd09bbb86a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a86b9316f7c8bc63e672f7efd09bbb86a">baudrate</a></td></tr>
+<tr class="memdesc:a86b9316f7c8bc63e672f7efd09bbb86a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired communication speed. <br/></td></tr>
+<tr class="separator:a86b9316f7c8bc63e672f7efd09bbb86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77f066eb41ad7b46edd5a3ee9e72d700"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77f066eb41ad7b46edd5a3ee9e72d700"></a>
+<a class="el" href="a00052.html#ga6fcd73abf900b8a17dab1f2b1f3f53c7">lpuart_parity_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a77f066eb41ad7b46edd5a3ee9e72d700">parity</a></td></tr>
+<tr class="memdesc:a77f066eb41ad7b46edd5a3ee9e72d700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parity setting. <br/></td></tr>
+<tr class="separator:a77f066eb41ad7b46edd5a3ee9e72d700"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a347be0a813260f445e7829308a58f479"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a347be0a813260f445e7829308a58f479"></a>
+<a class="el" href="a00052.html#ga7540d87bc3fa8a605d8da53fe08219f0">lpuart_stop_bit_count_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a347be0a813260f445e7829308a58f479">stopbits</a></td></tr>
+<tr class="memdesc:a347be0a813260f445e7829308a58f479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of stop bits to use. <br/></td></tr>
+<tr class="separator:a347be0a813260f445e7829308a58f479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a355e354365fe669ddf27d8eb538c83e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a355e354365fe669ddf27d8eb538c83e9"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a355e354365fe669ddf27d8eb538c83e9">buffer</a></td></tr>
+<tr class="memdesc:a355e354365fe669ddf27d8eb538c83e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for background reception. <br/></td></tr>
+<tr class="separator:a355e354365fe669ddf27d8eb538c83e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8ba8f4845a222fef29714542876ae55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8ba8f4845a222fef29714542876ae55"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ad8ba8f4845a222fef29714542876ae55">buffer_size</a></td></tr>
+<tr class="memdesc:ad8ba8f4845a222fef29714542876ae55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of buffer for background reception. <br/></td></tr>
+<tr class="separator:ad8ba8f4845a222fef29714542876ae55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8dc452650aae3faefd0f92cffe2b6ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8dc452650aae3faefd0f92cffe2b6ab"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#aa8dc452650aae3faefd0f92cffe2b6ab">rx_timeout_constant_ms</a></td></tr>
+<tr class="memdesc:aa8dc452650aae3faefd0f92cffe2b6ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX timeout applied per receive. <br/></td></tr>
+<tr class="separator:aa8dc452650aae3faefd0f92cffe2b6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7deed5c320a55485e10ccf7fb6f39d3b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a7deed5c320a55485e10ccf7fb6f39d3b">rx_timeout_multiplier_ms</a></td></tr>
+<tr class="memdesc:a7deed5c320a55485e10ccf7fb6f39d3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX timeout added for each byte of the receive.  <a href="#a7deed5c320a55485e10ccf7fb6f39d3b">More...</a><br/></td></tr>
+<tr class="separator:a7deed5c320a55485e10ccf7fb6f39d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42dc67e6be0ad089f67a8d404aee72d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42dc67e6be0ad089f67a8d404aee72d4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a42dc67e6be0ad089f67a8d404aee72d4">tx_timeout_constant_ms</a></td></tr>
+<tr class="memdesc:a42dc67e6be0ad089f67a8d404aee72d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX timeout applied per transmition. <br/></td></tr>
+<tr class="separator:a42dc67e6be0ad089f67a8d404aee72d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fa692dea066c6e1393912ae32a5fc3a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a8fa692dea066c6e1393912ae32a5fc3a">tx_timeout_multiplier_ms</a></td></tr>
+<tr class="memdesc:a8fa692dea066c6e1393912ae32a5fc3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX timeout added for each byte of the transmition.  <a href="#a8fa692dea066c6e1393912ae32a5fc3a">More...</a><br/></td></tr>
+<tr class="separator:a8fa692dea066c6e1393912ae32a5fc3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bf2ba5df12af74dd4049e4377caa213"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bf2ba5df12af74dd4049e4377caa213"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a6bf2ba5df12af74dd4049e4377caa213">enableRxRTS</a></td></tr>
+<tr class="memdesc:a6bf2ba5df12af74dd4049e4377caa213"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX RTS enable. <br/></td></tr>
+<tr class="separator:a6bf2ba5df12af74dd4049e4377caa213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc3d995c9c3c887bb00f2252882c9526"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc3d995c9c3c887bb00f2252882c9526"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#adc3d995c9c3c887bb00f2252882c9526">enableTxCTS</a></td></tr>
+<tr class="memdesc:adc3d995c9c3c887bb00f2252882c9526"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS enable. <br/></td></tr>
+<tr class="separator:adc3d995c9c3c887bb00f2252882c9526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39ef6b032392c800cb96fbf3db2470f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a39ef6b032392c800cb96fbf3db2470f9"></a>
+<a class="el" href="a00052.html#gadd3cf9892416c5503dce7f0567e8c41f">lpuart_transmit_cts_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#a39ef6b032392c800cb96fbf3db2470f9">txCtsSource</a></td></tr>
+<tr class="memdesc:a39ef6b032392c800cb96fbf3db2470f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS source. <br/></td></tr>
+<tr class="separator:a39ef6b032392c800cb96fbf3db2470f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af09c2955ab27338fac430062ae812388"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af09c2955ab27338fac430062ae812388"></a>
+<a class="el" href="a00052.html#gafe1039afd48853bd649e23bdfa034540">lpuart_transmit_cts_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#af09c2955ab27338fac430062ae812388">txCtsConfig</a></td></tr>
+<tr class="memdesc:af09c2955ab27338fac430062ae812388"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS configure. <br/></td></tr>
+<tr class="separator:af09c2955ab27338fac430062ae812388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="acd8c4f8763dcb388f62bfa50d6e97a64"></a>
+<a class="anchor" id="a7deed5c320a55485e10ccf7fb6f39d3b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ocotp_timing_t::wait</td>
+          <td class="memname">uint32_t lpuart_rtos_config_t::rx_timeout_multiplier_ms</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9fea8ef8e47c7341a275e2dae68efa0e"></a>
+<a class="anchor" id="a8fa692dea066c6e1393912ae32a5fc3a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ocotp_timing_t::relax</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8e99b30121ba46182baae7906e68ca21"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ocotp_timing_t::strobe_prog</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="abef3ec7b5191795eba9de0374b4e15cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ocotp_timing_t::strobe_read</td>
+          <td class="memname">uint32_t lpuart_rtos_config_t::tx_timeout_multiplier_ms</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -271,64 +242,40 @@ Driver version</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga211ad512cb6afc3a8649a61c4f887dd5"></a>
+<a class="anchor" id="gae78d379ef6bde2ad08e1fe64f1f09bf5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_OCOTP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
+          <td class="memname">#define FSL_LPUART_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf3520ff6d43011872bab77edd27d4de3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf3520ff6d43011872bab77edd27d4de3a6133e2fb03bd09bc490982251048c8de"></a>kStatus_OCOTP_AccessError</em>&nbsp;</td><td class="fielddoc">
-<p>eFuse and shadow register access error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf3520ff6d43011872bab77edd27d4de3a6c5aa99c2965029cf80feaf36cd0763a"></a>kStatus_OCOTP_CrcFail</em>&nbsp;</td><td class="fielddoc">
-<p>CRC check failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf3520ff6d43011872bab77edd27d4de3aa1a3a69603c6973128021852a03cf9ce"></a>kStatus_OCOTP_ReloadError</em>&nbsp;</td><td class="fielddoc">
-<p>Error happens during reload shadow register. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf3520ff6d43011872bab77edd27d4de3ae3aafd3ae27db94a954965038445d240"></a>kStatus_OCOTP_ProgramFail</em>&nbsp;</td><td class="fielddoc">
-<p>Fuse programming failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf3520ff6d43011872bab77edd27d4de3a3a38a5c2c3c0f0146c9b773e855812a6"></a>kStatus_OCOTP_Locked</em>&nbsp;</td><td class="fielddoc">
-<p>Fuse is locked and cannot be programmed. </p>
-</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga54480b3c489116b8cb76053b16f02c89"></a>
+<a class="anchor" id="ga5be9370b1fa0187c194475769e7138fc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OCOTP_Init </td>
+          <td class="memname">int LPUART_RTOS_Init </td>
           <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramname"><em>t_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00054.html#a00454">lpuart_rtos_config_t</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -339,184 +286,60 @@ Driver version</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>source clock frequency in unit of Hz. When the macro FSL_FEATURE_OCOTP_HAS_TIMING_CTRL is defined as 0, this parameter is not used, application could pass in 0 in this case. </td></tr>
+    <tr><td class="paramname">handle</td><td>The RTOS LPUART handle, the pointer to an allocated space for RTOS context. </td></tr>
+    <tr><td class="paramname">t_handle</td><td>The pointer to an allocated space to store the transactional layer internal state. </td></tr>
+    <tr><td class="paramname">cfg</td><td>The pointer to the parameters required to configure the LPUART after initialization. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 succeed, others failed </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaafffa3b5fe3f1f69f077e88ba5a7e107"></a>
+<a class="anchor" id="ga057e59dcc578ef4b303850bcd90ca50e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OCOTP_Deinit </td>
+          <td class="memname">int LPUART_RTOS_Deinit </td>
           <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>upon successful execution, error status otherwise. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa3040092099624ec476dd81bd022712c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool OCOTP_CheckBusyStatus </td>
-          <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Checking this BUSY bit will help confirm if the OCOTP controller is ready for access.</p>
+<p>This function deinitializes the LPUART module, sets all register value to the reset value, and releases the resources.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>for bit set and false for cleared. </td></tr>
+    <tr><td class="paramname">handle</td><td>The RTOS LPUART handle. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf0ee0166ccd35b0273d468b7eb72c954"></a>
+<a class="anchor" id="ga275e067e13ecc77dde83d2d7938c038e"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool OCOTP_CheckErrorStatus </td>
+          <td class="memname">int LPUART_RTOS_Send </td>
           <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>for bit set and false for cleared. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad9294be0c39be4dfaa1eea436ac85171"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
         <tr>
-          <td class="memname">static void OCOTP_ClearErrorStatus </td>
-          <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7a7b1cd03383fafde15157a06fdda557"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_ReloadShadowRegister </td>
-          <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function will help reload the shadow register without reseting the OCOTP module. Please make sure the OCOTP has been initialized before calling this API.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base addess. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Reload success. </td></tr>
-    <tr><td class="paramname">kStatus_OCOTP_ReloadError</td><td>Reload failed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaecc991ccf4be0c49286fb13cba97e389"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t OCOTP_ReadFuseShadowRegister </td>
-          <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -525,45 +348,45 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00299.html#_deprecated000015">Deprecated:</a></b></dt><dd>Use <a class="el" href="a00054.html#gaa1b0f813fa5ca43225d71d9218c48a28">OCOTP_ReadFuseShadowRegisterExt</a> instead of this function.</dd></dl>
+<p>This function sends data. It is an synchronous API. If the hardware buffer is full, the task is in the blocked state.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-    <tr><td class="paramname">address</td><td>the fuse address to be read from. </td></tr>
+    <tr><td class="paramname">handle</td><td>The RTOS LPUART handle. </td></tr>
+    <tr><td class="paramname">buffer</td><td>The pointer to buffer to send. </td></tr>
+    <tr><td class="paramname">length</td><td>The number of bytes to send. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The read out data. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa1b0f813fa5ca43225d71d9218c48a28"></a>
+<a class="anchor" id="ga0561f87122863c6e9b20f8991a73a0fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_ReadFuseShadowRegisterExt </td>
+          <td class="memname">int LPUART_RTOS_Receive </td>
           <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
+          <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>fuseWords</em>&#160;</td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>received</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -572,47 +395,40 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function reads fuse from <code>address</code>, how many words to read is specified by the parameter <code>fuseWords</code>. This function could read at most OCOTP_READ_FUSE_DATA_COUNT fuse word one time.</p>
+<p>This function receives data from LPUART. It is an synchronous API. If any data is immediately available it is returned immediately and the number of bytes received.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-    <tr><td class="paramname">address</td><td>the fuse address to be read from. </td></tr>
-    <tr><td class="paramname">data</td><td>Data array to save the readout fuse value. </td></tr>
-    <tr><td class="paramname">fuseWords</td><td>How many words to read. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Read success. </td></tr>
-    <tr><td class="paramname">kStatus_Fail</td><td>Error occurs during read. </td></tr>
+    <tr><td class="paramname">handle</td><td>The RTOS LPUART handle. </td></tr>
+    <tr><td class="paramname">buffer</td><td>The pointer to buffer where to write received data. </td></tr>
+    <tr><td class="paramname">length</td><td>The number of bytes to receive. </td></tr>
+    <tr><td class="paramname">received</td><td>The pointer to a variable of size_t where the number of received data is filled. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga43636ab96125958c9a14fe82c176e33e"></a>
+<a class="anchor" id="ga3e211e0c1a2c93d9bdd73d6ca4639a10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_WriteFuseShadowRegister </td>
+          <td class="memname">int LPUART_RTOS_SetRxTimeout </td>
           <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
+          <td class="paramname"><em>rx_timeout_constant_ms</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
+          <td class="paramname"><em>rx_timeout_multiplier_ms</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -621,51 +437,32 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Please make sure the wrtie address is not locked while calling this API.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-    <tr><td class="paramname">address</td><td>the fuse address to be written. </td></tr>
-    <tr><td class="paramname">data</td><td>the value will be writen to fuse address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">write</td><td>status, kStatus_Success for success and kStatus_Fail for failed. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This function can modify RX timeout between initialization and receive.</p>
+<p>param handle The RTOS LPUART handle. param rx_timeout_constant_ms RX timeout applied per receive. param rx_timeout_multiplier_ms RX timeout added for each byte of the receive. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga4f837c7b4a66ffe3153f2975fd5c6388"></a>
+<a class="anchor" id="gad2317ff04710f0f4a2dc7d219f850c85"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_WriteFuseShadowRegisterWithLock </td>
+          <td class="memname">int LPUART_RTOS_SetTxTimeout </td>
           <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
+          <td class="paramname"><em>tx_timeout_constant_ms</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>lock</em>&#160;</td>
+          <td class="paramname"><em>tx_timeout_multiplier_ms</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -674,63 +471,8 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Please make sure the wrtie address is not locked while calling this API.</p>
-<p>Some OCOTP controller supports ECC mode and redundancy mode (see reference mananual for more details). OCOTP controller will auto select ECC or redundancy mode to program the fuse word according to fuse map definition. In ECC mode, the 32 fuse bits in one word can only be written once. In redundancy mode, the word can be written more than once as long as they are different fuse bits. Set parameter <code>lock</code> as true to force use ECC mode.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-    <tr><td class="paramname">address</td><td>The fuse address to be written. </td></tr>
-    <tr><td class="paramname">data</td><td>The value will be writen to fuse address. </td></tr>
-    <tr><td class="paramname">lock</td><td>Lock or unlock write fuse shadow register operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Program and reload success. </td></tr>
-    <tr><td class="paramname">kStatus_OCOTP_Locked</td><td>The eFuse word is locked and cannot be programmed. </td></tr>
-    <tr><td class="paramname">kStatus_OCOTP_ProgramFail</td><td>eFuse word programming failed. </td></tr>
-    <tr><td class="paramname">kStatus_OCOTP_ReloadError</td><td>eFuse word programming success, but error happens during reload the values. </td></tr>
-    <tr><td class="paramname">kStatus_OCOTP_AccessError</td><td>Cannot access eFuse word. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga38c12a5cb815d9330cd8f2c04e8e1ec5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t OCOTP_GetVersion </td>
-          <td>(</td>
-          <td class="paramtype">OCOTP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">return</td><td>the version value. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This function can modify TX timeout between initialization and send.</p>
+<p>param handle The RTOS LPUART handle. param tx_timeout_constant_ms TX timeout applied per transmition. param tx_timeout_multiplier_ms TX timeout added for each byte of the transmition. </p>
 
 </div>
 </div>

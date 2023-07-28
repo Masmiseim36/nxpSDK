@@ -1252,9 +1252,10 @@ static API_RESULT a2dp_encode_n_send
 
 static void edgefast_a2dp_src_write_task (struct bt_a2dp_endpoint_state *ep_state)
 {
-    int32_t  rd_ptr, index, remaining;
-    uint16_t bytes_to_send, buf_index, encode_len;
+    int32_t  rd_ptr, remaining;
+    uint16_t bytes_to_send, bytes_to_copy, buf_index, encode_len;
     struct bt_a2dp_sbc_encoder *sbc_encoder = &ep_state->codec->sbc_encoder;
+    uint32_t priMask = 0U;
 
     for(;;)
     {
@@ -1274,8 +1275,8 @@ static void edgefast_a2dp_src_write_task (struct bt_a2dp_endpoint_state *ep_stat
             return;
         }
 
-        //BT_thread_mutex_lock (&a2dp_src_th_mutex);
-        EDGEFAST_A2DP_LOCK;
+        OSA_EnterCritical(&priMask);
+
         if (sbc_encoder->a2dp_src_buffer_wr_ptr >= sbc_encoder->a2dp_src_buffer_rd_ptr)
         {
             /*
@@ -1307,15 +1308,12 @@ static void edgefast_a2dp_src_write_task (struct bt_a2dp_endpoint_state *ep_stat
         {
             /* Wait for data in buffer */
             sbc_encoder->a2dp_src_wr_th_state = APP_A2DP_SRC_WR_TH_INIT;
-            //BT_thread_cond_wait (&a2dp_src_th_cond, &a2dp_src_th_mutex);
-            //T_thread_mutex_unlock (&a2dp_src_th_mutex);
-            EDGEFAST_A2DP_UNLOCK;
+            OSA_ExitCritical(priMask);
             continue;
         }
         else
         {
-            //BT_thread_mutex_unlock (&a2dp_src_th_mutex);
-            EDGEFAST_A2DP_UNLOCK;
+            OSA_ExitCritical(priMask);
         }
 
         rd_ptr = sbc_encoder->a2dp_src_buffer_rd_ptr;
@@ -1323,6 +1321,21 @@ static void edgefast_a2dp_src_write_task (struct bt_a2dp_endpoint_state *ep_stat
         bytes_to_send = (remaining > sbc_encoder->a2dp_pcm_datalen) ?
             sbc_encoder->a2dp_pcm_datalen : (uint16_t)remaining;
 
+#if 1
+        if((rd_ptr + bytes_to_send) > sbc_encoder->a2dp_src_buffer_size)
+        {
+            bytes_to_copy = sbc_encoder->a2dp_src_buffer_size - rd_ptr;
+            memcpy(sbc_encoder->pcm_to_send, &sbc_encoder->a2dp_src_buffer[rd_ptr], bytes_to_copy);
+            memcpy(&sbc_encoder->pcm_to_send[bytes_to_copy], &sbc_encoder->a2dp_src_buffer[0], bytes_to_send - bytes_to_copy);
+            rd_ptr = bytes_to_send - bytes_to_copy;
+        }
+        else
+        {
+            memcpy(sbc_encoder->pcm_to_send, &sbc_encoder->a2dp_src_buffer[rd_ptr], bytes_to_send);
+            rd_ptr = (rd_ptr + bytes_to_send) % sbc_encoder->a2dp_src_buffer_size;
+
+        }
+#else
         for (index = 0; index < bytes_to_send; index++)
         {
             sbc_encoder->pcm_to_send[index] = sbc_encoder->a2dp_src_buffer[rd_ptr];
@@ -1333,6 +1346,7 @@ static void edgefast_a2dp_src_write_task (struct bt_a2dp_endpoint_state *ep_stat
                 rd_ptr = 0;
             }
         }
+#endif
 
         /* Update the read pointer */
         sbc_encoder->a2dp_src_buffer_rd_ptr = rd_ptr;
@@ -2866,7 +2880,7 @@ static void a2dp_src_enqueue
            )
 {
     int32_t  n_free;
-    uint32_t count;
+    uint32_t copy, regMask = 0U;
     struct bt_a2dp_endpoint_state *ep_state;
     struct bt_a2dp_sbc_encoder *sbc_encoder;
 
@@ -2917,6 +2931,20 @@ static void a2dp_src_enqueue
     }
 
     /* Store new data into Buffer */
+#if 1
+        if((sbc_encoder->a2dp_src_buffer_wr_ptr + datalen) > sbc_encoder->a2dp_src_buffer_size)
+        {
+            copy = sbc_encoder->a2dp_src_buffer_size - sbc_encoder->a2dp_src_buffer_wr_ptr;
+            memcpy(&sbc_encoder->a2dp_src_buffer[sbc_encoder->a2dp_src_buffer_wr_ptr], data, copy);
+            memcpy(&sbc_encoder->a2dp_src_buffer[0], &data[copy], datalen - copy);
+            sbc_encoder->a2dp_src_buffer_wr_ptr = datalen - copy;
+        }
+        else
+        {
+            memcpy(&sbc_encoder->a2dp_src_buffer[sbc_encoder->a2dp_src_buffer_wr_ptr], data, datalen);
+            sbc_encoder->a2dp_src_buffer_wr_ptr = (sbc_encoder->a2dp_src_buffer_wr_ptr + datalen) % sbc_encoder->a2dp_src_buffer_size;
+        }
+#else
     for (count = 0; count < datalen; count++)
     {
         sbc_encoder->a2dp_src_buffer[sbc_encoder->a2dp_src_buffer_wr_ptr] = data[count];
@@ -2927,19 +2955,20 @@ static void a2dp_src_enqueue
             sbc_encoder->a2dp_src_buffer_wr_ptr = 0;
         }
     }
+#endif
 
-    EDGEFAST_A2DP_LOCK;
+    OSA_EnterCritical(&regMask); 
+		
     if (APP_A2DP_SRC_WR_TH_INIT == sbc_encoder->a2dp_src_wr_th_state)
     {
         /* Signal the waiting thread */
         sbc_encoder->a2dp_src_wr_th_state = APP_A2DP_SRC_WR_TH_PLAYING;
-        //a2dp_set_delay_work(ep_state, A2DP_EVENT_SEND_SBC_PCM_DATA, 0U);
+        OSA_ExitCritical(regMask);
         a2dp_send_task_msg(ep_state, A2DP_EVENT_SEND_SBC_PCM_DATA);
-        EDGEFAST_A2DP_UNLOCK;
     }
     else
     {
-        EDGEFAST_A2DP_UNLOCK;
+        OSA_ExitCritical(regMask);
     }
 
     return;

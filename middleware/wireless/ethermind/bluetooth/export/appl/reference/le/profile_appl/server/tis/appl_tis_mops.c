@@ -10,8 +10,8 @@
  */
 
 /* ------------------------------- Header File Inclusion */
-#include "appl_tis.h"
-#include "appl_tis_mops.h"
+#include "appl_service.h"
+#include "appl_service_mops.h"
 
 #if (defined ATT && defined TIS)
 #ifdef APPL_MENU_OPS

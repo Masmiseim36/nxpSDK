@@ -57,7 +57,7 @@
 #define GATT_SER_HRS_GAP_INST                  0
 
 /** GATT Service */
-#define GATT_SER_GATT_INST                 1
+#define GATT_SER_HRS_GATT_INST                 1
 
 /** Battery Service */
 #define GATT_SER_HRS_BATTERY_INST              2
@@ -129,7 +129,6 @@ extern UINT16 GATT_CHAR_HRS_BATTERY_LVL_INST;
 extern UINT16 GATT_CHAR_HRS_HR_MSRMNT;
 extern UINT16 GATT_CHAR_HRS_BODY_SNSR_LOC_INST;
 extern UINT16 GATT_CHAR_HRS_HR_CNTRL_PNT_INST;
-extern UINT16 GATT_DB_MAX_ATTRIBUTES;
 
 API_RESULT appl_hrs_add_gaps(void);
 API_RESULT appl_hrs_add_gatts(void);

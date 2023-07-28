@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP.
+ * Copyright 2020-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -90,17 +90,61 @@ void LOGD(const char* module, const char* func, int line, const char* format, ..
 }
 #endif
 
+int setup_graphic_dev(hal_graphics_setup_t gfx_setup[], int graphic_nb,
+                      const char *name, gfx_dev_t *dev)
+{
+    int i, found = 0;
+
+    /* search name */
+    if ((name == NULL) && (graphic_nb)) {
+        /* pick prefered first graphics device of the list */
+        found = 1;
+        i = 0;
+    }
+    else if ((name == NULL) || (!strcmp(name, HAL_GFX_DEV_CPU_NAME))) {
+        /* pick CPU graphics */
+        return HAL_GfxDev_CPU_Register(dev);
+    }
+    else {
+        for (i = 0; i < graphic_nb; i++)
+            if (!strcmp(name, gfx_setup[i].gfx_dev_name)) {
+                found = 1;
+                break;
+            }
+    }
+    if (!found) {
+        HAL_LOGE("Graphic device %s not found\n", name);
+        return MPP_INVALID_PARAM;
+    }
+
+    /* call name-specific graphic setup function*/
+    graphic_setup_func_t gfx_setup_f;
+    gfx_setup_f = gfx_setup[i].gfx_setup_func;
+    if (gfx_setup_f)
+        return gfx_setup_f(dev);
+
+    return MPP_ERROR;
+}
+
 int setup_display_dev(hal_display_setup_t display_setup[], int display_nb,
 		      const char *name, display_dev_t *dev)
 {
     int i, found = 0;
+
+    if (name == NULL) {
+        HAL_LOGE("name is NULL\n");
+        return MPP_INVALID_PARAM;
+    }
+
     for (i = 0; i < display_nb; i++)
         if (!strcmp(name, display_setup[i].display_name)) {
             found = 1;
             break;
         }
-    if (!found)
-        return MPP_ERROR;
+    if (!found) {
+        HAL_LOGE("Display device %s not found\n", name);
+        return MPP_INVALID_PARAM;
+    }
 
     display_setup_func_t disp_setup_f;
     disp_setup_f = display_setup[i].display_setup_func;
@@ -112,23 +156,31 @@ int setup_display_dev(hal_display_setup_t display_setup[], int display_nb,
 }
 
 int setup_camera_dev(hal_camera_setup_t camera_setup[], int camera_nb,
-		     const char *name, camera_dev_t *dev, _Bool defconfig)
+		     const char *name, camera_dev_t *dev)
 {
     int i, found = 0;
+
+    if (name == NULL) {
+        HAL_LOGE("name is NULL\n");
+        return MPP_INVALID_PARAM;
+    }
+
     /* search name */
     for (i = 0; i < camera_nb; i++)
         if (!strcmp(name, camera_setup[i].camera_name)) {
             found = 1;
             break;
         }
-    if (!found)
-        return MPP_ERROR;
+    if (!found) {
+        HAL_LOGE("Camera device %s not found\n", name);
+        return MPP_INVALID_PARAM;
+    }
 
     /* call name-specific camera setup function*/
     camera_setup_func_t cam_setup_f;
     cam_setup_f = camera_setup[i].camera_setup_func;
     if (cam_setup_f)
-        return cam_setup_f(name, dev, defconfig);
+        return cam_setup_f(name, dev);
 
     return MPP_ERROR;
 }
@@ -138,33 +190,6 @@ int setup_static_image(static_image_t *);
 int setup_static_image_elt(static_image_t *elt)
 {
     return setup_static_image(elt);
-}
-
-mpp_pixel_format_t hal_fsl_to_mpp_pixeltype(video_pixel_format_t fsl_typ)
-{
-    mpp_pixel_format_t mpp_typ;
-    switch(fsl_typ)
-    {
-    case kVIDEO_PixelFormatXYUV:
-        mpp_typ = MPP_PIXEL_YUV1P444;
-        break;
-    case kVIDEO_PixelFormatXRGB8888:
-        mpp_typ = MPP_PIXEL_ARGB;
-        break;
-    case kVIDEO_PixelFormatRGB565:
-        mpp_typ = MPP_PIXEL_RGB565;
-        break;
-    case kVIDEO_PixelFormatBGR888:
-        mpp_typ = MPP_PIXEL_BGR;
-        break;
-    case kVIDEO_PixelFormatRGB888:
-        mpp_typ = MPP_PIXEL_RGB;
-        break;
-    default:
-        mpp_typ = MPP_PIXEL_INVALID;
-        break;
-    }
-    return mpp_typ;
 }
 
 /* Computes the checksum of the buffer

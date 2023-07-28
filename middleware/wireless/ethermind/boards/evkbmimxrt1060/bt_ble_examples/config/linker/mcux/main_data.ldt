@@ -1,0 +1,11 @@
+	    *(.data*)
+	    . = ALIGN(4);
+	    PROVIDE(__start_NVM_TABLE = .);
+	    KEEP(*(.NVM_TABLE));
+	    PROVIDE(__stop_NVM_TABLE = .);
+	    . = ALIGN(4);
+	    PROVIDE(__start_NVM_ADAPTER_TABLE = .);
+	    KEEP(*(.NVM_ADAPTER_TABLE));
+	    PROVIDE(__stop_NVM_ADAPTER_TABLE = .);
+	    . = ALIGN(4);
+

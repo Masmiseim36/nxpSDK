@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="driver.ili9341.MIMXRT1015"/>
+    <definition extID="driver.ft6x06.MIMXRT1015"/>
+    <definition extID="platform.drivers.clock.MIMXRT1015"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1015"/>
+    <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1015"/>
+    <definition extID="platform.drivers.edma.MIMXRT1015"/>
+    <definition extID="platform.drivers.dmamux.MIMXRT1015"/>
+    <definition extID="platform.drivers.lpi2c.MIMXRT1015"/>
+    <definition extID="platform.drivers.lpi2c_edma.MIMXRT1015"/>
+    <definition extID="platform.drivers.lpspi_edma.MIMXRT1015"/>
+    <definition extID="platform.drivers.lpspi_cmsis.MIMXRT1015"/>
+    <definition extID="platform.drivers.lpi2c_cmsis.MIMXRT1015"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1015"/>
+    <definition extID="platform.drivers.common.MIMXRT1015"/>
+    <definition extID="middleware.lvgl.MIMXRT1015"/>
+    <definition extID="device.MIMXRT1015_CMSIS.MIMXRT1015"/>
+    <definition extID="utility.debug_console.MIMXRT1015"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1015"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1015"/>
+    <definition extID="component.serial_manager.MIMXRT1015"/>
+    <definition extID="component.lists.MIMXRT1015"/>
+    <definition extID="device.MIMXRT1015_startup.MIMXRT1015"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1015"/>
+    <definition extID="platform.utilities.assert.MIMXRT1015"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1015"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1015"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1015.MIMXRT1015"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1015"/>
+    <definition extID="CMSIS_Driver_Include.I2C.MIMXRT1015"/>
+    <definition extID="platform.drivers.lpspi.MIMXRT1015"/>
+    <definition extID="CMSIS_Driver_Include.SPI.MIMXRT1015"/>
+    <definition extID="RTE_Device.MIMXRT1015"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1015"/>
+    <definition extID="middleware.freertos-kernel.template.MIMXRT1015"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1015"/>
+    <definition extID="middleware.lvgl.template.MIMXRT1015"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1015"/>
+    <definition extID="device.MIMXRT1015_system.MIMXRT1015"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt1015_lvgl_guider" name="lvgl_guider" dependency="driver.ili9341.MIMXRT1015 driver.ft6x06.MIMXRT1015 platform.drivers.clock.MIMXRT1015 platform.drivers.lpuart.MIMXRT1015 platform.drivers.cache_armv7_m7.MIMXRT1015 platform.drivers.edma.MIMXRT1015 platform.drivers.dmamux.MIMXRT1015 platform.drivers.lpi2c.MIMXRT1015 platform.drivers.lpi2c_edma.MIMXRT1015 platform.drivers.lpspi_edma.MIMXRT1015 platform.drivers.lpspi_cmsis.MIMXRT1015 platform.drivers.lpi2c_cmsis.MIMXRT1015 middleware.freertos-kernel.heap_4.MIMXRT1015 platform.drivers.common.MIMXRT1015 middleware.lvgl.MIMXRT1015 device.MIMXRT1015_CMSIS.MIMXRT1015 utility.debug_console.MIMXRT1015 component.lpuart_adapter.MIMXRT1015 component.serial_manager_uart.MIMXRT1015 component.serial_manager.MIMXRT1015 component.lists.MIMXRT1015 device.MIMXRT1015_startup.MIMXRT1015 platform.drivers.iomuxc.MIMXRT1015 platform.utilities.assert.MIMXRT1015 platform.drivers.igpio.MIMXRT1015 platform.drivers.xip_device.MIMXRT1015 platform.drivers.xip_board.evkmimxrt1015.MIMXRT1015 platform.utilities.misc_utilities.MIMXRT1015 CMSIS_Driver_Include.I2C.MIMXRT1015 platform.drivers.lpspi.MIMXRT1015 CMSIS_Driver_Include.SPI.MIMXRT1015 RTE_Device.MIMXRT1015 middleware.freertos-kernel.MIMXRT1015 middleware.freertos-kernel.template.MIMXRT1015 middleware.freertos-kernel.extension.MIMXRT1015 middleware.lvgl.template.MIMXRT1015 CMSIS_Include_core_cm.MIMXRT1015 device.MIMXRT1015_system.MIMXRT1015" category="lvgl_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
+    </projects>
+    <memory>
+      <memoryBlock id="BOARD_FLASH_evkmimxrt1015" name="BOARD_FLASH" addr="60000000" size="01000000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="SRAM_OC_evkmimxrt1015" name="SRAM_OC" addr="20200000" size="00010000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_DTC_evkmimxrt1015" name="SRAM_DTC" addr="20000000" size="00008000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_ITC_evkmimxrt1015" name="SRAM_ITC" addr="00000000" size="00008000" type="RAM" access="RW"/>
+      <memoryBlock id="NCACHE_REGION_evkmimxrt1015" name="NCACHE_REGION" addr="20210000" size="00000000" type="RAM" access="RW"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1015DAF5A</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>LV_CONF_INCLUDE_SIMPLE=1</value>
+          <value>MCUXPRESSO_SDK</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>SDK_OS_FREE_RTOS</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
+          <value>MCUXPRESSO_SDK</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.cpp.hdrlib" type="enum">
+          <value>com.crt.advproject.cpp.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.cpp.specs" type="enum">
+          <value>com.crt.advproject.cpp.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.cpp.hdrlib" type="enum">
+          <value>com.crt.advproject.cpp.link.hdrlib.newlibnano.nohost</value>
+        </option>
+        <option id="com.crt.advproject.link.cpp.fpu" type="enum">
+          <value>com.crt.advproject.link.cpp.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.cpp.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections.cpp" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack.cpp" type="string">
+          <value>&amp;Heap:SRAM_DTC;Post Data;Default&amp;Stack:SRAM_DTC;End;Default</value>
+        </option>
+        <option id="gnu.cpp.link.option.other" type="stringList">
+          <value>-no-warn-rwx-segments</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -Wno-format</value>
+        </option>
+        <option id="com.crt.advproject.cpp.fpu" type="enum">
+          <value>com.crt.advproject.cpp.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.cpp.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnupp11</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.other.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -fno-rtti -fno-exceptions -Wno-format</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkmimxrt1015">
+            <driverBinary path="../../../../devices/MIMXRT1015/mcuxpresso" project_relative_path="binary" type="binary">
+              <files mask="MIMXRT1015_SFDP_QSPI.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path=".." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="generated" project_relative_path="generated" type="c_include"/>
+      <include_path path="custom" project_relative_path="custom" type="c_include"/>
+      <include_path path="generated/guider_customer_fonts" project_relative_path="generated/guider_customer_fonts" type="c_include"/>
+      <include_path path="generated/guider_fonts" project_relative_path="generated/guider_fonts" type="c_include"/>
+      <include_path path=".." project_relative_path="evkmimxrt1015/lvgl_examples/lvgl_guider" type="c_include"/>
+      <include_path path=".." project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="asm_include"/>
+    </include_paths>
+    <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="lvgl_guider.ewd"/>
+      <files mask="lvgl_guider.ewp"/>
+      <files mask="lvgl_guider.eww"/>
+    </source>
+    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="lvgl_guider.uvprojx"/>
+      <files mask="lvgl_guider.uvoptx"/>
+      <files mask="lvgl_guider.uvmpw"/>
+    </source>
+    <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_flexspi_nor_debug.bat"/>
+      <files mask="build_flexspi_nor_debug.sh"/>
+      <files mask="build_flexspi_nor_release.bat"/>
+      <files mask="build_flexspi_nor_release.sh"/>
+    </source>
+    <source path="../../../../devices/MIMXRT1015" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="all_lib_device.cmake"/>
+    </source>
+    <source path=".." project_relative_path="board" type="c_include" config="true">
+      <files mask="RTE_Device.h"/>
+    </source>
+    <source path="iar" project_relative_path="MIMXRT1015/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1015xxxxx_flexspi_nor_ocram.icf"/>
+    </source>
+    <source path="mdk" project_relative_path="MIMXRT1015/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1015xxxxx_flexspi_nor_ocram.scf"/>
+    </source>
+    <source path="armgcc" project_relative_path="MIMXRT1015/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1015xxxxx_flexspi_nor_ocram.ld"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="lvgl_guider.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="lv_conf.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="generated/images" project_relative_path="generated/images" type="src">
+      <files mask="images.c"/>
+    </source>
+    <source path="generated/guider_fonts" project_relative_path="generated/guider_fonts" type="c_include">
+      <files mask="guider_fonts.h"/>
+    </source>
+    <source path="generated/guider_customer_fonts" project_relative_path="generated/guider_customer_fonts" type="c_include">
+      <files mask="guider_customer_fonts.h"/>
+    </source>
+    <source path="generated" project_relative_path="generated" type="src">
+      <files mask="gui_guider.c"/>
+      <files mask="events_init.c"/>
+    </source>
+    <source path="generated" project_relative_path="generated" type="c_include">
+      <files mask="gui_guider.h"/>
+      <files mask="events_init.h"/>
+    </source>
+    <source path="custom" project_relative_path="custom" type="src">
+      <files mask="custom.c"/>
+    </source>
+    <source path="custom" project_relative_path="custom" type="c_include">
+      <files mask="custom.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="c_include">
+      <files mask="lvgl_freertos.h"/>
+      <files mask="lvgl_demo_utils.h"/>
+    </source>
+    <source path=".." project_relative_path="source" type="src">
+      <files mask="lvgl_freertos.c"/>
+      <files mask="lvgl_demo_utils.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include" config="true">
+      <files mask="FreeRTOSConfig.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include" config="true">
+      <files mask="lvgl_support.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src" config="true">
+      <files mask="lvgl_support.c"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="mdk" project_relative_path="evkmimxrt1015" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1015_flexspi_nor.ini"/>
+    </source>
+  </example>
+</ksdk:examples>

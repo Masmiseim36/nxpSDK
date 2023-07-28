@@ -69,13 +69,6 @@ API_RESULT appl_le_l2cap_co_send_data
                /* IN */ UINT16          buffer_len,
                /* IN */ UINT32          count
            );
-API_RESULT appl_l2ca_channel_data_write
-           (
-                /* IN */ UINT16             cid,
-                /* IN */ UCHAR *            buffer,
-                /* IN */ UINT16             buffer_len
-            );
-
 /* File Send and Receive related */
 #ifdef APPL_L2CAP_SUPPORT_FILE_OP
 void appl_l2cap_cbfc_recv_file(void);

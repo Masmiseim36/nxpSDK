@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1042xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x1000000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x1000000" --diag-warning=6242 --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -475,6 +475,16 @@
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
             </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -571,26 +581,6 @@
               <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_lpuart.h</FilePath>
@@ -609,6 +599,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1211,7 +1221,7 @@
             <ScatterFile>MIMXRT1042xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x1000000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x1000000" --diag-warning=6242 --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1321,6 +1331,16 @@
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
             </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1417,26 +1437,6 @@
               <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_lpuart.h</FilePath>
@@ -1455,6 +1455,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1042/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>

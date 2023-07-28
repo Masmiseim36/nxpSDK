@@ -1379,9 +1379,11 @@ int bt_setup_public_id_addr(void)
 	bt_read_identity_root(ir);
 
 	if (!IS_ENABLED(CONFIG_BT_PRIVACY_RANDOMIZE_IR)) {
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 		if (!bt_smp_irk_get(ir, ir_irk)) {
 			irk = ir_irk;
 		}
+#endif
 	}
 #endif /* defined(CONFIG_BT_PRIVACY) */
 
@@ -1470,9 +1472,11 @@ int bt_setup_random_id_addr(void)
 				uint8_t ir_irk[16];
 
 				if (!IS_ENABLED(CONFIG_BT_PRIVACY_RANDOMIZE_IR)) {
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 					if (!bt_smp_irk_get(addrs[i].ir, ir_irk)) {
 						irk = ir_irk;
 					}
+#endif
 				}
 #endif /* CONFIG_BT_PRIVACY */
 
@@ -1877,7 +1881,7 @@ int bt_le_oob_set_legacy_tk(struct bt_conn *conn, const uint8_t *tk)
 }
 #endif /* !defined(CONFIG_BT_SMP_SC_PAIR_ONLY) */
 
-#if !(defined(CONFIG_BT_SMP_SC_PAIR_ONLY) && (CONFIG_BT_SMP_SC_PAIR_ONLY > 0U))
+#if !(defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY > 0U))
 int bt_le_oob_set_sc_data(struct bt_conn *conn,
 			  const struct bt_le_oob_sc_data *oobd_local,
 			  const struct bt_le_oob_sc_data *oobd_remote)

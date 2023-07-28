@@ -70,6 +70,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCPU_MIMXRT1042XJM5B \
     -DUSB_STACK_BM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -93,6 +94,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCPU_MIMXRT1042XJM5B \
     -DUSB_STACK_BM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -117,6 +119,7 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DCPU_MIMXRT1042XJM5B \
     -DUSB_STACK_BM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -142,6 +145,7 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DCPU_MIMXRT1042XJM5B \
     -DUSB_STACK_BM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -166,6 +170,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCPU_MIMXRT1042XJM5B \
     -DUSB_STACK_BM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -191,6 +196,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCPU_MIMXRT1042XJM5B \
     -DUSB_STACK_BM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \

@@ -117,9 +117,6 @@ void appl_tis_init(void)
 
     APPL_TRC(
     "[TIS]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for Current Time */
@@ -132,10 +129,10 @@ void appl_tis_init(void)
 #endif /* GATT_DB_DYNAMIC */
 
     /* Register TIS GATT DB Handler with PL Extension */
-    gatt_db_init_pl(gatt_db_tis_gatt_char_handler);
+    (BT_IGNORE_RETURN_VALUE)gatt_db_init_pl(gatt_db_tis_gatt_char_handler);
 
 #ifdef BT_DUAL_MODE
-    appl_set_gatt_service_in_sdp_record
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_TIS_CUR_TIME_INST,
         DB_RECORD_CTS

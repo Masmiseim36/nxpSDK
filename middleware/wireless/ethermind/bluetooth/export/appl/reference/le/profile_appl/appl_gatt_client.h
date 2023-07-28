@@ -12,6 +12,7 @@
 
 #ifndef _H_APPL_GATT_CLIENT_
 #define _H_APPL_GATT_CLIENT_
+
 /* --------------------------------------------- Header File Inclusion */
 #include "BT_att_api.h"
 #include "BT_gatt_db_api.h"
@@ -54,6 +55,10 @@
 
 #define APPL_NOTIFY_EXECUTE_WRITE_RSP_TO_PROFILE(a)       \
         a##_notify_execute_write_rsp()
+
+#define APPL_NOTIFY_ADV_REPORT(a,at,bd,dt,dl)             \
+        a##_notify_adv_report((at), (bd), (dt), (dl))
+
 /* --------------------------------------------- Internal Functions */
 
 /* --------------------------------------------- API Declarations */
@@ -69,6 +74,13 @@ void appl_parse_indication_data(UINT16 handle, UCHAR * data, UINT16 datalen);
 void appl_parse_read_data(UCHAR * data, UINT16 datalen);
 void appl_notify_write_rsp(void);
 void appl_notify_execute_write_rsp(void);
+void appl_notify_adv_report
+     (
+         UCHAR          adv_type,
+         BT_DEVICE_ADDR * bd,
+         UCHAR          * data,
+         UINT16         data_len
+     );
 
 #ifdef APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION
 void appl_set_gatt_client_evt_trc(UCHAR flag);
@@ -114,6 +126,17 @@ void lnc_profile_operations (void);
 #ifdef CPMC
 void cpmc_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT16 size);
 void cpmc_profile_operations (void);
+void cpmc_parse_indication_data (UINT16 handle, UCHAR  * data, UINT16 datalen);
+void cpmc_notify_write_rsp(void);
+void cpmc_notify_gatt_disconn(void);
+void cpmc_notify_gatt_conn(void);
+void cpmc_notify_adv_report
+     (
+         UCHAR          adv_type,
+         BT_DEVICE_ADDR * bd,
+         UCHAR          * data,
+         UINT16         data_len
+     );
 #endif /* CPMC */
 
 #ifdef WSC
@@ -146,6 +169,35 @@ void pxm_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT1
 void pxm_profile_operations (void);
 void pxm_parse_notification_data(ATT_ATTR_HANDLE handle, UCHAR * data, UINT16 datalen);
 void pxm_parse_read_data (UCHAR * data, UINT16 datalen);
+API_RESULT pxm_discover_service
+           (
+               /* IN */ ATT_HANDLE * att_handle,
+               /* IN */ ATT_UUID16 s_uuid
+           );
+API_RESULT pxm_rd_attr
+           (
+               /* IN */ ATT_HANDLE * att_handle,
+               /* IN */ UINT16     attr_hndl
+           );
+API_RESULT pxm_wr_alert_lvl
+           (
+               /* IN */ ATT_HANDLE * att_handle,
+               /* IN */ UINT16     attr_hndl,
+               /* IN */ UCHAR      alert_lvl,
+               /* IN */ UCHAR      rsp
+           );
+API_RESULT pxm_config_tps
+           (
+               /* IN */ ATT_HANDLE * att_handle,
+               /* IN */ UINT16     attr_hndl,
+               /* IN */ UCHAR      enable
+           );
+API_RESULT pxm_get_rssi_complete
+           (
+               /* IN */ UCHAR  status,
+               /* IN */ UINT16 conn_handle,
+               /* IN */ UCHAR  rssi
+           );
 #endif /* PXM */
 
 #ifdef FML
@@ -159,6 +211,7 @@ void hidh_notify_gatt_disconn (void);
 void hidh_notify_gatt_servdata (GATT_SERVICE_PARAM * service, UINT16 size);
 void hidh_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT16 size);
 void hidh_profile_operations (void);
+void hidh_parse_read_data (UCHAR * data, UINT16 datalen);
 #endif /* HIDH */
 
 #ifdef ANP

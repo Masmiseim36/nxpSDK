@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: DCP AES blocking driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,101 +98,330 @@ $(document).ready(function(){initNavTree('a00274.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C CMSIS Driver<div class="ingroups"><a class="el" href="a00272.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">DCP AES blocking driver<div class="ingroups"><a class="el" href="a00020.html">DCP: Data Co-Processor</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the LPI2C Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<p>The LPI2C CMSIS driver includes transactional APIs.</p>
-<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
-<h1><a class="anchor" id="LPI2CCMSISDriver"></a>
-LPI2C CMSIS Driver</h1>
-<h2><a class="anchor" id="LPI2CMasterOpsTransIRQ"></a>
-Master Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"><span class="comment">/*Init I2C0*/</span></div>
-<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transmit*/</span></div>
-<div class="line">Driver_I2C0.MasterTransmit(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPI2CMasterOpsTransDMA"></a>
-Master Operation in DMA transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* DMAMux init and EDMA init. */</span></div>
-<div class="line"><a class="code" href="a00266.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(EXAMPLE_LPI2C_DMAMUX_BASEADDR);</div>
-<div class="line"><a class="code" href="a00021.html#a00368">edma_config_t</a> edmaConfig;</div>
-<div class="line"><a class="code" href="a00021.html#ga9851dc5addd6a1fc557bfdb625aa5c19">EDMA_GetDefaultConfig</a>(&amp;edmaConfig);</div>
-<div class="line"><a class="code" href="a00021.html#gaf7588eb4b54499f0f55c698bd98bc1bb">EDMA_Init</a>(EXAMPLE_LPI2C_DMA_BASEADDR, &amp;edmaConfig);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C0*/</span></div>
-<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">Driver_I2C0.MasterReceive(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPI2CSlaveOpsTransIRQ"></a>
-Slave Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_SlaveSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C1*/</span></div>
-<div class="line">Driver_I2C1.Initialize(I2C_SlaveSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C1.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config slave addr*/</span></div>
-<div class="line">Driver_I2C1.Control(ARM_I2C_OWN_ADDRESS, I2C_MASTER_SLAVE_ADDR);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">Driver_I2C1.SlaveReceive(g_slave_buff, I2C_DATA_LENGTH);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --> </div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>This section describes the programming interface of the DCP AES blocking driver. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga79352c57e1d42e0798b4d46732ddd0a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga79352c57e1d42e0798b4d46732ddd0a6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#ga79352c57e1d42e0798b4d46732ddd0a6">DCP_AES_BLOCK_SIZE</a>&#160;&#160;&#160;16</td></tr>
+<tr class="memdesc:ga79352c57e1d42e0798b4d46732ddd0a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES block size in bytes. <br/></td></tr>
+<tr class="separator:ga79352c57e1d42e0798b4d46732ddd0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga15f23983b967199537cda25d70761d82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#ga15f23983b967199537cda25d70761d82">DCP_AES_SetKey</a> (DCP_Type *base, <a class="el" href="a00020.html#a00380">dcp_handle_t</a> *handle, const uint8_t *key, size_t keySize)</td></tr>
+<tr class="memdesc:ga15f23983b967199537cda25d70761d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set AES key to <a class="el" href="a00020.html#a00380" title="Specify DCP&#39;s key resource and DCP channel. ">dcp_handle_t</a> struct and optionally to DCP.  <a href="#ga15f23983b967199537cda25d70761d82">More...</a><br/></td></tr>
+<tr class="separator:ga15f23983b967199537cda25d70761d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24ec493fe8f07ba4489e2f798531862d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#ga24ec493fe8f07ba4489e2f798531862d">DCP_AES_EncryptEcb</a> (DCP_Type *base, <a class="el" href="a00020.html#a00380">dcp_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size)</td></tr>
+<tr class="memdesc:ga24ec493fe8f07ba4489e2f798531862d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES on one or multiple 128-bit block(s).  <a href="#ga24ec493fe8f07ba4489e2f798531862d">More...</a><br/></td></tr>
+<tr class="separator:ga24ec493fe8f07ba4489e2f798531862d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad92e84b3cfd032400487113232f18bcf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#gad92e84b3cfd032400487113232f18bcf">DCP_AES_DecryptEcb</a> (DCP_Type *base, <a class="el" href="a00020.html#a00380">dcp_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size)</td></tr>
+<tr class="memdesc:gad92e84b3cfd032400487113232f18bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES on one or multiple 128-bit block(s).  <a href="#gad92e84b3cfd032400487113232f18bcf">More...</a><br/></td></tr>
+<tr class="separator:gad92e84b3cfd032400487113232f18bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac02bf9fce15f0b01521df1c33473a7fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#gac02bf9fce15f0b01521df1c33473a7fe">DCP_AES_EncryptCbc</a> (DCP_Type *base, <a class="el" href="a00020.html#a00380">dcp_handle_t</a> *handle, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[16])</td></tr>
+<tr class="memdesc:gac02bf9fce15f0b01521df1c33473a7fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using CBC block mode.  <a href="#gac02bf9fce15f0b01521df1c33473a7fe">More...</a><br/></td></tr>
+<tr class="separator:gac02bf9fce15f0b01521df1c33473a7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fb597b20b09424edd91fa83d684d203"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#ga1fb597b20b09424edd91fa83d684d203">DCP_AES_DecryptCbc</a> (DCP_Type *base, <a class="el" href="a00020.html#a00380">dcp_handle_t</a> *handle, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[16])</td></tr>
+<tr class="memdesc:ga1fb597b20b09424edd91fa83d684d203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using CBC block mode.  <a href="#ga1fb597b20b09424edd91fa83d684d203">More...</a><br/></td></tr>
+<tr class="separator:ga1fb597b20b09424edd91fa83d684d203"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga15f23983b967199537cda25d70761d82"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_SetKey </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00380">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>keySize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the AES key for encryption/decryption with the <a class="el" href="a00020.html#a00380" title="Specify DCP&#39;s key resource and DCP channel. ">dcp_handle_t</a> structure. The <a class="el" href="a00020.html#a00380" title="Specify DCP&#39;s key resource and DCP channel. ">dcp_handle_t</a> input argument specifies keySlot. If the keySlot is kDCP_OtpKey, the function will check the OTP_KEY_READY bit and will return it's ready to use status. For other keySlot selections, the function will copy and hold the key in <a class="el" href="a00020.html#a00380" title="Specify DCP&#39;s key resource and DCP channel. ">dcp_handle_t</a> struct. If the keySlot is one of the four DCP SRAM-based keys (one of kDCP_KeySlot0, kDCP_KeySlot1, kDCP_KeySlot2, kDCP_KeySlot3), this function will also load the supplied key to the specified keySlot in DCP.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DCP peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Handle used for the request. </td></tr>
+    <tr><td class="paramname">key</td><td>0-mod-4 aligned pointer to AES key. </td></tr>
+    <tr><td class="paramname">keySize</td><td>AES key size in bytes. Shall equal 16. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status from set key operation </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga24ec493fe8f07ba4489e2f798531862d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_EncryptEcb </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00380">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts AES. The source plaintext and destination ciphertext can overlap in system memory.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad92e84b3cfd032400487113232f18bcf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_DecryptEcb </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00380">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts AES. The source ciphertext and destination plaintext can overlap in system memory.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input plain text to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output cipher text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from decrypt operation </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac02bf9fce15f0b01521df1c33473a7fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_EncryptCbc </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00380">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[16]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts AES using CBC block mode. The source plaintext and destination ciphertext can overlap in system memory.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from encrypt operation </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1fb597b20b09424edd91fa83d684d203"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_DecryptCbc </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00380">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[16]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts AES using CBC block mode. The source ciphertext and destination plaintext can overlap in system memory.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from decrypt operation </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

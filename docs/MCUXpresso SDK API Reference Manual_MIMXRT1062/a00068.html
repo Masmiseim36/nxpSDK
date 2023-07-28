@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Serial Manager</title>
+<title>MCUXpresso SDK API Reference Manual: USDHC HOST adapter Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,575 +99,457 @@ $(document).ready(function(){initNavTree('a00068.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Manager</div>  </div>
+<div class="title">USDHC HOST adapter Driver<div class="ingroups"><a class="el" href="a00303.html">SDMMC HOST Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This chapter describes the programming interface of the serial manager component.</p>
-<p>The serial manager component provides a series of APIs to operate different serial port types. The port types it supports are UART, USB CDC and SWO. </p>
+<p>The USDHC host adapter driver provide adapter for blocking/non_blocking mode.</p>
+<h1>Cache maintain capability</h1>
+<p>To maintain data integrity during DMA operations on the platform that has cache, host driver provide a cache maintain functionality by set: host.enableCacheControl = kSDMMCHOST_CacheControlRWBuffer This is used for only when the low level driver cache maintain functionality is disabled. It is suggest that the address of buffer used for read/write is align with cache line size. </p>
+<h1>Cache line alignment maintain capability</h1>
+<p>when application submit a transfer request that the data buffer address is not align with cache line size, the potential data loss may happen during driver maintain the data cache, to aovid such issue happens, sdmmc usdhc host driver provides support on convert the unalign data transfer into align data transfer, if application would like to use the feature, please enable this functionality by define below macro firstly, #define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 1 And then call SDMMCHOST_InstallCacheAlignBuffer to install a cache line size align buffer, please note the installed buffer size must not small than 2 * cache line size. Please note that this functionality is support by the non blocking adapter only. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00069"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html">Serial Port SWO</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00070"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html">Serial Port USB</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00298"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00298.html">Serial Port Uart</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00508"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00508">serial_manager_config_t</a></td></tr>
-<tr class="memdesc:a00508"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager config structure  <a href="a00068.html#a00508">More...</a><br/></td></tr>
-<tr class="separator:a00508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00507"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00507">serial_manager_callback_message_t</a></td></tr>
-<tr class="memdesc:a00507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback message structure.  <a href="a00068.html#a00507">More...</a><br/></td></tr>
-<tr class="separator:a00507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00512"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00512">sdmmchost_t</a></td></tr>
+<tr class="memdesc:a00512"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host handler  <a href="a00068.html#a00512">More...</a><br/></td></tr>
+<tr class="separator:a00512"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gabf238ccb327fd5316f765109d1235ae3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabf238ccb327fd5316f765109d1235ae3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:gabf238ccb327fd5316f765109d1235ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable serial manager non-blocking mode (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:gabf238ccb327fd5316f765109d1235ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71fc96165b245c238b1f5c821ce9ebf8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga71fc96165b245c238b1f5c821ce9ebf8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga71fc96165b245c238b1f5c821ce9ebf8">SERIAL_MANAGER_RING_BUFFER_FLOWCONTROL</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga71fc96165b245c238b1f5c821ce9ebf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or ring buffer flow control (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:ga71fc96165b245c238b1f5c821ce9ebf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58308509c0f8d97f157a3f9eb5d72ce2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga58308509c0f8d97f157a3f9eb5d72ce2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga58308509c0f8d97f157a3f9eb5d72ce2">SERIAL_PORT_TYPE_UART</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga58308509c0f8d97f157a3f9eb5d72ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable uart port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:ga58308509c0f8d97f157a3f9eb5d72ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43b6bea88dad21ddfd0a9eeba15500fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga43b6bea88dad21ddfd0a9eeba15500fe"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga43b6bea88dad21ddfd0a9eeba15500fe">SERIAL_PORT_TYPE_UART_DMA</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga43b6bea88dad21ddfd0a9eeba15500fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable uart dma port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:ga43b6bea88dad21ddfd0a9eeba15500fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf2e3166c5915cc3c3669d158da08cd51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf2e3166c5915cc3c3669d158da08cd51"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaf2e3166c5915cc3c3669d158da08cd51">SERIAL_PORT_TYPE_USBCDC</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:gaf2e3166c5915cc3c3669d158da08cd51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable USB CDC port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:gaf2e3166c5915cc3c3669d158da08cd51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c73031b5ccec048199e131e3b4eaafc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7c73031b5ccec048199e131e3b4eaafc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga7c73031b5ccec048199e131e3b4eaafc">SERIAL_PORT_TYPE_SWO</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga7c73031b5ccec048199e131e3b4eaafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable SWO port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:ga7c73031b5ccec048199e131e3b4eaafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95320da6bae985e8917dae79acad6857"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga95320da6bae985e8917dae79acad6857"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga95320da6bae985e8917dae79acad6857">SERIAL_PORT_TYPE_VIRTUAL</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga95320da6bae985e8917dae79acad6857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable USB CDC virtual port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:ga95320da6bae985e8917dae79acad6857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8fb1fba8f9d1cea85a3203555fdb270"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf8fb1fba8f9d1cea85a3203555fdb270"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaf8fb1fba8f9d1cea85a3203555fdb270">SERIAL_PORT_TYPE_RPMSG</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:gaf8fb1fba8f9d1cea85a3203555fdb270"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable rPMSG port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:gaf8fb1fba8f9d1cea85a3203555fdb270"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0930f57cce1c63e56b8ce280e7423304"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0930f57cce1c63e56b8ce280e7423304"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga0930f57cce1c63e56b8ce280e7423304">SERIAL_PORT_TYPE_SPI_MASTER</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga0930f57cce1c63e56b8ce280e7423304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable SPI Master port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:ga0930f57cce1c63e56b8ce280e7423304"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78917d72251361c814cc6c09177fbbf4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga78917d72251361c814cc6c09177fbbf4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga78917d72251361c814cc6c09177fbbf4">SERIAL_PORT_TYPE_SPI_SLAVE</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga78917d72251361c814cc6c09177fbbf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable SPI Slave port (1 - enable, 0 - disable) <br/></td></tr>
-<tr class="separator:ga78917d72251361c814cc6c09177fbbf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab26fb3c93b19327a8e346d1fd762c720"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab26fb3c93b19327a8e346d1fd762c720"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gab26fb3c93b19327a8e346d1fd762c720">SERIAL_MANAGER_TASK_HANDLE_TX</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:gab26fb3c93b19327a8e346d1fd762c720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable SerialManager_Task() handle TX to prevent recursive calling. <br/></td></tr>
-<tr class="separator:gab26fb3c93b19327a8e346d1fd762c720"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaefd7b994ea13ed385804afbe3268db7c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaefd7b994ea13ed385804afbe3268db7c">SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE</a>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:gaefd7b994ea13ed385804afbe3268db7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default delay time in ms used by SerialManager_WriteTimeDelay().  <a href="#gaefd7b994ea13ed385804afbe3268db7c">More...</a><br/></td></tr>
-<tr class="separator:gaefd7b994ea13ed385804afbe3268db7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e349416c81a583a8a98e99683624929"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga5e349416c81a583a8a98e99683624929">SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE</a>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:ga5e349416c81a583a8a98e99683624929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default delay time in ms used by SerialManager_ReadTimeDelay().  <a href="#ga5e349416c81a583a8a98e99683624929">More...</a><br/></td></tr>
-<tr class="separator:ga5e349416c81a583a8a98e99683624929"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb98bd8be88e9a526f1e517bc6215a8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacb98bd8be88e9a526f1e517bc6215a8d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gacb98bd8be88e9a526f1e517bc6215a8d">SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:gacb98bd8be88e9a526f1e517bc6215a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable SerialManager_Task() handle RX data available notify. <br/></td></tr>
-<tr class="separator:gacb98bd8be88e9a526f1e517bc6215a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac278be51c3508495c1be1a4cff566f3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac278be51c3508495c1be1a4cff566f3f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a>&#160;&#160;&#160;(4U)</td></tr>
-<tr class="memdesc:gac278be51c3508495c1be1a4cff566f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set serial manager write handle size. <br/></td></tr>
-<tr class="separator:gac278be51c3508495c1be1a4cff566f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae959bcddd181966d6c8bf4cbf140fea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaae959bcddd181966d6c8bf4cbf140fea">SERIAL_MANAGER_USE_COMMON_TASK</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:gaae959bcddd181966d6c8bf4cbf140fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">SERIAL_PORT_UART_HANDLE_SIZE/SERIAL_PORT_USB_CDC_HANDLE_SIZE + serial manager dedicated size.  <a href="#gaae959bcddd181966d6c8bf4cbf140fea">More...</a><br/></td></tr>
-<tr class="separator:gaae959bcddd181966d6c8bf4cbf140fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc4aa7ae83c31b66e437d7fd264aaebc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gabc4aa7ae83c31b66e437d7fd264aaebc">SERIAL_MANAGER_HANDLE_SIZE</a>&#160;&#160;&#160;(SERIAL_MANAGER_HANDLE_SIZE_TEMP + 12U)</td></tr>
-<tr class="memdesc:gabc4aa7ae83c31b66e437d7fd264aaebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of serial manager handle size.  <a href="#gabc4aa7ae83c31b66e437d7fd264aaebc">More...</a><br/></td></tr>
-<tr class="separator:gabc4aa7ae83c31b66e437d7fd264aaebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad145f5877828fd4ec335f09b6790c673"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00068.html#gabc4aa7ae83c31b66e437d7fd264aaebc">SERIAL_MANAGER_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
-<tr class="memdesc:gad145f5877828fd4ec335f09b6790c673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the serial manager handle.  <a href="#gad145f5877828fd4ec335f09b6790c673">More...</a><br/></td></tr>
-<tr class="separator:gad145f5877828fd4ec335f09b6790c673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33eef6cd25374cbd49b00d2985b8be65"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga33eef6cd25374cbd49b00d2985b8be65">SERIAL_MANAGER_WRITE_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00068.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
-<tr class="memdesc:ga33eef6cd25374cbd49b00d2985b8be65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the serial manager write handle.  <a href="#ga33eef6cd25374cbd49b00d2985b8be65">More...</a><br/></td></tr>
-<tr class="separator:ga33eef6cd25374cbd49b00d2985b8be65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9206a431c26d9c557a0e32ab4d648e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gae9206a431c26d9c557a0e32ab4d648e8">SERIAL_MANAGER_READ_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((SERIAL_MANAGER_READ_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
-<tr class="memdesc:gae9206a431c26d9c557a0e32ab4d648e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the serial manager read handle.  <a href="#gae9206a431c26d9c557a0e32ab4d648e8">More...</a><br/></td></tr>
-<tr class="separator:gae9206a431c26d9c557a0e32ab4d648e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9bffc03255c48dae79cc2702f0980269"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9bffc03255c48dae79cc2702f0980269">SERIAL_MANAGER_TASK_PRIORITY</a>&#160;&#160;&#160;(2U)</td></tr>
-<tr class="memdesc:ga9bffc03255c48dae79cc2702f0980269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set serial manager task priority.  <a href="#ga9bffc03255c48dae79cc2702f0980269">More...</a><br/></td></tr>
-<tr class="separator:ga9bffc03255c48dae79cc2702f0980269"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga460c59805f2a8ec37e008b5a285e1760"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga460c59805f2a8ec37e008b5a285e1760">SERIAL_MANAGER_TASK_STACK_SIZE</a>&#160;&#160;&#160;(1000U)</td></tr>
-<tr class="memdesc:ga460c59805f2a8ec37e008b5a285e1760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set serial manager task stack size.  <a href="#ga460c59805f2a8ec37e008b5a285e1760">More...</a><br/></td></tr>
-<tr class="separator:ga460c59805f2a8ec37e008b5a285e1760"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7f416230cd008bf4453aca9e4ae6623"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gab7f416230cd008bf4453aca9e4ae6623">FSL_SDMMC_HOST_ADAPTER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 6U, 3U)) /*2.6.3*/</td></tr>
+<tr class="memdesc:gab7f416230cd008bf4453aca9e4ae6623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware adapter version.  <a href="#gab7f416230cd008bf4453aca9e4ae6623">More...</a><br/></td></tr>
+<tr class="separator:gab7f416230cd008bf4453aca9e4ae6623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51ef85092e4c145fd0c3a422df20aa93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga51ef85092e4c145fd0c3a422df20aa93"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga51ef85092e4c145fd0c3a422df20aa93">SDMMCHOST_SUPPORT_HIGH_SPEED</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:ga51ef85092e4c145fd0c3a422df20aa93"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host misc capability <br/></td></tr>
+<tr class="separator:ga51ef85092e4c145fd0c3a422df20aa93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00cdd080cd51a85324c018f15ad58498"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga00cdd080cd51a85324c018f15ad58498"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga00cdd080cd51a85324c018f15ad58498">SDMMCHOST_SUPPORT_DDR50</a>&#160;&#160;&#160;(SDMMCHOST_SUPPORT_DDR_MODE)</td></tr>
+<tr class="memdesc:ga00cdd080cd51a85324c018f15ad58498"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host sdcard DDR50 mode capability <br/></td></tr>
+<tr class="separator:ga00cdd080cd51a85324c018f15ad58498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89d8638c2e97507e62d5e5418740f5f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga89d8638c2e97507e62d5e5418740f5f7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga89d8638c2e97507e62d5e5418740f5f7">SDMMCHOST_SUPPORT_SDR104</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga89d8638c2e97507e62d5e5418740f5f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host sdcard SDR50 mode capability <br/></td></tr>
+<tr class="separator:ga89d8638c2e97507e62d5e5418740f5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab759ae28805697beea46fd107a14ebcb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab759ae28805697beea46fd107a14ebcb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gab759ae28805697beea46fd107a14ebcb">SDMMCHOST_SUPPORT_HS200</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:gab759ae28805697beea46fd107a14ebcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host sdcard SDR104/mmccard HS200 mode capability <br/></td></tr>
+<tr class="separator:gab759ae28805697beea46fd107a14ebcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad70b40d70fe9382f3b2d4d951c765b4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad70b40d70fe9382f3b2d4d951c765b4c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gad70b40d70fe9382f3b2d4d951c765b4c">SDMMCHOST_SUPPORT_HS400</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:gad70b40d70fe9382f3b2d4d951c765b4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host mmccard HS400 mode capability <br/></td></tr>
+<tr class="separator:gad70b40d70fe9382f3b2d4d951c765b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27fe2eca22de5770ae743c1e07bc1084"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga27fe2eca22de5770ae743c1e07bc1084"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga27fe2eca22de5770ae743c1e07bc1084">SDMMCHOST_INSTANCE_SUPPORT_8_BIT_WIDTH</a>(host)&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga27fe2eca22de5770ae743c1e07bc1084"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host instance capability <br/></td></tr>
+<tr class="separator:ga27fe2eca22de5770ae743c1e07bc1084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga731d8662df92959d2bb4c45eebe9580f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga731d8662df92959d2bb4c45eebe9580f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga731d8662df92959d2bb4c45eebe9580f">SDMMCHOST_DATA3_DETECT_CARD_DELAY</a>&#160;&#160;&#160;(10U)</td></tr>
+<tr class="memdesc:ga731d8662df92959d2bb4c45eebe9580f"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmchost delay for DAT3 detect card <br/></td></tr>
+<tr class="separator:ga731d8662df92959d2bb4c45eebe9580f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9910e59364c563ce607bcd4b4b408fbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9910e59364c563ce607bcd4b4b408fbb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9910e59364c563ce607bcd4b4b408fbb">SDMMCHOST_DMA_DESCRIPTOR_BUFFER_ALIGN_SIZE</a>&#160;&#160;&#160;(4U)</td></tr>
+<tr class="memdesc:ga9910e59364c563ce607bcd4b4b408fbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDMMC host dma descriptor buffer address align size. <br/></td></tr>
+<tr class="separator:ga9910e59364c563ce607bcd4b4b408fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b005d6c35ae08d925db709007d29970"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga6b005d6c35ae08d925db709007d29970">SDMMCHOST_STANDARD_TUNING_START</a>&#160;&#160;&#160;(10U)</td></tr>
+<tr class="memdesc:ga6b005d6c35ae08d925db709007d29970"><td class="mdescLeft">&#160;</td><td class="mdescRight">tuning configuration  <a href="#ga6b005d6c35ae08d925db709007d29970">More...</a><br/></td></tr>
+<tr class="separator:ga6b005d6c35ae08d925db709007d29970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13fa044c64b48b9c2d59503cb4461d2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga13fa044c64b48b9c2d59503cb4461d2c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga13fa044c64b48b9c2d59503cb4461d2c">SDMMCHOST_TUINIG_STEP</a>&#160;&#160;&#160;(2U)</td></tr>
+<tr class="memdesc:ga13fa044c64b48b9c2d59503cb4461d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">standard tuning stBep <br/></td></tr>
+<tr class="separator:ga13fa044c64b48b9c2d59503cb4461d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gaba1cc3859c4f829ee0bc6091184d4b08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaba1cc3859c4f829ee0bc6091184d4b08"></a>
-typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a></td></tr>
-<tr class="memdesc:gaba1cc3859c4f829ee0bc6091184d4b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle of the serial manager module. <br/></td></tr>
-<tr class="separator:gaba1cc3859c4f829ee0bc6091184d4b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8319b6189019680778f230eb319530e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac8319b6189019680778f230eb319530e"></a>
-typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a></td></tr>
-<tr class="memdesc:gac8319b6189019680778f230eb319530e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The write handle of the serial manager module. <br/></td></tr>
-<tr class="separator:gac8319b6189019680778f230eb319530e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8bfec9c49e40728806d775fdb4bbf78e"></a>
-typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a></td></tr>
-<tr class="memdesc:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The read handle of the serial manager module. <br/></td></tr>
-<tr class="separator:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe6a6263bb1570ea715938b2420af773"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabe6a6263bb1570ea715938b2420af773"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> )(void *callbackParam, <a class="el" href="a00068.html#a00507">serial_manager_callback_message_t</a> *message, <a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> status)</td></tr>
-<tr class="memdesc:gabe6a6263bb1570ea715938b2420af773"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager callback function <br/></td></tr>
-<tr class="separator:gabe6a6263bb1570ea715938b2420af773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga856d80a20772bd9d9ad950b8ec852635"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga856d80a20772bd9d9ad950b8ec852635"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga856d80a20772bd9d9ad950b8ec852635">serial_manager_lowpower_critical_callback_t</a> )(void)</td></tr>
-<tr class="memdesc:ga856d80a20772bd9d9ad950b8ec852635"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager Lowpower Critical callback function <br/></td></tr>
-<tr class="separator:ga856d80a20772bd9d9ad950b8ec852635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4cb15dfa790e535a38ec0b3ed86ff7b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4cb15dfa790e535a38ec0b3ed86ff7b8"></a>
+typedef <a class="el" href="a00081.html#a00555">usdhc_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga4cb15dfa790e535a38ec0b3ed86ff7b8">sdmmchost_transfer_t</a></td></tr>
+<tr class="memdesc:ga4cb15dfa790e535a38ec0b3ed86ff7b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host transfer function <br/></td></tr>
+<tr class="separator:ga4cb15dfa790e535a38ec0b3ed86ff7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga103db7d7f3fc8234978efadef0fdaf80"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb">kSerialPort_None</a> = 0U, 
+<tr class="memitem:ga7646ae03981912f97626c39dfe9318da"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daab51bcc21ae354f392e9c4abd9d6961b1">kSDMMCHOST_SupportHighSpeed</a> = 1U &lt;&lt; 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daa4b51491d9394952f028a960c14c69708">kSDMMCHOST_SupportSuspendResume</a> = 1U &lt;&lt; 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daaff71f5474fde37213196348beb75a392">kSDMMCHOST_SupportVoltage3v3</a> = 1U &lt;&lt; 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daae589248a31d21b97ccf7fe3b934c2a5a">kSDMMCHOST_SupportVoltage3v0</a> = 1U &lt;&lt; 3U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80a1ff49cc235ba1b2cf110d9cad5121aa4">kSerialPort_Virtual</a>, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daa9fb837cc0caf22137a71f92be9256c02">kSDMMCHOST_SupportVoltage1v8</a> = 1U &lt;&lt; 4U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80aa0ec8166f72522a029c7bdb44dbd8cbe">kSerialPort_Rpmsg</a>, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daa0459aebad28418d7a3bfc7d901a450ad">kSDMMCHOST_SupportVoltage1v2</a> = 1U &lt;&lt; 5U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80acad7e31b320242ceb4088c8a32635c5e">kSerialPort_UartDma</a>, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daa218ba5f7a68298486be4e6779d6ef5c8">kSDMMCHOST_Support4BitDataWidth</a> = 1U &lt;&lt; 6U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea">kSerialPort_SpiMaster</a>, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daa91b63bab7088996a1d9e3d29df2fab6f">kSDMMCHOST_Support8BitDataWidth</a> = 1U &lt;&lt; 7U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a">kSerialPort_SpiSlave</a>
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daaff9f331e225f56b274db78e2d009b154">kSDMMCHOST_SupportDDRMode</a> = 1U &lt;&lt; 8U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga103db7d7f3fc8234978efadef0fdaf80"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port type  <a href="a00068.html#ga103db7d7f3fc8234978efadef0fdaf80">More...</a><br/></td></tr>
-<tr class="separator:ga103db7d7f3fc8234978efadef0fdaf80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7799e0e52d9e9fe5bf5198f0a337331d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga7799e0e52d9e9fe5bf5198f0a337331d">serial_manager_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga7799e0e52d9e9fe5bf5198f0a337331dacae754a7dbe5f0d48d345a8b6120227c">kSerialManager_NonBlocking</a> = 0x0U, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daad4f9d7cb24bcc490e098deb007a8deab">kSDMMCHOST_SupportDetectCardByData3</a> = 1U &lt;&lt; 9U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga7799e0e52d9e9fe5bf5198f0a337331daa7834e61e5fcc82b73698f0465c3f24e">kSerialManager_Blocking</a> = 0x8F41U
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daad65309bd33be9cdc527fe76a68b5c7d0">kSDMMCHOST_SupportDetectCardByCD</a> = 1U &lt;&lt; 10U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga7799e0e52d9e9fe5bf5198f0a337331d"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager type  <a href="a00068.html#ga7799e0e52d9e9fe5bf5198f0a337331d">More...</a><br/></td></tr>
-<tr class="separator:ga7799e0e52d9e9fe5bf5198f0a337331d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9a330e1f3a81509399832c7b2c2872f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872fa1e4ed7376c48b94ec9a60f272a629ed4">kStatus_SerialManager_Success</a> = kStatus_Success, 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daa1cfe03e88e105a3694a480744d4c416a">kSDMMCHOST_SupportAutoCmd12</a> = 1U &lt;&lt; 11U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872fa61e6a331c5f789fe88fcf2bacf8a5553">kStatus_SerialManager_Error</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 1), 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daaa4a62b272a09c81052633a56e4787d74">kSDMMCHOST_SupportSDR104</a> = 1U &lt;&lt; 12U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872fa67e18fb1e47f4f40dc58988b76a2d876">kStatus_SerialManager_Busy</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 2), 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daaf6a929b28e097d111a3dc7369b356b7e">kSDMMCHOST_SupportSDR50</a> = 1U &lt;&lt; 13U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872fabdcdea0fcd8b4c01592728a4ba041154">kStatus_SerialManager_Notify</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 3), 
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daaf85a3d7721af182ca291d323bda71e75">kSDMMCHOST_SupportHS200</a> = 1U &lt;&lt; 14U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872faf01c3a38751393325ab9791d8181ef38">kStatus_SerialManager_Canceled</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872fa9f087536c7a9930159682ed03d8d71ea">kStatus_SerialManager_HandleConflict</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872fa41631953d2191b631fbe8443bfa856c8">kStatus_SerialManager_RingBufferOverflow</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggae9a330e1f3a81509399832c7b2c2872fa1e09ebaf03a4d8599170987750b17ce6">kStatus_SerialManager_NotConnected</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 7)
+&#160;&#160;<a class="el" href="a00068.html#gga7646ae03981912f97626c39dfe9318daac224880ccd4bb3d6f23405eed39e577e">kSDMMCHOST_SupportHS400</a> = 1U &lt;&lt; 15U
 <br/>
  }</td></tr>
-<tr class="memdesc:gae9a330e1f3a81509399832c7b2c2872f"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager error code  <a href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">More...</a><br/></td></tr>
-<tr class="separator:gae9a330e1f3a81509399832c7b2c2872f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga7646ae03981912f97626c39dfe9318da"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host capability  <a href="a00068.html#ga7646ae03981912f97626c39dfe9318da">More...</a><br/></td></tr>
+<tr class="separator:ga7646ae03981912f97626c39dfe9318da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29d44341ce767c5dfc737d622fc97ba1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00068.html#gga29d44341ce767c5dfc737d622fc97ba1a4ed3ac858d9b99252a49ca7a297d2dd0">kSDMMCHOST_EndianModeBig</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00068.html#gga29d44341ce767c5dfc737d622fc97ba1a2394f707bc8124fa714e61e0d9748264">kSDMMCHOST_EndianModeHalfWordBig</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00068.html#gga29d44341ce767c5dfc737d622fc97ba1accb3b8b837fb20c01c79a99364ca0138">kSDMMCHOST_EndianModeLittle</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga29d44341ce767c5dfc737d622fc97ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">host Endian mode corresponding to driver define  <a href="a00068.html#ga29d44341ce767c5dfc737d622fc97ba1">More...</a><br/></td></tr>
+<tr class="separator:ga29d44341ce767c5dfc737d622fc97ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b7b7893d940926615b39239ac05829d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00068.html#gga1b7b7893d940926615b39239ac05829dab6ab0377930594ffdc5552ce1bbe3841">kSDMMCHOST_StandardTuning</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00068.html#gga1b7b7893d940926615b39239ac05829daafec664445b46732b6f5e724e3088bf6">kSDMMCHOST_ManualTuning</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1b7b7893d940926615b39239ac05829d"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host tuning type  <a href="a00068.html#ga1b7b7893d940926615b39239ac05829d">More...</a><br/></td></tr>
+<tr class="separator:ga1b7b7893d940926615b39239ac05829d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga098384b0034af0daa7c9c5c82b563567"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00068.html#gga098384b0034af0daa7c9c5c82b563567ac8a5cf0d2ab8c1251349826b371bcc4b">kSDMMCHOST_NoCacheControl</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00068.html#gga098384b0034af0daa7c9c5c82b563567a2961728c986f1d18e094110f4a233a8c">kSDMMCHOST_CacheControlRWBuffer</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga098384b0034af0daa7c9c5c82b563567"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host maintain cache flag  <a href="a00068.html#ga098384b0034af0daa7c9c5c82b563567">More...</a><br/></td></tr>
+<tr class="separator:ga098384b0034af0daa7c9c5c82b563567"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gac9ad820108a6713516ff44ef109fadf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a> (<a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, const <a class="el" href="a00068.html#a00508">serial_manager_config_t</a> *config)</td></tr>
-<tr class="memdesc:gac9ad820108a6713516ff44ef109fadf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a serial manager module with the serial manager handle and the user configuration structure.  <a href="#gac9ad820108a6713516ff44ef109fadf4">More...</a><br/></td></tr>
-<tr class="separator:gac9ad820108a6713516ff44ef109fadf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga467c8a817003eacd48f86aaef1ce8306"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga467c8a817003eacd48f86aaef1ce8306">SerialManager_Deinit</a> (<a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
-<tr class="memdesc:ga467c8a817003eacd48f86aaef1ce8306"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the serial manager module instance.  <a href="#ga467c8a817003eacd48f86aaef1ce8306">More...</a><br/></td></tr>
-<tr class="separator:ga467c8a817003eacd48f86aaef1ce8306"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d26249a8331e6ca17e9c60838b56d20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga3d26249a8331e6ca17e9c60838b56d20">SerialManager_OpenWriteHandle</a> (<a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <a class="el" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
-<tr class="memdesc:ga3d26249a8331e6ca17e9c60838b56d20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a writing handle for the serial manager module.  <a href="#ga3d26249a8331e6ca17e9c60838b56d20">More...</a><br/></td></tr>
-<tr class="separator:ga3d26249a8331e6ca17e9c60838b56d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb8df1d54da32e6de17680264ca4106a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gadb8df1d54da32e6de17680264ca4106a">SerialManager_CloseWriteHandle</a> (<a class="el" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
-<tr class="memdesc:gadb8df1d54da32e6de17680264ca4106a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a writing handle for the serial manager module.  <a href="#gadb8df1d54da32e6de17680264ca4106a">More...</a><br/></td></tr>
-<tr class="separator:gadb8df1d54da32e6de17680264ca4106a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66915bf8f50a417620ef94951d1df4b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga66915bf8f50a417620ef94951d1df4b8">SerialManager_OpenReadHandle</a> (<a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <a class="el" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
-<tr class="memdesc:ga66915bf8f50a417620ef94951d1df4b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a reading handle for the serial manager module.  <a href="#ga66915bf8f50a417620ef94951d1df4b8">More...</a><br/></td></tr>
-<tr class="separator:ga66915bf8f50a417620ef94951d1df4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09c8831eb6ca6e544881dcbf18dcb4a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga09c8831eb6ca6e544881dcbf18dcb4a7">SerialManager_CloseReadHandle</a> (<a class="el" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
-<tr class="memdesc:ga09c8831eb6ca6e544881dcbf18dcb4a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a reading for the serial manager module.  <a href="#ga09c8831eb6ca6e544881dcbf18dcb4a7">More...</a><br/></td></tr>
-<tr class="separator:ga09c8831eb6ca6e544881dcbf18dcb4a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fab1d6bffd89459be9f23d40874248e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga3fab1d6bffd89459be9f23d40874248e">SerialManager_WriteBlocking</a> (<a class="el" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle, uint8_t *buffer, uint32_t length)</td></tr>
-<tr class="memdesc:ga3fab1d6bffd89459be9f23d40874248e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits data with the blocking mode.  <a href="#ga3fab1d6bffd89459be9f23d40874248e">More...</a><br/></td></tr>
-<tr class="separator:ga3fab1d6bffd89459be9f23d40874248e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb">SerialManager_ReadBlocking</a> (<a class="el" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, uint8_t *buffer, uint32_t length)</td></tr>
-<tr class="memdesc:ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data with the blocking mode.  <a href="#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb">More...</a><br/></td></tr>
-<tr class="separator:ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32cdccd6df5d87f17037f34cf9f1e416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga32cdccd6df5d87f17037f34cf9f1e416">SerialManager_EnterLowpower</a> (<a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
-<tr class="memdesc:ga32cdccd6df5d87f17037f34cf9f1e416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares to enter low power consumption.  <a href="#ga32cdccd6df5d87f17037f34cf9f1e416">More...</a><br/></td></tr>
-<tr class="separator:ga32cdccd6df5d87f17037f34cf9f1e416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef5c404d43871f6d8f761b27dbf183fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaef5c404d43871f6d8f761b27dbf183fa">SerialManager_ExitLowpower</a> (<a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
-<tr class="memdesc:gaef5c404d43871f6d8f761b27dbf183fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restores from low power consumption.  <a href="#gaef5c404d43871f6d8f761b27dbf183fa">More...</a><br/></td></tr>
-<tr class="separator:gaef5c404d43871f6d8f761b27dbf183fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga71bd55adb7a6a552ce5dac06b5794cea">SerialManager_SetLowpowerCriticalCb</a> (const serial_manager_lowpower_critical_CBs_t *pfCallback)</td></tr>
-<tr class="memdesc:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function performs initialization of the callbacks structure used to disable lowpower when serial manager is active.  <a href="#ga71bd55adb7a6a552ce5dac06b5794cea">More...</a><br/></td></tr>
-<tr class="separator:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+USDHC host controller function</h2></td></tr>
+<tr class="memitem:ga6a2f4160b4f2bf3a24c0a9e85f652cac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga6a2f4160b4f2bf3a24c0a9e85f652cac">SDMMCHOST_SetCardBusWidth</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, uint32_t dataBusWidth)</td></tr>
+<tr class="memdesc:ga6a2f4160b4f2bf3a24c0a9e85f652cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">set data bus width.  <a href="#ga6a2f4160b4f2bf3a24c0a9e85f652cac">More...</a><br/></td></tr>
+<tr class="separator:ga6a2f4160b4f2bf3a24c0a9e85f652cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3167687798418ad802388c549a4dc79e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga3167687798418ad802388c549a4dc79e">SDMMCHOST_SendCardActive</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host)</td></tr>
+<tr class="memdesc:ga3167687798418ad802388c549a4dc79e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send initilization active 80 clocks to card.  <a href="#ga3167687798418ad802388c549a4dc79e">More...</a><br/></td></tr>
+<tr class="separator:ga3167687798418ad802388c549a4dc79e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed911872439a396900e606d88ec2f639"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaed911872439a396900e606d88ec2f639">SDMMCHOST_SetCardClock</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, uint32_t targetClock)</td></tr>
+<tr class="memdesc:gaed911872439a396900e606d88ec2f639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set card bus clock.  <a href="#gaed911872439a396900e606d88ec2f639">More...</a><br/></td></tr>
+<tr class="separator:gaed911872439a396900e606d88ec2f639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3ab76c607654db1629f1bbaf773c2c3"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gab3ab76c607654db1629f1bbaf773c2c3">SDMMCHOST_IsCardBusy</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host)</td></tr>
+<tr class="memdesc:gab3ab76c607654db1629f1bbaf773c2c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">check card status by DATA0.  <a href="#gab3ab76c607654db1629f1bbaf773c2c3">More...</a><br/></td></tr>
+<tr class="separator:gab3ab76c607654db1629f1bbaf773c2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bd5a5d59633b4628f28c3599f3b897f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga6bd5a5d59633b4628f28c3599f3b897f">SDMMCHOST_GetSignalLineStatus</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, uint32_t signalLine)</td></tr>
+<tr class="memdesc:ga6bd5a5d59633b4628f28c3599f3b897f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get signal line status.  <a href="#ga6bd5a5d59633b4628f28c3599f3b897f">More...</a><br/></td></tr>
+<tr class="separator:ga6bd5a5d59633b4628f28c3599f3b897f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02e31cfbe66648fc70cb5ad1ad8d4e81"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga02e31cfbe66648fc70cb5ad1ad8d4e81">SDMMCHOST_EnableCardInt</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memdesc:ga02e31cfbe66648fc70cb5ad1ad8d4e81"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable card interrupt.  <a href="#ga02e31cfbe66648fc70cb5ad1ad8d4e81">More...</a><br/></td></tr>
+<tr class="separator:ga02e31cfbe66648fc70cb5ad1ad8d4e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga325ef14ece0196e72dbb9f23fb3a6c05"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga325ef14ece0196e72dbb9f23fb3a6c05">SDMMCHOST_EnableDDRMode</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, bool enable, uint32_t nibblePos)</td></tr>
+<tr class="memdesc:ga325ef14ece0196e72dbb9f23fb3a6c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable DDR mode.  <a href="#ga325ef14ece0196e72dbb9f23fb3a6c05">More...</a><br/></td></tr>
+<tr class="separator:ga325ef14ece0196e72dbb9f23fb3a6c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1cb3b2a1fc0014931ec3557d7a2539b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaa1cb3b2a1fc0014931ec3557d7a2539b">SDMMCHOST_EnableHS400Mode</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memdesc:gaa1cb3b2a1fc0014931ec3557d7a2539b"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable HS400 mode.  <a href="#gaa1cb3b2a1fc0014931ec3557d7a2539b">More...</a><br/></td></tr>
+<tr class="separator:gaa1cb3b2a1fc0014931ec3557d7a2539b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08cbe1e8c2a7f37be10f901761ff2870"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga08cbe1e8c2a7f37be10f901761ff2870">SDMMCHOST_EnableStrobeDll</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memdesc:ga08cbe1e8c2a7f37be10f901761ff2870"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable STROBE DLL.  <a href="#ga08cbe1e8c2a7f37be10f901761ff2870">More...</a><br/></td></tr>
+<tr class="separator:ga08cbe1e8c2a7f37be10f901761ff2870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b1a9d28ed22d8b7496372b0d1b2d068"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga1b1a9d28ed22d8b7496372b0d1b2d068">SDMMCHOST_StartBoot</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, <a class="el" href="a00081.html#a00545">sdmmchost_boot_config_t</a> *hostConfig, <a class="el" href="a00081.html#a00547">sdmmchost_cmd_t</a> *cmd, uint8_t *buffer)</td></tr>
+<tr class="memdesc:ga1b1a9d28ed22d8b7496372b0d1b2d068"><td class="mdescLeft">&#160;</td><td class="mdescRight">start read boot data.  <a href="#ga1b1a9d28ed22d8b7496372b0d1b2d068">More...</a><br/></td></tr>
+<tr class="separator:ga1b1a9d28ed22d8b7496372b0d1b2d068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga67013c224293f28edf35bbd645f56171"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga67013c224293f28edf35bbd645f56171">SDMMCHOST_ReadBootData</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, <a class="el" href="a00081.html#a00545">sdmmchost_boot_config_t</a> *hostConfig, uint8_t *buffer)</td></tr>
+<tr class="memdesc:ga67013c224293f28edf35bbd645f56171"><td class="mdescLeft">&#160;</td><td class="mdescRight">read boot data.  <a href="#ga67013c224293f28edf35bbd645f56171">More...</a><br/></td></tr>
+<tr class="separator:ga67013c224293f28edf35bbd645f56171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95c2985329c39dd313a8ae3330dafbcf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga95c2985329c39dd313a8ae3330dafbcf">SDMMCHOST_EnableBoot</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memdesc:ga95c2985329c39dd313a8ae3330dafbcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable boot mode.  <a href="#ga95c2985329c39dd313a8ae3330dafbcf">More...</a><br/></td></tr>
+<tr class="separator:ga95c2985329c39dd313a8ae3330dafbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96724bd653d1ca166314f52bd8eaf9ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga96724bd653d1ca166314f52bd8eaf9ab">SDMMCHOST_CardIntInit</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, void *sdioInt)</td></tr>
+<tr class="memdesc:ga96724bd653d1ca166314f52bd8eaf9ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">card interrupt function.  <a href="#ga96724bd653d1ca166314f52bd8eaf9ab">More...</a><br/></td></tr>
+<tr class="separator:ga96724bd653d1ca166314f52bd8eaf9ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5375f1305a451912d3ad33d85d45ce4e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga5375f1305a451912d3ad33d85d45ce4e">SDMMCHOST_ForceClockOn</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memdesc:ga5375f1305a451912d3ad33d85d45ce4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">force card clock on.  <a href="#ga5375f1305a451912d3ad33d85d45ce4e">More...</a><br/></td></tr>
+<tr class="separator:ga5375f1305a451912d3ad33d85d45ce4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96d258a5a09f079bfe135fe545c5778c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga96d258a5a09f079bfe135fe545c5778c">SDMMCHOST_SwitchToVoltage</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, uint32_t voltage)</td></tr>
+<tr class="memdesc:ga96d258a5a09f079bfe135fe545c5778c"><td class="mdescLeft">&#160;</td><td class="mdescRight">switch to voltage.  <a href="#ga96d258a5a09f079bfe135fe545c5778c">More...</a><br/></td></tr>
+<tr class="separator:ga96d258a5a09f079bfe135fe545c5778c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae33c669f37f6354c1618e4354e7a2d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaae33c669f37f6354c1618e4354e7a2d8">SDMMCHOST_CardDetectInit</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, void *cd)</td></tr>
+<tr class="memdesc:gaae33c669f37f6354c1618e4354e7a2d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">card detect init function.  <a href="#gaae33c669f37f6354c1618e4354e7a2d8">More...</a><br/></td></tr>
+<tr class="separator:gaae33c669f37f6354c1618e4354e7a2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga846a7644c956ee5533e913327cb85c3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga846a7644c956ee5533e913327cb85c3c">SDMMCHOST_PollingCardDetectStatus</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, uint32_t waitCardStatus, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga846a7644c956ee5533e913327cb85c3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detect card insert, only need for SD cases.  <a href="#ga846a7644c956ee5533e913327cb85c3c">More...</a><br/></td></tr>
+<tr class="separator:ga846a7644c956ee5533e913327cb85c3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0989b876590f6ae75709a06de205ae7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gae0989b876590f6ae75709a06de205ae7">SDMMCHOST_CardDetectStatus</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host)</td></tr>
+<tr class="memdesc:gae0989b876590f6ae75709a06de205ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">card detect status.  <a href="#gae0989b876590f6ae75709a06de205ae7">More...</a><br/></td></tr>
+<tr class="separator:gae0989b876590f6ae75709a06de205ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f316244d63b01d005de110482ca125f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga8f316244d63b01d005de110482ca125f">SDMMCHOST_Init</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host)</td></tr>
+<tr class="memdesc:ga8f316244d63b01d005de110482ca125f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Init host controller.  <a href="#ga8f316244d63b01d005de110482ca125f">More...</a><br/></td></tr>
+<tr class="separator:ga8f316244d63b01d005de110482ca125f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8070be281bdd447d149114b4445bcdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gad8070be281bdd447d149114b4445bcdc">SDMMCHOST_Deinit</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host)</td></tr>
+<tr class="memdesc:gad8070be281bdd447d149114b4445bcdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit host controller.  <a href="#gad8070be281bdd447d149114b4445bcdc">More...</a><br/></td></tr>
+<tr class="separator:gad8070be281bdd447d149114b4445bcdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga587da6c26c9e6401e77d083011b8e474"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga587da6c26c9e6401e77d083011b8e474">SDMMCHOST_SetCardPower</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, bool enable)</td></tr>
+<tr class="memdesc:ga587da6c26c9e6401e77d083011b8e474"><td class="mdescLeft">&#160;</td><td class="mdescRight">host power off card function.  <a href="#ga587da6c26c9e6401e77d083011b8e474">More...</a><br/></td></tr>
+<tr class="separator:ga587da6c26c9e6401e77d083011b8e474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62429a2a668ae8bef49352256bbc6a48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga62429a2a668ae8bef49352256bbc6a48">SDMMCHOST_TransferFunction</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, <a class="el" href="a00068.html#ga4cb15dfa790e535a38ec0b3ed86ff7b8">sdmmchost_transfer_t</a> *content)</td></tr>
+<tr class="memdesc:ga62429a2a668ae8bef49352256bbc6a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">host transfer function.  <a href="#ga62429a2a668ae8bef49352256bbc6a48">More...</a><br/></td></tr>
+<tr class="separator:ga62429a2a668ae8bef49352256bbc6a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb989c127eb1ca6bc4a831220be0f384"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaeb989c127eb1ca6bc4a831220be0f384">SDMMCHOST_ExecuteTuning</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)</td></tr>
+<tr class="memdesc:gaeb989c127eb1ca6bc4a831220be0f384"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host excute tuning.  <a href="#gaeb989c127eb1ca6bc4a831220be0f384">More...</a><br/></td></tr>
+<tr class="separator:gaeb989c127eb1ca6bc4a831220be0f384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4d25fd8cb129e822223b868bdfa6c10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac4d25fd8cb129e822223b868bdfa6c10">SDMMCHOST_Reset</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host)</td></tr>
+<tr class="memdesc:gac4d25fd8cb129e822223b868bdfa6c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">host reset function.  <a href="#gac4d25fd8cb129e822223b868bdfa6c10">More...</a><br/></td></tr>
+<tr class="separator:gac4d25fd8cb129e822223b868bdfa6c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8d6ed81a627153dfdfc9527193026490"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga8d6ed81a627153dfdfc9527193026490">SDMMCHOST_ConvertDataToLittleEndian</a> (<a class="el" href="a00068.html#a00512">sdmmchost_t</a> *host, uint32_t *data, uint32_t wordSize, uint32_t format)</td></tr>
+<tr class="memdesc:ga8d6ed81a627153dfdfc9527193026490"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc host convert data sequence to little endian sequence  <a href="#ga8d6ed81a627153dfdfc9527193026490">More...</a><br/></td></tr>
+<tr class="separator:ga8d6ed81a627153dfdfc9527193026490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00508" id="a00508"></a>
+<a name="a00512" id="a00512"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct serial_manager_config_t</td>
+          <td class="memname">struct sdmmchost_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a73403169ff2d3c8d8897059435fe7e01"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a></td></tr>
-<tr class="memdesc:a73403169ff2d3c8d8897059435fe7e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ring buffer address, it is used to buffer data received by the hardware.  <a href="#a73403169ff2d3c8d8897059435fe7e01">More...</a><br/></td></tr>
-<tr class="separator:a73403169ff2d3c8d8897059435fe7e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cdd8d8501bb64e720345207310de89b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cdd8d8501bb64e720345207310de89b"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a3cdd8d8501bb64e720345207310de89b">ringBufferSize</a></td></tr>
-<tr class="memdesc:a3cdd8d8501bb64e720345207310de89b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the ring buffer. <br/></td></tr>
-<tr class="separator:a3cdd8d8501bb64e720345207310de89b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19422220843683406b8487dd40fc2cee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19422220843683406b8487dd40fc2cee"></a>
-<a class="el" href="a00068.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a19422220843683406b8487dd40fc2cee">type</a></td></tr>
-<tr class="memdesc:a19422220843683406b8487dd40fc2cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial port type. <br/></td></tr>
-<tr class="separator:a19422220843683406b8487dd40fc2cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1f413cf0928c0efdf89ce584adf8007"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1f413cf0928c0efdf89ce584adf8007"></a>
-<a class="el" href="a00068.html#ga7799e0e52d9e9fe5bf5198f0a337331d">serial_manager_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ae1f413cf0928c0efdf89ce584adf8007">blockType</a></td></tr>
-<tr class="memdesc:ae1f413cf0928c0efdf89ce584adf8007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial manager port type. <br/></td></tr>
-<tr class="separator:ae1f413cf0928c0efdf89ce584adf8007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac91431f403f82ce50784274deab7e640"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac91431f403f82ce50784274deab7e640"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ac91431f403f82ce50784274deab7e640">portConfig</a></td></tr>
-<tr class="memdesc:ac91431f403f82ce50784274deab7e640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial port configuration. <br/></td></tr>
-<tr class="separator:ac91431f403f82ce50784274deab7e640"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a73403169ff2d3c8d8897059435fe7e01"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* serial_manager_config_t::ringBuffer</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Besides, the memory space cannot be free during the lifetime of the serial manager module. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00507" id="a00507"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct serial_manager_callback_message_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a80694c056b447b821f7e146122040e0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80694c056b447b821f7e146122040e0f"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a80694c056b447b821f7e146122040e0f">buffer</a></td></tr>
-<tr class="memdesc:a80694c056b447b821f7e146122040e0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transferred buffer. <br/></td></tr>
-<tr class="separator:a80694c056b447b821f7e146122040e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5eb02d4cb2745ea57f5f78e764f80893"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5eb02d4cb2745ea57f5f78e764f80893"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a5eb02d4cb2745ea57f5f78e764f80893">length</a></td></tr>
-<tr class="memdesc:a5eb02d4cb2745ea57f5f78e764f80893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transferred data length. <br/></td></tr>
-<tr class="separator:a5eb02d4cb2745ea57f5f78e764f80893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71c2bc521cd1b46bb9702a438694fd0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71c2bc521cd1b46bb9702a438694fd0f"></a>
+<a class="el" href="a00081.html#a00550">usdhc_host_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a71c2bc521cd1b46bb9702a438694fd0f">hostController</a></td></tr>
+<tr class="memdesc:a71c2bc521cd1b46bb9702a438694fd0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">host configuration <br/></td></tr>
+<tr class="separator:a71c2bc521cd1b46bb9702a438694fd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdbf757e35a244a36abd144ef6a221c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdbf757e35a244a36abd144ef6a221c7"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#afdbf757e35a244a36abd144ef6a221c7">dmaDesBuffer</a></td></tr>
+<tr class="memdesc:afdbf757e35a244a36abd144ef6a221c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA descriptor buffer address. <br/></td></tr>
+<tr class="separator:afdbf757e35a244a36abd144ef6a221c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b1c5755001081eb0846e05bc7ae220d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b1c5755001081eb0846e05bc7ae220d"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a4b1c5755001081eb0846e05bc7ae220d">dmaDesBufferWordsNum</a></td></tr>
+<tr class="memdesc:a4b1c5755001081eb0846e05bc7ae220d"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA descriptor buffer size in byte. <br/></td></tr>
+<tr class="separator:a4b1c5755001081eb0846e05bc7ae220d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac72e713390b10c610988d97600206bbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac72e713390b10c610988d97600206bbd"></a>
+usdhc_handle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ac72e713390b10c610988d97600206bbd">handle</a></td></tr>
+<tr class="memdesc:ac72e713390b10c610988d97600206bbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">host controller handler <br/></td></tr>
+<tr class="separator:ac72e713390b10c610988d97600206bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac33841d41030c4b4a306378b14d1f8ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac33841d41030c4b4a306378b14d1f8ac"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ac33841d41030c4b4a306378b14d1f8ac">capability</a></td></tr>
+<tr class="memdesc:ac33841d41030c4b4a306378b14d1f8ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">host controller capability <br/></td></tr>
+<tr class="separator:ac33841d41030c4b4a306378b14d1f8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6771bdda88a334cd45d7d1ac0f751a09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6771bdda88a334cd45d7d1ac0f751a09"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a6771bdda88a334cd45d7d1ac0f751a09">maxBlockCount</a></td></tr>
+<tr class="memdesc:a6771bdda88a334cd45d7d1ac0f751a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">host controller maximum block count <br/></td></tr>
+<tr class="separator:a6771bdda88a334cd45d7d1ac0f751a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a892f6a7da2999184cbdda11dd2bf3f43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a892f6a7da2999184cbdda11dd2bf3f43"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a892f6a7da2999184cbdda11dd2bf3f43">maxBlockSize</a></td></tr>
+<tr class="memdesc:a892f6a7da2999184cbdda11dd2bf3f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">host controller maximum block size <br/></td></tr>
+<tr class="separator:a892f6a7da2999184cbdda11dd2bf3f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a511523e7f57def013239ab926f4c16f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a511523e7f57def013239ab926f4c16f1"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a511523e7f57def013239ab926f4c16f1">tuningType</a></td></tr>
+<tr class="memdesc:a511523e7f57def013239ab926f4c16f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">host tuning type <br/></td></tr>
+<tr class="separator:a511523e7f57def013239ab926f4c16f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11341f23f4880014e3434831ecfcbfc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11341f23f4880014e3434831ecfcbfc5"></a>
+<a class="el" href="a00067.html#a00510">sdmmc_osa_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a11341f23f4880014e3434831ecfcbfc5">hostEvent</a></td></tr>
+<tr class="memdesc:a11341f23f4880014e3434831ecfcbfc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">host event handler <br/></td></tr>
+<tr class="separator:a11341f23f4880014e3434831ecfcbfc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eac770d59a0ce28e585fe187de8a584"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5eac770d59a0ce28e585fe187de8a584"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a5eac770d59a0ce28e585fe187de8a584">cd</a></td></tr>
+<tr class="memdesc:a5eac770d59a0ce28e585fe187de8a584"><td class="mdescLeft">&#160;</td><td class="mdescRight">card detect <br/></td></tr>
+<tr class="separator:a5eac770d59a0ce28e585fe187de8a584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac13e3f3fbadf990f727778cd1e79ed3b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac13e3f3fbadf990f727778cd1e79ed3b"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ac13e3f3fbadf990f727778cd1e79ed3b">cardInt</a></td></tr>
+<tr class="memdesc:ac13e3f3fbadf990f727778cd1e79ed3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">call back function for card interrupt <br/></td></tr>
+<tr class="separator:ac13e3f3fbadf990f727778cd1e79ed3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a831fa5dcf47b5c89cd18fbf75057b32f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a831fa5dcf47b5c89cd18fbf75057b32f"></a>
+<a class="el" href="a00067.html#a00511">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a831fa5dcf47b5c89cd18fbf75057b32f">lock</a></td></tr>
+<tr class="memdesc:a831fa5dcf47b5c89cd18fbf75057b32f"><td class="mdescLeft">&#160;</td><td class="mdescRight">host access lock <br/></td></tr>
+<tr class="separator:a831fa5dcf47b5c89cd18fbf75057b32f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaefd7b994ea13ed385804afbe3268db7c"></a>
+<a class="anchor" id="gab7f416230cd008bf4453aca9e4ae6623"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE&#160;&#160;&#160;(1U)</td>
+          <td class="memname">#define FSL_SDMMC_HOST_ADAPTER_VERSION&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 6U, 3U)) /*2.6.3*/</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga5e349416c81a583a8a98e99683624929"></a>
+<a class="anchor" id="ga6b005d6c35ae08d925db709007d29970"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE&#160;&#160;&#160;(1U)</td>
+          <td class="memname">#define SDMMCHOST_STANDARD_TUNING_START&#160;&#160;&#160;(10U)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gaae959bcddd181966d6c8bf4cbf140fea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERIAL_MANAGER_USE_COMMON_TASK&#160;&#160;&#160;(0U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Macro to determine whether use common task. </p>
-
-</div>
-</div>
-<a class="anchor" id="gabc4aa7ae83c31b66e437d7fd264aaebc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERIAL_MANAGER_HANDLE_SIZE&#160;&#160;&#160;(SERIAL_MANAGER_HANDLE_SIZE_TEMP + 12U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gad145f5877828fd4ec335f09b6790c673"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERIAL_MANAGER_HANDLE_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00068.html#gabc4aa7ae83c31b66e437d7fd264aaebc">SERIAL_MANAGER_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This macro is used to define a 4 byte aligned serial manager handle. Then use "(serial_handle_t)name" to get the serial manager handle.</p>
-<p>The macro should be global and could be optional. You could also define serial manager handle by yourself.</p>
-<p>This is an example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00068.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(serialManagerHandle);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The name string of the serial manager handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga33eef6cd25374cbd49b00d2985b8be65"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERIAL_MANAGER_WRITE_HANDLE_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00068.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This macro is used to define a 4 byte aligned serial manager write handle. Then use "(serial_write_handle_t)name" to get the serial manager write handle.</p>
-<p>The macro should be global and could be optional. You could also define serial manager write handle by yourself.</p>
-<p>This is an example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00068.html#ga33eef6cd25374cbd49b00d2985b8be65">SERIAL_MANAGER_WRITE_HANDLE_DEFINE</a>(serialManagerwriteHandle);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The name string of the serial manager write handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae9206a431c26d9c557a0e32ab4d648e8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERIAL_MANAGER_READ_HANDLE_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;uint32_t name[((SERIAL_MANAGER_READ_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This macro is used to define a 4 byte aligned serial manager read handle. Then use "(serial_read_handle_t)name" to get the serial manager read handle.</p>
-<p>The macro should be global and could be optional. You could also define serial manager read handle by yourself.</p>
-<p>This is an example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00068.html#gae9206a431c26d9c557a0e32ab4d648e8">SERIAL_MANAGER_READ_HANDLE_DEFINE</a>(serialManagerReadHandle);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The name string of the serial manager read handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9bffc03255c48dae79cc2702f0980269"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERIAL_MANAGER_TASK_PRIORITY&#160;&#160;&#160;(2U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga460c59805f2a8ec37e008b5a285e1760"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SERIAL_MANAGER_TASK_STACK_SIZE&#160;&#160;&#160;(1000U)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>standard tuning start point </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga103db7d7f3fc8234978efadef0fdaf80"></a>
+<a class="anchor" id="ga7646ae03981912f97626c39dfe9318da"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb"></a>kSerialPort_None</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port is none. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daab51bcc21ae354f392e9c4abd9d6961b1"></a>kSDMMCHOST_SupportHighSpeed</em>&nbsp;</td><td class="fielddoc">
+<p>high speed capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77"></a>kSerialPort_Uart</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port UART. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daa4b51491d9394952f028a960c14c69708"></a>kSDMMCHOST_SupportSuspendResume</em>&nbsp;</td><td class="fielddoc">
+<p>suspend resume capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2"></a>kSerialPort_UsbCdc</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port USB CDC. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daaff71f5474fde37213196348beb75a392"></a>kSDMMCHOST_SupportVoltage3v3</em>&nbsp;</td><td class="fielddoc">
+<p>3V3 capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77"></a>kSerialPort_Swo</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port SWO. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daae589248a31d21b97ccf7fe3b934c2a5a"></a>kSDMMCHOST_SupportVoltage3v0</em>&nbsp;</td><td class="fielddoc">
+<p>3V0 capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a1ff49cc235ba1b2cf110d9cad5121aa4"></a>kSerialPort_Virtual</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port Virtual. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daa9fb837cc0caf22137a71f92be9256c02"></a>kSDMMCHOST_SupportVoltage1v8</em>&nbsp;</td><td class="fielddoc">
+<p>1V8 capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80aa0ec8166f72522a029c7bdb44dbd8cbe"></a>kSerialPort_Rpmsg</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port RPMSG. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daa0459aebad28418d7a3bfc7d901a450ad"></a>kSDMMCHOST_SupportVoltage1v2</em>&nbsp;</td><td class="fielddoc">
+<p>1V2 capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80acad7e31b320242ceb4088c8a32635c5e"></a>kSerialPort_UartDma</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port UART DMA. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daa218ba5f7a68298486be4e6779d6ef5c8"></a>kSDMMCHOST_Support4BitDataWidth</em>&nbsp;</td><td class="fielddoc">
+<p>4 bit data width capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea"></a>kSerialPort_SpiMaster</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port SPIMASTER. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daa91b63bab7088996a1d9e3d29df2fab6f"></a>kSDMMCHOST_Support8BitDataWidth</em>&nbsp;</td><td class="fielddoc">
+<p>8 bit data width capability </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a"></a>kSerialPort_SpiSlave</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port SPISLAVE. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daaff9f331e225f56b274db78e2d009b154"></a>kSDMMCHOST_SupportDDRMode</em>&nbsp;</td><td class="fielddoc">
+<p>DDR mode capability. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daad4f9d7cb24bcc490e098deb007a8deab"></a>kSDMMCHOST_SupportDetectCardByData3</em>&nbsp;</td><td class="fielddoc">
+<p>data3 detect card capability </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daad65309bd33be9cdc527fe76a68b5c7d0"></a>kSDMMCHOST_SupportDetectCardByCD</em>&nbsp;</td><td class="fielddoc">
+<p>CD detect card capability. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daa1cfe03e88e105a3694a480744d4c416a"></a>kSDMMCHOST_SupportAutoCmd12</em>&nbsp;</td><td class="fielddoc">
+<p>auto command 12 capability </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daaa4a62b272a09c81052633a56e4787d74"></a>kSDMMCHOST_SupportSDR104</em>&nbsp;</td><td class="fielddoc">
+<p>SDR104 capability. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daaf6a929b28e097d111a3dc7369b356b7e"></a>kSDMMCHOST_SupportSDR50</em>&nbsp;</td><td class="fielddoc">
+<p>SDR50 capability. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daaf85a3d7721af182ca291d323bda71e75"></a>kSDMMCHOST_SupportHS200</em>&nbsp;</td><td class="fielddoc">
+<p>HS200 capability. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7646ae03981912f97626c39dfe9318daac224880ccd4bb3d6f23405eed39e577e"></a>kSDMMCHOST_SupportHS400</em>&nbsp;</td><td class="fielddoc">
+<p>HS400 capability. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga7799e0e52d9e9fe5bf5198f0a337331d"></a>
+<a class="anchor" id="ga29d44341ce767c5dfc737d622fc97ba1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga7799e0e52d9e9fe5bf5198f0a337331d">serial_manager_type_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p><a class="anchor" id="_sdmmchost_endian_mode"></a></p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7799e0e52d9e9fe5bf5198f0a337331dacae754a7dbe5f0d48d345a8b6120227c"></a>kSerialManager_NonBlocking</em>&nbsp;</td><td class="fielddoc">
-<p>None blocking handle. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga29d44341ce767c5dfc737d622fc97ba1a4ed3ac858d9b99252a49ca7a297d2dd0"></a>kSDMMCHOST_EndianModeBig</em>&nbsp;</td><td class="fielddoc">
+<p>Big endian mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7799e0e52d9e9fe5bf5198f0a337331daa7834e61e5fcc82b73698f0465c3f24e"></a>kSerialManager_Blocking</em>&nbsp;</td><td class="fielddoc">
-<p>Blocking handle. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga29d44341ce767c5dfc737d622fc97ba1a2394f707bc8124fa714e61e0d9748264"></a>kSDMMCHOST_EndianModeHalfWordBig</em>&nbsp;</td><td class="fielddoc">
+<p>Half word big endian mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga29d44341ce767c5dfc737d622fc97ba1accb3b8b837fb20c01c79a99364ca0138"></a>kSDMMCHOST_EndianModeLittle</em>&nbsp;</td><td class="fielddoc">
+<p>Little endian mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gae9a330e1f3a81509399832c7b2c2872f"></a>
+<a class="anchor" id="ga1b7b7893d940926615b39239ac05829d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p><a class="anchor" id="_sdmmchost_tuning_type"></a></p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa1e4ed7376c48b94ec9a60f272a629ed4"></a>kStatus_SerialManager_Success</em>&nbsp;</td><td class="fielddoc">
-<p>Success. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1b7b7893d940926615b39239ac05829dab6ab0377930594ffdc5552ce1bbe3841"></a>kSDMMCHOST_StandardTuning</em>&nbsp;</td><td class="fielddoc">
+<p>standard tuning type </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa61e6a331c5f789fe88fcf2bacf8a5553"></a>kStatus_SerialManager_Error</em>&nbsp;</td><td class="fielddoc">
-<p>Failed. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1b7b7893d940926615b39239ac05829daafec664445b46732b6f5e724e3088bf6"></a>kSDMMCHOST_ManualTuning</em>&nbsp;</td><td class="fielddoc">
+<p>manual tuning type </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa67e18fb1e47f4f40dc58988b76a2d876"></a>kStatus_SerialManager_Busy</em>&nbsp;</td><td class="fielddoc">
-<p>Busy. </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga098384b0034af0daa7c9c5c82b563567"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="anchor" id="_sdmmc_host_cache_control"></a></p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga098384b0034af0daa7c9c5c82b563567ac8a5cf0d2ab8c1251349826b371bcc4b"></a>kSDMMCHOST_NoCacheControl</em>&nbsp;</td><td class="fielddoc">
+<p>sdmmc host cache control disabled </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fabdcdea0fcd8b4c01592728a4ba041154"></a>kStatus_SerialManager_Notify</em>&nbsp;</td><td class="fielddoc">
-<p>Ring buffer is not empty. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872faf01c3a38751393325ab9791d8181ef38"></a>kStatus_SerialManager_Canceled</em>&nbsp;</td><td class="fielddoc">
-<p>the non-blocking request is canceled </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa9f087536c7a9930159682ed03d8d71ea"></a>kStatus_SerialManager_HandleConflict</em>&nbsp;</td><td class="fielddoc">
-<p>The handle is opened. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa41631953d2191b631fbe8443bfa856c8"></a>kStatus_SerialManager_RingBufferOverflow</em>&nbsp;</td><td class="fielddoc">
-<p>The ring buffer is overflowed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa1e09ebaf03a4d8599170987750b17ce6"></a>kStatus_SerialManager_NotConnected</em>&nbsp;</td><td class="fielddoc">
-<p>The host is not connected. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga098384b0034af0daa7c9c5c82b563567a2961728c986f1d18e094110f4a233a8c"></a>kSDMMCHOST_CacheControlRWBuffer</em>&nbsp;</td><td class="fielddoc">
+<p>sdmmc host cache control read/write buffer </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac9ad820108a6713516ff44ef109fadf4"></a>
+<a class="anchor" id="ga6a2f4160b4f2bf3a24c0a9e85f652cac"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_Init </td>
+          <td class="memname">void SDMMCHOST_SetCardBusWidth </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00068.html#a00508">serial_manager_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>dataBusWidth</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -676,105 +558,755 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function configures the Serial Manager module with user-defined settings. The user can configure the configuration structure. The parameter serialHandle is a pointer to point to a memory space of size <a class="el" href="a00068.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The Serial Manager module supports three types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc), USB CDC and swo. Please refer to <a class="el" href="a00068.html#ga103db7d7f3fc8234978efadef0fdaf80" title="serial port type ">serial_port_type_t</a> for serial port setting. These three types can be set by using <a class="el" href="a00068.html#a00508" title="serial manager config structure ">serial_manager_config_t</a>.</p>
-<p>Example below shows how to use this API to configure the Serial Manager. For UART, </p>
-<div class="fragment"><div class="line">*   #define SERIAL_MANAGER_RING_BUFFER_SIZE (256U)</div>
-<div class="line">*   <span class="keyword">static</span> <a class="code" href="a00068.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(s_serialHandle);</div>
-<div class="line">*   <span class="keyword">static</span> uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];</div>
-<div class="line">*</div>
-<div class="line">*   <a class="code" href="a00068.html#a00508">serial_manager_config_t</a> config;</div>
-<div class="line">*   serial_port_uart_config_t uartConfig;</div>
-<div class="line">*   config.<a class="code" href="a00068.html#a19422220843683406b8487dd40fc2cee">type</a> = <a class="code" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a>;</div>
-<div class="line">*   config.<a class="code" href="a00068.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
-<div class="line">*   config.<a class="code" href="a00068.html#a3cdd8d8501bb64e720345207310de89b">ringBufferSize</a> = SERIAL_MANAGER_RING_BUFFER_SIZE;</div>
-<div class="line">*   uartConfig.instance = 0;</div>
-<div class="line">*   uartConfig.clockRate = 24000000;</div>
-<div class="line">*   uartConfig.baudRate = 115200;</div>
-<div class="line">*   uartConfig.parityMode = <a class="code" href="a00298.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a>;</div>
-<div class="line">*   uartConfig.stopBitCount = <a class="code" href="a00298.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a>;</div>
-<div class="line">*   uartConfig.enableRx = 1;</div>
-<div class="line">*   uartConfig.enableTx = 1;</div>
-<div class="line">*   uartConfig.enableRxRTS = 0;</div>
-<div class="line">*   uartConfig.enableTxCTS = 0;</div>
-<div class="line">*   config.<a class="code" href="a00068.html#ac91431f403f82ce50784274deab7e640">portConfig</a> = &amp;uartConfig;</div>
-<div class="line">*   <a class="code" href="a00068.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a>((<a class="code" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, &amp;config);</div>
-<div class="line">*  </div>
-</div><!-- fragment --><p> For USB CDC, </p>
-<div class="fragment"><div class="line">*   #define SERIAL_MANAGER_RING_BUFFER_SIZE (256U)</div>
-<div class="line">*   <span class="keyword">static</span> <a class="code" href="a00068.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(s_serialHandle);</div>
-<div class="line">*   <span class="keyword">static</span> uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];</div>
-<div class="line">*</div>
-<div class="line">*   <a class="code" href="a00068.html#a00508">serial_manager_config_t</a> config;</div>
-<div class="line">*   <a class="code" href="a00070.html#a00510">serial_port_usb_cdc_config_t</a> usbCdcConfig;</div>
-<div class="line">*   config.<a class="code" href="a00068.html#a19422220843683406b8487dd40fc2cee">type</a> = <a class="code" href="a00068.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>;</div>
-<div class="line">*   config.<a class="code" href="a00068.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
-<div class="line">*   config.<a class="code" href="a00068.html#a3cdd8d8501bb64e720345207310de89b">ringBufferSize</a> = SERIAL_MANAGER_RING_BUFFER_SIZE;</div>
-<div class="line">*   usbCdcConfig.<a class="code" href="a00070.html#a164ef9f84df063b85674cc8aa6edd872">controllerIndex</a> = <a class="code" href="a00070.html#gga0d579054cbf9827f77f7018cd6f84c29aba414efbedc13dd6605fdc76daee832f">kSerialManager_UsbControllerKhci0</a>;</div>
-<div class="line">*   config.<a class="code" href="a00068.html#ac91431f403f82ce50784274deab7e640">portConfig</a> = &amp;usbCdcConfig;</div>
-<div class="line">*   <a class="code" href="a00068.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a>((<a class="code" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, &amp;config);</div>
-<div class="line">*  </div>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">dataBusWidth</td><td>data bus width </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3167687798418ad802388c549a4dc79e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SDMMCHOST_SendCardActive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaed911872439a396900e606d88ec2f639"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t SDMMCHOST_SetCardClock </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>targetClock</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">targetClock</td><td>target clock frequency </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">actual</td><td>clock frequency can be reach. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab3ab76c607654db1629f1bbaf773c2c3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool SDMMCHOST_IsCardBusy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>is busy, false is idle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6bd5a5d59633b4628f28c3599f3b897f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t SDMMCHOST_GetSignalLineStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>signalLine</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">signalLine</td><td>signal line type, reference _sdmmc_signal_line </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga02e31cfbe66648fc70cb5ad1ad8d4e81"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SDMMCHOST_EnableCardInt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">enable</td><td>true is enable, false is disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga325ef14ece0196e72dbb9f23fb3a6c05"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SDMMCHOST_EnableDDRMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>nibblePos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">enable</td><td>true is enable, false is disable. </td></tr>
+    <tr><td class="paramname">nibblePos</td><td>nibble position indictation. 0- the sequence is 'odd high nibble -&gt; even high nibble -&gt; odd low nibble -&gt; even low nibble'; 1- the sequence is 'odd high nibble -&gt; odd low nibble -&gt; even high nibble -&gt; even low nibble'. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa1cb3b2a1fc0014931ec3557d7a2539b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SDMMCHOST_EnableHS400Mode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">enable</td><td>true is enable, false is disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga08cbe1e8c2a7f37be10f901761ff2870"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SDMMCHOST_EnableStrobeDll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">enable</td><td>true is enable, false is disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1b1a9d28ed22d8b7496372b0d1b2d068"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_StartBoot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00081.html#a00545">sdmmchost_boot_config_t</a> *&#160;</td>
+          <td class="paramname"><em>hostConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00081.html#a00547">sdmmchost_cmd_t</a> *&#160;</td>
+          <td class="paramname"><em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">hostConfig</td><td>boot configuration </td></tr>
+    <tr><td class="paramname">cmd</td><td>boot command </td></tr>
+    <tr><td class="paramname">buffer</td><td>buffer address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga67013c224293f28edf35bbd645f56171"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_ReadBootData </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00081.html#a00545">sdmmchost_boot_config_t</a> *&#160;</td>
+          <td class="paramname"><em>hostConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">hostConfig</td><td>boot configuration </td></tr>
+    <tr><td class="paramname">buffer</td><td>buffer address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga95c2985329c39dd313a8ae3330dafbcf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SDMMCHOST_EnableBoot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">enable</td><td>true is enable, false is disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga96724bd653d1ca166314f52bd8eaf9ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_CardIntInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>sdioInt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">sdioInt</td><td>card interrupt configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5375f1305a451912d3ad33d85d45ce4e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void SDMMCHOST_ForceClockOn </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">enable</td><td>true is enable, false is disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga96d258a5a09f079bfe135fe545c5778c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SDMMCHOST_SwitchToVoltage </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>voltage</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">voltage</td><td>switch to voltage level. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaae33c669f37f6354c1618e4354e7a2d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_CardDetectInit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>cd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">cd</td><td>card detect configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga846a7644c956ee5533e913327cb85c3c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_PollingCardDetectStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>waitCardStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">waitCardStatus</td><td>status which user want to wait </td></tr>
+    <tr><td class="paramname">timeout</td><td>wait time out. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>detect card insert </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>card insert event fail </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae0989b876590f6ae75709a06de205ae7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SDMMCHOST_CardDetectStatus </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kSD_Inserted,kSD_Removed</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8f316244d63b01d005de110482ca125f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_Init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00068.html#gad8070be281bdd447d149114b4445bcdc">SDMMCHOST_Deinit</a>(host);</div>
+<div class="line">* <a class="code" href="a00068.html#ga8f316244d63b01d005de110482ca125f">SDMMCHOST_Init</a>(host);</div>
+<div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">serialHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00068.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00068.html#gad145f5877828fd4ec335f09b6790c673" title="Defines the serial manager handle. ">SERIAL_MANAGER_HANDLE_DEFINE(serialHandle)</a>; or uint32_t serialHandle[((SERIAL_MANAGER_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to user-defined configuration structure. </td></tr>
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Error</td><td>An error occurred. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>The Serial Manager module initialization succeed. </td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>host init success </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>event fail </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga467c8a817003eacd48f86aaef1ce8306"></a>
+<a class="anchor" id="gad8070be281bdd447d149114b4445bcdc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_Deinit </td>
+          <td class="memname">void SDMMCHOST_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function de-initializes the serial manager module instance. If the opened writing or reading handle is not closed, the function will return kStatus_SerialManager_Busy.</p>
+<p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>The serial manager de-initialization succeed. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Busy</td><td>Opened reading or writing handle is not closed. </td></tr>
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3d26249a8331e6ca17e9c60838b56d20"></a>
+<a class="anchor" id="ga587da6c26c9e6401e77d083011b8e474"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_OpenWriteHandle </td>
+          <td class="memname">void SDMMCHOST_SetCardPower </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
-          <td class="paramname"><em>writeHandle</em>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -783,91 +1315,31 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function Opens a writing handle for the serial manager module. If the serial manager needs to be used in different tasks, the task should open a dedicated write handle for itself by calling <a class="el" href="a00068.html#ga3d26249a8331e6ca17e9c60838b56d20" title="Opens a writing handle for the serial manager module. ">SerialManager_OpenWriteHandle</a>. Since there can only one buffer for transmission for the writing handle at the same time, multiple writing handles need to be opened when the multiple transmission is needed for a task.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. </td></tr>
-    <tr><td class="paramname">writeHandle</td><td>The serial manager module writing handle pointer. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00068.html#ga33eef6cd25374cbd49b00d2985b8be65" title="Defines the serial manager write handle. ">SERIAL_MANAGER_WRITE_HANDLE_DEFINE(writeHandle)</a>; or uint32_t writeHandle[((SERIAL_MANAGER_WRITE_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Error</td><td>An error occurred. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_HandleConflict</td><td>The writing handle was opened. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>The writing handle is opened.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Example below shows how to use this API to write data. For task 1, </p>
-<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00068.html#ga33eef6cd25374cbd49b00d2985b8be65">SERIAL_MANAGER_WRITE_HANDLE_DEFINE</a>(s_serialWriteHandle1);</div>
-<div class="line">*   <span class="keyword">static</span> uint8_t s_nonBlockingWelcome1[] = <span class="stringliteral">&quot;This is non-blocking writing log for task1!\r\n&quot;</span>;</div>
-<div class="line">*   <a class="code" href="a00068.html#ga3d26249a8331e6ca17e9c60838b56d20">SerialManager_OpenWriteHandle</a>((<a class="code" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)serialHandle, (<a class="code" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>)s_serialWriteHandle1);</div>
-<div class="line">*   SerialManager_InstallTxCallback((<a class="code" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>)s_serialWriteHandle1,</div>
-<div class="line">*                                    Task1_SerialManagerTxCallback,</div>
-<div class="line">*                                    s_serialWriteHandle1);</div>
-<div class="line">*   SerialManager_WriteNonBlocking((<a class="code" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>)s_serialWriteHandle1,</div>
-<div class="line">*                                   s_nonBlockingWelcome1,</div>
-<div class="line">*                                   <span class="keyword">sizeof</span>(s_nonBlockingWelcome1) - 1U);</div>
-<div class="line">*  </div>
-</div><!-- fragment --><p> For task 2, </p>
-<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00068.html#ga33eef6cd25374cbd49b00d2985b8be65">SERIAL_MANAGER_WRITE_HANDLE_DEFINE</a>(s_serialWriteHandle2);</div>
-<div class="line">*   <span class="keyword">static</span> uint8_t s_nonBlockingWelcome2[] = <span class="stringliteral">&quot;This is non-blocking writing log for task2!\r\n&quot;</span>;</div>
-<div class="line">*   <a class="code" href="a00068.html#ga3d26249a8331e6ca17e9c60838b56d20">SerialManager_OpenWriteHandle</a>((<a class="code" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)serialHandle, (<a class="code" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>)s_serialWriteHandle2);</div>
-<div class="line">*   SerialManager_InstallTxCallback((<a class="code" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>)s_serialWriteHandle2,</div>
-<div class="line">*                                    Task2_SerialManagerTxCallback,</div>
-<div class="line">*                                    s_serialWriteHandle2);</div>
-<div class="line">*   SerialManager_WriteNonBlocking((<a class="code" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>)s_serialWriteHandle2,</div>
-<div class="line">*                                   s_nonBlockingWelcome2,</div>
-<div class="line">*                                   <span class="keyword">sizeof</span>(s_nonBlockingWelcome2) - 1U);</div>
-<div class="line">*  </div>
-</div><!-- fragment --> 
-</div>
-</div>
-<a class="anchor" id="gadb8df1d54da32e6de17680264ca4106a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_CloseWriteHandle </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
-          <td class="paramname"><em>writeHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function Closes a writing handle for the serial manager module.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">writeHandle</td><td>The serial manager module writing handle pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>The writing handle is closed. </td></tr>
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">enable</td><td>true is power on, false is power down. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga66915bf8f50a417620ef94951d1df4b8"></a>
+<a class="anchor" id="ga62429a2a668ae8bef49352256bbc6a48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_OpenReadHandle </td>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_TransferFunction </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
-          <td class="paramname"><em>readHandle</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga4cb15dfa790e535a38ec0b3ed86ff7b8">sdmmchost_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>content</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -876,136 +1348,49 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function Opens a reading handle for the serial manager module. The reading handle can not be opened multiple at the same time. The error code kStatus_SerialManager_Busy would be returned when the previous reading handle is not closed. And there can only be one buffer for receiving for the reading handle at the same time.</p>
+<p>Please note it is a thread safe function.</p>
+<dl class="section note"><dt>Note</dt><dd>the host transfer function support below functionality,<ol type="1">
+<li>Non-cache line size alignment check on the data buffer, it is means that no matter the data buffer used for data transfer is align with cache line size or not, sdmmc host driver will use the address directly.</li>
+<li>Cache line size alignment check on the data buffer, sdmmc host driver will check the data buffer address, if the buffer is not align with cache line size, sdmmc host driver will convert it to cache line size align buffer, the functionality is enabled by #define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 1 #define FSL_USDHC_ENABLE_SCATTER_GATHER_TRANSFER 1U If application would like to enable the cache line size align functionality, please make sure the SDMMCHOST_InstallCacheAlignBuffer is called before submit data transfer request and make sure the installing buffer size is not smaller than 2 * cache line size.</li>
+</ol>
+</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. </td></tr>
-    <tr><td class="paramname">readHandle</td><td>The serial manager module reading handle pointer. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00068.html#gae9206a431c26d9c557a0e32ab4d648e8" title="Defines the serial manager read handle. ">SERIAL_MANAGER_READ_HANDLE_DEFINE(readHandle)</a>; or uint32_t readHandle[((SERIAL_MANAGER_READ_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Error</td><td>An error occurred. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>The reading handle is opened. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Busy</td><td>Previous reading handle is not closed.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Example below shows how to use this API to read data. </p>
-<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00068.html#gae9206a431c26d9c557a0e32ab4d648e8">SERIAL_MANAGER_READ_HANDLE_DEFINE</a>(s_serialReadHandle);</div>
-<div class="line">*   <a class="code" href="a00068.html#ga66915bf8f50a417620ef94951d1df4b8">SerialManager_OpenReadHandle</a>((<a class="code" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)serialHandle, (<a class="code" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>)s_serialReadHandle);</div>
-<div class="line">*   <span class="keyword">static</span> uint8_t s_nonBlockingBuffer[64];</div>
-<div class="line">*   SerialManager_InstallRxCallback((<a class="code" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>)s_serialReadHandle,</div>
-<div class="line">*                                    APP_SerialManagerRxCallback,</div>
-<div class="line">*                                    s_serialReadHandle);</div>
-<div class="line">*   SerialManager_ReadNonBlocking((<a class="code" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>)s_serialReadHandle,</div>
-<div class="line">*                                  s_nonBlockingBuffer,</div>
-<div class="line">*                                  <span class="keyword">sizeof</span>(s_nonBlockingBuffer));</div>
-<div class="line">*  </div>
-</div><!-- fragment --> 
-</div>
-</div>
-<a class="anchor" id="ga09c8831eb6ca6e544881dcbf18dcb4a7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_CloseReadHandle </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
-          <td class="paramname"><em>readHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function Closes a reading for the serial manager module.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">readHandle</td><td>The serial manager module reading handle pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>The reading handle is closed. </td></tr>
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">content</td><td>transfer content. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3fab1d6bffd89459be9f23d40874248e"></a>
+<a class="anchor" id="gaeb989c127eb1ca6bc4a831220be0f384"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_WriteBlocking </td>
+          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMCHOST_ExecuteTuning </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
-          <td class="paramname"><em>writeHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is a blocking function, which polls the sending queue, waits for the sending queue to be empty. This function sends data using an interrupt method. The interrupt of the hardware could not be disabled. And There can only one buffer for transmission for the writing handle at the same time.</p>
-<dl class="section note"><dt>Note</dt><dd>The function <a class="el" href="a00068.html#ga3fab1d6bffd89459be9f23d40874248e" title="Transmits data with the blocking mode. ">SerialManager_WriteBlocking</a> and the function SerialManager_WriteNonBlocking cannot be used at the same time. And, the function SerialManager_CancelWriting cannot be used to abort the transmission of this function.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">writeHandle</td><td>The serial manager module handle pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
-    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>Successfully sent all data. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Busy</td><td>Previous transmission still not finished; data not all sent yet. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Error</td><td>An error occurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_ReadBlocking </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
-          <td class="paramname"><em>readHandle</em>, </td>
+          <td class="paramname"><em>tuningCmd</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>revBuf</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1014,101 +1399,81 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This is a blocking function, which polls the receiving buffer, waits for the receiving buffer to be full. This function receives data using an interrupt method. The interrupt of the hardware could not be disabled. And There can only one buffer for receiving for the reading handle at the same time.</p>
-<dl class="section note"><dt>Note</dt><dd>The function <a class="el" href="a00068.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb" title="Reads data with the blocking mode. ">SerialManager_ReadBlocking</a> and the function SerialManager_ReadNonBlocking cannot be used at the same time. And, the function SerialManager_CancelReading cannot be used to abort the transmission of this function.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">readHandle</td><td>The serial manager module handle pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Start address of the data to store the received data. </td></tr>
-    <tr><td class="paramname">length</td><td>The length of the data to be received. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>Successfully received all data. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Busy</td><td>Previous transmission still not finished; data not all received yet. </td></tr>
-    <tr><td class="paramname">kStatus_SerialManager_Error</td><td>An error occurred. </td></tr>
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
+    <tr><td class="paramname">tuningCmd</td><td>tuning command. </td></tr>
+    <tr><td class="paramname">revBuf</td><td>receive buffer pointer </td></tr>
+    <tr><td class="paramname">blockSize</td><td>tuning data block size. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga32cdccd6df5d87f17037f34cf9f1e416"></a>
+<a class="anchor" id="gac4d25fd8cb129e822223b868bdfa6c10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_EnterLowpower </td>
+          <td class="memname">void SDMMCHOST_Reset </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function is used to prepare to enter low power consumption.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>Successful operation. </td></tr>
+    <tr><td class="paramname">host</td><td>host handler </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaef5c404d43871f6d8f761b27dbf183fa"></a>
+<a class="anchor" id="ga8d6ed81a627153dfdfc9527193026490"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_ExitLowpower </td>
+          <td class="memname">void SDMMCHOST_ConvertDataToLittleEndian </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00512">sdmmchost_t</a> *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to restore from low power consumption.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SerialManager_Success</td><td>Successful operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga71bd55adb7a6a552ce5dac06b5794cea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">void SerialManager_SetLowpowerCriticalCb </td>
-          <td>(</td>
-          <td class="paramtype">const serial_manager_lowpower_critical_CBs_t *&#160;</td>
-          <td class="paramname"><em>pfCallback</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>wordSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>format</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pfCallback</td><td>Pointer to the function structure used to allow/disable lowpower. </td></tr>
+    <tr><td class="paramname">host</td><td>host handler. </td></tr>
+    <tr><td class="paramname">data</td><td>data buffer address. </td></tr>
+    <tr><td class="paramname">wordSize</td><td>data buffer size in word. </td></tr>
+    <tr><td class="paramname">format</td><td>data packet format. </td></tr>
   </table>
   </dd>
 </dl>

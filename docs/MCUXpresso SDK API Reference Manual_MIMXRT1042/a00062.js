@@ -1,39 +1,64 @@
 var a00062 =
 [
-    [ "sai_edma_handle_t", "a00062.html#a00471", [
-      [ "dmaHandle", "a00062.html#ac754f63e6faf24815240a7677eb4a908", null ],
-      [ "nbytes", "a00062.html#a061d53e53af802d59eca8bc3171297ce", null ],
-      [ "bytesPerFrame", "a00062.html#a999a7493ad74199568fa0ae9a1daba82", null ],
-      [ "channelMask", "a00062.html#a2bf42623069a53221cf96ebb8a21c47b", null ],
-      [ "channelNums", "a00062.html#a9db9a8663063da43c9edba463d90680b", null ],
-      [ "channel", "a00062.html#a2585391f7bbe7407bd405362ef9d9eb5", null ],
-      [ "count", "a00062.html#a66e701d5eed6e4d80fbd8b042fb73fc3", null ],
-      [ "state", "a00062.html#a6611961529129ff1165493033c5dc573", null ],
-      [ "callback", "a00062.html#adde936fb4e2daa1753c841f3d52e2533", null ],
-      [ "userData", "a00062.html#af8526618ff18f03496d39a9003a02d6a", null ],
-      [ "tcd", "a00062.html#a6270bea65d16835b479649d9083bfddc", null ],
-      [ "saiQueue", "a00062.html#a8d5ec64db292ea91cacf543c6fe4f22b", null ],
-      [ "transferSize", "a00062.html#a28d0ac4b3b16fd68dfbb8ecf303397a3", null ],
-      [ "queueUser", "a00062.html#a13a45007eebf06db42ed42bb83ee3dbd", null ],
-      [ "queueDriver", "a00062.html#a969d922d9b8b82ac4fee2d9bb63b6a5a", null ]
+    [ "rtwdog_work_mode_t", "a00062.html#a00478", [
+      [ "enableWait", "a00062.html#ab54bf4ab423e60be41368acdb2602439", null ],
+      [ "enableStop", "a00062.html#ae8caa5a6c04d0f3dcafba6ac6adb9905", null ],
+      [ "enableDebug", "a00062.html#ab26c42c1815cfdc9b8b5f759db9be94d", null ]
     ] ],
-    [ "FSL_SAI_EDMA_DRIVER_VERSION", "a00062.html#gadec154552382f7b68bce82ce829f3911", null ],
-    [ "sai_edma_callback_t", "a00062.html#gaeb6ca21880d8cd8f5f954d38bfa73d63", null ],
-    [ "SAI_TransferTxCreateHandleEDMA", "a00062.html#ga84f148e1d3fe186ce6604d637f89c2c1", null ],
-    [ "SAI_TransferRxCreateHandleEDMA", "a00062.html#ga44a719a507630fdcc25ba93690098a89", null ],
-    [ "SAI_TransferTxSetFormatEDMA", "a00062.html#ga78b693c7c4667056f74c4763f47c6e14", null ],
-    [ "SAI_TransferRxSetFormatEDMA", "a00062.html#ga69b84d866cc9c5736780276c668df495", null ],
-    [ "SAI_TransferTxSetConfigEDMA", "a00062.html#ga5295038a021787aef619bdd9f96981da", null ],
-    [ "SAI_TransferRxSetConfigEDMA", "a00062.html#gaed5d72de0d0aa0ac71de3222924e4aa7", null ],
-    [ "SAI_TransferSendEDMA", "a00062.html#ga7a2c125e1f975c9f718dcb820ac46f63", null ],
-    [ "SAI_TransferReceiveEDMA", "a00062.html#ga9060fb028d5a24d8763066981b079900", null ],
-    [ "SAI_TransferSendLoopEDMA", "a00062.html#ga1b62338a71194856549698e374d13cb0", null ],
-    [ "SAI_TransferReceiveLoopEDMA", "a00062.html#gaaf6043ff078868f35d4459dd2e112c0d", null ],
-    [ "SAI_TransferTerminateSendEDMA", "a00062.html#ga6b3db811719337e4f2172c66ceeb7933", null ],
-    [ "SAI_TransferTerminateReceiveEDMA", "a00062.html#ga819dcef593d48f3296ee858239802e26", null ],
-    [ "SAI_TransferAbortSendEDMA", "a00062.html#ga12925e07667cc1b27915aedd1f718a7a", null ],
-    [ "SAI_TransferAbortReceiveEDMA", "a00062.html#ga3bd586da5f41126cbfa92d2baa03620b", null ],
-    [ "SAI_TransferGetSendCountEDMA", "a00062.html#ga02aa0e441b0aada0f4875f28f832dc71", null ],
-    [ "SAI_TransferGetReceiveCountEDMA", "a00062.html#gae4a1100515e9a05bb61e0039288664a0", null ],
-    [ "SAI_TransferGetValidTransferSlotsEDMA", "a00062.html#ga33af2c1b3c360823ffdbb1348e586107", null ]
+    [ "rtwdog_config_t", "a00062.html#a00477", [
+      [ "enableRtwdog", "a00062.html#a4d385e66b0c28b471ad83fe2e6fc6a1b", null ],
+      [ "clockSource", "a00062.html#aff561a937f074058a0565d2ffded113b", null ],
+      [ "prescaler", "a00062.html#adf6d7a1cdf7d57cc6f2893d3eef8f0e2", null ],
+      [ "workMode", "a00062.html#af6a2f68b62b07a7021f877944a685c44", null ],
+      [ "testMode", "a00062.html#a82219c16b8f8486929b76b2378ea61aa", null ],
+      [ "enableUpdate", "a00062.html#a99c63818532637f61d00993753da6511", null ],
+      [ "enableInterrupt", "a00062.html#af397bc8e047c5572cfe977a1a094b04d", null ],
+      [ "enableWindowMode", "a00062.html#a005c4d1da33cdaa57cc868658969b963", null ],
+      [ "windowValue", "a00062.html#a9869a43ba272014de8f4b2f91ec45e10", null ],
+      [ "timeoutValue", "a00062.html#ab4192d93defc5943013d8376f708325d", null ]
+    ] ],
+    [ "WDOG_FIRST_WORD_OF_UNLOCK", "a00062.html#ga8825b35bd62726165737f5dc0f5f61e4", null ],
+    [ "WDOG_SECOND_WORD_OF_UNLOCK", "a00062.html#gae2018a4151df654f86822786500cf2d3", null ],
+    [ "WDOG_FIRST_WORD_OF_REFRESH", "a00062.html#ga10f1df824e5965d6413b2e892fd04659", null ],
+    [ "WDOG_SECOND_WORD_OF_REFRESH", "a00062.html#ga2a375c7e4d71e7f52e899bce0a9106ee", null ],
+    [ "FSL_RTWDOG_DRIVER_VERSION", "a00062.html#ga036d8fa82f101485bb1bef62fbe0efec", null ],
+    [ "rtwdog_clock_source_t", "a00062.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b", [
+      [ "kRTWDOG_ClockSource0", "a00062.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba89fe3caec9c47ea18afbea78fa7b75db", null ],
+      [ "kRTWDOG_ClockSource1", "a00062.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba0490435c4f8e6b5f2bfb4d4959ee6ce5", null ],
+      [ "kRTWDOG_ClockSource2", "a00062.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba596c695b96b5287f927f74d78577fe84", null ],
+      [ "kRTWDOG_ClockSource3", "a00062.html#gga106ba79a9a7b0863ca8555c5d8ad9b3bad51ba4630b31474e7d497d1defc3075a", null ]
+    ] ],
+    [ "rtwdog_clock_prescaler_t", "a00062.html#ga2a46bb420b0a97fc9d440ee7ef329ffa", [
+      [ "kRTWDOG_ClockPrescalerDivide1", "a00062.html#gga2a46bb420b0a97fc9d440ee7ef329ffaaffcd087724256907ae1e47f896461e78", null ],
+      [ "kRTWDOG_ClockPrescalerDivide256", "a00062.html#gga2a46bb420b0a97fc9d440ee7ef329ffaa1b8252427d181ff4de3e4ea7eb1aac52", null ]
+    ] ],
+    [ "rtwdog_test_mode_t", "a00062.html#gae84238ba96d9319d820c3319c5f7e526", [
+      [ "kRTWDOG_TestModeDisabled", "a00062.html#ggae84238ba96d9319d820c3319c5f7e526a62fe6bb45f28e5b1275bfa1aad708124", null ],
+      [ "kRTWDOG_UserModeEnabled", "a00062.html#ggae84238ba96d9319d820c3319c5f7e526ae12fd7134b26ac7e621f2117f3312598", null ],
+      [ "kRTWDOG_LowByteTest", "a00062.html#ggae84238ba96d9319d820c3319c5f7e526ab885cb05aaad282ee54fe47b8ad270cc", null ],
+      [ "kRTWDOG_HighByteTest", "a00062.html#ggae84238ba96d9319d820c3319c5f7e526aaf013b692ea93f0de8a9c47a814ac09d", null ]
+    ] ],
+    [ "_rtwdog_interrupt_enable_t", "a00062.html#ga4225d9230a4625186e9b65be501bbc24", [
+      [ "kRTWDOG_InterruptEnable", "a00062.html#gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a", null ]
+    ] ],
+    [ "_rtwdog_status_flags_t", "a00062.html#gab1ef76bc31ec6ca52a50e1aba88a08d8", [
+      [ "kRTWDOG_RunningFlag", "a00062.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38", null ],
+      [ "kRTWDOG_InterruptFlag", "a00062.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3", null ]
+    ] ],
+    [ "RTWDOG_GetDefaultConfig", "a00062.html#ga9b0f93e60a4ad521b60ea546e2b7cde5", null ],
+    [ "RTWDOG_Init", "a00062.html#gaf45b60f55a83c5f3632b4136a3ad2b52", null ],
+    [ "RTWDOG_Deinit", "a00062.html#ga470b1d21c8013531100e7c3c605046a7", null ],
+    [ "RTWDOG_Enable", "a00062.html#gab07abcef0c2d984783ab36df5b08ffa4", null ],
+    [ "RTWDOG_Disable", "a00062.html#ga7526eb9df0830431e942fcbca32ca6cd", null ],
+    [ "RTWDOG_EnableInterrupts", "a00062.html#ga69c0e214f7424205a23a902b688cb00d", null ],
+    [ "RTWDOG_DisableInterrupts", "a00062.html#ga58a299966ea5b0d72eab1e3a95916459", null ],
+    [ "RTWDOG_GetStatusFlags", "a00062.html#gabcee9521ed7f9e2106cbc8844c915910", null ],
+    [ "RTWDOG_EnableWindowMode", "a00062.html#ga6467fc58dc00affb0daf4df8c2edec9d", null ],
+    [ "RTWDOG_CountToMesec", "a00062.html#gafc86c177da23e2aea8980c9722f2d2af", null ],
+    [ "RTWDOG_ClearStatusFlags", "a00062.html#ga49c1f47ae1f5eacc9d33035a96919bd6", null ],
+    [ "RTWDOG_SetTimeoutValue", "a00062.html#ga1ef5c238172a1384ca3add569094505d", null ],
+    [ "RTWDOG_SetWindowValue", "a00062.html#ga8c32aa54a50e5ef0fc68945cb74549ad", null ],
+    [ "RTWDOG_Unlock", "a00062.html#gacac03752d33b0b906a9bc09c7b83d1d1", null ],
+    [ "RTWDOG_Refresh", "a00062.html#ga0d8b4744fc5ad161c8e5fbc47255328e", null ],
+    [ "RTWDOG_GetCounterValue", "a00062.html#ga8c3760e127cbcf22983a65d13c8a4bcd", null ]
 ];

@@ -1,7 +1,5 @@
 var a00278 =
 [
-    [ "LPUART CMSIS Driver", "a00279.html", null ],
-    [ "LPUART Driver", "a00049.html", "a00049" ],
-    [ "LPUART FreeRTOS Driver", "a00051.html", "a00051" ],
-    [ "LPUART eDMA Driver", "a00050.html", "a00050" ]
+    [ "FlexCAN Driver", "a00027.html", "a00027" ],
+    [ "FlexCAN eDMA Driver", "a00028.html", "a00028" ]
 ];

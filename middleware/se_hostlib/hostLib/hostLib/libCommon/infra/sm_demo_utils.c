@@ -68,7 +68,7 @@
 /* ENET clock frequency. */
 #if defined(CPU_MIMXRT1176DVMAA_cm7)
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#elif defined(CPU_MIMXRT1062DVL6A)
+#elif defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 #else
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
@@ -76,23 +76,25 @@
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 
+// P&T MW team to fix this properly when re-enabling example in SDK
 #ifdef EXAMPLE_USE_100M_ENET_PORT
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 extern phy_ksz8081_resource_t g_phy_resource;
 /* PHY operations. */
 #define EXAMPLE_PHY_OPS &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #else
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET1_PHY_ADDRESS
+extern phy_rtl8211f_resource_t g_phy_resource;
 /* PHY operations. */
-#define EXAMPLE_PHY_OPS phyrtl8211f_ops
+#define EXAMPLE_PHY_OPS &phyrtl8211f_ops
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif1_init
 #endif // EXAMPLE_USE_100M_ENET_PORT
+#define EXAMPLE_PHY_RESOURCE &g_phy_resource
 
 /* PHY operations. */
 #endif // (LPC_ENET)
@@ -419,19 +421,20 @@ int GetHandle_GPstorage(HLSE_OBJECT_INDEX index)
 
 #endif
 
-#if defined(LPC_ENET) || defined(LPC_WIFI)
-/*JSON utility function to check equality */
-int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s)
-{
-    if (tok->type == JSMN_STRING) {
-        if ((int)strlen(s) == tok->end - tok->start) {
-            if (strncmp(json + tok->start, s, (size_t)(tok->end - tok->start)) == 0) {
-                return 0;
-            }
-        }
-    }
-    return -1;
-}
-#endif
+// P&T MW team to fix this properly when re-enabling example in SDK
+//#if defined(LPC_ENET) || defined(LPC_WIFI)
+///*JSON utility function to check equality */
+//int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s)
+//{
+//    if (tok->type == JSMN_STRING) {
+//        if ((int)strlen(s) == tok->end - tok->start) {
+//            if (strncmp(json + tok->start, s, (size_t)(tok->end - tok->start)) == 0) {
+//                return 0;
+//            }
+//        }
+//    }
+//    return -1;
+//}
+//#endif
 
 #endif /* USE_RTOS */

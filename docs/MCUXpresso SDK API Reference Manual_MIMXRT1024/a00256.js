@@ -1,32 +1,20 @@
 var a00256 =
 [
-    [ "FSL_FLEXRAM_DRIVER_VERSION", "a00256.html#gae7b4a4bc48727db1cdc7851d2eb33d25", null ],
-    [ "FLEXRAM_ECC_ERROR_DETAILED_INFO", "a00256.html#ga753afc4abc676bea1fd173785f3e4df1", [
-      [ "kFLEXRAM_Read", "a00256.html#gga4caf8d8f829279fba122163d961608a4af3fc6642323a8ada0f6777d7f4a6376e", null ],
-      [ "kFLEXRAM_Write", "a00256.html#gga4caf8d8f829279fba122163d961608a4a385ea6c35cc58d010f554655fd135a2a", null ],
-      [ "kFLEXRAM_OCRAMAccessError", "a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556eaba5c335068cfa8f481899ecef329e079", null ],
-      [ "kFLEXRAM_DTCMAccessError", "a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556eaf37a97aa3a38990b880d359dae93a8fa", null ],
-      [ "kFLEXRAM_ITCMAccessError", "a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556ea676a0b6358eb31b6623c4499556af51d", null ],
-      [ "kFLEXRAM_InterruptStatusAll", "a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556eaa952a181d9000982402d3001c9a3814b", null ]
-    ] ],
-    [ "flexram_tcm_access_mode_t", "a00256.html#gaa473aadf12ac43c4288d5a8f951721a7", [
-      [ "kFLEXRAM_TCMAccessFastMode", "a00256.html#ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323", null ],
-      [ "kFLEXRAM_TCMAccessWaitMode", "a00256.html#ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011", null ],
-      [ "kFLEXRAM_TCMSize32KB", "a00256.html#ggab48899087cc647f0f791ed0c459adc53a74b5c142ac9edb5583e8889b9af4a6c0", null ],
-      [ "kFLEXRAM_TCMSize64KB", "a00256.html#ggab48899087cc647f0f791ed0c459adc53a47c4472f61015f0328f058f0a5202da1", null ],
-      [ "kFLEXRAM_TCMSize128KB", "a00256.html#ggab48899087cc647f0f791ed0c459adc53ab431382e96926968904f185135c85783", null ],
-      [ "kFLEXRAM_TCMSize256KB", "a00256.html#ggab48899087cc647f0f791ed0c459adc53a4955cd2b2ae58ff9e1f4035f6fc07912", null ],
-      [ "kFLEXRAM_TCMSize512KB", "a00256.html#ggab48899087cc647f0f791ed0c459adc53ac58032229d029c46cc94ac7b4d143c3e", null ]
-    ] ],
-    [ "FLEXRAM_Init", "a00256.html#gad8bd4333a61ae64e6ad396bf1c4e4f8a", null ],
-    [ "FLEXRAM_Deinit", "a00256.html#ga60031f87389fb038eb0236d06780e328", null ],
-    [ "FLEXRAM_GetInterruptStatus", "a00256.html#gabafedc98f7b19727c15b519fbb5622cc", null ],
-    [ "FLEXRAM_ClearInterruptStatus", "a00256.html#ga94fad29c4ce4f80e99127a86b964880a", null ],
-    [ "FLEXRAM_EnableInterruptStatus", "a00256.html#ga9846b45b429edc61e13d7643040f758c", null ],
-    [ "FLEXRAM_DisableInterruptStatus", "a00256.html#ga2af91e45db0c0ed8b36ccc536b75e68d", null ],
-    [ "FLEXRAM_EnableInterruptSignal", "a00256.html#ga047368992e49cf1771c6e22a451d681e", null ],
-    [ "FLEXRAM_DisableInterruptSignal", "a00256.html#ga557f1b09ff66836a1b884818a5d7ea33", null ],
-    [ "FLEXRAM_SetTCMReadAccessMode", "a00256.html#ga955668a7e7f3642c356afec976af4760", null ],
-    [ "FLEXRAM_SetTCMWriteAccessMode", "a00256.html#ga315d028e5ef0e55ae3ba711b5d45978d", null ],
-    [ "FLEXRAM_EnableForceRamClockOn", "a00256.html#gad2de915fd7534b8355f320aef9b8571b", null ]
+    [ "FSL_CACHE_DRIVER_VERSION", "a00256.html#gac954b8be2bb59a983a9594c59e4b4fa5", null ],
+    [ "L1CACHE_EnableICache", "a00256.html#gaea07bb3879fa96b03f1ecaa6bf821c74", null ],
+    [ "L1CACHE_DisableICache", "a00256.html#gafa6d1a14a0499342890eee0e104c8d96", null ],
+    [ "L1CACHE_InvalidateICache", "a00256.html#gabce0ccbe1684fef7eff231f3704025b6", null ],
+    [ "L1CACHE_InvalidateICacheByRange", "a00256.html#gaf66ed6d9a7b881ef98707861484d7530", null ],
+    [ "L1CACHE_EnableDCache", "a00256.html#ga52d071c691c4ce9ead828e086f07f457", null ],
+    [ "L1CACHE_DisableDCache", "a00256.html#gae6eb154e5afc3a877aad4155cb90bca9", null ],
+    [ "L1CACHE_InvalidateDCache", "a00256.html#gad6bb45d3f9feb8ed2a63b174d204f277", null ],
+    [ "L1CACHE_CleanDCache", "a00256.html#gab1dcfc930ee90724a807f69428a1f269", null ],
+    [ "L1CACHE_CleanInvalidateDCache", "a00256.html#ga49c6ba08328943022264442f6ce2c090", null ],
+    [ "L1CACHE_InvalidateDCacheByRange", "a00256.html#ga9baff800f4d60a09efc4e4ce309dd583", null ],
+    [ "L1CACHE_CleanDCacheByRange", "a00256.html#gad120776b1a7f2f3f21b2bf017dbab095", null ],
+    [ "L1CACHE_CleanInvalidateDCacheByRange", "a00256.html#ga4837708efaec2927416b268d75412361", null ],
+    [ "ICACHE_InvalidateByRange", "a00256.html#ga00cdccb5c53201a747f2a3e2009f43cc", null ],
+    [ "DCACHE_InvalidateByRange", "a00256.html#gab5c47d7193562d7a763b1bc1bd91b28c", null ],
+    [ "DCACHE_CleanByRange", "a00256.html#ga893959336987f85910fe98ab9f7f8648", null ],
+    [ "DCACHE_CleanInvalidateByRange", "a00256.html#gac20095b525889cf55c105658877c2c84", null ]
 ];

@@ -1,59 +1,96 @@
 var a00017 =
 [
-    [ "DCP AES blocking driver", "a00217.html", "a00217" ],
-    [ "DCP AES non-blocking driver", "a00218.html", "a00218" ],
-    [ "DCP HASH driver", "a00018.html", "a00018" ],
-    [ "dcp_work_packet_t", "a00017.html#a00303", null ],
-    [ "dcp_handle_t", "a00017.html#a00301", [
-      [ "channel", "a00017.html#a39ed7dd6a2962d2828d9493fd92280c0", null ],
-      [ "keySlot", "a00017.html#a71cde84117fa8d1c3e2d31463fe0ca9a", null ],
-      [ "swapConfig", "a00017.html#a2d15c1d34f59af1fbc90c82662f1b2c5", null ]
+    [ "dcdc_detection_config_t", "a00017.html#a00310", [
+      [ "enableXtalokDetection", "a00017.html#a26388a555904c467f343d5cee515f268", null ],
+      [ "powerDownOverVoltageDetection", "a00017.html#ade909492fceb456669197dc2375b66e0", null ],
+      [ "powerDownLowVlotageDetection", "a00017.html#a66c8245327afcaeaea7658dc07cd72f0", null ],
+      [ "powerDownOverCurrentDetection", "a00017.html#a6782ff659baff137d41d8945b5ae6e7c", null ],
+      [ "powerDownPeakCurrentDetection", "a00017.html#a260cd48342ce09a1b2c4c79c8d999b2c", null ],
+      [ "powerDownZeroCrossDetection", "a00017.html#ab101a2301403aa70d194c5180e18ca3a", null ],
+      [ "OverCurrentThreshold", "a00017.html#a2cbfaed67e0e2e90e77fce311a24e8c4", null ],
+      [ "PeakCurrentThreshold", "a00017.html#a918a386c698955495c5ae942f8c9d728", null ]
     ] ],
-    [ "dcp_context_t", "a00017.html#a00300", null ],
-    [ "dcp_config_t", "a00017.html#a00299", [
-      [ "gatherResidualWrites", "a00017.html#a9bf6c28d293292f7ab36414ac55d8e6b", null ],
-      [ "enableContextCaching", "a00017.html#ac5894cd7e28f23913baadfd40f77bc02", null ],
-      [ "enableContextSwitching", "a00017.html#a78b6fbfe15a7691babe04e1e8c2ff59a", null ],
-      [ "enableChannel", "a00017.html#afa9ac97dfb28115f1ee3dcec6e8eac9c", null ],
-      [ "enableChannelInterrupt", "a00017.html#a5f4c1eada870dae661aebe306c93df76", null ]
+    [ "dcdc_loop_control_config_t", "a00017.html#a00312", [
+      [ "enableCommonHysteresis", "a00017.html#aa585f6efdba3cb2bc66b4c658c0b0e80", null ],
+      [ "enableCommonThresholdDetection", "a00017.html#ad5a97673aa667b4aeb7549173d4e8516", null ],
+      [ "enableInvertHysteresisSign", "a00017.html#afc343fa7b91648dd8823d261c9cf4ab7", null ],
+      [ "enableRCThresholdDetection", "a00017.html#a9a547376d7c56bad98ea1effc3a45f84", null ],
+      [ "enableRCScaleCircuit", "a00017.html#a858dc72ad7c5c7d9222a88e38000aeaf", null ],
+      [ "complementFeedForwardStep", "a00017.html#a82a1dd02ed11c6788782084e2645a388", null ]
     ] ],
-    [ "FSL_DCP_DRIVER_VERSION", "a00017.html#ga5e6e0628adf52111c3174a5f97b4aa99", null ],
-    [ "_dcp_status", "a00017.html#ga59389883fbb9191933ba51f3111cf01d", [
-      [ "kStatus_DCP_Again", "a00017.html#gga59389883fbb9191933ba51f3111cf01da7c68d4a61e9323994193a7cb9a643746", null ]
+    [ "dcdc_low_power_config_t", "a00017.html#a00313", [
+      [ "enableOverloadDetection", "a00017.html#a0b5eac5db5131a800abf4d9094239a12", null ],
+      [ "enableAdjustHystereticValue", "a00017.html#a5ba90c8ec3b353714b1db3e3951b5013", null ],
+      [ "countChargingTimePeriod", "a00017.html#ae490cc4c07715bb317d3d67d964a3372", null ],
+      [ "countChargingTimeThreshold", "a00017.html#a201277744bf77d5a14a0ed9ecbe3ff54", null ]
     ] ],
-    [ "_dcp_ch_enable_t", "a00017.html#ga8f3d6a6108a5206cd9462a7bd3d60459", [
-      [ "kDCP_chDisable", "a00017.html#gga8f3d6a6108a5206cd9462a7bd3d60459a0c83a7a742d76ca14c153fbc183d10ff", null ],
-      [ "kDCP_ch0Enable", "a00017.html#gga8f3d6a6108a5206cd9462a7bd3d60459a1b1fc9b6c50a2d9629c98e90508bf272", null ],
-      [ "kDCP_ch1Enable", "a00017.html#gga8f3d6a6108a5206cd9462a7bd3d60459aedbf328bba0357a17ab7f837b153d970", null ],
-      [ "kDCP_ch2Enable", "a00017.html#gga8f3d6a6108a5206cd9462a7bd3d60459a640eb8bb142953fa34b0f134e30a231b", null ],
-      [ "kDCP_ch3Enable", "a00017.html#gga8f3d6a6108a5206cd9462a7bd3d60459a2d4a490eb2303702d6657652c70f7292", null ],
-      [ "kDCP_chEnableAll", "a00017.html#gga8f3d6a6108a5206cd9462a7bd3d60459a7004e39596effb975998db1d80532621", null ]
+    [ "dcdc_internal_regulator_config_t", "a00017.html#a00311", [
+      [ "enableLoadResistor", "a00017.html#ac44462711fb30cd01799e287a3a4791e", null ],
+      [ "feedbackPoint", "a00017.html#a7494dc737ae93a739c944037610372b2", null ]
     ] ],
-    [ "_dcp_ch_int_enable_t", "a00017.html#gafab55a2548cbb12c7703cc09d7de15b6", [
-      [ "kDCP_chIntDisable", "a00017.html#ggafab55a2548cbb12c7703cc09d7de15b6aead556c5f6954b959bcdd1e4d1d6bb10", null ],
-      [ "kDCP_ch0IntEnable", "a00017.html#ggafab55a2548cbb12c7703cc09d7de15b6a81462f919e60b86ad4c3f162ba1695c7", null ],
-      [ "kDCP_ch1IntEnable", "a00017.html#ggafab55a2548cbb12c7703cc09d7de15b6a3811ee00515751c0796430b3df2c0d6a", null ],
-      [ "kDCP_ch2IntEnable", "a00017.html#ggafab55a2548cbb12c7703cc09d7de15b6a58ffdbf876d392e731235ca2eba407fb", null ],
-      [ "kDCP_ch3IntEnable", "a00017.html#ggafab55a2548cbb12c7703cc09d7de15b6ac07c9d98ef9766353f794f4497a82452", null ]
+    [ "dcdc_min_power_config_t", "a00017.html#a00314", [
+      [ "enableUseHalfFreqForContinuous", "a00017.html#adbe01c99b380a3d872f7fd6f787ab7cc", null ]
     ] ],
-    [ "dcp_channel_t", "a00017.html#gabe988b448f40c3ff148c8751c1a93800", [
-      [ "kDCP_Channel0", "a00017.html#ggabe988b448f40c3ff148c8751c1a93800a9b7796c07ffcd4ae098abb20a20586c3", null ],
-      [ "kDCP_Channel1", "a00017.html#ggabe988b448f40c3ff148c8751c1a93800ac3140cbeefb23e61213db30c926e9763", null ],
-      [ "kDCP_Channel2", "a00017.html#ggabe988b448f40c3ff148c8751c1a93800a94768171706b0228cdc0246406e2ab95", null ],
-      [ "kDCP_Channel3", "a00017.html#ggabe988b448f40c3ff148c8751c1a93800aab2d665d78d62fae879bde90b9203618", null ]
+    [ "FSL_DCDC_DRIVER_VERSION", "a00017.html#gaead28d0a1704d502fa7e4d83448530d9", null ],
+    [ "_dcdc_status_flags_t", "a00017.html#gae715f6e4017ad893d5b131cb1b65bd97", [
+      [ "kDCDC_LockedOKStatus", "a00017.html#ggae715f6e4017ad893d5b131cb1b65bd97a88bc89752444c6db226ac58686c6dda4", null ]
     ] ],
-    [ "dcp_key_slot_t", "a00017.html#ga145621fe05551d1c60669870da0adf43", [
-      [ "kDCP_KeySlot0", "a00017.html#gga145621fe05551d1c60669870da0adf43a349ec618ee7086ea6e1bbccf855cccbe", null ],
-      [ "kDCP_KeySlot1", "a00017.html#gga145621fe05551d1c60669870da0adf43a48a43f854473e046eab93d3c074237cc", null ],
-      [ "kDCP_KeySlot2", "a00017.html#gga145621fe05551d1c60669870da0adf43af4919af09de44d8547abae866160f440", null ],
-      [ "kDCP_KeySlot3", "a00017.html#gga145621fe05551d1c60669870da0adf43aaeb39b1683029ec0990ff89456ab222f", null ],
-      [ "kDCP_OtpKey", "a00017.html#gga145621fe05551d1c60669870da0adf43a6e18f3e76ac307e36d44ec9655cc5c5d", null ],
-      [ "kDCP_OtpUniqueKey", "a00017.html#gga145621fe05551d1c60669870da0adf43a10e0d8054b2fd3f886694a5fd8651f51", null ],
-      [ "kDCP_PayloadKey", "a00017.html#gga145621fe05551d1c60669870da0adf43a21976048a18fef6b68767b24dafa0f0b", null ]
+    [ "dcdc_comparator_current_bias_t", "a00017.html#ga11a431a6377193c7ecb973f72fee13fa", [
+      [ "kDCDC_ComparatorCurrentBias50nA", "a00017.html#gga11a431a6377193c7ecb973f72fee13faab2be4fb74c74083b5a501e98469237fd", null ],
+      [ "kDCDC_ComparatorCurrentBias100nA", "a00017.html#gga11a431a6377193c7ecb973f72fee13faaf11efa682be88fcdc3dade737c672b0b", null ],
+      [ "kDCDC_ComparatorCurrentBias200nA", "a00017.html#gga11a431a6377193c7ecb973f72fee13faabbe35f83fd7ae207e6c513fcfc26cf29", null ],
+      [ "kDCDC_ComparatorCurrentBias400nA", "a00017.html#gga11a431a6377193c7ecb973f72fee13faa8a7dafad371962ccbc67385d6f812421", null ]
     ] ],
-    [ "dcp_swap_t", "a00017.html#gaab2a919815c5b2b35800ccac5a535bb7", null ],
-    [ "DCP_Init", "a00017.html#ga933c854a72dc9dc4aa5c419acef247ba", null ],
-    [ "DCP_Deinit", "a00017.html#ga0b9618e77ddda7528fa176a262614b1d", null ],
-    [ "DCP_GetDefaultConfig", "a00017.html#ga29b04db9db907101539c12a3130525f8", null ],
-    [ "DCP_WaitForChannelComplete", "a00017.html#ga132509d992e50d593f417de365408485", null ]
+    [ "dcdc_over_current_threshold_t", "a00017.html#gab1ee138d1d60e1357b602b5939890bd7", [
+      [ "kDCDC_OverCurrentThresholdAlt0", "a00017.html#ggab1ee138d1d60e1357b602b5939890bd7a5ebbf9b57fe2aef4b3a527c098351fc2", null ],
+      [ "kDCDC_OverCurrentThresholdAlt1", "a00017.html#ggab1ee138d1d60e1357b602b5939890bd7ac85f8a7eedeb6716fd01fa9943a928d6", null ],
+      [ "kDCDC_OverCurrentThresholdAlt2", "a00017.html#ggab1ee138d1d60e1357b602b5939890bd7afe4b9daeed02ac875ce992d3b3e48576", null ],
+      [ "kDCDC_OverCurrentThresholdAlt3", "a00017.html#ggab1ee138d1d60e1357b602b5939890bd7af51b51cf756df6e9753eae157bba3835", null ]
+    ] ],
+    [ "dcdc_peak_current_threshold_t", "a00017.html#gacea8ce1454590ef280751fc9ae4660e4", [
+      [ "kDCDC_PeakCurrentThresholdAlt0", "a00017.html#ggacea8ce1454590ef280751fc9ae4660e4a7fa50866827a30a4ca98def50c92d93d", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt1", "a00017.html#ggacea8ce1454590ef280751fc9ae4660e4a020052660522adca4311d50937784da2", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt2", "a00017.html#ggacea8ce1454590ef280751fc9ae4660e4a1a316a1d5d9b1a8dd90a26eade3c9730", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt3", "a00017.html#ggacea8ce1454590ef280751fc9ae4660e4af9c26a547765bb2b0c26d1d7102ae67c", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt4", "a00017.html#ggacea8ce1454590ef280751fc9ae4660e4a6ed3f7cd3e9c10b9d80458da6aee5c50", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt5", "a00017.html#ggacea8ce1454590ef280751fc9ae4660e4a0e40d22916e03c36c2c562b744cf563e", null ]
+    ] ],
+    [ "dcdc_count_charging_time_period_t", "a00017.html#gad5473e4ea54bf7ceb0d994dbbcf135c1", [
+      [ "kDCDC_CountChargingTimePeriod8Cycle", "a00017.html#ggad5473e4ea54bf7ceb0d994dbbcf135c1ae685b89096384a98737f39b2dde87861", null ],
+      [ "kDCDC_CountChargingTimePeriod16Cycle", "a00017.html#ggad5473e4ea54bf7ceb0d994dbbcf135c1a232c187a9f30ef865b1203bc645973fa", null ]
+    ] ],
+    [ "dcdc_count_charging_time_threshold_t", "a00017.html#ga2cd4c599e216c88088c4f4e2d3371c6d", [
+      [ "kDCDC_CountChargingTimeThreshold32", "a00017.html#gga2cd4c599e216c88088c4f4e2d3371c6dae17e5a516c544140045c1c6801a9ac4e", null ],
+      [ "kDCDC_CountChargingTimeThreshold64", "a00017.html#gga2cd4c599e216c88088c4f4e2d3371c6da74e57aeb24c45fc8018bd08b4d1082ce", null ],
+      [ "kDCDC_CountChargingTimeThreshold16", "a00017.html#gga2cd4c599e216c88088c4f4e2d3371c6da4c99e35bb7538e4aa165c6556ea9ca0e", null ],
+      [ "kDCDC_CountChargingTimeThreshold8", "a00017.html#gga2cd4c599e216c88088c4f4e2d3371c6daa570ad287107c1b54a846fdae2dd667b", null ]
+    ] ],
+    [ "dcdc_clock_source_t", "a00017.html#ga8035a76b241261c80ef27c1c2baf614b", [
+      [ "kDCDC_ClockAutoSwitch", "a00017.html#gga8035a76b241261c80ef27c1c2baf614ba598ff7757e17e93192bb02060b9e17f7", null ],
+      [ "kDCDC_ClockInternalOsc", "a00017.html#gga8035a76b241261c80ef27c1c2baf614ba9a9fba153517ab7aa481929ab112c7ce", null ],
+      [ "kDCDC_ClockExternalOsc", "a00017.html#gga8035a76b241261c80ef27c1c2baf614baa626d594c9a911bd6d8f36852ae535fd", null ]
+    ] ],
+    [ "DCDC_Init", "a00017.html#gade63427da706b28f4bc5fb3df32549fc", null ],
+    [ "DCDC_Deinit", "a00017.html#ga6edcfa7b584ed32abeba4aa1ead354b5", null ],
+    [ "DCDC_GetstatusFlags", "a00017.html#ga0e05ffe0195a4997353dd066266028e2", null ],
+    [ "DCDC_EnableOutputRangeComparator", "a00017.html#gad851aa409cd7a30afd61f1033650ddc4", null ],
+    [ "DCDC_SetClockSource", "a00017.html#ga2fae2a0e5c2bc54cc47fa4e6cbe53f37", null ],
+    [ "DCDC_GetDefaultDetectionConfig", "a00017.html#gabecb64bff81d824c22e7dd58962496b4", null ],
+    [ "DCDC_SetDetectionConfig", "a00017.html#ga88dcfe2c525f75e118e922ba398b4867", null ],
+    [ "DCDC_GetDefaultLowPowerConfig", "a00017.html#ga07748a20a7c73fd8be68c4e9ede83535", null ],
+    [ "DCDC_SetLowPowerConfig", "a00017.html#ga0b9c2837458d92e1924b899f883e0c6d", null ],
+    [ "DCDC_ResetCurrentAlertSignal", "a00017.html#ga0c4e86095eafae5ff4fba2a83eb76444", null ],
+    [ "DCDC_SetBandgapVoltageTrimValue", "a00017.html#ga57083b91091e830c66f01fb915883721", null ],
+    [ "DCDC_GetDefaultLoopControlConfig", "a00017.html#ga18d9f9a178e395a6f8412c60f1af99eb", null ],
+    [ "DCDC_SetLoopControlConfig", "a00017.html#gaf0b6cb34a3c948cdc225f8e1cb055e34", null ],
+    [ "DCDC_SetMinPowerConfig", "a00017.html#ga02d7fde9dea0d6e88559e28f6547c0eb", null ],
+    [ "DCDC_SetLPComparatorBiasValue", "a00017.html#ga98fb67e98a2393ff32ee5aa8877aded0", null ],
+    [ "DCDC_LockTargetVoltage", "a00017.html#ga017537be6f0c499b39abf56a6df58dba", null ],
+    [ "DCDC_AdjustTargetVoltage", "a00017.html#ga18a67ce4a510d87ddb60d049c5a2a413", null ],
+    [ "DCDC_AdjustRunTargetVoltage", "a00017.html#ga68b8a87cb61c4d6d6f12be19de101122", null ],
+    [ "DCDC_AdjustLowPowerTargetVoltage", "a00017.html#ga3ac5a0ad9ac0448b6f7d73eb7f53ad97", null ],
+    [ "DCDC_SetInternalRegulatorConfig", "a00017.html#ga156e3a02981fc97856c26a98ac5ef8e4", null ],
+    [ "DCDC_EnableImproveTransition", "a00017.html#ga26e177d70e32f43b64e3fa953efd8571", null ],
+    [ "DCDC_BootIntoDCM", "a00017.html#gab60fd96fbcd6971e217a16bb74ef85e3", null ],
+    [ "DCDC_BootIntoCCM", "a00017.html#gab7b765330b8a888f7e681cb0f9d6307b", null ]
 ];

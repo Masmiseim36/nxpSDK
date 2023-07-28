@@ -234,11 +234,13 @@ static int l2cap_accept_policy(struct bt_conn *conn)
 	int i;
 
 	if (l2cap_policy == L2CAP_POLICY_16BYTE_KEY) {
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 		uint8_t enc_key_size = bt_conn_enc_key_size(conn);
 
 		if (enc_key_size && enc_key_size < BT_ENC_KEY_SIZE_MAX) {
 			return -EPERM;
 		}
+#endif
 	} else if (l2cap_policy == L2CAP_POLICY_ALLOWLIST) {
 		for (i = 0; i < ARRAY_SIZE(l2cap_allowlist); i++) {
 			if (l2cap_allowlist[i] == conn) {

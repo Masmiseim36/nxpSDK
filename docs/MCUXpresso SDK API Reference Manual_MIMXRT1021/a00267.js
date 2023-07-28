@@ -1,7 +1,7 @@
 var a00267 =
 [
-    [ "LPUART CMSIS Driver", "a00268.html", null ],
-    [ "LPUART Driver", "a00046.html", "a00046" ],
-    [ "LPUART FreeRTOS Driver", "a00048.html", "a00048" ],
-    [ "LPUART eDMA Driver", "a00047.html", "a00047" ]
+    [ "FSL_LPI2C_FREERTOS_DRIVER_VERSION", "a00267.html#gabe1b685d26560cdb8a3eccf81d013a3f", null ],
+    [ "LPI2C_RTOS_Init", "a00267.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c", null ],
+    [ "LPI2C_RTOS_Deinit", "a00267.html#gacacb0612bfdcd7913be1cef8ad19fb9c", null ],
+    [ "LPI2C_RTOS_Transfer", "a00267.html#gab5359e4f864d7f21eebcab8d3229e963", null ]
 ];

@@ -45,7 +45,7 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
-    task_data->pipeline_type = pipeline_type;
+    task_data->pipeline_type[pipeline_index] = pipeline_type;
 
     /* Create the pipeline */
     ret = create_pipeline(&task_data->pipes[pipeline_index], pipeline_index, pipeline_type, &task_data->mq_out);
@@ -56,33 +56,35 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
     }
 
     /* Create each of the pipeline elements: AUDIOSRC, AUDIOSINK */
-    ret = create_element(&task_data->elems[ELEMENT_AUDIO_SRC_INDEX], TYPE_ELEMENT_AUDIO_SRC, 0);
+    ret = create_element(&task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], TYPE_ELEMENT_AUDIO_SRC, 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed:%d\n", ELEMENT_AUDIO_SRC_INDEX, ret);
         goto err_catch;
     }
 
-    ret = create_element(&task_data->elems[ELEMENT_FILE_SINK_INDEX], TYPE_ELEMENT_FILE_SINK, 0);
+    ret = create_element(&task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX], TYPE_ELEMENT_FILE_SINK, 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed:%d\n", ELEMENT_FILE_SINK_INDEX, ret);
         goto err_catch;
     }
 
-    element = (StreamElement *)task_data->elems[ELEMENT_FILE_SINK_INDEX];
+    element = (StreamElement *)task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX];
     /* Configure as push mode */
     element->sink_pad[0].scheduling = SCHEDULING_PUSH;
 
     /* Add each of the created elements to the pipeline */
-    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_SRC_INDEX], level++);
+    ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                               task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], level++);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed:%d\n", ELEMENT_AUDIO_SRC_INDEX, ret);
         goto err_catch;
     }
 
-    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_FILE_SINK_INDEX], level++);
+    ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                               task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX], level++);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed:%d\n", ELEMENT_FILE_SINK_INDEX, ret);
@@ -94,7 +96,8 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
      *    Level-0        Level-1(optional)  Level-2
      *   Audiosrc[src]->[sink]Queue[src]->[sink]Audio
      */
-    ret = link_elements(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], 0, task_data->elems[ELEMENT_FILE_SINK_INDEX], 0);
+    ret = link_elements(task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], 0,
+                        task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX], 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d) to element(%d) failed:%d\n",
@@ -110,7 +113,7 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
     prop.prop                      = PROP_AUDIOSRC_SET_DEVICE_NAME;
     prop.val                       = (uintptr_t)&audsrc_name;
 
-    ret = element_set_property(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -123,7 +126,7 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
     prop.prop = PROP_AUDIOSRC_SET_SAMPLE_RATE;
     prop.val  = STREAMER_AUDIO_SRC_DEFAULT_SAMPLE_RATE;
 
-    ret = element_set_property(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -136,7 +139,7 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
     prop.prop = PROP_AUDIOSRC_SET_DUMMY_TX_ENABLE;
     prop.val  = true;
 
-    ret = element_set_property(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -150,7 +153,7 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
     prop.val  = (uint32_t)AUDIOSRC_PCMRTOS;
     prop.prop = PROP_AUDIOSRC_SET_DEVICE_TYPE;
 
-    ret = element_set_property(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -165,7 +168,7 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
     prop.prop = PROP_FILESINK_RAW_WRITE_MODE;
     prop.val  = (uint8_t) true;
 
-    ret = element_set_property(task_data->elems[ELEMENT_FILE_SINK_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -180,7 +183,7 @@ int streamer_build_mic2file_pipeline(int8_t pipeline_index,
     prop.val  = (uintptr_t) out_dev_name;
 
     ret = element_set_property(
-                 task_data->elems[ELEMENT_FILE_SINK_INDEX],
+                 task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX],
                  prop.prop, prop.val);
 
     if (STREAM_OK != ret) {
@@ -210,7 +213,8 @@ int streamer_destroy_mic2file_pipeline(int8_t pipeline_index, STREAMER_T *task_d
     STREAMER_FUNC_ENTER(DBG_CORE);
 
     /* unlink elements in pipeline */
-    ret = unlink_elements(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], 0, task_data->elems[ELEMENT_FILE_SINK_INDEX], 0);
+    ret = unlink_elements(task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX], 0,
+                          task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX], 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to unlink audio src and audio sink\n");
@@ -218,14 +222,16 @@ int streamer_destroy_mic2file_pipeline(int8_t pipeline_index, STREAMER_T *task_d
     }
 
     /* remove_elements from pipeline*/
-    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_SRC_INDEX]);
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                  task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio src\n");
         return ret;
     }
 
-    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_FILE_SINK_INDEX]);
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                  task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio sink\n");
@@ -233,21 +239,21 @@ int streamer_destroy_mic2file_pipeline(int8_t pipeline_index, STREAMER_T *task_d
     }
 
     /* destroy elements*/
-    ret = destroy_element(task_data->elems[ELEMENT_AUDIO_SRC_INDEX]);
+    ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio src\n");
         return ret;
     }
-    task_data->elems[ELEMENT_AUDIO_SRC_INDEX] = (uintptr_t)NULL;
+    task_data->elems[pipeline_index][ELEMENT_AUDIO_SRC_INDEX] = (uintptr_t)NULL;
 
-    ret = destroy_element(task_data->elems[ELEMENT_FILE_SINK_INDEX]);
+    ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio sink\n");
         return ret;
     }
-    task_data->elems[ELEMENT_FILE_SINK_INDEX] = (uintptr_t)NULL;
+    task_data->elems[pipeline_index][ELEMENT_FILE_SINK_INDEX] = (uintptr_t)NULL;
 
     /* destroy pipeline*/
     ret = destroy_pipeline(task_data->pipes[pipeline_index]);

@@ -331,7 +331,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1015/drivers;../../../../../../../devices/MIMXRT1015;../../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1015/xip;../../../../../xip;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -367,7 +367,7 @@
             <ScatterFile>MIMXRT1015xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -528,16 +528,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.c</FilePath>
@@ -546,6 +536,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -633,6 +633,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -646,16 +656,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1079,7 +1079,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>ENABLE_RAM_VECTOR_TABLE, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>ENABLE_RAM_VECTOR_TABLE, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1015/drivers;../../../../../../../devices/MIMXRT1015;../../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1015/xip;../../../../../xip;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1115,7 +1115,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__ram_vector_table__=1" --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__ram_vector_table__=1" --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1276,16 +1276,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.c</FilePath>
@@ -1294,6 +1284,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1381,6 +1381,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1394,16 +1404,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1827,7 +1827,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1015/drivers;../../../../../../../devices/MIMXRT1015;../../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1015/xip;../../../../../xip;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1863,7 +1863,7 @@
             <ScatterFile>MIMXRT1015xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2024,16 +2024,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.c</FilePath>
@@ -2042,6 +2032,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2129,6 +2129,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2142,16 +2152,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2575,7 +2575,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>ENABLE_RAM_VECTOR_TABLE, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>ENABLE_RAM_VECTOR_TABLE, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1015/drivers;../../../../../../../devices/MIMXRT1015;../../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1015/xip;../../../../../xip;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -2611,7 +2611,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__ram_vector_table__=1" --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__ram_vector_table__=1" --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2772,16 +2772,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dmamux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.c</FilePath>
@@ -2790,6 +2780,16 @@
               <FileName>fsl_flexspi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_flexspi.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dmamux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2877,6 +2877,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2890,16 +2900,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>

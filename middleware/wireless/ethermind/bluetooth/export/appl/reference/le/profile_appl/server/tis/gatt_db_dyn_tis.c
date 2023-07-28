@@ -35,7 +35,6 @@ UINT16 GATT_CHAR_TIS_TIME_UPDATE_CP_INST;
 UINT16 GATT_CHAR_TIS_TIME_UPDATE_STATE_INST;
 UINT16 GATT_CHAR_TIS_TIME_W_DST_INST;
 
-UINT16 GATT_DB_MAX_ATTRIBUTES;
 /* --------------------------------------------- Static Global Variables */
 
 /* --------------------------------------------- Functions */

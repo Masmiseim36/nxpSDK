@@ -34,7 +34,7 @@
 FIL *pcm_file = NULL;
 #endif
 
-extern const uint8_t cci_decoder_type_conversion(DecoderType audio_type);
+extern uint8_t cci_decoder_type_conversion(DecoderType audio_type);
 
 /**
  * @brief Get data from a file source
@@ -346,7 +346,7 @@ int32_t ccidec_decode_frame(ElementDecoder *element)
             }
 
             cci_dec->buffer_index++;
-            if (cci_dec->buffer_index >= CASCFG_NUM_OF_PING_PONG_BUFFER)
+            if (cci_dec->buffer_index >= NUM_OF_PING_PONG_BUFFER)
             {
                 cci_dec->buffer_index = 0;
             }
@@ -580,11 +580,11 @@ uint8_t ccidec_sink_pad_activation_handler(StreamPad *pad, uint8_t active)
 
         /* packed_buffer[] will store the data to be sent to audiosink */
         cci_dec->unaligned_packed_buffer = OSA_MemoryAllocate(
-            (sizeof(AudioPacketHeader) + dec_out_frame_size + sizeof(uint32_t)) * CASCFG_NUM_OF_PING_PONG_BUFFER);
+            (sizeof(AudioPacketHeader) + dec_out_frame_size + sizeof(uint32_t)) * NUM_OF_PING_PONG_BUFFER);
 
         STREAMER_LOG_DEBUG(
             DBG_CCID, "[CCID] CCI unaligned_packed_buffer  %d\n",
-            (sizeof(AudioPacketHeader) + dec_out_frame_size + sizeof(uint32_t)) * CASCFG_NUM_OF_PING_PONG_BUFFER);
+            (sizeof(AudioPacketHeader) + dec_out_frame_size + sizeof(uint32_t)) * NUM_OF_PING_PONG_BUFFER);
         if (NULL == cci_dec->unaligned_packed_buffer)
         {
             STREAMER_LOG_CATA(DBG_CCID, ERRCODE_OUT_OF_MEMORY, "[CCID]Out of memory: unaligned_packed_buffer\n");
@@ -597,7 +597,7 @@ uint8_t ccidec_sink_pad_activation_handler(StreamPad *pad, uint8_t active)
         cci_dec->filesrc_buffer[0] =
             (uint8_t *)MEM4_ALIGN((uintptr_t)cci_dec->unaligned_filesrc_buffer[0] + sizeof(RawPacketHeader));
 
-        for (i = 0; i < CASCFG_NUM_OF_PING_PONG_BUFFER; i++)
+        for (i = 0; i < NUM_OF_PING_PONG_BUFFER; i++)
         {
             cci_dec->packed_buffer[i] =
                 (void *)MEM4_ALIGN((uintptr_t)cci_dec->unaligned_packed_buffer +

@@ -31,7 +31,7 @@ UINT16 GATT_CHAR_GLS_GL_MSRMNT_INST;
 UINT16 GATT_CHAR_GLS_GL_CNTXT_INST;
 UINT16 GATT_CHAR_GLS_GL_FEATURES_INST;
 UINT16 GATT_CHAR_GLS_GL_RACP_INST;
-UINT16 GATT_DB_MAX_ATTRIBUTES;
+
 /* --------------------------------------------- Static Global Variables */
 
 /* --------------------------------------------- Functions */
@@ -430,16 +430,14 @@ API_RESULT appl_gls_add_dis(void)
         GATT_SER_GLS_DEV_INFO_INST  = service_handle;
         /* ManufacturerName */
         {
-            /* Mindtree Limited */
-            UCHAR manufacturer_name[] = { 'M', 'i', 'n', 'd', 't', 'r', 'e', 'e', ' ', 'L', 'i', 'm', 'i', 't', 'e', 'd' };
             char_uuid.uuid_format     = ATT_16_BIT_UUID_FORMAT;
             char_uuid.uuid.uuid_16    = GATT_MANUFACTURER_NAME_CHARACTERISTIC;
 
             perm                      = GATT_DB_PERM_READ;
             property                  = GATT_DB_CHAR_READ_PROPERTY;
 
-            char_value.val            = manufacturer_name;
-            char_value.len            = sizeof(manufacturer_name);
+            char_value.val            = appl_manufacturer_name_ext;
+            char_value.len            = sizeof(APPL_MANUFACTURER_NAME);
             char_value.actual_len     = char_value.len;
 
             retval = BT_gatt_db_add_characteristic
@@ -689,8 +687,8 @@ API_RESULT appl_gls_add_dis(void)
 
         /* PnPID */
         {
-            /* Vendor: 0x006A[Mindtree], Product: 0x014D, Version: 0x100 */
-            UCHAR pnp_id[]         = { 0x01U, 0x6AU, 0x00U, 0x4DU, 0x01U, 0x00U, 0x01U };
+            /* Vendor: 0x0025[NXP], Product: 0x0000, Version: 0x0001 */
+            UCHAR pnp_id[]         = { 0x01U, 0x25U, 0x00U, 0x00U, 0x00U, 0x01U, 0x00U };
             char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
             char_uuid.uuid.uuid_16 = GATT_PNP_ID_CHARACTERISTIC;
 
@@ -739,7 +737,7 @@ API_RESULT appl_gls_add_gls(void)
     service_info.uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
     service_info.uuid.uuid.uuid_16 = GATT_GLUCOSE_SERVICE;
     service_info.link_req          = GATT_DB_SER_SUPPORT_LE_LINK_TYPE;
-    service_info.sec_req           = GATT_DB_SER_NO_SECURITY_PROPERTY;
+    service_info.sec_req           = (GATT_DB_SER_SECURITY_MODE1 | GATT_DB_SER_SECURITY_LEVEL1 | GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE);
 
     num_attr_handles = 30U;
 

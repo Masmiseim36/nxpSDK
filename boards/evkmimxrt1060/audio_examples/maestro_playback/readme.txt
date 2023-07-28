@@ -41,9 +41,9 @@ Type "help" to see the command list. Similar description will be displayed on se
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
@@ -76,6 +76,7 @@ Note:
     2. Undefine EAP_PROC in the project settings
 
 - The AAC decoder is only supported in MCUXpresso and ARMGCC.
+
 Running the demo
 ================
 When the example runs successfully, you should see similar output on the serial terminal as below:
@@ -95,3 +96,5 @@ Copyright  2022  NXP
 Known issues
 
 1. MP3 decoder has issues with some of the files. One of the channels can be sometimes distorted or missing parts of the signal.
+2. When using EAP crossover feature together with SSRC, after finishing the playback, it might be necessary to reset
+   the board in order to have correct sound output. Otherwise the sound output may be distorted.

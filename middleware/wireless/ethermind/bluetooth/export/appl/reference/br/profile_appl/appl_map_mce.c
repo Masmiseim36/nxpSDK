@@ -134,8 +134,8 @@ API_RESULT appl_map_mce_callback
                MAP_HANDLE_INFO * map_handle,
                UINT8             event_type,
                UINT16            event_result,
-               MAP_HEADERS     * event_data,
-               UINT16            event_datalen
+               MAP_HEADERS     * event_header,
+               UINT16            event_hdrlen
            );
 
 void appl_map_mce_sdp_callback
@@ -217,7 +217,7 @@ void main_map_mce_operations (void)
                 LOG_DEBUG("Enter MAP MSE's Bluetooth Device Address\n");
 
                 /* Read the BD_ADDR of Remote Device */
-                appl_get_bd_addr(mapc_bd_addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(mapc_bd_addr);
                 break;
 
             case 3:
@@ -272,6 +272,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 phandle = (1U == val)?
                     &mas_instance[handle].instance.handle:
                     &mns_instance[handle].handle;
@@ -307,6 +313,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 if (1U == val)
                 {
@@ -472,6 +484,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
 #ifndef APPL_REGISTER_PEER_BD_ADDR
                 LOG_DEBUG ("Enter peer device address: ");
                 appl_get_bd_addr (mapc_bd_addr);
@@ -526,6 +544,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 LOG_DEBUG ("Disconnecting on MAP MCE Instance %d\n", handle);
                 retval = BT_map_mce_disconnect (&mas_instance[handle].instance.handle);
                 LOG_DEBUG ("Retval - 0x%04X\n", retval);
@@ -537,6 +561,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 LOG_DEBUG ("Closing on MAP MCE Instance %d\n", handle);
                 retval = BT_map_mce_transport_close (&mas_instance[handle].instance.handle);
                 LOG_DEBUG ("Retval - 0x%04X\n", retval);
@@ -547,6 +577,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 LOG_DEBUG ("Requesting to update inbox...\n");
                 retval = BT_map_mce_update_inbox (&mas_instance[handle].instance.handle);
@@ -560,6 +596,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 LOG_DEBUG ("Enter folder to set, (1:Child, 2:Parent, 3:Root): ");
                 scanf ("%d", &choice);
@@ -603,6 +645,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
@@ -684,6 +732,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
@@ -979,6 +1033,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
 
@@ -1067,6 +1127,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");;
+                    break;
+                }
+
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&set_info, 0, sizeof(MAP_REQUEST_STRUCT));
 
@@ -1144,6 +1210,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 BT_mem_set(&set_info, 0, sizeof(MAP_REQUEST_STRUCT));
                 MAP_INIT_HEADER_STRUCT(name_req);
@@ -1325,6 +1397,7 @@ void main_map_mce_operations (void)
                 scanf ("%s", msg_file);
 
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                BT_mem_set(mapc_file_object, 0, sizeof(mapc_file_object));
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)MAP_ROOT_FOLDER_BASE,
@@ -1411,6 +1484,14 @@ void main_map_mce_operations (void)
                 sent += actual;
                 remaining = fsize - sent;
 
+                /* Adjust the file read pointer to the actual bytes transmitted */
+                if (body_req.length != actual)
+                {
+                    printf("read length = %d, actual sent = %d\n", body_req.length, actual);
+                    printf("Adjusting the file read pointer\n");
+                    (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+                }
+
                 /* If operation has failed or completed, perform cleanup */
                 if ((API_SUCCESS != retval) || (0U == remaining))
                 {
@@ -1436,6 +1517,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&set_info, 0, sizeof(MAP_REQUEST_STRUCT));
@@ -1472,6 +1559,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG("Select Application Instance: ");
                 scanf("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 LOG_DEBUG("Closing on MAP MCE Notification Instance %d\n", handle);
                 retval = BT_map_mce_ns_transport_close(&mas_instance[handle].instance.handle);
                 LOG_DEBUG("Retval - 0x%04X\n", retval);
@@ -1482,6 +1575,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 LOG_DEBUG ("Requesting Abort...\n");
                 retval = BT_map_mce_abort
@@ -1497,6 +1596,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
@@ -1547,6 +1652,12 @@ void main_map_mce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
@@ -1737,6 +1848,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&set_info, 0, sizeof(MAP_REQUEST_STRUCT));
 
@@ -1873,6 +1990,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
 
@@ -1935,6 +2058,12 @@ void main_map_mce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (MAP_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&get_info, 0, sizeof(MAP_REQUEST_STRUCT));
 
@@ -1989,7 +2118,7 @@ void main_map_mce_operations (void)
             case 50:
                 LOG_DEBUG("Enter the path: ");
                 scanf("%s", path);
-                EM_fops_list_directory(path);
+                (void)BT_fops_list_directory(path);
                 break;
 
             default:
@@ -2262,6 +2391,7 @@ API_RESULT appl_map_mce_callback
                 if (NULL == map_list_fp)
                 {
                     /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                    BT_mem_set(mapc_file_object, 0, sizeof(mapc_file_object));
                     (void)BT_vfops_create_object_name
                     (
                         (UCHAR *)MAP_ROOT_FOLDER_BASE,
@@ -2515,6 +2645,7 @@ API_RESULT appl_map_mce_callback
             if (NULL == map_list_fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                BT_mem_set(mapc_file_object, 0, sizeof(mapc_file_object));
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)MAP_ROOT_FOLDER_BASE,
@@ -2553,7 +2684,7 @@ API_RESULT appl_map_mce_callback
             }
 
             BT_mem_set(xml_obj.file, 0x00, sizeof(xml_obj.file));
-            BT_str_n_copy(xml_obj.file, mapc_file_object, (sizeof(xml_obj.file) - 1));
+            BT_str_n_copy(xml_obj.file, mapc_file_object,sizeof(mapc_file_object)-1);
             xml_obj.use_buffer = BT_FALSE;
             xml_obj.pStart = NULL;
 
@@ -2713,6 +2844,7 @@ API_RESULT appl_map_mce_callback
             if (NULL == map_list_fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                BT_mem_set(mapc_file_object, 0, sizeof(mapc_file_object));
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)MAP_ROOT_FOLDER_BASE,
@@ -2878,6 +3010,7 @@ API_RESULT appl_map_mce_callback
             if (NULL == map_raw_fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                BT_mem_set(mapc_file_object, 0, sizeof(mapc_file_object));
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)MAP_ROOT_FOLDER_BASE,
@@ -2908,6 +3041,7 @@ API_RESULT appl_map_mce_callback
             if (NULL == map_parsed_fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                BT_mem_set(mapc_file_object, 0, sizeof(mapc_file_object));
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)MAP_ROOT_FOLDER_BASE,
@@ -3327,6 +3461,7 @@ API_RESULT appl_map_mce_callback
             if (NULL == fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                BT_mem_set(mapc_file_object, 0, sizeof(mapc_file_object));
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)MAP_ROOT_FOLDER_BASE,
@@ -3407,6 +3542,14 @@ API_RESULT appl_map_mce_callback
 
             sent += actual;
             remaining = fsize - sent;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_req.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_req.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
 
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
@@ -3782,13 +3925,13 @@ void map_bmsg_parser_cb
     {
     case OBJECT_TOKEN_GRP_NAME:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "GROUP NAME ---> ");
+        fprintf (map_parsed_fp, "GROUP NAME ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     case OBJECT_TOKEN_PROP_NAME:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property NAME ---> ");
+        fprintf (map_parsed_fp, "Property NAME ---> ");
 #endif /* HAVE_OBJECT_PARSER */
 
         param_id = cb_param.keyword_id;
@@ -3796,13 +3939,13 @@ void map_bmsg_parser_cb
 
     case OBJECT_TOKEN_PROP_VAL:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property VALUE ---> ");
+        fprintf (map_parsed_fp, "Property VALUE ---> ");
 #endif /* HAVE_OBJECT_PARSER */
 
         if (cb_param.parser_result & OBJECT_RESULT_PARTIAL_PARSED)
         {
 #ifdef HAVE_OBJECT_PARSER
-            fLOG_DEBUG (map_parsed_fp, "<Partial value> ");
+            fprintf (map_parsed_fp, "<Partial value> ");
 #endif /* HAVE_OBJECT_PARSER */
         }
 
@@ -3912,24 +4055,24 @@ void map_bmsg_parser_cb
 
     case OBJECT_TOKEN_PROP_PARAM_NAME:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM NAME ---> ");
+        fprintf (map_parsed_fp, "Property PARAM NAME ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     case OBJECT_TOKEN_PROP_PARAM_VAL:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM VALUE ---> ");
+        fprintf (map_parsed_fp, "Property PARAM VALUE ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     case OBJECT_TOKEN_ERROR:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "***ERROR*** ---> ");
+        fprintf (map_parsed_fp, "***ERROR*** ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     default:
-        LOG_DEBUG("Invalid Keyword Type: %d\n", cb_param.keyword_type);
+        printf("Invalid Keyword Type: %d\n", cb_param.keyword_type);
         break;
     }
 
@@ -4005,17 +4148,17 @@ void map_bmsg_parser_cb
     }
 
 #ifdef HAVE_OBJECT_PARSER
-    fLOG_DEBUG (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
+    fprintf (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
 
     for (i = 0U; i < cb_param.value_len; i++)
     {
-        fLOG_DEBUG (map_parsed_fp, "%c", cb_param.value [i]);
+        fprintf (map_parsed_fp, "%c", cb_param.value [i]);
     }
-    fLOG_DEBUG (map_parsed_fp, "\n");
+    fprintf (map_parsed_fp, "\n");
 
     if (0U != (cb_param.parser_result & 0x01U))
     {
-        fLOG_DEBUG (map_parsed_fp, "Folded Line Detected\n");
+        fprintf (map_parsed_fp, "Folded Line Detected\n");
     }
 #endif /* HAVE_OBJECT_PARSER */
 }
@@ -4041,24 +4184,24 @@ void map_vcard_parser_cb
     {
     case OBJECT_TOKEN_GRP_NAME:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "GROUP NAME ---> ");
+        fprintf (map_parsed_fp, "GROUP NAME ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     case OBJECT_TOKEN_PROP_NAME:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property NAME ---> ");
+        fprintf (map_parsed_fp, "Property NAME ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         vcard_param_id = cb_param.keyword_id;
         break;
 
     case OBJECT_TOKEN_PROP_VAL:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property VALUE ---> ");
+        fprintf (map_parsed_fp, "Property VALUE ---> ");
 
         if (cb_param.parser_result & OBJECT_RESULT_PARTIAL_PARSED)
         {
-            fLOG_DEBUG (map_parsed_fp, "<Partial value> ");
+            fprintf (map_parsed_fp, "<Partial value> ");
         }
 #endif /* HAVE_OBJECT_PARSER */
 
@@ -4128,39 +4271,39 @@ void map_vcard_parser_cb
 
     case OBJECT_TOKEN_PROP_PARAM_NAME:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM NAME ---> ");
+        fprintf (map_parsed_fp, "Property PARAM NAME ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     case OBJECT_TOKEN_PROP_PARAM_VAL:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM VALUE ---> ");
+        fprintf (map_parsed_fp, "Property PARAM VALUE ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     case OBJECT_TOKEN_ERROR:
 #ifdef HAVE_OBJECT_PARSER
-        fLOG_DEBUG (map_parsed_fp, "***ERROR*** ---> ");
+        fprintf (map_parsed_fp, "***ERROR*** ---> ");
 #endif /* HAVE_OBJECT_PARSER */
         break;
 
     default:
-        LOG_DEBUG("Invalid Keyword: %d\n", cb_param.keyword_type);
+        printf("Invalid Keyword: %d\n", cb_param.keyword_type);
         break;
     }
 
 #ifdef HAVE_OBJECT_PARSER
-    fLOG_DEBUG (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
+    fprintf (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
 
     for (i = 0U; i < cb_param.value_len; i++)
     {
-        fLOG_DEBUG (map_parsed_fp, "%c", cb_param.value [i]);
+        fprintf (map_parsed_fp, "%c", cb_param.value [i]);
     }
-    fLOG_DEBUG (map_parsed_fp, "\n");
+    fprintf (map_parsed_fp, "\n");
 
     if (cb_param.parser_result & 0x01U)
     {
-        fLOG_DEBUG (map_parsed_fp, "Folded Line Detected\n");
+        fprintf (map_parsed_fp, "Folded Line Detected\n");
     }
 #endif /* HAVE_OBJECT_PARSER*/
 }

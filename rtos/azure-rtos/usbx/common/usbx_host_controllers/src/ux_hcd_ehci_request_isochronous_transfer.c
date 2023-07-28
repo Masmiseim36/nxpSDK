@@ -109,8 +109,8 @@ UX_ENDPOINT                     *endpoint;
 UX_EHCI_PERIODIC_LINK_POINTER   lp;
 UX_EHCI_HSISO_ED                *ied;
 UX_TRANSFER                     **head;
-UX_TRANSFER                     **tail;
-UX_TRANSFER                     **first_new;
+UX_TRANSFER                     **tail = NULL;
+UX_TRANSFER                     **first_new = NULL;
 UX_TRANSFER                     *request_list;
 UCHAR                           start = UX_FALSE;
 

@@ -39,7 +39,7 @@ void appl_avctp_test_menu (int choice);
 API_RESULT avctp_ntf_cb
            ( UCHAR  event_type,
              UINT16 event_result,
-             AVCTP_HANDLE *avctp_handle,
+             AVCTP_HANDLE *handle,
              void  *event_data,
              UINT16 event_datalen );
 

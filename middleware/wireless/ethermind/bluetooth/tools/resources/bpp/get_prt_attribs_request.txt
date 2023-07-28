@@ -8,8 +8,23 @@ s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
 <u:GetPrinterAttributes xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
 <RequestedPrinterAttributes>
 <PrinterAttribute>PrinterName </PrinterAttribute>
+<PrinterAttribute>PrinterLocation </PrinterAttribute>
 <PrinterAttribute>PrinterState </PrinterAttribute>
 <PrinterAttribute>PrinterStateReasons </PrinterAttribute>
+<PrinterAttribute>PrinterGeneralCurrentOperator </PrinterAttribute>
+<PrinterAttribute>DocumentFormatsSupported </PrinterAttribute>
+<PrinterAttribute>ImageFormatsSupported </PrinterAttribute>
+<PrinterAttribute>ColorSupported </PrinterAttribute>
+<PrinterAttribute>MaxCopiesSupported </PrinterAttribute>
+<PrinterAttribute>SidesSupported </PrinterAttribute>
+<PrinterAttribute>NumberUpSupported </PrinterAttribute>
+<PrinterAttribute>OrientationsSupported </PrinterAttribute>
+<PrinterAttribute>MediaSizesSupported </PrinterAttribute>
+<PrinterAttribute>MediaTypesSupported </PrinterAttribute>
+<PrinterAttribute>MediaLoaded </PrinterAttribute>
+<PrinterAttribute>PrintQualitySupported </PrinterAttribute>
+<PrinterAttribute>QueuedJobCount </PrinterAttribute>
+<PrinterAttribute>OperationStatus </PrinterAttribute>
 </RequestedPrinterAttributes>
 </u:GetPrinterAttributes>
 </s:Body>

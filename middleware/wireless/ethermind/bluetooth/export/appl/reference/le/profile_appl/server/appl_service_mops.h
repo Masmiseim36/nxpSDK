@@ -19,6 +19,10 @@
 /* GATT DB Generic Header Include */
 #include "gatt_db.h"
 
+#if ((defined BASIC) && (defined GATT_DB))
+#include "appl_basic_mops.h"
+#endif
+
 #if ((defined BPS) && (defined GATT_DB))
 #include "appl_bps_mops.h"
 #endif
@@ -69,6 +73,11 @@
 
 #if ((defined TIS) && (defined GATT_DB))
 #include "appl_tis_mops.h"
+#endif
+
+
+#if ((defined PTS) && (defined GATT_DB))
+#include "appl_pts_mops.h"
 #endif
 
 /* --------------------------------------------- Global Definitions */

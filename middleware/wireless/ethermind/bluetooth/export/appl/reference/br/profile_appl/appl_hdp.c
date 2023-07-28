@@ -63,17 +63,16 @@ DECL_STATIC HDP_HANDLE  appl_hdp_handle;
 DECL_STATIC UCHAR       rsp_params[14U], cmd_rsp[16U];
 
 /* HDP peer BD_ADDR */
-static UCHAR appl_hdp_peer_bd_addr[BT_BD_ADDR_SIZE];
+DECL_STATIC UCHAR appl_hdp_peer_bd_addr[BT_BD_ADDR_SIZE];
 
-UINT8   send_sync_set_rsp, send_sync_info_ind;
-UCHAR   read_clock_in_progress;
-UINT16  req_accr, sync_lead_time, ts_samp_accuracy, appl_clk_hdp_handle;
-UINT16  sync_info_ind_interval, ts_native_accuracy;
-UINT32  req_bt_inst, g_bt_clk_value;
-UINT64  ts_clk;
+DECL_STATIC UINT8   send_sync_set_rsp, send_sync_info_ind;
+DECL_STATIC UINT16  req_accr, sync_lead_time, ts_samp_accuracy, appl_clk_hdp_handle;
+DECL_STATIC UINT16  sync_info_ind_interval, ts_native_accuracy;
+DECL_STATIC UINT32  req_bt_inst, g_bt_clk_value;
+DECL_STATIC UINT64  ts_clk;
 
-BT_timer_handle appl_hdp_timer_handle = BT_TIMER_HANDLE_INIT_VAL;
-BT_timer_handle appl_hdp_timer_handle1 = BT_TIMER_HANDLE_INIT_VAL;
+DECL_STATIC BT_timer_handle appl_hdp_timer_handle = BT_TIMER_HANDLE_INIT_VAL;
+DECL_STATIC BT_timer_handle appl_hdp_timer_handle1 = BT_TIMER_HANDLE_INIT_VAL;
 
 #endif  /* HDP_CLOCK_SYNC */
 
@@ -113,10 +112,11 @@ static const char hdp_options[] = "\n\
     31.  Set Reliable Channel Configuration\n\
 \n\
     50.  Send Echo Request \n\
+    51.  Send incorrect Echo Request \n\
 Your Choice  \n";
 
 #else /* HDP_CLOCK_SYNC */
-char hdp_options[] = "\n\
+static const char hdp_options[] = "\n\
 -------------- HDP Menu ---------------\n\
      0.  Exit \n\
      1.  Refresh \n\
@@ -140,6 +140,7 @@ char hdp_options[] = "\n\
     31.  Set Reliable Channel Configuration\n\
 \n\
     50.  Send Echo Request \n\
+    51.  Send incorrect Echo Request \n\
 Your Choice  \n";
 #endif /* HDP_CLOCK_SYNC */
 
@@ -169,19 +170,19 @@ DECL_STATIC HDP_MD_PARAMS *appl_ch_params;
 DECL_STATIC UCHAR appl_hdp_data[APPL_HDP_DATA_SIZE];
 
 /* L2CAP Configurations for reliable data channel */
-L2CAP_CONFIG_OPTION appl_rlbl_data_l2cap_config;
+DECL_STATIC L2CAP_CONFIG_OPTION appl_rlbl_data_l2cap_config;
 
 /* L2CAP Configurations for streaming data channel */
-L2CAP_CONFIG_OPTION appl_strm_data_l2cap_config;
+DECL_STATIC L2CAP_CONFIG_OPTION appl_strm_data_l2cap_config;
 
 /* L2CAP Configurations for control channel */
-L2CAP_CONFIG_OPTION appl_cntrl_l2cap_config;
+DECL_STATIC L2CAP_CONFIG_OPTION appl_cntrl_l2cap_config;
 
 /* Structure containing the role to MDEP ID mapping */
-HDP_MDEP appl_mdep[HDP_APPL_MAX_MDEP_IDS];
+DECL_STATIC HDP_MDEP appl_mdep[HDP_APPL_MAX_MDEP_IDS];
 
 /* Array of Control Channels */
-HDP_APPL_CNTRL_CHNL cntrl_chnls[HDP_APPL_MAX_CNTRL_CHNLS];
+DECL_STATIC HDP_APPL_CNTRL_CHNL cntrl_chnls[HDP_APPL_MAX_CNTRL_CHNLS];
 
 DECL_STATIC L2CAP_CONFIG_OPTION appl_dflt_ch_l2cap_params;
 
@@ -260,6 +261,7 @@ DECL_STATIC HDP_MDEP_DATA_TYPE hdp_mdep_data_type[] =
 
 /* HDP Echo Request */
 DECL_STATIC UCHAR appl_hdp_echo_req_payload[] = {'H', 'D', 'P', ' ', 'E', 'C', 'H', 'O'};
+DECL_STATIC UCHAR appl_hdp_echo_req_incorrect_payload[] = {'H', 'D', 'P', ' ', 'E', 'C', 'H', 'O', ' ', 'I', 'N', 'C', 'O', 'R', 'R', 'E', 'C', 'T', ' ', 'D', 'A', 'T', 'A'};
 DECL_STATIC UCHAR appl_hdp_waiting_for_echo_rsp;
 
 /* ----------------------------------------- Static Function Declarations */
@@ -475,7 +477,7 @@ API_RESULT hdp_appl_get_cntrl_chnl_id
 
 
 /**
- * To get the data chnl array instance in the cntrl_chnl array instance
+ * To get the data channel array instance in the cntrl_chnls array
  * corresponding to mcap provided mdl_id
  */
 API_RESULT hdp_appl_get_data_chnl_id
@@ -539,7 +541,7 @@ API_RESULT hdp_appl_get_free_data_chnl_id
     {
         LOG_DEBUG
         (
-            "[***ERR***]:[MCL %04X]: No free data channel instance available,"
+            "[***ERR***]:[MCL %04X] hdp_appl_get_free_data_chnl_id: No free data channel instance available,"
             " delete any existing data channel to create new one\n",
             hdp_appl_cntrl_chnl_id
         );
@@ -688,7 +690,56 @@ API_RESULT hdp_appl_check_rel_data_chnls
     return retval;
 }
 
+/**
+ * Function return API_SUCCESS if all data channels are deleted
+ */
+API_RESULT hdp_appl_delete_all_data_chnls
+           (
+               UCHAR * bd_addr
+           )
+{
+    UINT16 chnl_index;
+    UINT16 mdl_index;
+    API_RESULT retval;
 
+    /* Init */
+    retval = API_SUCCESS;
+
+    for (chnl_index = 0U; chnl_index < HDP_APPL_MAX_CNTRL_CHNLS; chnl_index++)
+    {
+        if (NULL == bd_addr)
+        {
+            LOG_DEBUG("Deleting data channels for all HDP entities\n");
+            cntrl_chnls[chnl_index].rel_data_chnl_flag = 0x00U;
+
+            for (mdl_index = 0U; mdl_index < HDP_APPL_MAX_MDL_IDS; mdl_index++)
+            {
+                cntrl_chnls[chnl_index].mcap_mdl_id[mdl_index] = HDP_APPL_INVALID_ID;
+            }
+        }
+        else if (0 == (BT_mem_cmp(cntrl_chnls[chnl_index].bd_addr, bd_addr, BT_BD_ADDR_SIZE)))
+        {
+            LOG_DEBUG("Deleting All data channels for HDP entity %d\n", chnl_index);
+            cntrl_chnls[chnl_index].rel_data_chnl_flag = 0x00U;
+
+            for (mdl_index = 0U; mdl_index < HDP_APPL_MAX_MDL_IDS; mdl_index++)
+            {
+                cntrl_chnls[chnl_index].mcap_mdl_id[mdl_index] = HDP_APPL_INVALID_ID;
+            }
+            break;
+        }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
+        }
+    }
+
+#ifdef HDP_APPL_STORAGE
+    hdp_appl_storage_write();
+#endif  /* HDP_APPL_STORAGE */
+
+    return retval;
+}
 
 #ifdef HDP_APPL_STORAGE
 
@@ -1290,7 +1341,8 @@ API_RESULT hdp_appl_cb
                    if ((event_len != sizeof(appl_hdp_echo_req_payload)) ||
                        (0 != BT_mem_cmp (appl_hdp_echo_req_payload, event_params, event_len)))
                    {
-                       LOG_DEBUG ("Echo Response does not match\n");
+                       LOG_DEBUG ("\nEcho Response does not match\n");
+                       LOG_DEBUG ("\nUse HDP menu options to delete Data channel and disconnect Control Channel\n");
                    }
                    else
                    {
@@ -1362,7 +1414,7 @@ API_RESULT hdp_appl_cb
             LOG_DEBUG ("[MCL %04X]: Requested bt_clk time %08X and timestamp %010llX\n",
             handle->mcl_id, req_bt_inst, ts_clk);
 
-            if (0xffffffffU == req_bt_inst)
+            if (0xFFFFFFFFU == req_bt_inst)
             {
                 UINT32 val;
                 retval = BT_stop_timer (appl_hdp_timer_handle1);
@@ -1371,9 +1423,6 @@ API_RESULT hdp_appl_cb
                 HDP_WRITE_TIMESTAMP_SYNC_TIME ((&cmd_rsp[4U]),(UINT64)ts_clk);
                 val = 0x0000U;
                 HDP_WRITE_TIMESTAMP_SAMPLE_ACCURACY (&cmd_rsp[12U],(UINT16)val);
-
-                sync_info_ind_interval = (req_accr / ts_native_accuracy);
-                LOG_DEBUG("sync_info_ind_interval = %08x\n", sync_info_ind_interval);
 
                 /**
                  * Since req_bt_inst is ffffffff, the Sync-Slave shall
@@ -1388,23 +1437,46 @@ API_RESULT hdp_appl_cb
                              cmd_rsp
                          );
 
-                /**
-                 * Read the BT clock and start the timer to send the
-                 * sync_ind if “TimeStamp_UpdateInformation” is set to 1
-                 */
-                retval = BT_hci_read_clock(1U, appl_clk_hdp_handle);
-                if (retval != API_SUCCESS)
+                if (1U == send_sync_info_ind)
                 {
-                    LOG_DEBUG("[MCL %04X]: Failed to Read BT Piconet Clock\n",
-                        handle->mcl_id);
-                }
-                else
-                {
-                    retval = BT_stop_timer(appl_hdp_timer_handle1);
-                    /* Setting send_sync_set_rsp to 0 as sync_set_rsp is already sent */
-                    send_sync_set_rsp = 0U;
-                }
+                    if (ts_native_accuracy == 0U)
+                    {
+                        LOG_DEBUG("Native Accuracy is not set.\n");
+                        LOG_DEBUG("Check if Sync Capability procedure is performed.\n");
+                    }
+                    else
+                    {
+                        /**
+                         *  MD_SYNC_INFO_IND indicator to be called every Time-Stamp Update Interval
+                         *  and is calculated as the TimeStamp_RequiredAccuracy (provided by the Sync-Master
+                         *  as part of the MD_SYNC_CAP_REQ command) divided by the TimeStamp_NativeAccuracy
+                         *  (provided by the Sync-Slave as part of the MD_SYNC_CAP_RSP response).
+                         *
+                         *  For example, if the Sync-Master indicates a TimeStamp_RequiredAccuracy of 1000ppm,
+                         *  and the Sync-Slave indicates a worst case TimeStamp_NativeAccuracy of 20ppm,
+                         *  the Sync-Slave is required to send a MD_SYNC_INFO_IND to the Sync-Master
+                         *  at least every 1000/20 or 50 seconds.
+                         */
+                        sync_info_ind_interval = ((req_accr + (ts_native_accuracy - 1)) / ts_native_accuracy);
 
+                        /**
+                         * Read the BT clock and start the timer to send the
+                         * sync_ind if "TimeStamp_UpdateInformation" is set to 1
+                         */
+                        retval = BT_hci_read_clock(1U, appl_clk_hdp_handle);
+                        if (retval != API_SUCCESS)
+                        {
+                            LOG_DEBUG("[MCL %04X]: Failed to Read BT Piconet Clock\n",
+                            handle->mcl_id);
+                        }
+                        else
+                        {
+                            retval = BT_stop_timer(appl_hdp_timer_handle1);
+                            /* Setting send_sync_set_rsp to 0 as sync_set_rsp is already sent */
+                            send_sync_set_rsp = 0U;
+                        }
+                    }
+                }
 
                 LOG_DEBUG ("[MCL %04X]: Synchronization Response Sent with Result "
                 "%04X\n",handle->mcl_id,retval);
@@ -1431,11 +1503,19 @@ API_RESULT hdp_appl_cb
                 }
                 else
                 {
+                    /**
+                     * If the BluetoothClock_SyncTime is set to another valid value
+                     * (see MD_SYNC_SET_RSP description for details), the Sync - Slave
+                     * shall set the Time - Stamp Clock to the TimeStamp_SyncTime indicated
+                     * value when the Bluetooth Clock time reaches the Baseband Half - Slot Instant
+                     * defined in the BluetoothClock_SyncTime and then shall respond
+                     * with a MD_SYNC_SET_RSP.
+                     */
                     retval = BT_hci_read_clock(1U, appl_clk_hdp_handle);
                     if (retval != API_SUCCESS)
                     {
                         LOG_DEBUG("[MCL %04X]: Failed to Read BT Piconet Clock\n",
-                            handle->mcl_id);
+                        handle->mcl_id);
                     }
                     else
                     {
@@ -1572,23 +1652,43 @@ void appl_hdp_timer_cb (void *args, UINT16 len)
     if (1U == send_sync_info_ind)
     {
         appl_hdp_timer_handle1 = BT_TIMER_HANDLE_INIT_VAL;
-        sync_info_ind_interval = (req_accr / ts_native_accuracy);
-        retval = BT_start_timer
-                 (
-                     &appl_hdp_timer_handle1,
-                     sync_info_ind_interval,
-                     appl_hdp_sync_info_cb,
-                     NULL,
-                     0U
-                 );
 
-        if (retval != API_SUCCESS)
+        if (ts_native_accuracy == 0U)
         {
-            LOG_DEBUG ("Start timer failed for sending sync info indication\n");
+            LOG_DEBUG("Native Accuracy is not set.\n");
+            LOG_DEBUG("Check if Sync Capability procedure is performed.\n");
         }
         else
         {
-            LOG_DEBUG ("Timer started for %04X secs\n", sync_info_ind_interval);
+            /**
+             *  MD_SYNC_INFO_IND indicator to be called every Time-Stamp Update Interval
+             *  and is calculated as the TimeStamp_RequiredAccuracy (provided by the Sync-Master
+             *  as part of the MD_SYNC_CAP_REQ command) divided by the TimeStamp_NativeAccuracy
+             *  (provided by the Sync-Slave as part of the MD_SYNC_CAP_RSP response).
+             *
+             *  For example, if the Sync-Master indicates a TimeStamp_RequiredAccuracy of 1000ppm,
+             *  and the Sync-Slave indicates a worst case TimeStamp_NativeAccuracy of 20ppm,
+             *  the Sync-Slave is required to send a MD_SYNC_INFO_IND to the Sync-Master
+             *  at least every 1000/20 or 50 seconds.
+             */
+            sync_info_ind_interval = ((req_accr + (ts_native_accuracy - 1)) / ts_native_accuracy);
+            retval = BT_start_timer
+                     (
+                         &appl_hdp_timer_handle1,
+                         sync_info_ind_interval,
+                         appl_hdp_sync_info_cb,
+                         NULL,
+                         0U
+                     );
+
+            if (retval != API_SUCCESS)
+            {
+                LOG_DEBUG ("Start timer failed for sending sync info indication\n");
+            }
+            else
+            {
+                LOG_DEBUG ("Timer started for %04X secs\n", sync_info_ind_interval);
+            }
         }
     }
 }
@@ -2069,8 +2169,11 @@ API_RESULT hdp_appl_hci_event_ind_cb
 #endif /* HDP_CLOCK_SYNC */
             break;
 
+        case HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT:
+            break;
+
         default:
-            LOG_DEBUG("Invalid Event Type: 0x%02X\n", event_type);
+            /* LOG_DEBUG("Invalid Event Type: 0x%02X\n", event_type); */
             break;
     }
 
@@ -2147,12 +2250,12 @@ void main_hdp_operations (void)
     BT_LOOP_FOREVER()
     {
         fflush(stdout);
-        printf ("%s",hdp_options);
+        LOG_DEBUG ("%s",hdp_options);
         scanf ("%d",&choice);
         invalid_role_flag = 0;
         menu_choice = choice;
 
-        if (((choice >= 12U) && (choice < 23U)) || (50U == choice))
+        if (((choice >= 12U) && (choice < 23U)) || (50U == choice) || (51U == choice))
         {
             hdp_appl_display_chnls ();
             LOG_DEBUG ("Enter the Control Channel Id\n");
@@ -2176,7 +2279,7 @@ void main_hdp_operations (void)
 
             hdp_handle.mcl_id = (UINT16)ctrl_chnl_id;
 
-            if ((choice >= 14U && choice <= 19U && choice != 17U) || (50U == choice))
+            if ((choice >= 14U && choice <= 19U && choice != 17U) || (50U == choice) || (51U == choice))
             {
                 LOG_DEBUG("Enter the Data Channel Id\n");
                 scanf("%x",&data_chnl_id);
@@ -2208,7 +2311,7 @@ void main_hdp_operations (void)
 
         case 3: /* Register BD_ADDR of peer device */
             LOG_DEBUG("Please enter BD ADDR of peer HDP\n");
-            appl_get_bd_addr(appl_hdp_peer_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_hdp_peer_bd_addr);
             break;
 
         case 4:
@@ -3050,6 +3153,17 @@ void main_hdp_operations (void)
                 &hdp_handle,
                 appl_hdp_echo_req_payload,
                 sizeof(appl_hdp_echo_req_payload)
+            );
+            break;
+
+        case 51: /* Send Echo Request */
+            LOG_DEBUG ("[MCL %04X]:[MDL %04X]: Sending Echo Req of %d bytes\n",
+            hdp_handle.mcl_id,hdp_handle.mdl_id, sizeof(appl_hdp_echo_req_incorrect_payload));
+            (BT_IGNORE_RETURN_VALUE) appl_hdp_send_echo_request
+            (
+                &hdp_handle,
+                appl_hdp_echo_req_incorrect_payload,
+                sizeof(appl_hdp_echo_req_incorrect_payload)
             );
             break;
 

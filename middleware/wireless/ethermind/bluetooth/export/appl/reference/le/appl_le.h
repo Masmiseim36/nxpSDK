@@ -25,7 +25,12 @@
 
 #include "fsm_defines.h"
 #include "gatt_defines.h"
+
+#define INCLUDE_NIFACE
+
+#ifdef INCLUDE_NIFACE
 #include "niface.h"
+#endif /* INCLUDE_NIFACE */
 
 #ifdef BT_DUAL_MODE
 #include "db_gen.h"
@@ -279,7 +284,7 @@ API_RESULT appl_delete_device
 
 API_RESULT appl_set_att_instance
            (
-               /* IN */  ATT_HANDLE     * att_instace,
+               /* IN */  ATT_HANDLE     * att_instance,
                /* OUT */ APPL_HANDLE    * handle
            );
 

@@ -36,7 +36,7 @@
 #define APPL_LE_CREDIT 10U
 #define APPL_L2CA_RECV_CREDIT_LWM 2U
 
-L2CAP_PSM_CBFC appl_l2cap_psm =
+DECL_STATIC L2CAP_PSM_CBFC appl_l2cap_psm =
 {
     appl_l2ca_connect_ind_cb,
     appl_l2ca_connect_cnf_cb,
@@ -54,12 +54,22 @@ L2CAP_PSM_CBFC appl_l2cap_psm =
     appl_l2ca_data_write_cb
 };
 
+#ifdef L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT
+L2CAP_CBFC_CONNECT_PARAM connect_param =
+{
+    APPL_LE_CO_MTU,
+    APPL_LE_CO_MPS,
+    APPL_LE_CREDIT,
+    0x0000
+};
+#else /* L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT */
 L2CAP_CBFC_CONNECT_PARAM connect_param =
 {
     APPL_LE_CO_MTU,
     APPL_LE_CO_MPS,
     APPL_LE_CREDIT
 };
+#endif /* L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT */
 
 DECL_STATIC UCHAR * appl_data_buffer;
 
@@ -69,7 +79,7 @@ DECL_STATIC UCHAR transfer_char = 0x00U;
 DECL_STATIC UINT16 appl_le_co_peer_mtu = 0x0000U;
 
 #ifdef APPL_LE_L2CAP_CONN_AUTO_ACCEPT
-UCHAR appl_l2cap_cbfc_automatic_mode = BT_TRUE;
+DECL_STATIC UCHAR appl_l2cap_cbfc_automatic_mode = BT_TRUE;
 #endif /* APPL_LE_L2CAP_CONN_AUTO_ACCEPT */
 
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
@@ -77,33 +87,33 @@ UCHAR appl_l2cap_cbfc_automatic_mode = BT_TRUE;
 
 /* ----------------------------------------- External Global Variables */
 
-
 /* ----------------------------------------- Exported Global Variables */
 
-
 /* ----------------------------------------- Static Global Variables */
-static const char l2cap_options[] = "\n\
-========= LE L2CAP Menu ================== \n\
-    0. Exit. \n\
-    1. Refresh \n\
+DECL_STATIC DECL_CONST CHAR l2cap_options[] = "\n\
+========= LE L2CAP Menu ==================\n\
+  0. Exit\n\
+  1. Refresh\n\
 \n\
-    2. Register Callback.\n\
-    3. Send Connection Update Request. \n\
-    4. Send Connection Update Response. \n\
+  2. Register LE Signalling Channel Callback\n\
+  3. Send Connection Update Request\n\
+  4. Send Connection Update Response\n\
 \n\
-   10. Register PSM.\n\
-   11. Connect to Remote PSM\n\
-   12. Accept Remote Connection on Local PSM.\n\
-   13. Send Data on Channel\n\
-   14. Send Transfer Credits\n\
-   15. Disconnect Channel\n\
+ 10. Register L2CAP CBFC SPSM\n\
+ 11. Connect to Remote SPSM\n\
+ 12. Accept Remote Connection on Local SPSM\n\
+ 13. Send Data on Channel\n\
+ 14. Send Transfer Credits\n\
+ 15. Disconnect Channel\n\
+ 16. Unregister L2CAP CBFC SPSM\n\
 \n\
-   20. Set Auto Response Mode\n\
+ 20. Set Auto Response Mode\n\
 \n\
-   50. Send Bulk Data on Channel\n\
+ 30. Set Current CBFC MTU/MPS/Credit Values\n\
+ 31. Get Current CBFC MTU/MPS/Credit Values\n\
+\n\
+ 50. Send Bulk Data on Channel\n\
 Your Option ?";
-
-
 
 /* ----------------------------------------- Functions */
 
@@ -151,7 +161,7 @@ void main_l2cap_le_operations(void)
 
         case 3:
             CONSOLE_OUT("Enter BD_ADDR : ");
-            appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
 
             CONSOLE_OUT("Enter bd_addr_type : ");
             CONSOLE_IN("%X", &read_val);
@@ -196,7 +206,7 @@ void main_l2cap_le_operations(void)
 
         case 4:
             CONSOLE_OUT("Enter BD_ADDR : ");
-            appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
 
             CONSOLE_OUT("Enter bd_addr_type : ");
             CONSOLE_IN("%X", &read_val);
@@ -243,7 +253,7 @@ void main_l2cap_le_operations(void)
 
         case 11:
             CONSOLE_OUT("Enter BD_ADDR : ");
-            appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
 
             CONSOLE_OUT("Enter bd_addr_type : ");
             CONSOLE_IN("%X", &read_val);
@@ -366,6 +376,29 @@ void main_l2cap_le_operations(void)
             }
             break;
 
+        case 16:
+            {
+#ifndef L2CAP_NO_UNREGISTER_LE_PSM
+                CONSOLE_OUT("Enter the PSM to Unregister (0x): ");
+                CONSOLE_IN("%x", &read_val);
+
+                appl_l2cap_psm.psm = (UINT16)read_val;
+                retval = l2cap_cbfc_unregister_psm (appl_l2cap_psm.psm);
+
+                if(retval != API_SUCCESS)
+                {
+                    CONSOLE_OUT("ERROR!!! retval = 0x%04X", retval);
+                }
+                else
+                {
+                    CONSOLE_OUT("PSM 0x%04X Unregister Successful!!\n", appl_l2cap_psm.psm);
+                }
+#else /* L2CAP_NO_UNREGISTER_LE_PSM */
+                CONSOLE_OUT("Unregister L2CAP CBFC PSM Feature Not Enabled!\n");
+#endif /* L2CAP_NO_UNREGISTER_LE_PSM */
+            }
+            break;
+
         case 20:
 #ifdef APPL_LE_L2CAP_CONN_AUTO_ACCEPT
             CONSOLE_OUT("Enter mode (0: Non-automatic, 1: Automatic) : ");
@@ -374,6 +407,65 @@ void main_l2cap_le_operations(void)
 #else /* APPL_LE_L2CAP_CONN_AUTO_ACCEPT */
             CONSOLE_OUT("Compilation flag APPL_LE_L2CAP_CONN_AUTO_ACCEPT Disabled!\n");
 #endif /* APPL_LE_L2CAP_CONN_AUTO_ACCEPT */
+            break;
+
+        case 30:
+            {
+                UCHAR t_config_option;
+
+                CONSOLE_OUT(
+                "\nCurrent L2CAP CBFC MTU=%d, MPS=%d, Credits=%d\n",
+                connect_param.mtu, connect_param.mps, connect_param.credit);
+
+                CONSOLE_OUT("Set New Values for What?\n1. MTU\n2. MPS:\n3. Credits:\n");
+                CONSOLE_IN("%d", &read_val);
+                t_config_option = (UCHAR)read_val;
+
+                /* Set MTU value */
+                if (1 == t_config_option)
+                {
+                    CONSOLE_OUT("Enter Desired MTU Value to be used in CoC req/res [in Dec]: ");
+                    CONSOLE_IN("%d", &read_val);
+                    if (0 != read_val)
+                    {
+                        connect_param.mtu = (UINT16)read_val;
+                    }
+                }
+
+                /* Set MPS value */
+                if (2 == t_config_option)
+                {
+                    CONSOLE_OUT("Enter Desired MPS Value to be used in CoC req/res [in Dec]: ");
+                    CONSOLE_IN("%d", &read_val);
+                    if (0 != read_val)
+                    {
+                        connect_param.mps = (UINT16)read_val;
+                    }
+                }
+
+                /* Set Credits value */
+                if (3 == t_config_option)
+                {
+                    CONSOLE_OUT("Enter Desired Credit Value to be used in CoC req/res [in Dec]: ");
+                    CONSOLE_IN("%d", &read_val);
+                    if (0 != read_val)
+                    {
+                        connect_param.credit = (UINT16)read_val;
+                    }
+                }
+
+                CONSOLE_OUT(
+                "\nUpdated values of L2CAP CBFC MTU=%d, MPS=%d, Credits=%d\n",
+                connect_param.mtu, connect_param.mps, connect_param.credit);
+            }
+            break;
+
+        case 31:
+            {
+                CONSOLE_OUT(
+                "\nCurrent L2CAP CBFC MTU=%d, MPS=%d, Credits=%d\n",
+                connect_param.mtu, connect_param.mps, connect_param.credit);
+            }
             break;
 
         case 50:
@@ -644,13 +736,13 @@ API_RESULT appl_l2ca_connect_cnf_cb
      "\n -> appl_l2ca_connect_cnf_cb from Device %02X, lcid %04X, response 0x%04X\n",
     (*handle), lcid, response);
 
-#ifdef L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT
-    CONSOLE_OUT("Remote CID - 0x%04X\n", param->cid);
-#endif /* L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT */
-
     /* Print MTU, MPS and Credit, on success response */
     if (L2CAP_CONNECTION_SUCCESSFUL == response)
     {
+#ifdef L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT
+        CONSOLE_OUT("Remote CID - 0x%04X\n", param->cid);
+#endif /* L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT */
+
         CONSOLE_OUT (
         "\n MTU:0x%04X MPS:0x%04X Credit:0x%04X\n", param->mtu, param->mps, param->credit);
 

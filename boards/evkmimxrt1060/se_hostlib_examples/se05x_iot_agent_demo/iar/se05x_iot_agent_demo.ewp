@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -236,7 +236,9 @@
           <state>FREEDOM</state>
           <state>LPC_ENET</state>
           <state>EXAMPLE_USE_100M_ENET_PORT</state>
+          <state>NXP_IOT_AGENT_USE_COREJSON</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>PB_FIELD_32BIT</state>
           <state>EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1</state>
@@ -250,7 +252,7 @@
           <state>USE_RTOS</state>
           <state>mqttconfigENABLE_METRICS=0</state>
           <state>SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</state>
-          <state>MCUXPRESSO_SDK</state>
+          <state>LWIP_DNS=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -331,7 +333,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050,Pe188,Pa089,Pe546,Pe167,Pe144,Pa183,Pa084  --diag_suppress Pa167,Pe177,Pe546</state>
+          <state>--diag_suppress Pa082,Pa050,Pe188,Pa089,Pe546,Pe167,Pe144,Pa183,Pa084  --diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -376,7 +378,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/demos/ksdk/se05x/iot_agent</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/demos/ksdk/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/platform</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls</state>
@@ -389,13 +390,11 @@
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/examples/common/logging</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -404,9 +403,10 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/ex/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
@@ -419,17 +419,19 @@
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/platform</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/ex/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/interface</state>
           <state>$PROJ_DIR$/../../../../../middleware/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/corepkcs11/source/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/template</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -551,7 +553,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -757,7 +759,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1168,7 +1170,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1255,7 +1257,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1272,7 +1274,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1295,7 +1297,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1374,7 +1376,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1393,7 +1395,9 @@
           <state>FREEDOM</state>
           <state>LPC_ENET</state>
           <state>EXAMPLE_USE_100M_ENET_PORT</state>
+          <state>NXP_IOT_AGENT_USE_COREJSON</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>PB_FIELD_32BIT</state>
           <state>EXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1</state>
@@ -1407,7 +1411,7 @@
           <state>USE_RTOS</state>
           <state>mqttconfigENABLE_METRICS=0</state>
           <state>SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</state>
-          <state>MCUXPRESSO_SDK</state>
+          <state>LWIP_DNS=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1488,7 +1492,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050,Pe188,Pa089,Pe546,Pe167,Pe144,Pa183,Pa084  --diag_suppress Pa167,Pe177,Pe546</state>
+          <state>--diag_suppress Pa082,Pa050,Pe188,Pa089,Pe546,Pe167,Pe144,Pa183,Pa084  --diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1533,7 +1537,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/demos/ksdk/se05x/iot_agent</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/demos/ksdk/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/ex/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/platform</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/platform/mbedtls</state>
@@ -1546,13 +1549,11 @@
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/src/protobuf</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/nxp_iot_agent/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls</state>
           <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/examples/common/logging</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -1561,9 +1562,10 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/ex/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
@@ -1576,17 +1578,19 @@
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/platform</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/ex/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/coremqtt/source/interface</state>
           <state>$PROJ_DIR$/../../../../../middleware/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/backoffalgorithm/source/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/corepkcs11/source/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/template</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1708,7 +1712,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1914,7 +1918,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2339,6 +2343,12 @@
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../se_board_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../se_board_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../aws_secure_sockets_config.h</name>
     </file>
     <file>
@@ -2506,6 +2516,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -2513,12 +2529,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -3307,6 +3317,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</name>
         </file>
       </group>
     </group>
@@ -4371,6 +4384,165 @@
           </group>
         </group>
         <group>
+          <name>libCommon</name>
+          <group>
+            <name>infra</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils_rtos.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_connect.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/a71_debug.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot_nfc.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/cm_commands.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_api.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_types.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_printf.c</name>
+            </file>
+          </group>
+          <group>
+            <name>smCom</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/apduComm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/sci2c_cfg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.h</name>
+            </file>
+            <group>
+              <name>T1oI2C</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseStatus.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseTypes.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Internal.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.c</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>nxScp</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/nxScp/nxScp03_Com.c</name>
+            </file>
+          </group>
+          <group>
+            <name>scp</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/scp/scp.c</name>
+            </file>
+          </group>
+          <group>
+            <name>log</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_App.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_DefaultConfig.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_UseCases.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_VCOM.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_hostLib.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_mbedtls.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_scp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_smCom.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_sscp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_sss.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
           <name>platform</name>
           <group>
             <name>inc</name>
@@ -4427,165 +4599,6 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_threadx.c</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>libCommon</name>
-          <group>
-            <name>smCom</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/apduComm.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/sci2c_cfg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.h</name>
-            </file>
-            <group>
-              <name>T1oI2C</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseStatus.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseTypes.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Internal.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.c</name>
-              </file>
-            </group>
-          </group>
-          <group>
-            <name>infra</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_connect.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/a71_debug.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot_nfc.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/cm_commands.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_api.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_types.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_printf.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils_rtos.c</name>
-            </file>
-          </group>
-          <group>
-            <name>nxScp</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/nxScp/nxScp03_Com.c</name>
-            </file>
-          </group>
-          <group>
-            <name>scp</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/scp/scp.c</name>
-            </file>
-          </group>
-          <group>
-            <name>log</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_App.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_DefaultConfig.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_UseCases.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_VCOM.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_hostLib.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_mbedtls.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_scp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_smCom.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_sscp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log/nxLog_sss.h</name>
             </file>
           </group>
         </group>
@@ -4771,6 +4784,69 @@
         </group>
       </group>
       <group>
+        <name>plugin</name>
+        <group>
+          <name>pkcs11</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_core.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/nxLog_pkcs11.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_helpers.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_object.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_asymm.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_symm.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/pkcs11_mbedtls_utils.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/pkcs11_mbedtls_utils.h</name>
+          </file>
+        </group>
+        <group>
+          <name>mbedtls</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdh_alt_ax.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdsa_verify_alt.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecp_alt_sss.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_rsa.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdsa_verify_alt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecp_alt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/rsa_alt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
         <name>ex</name>
         <group>
           <name>inc</name>
@@ -4851,94 +4927,10 @@
           </file>
         </group>
       </group>
-      <group>
-        <name>plugin</name>
-        <group>
-          <name>pkcs11</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_core.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/nxLog_pkcs11.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_helpers.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_object.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_asymm.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/sss_pkcs11_pal_symm.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/pkcs11_mbedtls_utils.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/pkcs11_mbedtls_utils.h</name>
-          </file>
-        </group>
-        <group>
-          <name>mbedtls</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdh_alt_ax.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdsa_verify_alt.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecp_alt_sss.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_rsa.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdsa_verify_alt.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecp_alt.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/rsa_alt.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.h</name>
-          </file>
-        </group>
-      </group>
     </group>
   </group>
   <group>
     <name>aws_iot</name>
-    <group>
-      <name>amazon-freertos</name>
-      <group>
-        <name>libraries</name>
-        <group>
-          <name>3rdparty</name>
-          <group>
-            <name>jsmn</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/aws_iot/amazon-freertos/libraries/3rdparty/jsmn/LICENSE</name>
-            </file>
-          </group>
-        </group>
-      </group>
-    </group>
     <group>
       <name>iot-reference</name>
       <group>
@@ -4971,91 +4963,34 @@
           </group>
         </group>
       </group>
+      <group>
+        <name>template</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/template/demo_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/aws_iot/iot-reference/template/kvstore_config.h</name>
+        </file>
+      </group>
     </group>
   </group>
   <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.h</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/iar/startup_MIMXRT1062.s</name>
-    </file>
-  </group>
-  <group>
-    <name>xip</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
-    </file>
-  </group>
-  <group>
     <name>freertos</name>
+    <group>
+      <name>corejson</name>
+      <group>
+        <name>source</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/core_json.c</name>
+        </file>
+        <group>
+          <name>include</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/corejson/source/include/core_json.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
     <group>
       <name>freertos-kernel</name>
       <file>
@@ -5256,6 +5191,66 @@
     </group>
   </group>
   <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.h</name>
+    </file>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/iar/startup_MIMXRT1062.s</name>
+    </file>
+  </group>
+  <group>
+    <name>xip</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
     <name>pkcs11</name>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/pkcs11/README.md</name>
@@ -5274,6 +5269,27 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/pkcs11/CONTRIBUTING.md</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

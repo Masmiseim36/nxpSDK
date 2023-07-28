@@ -32,7 +32,11 @@
 #include "mbedtls/ssl_cache.h"
 #include "mbedtls/debug.h"
 
+#if defined(MBEDTLS_MCUX_ELS_PKC_API)
+#include "els_pkc_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -241,20 +245,6 @@ static HTTPS_TRANSPORT_CB_PL https_appl_cb;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void *pvPortCalloc(size_t num, size_t size)
-{
-    void *ptr;
-    int allocSize = num * size;
-
-    ptr = pvPortMalloc(allocSize);
-    if (ptr != NULL)
-    {
-        (BT_IGNORE_RETURN_VALUE) memset(ptr, 0U, allocSize);
-    }
-
-    return ptr;
-}
-
 /* Send function used by mbedtls ssl */
 static int lwipSend(void *fd, unsigned char const *buf, size_t len)
 {
@@ -303,10 +293,6 @@ static int https_init(void)
     int ret          = 0U;
     const char *pers = "aws_iot_tls_wrapper";
     const mbedtls_md_info_t *md_info;
-
-#ifdef MBEDTLS_DEBUG_C
-    unsigned char buf[MBEDTLS_SSL_MAX_CONTENT_LEN + 1U];
-#endif
 
     /* Crypto init */
     CRYPTO_InitHardware();
@@ -370,11 +356,18 @@ static int https_connect(UCHAR * ip_addr)
     int ret          = 0U;
     INT32 hc_port;
 
+#ifdef MBEDTLS_DEBUG_C
+    unsigned char buf[MBEDTLS_SSL_MAX_CONTENT_LEN + 1U];
+#endif
+
     struct addrinfo hints;
     (BT_IGNORE_RETURN_VALUE) memset(&hints, 0U, sizeof(struct addrinfo));
+    /* MISRA C - 2012 Rule 2.2 */
+#if 0
     hints.ai_family   = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags    = AI_PASSIVE;
+#endif /* 0 */
 
     mbedtls_ssl_init(&(tlsDataParams.ssl));
     mbedtls_ssl_config_init(&(tlsDataParams.conf));
@@ -488,23 +481,30 @@ static int https_connect(UCHAR * ip_addr)
 
     if (ServerVerificationFlag == true)
     {
+	 /**
+         * Note:
+         * Below block will not be executed, as ServerVerificationFlag is initialized to false.
+         */
         if ((tlsDataParams.flags = mbedtls_ssl_get_verify_result(&(tlsDataParams.ssl))) != 0U)
         {
             HTTPS_PL_ERR(" failed\n");
             (BT_IGNORE_RETURN_VALUE) mbedtls_x509_crt_verify_info(vrfy_buf, sizeof(vrfy_buf), "  ! ", tlsDataParams.flags);
             HTTPS_PL_ERR("%s\n", vrfy_buf);
-            ret = SSL_CONNECTION_ERROR;
+            /* MISRA C - 2012 Rule 2.2 */
+            /* ret = SSL_CONNECTION_ERROR; */
         }
         else
         {
             HTTPS_PL_TRC(" ok\n");
-            ret = SUCCESS;
+            /* MISRA C - 2012 Rule 2.2 */
+            /* ret = SUCCESS; */
         }
     }
     else
     {
         HTTPS_PL_TRC(" Server Verification skipped\n");
-        ret = SUCCESS;
+        /* MISRA C - 2012 Rule 2.2 */
+        /* ret = SUCCESS; */
     }
 
 #ifdef MBEDTLS_DEBUG_C

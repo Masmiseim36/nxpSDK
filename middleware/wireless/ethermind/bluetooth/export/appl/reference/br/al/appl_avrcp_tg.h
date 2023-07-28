@@ -30,7 +30,7 @@
 
 #define AVRCP_TG_MAX_FILE_OBJ_NAME_LEN                 190U
 #define APPL_AVRCP_MAX_BROW_PDU_PARAM_LEN              (AVCTP_DEFAULT_BROW_CH_L2CAP_MTU - 16U)
-#define APPL_MAX_CA_IMAGE_PROPERTIES_LEN               256U
+#define APPL_MAX_CA_IMAGE_PROPERTIES_LEN               320U
 
 /* ----------------------------------------- Static Global Variables */
 
@@ -59,7 +59,7 @@ void appl_avrcp_tg_handle_vendor_dependent_cmd
      (
          UCHAR       inst,
          void      * event_data,
-         UINT16      event_datalens
+         UINT16      event_datalen
      );
 
 #endif /* AVRCP_1_3 */
@@ -143,7 +143,7 @@ void appl_avrcp_tg_handle_get_virtual_filesystem_list
          UINT32     start_idx,
          UINT32     end_idx,
          UCHAR      num_attr_ids,
-         UINT32     *media_attr_ids,
+         UINT32     *mediaattr_ids,
          UCHAR      tl
      );
 
@@ -180,7 +180,7 @@ void appl_avrcp_tg_handle_get_search_list
          UINT32     start_idx,
          UINT32     end_idx,
          UCHAR      num_attr_ids,
-         UINT32     *media_attr_ids,
+         UINT32     *mediaattr_ids,
          UCHAR      tl
      );
 
@@ -190,7 +190,7 @@ void appl_avrcp_tg_handle_get_media_element_list
          UINT32     start_idx,
          UINT32     end_idx,
          UCHAR      num_attr_ids,
-         UINT32     *media_attr_ids,
+         UINT32     *mediaattr_ids,
          UCHAR      tl
      );
 

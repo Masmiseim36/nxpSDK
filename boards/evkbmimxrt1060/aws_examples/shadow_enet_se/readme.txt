@@ -7,10 +7,10 @@ A simple shadow demo that updates the device’s powerOn state and runs concurre
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
@@ -22,7 +22,9 @@ Hardware requirements
 
 Board settings
 ==============
-No special settings are required.
+    -J14 3-4 (Default): EdgeLock SE05x_VCC pin routed to SE05X_VOUT pin
+    -J15 3-4 (Default): I2C target SDA connection
+    -J17 3-4 (Default): I2C target SCL connection
 
 Prepare the Demo
 ================

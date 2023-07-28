@@ -8,14 +8,7 @@
 #ifndef SBL_CONFIG_H__
 #define SBL_CONFIG_H__
 
-/* MCU-SBL RT1060 Configuration */
-
-#define SOC_IMXRT1060_SERIES
-#define ARCH_ARM_CORTEX_M7
-#define ARCH_ARM_CORTEX_FPU
-#define SOC_IMXRTYYYY_SERIES
-
-/* MCU SBL core */
+/* MCUBoot Flash Config */
 
 #define CONFIG_MCUBOOT_MAX_IMG_SECTORS 800
 
@@ -26,19 +19,19 @@
  * remapping functionality is supported by processor the alternative mechanism
  * using direct-xip mode can be used and evaluated by user.
  */
-#define CONFIG_MCUBOOT_FLASH_REMAP_ENABLE 1
+#define CONFIG_MCUBOOT_FLASH_REMAP_ENABLE
 
 /*
  * Downgrade is not supported in MCUBoot using direct-xip mode because the active
  * image with highest version is always chosen. This define enables code in
  * bootloader and OTA application to support downgrade.
  */
-#define CONFIG_MCUBOOT_FLASH_REMAP_DOWNGRADE_SUPPORT 1
+#define CONFIG_MCUBOOT_FLASH_REMAP_DOWNGRADE_SUPPORT
 
 /* Board specific register for flash remap functionality */
 #define FLASH_REMAP_OFFSET_REG 0x400AC080 /* RT1060 flash remap offset register */
 
-/* Crypto */
+/* Crypto Config */
 
 #define COMPONENT_MCUBOOT_SECURE
 #define CONFIG_BOOT_SIGNATURE

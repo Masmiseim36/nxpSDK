@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v12.0
 processor: MIMXRT1062xxxxA
 package_id: MIMXRT1062DVL6A
 mcu_data: ksdk2_0
-processor_version: 7.0.1
+processor_version: 12.0.1
 board: MIMXRT1060-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -38,7 +38,6 @@ void BOARD_InitBootPins(void) {
     BOARD_InitUSDHCPins();
     BOARD_InitArduinoUARTPins();
     BOARD_Init_Audio_Pins();
- //   BOARD_InitScoPins();
 }
 
 /*
@@ -112,7 +111,7 @@ void BOARD_InitDEBUG_UARTPins(void) {
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitSDRAMPins:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: C2, peripheral: SEMC, signal: 'ADDR, 00', pin_signal: GPIO_EMC_09}
   - {pin_num: G1, peripheral: SEMC, signal: 'ADDR, 01', pin_signal: GPIO_EMC_10}

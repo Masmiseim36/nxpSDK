@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Serial Port USB</title>
+<title>MCUXpresso SDK API Reference Manual: SAI EDMA Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,137 +99,1027 @@ $(document).ready(function(){initNavTree('a00056.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Port USB<div class="ingroups"><a class="el" href="a00054.html">Serial Manager</a></div></div>  </div>
+<div class="title">SAI EDMA Driver<div class="ingroups"><a class="el" href="a00240.html">SAI: Serial Audio Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00246"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00246.html">USB Device Configuration</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00377"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a00377">serial_port_usb_cdc_config_t</a></td></tr>
-<tr class="memdesc:a00377"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port usb config struct  <a href="a00056.html#a00377">More...</a><br/></td></tr>
-<tr class="separator:a00377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00387"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a00387">sai_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00387"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAI DMA transfer handle, users should not touch the content of the handle.  <a href="a00056.html#a00387">More...</a><br/></td></tr>
+<tr class="separator:a00387"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga360a6c81305a4e09848df9aece70ad40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga360a6c81305a4e09848df9aece70ad40"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga360a6c81305a4e09848df9aece70ad40">SERIAL_PORT_USB_CDC_HANDLE_SIZE</a>&#160;&#160;&#160;(72U)</td></tr>
-<tr class="memdesc:ga360a6c81305a4e09848df9aece70ad40"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port usb handle size <br/></td></tr>
-<tr class="separator:ga360a6c81305a4e09848df9aece70ad40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9fb260c0db8e2e75fa339416c82084b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9fb260c0db8e2e75fa339416c82084b9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga9fb260c0db8e2e75fa339416c82084b9">USB_DEVICE_INTERRUPT_PRIORITY</a>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="memdesc:ga9fb260c0db8e2e75fa339416c82084b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB interrupt priority. <br/></td></tr>
-<tr class="separator:ga9fb260c0db8e2e75fa339416c82084b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeb6ca21880d8cd8f5f954d38bfa73d63"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a> )(I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAI eDMA transfer callback function for finish and error. <br/></td></tr>
+<tr class="separator:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga0d579054cbf9827f77f7018cd6f84c29"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga0d579054cbf9827f77f7018cd6f84c29">serial_port_usb_cdc_controller_index_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29aba414efbedc13dd6605fdc76daee832f">kSerialManager_UsbControllerKhci0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a2992ed3c36bb733a2f3760b8a5927fdd">kSerialManager_UsbControllerKhci1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29aa9a69ebd4f3d306f583cb23ff5bc8aad">kSerialManager_UsbControllerEhci0</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a48e611ec0653efbf4a8b01168b8668b3">kSerialManager_UsbControllerEhci1</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29afd13021033517524c07c581fa500a83d">kSerialManager_UsbControllerLpcIp3511Fs0</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a4fc76a970dded05f11d3adc8c99880c3">kSerialManager_UsbControllerLpcIp3511Fs1</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a78c55818f572f8120a85f13337ec9274">kSerialManager_UsbControllerLpcIp3511Hs0</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a3e09ecce4e5aee8338fa0d1574139d47">kSerialManager_UsbControllerLpcIp3511Hs1</a> = 7U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29acb150e43e1572c4f7abb9b374783ba30">kSerialManager_UsbControllerOhci0</a> = 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a2a98602358806c8f01cdbe42cc4c763c">kSerialManager_UsbControllerOhci1</a> = 9U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a51d953a091b2650c6b8283e2ce5639ae">kSerialManager_UsbControllerIp3516Hs0</a> = 10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00056.html#gga0d579054cbf9827f77f7018cd6f84c29a863a8a6669f791ce5b5207b3d85c6664">kSerialManager_UsbControllerIp3516Hs1</a> = 11U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga0d579054cbf9827f77f7018cd6f84c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB controller ID.  <a href="a00056.html#ga0d579054cbf9827f77f7018cd6f84c29">More...</a><br/></td></tr>
-<tr class="separator:ga0d579054cbf9827f77f7018cd6f84c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:gadec154552382f7b68bce82ce829f3911"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadec154552382f7b68bce82ce829f3911"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gadec154552382f7b68bce82ce829f3911">FSL_SAI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00224.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 1))</td></tr>
+<tr class="memdesc:gadec154552382f7b68bce82ce829f3911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.5.1. <br/></td></tr>
+<tr class="separator:gadec154552382f7b68bce82ce829f3911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+eDMA Transactional</h2></td></tr>
+<tr class="memitem:ga84f148e1d3fe186ce6604d637f89c2c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga84f148e1d3fe186ce6604d637f89c2c1">SAI_TransferTxCreateHandleEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00056.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a> callback, void *userData, <a class="el" href="a00020.html#a00322">edma_handle_t</a> *txDmaHandle)</td></tr>
+<tr class="memdesc:ga84f148e1d3fe186ce6604d637f89c2c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SAI eDMA handle.  <a href="#ga84f148e1d3fe186ce6604d637f89c2c1">More...</a><br/></td></tr>
+<tr class="separator:ga84f148e1d3fe186ce6604d637f89c2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44a719a507630fdcc25ba93690098a89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga44a719a507630fdcc25ba93690098a89">SAI_TransferRxCreateHandleEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00056.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a> callback, void *userData, <a class="el" href="a00020.html#a00322">edma_handle_t</a> *rxDmaHandle)</td></tr>
+<tr class="memdesc:ga44a719a507630fdcc25ba93690098a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SAI Rx eDMA handle.  <a href="#ga44a719a507630fdcc25ba93690098a89">More...</a><br/></td></tr>
+<tr class="separator:ga44a719a507630fdcc25ba93690098a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78b693c7c4667056f74c4763f47c6e14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga78b693c7c4667056f74c4763f47c6e14">SAI_TransferTxSetFormatEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00391">sai_transfer_format_t</a> *format, uint32_t mclkSourceClockHz, uint32_t bclkSourceClockHz)</td></tr>
+<tr class="memdesc:ga78b693c7c4667056f74c4763f47c6e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Tx audio format.  <a href="#ga78b693c7c4667056f74c4763f47c6e14">More...</a><br/></td></tr>
+<tr class="separator:ga78b693c7c4667056f74c4763f47c6e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69b84d866cc9c5736780276c668df495"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga69b84d866cc9c5736780276c668df495">SAI_TransferRxSetFormatEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00391">sai_transfer_format_t</a> *format, uint32_t mclkSourceClockHz, uint32_t bclkSourceClockHz)</td></tr>
+<tr class="memdesc:ga69b84d866cc9c5736780276c668df495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Rx audio format.  <a href="#ga69b84d866cc9c5736780276c668df495">More...</a><br/></td></tr>
+<tr class="separator:ga69b84d866cc9c5736780276c668df495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5295038a021787aef619bdd9f96981da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga5295038a021787aef619bdd9f96981da">SAI_TransferTxSetConfigEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00390">sai_transceiver_t</a> *saiConfig)</td></tr>
+<tr class="memdesc:ga5295038a021787aef619bdd9f96981da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Tx.  <a href="#ga5295038a021787aef619bdd9f96981da">More...</a><br/></td></tr>
+<tr class="separator:ga5295038a021787aef619bdd9f96981da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed5d72de0d0aa0ac71de3222924e4aa7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaed5d72de0d0aa0ac71de3222924e4aa7">SAI_TransferRxSetConfigEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00390">sai_transceiver_t</a> *saiConfig)</td></tr>
+<tr class="memdesc:gaed5d72de0d0aa0ac71de3222924e4aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Rx.  <a href="#gaed5d72de0d0aa0ac71de3222924e4aa7">More...</a><br/></td></tr>
+<tr class="separator:gaed5d72de0d0aa0ac71de3222924e4aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a2c125e1f975c9f718dcb820ac46f63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga7a2c125e1f975c9f718dcb820ac46f63">SAI_TransferSendEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00392">sai_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga7a2c125e1f975c9f718dcb820ac46f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI transfer using DMA.  <a href="#ga7a2c125e1f975c9f718dcb820ac46f63">More...</a><br/></td></tr>
+<tr class="separator:ga7a2c125e1f975c9f718dcb820ac46f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9060fb028d5a24d8763066981b079900"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga9060fb028d5a24d8763066981b079900">SAI_TransferReceiveEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00392">sai_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga9060fb028d5a24d8763066981b079900"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI receive using eDMA.  <a href="#ga9060fb028d5a24d8763066981b079900">More...</a><br/></td></tr>
+<tr class="separator:ga9060fb028d5a24d8763066981b079900"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b62338a71194856549698e374d13cb0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga1b62338a71194856549698e374d13cb0">SAI_TransferSendLoopEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00392">sai_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
+<tr class="memdesc:ga1b62338a71194856549698e374d13cb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI loop transfer using eDMA.  <a href="#ga1b62338a71194856549698e374d13cb0">More...</a><br/></td></tr>
+<tr class="separator:ga1b62338a71194856549698e374d13cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf6043ff078868f35d4459dd2e112c0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaaf6043ff078868f35d4459dd2e112c0d">SAI_TransferReceiveLoopEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00055.html#a00392">sai_transfer_t</a> *xfer, uint32_t loopTransferCount)</td></tr>
+<tr class="memdesc:gaaf6043ff078868f35d4459dd2e112c0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SAI loop transfer using eDMA.  <a href="#gaaf6043ff078868f35d4459dd2e112c0d">More...</a><br/></td></tr>
+<tr class="separator:gaaf6043ff078868f35d4459dd2e112c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b3db811719337e4f2172c66ceeb7933"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga6b3db811719337e4f2172c66ceeb7933">SAI_TransferTerminateSendEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:ga6b3db811719337e4f2172c66ceeb7933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate all SAI send.  <a href="#ga6b3db811719337e4f2172c66ceeb7933">More...</a><br/></td></tr>
+<tr class="separator:ga6b3db811719337e4f2172c66ceeb7933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga819dcef593d48f3296ee858239802e26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga819dcef593d48f3296ee858239802e26">SAI_TransferTerminateReceiveEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:ga819dcef593d48f3296ee858239802e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate all SAI receive.  <a href="#ga819dcef593d48f3296ee858239802e26">More...</a><br/></td></tr>
+<tr class="separator:ga819dcef593d48f3296ee858239802e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12925e07667cc1b27915aedd1f718a7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga12925e07667cc1b27915aedd1f718a7a">SAI_TransferAbortSendEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:ga12925e07667cc1b27915aedd1f718a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a SAI transfer using eDMA.  <a href="#ga12925e07667cc1b27915aedd1f718a7a">More...</a><br/></td></tr>
+<tr class="separator:ga12925e07667cc1b27915aedd1f718a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bd586da5f41126cbfa92d2baa03620b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga3bd586da5f41126cbfa92d2baa03620b">SAI_TransferAbortReceiveEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:ga3bd586da5f41126cbfa92d2baa03620b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a SAI receive using eDMA.  <a href="#ga3bd586da5f41126cbfa92d2baa03620b">More...</a><br/></td></tr>
+<tr class="separator:ga3bd586da5f41126cbfa92d2baa03620b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02aa0e441b0aada0f4875f28f832dc71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga02aa0e441b0aada0f4875f28f832dc71">SAI_TransferGetSendCountEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memdesc:ga02aa0e441b0aada0f4875f28f832dc71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets byte count sent by SAI.  <a href="#ga02aa0e441b0aada0f4875f28f832dc71">More...</a><br/></td></tr>
+<tr class="separator:ga02aa0e441b0aada0f4875f28f832dc71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4a1100515e9a05bb61e0039288664a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gae4a1100515e9a05bb61e0039288664a0">SAI_TransferGetReceiveCountEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memdesc:gae4a1100515e9a05bb61e0039288664a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets byte count received by SAI.  <a href="#gae4a1100515e9a05bb61e0039288664a0">More...</a><br/></td></tr>
+<tr class="separator:gae4a1100515e9a05bb61e0039288664a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33af2c1b3c360823ffdbb1348e586107"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga33af2c1b3c360823ffdbb1348e586107">SAI_TransferGetValidTransferSlotsEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle)</td></tr>
+<tr class="memdesc:ga33af2c1b3c360823ffdbb1348e586107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets valid transfer slot.  <a href="#ga33af2c1b3c360823ffdbb1348e586107">More...</a><br/></td></tr>
+<tr class="separator:ga33af2c1b3c360823ffdbb1348e586107"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00377" id="a00377"></a>
+<a name="a00387" id="a00387"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct serial_port_usb_cdc_config_t</td>
+          <td class="memname">struct sai_edma_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a164ef9f84df063b85674cc8aa6edd872"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a164ef9f84df063b85674cc8aa6edd872"></a>
-<a class="el" href="a00056.html#ga0d579054cbf9827f77f7018cd6f84c29">serial_port_usb_cdc_controller_index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a164ef9f84df063b85674cc8aa6edd872">controllerIndex</a></td></tr>
-<tr class="memdesc:a164ef9f84df063b85674cc8aa6edd872"><td class="mdescLeft">&#160;</td><td class="mdescRight">controller index <br/></td></tr>
-<tr class="separator:a164ef9f84df063b85674cc8aa6edd872"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac754f63e6faf24815240a7677eb4a908"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac754f63e6faf24815240a7677eb4a908"></a>
+<a class="el" href="a00020.html#a00322">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ac754f63e6faf24815240a7677eb4a908">dmaHandle</a></td></tr>
+<tr class="memdesc:ac754f63e6faf24815240a7677eb4a908"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for SAI send. <br/></td></tr>
+<tr class="separator:ac754f63e6faf24815240a7677eb4a908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a061d53e53af802d59eca8bc3171297ce"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a061d53e53af802d59eca8bc3171297ce">nbytes</a></td></tr>
+<tr class="memdesc:a061d53e53af802d59eca8bc3171297ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a061d53e53af802d59eca8bc3171297ce">More...</a><br/></td></tr>
+<tr class="separator:a061d53e53af802d59eca8bc3171297ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a999a7493ad74199568fa0ae9a1daba82"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a999a7493ad74199568fa0ae9a1daba82"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a999a7493ad74199568fa0ae9a1daba82">bytesPerFrame</a></td></tr>
+<tr class="memdesc:a999a7493ad74199568fa0ae9a1daba82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes in a frame. <br/></td></tr>
+<tr class="separator:a999a7493ad74199568fa0ae9a1daba82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bf42623069a53221cf96ebb8a21c47b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bf42623069a53221cf96ebb8a21c47b"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a2bf42623069a53221cf96ebb8a21c47b">channelMask</a></td></tr>
+<tr class="memdesc:a2bf42623069a53221cf96ebb8a21c47b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enabled channel mask value, reference _sai_channel_mask. <br/></td></tr>
+<tr class="separator:a2bf42623069a53221cf96ebb8a21c47b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9db9a8663063da43c9edba463d90680b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9db9a8663063da43c9edba463d90680b"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a9db9a8663063da43c9edba463d90680b">channelNums</a></td></tr>
+<tr class="memdesc:a9db9a8663063da43c9edba463d90680b"><td class="mdescLeft">&#160;</td><td class="mdescRight">total enabled channel nums <br/></td></tr>
+<tr class="separator:a9db9a8663063da43c9edba463d90680b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2585391f7bbe7407bd405362ef9d9eb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2585391f7bbe7407bd405362ef9d9eb5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a2585391f7bbe7407bd405362ef9d9eb5">channel</a></td></tr>
+<tr class="memdesc:a2585391f7bbe7407bd405362ef9d9eb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which data channel. <br/></td></tr>
+<tr class="separator:a2585391f7bbe7407bd405362ef9d9eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66e701d5eed6e4d80fbd8b042fb73fc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66e701d5eed6e4d80fbd8b042fb73fc3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a66e701d5eed6e4d80fbd8b042fb73fc3">count</a></td></tr>
+<tr class="memdesc:a66e701d5eed6e4d80fbd8b042fb73fc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer data count in a DMA request. <br/></td></tr>
+<tr class="separator:a66e701d5eed6e4d80fbd8b042fb73fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6611961529129ff1165493033c5dc573"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6611961529129ff1165493033c5dc573"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a6611961529129ff1165493033c5dc573">state</a></td></tr>
+<tr class="memdesc:a6611961529129ff1165493033c5dc573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal state for SAI eDMA transfer. <br/></td></tr>
+<tr class="separator:a6611961529129ff1165493033c5dc573"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adde936fb4e2daa1753c841f3d52e2533"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adde936fb4e2daa1753c841f3d52e2533"></a>
+<a class="el" href="a00056.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#adde936fb4e2daa1753c841f3d52e2533">callback</a></td></tr>
+<tr class="memdesc:adde936fb4e2daa1753c841f3d52e2533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for users while transfer finish or error occurs. <br/></td></tr>
+<tr class="separator:adde936fb4e2daa1753c841f3d52e2533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8526618ff18f03496d39a9003a02d6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8526618ff18f03496d39a9003a02d6a"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#af8526618ff18f03496d39a9003a02d6a">userData</a></td></tr>
+<tr class="memdesc:af8526618ff18f03496d39a9003a02d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User callback parameter. <br/></td></tr>
+<tr class="separator:af8526618ff18f03496d39a9003a02d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6270bea65d16835b479649d9083bfddc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a6270bea65d16835b479649d9083bfddc">tcd</a> [(<a class="el" href="a00055.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>+1U)*sizeof(edma_tcd_t)]</td></tr>
+<tr class="memdesc:a6270bea65d16835b479649d9083bfddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">TCD pool for eDMA transfer.  <a href="#a6270bea65d16835b479649d9083bfddc">More...</a><br/></td></tr>
+<tr class="separator:a6270bea65d16835b479649d9083bfddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d5ec64db292ea91cacf543c6fe4f22b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00055.html#a00392">sai_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a8d5ec64db292ea91cacf543c6fe4f22b">saiQueue</a> [<a class="el" href="a00055.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>]</td></tr>
+<tr class="memdesc:a8d5ec64db292ea91cacf543c6fe4f22b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer queue storing queued transfer.  <a href="#a8d5ec64db292ea91cacf543c6fe4f22b">More...</a><br/></td></tr>
+<tr class="separator:a8d5ec64db292ea91cacf543c6fe4f22b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28d0ac4b3b16fd68dfbb8ecf303397a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28d0ac4b3b16fd68dfbb8ecf303397a3"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a28d0ac4b3b16fd68dfbb8ecf303397a3">transferSize</a> [<a class="el" href="a00055.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>]</td></tr>
+<tr class="memdesc:a28d0ac4b3b16fd68dfbb8ecf303397a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bytes need to transfer. <br/></td></tr>
+<tr class="separator:a28d0ac4b3b16fd68dfbb8ecf303397a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a45007eebf06db42ed42bb83ee3dbd"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a13a45007eebf06db42ed42bb83ee3dbd">queueUser</a></td></tr>
+<tr class="memdesc:a13a45007eebf06db42ed42bb83ee3dbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer.  <a href="#a13a45007eebf06db42ed42bb83ee3dbd">More...</a><br/></td></tr>
+<tr class="separator:a13a45007eebf06db42ed42bb83ee3dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a969d922d9b8b82ac4fee2d9bb63b6a5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a969d922d9b8b82ac4fee2d9bb63b6a5a"></a>
+volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a969d922d9b8b82ac4fee2d9bb63b6a5a">queueDriver</a></td></tr>
+<tr class="memdesc:a969d922d9b8b82ac4fee2d9bb63b6a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for driver to get the transfer data and size. <br/></td></tr>
+<tr class="separator:a969d922d9b8b82ac4fee2d9bb63b6a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga0d579054cbf9827f77f7018cd6f84c29"></a>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a061d53e53af802d59eca8bc3171297ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00056.html#ga0d579054cbf9827f77f7018cd6f84c29">serial_port_usb_cdc_controller_index_t</a></td>
+          <td class="memname">uint8_t sai_edma_handle_t::nbytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29aba414efbedc13dd6605fdc76daee832f"></a>kSerialManager_UsbControllerKhci0</em>&nbsp;</td><td class="fielddoc">
-<p>KHCI 0U. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a2992ed3c36bb733a2f3760b8a5927fdd"></a>kSerialManager_UsbControllerKhci1</em>&nbsp;</td><td class="fielddoc">
-<p>KHCI 1U, Currently, there are no platforms which have two KHCI IPs, this is reserved to be used in the future. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29aa9a69ebd4f3d306f583cb23ff5bc8aad"></a>kSerialManager_UsbControllerEhci0</em>&nbsp;</td><td class="fielddoc">
-<p>EHCI 0U. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a48e611ec0653efbf4a8b01168b8668b3"></a>kSerialManager_UsbControllerEhci1</em>&nbsp;</td><td class="fielddoc">
-<p>EHCI 1U, Currently, there are no platforms which have two EHCI IPs, this is reserved to be used in the future. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29afd13021033517524c07c581fa500a83d"></a>kSerialManager_UsbControllerLpcIp3511Fs0</em>&nbsp;</td><td class="fielddoc">
-<p>LPC USB IP3511 FS controller 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a4fc76a970dded05f11d3adc8c99880c3"></a>kSerialManager_UsbControllerLpcIp3511Fs1</em>&nbsp;</td><td class="fielddoc">
-<p>LPC USB IP3511 FS controller 1, there are no platforms which have two IP3511 IPs, this is reserved to be used in the future. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a78c55818f572f8120a85f13337ec9274"></a>kSerialManager_UsbControllerLpcIp3511Hs0</em>&nbsp;</td><td class="fielddoc">
-<p>LPC USB IP3511 HS controller 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a3e09ecce4e5aee8338fa0d1574139d47"></a>kSerialManager_UsbControllerLpcIp3511Hs1</em>&nbsp;</td><td class="fielddoc">
-<p>LPC USB IP3511 HS controller 1, there are no platforms which have two IP3511 IPs, this is reserved to be used in the future. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29acb150e43e1572c4f7abb9b374783ba30"></a>kSerialManager_UsbControllerOhci0</em>&nbsp;</td><td class="fielddoc">
-<p>OHCI 0U. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a2a98602358806c8f01cdbe42cc4c763c"></a>kSerialManager_UsbControllerOhci1</em>&nbsp;</td><td class="fielddoc">
-<p>OHCI 1U, Currently, there are no platforms which have two OHCI IPs, this is reserved to be used in the future. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a51d953a091b2650c6b8283e2ce5639ae"></a>kSerialManager_UsbControllerIp3516Hs0</em>&nbsp;</td><td class="fielddoc">
-<p>IP3516HS 0U. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d579054cbf9827f77f7018cd6f84c29a863a8a6669f791ce5b5207b3d85c6664"></a>kSerialManager_UsbControllerIp3516Hs1</em>&nbsp;</td><td class="fielddoc">
-<p>IP3516HS 1U, Currently, there are no platforms which have two IP3516HS IPs, this is reserved to be used in the future. </p>
-</td></tr>
-</table>
+
+</div>
+</div>
+<a class="anchor" id="a6270bea65d16835b479649d9083bfddc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t sai_edma_handle_t::tcd[(<a class="el" href="a00055.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>+1U)*sizeof(edma_tcd_t)]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8d5ec64db292ea91cacf543c6fe4f22b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00055.html#a00392">sai_transfer_t</a> sai_edma_handle_t::saiQueue[<a class="el" href="a00055.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a13a45007eebf06db42ed42bb83ee3dbd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t sai_edma_handle_t::queueUser</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga84f148e1d3fe186ce6604d637f89c2c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferTxCreateHandleEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00056.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00322">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>txDmaHandle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the SAI master DMA handle, which can be used for other SAI master transactional APIs. Usually, for a specified SAI instance, call this API once to get the initialized handle.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI peripheral base address. </td></tr>
+    <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
+    <tr><td class="paramname">txDmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga44a719a507630fdcc25ba93690098a89"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferRxCreateHandleEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00056.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00322">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the SAI slave DMA handle, which can be used for other SAI master transactional APIs. Usually, for a specified SAI instance, call this API once to get the initialized handle.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">base</td><td>SAI peripheral base address. </td></tr>
+    <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
+    <tr><td class="paramname">rxDmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga78b693c7c4667056f74c4763f47c6e14"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferTxSetFormatEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00391">sai_transfer_format_t</a> *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mclkSourceClockHz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bclkSourceClockHz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00259.html#_deprecated000019">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00056.html#ga5295038a021787aef619bdd9f96981da">SAI_TransferTxSetConfigEDMA</a></dd></dl>
+<p>The audio format can be changed at run-time. This function configures the sample rate and audio data format to be transferred. This function also sets the eDMA parameter according to formatting requirements.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">format</td><td>Pointer to SAI audio data format structure. </td></tr>
+    <tr><td class="paramname">mclkSourceClockHz</td><td>SAI master clock source frequency in Hz. </td></tr>
+    <tr><td class="paramname">bclkSourceClockHz</td><td>SAI bit clock source frequency in Hz. If bit clock source is master clock, this value should equals to masterClockHz in format. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Audio format set successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga69b84d866cc9c5736780276c668df495"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferRxSetFormatEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00391">sai_transfer_format_t</a> *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mclkSourceClockHz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bclkSourceClockHz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00259.html#_deprecated000020">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00056.html#gaed5d72de0d0aa0ac71de3222924e4aa7">SAI_TransferRxSetConfigEDMA</a></dd></dl>
+<p>The audio format can be changed at run-time. This function configures the sample rate and audio data format to be transferred. This function also sets the eDMA parameter according to formatting requirements.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">format</td><td>Pointer to SAI audio data format structure. </td></tr>
+    <tr><td class="paramname">mclkSourceClockHz</td><td>SAI master clock source frequency in Hz. </td></tr>
+    <tr><td class="paramname">bclkSourceClockHz</td><td>SAI bit clock source frequency in Hz. If a bit clock source is the master clock, this value should equal to masterClockHz in format. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Audio format set successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5295038a021787aef619bdd9f96981da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferTxSetConfigEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00390">sai_transceiver_t</a> *&#160;</td>
+          <td class="paramname"><em>saiConfig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>SAI eDMA supports data transfer in a multiple SAI channels if the FIFO Combine feature is supported. To activate the multi-channel transfer enable SAI channels by filling the channelMask of <a class="el" href="a00055.html#a00390" title="sai transceiver configurations ">sai_transceiver_t</a> with the corresponding values of _sai_channel_mask enum, enable the FIFO Combine mode by assigning kSAI_FifoCombineModeEnabledOnWrite to the fifoCombine member of sai_fifo_combine_t which is a member of <a class="el" href="a00055.html#a00390" title="sai transceiver configurations ">sai_transceiver_t</a>. This is an example of multi-channel data transfer configuration step. <div class="fragment"><div class="line">*   <a class="code" href="a00055.html#a00390">sai_transceiver_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00055.html#gaf233a2ef17cff713b18a002924e992fc">SAI_GetClassicI2SConfig</a>(&amp;config, <a class="code" href="a00055.html#ggae357d8842863ba610f57acd1e1f35528a0328fc45f36f361f958cacd8378d4923">kSAI_WordWidth16bits</a>, <a class="code" href="a00055.html#gga23ffdf03cf1409d3385f3ead175a97c4a68780a0cf179c054ccccdd0d57fb780e">kSAI_Stereo</a>, <a class="code" href="a00055.html#gga1f9aebf1de3ebbf4283a4dcf73308562aa21f6e0475cce1ba88f8105ab4f692c7">kSAI_Channel0Mask</a>|<a class="code" href="a00055.html#gga1f9aebf1de3ebbf4283a4dcf73308562a4f8ec142406d199623daa8671b62285b">kSAI_Channel1Mask</a>);</div>
+<div class="line">*   config.fifo.fifoCombine = kSAI_FifoCombineModeEnabledOnWrite;</div>
+<div class="line">*   <a class="code" href="a00056.html#ga5295038a021787aef619bdd9f96981da">SAI_TransferTxSetConfigEDMA</a>(I2S0, &amp;edmaHandle, &amp;config);</div>
+<div class="line">*  </div>
+</div><!-- fragment --></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">saiConfig</td><td>sai configurations. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaed5d72de0d0aa0ac71de3222924e4aa7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferRxSetConfigEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00390">sai_transceiver_t</a> *&#160;</td>
+          <td class="paramname"><em>saiConfig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>SAI eDMA supports data transfer in a multiple SAI channels if the FIFO Combine feature is supported. To activate the multi-channel transfer enable SAI channels by filling the channelMask of <a class="el" href="a00055.html#a00390" title="sai transceiver configurations ">sai_transceiver_t</a> with the corresponding values of _sai_channel_mask enum, enable the FIFO Combine mode by assigning kSAI_FifoCombineModeEnabledOnRead to the fifoCombine member of sai_fifo_combine_t which is a member of <a class="el" href="a00055.html#a00390" title="sai transceiver configurations ">sai_transceiver_t</a>. This is an example of multi-channel data transfer configuration step. <div class="fragment"><div class="line">*   <a class="code" href="a00055.html#a00390">sai_transceiver_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00055.html#gaf233a2ef17cff713b18a002924e992fc">SAI_GetClassicI2SConfig</a>(&amp;config, <a class="code" href="a00055.html#ggae357d8842863ba610f57acd1e1f35528a0328fc45f36f361f958cacd8378d4923">kSAI_WordWidth16bits</a>, <a class="code" href="a00055.html#gga23ffdf03cf1409d3385f3ead175a97c4a68780a0cf179c054ccccdd0d57fb780e">kSAI_Stereo</a>, <a class="code" href="a00055.html#gga1f9aebf1de3ebbf4283a4dcf73308562aa21f6e0475cce1ba88f8105ab4f692c7">kSAI_Channel0Mask</a>|<a class="code" href="a00055.html#gga1f9aebf1de3ebbf4283a4dcf73308562a4f8ec142406d199623daa8671b62285b">kSAI_Channel1Mask</a>);</div>
+<div class="line">*   config.fifo.fifoCombine = kSAI_FifoCombineModeEnabledOnRead;</div>
+<div class="line">*   <a class="code" href="a00056.html#gaed5d72de0d0aa0ac71de3222924e4aa7">SAI_TransferRxSetConfigEDMA</a>(I2S0, &amp;edmaHandle, &amp;config);</div>
+<div class="line">*  </div>
+</div><!-- fragment --> </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">saiConfig</td><td>sai configurations. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7a2c125e1f975c9f718dcb820ac46f63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferSendEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00392">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This interface returns immediately after the transfer initiates. Call SAI_GetTransferStatus to poll the transfer status and check whether the SAI transfer is finished.</dd></dl>
+<p>This function support multi channel transfer,</p>
+<ol type="1">
+<li>for the sai IP support fifo combine mode, application should enable the fifo combine mode, no limitation on channel numbers</li>
+<li>for the sai IP not support fifo combine mode, sai edma provide another solution which using EDMA modulo feature, but support 2 or 4 channels only.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the DMA transfer structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA send successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_TxBusy</td><td>SAI is busy sending data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9060fb028d5a24d8763066981b079900"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00392">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This interface returns immediately after the transfer initiates. Call the SAI_GetReceiveRemainingBytes to poll the transfer status and check whether the SAI transfer is finished.</dd></dl>
+<p>This function support multi channel transfer,</p>
+<ol type="1">
+<li>for the sai IP support fifo combine mode, application should enable the fifo combine mode, no limitation on channel numbers</li>
+<li>for the sai IP not support fifo combine mode, sai edma provide another solution which using EDMA modulo feature, but support 2 or 4 channels only.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to DMA transfer structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA receive successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_RxBusy</td><td>SAI is busy receiving data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1b62338a71194856549698e374d13cb0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferSendLoopEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00392">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>loopTransferCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This function support loop transfer only,such as A-&gt;B-&gt;...-&gt;A, application must be aware of that the more counts of the loop transfer, then more tcd memory required, as the function use the tcd pool in sai_edma_handle_t, so application could redefine the SAI_XFER_QUEUE_SIZE to determine the proper TCD pool size. This function support one sai channel only.</dd></dl>
+<p>Once the loop transfer start, application can use function SAI_TransferAbortSendEDMA to stop the loop transfer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the DMA transfer structure, should be a array with elements counts &gt;=1(loopTransferCount). </td></tr>
+    <tr><td class="paramname">loopTransferCount</td><td>the counts of xfer array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA send successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaaf6043ff078868f35d4459dd2e112c0d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferReceiveLoopEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00055.html#a00392">sai_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>loopTransferCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This function support loop transfer only,such as A-&gt;B-&gt;...-&gt;A, application must be aware of that the more counts of the loop transfer, then more tcd memory required, as the function use the tcd pool in sai_edma_handle_t, so application could redefine the SAI_XFER_QUEUE_SIZE to determine the proper TCD pool size. This function support one sai channel only.</dd></dl>
+<p>Once the loop transfer start, application can use function SAI_TransferAbortReceiveEDMA to stop the loop transfer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the DMA transfer structure, should be a array with elements counts &gt;=1(loopTransferCount). </td></tr>
+    <tr><td class="paramname">loopTransferCount</td><td>the counts of xfer array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a SAI eDMA receive successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6b3db811719337e4f2172c66ceeb7933"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferTerminateSendEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function will clear all transfer slots buffered in the sai queue. If users only want to abort the current transfer slot, please call SAI_TransferAbortSendEDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga819dcef593d48f3296ee858239802e26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferTerminateReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function will clear all transfer slots buffered in the sai queue. If users only want to abort the current transfer slot, please call SAI_TransferAbortReceiveEDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga12925e07667cc1b27915aedd1f718a7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferAbortSendEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function only aborts the current transfer slots, the other transfer slots' information still kept in the handler. If users want to terminate all transfer slots, just call SAI_TransferTerminateSendEDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3bd586da5f41126cbfa92d2baa03620b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SAI_TransferAbortReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function only aborts the current transfer slots, the other transfer slots' information still kept in the handler. If users want to terminate all transfer slots, just call SAI_TransferTerminateReceiveEDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga02aa0e441b0aada0f4875f28f832dc71"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferGetSendCountEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">count</td><td>Bytes count sent by SAI. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is no non-blocking transaction in progress. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae4a1100515e9a05bb61e0039288664a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SAI_TransferGetReceiveCountEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">count</td><td>Bytes count received by SAI. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is no non-blocking transaction in progress. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga33af2c1b3c360823ffdbb1348e586107"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t SAI_TransferGetValidTransferSlotsEDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2S_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sai_edma_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function can be used to query the valid transfer request slot that the application can submit. It should be called in the critical section, that means the application could call it in the corresponding callback function or disable IRQ before calling it in the application, otherwise, the returned value may not correct.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">valid</td><td>slot count that application submit. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -191,7 +191,7 @@ int32_t encoder_set_type(StreamElement *element, uintptr_t val)
     if (element == NULL)
         return STREAM_ERR_INVALID_ARGS;
 
-    if (val < 0 || val >= CEIENC_LAST)
+    if (val >= CEIENC_LAST)
         return STREAM_ERR_INVALID_ARGS;
 
     ElementEncoder *encElm = (ElementEncoder *)element;

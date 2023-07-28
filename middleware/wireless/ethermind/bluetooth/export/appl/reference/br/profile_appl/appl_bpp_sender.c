@@ -23,9 +23,9 @@
 static UCHAR         appl_bpp_printer_bd_addr[BT_BD_ADDR_SIZE];
 static UINT16        connection_handle;
 
-UCHAR bpp_sample_http_accept_header[] = "Accept: text/plain; q=0.5, text/html";
-UCHAR bpp_sample_http_accept_lang_header[] = "Accept-Language: da,en-gb;q=0.8,en;q=0.7";
-UCHAR bpp_sample_http_authorization_header[] = "Authorization: admin Welcome@123";
+static UCHAR bpp_sample_http_accept_header[] = "Accept: text/plain; q=0.5, text/html";
+static UCHAR bpp_sample_http_accept_lang_header[] = "Accept-Language: da,en-gb;q=0.8,en;q=0.7";
+static UCHAR bpp_sample_http_authorization_header[] = "Authorization: admin Welcome@123";
 
 static BPP_INSTANCE  bpp_sender_jobch_instance[BPP_NUM_SENDER_INSTANCE];
 static BPP_INSTANCE  bpp_sender_statusch_instance[BPP_NUM_SENDER_INSTANCE];
@@ -36,7 +36,6 @@ static UINT16 bpp_attrib_data_len = BPP_SDP_RECORD_DATA_SIZE;
 static SDP_HANDLE bpp_sdp_handle;
 static UCHAR bpp_job_server_channel;
 static UCHAR bpp_status_server_channel;
-/* static UINT16 bpp_l2cap_psm; */
 static BPP_CONNECT_STRUCT connect_info;
 static UCHAR        appl_reject_opn;
 static BT_fops_file_handle  fp;
@@ -296,6 +295,13 @@ void main_bpp_sender_operations (void)
 
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
             LOG_DEBUG("Enter Service Type \n 0. Direct Printing \n 1. Print by Reference \n 2. RUI \n  ");
             scanf ("%d", &service_type);
             LOG_DEBUG("Enter Channel Type \n 0. Job Channel \n 1. Status Channel \n 2. Object Channel \n");
@@ -364,6 +370,12 @@ void main_bpp_sender_operations (void)
 
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG("Enter Channel Type \n 0. Job Channel \n 1. Status Channel \n 2. Object Channel \n  ");
             scanf ("%d", &choice);
@@ -454,7 +466,7 @@ void main_bpp_sender_operations (void)
 
         case 10: /* Read the BD_ADDR of Remote Device */
             LOG_DEBUG("Please enter BD ADDR of BPP Printer\n");
-            appl_get_bd_addr(appl_bpp_printer_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_bpp_printer_bd_addr);
             break;
 
         case 11:
@@ -524,6 +536,12 @@ void main_bpp_sender_operations (void)
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
 
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
             LOG_DEBUG("Enter Channel Type \n 0. Job Channel \n 1. Status Channel \n   ");
             scanf ("%d", &choice);
 
@@ -566,6 +584,13 @@ void main_bpp_sender_operations (void)
         case 16:
             LOG_DEBUG ("Enter BPP Client instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
             LOG_DEBUG("Enter Channel Type \n 0. Job Channel \n 1. Status Channel \n   ");
             scanf ("%d", &choice);
 
@@ -598,6 +623,12 @@ void main_bpp_sender_operations (void)
         case 17:
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG("Enter Channel Type \n 0. Job Channel \n 1. Status Channel \n 2. Object Channel \n ");
             scanf ("%d", &choice);
@@ -634,9 +665,17 @@ void main_bpp_sender_operations (void)
 
         case 20:
             bpp_sender_print_appl_instances (BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
-            LOG_DEBUG ("Enter BPP Sender instance: ");
+
+            LOG_DEBUG("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT (name_info);
             BPP_INIT_HEADER_STRUCT (body_info);
@@ -780,6 +819,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -804,9 +851,16 @@ void main_bpp_sender_operations (void)
             UCHAR put_req_type;
 
             bpp_sender_print_appl_instances(BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
             LOG_DEBUG("Enter BPP Sender instance: ");
             scanf("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT(name_info);
             BPP_INIT_HEADER_STRUCT(body_info);
@@ -978,6 +1032,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1000,9 +1062,16 @@ void main_bpp_sender_operations (void)
 
         case 22:
             bpp_sender_print_appl_instances (BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT (body_info);
             BT_mem_set(&req_info, 0, sizeof(req_info));
@@ -1092,6 +1161,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1116,6 +1193,12 @@ void main_bpp_sender_operations (void)
             /*current_channel = BPP_JOB_CHANNEL;*/
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             BPP_INIT_HEADER_STRUCT (body_info);
             BT_mem_set(&req_info, 0, sizeof(req_info));
@@ -1221,6 +1304,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1245,6 +1336,12 @@ void main_bpp_sender_operations (void)
             /*current_channel = BPP_JOB_CHANNEL;*/
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             BPP_INIT_HEADER_STRUCT (body_info);
             BT_mem_set(&req_info, 0, sizeof(req_info));
@@ -1350,6 +1447,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1375,6 +1480,12 @@ void main_bpp_sender_operations (void)
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
 
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
             LOG_DEBUG("Send Request over \n 0. Job channel \n 1. status channel");
             scanf("%d", &choice);
             current_channel = (UCHAR)choice;
@@ -1398,9 +1509,16 @@ void main_bpp_sender_operations (void)
 
         case 26:
             bpp_sender_print_appl_instances (BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT (body_info);
             BT_mem_set(&req_info, 0, sizeof(req_info));
@@ -1490,6 +1608,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1511,9 +1637,16 @@ void main_bpp_sender_operations (void)
 
         case 27:
             bpp_sender_print_appl_instances (BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT (body_info);
             BT_mem_set(&req_info, 0, sizeof(req_info));
@@ -1603,6 +1736,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1624,12 +1765,17 @@ void main_bpp_sender_operations (void)
 
         case 28:
         {
-            UCHAR put_req_type;
-
             bpp_sender_print_appl_instances(BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
             LOG_DEBUG("Enter BPP  Sender instance: ");
             scanf("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT(name_info);
             BPP_INIT_HEADER_STRUCT(body_info);
@@ -1648,7 +1794,6 @@ void main_bpp_sender_operations (void)
 
             appl_param.job_id = (UINT32)val;
 
-            put_req_type = 0U;
             LOG_DEBUG("Enter the Type of file to be sent: \n");
             LOG_DEBUG("1 -> image/jpeg i.e. Image\n");
             LOG_DEBUG("2 -> text/x-vcard:2.1 i.e. vcard\n");
@@ -1661,32 +1806,26 @@ void main_bpp_sender_operations (void)
 
             if (1U == option)
             {
-                put_req_type = BPP_PUT_REQ_TYPE_MIME_MEDIA_DOC;
                 BT_str_copy(type_header, BPP_TYPE_MIME_MEDIA_JPEG);
             }
             else if (2U == option)
             {
-                put_req_type = BPP_PUT_REQ_TYPE_VCARD;
                 BT_str_copy(type_header, BPP_TYPE_MIME_MEDIA_VCARD);
             }
             else if (3U == option)
             {
-                put_req_type = BPP_PUT_REQ_TYPE_APPL_HTML;
                 BT_str_copy(type_header, BPP_TYPE_MIME_MEDIA_XHTML_PRINT);
             }
             else if (4U == option)
             {
-                put_req_type = BPP_PUT_REQ_TYPE_PLAIN_TEXT;
                 BT_str_copy(type_header, BPP_TYPE_MIME_MEDIA_BASIC_TEXT);
             }
             else if (5U == option)
             {
-                put_req_type = BPP_PUT_REQ_TYPE_VCALENDER;
                 BT_str_copy(type_header, BPP_TYPE_MIME_MEDIA_VCALENDAR);
             }
             else if (6U == option)
             {
-                put_req_type = BPP_PUT_REQ_TYPE_VMSG;
                 BT_str_copy(type_header, BPP_TYPE_MIME_MEDIA_VMESSAGE);
             }
             else
@@ -1714,36 +1853,13 @@ void main_bpp_sender_operations (void)
             sent = 0U;
             bpp_xchg_size = bpp_sender_jobch_instance[handle].max_xchg_size;
 
-            if (BPP_PUT_REQ_TYPE_MIME_MEDIA_DOC == put_req_type)
-            {
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_vfops_create_object_name
-                (
-                    (UCHAR *)BPP_ROOT_FOLDER_BASE,
-                    (UCHAR *)"bigpic.jpg",
-                    file_object
-                );
-            }
-            else if (BPP_PUT_REQ_TYPE_VCARD == put_req_type)
-            {
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_vfops_create_object_name
-                (
-                    (UCHAR *)BPP_ROOT_FOLDER_BASE,
-                    (UCHAR *)file_name,
-                    file_object
-                );
-            }
-            else
-            {
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_vfops_create_object_name
-                (
-                    (UCHAR *)BPP_ROOT_FOLDER_BASE,
-                    (UCHAR *)file_name,
-                    file_object
-                );
-            }
+            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+            (void)BT_vfops_create_object_name
+            (
+                (UCHAR *)BPP_ROOT_FOLDER_BASE,
+                (UCHAR *)file_name,
+                file_object
+            );
 
             /* Open the file to be sent */
             retval = BT_fops_file_open(file_object, (UCHAR *)"rb", &bpp_tx_fp);
@@ -1820,6 +1936,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bpp_tx_fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1842,9 +1966,16 @@ void main_bpp_sender_operations (void)
 
         case 29:
             bpp_sender_print_appl_instances (BPP_STATUS_CHANNEL);
-            current_channel = BPP_STATUS_CHANNEL;
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_STATUS_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT (body_info);
             BT_mem_set(&req_info, 0, sizeof(req_info));
@@ -1931,6 +2062,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -1955,9 +2094,16 @@ void main_bpp_sender_operations (void)
             UCHAR put_req_type;
 
             bpp_sender_print_appl_instances(BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
             LOG_DEBUG("Enter BPP Sender instance: ");
             scanf("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT(name_info);
             BPP_INIT_HEADER_STRUCT(body_info);
@@ -2126,6 +2272,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -2148,9 +2302,16 @@ void main_bpp_sender_operations (void)
 
         case 31:
             bpp_sender_print_appl_instances (BPP_JOB_CHANNEL);
-            current_channel = BPP_JOB_CHANNEL;
             LOG_DEBUG ("Enter BPP Sender instance: ");
             scanf ("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
+
+            current_channel = BPP_JOB_CHANNEL;
 
             BPP_INIT_HEADER_STRUCT (body_info);
             BPP_INIT_HEADER_STRUCT (name_info);
@@ -2256,6 +2417,14 @@ void main_bpp_sender_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -2280,6 +2449,12 @@ void main_bpp_sender_operations (void)
 
             LOG_DEBUG("Enter BPP Sender instance: ");
             scanf("%d", &handle);
+
+            if (BPP_NUM_SENDER_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 
             LOG_DEBUG("Enter Channel Type \n 0. Job Channel \n 1. Status Channel \n 2. Object Channel \n ");
             scanf("%d", &choice);
@@ -2624,12 +2799,12 @@ API_RESULT appl_bpp_sender_callback
         LOG_DEBUG("BPP SENDER Instance: %d\n", handle);
         LOG_DEBUG("Result = 0x%04X\n", event_result);
 
+        /* Set response to be sent */
+        send_response = 1U;
+
         if (BPP_SUCCESS_RSP != event_result)
         {
             tx_response = BPP_NOT_ACCEPTABLE_RSP;
-
-            send_response = 1U;
-
             break;
         }
 
@@ -2639,9 +2814,6 @@ API_RESULT appl_bpp_sender_callback
         LOG_DEBUG ("MAX Exchange Size: %d\n",
         bpp_rx_hdrs->bpp_connect_info->max_recv_size);
         tx_response = BPP_SUCCESS_RSP;
-
-        /* Set response to be sent */
-        send_response = 1U;
 
         /* Get the Handle parameters */
         BT_mem_copy
@@ -2888,6 +3060,19 @@ API_RESULT appl_bpp_sender_callback
         if ((BPP_SUCCESS_RSP == event_result) ||
             (BPP_CONTINUE_RSP != event_result))
         {
+            /* Reset the variables */
+            sent = 0U;
+            fsize = 0U;
+            remaining = 0U;
+            actual = 0U;
+            send_request = 0x00U;
+
+            if (NULL != fp)
+            {
+                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
+            }
             break;
         }
 
@@ -2939,6 +3124,19 @@ API_RESULT appl_bpp_sender_callback
         if ((BPP_SUCCESS_RSP == event_result) ||
             (BPP_CONTINUE_RSP != event_result))
         {
+            /* Reset the variables */
+            sent = 0U;
+            fsize = 0U;
+            remaining = 0U;
+            actual = 0U;
+            send_request = 0x00U;
+
+            if (NULL != fp)
+            {
+                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
+            }
             break;
         }
 
@@ -2997,11 +3195,11 @@ API_RESULT appl_bpp_sender_callback
             actual = 0U;
             send_request = 0x00U;
 
-            if (NULL != bpp_tx_fp)
+            if (NULL != fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(bpp_tx_fp);
-                bpp_tx_fp = NULL;
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
             }
 
             if (NULL != bpp_rx_fp)
@@ -3146,11 +3344,11 @@ API_RESULT appl_bpp_sender_callback
             actual = 0U;
             send_request = 0x00U;
 
-            if (NULL != bpp_tx_fp)
+            if (NULL != fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(bpp_tx_fp);
-                bpp_tx_fp = NULL;
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
             }
 
             if (NULL != bpp_rx_fp)
@@ -3292,11 +3490,11 @@ API_RESULT appl_bpp_sender_callback
             actual = 0U;
             send_request = 0x00U;
 
-            if (NULL != bpp_tx_fp)
+            if (NULL != fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(bpp_tx_fp);
-                bpp_tx_fp = NULL;
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
             }
 
             if (NULL != bpp_rx_fp)
@@ -3447,11 +3645,11 @@ API_RESULT appl_bpp_sender_callback
             actual = 0U;
             send_request = 0x00U;
 
-            if (NULL != bpp_tx_fp)
+            if (NULL != fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(bpp_tx_fp);
-                bpp_tx_fp = NULL;
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
             }
 
             if (NULL != bpp_rx_fp)
@@ -3594,11 +3792,11 @@ API_RESULT appl_bpp_sender_callback
             actual = 0U;
             send_request = 0x00U;
 
-            if (NULL != bpp_tx_fp)
+            if (NULL != fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(bpp_tx_fp);
-                bpp_tx_fp = NULL;
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
             }
 
             if (NULL != bpp_rx_fp)
@@ -3743,11 +3941,11 @@ API_RESULT appl_bpp_sender_callback
             actual = 0U;
             send_request = 0x00U;
 
-            if (NULL != bpp_tx_fp)
+            if (NULL != fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(bpp_tx_fp);
-                bpp_tx_fp = NULL;
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
             }
 
             if (NULL != bpp_rx_fp)
@@ -4036,11 +4234,11 @@ API_RESULT appl_bpp_sender_callback
             actual = 0U;
             send_request = 0x00U;
 
-            if (NULL != bpp_tx_fp)
+            if (NULL != fp)
             {
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(bpp_tx_fp);
-                bpp_tx_fp = NULL;
+                (void)BT_fops_file_close(fp);
+                fp = NULL;
             }
 
             if (NULL != bpp_rx_fp)
@@ -4286,6 +4484,14 @@ API_RESULT appl_bpp_sender_callback
         sent += actual;
         remaining = fsize - sent;
 
+        /* Adjust the file read pointer to the actual bytes transmitted */
+        if (body_info.length != actual)
+        {
+            printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+            printf("Adjusting the file read pointer\n");
+            (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bpp_tx_fp, sent, SEEK_SET);
+        }
+
         if (0U == remaining)
         {
             /* Reset the variables */
@@ -4364,6 +4570,23 @@ API_RESULT appl_bpp_sender_callback
                 /* Update object size sent & remaining to send */
                 sent += actual;
                 remaining = fsize - sent;
+
+                /* Adjust the file read pointer to the actual bytes transmitted */
+                if (body_info.length != actual)
+                {
+                    if (BPP_SENDER_SEND_DOC_CNF == event_type)
+                    {
+                        printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                        printf("Adjusting the file read pointer\n");
+                        (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bpp_tx_fp, sent, SEEK_SET);
+                    }
+                    else
+                    {
+                        printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                        printf("Adjusting the file read pointer\n");
+                        (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+                    }
+                }
             }
 
             /* If operation has failed or completed, perform cleanup */
@@ -4373,10 +4596,25 @@ API_RESULT appl_bpp_sender_callback
                 sent = 0U;
                 fsize = 0U;
 
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(fp);
-                fp = NULL;
-                appl_bpp_sender_print_ongoing = BT_FALSE;
+                if (BPP_SENDER_SEND_DOC_CNF == event_type)
+                {
+                    if (NULL != bpp_tx_fp)
+                    {
+                        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                        (void)BT_fops_file_close(bpp_tx_fp);
+                        bpp_tx_fp = NULL;
+                    }
+                }
+                else
+                {
+                    if (NULL != fp)
+                    {
+                        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                        (void)BT_fops_file_close(fp);
+                        fp = NULL;
+                        appl_bpp_sender_print_ongoing = BT_FALSE;
+                    }
+                }
             }
         }
 #endif
@@ -4784,6 +5022,14 @@ static API_RESULT appl_bpp_sender_cancel_job(UCHAR handle, UCHAR channel)
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             if (0U == remaining)
             {
                 /* Reset the variables */
@@ -4945,6 +5191,14 @@ static API_RESULT appl_bpp_sender_cancel_job_ext(UCHAR handle, UCHAR channel)
             /* Update object size sent & remaining to send */
             _sent += actual;
             _remaining = _fsize - _sent;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, _sent, SEEK_SET);
+            }
 
             LOG_DEBUG("=== appl_bpp_sender_cancel_job, _remaining: %d\n ==== ", _remaining);
 

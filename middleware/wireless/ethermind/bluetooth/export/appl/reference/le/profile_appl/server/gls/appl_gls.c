@@ -2,7 +2,55 @@
 /**
  *  \file appl_gls.c
  *
- *  This file contains the Glucose Sensor application.
+ *  This file contains the Sample Glucose Sensor application.
+ *  Sample applications detailed below:
+ *      a. The Sensor, as defined by the Specification plays the GAP Peripheral
+ *         role.
+ *      b. The Sensor application has following service records:
+ *           - GAP
+ *           - GATT
+ *           - Battery
+ *           - Device Information and
+ *           - Glucose
+ *         [NOTE]: Please see gatt_db.c for more details of the record.
+ *      c. The Glucose Service exposes:
+ *           - Glucose Measurement
+ *           - Glucose Measurement Context
+ *           - Glucose Feature
+ *           - RACP
+ *      d. Glucose Measurement and Glucose Measurement Context can
+ *         be configured to send Notifications respectively.
+ *         Glucose Measurement Context may be used to send additional
+ *         contextual information related to a Glucose Measurement.
+ *      e. This sample application, once configured, send measurements every
+ *         3s. This interval can be altered using the define
+ *         APPL_RECORD_TRNSFER_INTERVAL.
+ *      f. Following RACP Opcodes, Operator and Operand are supported by the
+ *         sample application
+ *         +================+===============+===============+=======+================+
+ *         |                          RACP Request Opcodes                           |
+ *         +================+===============+===============+=======+================+
+ *         |     RACP       | Report Stored | Delete Stored | Abort | Report # of    |
+ *         |   Operator     |  Record       | Record        |       | Stored Records |
+ *         +================+===============+===============+=======+================+
+ *         | All Records    |      YES      |      YES      |  YES  |       YES      |
+ *         +----------------+---------------+---------------+-------+----------------+
+ *         | Less than or   |      YES      |      YES      |  YES  |       YES      |
+ *         |    equal       |               |               |       |                |
+ *         +----------------+---------------+---------------+-------+----------------+
+ *         | Greater than   |      YES      |      YES      |  YES  |       YES      |
+ *         |   or equal     |               |               |       |                |
+ *         +----------------+---------------+---------------+-------+----------------+
+ *         | Within Range   |      YES      |      YES      |  YES  |       YES      |
+ *         +----------------+---------------+---------------+-------+----------------+
+ *         | First Record   |      YES      |      YES      |  YES  |       YES      |
+ *         +----------------+---------------+---------------+-------+----------------+
+ *         | Last Record    |      YES      |      YES      |  YES  |       YES      |
+ *         +----------------+---------------+---------------+-------+----------------+
+ *
+ *   g. Currently this sample application supports only Sequence Number Operand.
+ *      On receiving RACP request with User facing Time operand it sends the
+ *      indication with Operand Not Supported
  */
 
 /*
@@ -53,12 +101,27 @@
 #define APPL_GL_RACP_SEQ_NO_FILTER                0x01U
 #define APPL_GL_RACP_USR_FACING_TIME_FILTER       0x02U
 
-#define APPL_GLS_ADV_DATA_LEN                     21U
-#define APPL_RECORD_TRNSFER_INTERVAL               3U
+#define APPL_GLS_DEFAULT_ADV_SWITCH_BACK_INTVAL    5U
+/**
+ * Complete Advertisement Data Length used by
+ * Glucose Advertisement.
+ * This typically is the same value as the
+ * "appl_gap_adv_data.datalen" which is present in the
+ * GLS specific "appl_gls_gap_config_params.c" file.
+ */
+#define APPL_GLS_ADV_DATA_LEN                      19U
 
 /* --------------------------------------------- External Global Variables */
 
 /* --------------------------------------------- Exported Global Variables */
+/**
+ * External global variable defined in "appl_gls_gap_config_params.c" file
+ * which corresponds to the Glucose related ADV data.
+ */
+extern APPL_GAP_ADV_DATA appl_gap_adv_data;
+
+/** External global variable related to the Current Connected Peer Address */
+extern BT_DEVICE_ADDR g_bd_addr;
 
 /* --------------------------------------------- Static Global Variables */
 /* Timer related Globals */
@@ -67,6 +130,7 @@ static BT_timer_handle timer_handle;
 /* GATT DB Handle related Globals */
 static GATT_DB_HANDLE  appl_gl_msrmt_db_handle;
 static GATT_DB_HANDLE  appl_gl_cntxt_msrmt_db_handle;
+static GATT_DB_HANDLE  appl_gl_features_db_handle;
 static GATT_DB_HANDLE  appl_gl_racp_db_handle;
 
 /* Attribute Handle related Globals */
@@ -84,6 +148,41 @@ static UCHAR  msrmnt_to_send;
 UCHAR         last_record_update;
 UCHAR         gls_racp_id;
 APPL_HANDLE   appl_hndl;
+
+/**
+ * Holding a constant Template of Glucose ADV Data
+ * To be used by application after disconnection if needed
+ * by the application(to reset back any modified ADV Data)
+ */
+DECL_CONST UCHAR appl_gls_default_adv_data[APPL_GLS_ADV_DATA_LEN] =
+{
+    /**
+     *  Flags:
+     *      0x01: LE Limited Discoverable Mode
+     *      0x02: LE General Discoverable Mode
+     *      0x04: BR/EDR Not Supported
+     *      0x08: Simultaneous LE and BR/EDR to Same Device
+     *            Capable (Controller)
+     *      0x10: Simultaneous LE and BR/EDR to Same Device
+     *            Capable (Host)
+     */
+    0x02U, 0x01U,
+    (BT_AD_FLAGS_LE_GENERAL_DISC_MODE | BT_AD_FLAGS_LE_BR_EDR_HOST),
+
+    /**
+     *  Service UUID List:
+     *      DeviceInformation Service (0x180A)
+     *      Battery Service (0x180F)
+     *      Blood Glucose-meter Service (0x1808)
+     */
+    0x07U, 0x03U, 0x0AU, 0x18U, 0x0FU, 0x18U, 0x08U, 0x18U,
+
+    /**
+     *  Shortened Device Name: Mt-GLP
+     */
+    0x07U, 0x08U, 'M', 't', '-', 'G', 'L', 'P'
+};
+
 
 DECL_STATIC DECL_CONST RACP_MODULE_T gls_racp =
 {
@@ -110,45 +209,53 @@ UCHAR gls_msrmt_obs_data
     0x0BU,
     /* sequence number */
     0x00U, 0x00U,
-    /* TimeStamp (In YYYY-MM-DD:HR-MIN-SEC) */
+    /* Base Time (In YYYY-MM-DD:HR-MIN-SEC) */
     0xDCU, 0x07U, 0x06U, 0x07U, 0x00U, 0x00U, 0x00U,
-    /* Time Offset Field */
-    0x00U, 0x00U,
+    /* Time Offset (In Minutes) */
+    0x00U, 0x00U, /* 0 minutes */
     /* Glucose Concentration Field and Type-Sample Location Field */
     0x16U, 0xD1U, 0x11U,
     /* Sensor Status Annunciation Field */
     0x00U, 0x00U,
 
     /* Record 2 */
-    0x00U, 0x1FU, 0x01U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x08U, 0x00U, 0x00U, 0x00U, 0x01U, 0x00U,
+    0x00U, 0x1FU, 0x01U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x08U, 0x00U, 0x00U, 0x00U,
+    0x01U, 0x00U, /* 1 Minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U,
 
     /* Record 3 */
-    0x00U, 0x0FU, 0x02U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U, 0x02U, 0x00U,
+    0x00U, 0x0FU, 0x02U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U,
+    0x02U, 0x00U, /* 2 Minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U,
 
     /* Record 4 */
-    0x00U, 0x0FU, 0x03U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U, 0x3CU, 0x00U,
+    0x00U, 0x0FU, 0x03U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U,
+    0x3CU, 0x00U, /* 60 Minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U,
 
     /* Record 5 */
-    0x00U, 0x0FU, 0x07U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U, 0x3DU, 0x00U,
+    0x00U, 0x0FU, 0x07U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U,
+    0x3DU, 0x00U, /* 61 Minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U,
 
     /* Record 6 */
-    0x00U, 0x0FU, 0x08U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U, 0x3EU, 0x00U,
+    0x00U, 0x0FU, 0x08U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U,
+    0x3EU, 0x00U, /* 62 Minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U,
 
     /* Record 7 */
-    0x00U, 0x0FU, 0x09U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U, 0xC4U, 0xFFU,
+    0x00U, 0x0FU, 0x09U, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U,
+    0xC4U, 0xFFU, /* 65,476 minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U,
 
     /* Record 8 */
-    0x00U, 0x0FU, 0x0AU, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U, 0xC3U, 0xFFU,
+    0x00U, 0x0FU, 0x0AU, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U,
+    0xC3U, 0xFFU, /* 65,475 minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U,
 
     /* Record 9 */
-    0x00U, 0x0FU, 0x0BU, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U, 0xC2U, 0xFFU,
+    0x00U, 0x0FU, 0x0BU, 0x00U, 0xDCU, 0x07U, 0x06U, 0x09U, 0x00U, 0x00U, 0x00U,
+    0xC2U, 0xFFU, /* 65,474 minutes */
     0x37U, 0xC0U, 0x11U, 0x00U, 0x00U
 };
 
@@ -228,17 +335,23 @@ UCHAR gls_cntxt_msrmt_seq_id_index[APPL_GLUCOSE_MEASUREMENT_CONTEXT_COUNT] =
     18U
 };
 
-UCHAR appl_gl_feature_value[] = { 0xFFU, 0x03U };
+DECL_STATIC UCHAR target_addr_set;
+DECL_STATIC UCHAR appl_gls_multi_bond_set;
+
 /* --------------------------------------------- Functions */
 void appl_gls_init (void)
 {
-    gls_racp_id = RACP_MAX_MODULES;
 #ifdef GATT_DB_DYNAMIC
 #ifdef GATT_DB_HAVE_DB_SIGNATURE
     GATT_DB_SIGNATURE appl_gls_db_sign;
 #endif /* GATT_DB_HAVE_DB_SIGNATURE */
     API_RESULT      retval = API_FAILURE;
 #endif /* GATT_DB_DYNAMIC */
+
+    /* Initialize */
+    gls_racp_id             = RACP_MAX_MODULES;
+    target_addr_set         = BT_FALSE;
+    appl_gls_multi_bond_set = BT_TRUE;
 
 #ifdef GATT_DB_DYNAMIC
     (BT_IGNORE_RETURN_VALUE) appl_gls_add_gaps();
@@ -257,7 +370,6 @@ void appl_gls_init (void)
 
     APPL_TRC(
     "[GLS]: GATT Database Registration Status: 0x%04X\n", retval);
-    GATT_DB_MAX_ATTRIBUTES         = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
     /* Populate the GATT DB HANDLE for GLS Measurement */
     appl_gl_msrmt_db_handle.device_id        = DEVICE_HANDLE_INIT_VAL;
@@ -267,6 +379,10 @@ void appl_gls_init (void)
     appl_gl_cntxt_msrmt_db_handle.device_id  = DEVICE_HANDLE_INIT_VAL;
     appl_gl_cntxt_msrmt_db_handle.service_id = (UCHAR)GATT_SER_GLS_GLUCOSE_METER_INST;
     appl_gl_cntxt_msrmt_db_handle.char_id    = (UCHAR)GATT_CHAR_GLS_GL_CNTXT_INST;
+
+    appl_gl_features_db_handle.device_id     = DEVICE_HANDLE_INIT_VAL;
+    appl_gl_features_db_handle.service_id    = (UCHAR)GATT_SER_GLS_GLUCOSE_METER_INST;
+    appl_gl_features_db_handle.char_id       = (UCHAR)GATT_CHAR_GLS_GL_FEATURES_INST;
 
     appl_gl_racp_db_handle.device_id         = DEVICE_HANDLE_INIT_VAL;
     appl_gl_racp_db_handle.service_id        = (UCHAR)GATT_SER_GLS_GLUCOSE_METER_INST;
@@ -278,7 +394,10 @@ void appl_gls_init (void)
 #endif /* GATT_DB_DYNAMIC */
 
     /* Register GLS GATT DB Handler with PL Extension */
-    gatt_db_init_pl(gatt_db_gls_gatt_char_handler);
+    (BT_IGNORE_RETURN_VALUE) gatt_db_init_pl(gatt_db_gls_gatt_char_handler);
+
+    /* Calling RACP Registration for GLS from here */
+    gls_racp_init();
 }
 
 void appl_gls_bt_init(void)
@@ -324,16 +443,18 @@ void gls_racp_init(void)
 void appl_gls_connect(DEVICE_HANDLE  * dq_handle)
 {
     API_RESULT retval;
-    ATT_VALUE         value;
-    UINT16            cli_cnfg;
+    ATT_VALUE  value;
+    UINT16     cli_cnfg;
 
     cli_cnfg = 0U;
 
-    appl_gl_msrmt_db_handle.device_id = (*dq_handle);
+    /* Set the Public or random target address in the adv data */
+    if (BT_TRUE == target_addr_set)
+    {
+        appl_gls_set_target_address_in_adv_data(APPL_GLS_ADV_DATA_LEN);
+    }
 
-    /* Calling RACP Registration for GLS from here */
-    /* This is done as profile init is invoked ahead of BT_bluetooth_on in SingleMode */
-    gls_racp_init();
+    appl_gl_msrmt_db_handle.device_id = (*dq_handle);
 
     /* If GLS Measurement is configured, initiated transfer */
     appl_gl_msrmt_db_handle.device_id = (*dq_handle);
@@ -343,12 +464,14 @@ void appl_gls_connect(DEVICE_HANDLE  * dq_handle)
         appl_gl_msrmt_db_handle.device_id,
         &appl_hndl
     );
+
     /* Get Glucose Measurement Characteristics Handle */
     retval = BT_gatt_db_get_char_val_hndl
              (
                   &appl_gl_msrmt_db_handle,
                   &appl_gl_msrmt_hndl
              );
+
     retval = BT_gatt_db_get_char_cli_cnfg(&appl_gl_msrmt_db_handle, &value);
     if (retval != API_SUCCESS)
     {
@@ -358,6 +481,7 @@ void appl_gls_connect(DEVICE_HANDLE  * dq_handle)
     {
         BT_UNPACK_LE_2_BYTE(&cli_cnfg, value.val);
     }
+
     APPL_TRC(
     "[GLS]: Fetched Client Configuration (0x%04X) for Device (0x%02X)\n",
     cli_cnfg, (*dq_handle));
@@ -370,7 +494,9 @@ void appl_gls_connect(DEVICE_HANDLE  * dq_handle)
                   &appl_gl_cntxt_msrmt_db_handle,
                   &appl_gl_cntxt_msrmt_hndl
              );
+
     retval = BT_gatt_db_get_char_cli_cnfg(&appl_gl_cntxt_msrmt_db_handle, &value);
+
     if (retval != API_SUCCESS)
     {
         cli_cnfg = 0x0000U;
@@ -406,19 +532,43 @@ void appl_gls_connect(DEVICE_HANDLE  * dq_handle)
     APPL_TRC(
     "[GLS]: Fetched Client Configuration (0x%04X) for Device (0x%02X)\n",
     cli_cnfg, (*dq_handle));
-#ifdef APPL_GLS_SINGLE_BOND_SUPPORT
-    appl_gl_msrmt_db_handle.char_id = GATT_CHAR_GL_FEATURES_INST;
 
-    value.val = appl_gl_feature_value;
-    value.len = sizeof(appl_gl_feature_value);
+    /* Glucose Features related handling */
+    appl_gl_features_db_handle.device_id = (*dq_handle);
 
-    /* Set Multi Bond bit in Glucose feature to zero */
-    retval = BT_gatt_db_set_char_val
+    retval = BT_gatt_db_get_char_val
              (
-                &appl_gl_msrmt_db_handle,
-                &value
+                 &appl_gl_features_db_handle,
+                 &value
              );
-#endif /* APPL_GLS_SINGLE_BOND_SUPPORT */
+
+    if (API_SUCCESS == retval)
+    {
+        /**
+         * TODO:
+         * Currently not checking for the Value length returned for
+         * Glucose Features.
+         */
+        if (BT_TRUE == appl_gls_multi_bond_set)
+        {
+            /* Set Multiple Bond Support bit(10th bit) in Glucose feature char */
+            value.val[0] = value.val[0] | 0xFFU;
+            value.val[1] = value.val[1] | 0x04U;
+        }
+        else
+        {
+            /* Reset Multiple Bond Support bit in Glucose feature char */
+            value.val[0] = value.val[0] & 0xFFU;
+            value.val[1] = value.val[1] & 0xFBU;
+        }
+
+        /* Set Multi Bond bit in Glucose feature to zero */
+        retval = BT_gatt_db_set_char_val
+                 (
+                     &appl_gl_features_db_handle,
+                     &value
+                 );
+    }
 }
 
 void appl_gls_server_reinitialize (void)
@@ -427,6 +577,27 @@ void appl_gls_server_reinitialize (void)
     {
         BT_stop_timer (timer_handle);
         timer_handle = BT_TIMER_HANDLE_INIT_VAL;
+    }
+
+    if (BT_FALSE != target_addr_set)
+    {
+        target_addr_set = BT_FALSE;
+
+        /**
+         * Start Timer to set the default advertising data after
+         * "APPL_BPS_DEFAULT_ADV_SWITCH_BACK_INTERVAL" seconds
+         */
+        BT_start_timer
+        (
+            &timer_handle,
+            APPL_GLS_DEFAULT_ADV_SWITCH_BACK_INTVAL,
+            appl_gls_timer_expiry_hndlr,
+            NULL,
+            0U
+        );
+
+        APPL_TRC(
+        "[APPL]: Started Timer %p\n", timer_handle);
     }
 
     appl_gl_operating_state = APPL_RACP_INIT_STATE;
@@ -468,19 +639,35 @@ API_RESULT appl_gl_racp_validate_operands
 
     retval = API_SUCCESS;
 
-    if ((oprtr != APPL_GL_RACP_ALL_RCRD_OPRTR) ||
-        (oprtr != APPL_GL_RACP_FRST_RCRD_OPRTR) ||
+    /**
+     * For below Operators, Operand fields are not present
+     *  - All Records
+     *  - First Record
+     *  - Last Record
+     * Thus checking if the incoming Operator is anything other than
+     * the above mentioned Operators.
+     */
+
+    if ((oprtr != APPL_GL_RACP_ALL_RCRD_OPRTR) &&
+        (oprtr != APPL_GL_RACP_FRST_RCRD_OPRTR) &&
         (oprtr != APPL_GL_RACP_LST_RCRD_OPRTR))
     {
         switch (oprtr)
         {
         case APPL_GL_RACP_LSS_THN_EQL_TO_OPRTR:
         case APPL_GL_RACP_GRTR_HNN_EQL_TO_OPRTR:
-            /** checking length of 3 is 1 byte of filter type and 2 bytes of seq no
-             *  checking length of 8 is 1 byte of filter type and 7 bytes of user facing time
-             */
-            if ((APPL_GL_RACP_SEQ_NO_FILTER == operand[0U] && 3U == len) ||
-                (APPL_GL_RACP_USR_FACING_TIME_FILTER == operand[0U] && 8U == len))
+            /**
+              * For Sequence Number Filter Type
+              * Checking length as 3
+              * 1 byte  = Sequence Number filter type
+              * 2 bytes = Sequence Number
+              */
+
+            /**
+              * Currently we are supporting only Sequence number filter type
+              * For User Facing time filter type send Operand Not Supported
+              */
+            if ( (APPL_GL_RACP_SEQ_NO_FILTER == operand[0U] && 3U == len) )
             {
                 retval = API_SUCCESS;
             }
@@ -650,7 +837,8 @@ API_RESULT appl_gl_racp_clear_strd_records(APPL_TIMER_PARAM  *appl_timer_param)
     API_RESULT retval;
     UINT16 min_seg_id;
     UINT16 max_seg_id;
-    UINT16 seg_id;
+    UINT16 record_seg_id;
+    UINT16 seq_no;
     UINT16 index;
 
     if (APPL_GL_RACP_ALL_RCRD_OPRTR == appl_timer_param->appl_req_param.oprtr)
@@ -663,12 +851,14 @@ API_RESULT appl_gl_racp_clear_strd_records(APPL_TIMER_PARAM  *appl_timer_param)
     }
     else if (APPL_GL_RACP_WINTHIN_RNG_OPRTR == appl_timer_param->appl_req_param.oprtr)
     {
+        /* Extract Min Filter value from the Request */
         BT_UNPACK_LE_2_BYTE
         (
             &min_seg_id,
             appl_timer_param->appl_req_param.operand + 1U
         );
 
+        /* Extract Maximum Filter value from the Request */
         BT_UNPACK_LE_2_BYTE
         (
             &max_seg_id,
@@ -677,18 +867,78 @@ API_RESULT appl_gl_racp_clear_strd_records(APPL_TIMER_PARAM  *appl_timer_param)
 
         for (index = 0U; index < appl_stored_record_count; index++)
         {
+            /* Extract sequence number from each record */
             BT_UNPACK_LE_2_BYTE
             (
-                &seg_id,
+                &record_seg_id,
                 &gls_msrmt_obs_data[gls_msrmt_seq_id_index[index]]
             );
 
-            if (seg_id >= min_seg_id && seg_id <= max_seg_id)
+            if (record_seg_id >= min_seg_id && record_seg_id <= max_seg_id)
             {
                 gls_msrmt_obs_data[gls_msrmt_seq_id_index[index] - 2U] = 0x01U;
                 /* appl_stored_record_count --; */
             }
         }
+    }
+    else if (APPL_GL_RACP_LSS_THN_EQL_TO_OPRTR == appl_timer_param->appl_req_param.oprtr)
+    {
+        /* Extract seq no from the request */
+        BT_UNPACK_LE_2_BYTE
+        (
+            &seq_no,
+            appl_timer_param->appl_req_param.operand + 1U
+        );
+
+        for (index = 0U; index <= appl_stored_record_count; index++)
+        {
+            /* Extract seq no from each record */
+            BT_UNPACK_LE_2_BYTE
+            (
+                &record_seg_id,
+                &gls_msrmt_obs_data[gls_msrmt_seq_id_index[index]]
+            );
+
+            if (record_seg_id <= seq_no)
+            {
+                gls_msrmt_obs_data[gls_msrmt_seq_id_index[index] - 2U] = 0x01U;
+            }
+        }
+    }
+    else if (APPL_GL_RACP_GRTR_HNN_EQL_TO_OPRTR == appl_timer_param->appl_req_param.oprtr)
+    {
+        /* Extract seq no from the request */
+        BT_UNPACK_LE_2_BYTE
+        (
+            &seq_no,
+            appl_timer_param->appl_req_param.operand + 1U
+        );
+
+        for (index = 0U; index <= appl_stored_record_count; index++)
+        {
+            /* Extract seq no from each record */
+            BT_UNPACK_LE_2_BYTE
+            (
+                &record_seg_id,
+                &gls_msrmt_obs_data[gls_msrmt_seq_id_index[index]]
+            );
+
+            if (record_seg_id >= seq_no)
+            {
+                gls_msrmt_obs_data[gls_msrmt_seq_id_index[index] - 2U] = 0x01U;
+            }
+        }
+    }
+    else if (APPL_GL_RACP_FRST_RCRD_OPRTR == appl_timer_param->appl_req_param.oprtr)
+    {
+        /* Set the First Record as DELETED */
+        gls_msrmt_obs_data[APPL_GLUCOSE_MEASUREMENT_LENGTH * appl_record_count] = 0x01U;
+    }
+    else if (APPL_GL_RACP_LST_RCRD_OPRTR == appl_timer_param->appl_req_param.oprtr)
+    {
+        /* Set the Last Record as DELETED */
+        appl_record_count = (appl_stored_record_count - 1);
+        gls_msrmt_obs_data[APPL_GLUCOSE_MEASUREMENT_LENGTH * appl_record_count] = 0x01U;
     }
     else
     {
@@ -1025,7 +1275,8 @@ API_RESULT appl_gl_racp_send_response (APPL_TIMER_PARAM * appl_timer_param)
 
         if (APPL_GL_RACP_ALL_RCRD_OPRTR == appl_timer_param->appl_req_param.oprtr)
         {
-            count = appl_stored_record_count;
+            /* count = appl_stored_record_count; */
+            count = appl_get_stored_records_count(appl_timer_param, APPL_GL_RACP_ALL_RCRD_OPRTR);
         }
         else if (APPL_GL_RACP_GRTR_HNN_EQL_TO_OPRTR == appl_timer_param->appl_req_param.oprtr)
         {
@@ -1035,10 +1286,14 @@ API_RESULT appl_gl_racp_send_response (APPL_TIMER_PARAM * appl_timer_param)
         {
             count = appl_get_stored_records_count(appl_timer_param,APPL_GL_RACP_LSS_THN_EQL_TO_OPRTR);
         }
+        else if (APPL_GL_RACP_WINTHIN_RNG_OPRTR == appl_timer_param->appl_req_param.oprtr)
+        {
+            count = appl_get_stored_records_count(appl_timer_param, APPL_GL_RACP_WINTHIN_RNG_OPRTR);
+        }
         else
         {
-            /* Need to update for LAST and FIRST Record!! */
-            count = appl_get_stored_records_count(appl_timer_param, 0U);
+            /* For FIRST and LAST Record record count set to 1  */
+            count = 1U;
         }
         val[2U] = (UCHAR)(count);
         val[3U] = (UCHAR)(count >> 8U);
@@ -1081,6 +1336,8 @@ UINT16 appl_get_stored_records_count(APPL_TIMER_PARAM * appl_timer_param, UCHAR 
     UINT16  oprnd;
     UINT16  index;
     UINT16  count;
+    UINT16  min_seq_no;
+    UINT16  max_seq_no;
 
     count = 0U;
 
@@ -1092,20 +1349,51 @@ UINT16 appl_get_stored_records_count(APPL_TIMER_PARAM * appl_timer_param, UCHAR 
 
     for (index = 0U; index < appl_stored_record_count; index++)
     {
+        /* Extract the Sequence number form each Record */
         BT_UNPACK_LE_2_BYTE
         (
             &seg_index,
             &(gls_msrmt_obs_data[gls_msrmt_seq_id_index[index]])
         );
 
-        /*For Greater than or equal Operator (Seg ID) */
+        /* For All Record */
+        if (APPL_GL_RACP_ALL_RCRD_OPRTR == type)
+        {
+            /* Check whether the record is deleted? */
+            if (0x01U != gls_msrmt_obs_data[gls_msrmt_seq_id_index[index] - 2U])
+            {
+                count++;
+            }
+        }
+        /* For Greater than or equal Operator (Seq ID) */
         if (seg_index >= oprnd && APPL_GL_RACP_GRTR_HNN_EQL_TO_OPRTR == type)
         {
             count++;
         }
-        else if (seg_index >= oprnd && APPL_GL_RACP_LSS_THN_EQL_TO_OPRTR == type)
+        /* For Less than or equal Operator (Seq ID) */
+        else if (seg_index <= oprnd && APPL_GL_RACP_LSS_THN_EQL_TO_OPRTR == type)
         {
             count++;
+        }
+        /* For Within range (Seq ID) */
+        else if (APPL_GL_RACP_WINTHIN_RNG_OPRTR == type)
+        {
+            BT_UNPACK_LE_2_BYTE
+            (
+                &min_seq_no,
+                &(appl_timer_param->appl_req_param.operand[1U])
+            );
+
+            BT_UNPACK_LE_2_BYTE
+            (
+                &max_seq_no,
+                &(appl_timer_param->appl_req_param.operand[3U])
+            );
+
+            if (seg_index >= min_seq_no && seg_index <= max_seq_no)
+            {
+                count++;
+            }
         }
     }
 
@@ -1431,21 +1719,21 @@ API_RESULT appl_gls_abort_operation
 }
 
 void appl_gls_handle_ind_complete
-(
-    APPL_HANDLE* handle,
-    UINT16      evt_result
-)
+     (
+         APPL_HANDLE * handle,
+         UINT16      evt_result
+     )
 {
     CONSOLE_OUT("\n [GLS]: IND Completed for Appl Handle 0x%02X with result 0x%04X\n",
     *handle, evt_result);
 }
 
 void appl_gls_handle_ntf_complete
-(
-    APPL_HANDLE* handle,
-    UCHAR* event_data,
-    UINT16      datalen
-)
+     (
+         APPL_HANDLE * handle,
+         UCHAR       * event_data,
+         UINT16      datalen
+     )
 {
     CONSOLE_OUT("\n [GLS]: NTF Sent for Appl Handle 0x%02X\n",
     *handle);
@@ -1453,13 +1741,87 @@ void appl_gls_handle_ntf_complete
 }
 
 void appl_gls_handle_mtu_update_complete
-(
-    APPL_HANDLE* handle,
-    UINT16      mtu
-)
+     (
+         APPL_HANDLE * handle,
+         UINT16      mtu
+     )
 {
     CONSOLE_OUT("\n [GLS]: Updated MTU is %d for Appl Handle 0x%02X\n",
     mtu, *handle);
+}
+
+void appl_gls_update_multi_bond_flag(UCHAR flag)
+{
+    /* Set the Multi Bond Usage Flag */
+    appl_gls_multi_bond_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+}
+
+void appl_gls_update_target_addr_flag(UCHAR flag)
+{
+    /* Set the Target Address Usage value */
+    target_addr_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+}
+
+void appl_gls_timer_expiry_hndlr(void* data, UINT16 datalen)
+{
+    BT_IGNORE_UNUSED_PARAM(data);
+    BT_IGNORE_UNUSED_PARAM(datalen);
+
+    /* Stop timer */
+    if (BT_TIMER_HANDLE_INIT_VAL != timer_handle)
+    {
+        APPL_TRC(
+        "[APPL]: Timeout Occurred: %p\n", timer_handle);
+
+        timer_handle = BT_TIMER_HANDLE_INIT_VAL;
+    }
+
+    /* Reset to Default ADV Data */
+    appl_reset_gls_adv_data_to_default_value();
+}
+
+void appl_gls_set_target_address_in_adv_data(UCHAR offset)
+{
+#if ((defined APPL_GAP_BROADCASTER) || (defined APPL_GAP_PERIPHERAL))
+    /* Add Target Address AD Type Length */
+    appl_gap_adv_data.data[offset] =
+        BT_BD_ADDR_SIZE + 1U;
+
+    /* Add Target Address AD Type. Public/Random */
+    if (BT_BD_PUBLIC_ADDRESS_TYPE == g_bd_addr.type)
+    {
+        appl_gap_adv_data.data[offset + 1U] =
+            HCI_AD_TYPE_PUBLIC_TARGET_ADDRESS;
+    }
+    else
+    {
+        appl_gap_adv_data.data[offset + 1U] =
+            HCI_AD_TYPE_RANDOM_TARGET_ADDRESS;
+    }
+
+    /* Add Target Address */
+    BT_COPY_BD_ADDR
+    (
+        appl_gap_adv_data.data + offset + 2U,
+        g_bd_addr.addr
+    );
+
+    /* Update the actual length of advertising data */
+    appl_gap_adv_data.datalen = offset + BT_BD_ADDR_SIZE + 2U;
+#endif /* ((defined APPL_GAP_BROADCASTER) || (defined APPL_GAP_PERIPHERAL)) */
+}
+
+void appl_reset_gls_adv_data_to_default_value(void)
+{
+    /* Copy the Default Template ADV Data for next usage */
+    BT_mem_copy
+    (
+        appl_gap_adv_data.data,
+        appl_gls_default_adv_data,
+        sizeof(appl_gls_default_adv_data)
+    );
+
+    appl_gap_adv_data.datalen = sizeof(appl_gls_default_adv_data);
 }
 
 #endif /* (defined ATT && defined GLS) */

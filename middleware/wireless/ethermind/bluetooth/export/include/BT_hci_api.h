@@ -1054,8 +1054,6 @@
 #define HCI_READ_CLOCK_OFFSET_COMPLETE_EVENT                    0x1CU
 #define HCI_CONNECTION_PACKET_TYPE_CHANGED_EVENT                0x1DU
 #define HCI_QOS_VIOLATION_EVENT                                 0x1EU
-/* Event 0x1F removed from specification */
-/* #define HCI_PAGE_SCAN_MODE_CHANGE_EVENT                      0x1F */
 #define HCI_PAGE_SCAN_REPETITION_MODE_CHANGE_EVENT              0x20U
 
 #ifdef BT_HCI_1_2

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CODEC Adapter</title>
+<title>MCUXpresso SDK API Reference Manual: Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,96 +99,56 @@ $(document).ready(function(){initNavTree('a00298.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">CODEC Adapter<div class="ingroups"><a class="el" href="a00013.html">CODEC Common Driver</a></div></div>  </div>
+<div class="title">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga9b29769343da78881f442e657eb62b6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6eacb2ee31cd4ee06712e3cf445e12cb389">kCODEC_WM8904</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6eaa15237d33f0b971a6596458ef7aa8d99">kCODEC_WM8960</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea57b2941cff245c37272e1ea4598c3ab0">kCODEC_WM8524</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea870028cfe305a220c90a187029ae3408">kCODEC_SGTL5000</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea533359b62306ff77d6cd4a6aeaf075ab">kCODEC_DA7212</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6eae667850df8261ea1e8c02201e1ccafee">kCODEC_CS42888</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea32073f5e23a3c6e7960d937c0816286b">kCODEC_CS42448</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea58d64d2b7b432eb8ede4e22a811cadf1">kCODEC_AK4497</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea67f0293553ad8cc4bbb432b6b09f6900">kCODEC_AK4458</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea448b697ab0cc0c28740e77484faad04f">kCODEC_TFA9XXX</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea899f42fede26bf5fd37ea863fb4e5624">kCODEC_TFA9896</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00298.html#gga9b29769343da78881f442e657eb62b6ea018d6b6d07eab64fe414983199950dc8">kCODEC_WM8962</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga9b29769343da78881f442e657eb62b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec type  <a href="a00298.html#ga9b29769343da78881f442e657eb62b6e">More...</a><br/></td></tr>
-<tr class="separator:ga9b29769343da78881f442e657eb62b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<p>The MCUXpresso SDK provides drivers to access the Secure Digital Card(up to v3.0), Embedded MultiMedia Card(up to v5.0) and sdio card(up to v3.0) based on the SDHC/USDHC/SDIF driver. Here is a simple block diagram about the drivers:</p>
+<pre class="fragment">                ---------------------------
+                |       Application       |
+                ---------------------------
+                            |
+                            v
+                ---------------------------
+                |       Card driver       |
+                ---------------------------
+                            |
+                            v
+                ------------- -------------
+                |host driver| |OSA adapter|
+                ------------- -------------
+                            |
+                            v
+                ----------------------------
+                |  host controller driver  |
+                ----------------------------
+                            |
+                            v
+                ----------------------------
+                |host controller peripheral|
+                ----------------------------
+                            |
+                            v
+                ----------------------------
+                |          card            |
+                ----------------------------</pre> <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00057"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html">MMC Card Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00067"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html">SD Card Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00068"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html">SDIO Card Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00056"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html">SDMMC Common</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00299"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html">SDMMC HOST Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00069"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html">SDMMC OSA</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga9b29769343da78881f442e657eb62b6e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="anchor" id="_codec_type"></a></p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6eacb2ee31cd4ee06712e3cf445e12cb389"></a>kCODEC_WM8904</em>&nbsp;</td><td class="fielddoc">
-<p>wm8904 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6eaa15237d33f0b971a6596458ef7aa8d99"></a>kCODEC_WM8960</em>&nbsp;</td><td class="fielddoc">
-<p>wm8960 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea57b2941cff245c37272e1ea4598c3ab0"></a>kCODEC_WM8524</em>&nbsp;</td><td class="fielddoc">
-<p>wm8524 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea870028cfe305a220c90a187029ae3408"></a>kCODEC_SGTL5000</em>&nbsp;</td><td class="fielddoc">
-<p>sgtl5000 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea533359b62306ff77d6cd4a6aeaf075ab"></a>kCODEC_DA7212</em>&nbsp;</td><td class="fielddoc">
-<p>da7212 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6eae667850df8261ea1e8c02201e1ccafee"></a>kCODEC_CS42888</em>&nbsp;</td><td class="fielddoc">
-<p>CS42888. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea32073f5e23a3c6e7960d937c0816286b"></a>kCODEC_CS42448</em>&nbsp;</td><td class="fielddoc">
-<p>CS42448. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea58d64d2b7b432eb8ede4e22a811cadf1"></a>kCODEC_AK4497</em>&nbsp;</td><td class="fielddoc">
-<p>AK4497. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea67f0293553ad8cc4bbb432b6b09f6900"></a>kCODEC_AK4458</em>&nbsp;</td><td class="fielddoc">
-<p>ak4458 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea448b697ab0cc0c28740e77484faad04f"></a>kCODEC_TFA9XXX</em>&nbsp;</td><td class="fielddoc">
-<p>tfa9xxx </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea899f42fede26bf5fd37ea863fb4e5624"></a>kCODEC_TFA9896</em>&nbsp;</td><td class="fielddoc">
-<p>tfa9896 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea018d6b6d07eab64fe414983199950dc8"></a>kCODEC_WM8962</em>&nbsp;</td><td class="fielddoc">
-<p>wm8962 </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

@@ -5,19 +5,12 @@
       <name>all</name>
       <member>
         <project>dev_hid_mouse_freertos</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>dev_hid_mouse_freertos</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>dev_hid_mouse_freertos</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
       <member>
         <project>dev_hid_mouse_freertos</project>
         <configuration>release</configuration>
@@ -35,6 +28,13 @@
       <member>
         <project>dev_hid_mouse_freertos</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>dev_hid_mouse_freertos</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

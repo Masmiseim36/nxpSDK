@@ -12,7 +12,8 @@
 #ifndef __WIRELESS_UART_H__
 #define __WIRELESS_UART_H__
 
-typedef int (*bt_gatt_wu_read_request_t)(struct bt_conn *conn, uint8_t** buffer, ssize_t* length);
+typedef int (*bt_gatt_wu_read_response_t)(void *param, uint8_t* buffer, ssize_t length);
+typedef int (*bt_gatt_wu_read_request_t)(struct bt_conn *conn, bt_gatt_wu_read_response_t response, void *param);
 typedef int (*bt_gatt_wu_data_received_t)(struct bt_conn *conn, uint8_t* buffer, ssize_t length);
 
 typedef struct _bt_gatt_wu_config

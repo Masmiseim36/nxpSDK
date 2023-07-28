@@ -329,7 +329,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1042;../../../../../devices/MIMXRT1042/drivers;../../../../../devices/MIMXRT1042;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -347,7 +347,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1042xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -936,6 +936,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -949,16 +959,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1590,7 +1590,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1042;../../../../../devices/MIMXRT1042/drivers;../../../../../devices/MIMXRT1042;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1608,7 +1608,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1626,7 +1626,7 @@
             <ScatterFile>MIMXRT1042xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2197,6 +2197,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2210,16 +2220,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2851,7 +2851,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1042;../../../../../devices/MIMXRT1042/drivers;../../../../../devices/MIMXRT1042;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -2869,7 +2869,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -2887,7 +2887,7 @@
             <ScatterFile>MIMXRT1042xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3458,6 +3458,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3471,16 +3481,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4112,7 +4112,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1042XJM5B, LX_USE_MFLASH, DEMO_DISK_FLASH_OFFSET=MFLASH_FILE_BASEADDR, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, LX_THREAD_SAFE_ENABLE, MFLASH_FILE_BASEADDR=7340032, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/levelx/common/inc;../../../../../components/flash/mflash/mimxrt1042;../../../../../devices/MIMXRT1042/drivers;../../../../../devices/MIMXRT1042;../../../../../devices/MIMXRT1042/utilities/str;../../../../../devices/MIMXRT1042/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1042/xip;../../../xip;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -4130,7 +4130,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -4148,7 +4148,7 @@
             <ScatterFile>MIMXRT1042xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -4719,6 +4719,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4732,16 +4742,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -7,10 +7,11 @@
 
 /*
  *  Copyright (C) 2013. Mindtree Ltd.
+ *  Copyright 2021 NXP
  *  All rights reserved.
  */
 
-/*   Copyright 2008-2020 NXP    */ 
+/*   Copyright 2008-2020 NXP    */
 
 #ifndef _H_APPL_HCI_
 #define _H_APPL_HCI_
@@ -33,7 +34,7 @@ typedef struct
 typedef struct
 {
     /* Pointer to HCI callback function  */
-    API_RESULT (* hci_event_ind_cb) (UINT8, UCHAR *, UINT8);
+    API_RESULT (* hci_event_ind_cb) (UINT8 event_code, UCHAR *event_data, UINT8 event_datalen);
 
 } APPL_HCI_CB_PTR;
 
@@ -80,12 +81,6 @@ API_RESULT appl_hci_error_indication_callback
                UINT16  opcode,
                UINT16  error_code
            );
-
-/* To show HCI Inquiry Results */
-void appl_hci_show_inq_result
-     (UCHAR inq_resp_recvd, UCHAR *inq_bytes);
-void appl_hci_show_inq_result_with_rssi
-     (UCHAR inq_resp_recvd, UCHAR *inq_bytes);
 
 void appl_hci_esco_audio_config(UCHAR coding);
 
@@ -149,7 +144,7 @@ void appl_hci_write_inquiry_scan_activity (void);
 void appl_hci_read_class_of_device (void);
 API_RESULT appl_hci_write_class_of_device (void);
 void appl_hci_read_scan_enable (void);
-void appl_hci_write_scan_enable (void);
+API_RESULT appl_hci_write_scan_enable (void);
 void appl_hci_read_local_name (void);
 void appl_hci_change_local_name (void);
 void appl_hci_read_inquiry_mode (void);
@@ -164,6 +159,7 @@ void appl_hci_get_connection_details (void);
 void appl_cancel_inquiry_scan(void);
 void appl_hci_read_buffersize (void);
 void appl_hci_read_link_policy ( void );
+void appl_vendor_specific_commands(void);
 void appl_hci_generic_command(void);
 void appl_hci_read_default_link_policy_settings (void);
 void appl_hci_write_default_link_policy_settings (void);
@@ -203,7 +199,7 @@ void main_hci_operations ( void );
 /* Application Interface for Profiles to Register their HCI Callbacks */
 API_RESULT appl_hci_register_callback
            (
-               API_RESULT (* callback_ptr)
+               API_RESULT (* callback_fn)
                           (
                               UINT8    event_code,
                               UINT8 *  event_data,
@@ -213,7 +209,7 @@ API_RESULT appl_hci_register_callback
 
 API_RESULT appl_hci_unregister_callback
            (
-               API_RESULT (* callback_ptr)
+               API_RESULT (* callback_fn)
                           (
                               UINT8    event_code,
                               UINT8 *  event_data,
@@ -230,8 +226,11 @@ API_RESULT appl_hci_set_esco_channel_parameters
            );
 void appl_hci_get_esco_channel_parameters(HCI_SCO_IN_PARAMS * esco_param);
 #ifdef HCI_ENH_SCO
+API_RESULT appl_hci_set_enh_esco_channel_parameters
+           (
+               /* IN */ HCI_ENH_SCO_PARAMS * enh_sco_params
+           );
 void appl_hci_get_enh_esco_channel_parameters(HCI_ENH_SCO_PARAMS * enh_esco_param);
-API_RESULT appl_hci_set_enh_esco_channel_parameters(HCI_ENH_SCO_PARAMS * enh_esco_params);
 #endif /* HCI_ENH_SCO */
 #endif /* BT_HCI_1_2 */
 
@@ -249,6 +248,8 @@ void appl_print_extended_inquiry_response
      );
 
 void appl_hci_write_extended_inquiry_response(void);
+
+void appl_hci_setup_synchronous_connection_with_codec_type(UINT8 type);
 
 #endif /* BT_EIR */
 

@@ -1,14 +1,14 @@
 /*! *********************************************************************************
-* Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
-* All rights reserved.
-*
-* \file
-*
-* Private header file of the non-volatile storage module for the CORTEX-M4 processor
-*
-* SPDX-License-Identifier: BSD-3-Clause
-********************************************************************************** */
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
+ * All rights reserved.
+ *
+ * \file
+ *
+ * Private header file of the non-volatile storage module for the CORTEX-M4 processor
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ ********************************************************************************** */
 
 #ifndef _NV_FLASH_H_
 #define _NV_FLASH_H_
@@ -17,7 +17,7 @@
 #include "NVM_Interface.h"
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C" {
 #endif
 
 /*****************************************************************************
@@ -30,94 +30,94 @@
  * Name: gNvInvalidTableEntryIndex_c
  * Description: self explanatory
  */
-#define gNvInvalidTableEntryIndex_c    0xFFFFU
+#define gNvInvalidTableEntryIndex_c 0xFFFFU
 
 /*
  * Name: gNvInvalidElementIndex_c
  * Description: self explanatory
  */
-#define gNvInvalidElementIndex_c       0xFFFF
+#define gNvInvalidElementIndex_c 0xFFFF
 
 /*
  * Name: gValidationByteSingleRecord_c
  * Description: the value of validation byte used in meta tag to mark a single record type
  */
-#define gValidationByteSingleRecord_c  0xAAU
+#define gValidationByteSingleRecord_c 0xAAU
 
 /*
  * Name: gValidationByteAllRecords_c
  * Description: the value of validation byte used in meta tag to mark an entire table entry type
  */
-#define gValidationByteAllRecords_c    0x55U
+#define gValidationByteAllRecords_c 0x55U
 
 /*
  * Name: gPageCounterMaxValue_c
  * Description: self explanatory
  */
-#define gPageCounterMaxValue_c         0xFFFFFFFFUL
+#define gPageCounterMaxValue_c 0xFFFFFFFFUL
 
 /*
  * Name: gEmptyPageMetaAddress_c
  * Description: the value of a page that has no records yet
  */
-#define gEmptyPageMetaAddress_c        0x3FFF0000UL
+#define gEmptyPageMetaAddress_c 0x3FFF0000UL
 
 /*
  * Name: gFifoOverwriteEnabled_c
  * Description: if set to TRUE, it enables the pending saves queue to be overwritten
  */
-#define gFifoOverwriteEnabled_c        0
+#define gFifoOverwriteEnabled_c 0
 
 /*
  * Name: gNvCopyAll_c
  * Description: definition used when a full page copy is requested
  */
-#define gNvCopyAll_c                   0xFFFFU
+#define gNvCopyAll_c 0xFFFFU
 
 /*
  * Name: gNvFlexFormatBufferSize_c
  * Description: the size of the buffer used for FlexNVM formating. The FlexRAM
  *              is "formatted" in blocks of gNvFlexFormatBufferSize_c bytes
  */
-#define gNvFlexFormatBufferSize_c      32
+#define gNvFlexFormatBufferSize_c 32
 
 /*
  * Name: gNvFlexGuardValue_c
  * Description: value of the guard space between meta info and records
  *              (four 0xFF bytes)
  */
-#define gNvFlexGuardValue_c            0xFFFFFFFFUL
+#define gNvFlexGuardValue_c 0xFFFFFFFFUL
 
 /*
  * Name: gNvJitterDecrement_c
  * Description: the value of the jitter (in microseconds) to be substracted from the random generated one
  */
-#define gNvJitterDecrement_c    50000UL
+#define gNvJitterDecrement_c 50000UL
 
 /*
  * Name: gNvJitterMultiplier_c
  * Description: the value of the jitter magnitude multiplier (1ms = 1000 us)
  */
-#define gNvJitterMultiplier_c    1000UL
+#define gNvJitterMultiplier_c 1000UL
 
 /*
  * Name: gNvOneSecondInMicros_c
  * Description: the value of one second expressed in microseconds
  */
-#define gNvOneSecondInMicros_c    1000000UL
-  
+#define gNvOneSecondInMicros_c 1000000UL
+
 /*
  * Name: PGM_SIZE_BYTE
  * Description: the value of min flash write operation unit
- */      
+ */
 
 #if (defined(FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE) && (FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE > 0))
-#define PGM_SIZE_BYTE           FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE
+#define PGM_SIZE_BYTE FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE
 #elif (defined(FSL_FEATURE_FLASH_BLOCK_PHRASE_SIZE) && (FSL_FEATURE_FLASH_BLOCK_PHRASE_SIZE > 0))
-#define PGM_SIZE_BYTE           FSL_FEATURE_FLASH_BLOCK_PHRASE_SIZE
+#define PGM_SIZE_BYTE FSL_FEATURE_FLASH_BLOCK_PHRASE_SIZE
 #else
-#define PGM_SIZE_BYTE           16U
-#endif   
+#define PGM_SIZE_BYTE 16U
+#endif
 
 /*****************************************************************************
  ******************************************************************************
@@ -135,12 +135,12 @@ typedef union NVM_RecordMetaInfo_tag
     uint64_t rawValue;
     struct
     {
-        uint8_t NvValidationStartByte;
+        uint8_t  NvValidationStartByte;
         uint16_t NvmDataEntryID;
         uint16_t NvmElementIndex;
         uint16_t NvmRecordOffset;
-        uint8_t NvValidationEndByte;
-        uint8_t Padding[PGM_SIZE_BYTE - sizeof(uint64_t)];
+        uint8_t  NvValidationEndByte;
+        uint8_t  Padding[PGM_SIZE_BYTE - sizeof(uint64_t)];
     } fields;
 } NVM_RecordMetaInfo_t;
 #pragma pack()
@@ -181,7 +181,7 @@ typedef union NVM_EntryInfo_tag
         uint16_t NvDataEntryType;
         uint16_t NvElementsCount;
         uint16_t NvElementSize;
-        uint8_t Padding[PGM_SIZE_BYTE - sizeof(uint64_t)];
+        uint8_t  Padding[PGM_SIZE_BYTE - sizeof(uint64_t)];
     } fields;
 } NVM_EntryInfo_t;
 #pragma pack()
@@ -205,7 +205,7 @@ typedef struct NVM_VirtualPageProperties_tag
 {
     uint32_t NvRawSectorStartAddress;
     uint32_t NvRawSectorEndAddress;
-    uint8_t NvRawSectorsCount;
+    uint8_t  NvRawSectorsCount;
     uint32_t NvTotalPageSize;
     uint32_t NvLastMetaInfoAddress;
 #if gUnmirroredFeatureSet_d
@@ -215,9 +215,9 @@ typedef struct NVM_VirtualPageProperties_tag
 
 typedef struct NVM_ErasePageCmdStatus_tag
 {
-    bool_t NvErasePending;
+    bool_t              NvErasePending;
     NVM_VirtualPageID_t NvPageToErase;
-    uint32_t NvSectorAddress;
+    uint32_t            NvSectorAddress;
 } NVM_ErasePageCmdStatus_t;
 
 /*
@@ -227,8 +227,8 @@ typedef struct NVM_ErasePageCmdStatus_tag
 typedef struct NVM_TableEntryInfo_tag
 {
     NvTableEntryId_t entryId;
-    uint16_t elementIndex;
-    bool_t saveRestoreAll;
+    uint16_t         elementIndex;
+    bool_t           saveRestoreAll;
 } NVM_TableEntryInfo_t;
 
 /*
@@ -237,10 +237,10 @@ typedef struct NVM_TableEntryInfo_tag
  */
 typedef struct NVM_SaveQueue_tag
 {
-    NVM_TableEntryInfo_t  QData[gNvPendingSavesQueueSize_c];  /* queue data */
-    uint16_t Head;    /* read index */
-    uint16_t Tail;    /* write index */
-    uint16_t EntriesCount; /* entries count */
+    NVM_TableEntryInfo_t QData[gNvPendingSavesQueueSize_c]; /* queue data */
+    uint16_t             Head;                              /* read index */
+    uint16_t             Tail;                              /* write index */
+    uint16_t             EntriesCount;                      /* entries count */
 } NVM_SaveQueue_t;
 
 /*
@@ -250,12 +250,12 @@ typedef struct NVM_SaveQueue_tag
 #if gNvUseFlexNVM_d
 typedef union NVM_FlexMetaInfo_tag
 {
-  uint32_t rawValue;
-  struct
-  {
-    uint16_t NvDataEntryID;
-    uint16_t NvDataOffset;
-  } fields;
+    uint32_t rawValue;
+    struct
+    {
+        uint16_t NvDataEntryID;
+        uint16_t NvDataOffset;
+    } fields;
 } NVM_FlexMetaInfo_t;
 #endif
 
@@ -270,5 +270,3 @@ typedef union NVM_FlexMetaInfo_tag
 #endif
 
 #endif /* _NV_FLASH_H_ */
-
-

@@ -1,6 +1,7 @@
 var a00284 =
 [
-    [ "XBARB_Init", "a00284.html#gaef36940e839f28936f9415c3cb6d703f", null ],
-    [ "XBARB_Deinit", "a00284.html#gad5775a6073d472b2749cc202116d1809", null ],
-    [ "XBARB_SetSignalsConnection", "a00284.html#ga64a72733261fc11d061c0d7f0abe0771", null ]
+    [ "LPUART CMSIS Driver", "a00285.html", null ],
+    [ "LPUART Driver", "a00052.html", "a00052" ],
+    [ "LPUART FreeRTOS Driver", "a00054.html", "a00054" ],
+    [ "LPUART eDMA Driver", "a00053.html", "a00053" ]
 ];

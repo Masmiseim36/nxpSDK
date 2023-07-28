@@ -38,13 +38,11 @@
 #endif /* GATT_NO_DEBUG */
 
 /* GATT Configurable limits */
-#define GATT_MAX_SUPPORTED_SERVERS      BT_MAX_REMOTE_DEVICES
-
-#define GATT_NUM_CONTEXTS               BT_MAX_DEVICE_QUEUE_SIZE
+#define GATT_NUM_CONTEXTS               2U
 #define GATT_INVALID_CONTEXT            0xFFU
 #define GATT_MAX_SERVICES               10U
-#define GATT_MAX_INC_SERVICES           2U
-#define GATT_MAX_CHARACTERISTICS        20U
+#define GATT_MAX_INC_SERVICES           5U
+#define GATT_MAX_CHARACTERISTICS        25U
 #define GATT_MAX_CHAR_DESCRIPTORS       6U
 
 #define GATT_PREPARE_WRITE_REQ_Q_SIZE   10U
@@ -283,7 +281,7 @@ typedef API_RESULT (* GATT_APP_CB)
 
 /* --------------------------------------------- API Declarations */
 API_RESULT gatt_init (GATT_APP_CB cb);
-API_RESULT gatt_xchg_mtu (ATT_HANDLE * att_handle, UINT16 mtu, UCHAR rsp);
+API_RESULT gatt_xchg_mtu (ATT_HANDLE * handle, UINT16 mtu, UCHAR rsp);
 API_RESULT gatt_discover_service (ATT_HANDLE * att_handle, ATT_UUID uuid, UCHAR frmt, UINT16 type);
 API_RESULT gatt_discover_is (ATT_HANDLE * att_handle, UINT16 sh, UINT16 eh);
 API_RESULT gatt_discover_char (ATT_HANDLE * att_handle, UINT16 sh, UINT16 eh, UINT16 uuid, UCHAR desc);
@@ -302,7 +300,6 @@ API_RESULT gatt_char_hv_action
                UCHAR * value,
                UINT16 length
            );
-
 
 /* --------------------------------------------- Internal Declarations */
 API_RESULT gatt_search_context (ATT_HANDLE * att_handle, UCHAR * id);
@@ -376,6 +373,10 @@ API_RESULT gatt_cb
                UCHAR         * event_data,
                UINT16        event_datalen
            );
+
+/** Function to convert UUID into a String */
+CHAR * gatt_uuid_to_str(ATT_UUID * uuid, UCHAR frmt);
+
 #endif /* _H_GATT_ */
 
 

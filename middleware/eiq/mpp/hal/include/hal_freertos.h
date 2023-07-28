@@ -18,12 +18,12 @@
 
 typedef SemaphoreHandle_t hal_mutex_t;
 
-/* precomputation of the OS tick period with no precision loss */
+/** precomputation of the OS tick period with no precision loss */
 #define TICK_PERIOD_MS   (1000*128 / configTICK_RATE_HZ) / 128
 
-/* For RT1170,  TickType_t is uint32_t */
+/** For RT1170,  TickType_t is uint32_t */
 #define GET_TICK            (uint32_t)xTaskGetTickCount
-/* Conversion to real time with the resolution of one tick period. */
+/** Conversion to real time with the resolution of one tick period. */
 #define TICK_TO_MS(os_tick) (os_tick * TICK_PERIOD_MS)
 
 #define MPP_MALLOC                  pvPortMalloc

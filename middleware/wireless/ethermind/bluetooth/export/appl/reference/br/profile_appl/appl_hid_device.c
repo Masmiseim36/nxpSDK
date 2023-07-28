@@ -173,7 +173,7 @@ static UCHAR hid_additional_protocol_descriptor_list[] =
 
 
 #ifdef HID_MOUSE
-static UCHAR hid_mouse_report_desc[] =
+static UCHAR appl_hid_report_desc[] =
 { 0x35U, 0x38U, 0x35U, 0x36U, 0x08U, 0x22U, 0x25U, 0x32U,
   0x05U, 0x01U, 0x09U, 0x02U, 0xa1U, 0x01U, 0x09U, 0x01U, 0xa1U, 0x00U,
   0x05U, 0x09U, 0x19U, 0x01U, 0x29U, 0x03U, 0x15U, 0x00U, 0x25U, 0x01U,
@@ -182,22 +182,77 @@ static UCHAR hid_mouse_report_desc[] =
   0x15U, 0x81U, 0x25U, 0x7fU, 0x75U, 0x08U, 0x95U, 0x02U, 0x81U, 0x06U,
   0xc0U, 0xc0U };
 #else
-static UCHAR hid_mouse_report_desc[] =
-{ 0x35U, 0x7BU, 0x35U, 0x79U, 0x08U, 0x22U, 0x25U, 0x75U, 0x05U, 0x01U,
-  0x09U, 0x06U, 0xA1U, 0x01U, 0x85U, 0x01U, 0x05U, 0x07U, 0x19U, 0xE0U,
-  0x29U, 0xE7U, 0x15U, 0x00U, 0x25U, 0x01U, 0x75U, 0x01U, 0x95U, 0x08U,
-  0x81U, 0x02U, 0x95U, 0x01U, 0x75U, 0x08U, 0x81U, 0x03U, 0x95U, 0x05U,
-  0x75U, 0x01U, 0x05U, 0x08U, 0x19U, 0x01U, 0x29U, 0x05U, 0x91U, 0x02U,
-  0x95U, 0x01U, 0x75U, 0x03U, 0x91U, 0x03U, 0x95U, 0x06U, 0x75U, 0x08U,
-  0x15U, 0x00U, 0x25U, 0x65U, 0x05U, 0x07U, 0x19U, 0x00U, 0x29U, 0x65U,
-  0x81U, 0x00U, 0x95U, 0x05U, 0x75U, 0x08U, 0x26U, 0xFFU, 0x00U, 0x15U,
-  0x00U, 0x09U, 0x01U, 0xB1U, 0x02U, 0xC0U, 0x05U, 0x01U, 0x09U, 0x02U,
-  0xA1U, 0x01U, 0x85U, 0x02U, 0x09U, 0x01U, 0xA1U, 0x00U, 0x05U, 0x09U,
-  0x19U, 0x01U, 0x29U, 0x03U, 0x15U, 0x00U, 0x25U, 0x01U, 0x95U, 0x03U,
-  0x75U, 0x01U, 0x81U, 0x02U, 0x95U, 0x01U, 0x75U, 0x05U, 0x81U, 0x03U,
-  0x05U, 0x01U, 0x09U, 0x30U, 0x09U, 0x31U, 0x15U, 0x81U, 0x25U, 0x7FU,
-  0x75U, 0x08U, 0x95U, 0x02U, 0x81U, 0x06U, 0xC0U, 0xC0U };
-#endif
+static UCHAR appl_hid_report_desc[] =
+{
+    0x35U, 0x7BU, 0x35U, 0x79U,  /* SDP Length Fields */
+    /*     ^^^^^         ^^^^^
+     * Adjust lengths if Report Descriptor is changed.
+     */
+    /* HID Report Descriptor Length = 121 Octets (0x79) */
+    0x08U,                       /* Usage */
+    0x22U, 0x25U, 0x75U,         /* Unknown (bTag: 0x02, bType: 0x00) */
+    0x05U, 0x01U,                /* Usage Page (Generic Desktop Ctrls) */
+    0x09U, 0x06U,                /* Usage (Keyboard) */
+    0xA1U, 0x01U,                /* Collection (Application) */
+    0x85U, 0x01U,                /*   Report ID (1) */
+    0x05U, 0x07U,                /*   Usage Page (Kbrd/Keypad) */
+    0x19U, 0xE0U,                /*   Usage Minimum (0xE0) */
+    0x29U, 0xE7U,                /*   Usage Maximum (0xE7) */
+    0x15U, 0x00U,                /*   Logical Minimum (0) */
+    0x25U, 0x01U,                /*   Logical Maximum (1) */
+    0x75U, 0x01U,                /*   Report Size (1) */
+    0x95U, 0x08U,                /*   Report Count (8) */
+    0x81U, 0x02U,                /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */
+    0x95U, 0x01U,                /*   Report Count (1) */
+    0x75U, 0x08U,                /*   Report Size (8) */
+    0x81U, 0x03U,                /*   Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */
+    0x95U, 0x05U,                /*   Report Count (5)      */
+    0x75U, 0x01U,                /*   Report Size (1) */
+    0x05U, 0x08U,                /*   Usage Page (LEDs) */
+    0x19U, 0x01U,                /*   Usage Minimum (Num Lock) */
+    0x29U, 0x05U,                /*   Usage Maximum (Kana) */
+    0x91U, 0x02U,                /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */
+    0x95U, 0x01U,                /*   Report Count (1) */
+    0x75U, 0x03U,                /*   Report Size (3) */
+    0x91U, 0x03U,                /*   Output (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */
+    0x95U, 0x06U,                /*   Report Count (6) */
+    0x75U, 0x08U,                /*   Report Size (8) */
+    0x15U, 0x00U,                /*   Logical Minimum (0) */
+    0x25U, 0x65U,                /*   Logical Maximum (101) */
+    0x05U, 0x07U,                /*   Usage Page (Kbrd/Keypad) */
+    0x19U, 0x00U,                /*   Usage Minimum (0x00) */
+    0x29U, 0x65U,                /*   Usage Maximum (0x65) */
+    0x81U, 0x00U,                /*   Input (Data,Array,Abs,No Wrap,Linear,Preferred State,No Null Position) */
+    0xC0U,                       /* End Collection */
+    0x05U, 0x01U,                /* Usage Page (Generic Desktop Ctrls) */
+    0x09U, 0x02U,                /* Usage (Mouse) */
+    0xA1U, 0x01U,                /* Collection (Application) */
+    0x85U, 0x02U,                /*   Report ID (2) */
+    0x09U, 0x01U,                /*   Usage (Pointer) */
+    0xA1U, 0x00U,                /*   Collection (Physical) */
+    0x05U, 0x09U,                /*     Usage Page (Button) */
+    0x19U, 0x01U,                /*     Usage Minimum (0x01) */
+    0x29U, 0x03U,                /*     Usage Maximum (0x03) */
+    0x15U, 0x00U,                /*     Logical Minimum (0) */
+    0x25U, 0x01U,                /*     Logical Maximum (1) */
+    0x95U, 0x03U,                /*     Report Count (3) */
+    0x75U, 0x01U,                /*     Report Size (1) */
+    0x81U, 0x02U,                /*     Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */
+    0x95U, 0x01U,                /*     Report Count (1) */
+    0x75U, 0x05U,                /*     Report Size (5) */
+    0x81U, 0x03U,                /*     Input (Const,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */
+    0x05U, 0x01U,                /*     Usage Page (Generic Desktop Ctrls) */
+    0x09U, 0x30U,                /*     Usage (X) */
+    0x09U, 0x31U,                /*     Usage (Y) */
+    0x15U, 0x81U,                /*     Logical Minimum (-127) */
+    0x25U, 0x7FU,                /*     Logical Maximum (127) */
+    0x75U, 0x08U,                /*     Report Size (8) */
+    0x95U, 0x02U,                /*     Report Count (2) */
+    0x81U, 0x06U,                /*     Input (Data,Var,Rel,No Wrap,Linear,Preferred State,No Null Position) */
+    0xC0U,                       /*   End Collection */
+    0xC0U,                       /* End Collection */
+};
+#endif /* HID_MOUSE */
 
 /* HID Device Service Name : "Mouse n Keyboard" */
 static UCHAR hid_dev_service_name [] =
@@ -254,7 +309,7 @@ void main_hid_device_operations(void)
 
         case 2: /* Set BD_ADDR for HID Host application */
             LOG_DEBUG("Please enter BD ADDR of HID Host\n");
-            appl_get_bd_addr(hid_host_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(hid_host_bd_addr);
             break;
 
         case 3:/* Get Registered BD_ADDR of peer device */
@@ -1422,7 +1477,7 @@ API_RESULT hid_appl_get_event
         break;
 
     default:
-        LOG_DEBUG("Invalid Event Type: 0x%02X\n", event_info);
+        /* LOG_DEBUG("Invalid Event Type: 0x%02X\n", event_info); */
         break;
     }
 
@@ -1531,17 +1586,12 @@ void hid_appl_dbase_register ( void )
                                  0x0205U,
                                  hid_mouse_reconnect_initiate,
                                  2U) ;
-#ifdef HID_MOUSE
-    BT_dbase_change_attr_value ( hid_dbase_rec_handle,
-                                 0x0206U,
-                                 hid_mouse_report_desc,
-                                 58U) ;
-#else
+
     (BT_IGNORE_RETURN_VALUE) BT_dbase_change_attr_value ( hid_dbase_rec_handle,
                                  0x0206U,
-                                 hid_mouse_report_desc,
-                                 125U);
-#endif
+                                 appl_hid_report_desc,
+                                 sizeof(appl_hid_report_desc));
+
     (BT_IGNORE_RETURN_VALUE) BT_dbase_change_attr_value ( hid_dbase_rec_handle,
                                  0x0207U,
                                  hid_mouse_lang_base_id_list,
@@ -1750,18 +1800,6 @@ API_RESULT hid_device_hci_event_ind_cb
         }
     break;
 
-
-    case HCI_PAGE_SCAN_MODE_CHANGE_EVENT:
-
-        /* Refresh page scan repetition mode of the host */
-        mode = event_data[6U];
-        if (mode < 4U)
-        {
-            hid_device_host_page_scan_mode
-                  = event_data[6U];
-        }
-    break;
-
     case HCI_READ_CLOCK_OFFSET_COMPLETE_EVENT:
         /* extract status */
         status = *event_data;
@@ -1842,7 +1880,7 @@ API_RESULT hid_device_hci_event_ind_cb
     break;
 
     default:
-        LOG_DEBUG("Invalid Event Type: 0x%02X\n", event_type);
+        /* LOG_DEBUG("Invalid Event Type: 0x%02X\n", event_type); */
     break;
     }
 
@@ -1963,11 +2001,12 @@ void hid_send_ppt_report(void)
     LOG_DEBUG(" %2d : Mouse Move Right \n",KEY_RIGHT);
     LOG_DEBUG(" %2d : Mouse Enter \n",KEY_CENTER);
 
+#if 0
     while (getchar() != '\n')
     {
         /* MISRA C-2012 Rule 15.6 */
     }
-
+#endif
     scanf ("%d", &read_val);
 
     key = (UINT8)read_val;

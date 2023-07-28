@@ -23,6 +23,12 @@ void vApplicationStackOverflowHook( TaskHandle_t xTask, char * pcTaskName )
     while(true);
 }
 
+void vApplicationMallocFailedHook()
+{
+    HAL_LOGE("Malloc failure detected.\n");
+    while(true);
+}
+
 /**
  * hal mutex handling:
  *  create, lock, unlock and remove

@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/codec;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1064xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -506,26 +506,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
@@ -574,6 +554,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1108,6 +1108,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -1143,17 +1158,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
+              <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1199,36 +1234,6 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1413,6 +1418,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1449,46 +1494,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1819,9 +1824,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/codec;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1855,7 +1860,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1997,26 +2002,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
@@ -2065,6 +2050,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2599,6 +2604,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -2634,17 +2654,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
+              <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2690,36 +2730,6 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2904,6 +2914,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2940,46 +2990,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3310,9 +3320,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/codec;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3346,7 +3356,7 @@
             <ScatterFile>MIMXRT1064xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3488,26 +3498,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
@@ -3556,6 +3546,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4090,6 +4100,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -4125,17 +4150,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
+              <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4181,36 +4226,6 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4395,6 +4410,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -4431,46 +4486,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4801,9 +4816,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/codec;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4837,7 +4852,7 @@
             <ScatterFile>MIMXRT1064xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4979,26 +4994,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
@@ -5047,6 +5042,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -5581,6 +5596,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -5616,17 +5646,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
+              <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -5672,36 +5722,6 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -5886,6 +5906,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -5922,46 +5982,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6292,9 +6312,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/codec;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6328,7 +6348,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -6470,26 +6490,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
@@ -6538,6 +6538,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -7072,6 +7092,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -7107,17 +7142,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
+              <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -7163,36 +7218,6 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -7377,6 +7402,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -7413,46 +7478,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7783,9 +7808,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, ARM_MATH_CM7, ARM_MATH_CM4, CPU_MIMXRT1064DVL6A, PRINTF_FLOAT_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, DISABLEFLOAT16, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../components/codec;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec/i2c;../../../../../components/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/codec/wm8960;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../components/codec/port/wm8960;../../../../../components/codec/port;../../../../../components/codec;../../../../../components/i2c;../../../../../components/codec/i2c;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7819,7 +7844,7 @@
             <ScatterFile>MIMXRT1064xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -7961,26 +7986,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
@@ -8029,6 +8034,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -8563,6 +8588,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -8598,17 +8638,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <GroupName>sdmmc/host</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
+              <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -8654,36 +8714,6 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -8868,6 +8898,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -8904,46 +8974,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>

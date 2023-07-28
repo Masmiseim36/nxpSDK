@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -67,76 +75,15 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkbimxrt1050/emwin_examples/common
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
-    ${SdkRootDirPath}/components/ft5406_rt
-    ${SdkRootDirPath}/components/gt911
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1052/utilities/debug_console_lite
-    ${SdkRootDirPath}/middleware/emwin
-    ${SdkRootDirPath}/devices/MIMXRT1052
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1052/xip
-    ${SdkRootDirPath}/boards/evkbimxrt1050/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../emwin_support.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_emwin_template")
+set_source_files_properties("${ProjDirPath}/../emwin_support.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_emwin_template")
 
-# include modules
-include(driver_elcdif_MIMXRT1052)
-
-include(driver_pxp_MIMXRT1052)
-
-include(driver_lpi2c_MIMXRT1052)
-
-include(driver_ft5406_rt_MIMXRT1052)
-
-include(driver_gt911_MIMXRT1052)
-
-include(driver_video-common_MIMXRT1052)
-
-include(driver_gpt_MIMXRT1052)
-
-include(utility_debug_console_lite_MIMXRT1052)
-
-include(utility_assert_lite_MIMXRT1052)
-
-include(middleware_emwin_MIMXRT1052)
-
-include(driver_common_MIMXRT1052)
-
-include(driver_clock_MIMXRT1052)
-
-include(device_MIMXRT1052_CMSIS_MIMXRT1052)
-
-include(component_lpuart_adapter_MIMXRT1052)
-
-include(component_lists_MIMXRT1052)
-
-include(driver_lpuart_MIMXRT1052)
-
-include(device_MIMXRT1052_startup_MIMXRT1052)
-
-include(driver_iomuxc_MIMXRT1052)
-
-include(driver_igpio_MIMXRT1052)
-
-include(driver_xip_device_MIMXRT1052)
-
-include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
-
-include(CMSIS_Include_core_cm_MIMXRT1052)
-
-include(utilities_misc_utilities_MIMXRT1052)
-
-include(device_MIMXRT1052_system_MIMXRT1052)
-
+include(${SdkRootDirPath}/devices/MIMXRT1052/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -146,14 +93,7 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

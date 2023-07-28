@@ -25,7 +25,7 @@
 /* ----------------------------------------- Function Declarations */
 void main_sap_client_operations(void);
 
-API_RESULT sap_client_appl_cb
+API_RESULT appl_sap_client_appl_cb
            (
                UCHAR    event_type,
                UINT16   event_result,

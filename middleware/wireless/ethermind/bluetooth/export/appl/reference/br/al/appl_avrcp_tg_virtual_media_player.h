@@ -16,7 +16,7 @@
 #include "BT_os.h"
 #include "BT_error.h"
 #include "BT_fops.h"
-#include "appl_utils.h"
+
 /* ----------------------------------------- Global Definitions */
 
 #define     APPL_AVRCP_MAX_COMPANY_ID_COUNT                 10U
@@ -106,7 +106,7 @@ typedef struct _APPL_AVRCP_COMPANY_ID_LIST
     UCHAR       no_ids;
 
     /* Company id list */
-    UINT32      company_id_list[APPL_AVRCP_MAX_COMPANY_ID_COUNT];
+    UINT32      c_id_list[APPL_AVRCP_MAX_COMPANY_ID_COUNT];
 
 }APPL_AVRCP_COMPANY_ID_LIST;
 
@@ -117,7 +117,7 @@ typedef struct _APPL_AVRCP_EVENT_ID_LIST
     UCHAR       no_ids;
 
     /* Event ID list */
-    UCHAR      event_id_list[APPL_AVRCP_MAX_PLAYER_EVENT_COUNT];
+    UCHAR      e_id_list[APPL_AVRCP_MAX_PLAYER_EVENT_COUNT];
 
 }APPL_AVRCP_EVENT_ID_LIST;
 
@@ -468,6 +468,8 @@ extern UCHAR                                  skip_cover_art_handle_get_folder_i
 
 extern APPL_AVRCP_PLAYER_EVENT                registered_event_list[APPL_AVRCP_MAX_PLAYER_EVENT_COUNT];
 
+extern UCHAR                                  change_media_elem_attr_flag;
+
 /* ----------------------------------------- Exported Global Variables */
 
 /* ----------------------------------------- Static Global Variables */
@@ -493,6 +495,8 @@ API_RESULT  appl_mp_read_media_element_attr_info(void);
 API_RESULT  appl_mp_display_player_appl_attr_info(void);
 
 API_RESULT  appl_mp_display_media_element_attr_info(void);
+
+API_RESULT appl_mp_display_event_id_list(void);
 
 API_RESULT  appl_mp_read_cur_media_play_status_info(void);
 
@@ -540,10 +544,12 @@ API_RESULT appl_mp_register_player_event
            );
 
 UCHAR appl_mp_get_registered_player_event_tl (UCHAR event_id);
-
+UCHAR appl_mp_get_registered_player_event_reg_status (UCHAR event_id);
+void appl_mp_un_register_player_event_reg_status (UCHAR event_id);
 API_RESULT appl_mp_add_media_item_to_virtual_filesystem
            (
                UCHAR   folder_depth
            );
 
 #endif  /* _H_APPL_AVRCP_VIRTUAL_MEDIA_PLAYER_ */
+

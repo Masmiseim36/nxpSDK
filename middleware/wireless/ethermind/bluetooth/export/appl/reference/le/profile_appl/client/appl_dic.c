@@ -132,8 +132,8 @@ void dic_profile_operations (void)
 
     BT_LOOP_FOREVER()
     {
-        CONSOLE_OUT ("%s \n", dic_client_menu);
-        LOG_DEBUG ("Enter your choice : ");
+        CONSOLE_OUT ("%s\n", dic_client_menu);
+        CONSOLE_OUT ("Enter your choice : ");
         CONSOLE_IN ("%u", &choice);
 
         menu_choice = choice;
@@ -154,12 +154,12 @@ void dic_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
-            LOG_DEBUG ("retval of discovery proc = %04x\n", retval);
+            CONSOLE_OUT ("retval of discovery proc = %04x\n", retval);
             break;
 
         case 3:
             uuid.uuid_16 = 0x0000U;
-            LOG_DEBUG ("dis_man_nam_hdl = %04x\n", dis_man_nam_hdl);
+            CONSOLE_OUT ("dis_man_nam_hdl = %04x\n", dis_man_nam_hdl);
             retval = gatt_char_read
             (
                 &appl_gatt_client_handle,
@@ -168,12 +168,12 @@ void dic_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
-            LOG_DEBUG ("retval = %04x\n", retval);
+            CONSOLE_OUT ("retval = %04x\n", retval);
             break;
 
         case 4:
             uuid.uuid_16 = 0x0000U;
-            LOG_DEBUG ("dis_mod_num_hdl = %04x\n", dis_man_nam_hdl);
+            CONSOLE_OUT ("dis_mod_num_hdl = %04x\n", dis_man_nam_hdl);
             retval = gatt_char_read
             (
                 &appl_gatt_client_handle,
@@ -182,7 +182,7 @@ void dic_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
-            LOG_DEBUG ("retval = %04x\n", retval);
+            CONSOLE_OUT ("retval = %04x\n", retval);
             break;
 
         case 5:
@@ -270,7 +270,7 @@ void dic_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

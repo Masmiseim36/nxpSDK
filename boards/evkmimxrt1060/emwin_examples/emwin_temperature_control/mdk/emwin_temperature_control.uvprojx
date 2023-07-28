@@ -127,7 +127,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -329,7 +329,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1, APPWIZARD, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, APPWIZARD, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../common;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -444,6 +444,141 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard</GroupName>
+          <Files>
+            <File>
+              <FileName>APPW_X_NoFS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/APPW_X_NoFS.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Resource/Font</GroupName>
+          <Files>
+            <File>
+              <FileName>NettoOT_24_Normal_EXT_AA4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c</FilePath>
+            </File>
+            <File>
+              <FileName>Roboto_16_Normal_EXT_AA4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c</FilePath>
+            </File>
+            <File>
+              <FileName>Roboto_24_Normal_EXT_AA4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Resource/Image</GroupName>
+          <Files>
+            <File>
+              <FileName>ButtonRoundPressed_48x21.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
+            </File>
+            <File>
+              <FileName>ButtonRound_48x21.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/ButtonRound_48x21.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenGlowMarker_16x9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
+            </File>
+            <File>
+              <FileName>KNOB_106x106.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/KNOB_106x106.c</FilePath>
+            </File>
+            <File>
+              <FileName>SeggerLogo_80x40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
+            </File>
+            <File>
+              <FileName>TemperatureControl_3_480x272.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Resource/Text</GroupName>
+          <Files>
+            <File>
+              <FileName>APPW_Language_0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
+            </File>
+            <File>
+              <FileName>APPW_Pattern.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Text/APPW_Pattern.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Source</GroupName>
+          <Files>
+            <File>
+              <FileName>APPW_MainTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/APPW_MainTask.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Source/CustomCode</GroupName>
+          <Files>
+            <File>
+              <FileName>Application.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../AppWizard/Source/CustomCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Source/Generated</GroupName>
+          <Files>
+            <File>
+              <FileName>APPWConf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h</FilePath>
+            </File>
+            <File>
+              <FileName>Resource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/Resource.c</FilePath>
+            </File>
+            <File>
+              <FileName>Resource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../AppWizard/Source/Generated/Resource.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -584,141 +719,6 @@
               <FileName>fsl_video_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Resource/Font</GroupName>
-          <Files>
-            <File>
-              <FileName>NettoOT_24_Normal_EXT_AA4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c</FilePath>
-            </File>
-            <File>
-              <FileName>Roboto_16_Normal_EXT_AA4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c</FilePath>
-            </File>
-            <File>
-              <FileName>Roboto_24_Normal_EXT_AA4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Resource/Image</GroupName>
-          <Files>
-            <File>
-              <FileName>ButtonRoundPressed_48x21.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
-            </File>
-            <File>
-              <FileName>ButtonRound_48x21.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/ButtonRound_48x21.c</FilePath>
-            </File>
-            <File>
-              <FileName>GreenGlowMarker_16x9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
-            </File>
-            <File>
-              <FileName>KNOB_106x106.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/KNOB_106x106.c</FilePath>
-            </File>
-            <File>
-              <FileName>SeggerLogo_80x40.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
-            </File>
-            <File>
-              <FileName>TemperatureControl_3_480x272.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Resource/Text</GroupName>
-          <Files>
-            <File>
-              <FileName>APPW_Language_0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
-            </File>
-            <File>
-              <FileName>APPW_Pattern.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Text/APPW_Pattern.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Source</GroupName>
-          <Files>
-            <File>
-              <FileName>APPW_MainTask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/APPW_MainTask.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Source/CustomCode</GroupName>
-          <Files>
-            <File>
-              <FileName>Application.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../AppWizard/Source/CustomCode/Application.h</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Source/Generated</GroupName>
-          <Files>
-            <File>
-              <FileName>APPWConf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h</FilePath>
-            </File>
-            <File>
-              <FileName>Resource.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/Resource.c</FilePath>
-            </File>
-            <File>
-              <FileName>Resource.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../AppWizard/Source/Generated/Resource.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard</GroupName>
-          <Files>
-            <File>
-              <FileName>APPW_X_NoFS.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/APPW_X_NoFS.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1256,6 +1256,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -1391,6 +1401,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -1414,6 +1434,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -1713,7 +1738,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -1915,7 +1940,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, SDK_I2C_BASED_COMPONENT_USED=1, APPWIZARD, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, APPWIZARD, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../common;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1951,7 +1976,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M7.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2030,6 +2055,141 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard</GroupName>
+          <Files>
+            <File>
+              <FileName>APPW_X_NoFS.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/APPW_X_NoFS.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Resource/Font</GroupName>
+          <Files>
+            <File>
+              <FileName>NettoOT_24_Normal_EXT_AA4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c</FilePath>
+            </File>
+            <File>
+              <FileName>Roboto_16_Normal_EXT_AA4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c</FilePath>
+            </File>
+            <File>
+              <FileName>Roboto_24_Normal_EXT_AA4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Resource/Image</GroupName>
+          <Files>
+            <File>
+              <FileName>ButtonRoundPressed_48x21.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
+            </File>
+            <File>
+              <FileName>ButtonRound_48x21.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/ButtonRound_48x21.c</FilePath>
+            </File>
+            <File>
+              <FileName>GreenGlowMarker_16x9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
+            </File>
+            <File>
+              <FileName>KNOB_106x106.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/KNOB_106x106.c</FilePath>
+            </File>
+            <File>
+              <FileName>SeggerLogo_80x40.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
+            </File>
+            <File>
+              <FileName>TemperatureControl_3_480x272.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Resource/Text</GroupName>
+          <Files>
+            <File>
+              <FileName>APPW_Language_0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
+            </File>
+            <File>
+              <FileName>APPW_Pattern.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Text/APPW_Pattern.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Source</GroupName>
+          <Files>
+            <File>
+              <FileName>APPW_MainTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/APPW_MainTask.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Source/CustomCode</GroupName>
+          <Files>
+            <File>
+              <FileName>Application.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../AppWizard/Source/CustomCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AppWizard/Source/Generated</GroupName>
+          <Files>
+            <File>
+              <FileName>APPWConf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h</FilePath>
+            </File>
+            <File>
+              <FileName>Resource.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/Resource.c</FilePath>
+            </File>
+            <File>
+              <FileName>Resource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../AppWizard/Source/Generated/Resource.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2170,141 +2330,6 @@
               <FileName>fsl_video_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Resource/Font</GroupName>
-          <Files>
-            <File>
-              <FileName>NettoOT_24_Normal_EXT_AA4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c</FilePath>
-            </File>
-            <File>
-              <FileName>Roboto_16_Normal_EXT_AA4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c</FilePath>
-            </File>
-            <File>
-              <FileName>Roboto_24_Normal_EXT_AA4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Resource/Image</GroupName>
-          <Files>
-            <File>
-              <FileName>ButtonRoundPressed_48x21.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
-            </File>
-            <File>
-              <FileName>ButtonRound_48x21.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/ButtonRound_48x21.c</FilePath>
-            </File>
-            <File>
-              <FileName>GreenGlowMarker_16x9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
-            </File>
-            <File>
-              <FileName>KNOB_106x106.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/KNOB_106x106.c</FilePath>
-            </File>
-            <File>
-              <FileName>SeggerLogo_80x40.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
-            </File>
-            <File>
-              <FileName>TemperatureControl_3_480x272.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Resource/Text</GroupName>
-          <Files>
-            <File>
-              <FileName>APPW_Language_0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
-            </File>
-            <File>
-              <FileName>APPW_Pattern.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Text/APPW_Pattern.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Source</GroupName>
-          <Files>
-            <File>
-              <FileName>APPW_MainTask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/APPW_MainTask.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Source/CustomCode</GroupName>
-          <Files>
-            <File>
-              <FileName>Application.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../AppWizard/Source/CustomCode/Application.h</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard/Source/Generated</GroupName>
-          <Files>
-            <File>
-              <FileName>APPWConf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h</FilePath>
-            </File>
-            <File>
-              <FileName>Resource.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/Resource.c</FilePath>
-            </File>
-            <File>
-              <FileName>Resource.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../AppWizard/Source/Generated/Resource.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>AppWizard</GroupName>
-          <Files>
-            <File>
-              <FileName>APPW_X_NoFS.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/APPW_X_NoFS.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2842,6 +2867,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -2977,6 +3012,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -3000,6 +3045,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>

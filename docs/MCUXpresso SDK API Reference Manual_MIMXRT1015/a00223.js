@@ -1,21 +1,20 @@
 var a00223 =
 [
-    [ "LPI2C CMSIS Driver", "a00225.html", null ],
-    [ "LPI2C FreeRTOS Driver", "a00224.html", "a00224" ],
-    [ "LPI2C Master DMA Driver", "a00039.html", "a00039" ],
-    [ "LPI2C Master Driver", "a00038.html", "a00038" ],
-    [ "LPI2C Slave Driver", "a00040.html", "a00040" ],
-    [ "FSL_LPI2C_DRIVER_VERSION", "a00223.html#gad5469acd31ed336234c60b02cf7c424a", null ],
-    [ "I2C_RETRY_TIMES", "a00223.html#gaac288786aaa7d0cb947c91591baf42d7", [
-      [ "kStatus_LPI2C_Busy", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409af52a270e301641b8855edf3fcc843814", null ],
-      [ "kStatus_LPI2C_Idle", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409a6603ec1135f58532c9d4accc3661bc27", null ],
-      [ "kStatus_LPI2C_Nak", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409a75dbc01ed590c24e787fadb97ba2f684", null ],
-      [ "kStatus_LPI2C_FifoError", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409a5b3634e1fedb0ad8cc38476aac29477e", null ],
-      [ "kStatus_LPI2C_BitError", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409aa08b2b2938831610ff303e2415291be6", null ],
-      [ "kStatus_LPI2C_ArbitrationLost", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409a5169d7e655df8bde3b4fc6d49ae8777a", null ],
-      [ "kStatus_LPI2C_PinLowTimeout", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409aa8c558fc024cbde751d7861ea6efca78", null ],
-      [ "kStatus_LPI2C_NoTransferInProgress", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409aa301f3640e63a3d3d951429b9b7ee866", null ],
-      [ "kStatus_LPI2C_DmaRequestFail", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409a14d70db977f150497fd4a9d232dc2cd8", null ],
-      [ "kStatus_LPI2C_Timeout", "a00223.html#ggadb49720dc49f7d4e4cf9adbf2948e409a002394fe77437f41ea82506d69646d66", null ]
-    ] ]
+    [ "FSL_CACHE_DRIVER_VERSION", "a00223.html#gac954b8be2bb59a983a9594c59e4b4fa5", null ],
+    [ "L1CACHE_EnableICache", "a00223.html#gaea07bb3879fa96b03f1ecaa6bf821c74", null ],
+    [ "L1CACHE_DisableICache", "a00223.html#gafa6d1a14a0499342890eee0e104c8d96", null ],
+    [ "L1CACHE_InvalidateICache", "a00223.html#gabce0ccbe1684fef7eff231f3704025b6", null ],
+    [ "L1CACHE_InvalidateICacheByRange", "a00223.html#gaf66ed6d9a7b881ef98707861484d7530", null ],
+    [ "L1CACHE_EnableDCache", "a00223.html#ga52d071c691c4ce9ead828e086f07f457", null ],
+    [ "L1CACHE_DisableDCache", "a00223.html#gae6eb154e5afc3a877aad4155cb90bca9", null ],
+    [ "L1CACHE_InvalidateDCache", "a00223.html#gad6bb45d3f9feb8ed2a63b174d204f277", null ],
+    [ "L1CACHE_CleanDCache", "a00223.html#gab1dcfc930ee90724a807f69428a1f269", null ],
+    [ "L1CACHE_CleanInvalidateDCache", "a00223.html#ga49c6ba08328943022264442f6ce2c090", null ],
+    [ "L1CACHE_InvalidateDCacheByRange", "a00223.html#ga9baff800f4d60a09efc4e4ce309dd583", null ],
+    [ "L1CACHE_CleanDCacheByRange", "a00223.html#gad120776b1a7f2f3f21b2bf017dbab095", null ],
+    [ "L1CACHE_CleanInvalidateDCacheByRange", "a00223.html#ga4837708efaec2927416b268d75412361", null ],
+    [ "ICACHE_InvalidateByRange", "a00223.html#ga00cdccb5c53201a747f2a3e2009f43cc", null ],
+    [ "DCACHE_InvalidateByRange", "a00223.html#gab5c47d7193562d7a763b1bc1bd91b28c", null ],
+    [ "DCACHE_CleanByRange", "a00223.html#ga893959336987f85910fe98ab9f7f8648", null ],
+    [ "DCACHE_CleanInvalidateByRange", "a00223.html#gac20095b525889cf55c105658877c2c84", null ]
 ];

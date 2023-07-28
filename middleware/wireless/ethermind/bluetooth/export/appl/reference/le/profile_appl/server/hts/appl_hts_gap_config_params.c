@@ -48,7 +48,13 @@ const APPL_GAP_ADV_DATA appl_gap_adv_data =
          *            Capable (Host)
          */
         0x02U, 0x01U,
-        (BT_AD_FLAGS_LE_GENERAL_DISC_MODE | BT_AD_FLAGS_LE_BR_EDR_HOST),
+        (BT_AD_FLAGS_LE_GENERAL_DISC_MODE |
+#if defined(RW610_SERIES) || defined(RW612_SERIES)
+         BT_AD_FLAGS_BR_EDR_NOT_SUPPORTED),
+#else
+         BT_AD_FLAGS_LE_BR_EDR_HOST),
+#endif /* RW610_SERIES || defined(RW612_SERIES)*/
+
 
         /**
          *  Service UUID List:

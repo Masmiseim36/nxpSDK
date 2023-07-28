@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DMAMUX: Direct Memory Access Multiplexer Driver</title>
+<title>MCUXpresso SDK API Reference Manual: IOMUXC: IOMUX Controller</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,61 +98,956 @@ $(document).ready(function(){initNavTree('a00211.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#files">Files</a>  </div>
   <div class="headertitle">
-<div class="title">DMAMUX: Direct Memory Access Multiplexer Driver</div>  </div>
+<div class="title">IOMUXC: IOMUX Controller</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Direct Memory Access Multiplexer (DMAMUX) of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="DMAMUXTypicalUseCase"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="DMAMUXOper"></a>
-DMAMUX Operation</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmamux </p>
+<p>IOMUXC driver provides APIs for pin configuration. It also supports the miscellaneous functions integrated in IOMUXC. </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:a00092"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00092.html">fsl_iomuxc.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga52b927e4f978ddf42faf0acf6de3df57">FSL_DMAMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00208.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
-<tr class="memdesc:ga52b927e4f978ddf42faf0acf6de3df57"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMAMUX driver version 2.0.5.  <a href="#ga52b927e4f978ddf42faf0acf6de3df57">More...</a><br/></td></tr>
-<tr class="separator:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa82996f29b9fa7947fdc478b7a874757"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gaa82996f29b9fa7947fdc478b7a874757">FSL_IOMUXC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="memdesc:gaa82996f29b9fa7947fdc478b7a874757"><td class="mdescLeft">&#160;</td><td class="mdescRight">IOMUXC driver version 2.0.3.  <a href="#gaa82996f29b9fa7947fdc478b7a874757">More...</a><br/></td></tr>
+<tr class="separator:gaa82996f29b9fa7947fdc478b7a874757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMAMUX Initialization and de-initialization</h2></td></tr>
-<tr class="memitem:ga850545ac61a004df8ca312db2ca9db73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a> (DMAMUX_Type *base)</td></tr>
-<tr class="memdesc:ga850545ac61a004df8ca312db2ca9db73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DMAMUX peripheral.  <a href="#ga850545ac61a004df8ca312db2ca9db73">More...</a><br/></td></tr>
-<tr class="separator:ga850545ac61a004df8ca312db2ca9db73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gab663257d094b9b7b6fa1b894fbf8000b">DMAMUX_Deinit</a> (DMAMUX_Type *base)</td></tr>
-<tr class="memdesc:gab663257d094b9b7b6fa1b894fbf8000b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the DMAMUX peripheral.  <a href="#gab663257d094b9b7b6fa1b894fbf8000b">More...</a><br/></td></tr>
-<tr class="separator:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Pin function ID</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrpc032aeb8f5da757adeeb73e592c30b61"></a>The pin function ID is a tuple of &lt;muxRegister muxMode inputRegister inputDaisy configRegister&gt; </p>
+</td></tr>
+<tr class="memitem:ga57252fe7bece44083975e16af96935de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga57252fe7bece44083975e16af96935de"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_LPI2C1_SCL</b>&#160;&#160;&#160;0x401F8010U, 0x0U, 0x401F81C0U, 0x0U, 0x401F80C0U</td></tr>
+<tr class="separator:ga57252fe7bece44083975e16af96935de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08c392edd76f8b98d244c78250c07c9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga08c392edd76f8b98d244c78250c07c9d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_LPUART3_CTS_B</b>&#160;&#160;&#160;0x401F8010U, 0x1U, 0, 0, 0x401F80C0U</td></tr>
+<tr class="separator:ga08c392edd76f8b98d244c78250c07c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5977d8128c6bc719c48a2f241b9233e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5977d8128c6bc719c48a2f241b9233e9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_KPP_COL00</b>&#160;&#160;&#160;0x401F8010U, 0x2U, 0x401F819CU, 0x0U, 0x401F80C0U</td></tr>
+<tr class="separator:ga5977d8128c6bc719c48a2f241b9233e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d13891a1b9d5a4fd9ac230ff09efea7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7d13891a1b9d5a4fd9ac230ff09efea7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_LPUART4_CTS_B</b>&#160;&#160;&#160;0x401F8010U, 0x3U, 0, 0, 0x401F80C0U</td></tr>
+<tr class="separator:ga7d13891a1b9d5a4fd9ac230ff09efea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9fe6cf5168d67311b5d90c25ad241cde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9fe6cf5168d67311b5d90c25ad241cde"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_FLEXIO1_IO26</b>&#160;&#160;&#160;0x401F8010U, 0x4U, 0, 0, 0x401F80C0U</td></tr>
+<tr class="separator:ga9fe6cf5168d67311b5d90c25ad241cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a9f12cd502a2f10a5a92c9cbf64b984"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3a9f12cd502a2f10a5a92c9cbf64b984"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_GPIOMUX_IO28</b>&#160;&#160;&#160;0x401F8010U, 0x5U, 0, 0, 0x401F80C0U</td></tr>
+<tr class="separator:ga3a9f12cd502a2f10a5a92c9cbf64b984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga551f22789974b8fcc07bab9374c4572c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga551f22789974b8fcc07bab9374c4572c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_REF_CLK_24M</b>&#160;&#160;&#160;0x401F8010U, 0x6U, 0, 0, 0x401F80C0U</td></tr>
+<tr class="separator:ga551f22789974b8fcc07bab9374c4572c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0c90696a1a0b78deb98429fd1a32a5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad0c90696a1a0b78deb98429fd1a32a5f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_14_XBAR1_INOUT02</b>&#160;&#160;&#160;0x401F8010U, 0x7U, 0, 0, 0x401F80C0U</td></tr>
+<tr class="separator:gad0c90696a1a0b78deb98429fd1a32a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7990d6d516e75abf906061eb62a581c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7990d6d516e75abf906061eb62a581c2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_LPI2C1_SDA</b>&#160;&#160;&#160;0x401F8014U, 0x0U, 0x401F81C4U, 0x0U, 0x401F80C4U</td></tr>
+<tr class="separator:ga7990d6d516e75abf906061eb62a581c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabbc2ec14a56dcd520844702cc341a0a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabbc2ec14a56dcd520844702cc341a0a4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_LPUART3_RTS_B</b>&#160;&#160;&#160;0x401F8014U, 0x1U, 0, 0, 0x401F80C4U</td></tr>
+<tr class="separator:gabbc2ec14a56dcd520844702cc341a0a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedbaa88a7bce1a60dd70326b88d1c448"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaedbaa88a7bce1a60dd70326b88d1c448"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_KPP_ROW00</b>&#160;&#160;&#160;0x401F8014U, 0x2U, 0x401F81ACU, 0x0U, 0x401F80C4U</td></tr>
+<tr class="separator:gaedbaa88a7bce1a60dd70326b88d1c448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade74e565568ba0191c363693b69ecc90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gade74e565568ba0191c363693b69ecc90"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_LPUART4_RTS_B</b>&#160;&#160;&#160;0x401F8014U, 0x3U, 0, 0, 0x401F80C4U</td></tr>
+<tr class="separator:gade74e565568ba0191c363693b69ecc90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23c28d1823678e3457e1c2c003e2f147"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga23c28d1823678e3457e1c2c003e2f147"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_FLEXIO1_IO25</b>&#160;&#160;&#160;0x401F8014U, 0x4U, 0, 0, 0x401F80C4U</td></tr>
+<tr class="separator:ga23c28d1823678e3457e1c2c003e2f147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadecbc9d5239fab733871fa488461735a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadecbc9d5239fab733871fa488461735a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_GPIOMUX_IO27</b>&#160;&#160;&#160;0x401F8014U, 0x5U, 0, 0, 0x401F80C4U</td></tr>
+<tr class="separator:gadecbc9d5239fab733871fa488461735a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad91d85c6d26c7f04c88ad40974c5d3dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad91d85c6d26c7f04c88ad40974c5d3dc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_ARM_NMI</b>&#160;&#160;&#160;0x401F8014U, 0x6U, 0x401F8210U, 0x0U, 0x401F80C4U</td></tr>
+<tr class="separator:gad91d85c6d26c7f04c88ad40974c5d3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53b2a1bc8fe89415677d64f792eb8955"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga53b2a1bc8fe89415677d64f792eb8955"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_13_JTAG_TMS</b>&#160;&#160;&#160;0x401F8014U, 0x7U, 0, 0, 0x401F80C4U</td></tr>
+<tr class="separator:ga53b2a1bc8fe89415677d64f792eb8955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90995b1df785cdd6815b51fade497a33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga90995b1df785cdd6815b51fade497a33"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_LPSPI2_SCK</b>&#160;&#160;&#160;0x401F8018U, 0x0U, 0x401F81E4U, 0x0U, 0x401F80C8U</td></tr>
+<tr class="separator:ga90995b1df785cdd6815b51fade497a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2358ba3c6c509d91f271ec58e6760db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab2358ba3c6c509d91f271ec58e6760db"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_FLEXPWM1_PWM0_X</b>&#160;&#160;&#160;0x401F8018U, 0x1U, 0, 0, 0x401F80C8U</td></tr>
+<tr class="separator:gab2358ba3c6c509d91f271ec58e6760db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd8b8377c84d0ab3298be8cfa0c04d9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd8b8377c84d0ab3298be8cfa0c04d9b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_KPP_COL01</b>&#160;&#160;&#160;0x401F8018U, 0x2U, 0x401F81A0U, 0x0U, 0x401F80C8U</td></tr>
+<tr class="separator:gafd8b8377c84d0ab3298be8cfa0c04d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa15f68f4f3967213f75e58e429b61a9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa15f68f4f3967213f75e58e429b61a9a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_PIT_TRIGGER01</b>&#160;&#160;&#160;0x401F8018U, 0x3U, 0, 0, 0x401F80C8U</td></tr>
+<tr class="separator:gaa15f68f4f3967213f75e58e429b61a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae22ae9a954bbe810db33c7801b75bfc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaae22ae9a954bbe810db33c7801b75bfc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_FLEXIO1_IO24</b>&#160;&#160;&#160;0x401F8018U, 0x4U, 0, 0, 0x401F80C8U</td></tr>
+<tr class="separator:gaae22ae9a954bbe810db33c7801b75bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab88c0aa42a88022d8e1e420b1702e904"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab88c0aa42a88022d8e1e420b1702e904"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_GPIOMUX_IO26</b>&#160;&#160;&#160;0x401F8018U, 0x5U, 0, 0, 0x401F80C8U</td></tr>
+<tr class="separator:gab88c0aa42a88022d8e1e420b1702e904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d9f251f997bed075cfabb06c6a859e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9d9f251f997bed075cfabb06c6a859e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_USB_OTG1_PWR</b>&#160;&#160;&#160;0x401F8018U, 0x6U, 0, 0, 0x401F80C8U</td></tr>
+<tr class="separator:ga9d9f251f997bed075cfabb06c6a859e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ab0fa2c85eadf81556e749f6d763eb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7ab0fa2c85eadf81556e749f6d763eb4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_12_JTAG_TCK</b>&#160;&#160;&#160;0x401F8018U, 0x7U, 0, 0, 0x401F80C8U</td></tr>
+<tr class="separator:ga7ab0fa2c85eadf81556e749f6d763eb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac241df94b3a703f8de71f8301267b8fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac241df94b3a703f8de71f8301267b8fb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_LPSPI2_PCS0</b>&#160;&#160;&#160;0x401F801CU, 0x0U, 0x401F81E0U, 0x0U, 0x401F80CCU</td></tr>
+<tr class="separator:gac241df94b3a703f8de71f8301267b8fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae958a0aa0899c9c74570818149eecdfd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae958a0aa0899c9c74570818149eecdfd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_FLEXPWM1_PWM1_X</b>&#160;&#160;&#160;0x401F801CU, 0x1U, 0, 0, 0x401F80CCU</td></tr>
+<tr class="separator:gae958a0aa0899c9c74570818149eecdfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1aa35a29df3bbb30f497c43f23e30df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad1aa35a29df3bbb30f497c43f23e30df"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_KPP_ROW01</b>&#160;&#160;&#160;0x401F801CU, 0x2U, 0x401F81B0U, 0x0U, 0x401F80CCU</td></tr>
+<tr class="separator:gad1aa35a29df3bbb30f497c43f23e30df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6c5f5a28d7460f025b9486f6f4b30c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6c5f5a28d7460f025b9486f6f4b30c0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_PIT_TRIGGER02</b>&#160;&#160;&#160;0x401F801CU, 0x3U, 0, 0, 0x401F80CCU</td></tr>
+<tr class="separator:gaf6c5f5a28d7460f025b9486f6f4b30c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd2c903a04d63d952bd70285c5302c7e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd2c903a04d63d952bd70285c5302c7e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_FLEXIO1_IO23</b>&#160;&#160;&#160;0x401F801CU, 0x4U, 0, 0, 0x401F80CCU</td></tr>
+<tr class="separator:gafd2c903a04d63d952bd70285c5302c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfb516a21ea86124eb2f9e94119304b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacfb516a21ea86124eb2f9e94119304b4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_GPIOMUX_IO25</b>&#160;&#160;&#160;0x401F801CU, 0x5U, 0, 0, 0x401F80CCU</td></tr>
+<tr class="separator:gacfb516a21ea86124eb2f9e94119304b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4193be78dccc8411753e4621a898c00c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4193be78dccc8411753e4621a898c00c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_WDOG1_B</b>&#160;&#160;&#160;0x401F801CU, 0x6U, 0, 0, 0x401F80CCU</td></tr>
+<tr class="separator:ga4193be78dccc8411753e4621a898c00c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0536d810528dca7932643cd14dfd371"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac0536d810528dca7932643cd14dfd371"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_11_JTAG_MOD</b>&#160;&#160;&#160;0x401F801CU, 0x7U, 0, 0, 0x401F80CCU</td></tr>
+<tr class="separator:gac0536d810528dca7932643cd14dfd371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3041091e36329dcae5c8f743b0608198"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3041091e36329dcae5c8f743b0608198"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_LPSPI2_SDO</b>&#160;&#160;&#160;0x401F8020U, 0x0U, 0x401F81ECU, 0x0U, 0x401F80D0U</td></tr>
+<tr class="separator:ga3041091e36329dcae5c8f743b0608198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga579c497d4b7ac10245e0d3a701ae7ce3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga579c497d4b7ac10245e0d3a701ae7ce3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_FLEXPWM1_PWM2_X</b>&#160;&#160;&#160;0x401F8020U, 0x1U, 0, 0, 0x401F80D0U</td></tr>
+<tr class="separator:ga579c497d4b7ac10245e0d3a701ae7ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dd494fcea53e4c1af054402656e4849"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6dd494fcea53e4c1af054402656e4849"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_KPP_COL02</b>&#160;&#160;&#160;0x401F8020U, 0x2U, 0x401F81A4U, 0x0U, 0x401F80D0U</td></tr>
+<tr class="separator:ga6dd494fcea53e4c1af054402656e4849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga520315d00dae6686549770fb928393fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga520315d00dae6686549770fb928393fc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_PIT_TRIGGER03</b>&#160;&#160;&#160;0x401F8020U, 0x3U, 0, 0, 0x401F80D0U</td></tr>
+<tr class="separator:ga520315d00dae6686549770fb928393fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2cfcaccf86e785e2de02a4046560c2c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2cfcaccf86e785e2de02a4046560c2c8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_FLEXIO1_IO22</b>&#160;&#160;&#160;0x401F8020U, 0x4U, 0, 0, 0x401F80D0U</td></tr>
+<tr class="separator:ga2cfcaccf86e785e2de02a4046560c2c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e1301588726fee17dd36f59e452c6f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2e1301588726fee17dd36f59e452c6f5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_GPIOMUX_IO24</b>&#160;&#160;&#160;0x401F8020U, 0x5U, 0, 0, 0x401F80D0U</td></tr>
+<tr class="separator:ga2e1301588726fee17dd36f59e452c6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabadff7ec7f7f3716ec75b27ac318c833"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabadff7ec7f7f3716ec75b27ac318c833"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_USB_OTG1_ID</b>&#160;&#160;&#160;0x401F8020U, 0x6U, 0x401F8170U, 0x0U, 0x401F80D0U</td></tr>
+<tr class="separator:gabadff7ec7f7f3716ec75b27ac318c833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23624bd4633ae0bb84479c4f65982386"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga23624bd4633ae0bb84479c4f65982386"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_10_JTAG_TDI</b>&#160;&#160;&#160;0x401F8020U, 0x7U, 0, 0, 0x401F80D0U</td></tr>
+<tr class="separator:ga23624bd4633ae0bb84479c4f65982386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4524064039d85d7d02fc0ad097ec102d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4524064039d85d7d02fc0ad097ec102d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_LPSPI2_SDI</b>&#160;&#160;&#160;0x401F8024U, 0x0U, 0x401F81E8U, 0x0U, 0x401F80D4U</td></tr>
+<tr class="separator:ga4524064039d85d7d02fc0ad097ec102d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad210b3b8447f4f85531719dd6abba0d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad210b3b8447f4f85531719dd6abba0d1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_FLEXPWM1_PWM3_X</b>&#160;&#160;&#160;0x401F8024U, 0x1U, 0, 0, 0x401F80D4U</td></tr>
+<tr class="separator:gad210b3b8447f4f85531719dd6abba0d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee2186e5f20e22b24c53df90bf7aa921"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaee2186e5f20e22b24c53df90bf7aa921"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_KPP_ROW02</b>&#160;&#160;&#160;0x401F8024U, 0x2U, 0x401F81B4U, 0x0U, 0x401F80D4U</td></tr>
+<tr class="separator:gaee2186e5f20e22b24c53df90bf7aa921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14db9ca7f571117f4f5360bea4d7d34a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga14db9ca7f571117f4f5360bea4d7d34a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_ARM_TRACE_SWO</b>&#160;&#160;&#160;0x401F8024U, 0x3U, 0, 0, 0x401F80D4U</td></tr>
+<tr class="separator:ga14db9ca7f571117f4f5360bea4d7d34a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5777f5bd6ceb94845ca9ca565f154277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5777f5bd6ceb94845ca9ca565f154277"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_FLEXIO1_IO21</b>&#160;&#160;&#160;0x401F8024U, 0x4U, 0, 0, 0x401F80D4U</td></tr>
+<tr class="separator:ga5777f5bd6ceb94845ca9ca565f154277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0783d844489ed0eec095f15208d274ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0783d844489ed0eec095f15208d274ed"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_GPIOMUX_IO23</b>&#160;&#160;&#160;0x401F8024U, 0x5U, 0, 0, 0x401F80D4U</td></tr>
+<tr class="separator:ga0783d844489ed0eec095f15208d274ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70e5babf8dc511cccaf18f898dd5cd76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga70e5babf8dc511cccaf18f898dd5cd76"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_REF_CLK_32K</b>&#160;&#160;&#160;0x401F8024U, 0x6U, 0, 0, 0x401F80D4U</td></tr>
+<tr class="separator:ga70e5babf8dc511cccaf18f898dd5cd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4dc3a76245cf8185e4ed916ccbf094c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4dc3a76245cf8185e4ed916ccbf094c3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_09_JTAG_TDO</b>&#160;&#160;&#160;0x401F8024U, 0x7U, 0, 0, 0x401F80D4U</td></tr>
+<tr class="separator:ga4dc3a76245cf8185e4ed916ccbf094c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga967a3882e1bf57c98939176b602752e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga967a3882e1bf57c98939176b602752e5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_LPI2C2_SCL</b>&#160;&#160;&#160;0x401F8028U, 0x0U, 0x401F81C8U, 0x0U, 0x401F80D8U</td></tr>
+<tr class="separator:ga967a3882e1bf57c98939176b602752e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6efdb1d48feded1d38edebb60842e45c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6efdb1d48feded1d38edebb60842e45c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_LPUART3_TXD</b>&#160;&#160;&#160;0x401F8028U, 0x1U, 0x401F8204U, 0x0U, 0x401F80D8U</td></tr>
+<tr class="separator:ga6efdb1d48feded1d38edebb60842e45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1316980584628781434ed2f66e05c953"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1316980584628781434ed2f66e05c953"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_ARM_CM7_TXEV</b>&#160;&#160;&#160;0x401F8028U, 0x2U, 0, 0, 0x401F80D8U</td></tr>
+<tr class="separator:ga1316980584628781434ed2f66e05c953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef3f6d5dd39bc28e9f271cfb9bdac171"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaef3f6d5dd39bc28e9f271cfb9bdac171"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_LPUART2_CTS_B</b>&#160;&#160;&#160;0x401F8028U, 0x3U, 0, 0, 0x401F80D8U</td></tr>
+<tr class="separator:gaef3f6d5dd39bc28e9f271cfb9bdac171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8df52db50a8fe3e8d8fb0bda5dae02aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8df52db50a8fe3e8d8fb0bda5dae02aa"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_GPT2_COMPARE3</b>&#160;&#160;&#160;0x401F8028U, 0x4U, 0, 0, 0x401F80D8U</td></tr>
+<tr class="separator:ga8df52db50a8fe3e8d8fb0bda5dae02aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad16a0dc39f050eacf42bdd2fefb5ac04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad16a0dc39f050eacf42bdd2fefb5ac04"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_GPIOMUX_IO22</b>&#160;&#160;&#160;0x401F8028U, 0x5U, 0, 0, 0x401F80D8U</td></tr>
+<tr class="separator:gad16a0dc39f050eacf42bdd2fefb5ac04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga783e4a92fb108792cf74281858a66a11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga783e4a92fb108792cf74281858a66a11"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_EWM_OUT_B</b>&#160;&#160;&#160;0x401F8028U, 0x6U, 0, 0, 0x401F80D8U</td></tr>
+<tr class="separator:ga783e4a92fb108792cf74281858a66a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga599d5a7d58f54ab270ade18635eb8a92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga599d5a7d58f54ab270ade18635eb8a92"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_08_JTAG_TRSTB</b>&#160;&#160;&#160;0x401F8028U, 0x7U, 0, 0, 0x401F80D8U</td></tr>
+<tr class="separator:ga599d5a7d58f54ab270ade18635eb8a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82df46e69d4eda3db9ce8d6291747b4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga82df46e69d4eda3db9ce8d6291747b4a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_LPI2C2_SDA</b>&#160;&#160;&#160;0x401F802CU, 0x0U, 0x401F81CCU, 0x0U, 0x401F80DCU</td></tr>
+<tr class="separator:ga82df46e69d4eda3db9ce8d6291747b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfdcc09ec4afa20eb0b4d5d0527a6c29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabfdcc09ec4afa20eb0b4d5d0527a6c29"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_LPUART3_RXD</b>&#160;&#160;&#160;0x401F802CU, 0x1U, 0x401F8200U, 0x0U, 0x401F80DCU</td></tr>
+<tr class="separator:gabfdcc09ec4afa20eb0b4d5d0527a6c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86b4019fc3f8f559416c3ea6bef09ed6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga86b4019fc3f8f559416c3ea6bef09ed6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_ARM_CM7_RXEV</b>&#160;&#160;&#160;0x401F802CU, 0x2U, 0x401F8220U, 0x0U, 0x401F80DCU</td></tr>
+<tr class="separator:ga86b4019fc3f8f559416c3ea6bef09ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga261e30145147b94257c9d8390ffca002"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga261e30145147b94257c9d8390ffca002"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_LPUART2_RTS_B</b>&#160;&#160;&#160;0x401F802CU, 0x3U, 0, 0, 0x401F80DCU</td></tr>
+<tr class="separator:ga261e30145147b94257c9d8390ffca002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6918352c8c57aac810c668fc130d2489"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6918352c8c57aac810c668fc130d2489"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_GPT2_CAPTURE2</b>&#160;&#160;&#160;0x401F802CU, 0x4U, 0, 0, 0x401F80DCU</td></tr>
+<tr class="separator:ga6918352c8c57aac810c668fc130d2489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad81be51c0092df7f54bf8a50fdfd2bf1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad81be51c0092df7f54bf8a50fdfd2bf1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_GPIOMUX_IO21</b>&#160;&#160;&#160;0x401F802CU, 0x5U, 0, 0, 0x401F80DCU</td></tr>
+<tr class="separator:gad81be51c0092df7f54bf8a50fdfd2bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga459de7ca4a848fae8548f85b3cc6dfbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga459de7ca4a848fae8548f85b3cc6dfbf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_OCOTP_FUSE_LATCHED</b>&#160;&#160;&#160;0x401F802CU, 0x6U, 0, 0, 0x401F80DCU</td></tr>
+<tr class="separator:ga459de7ca4a848fae8548f85b3cc6dfbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55f776a4b03a0c8bbce22fd99a6c7963"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55f776a4b03a0c8bbce22fd99a6c7963"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_07_XBAR1_INOUT03</b>&#160;&#160;&#160;0x401F802CU, 0x7U, 0, 0, 0x401F80DCU</td></tr>
+<tr class="separator:ga55f776a4b03a0c8bbce22fd99a6c7963"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad883b55f7127b1214335d955abcf4c9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad883b55f7127b1214335d955abcf4c9b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_06_LPSPI1_SCK</b>&#160;&#160;&#160;0x401F8030U, 0x0U, 0x401F81D4U, 0x0U, 0x401F80E0U</td></tr>
+<tr class="separator:gad883b55f7127b1214335d955abcf4c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28a5227215d9b0bee4152545f38b1778"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28a5227215d9b0bee4152545f38b1778"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_06_PIT_TRIGGER00</b>&#160;&#160;&#160;0x401F8030U, 0x1U, 0, 0, 0x401F80E0U</td></tr>
+<tr class="separator:ga28a5227215d9b0bee4152545f38b1778"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82aae9c4d022c2a768fc64c224e06e65"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga82aae9c4d022c2a768fc64c224e06e65"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_06_FLEXPWM1_PWM3_A</b>&#160;&#160;&#160;0x401F8030U, 0x2U, 0x401F8180U, 0x0U, 0x401F80E0U</td></tr>
+<tr class="separator:ga82aae9c4d022c2a768fc64c224e06e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf1969bfb77d4d1e0dec7985d0589315"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaf1969bfb77d4d1e0dec7985d0589315"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_06_KPP_COL01</b>&#160;&#160;&#160;0x401F8030U, 0x3U, 0x401F81A0U, 0x1U, 0x401F80E0U</td></tr>
+<tr class="separator:gaaf1969bfb77d4d1e0dec7985d0589315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81e1d1b851a8f55d7dc545dea6b1af35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga81e1d1b851a8f55d7dc545dea6b1af35"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_06_GPT2_COMPARE2</b>&#160;&#160;&#160;0x401F8030U, 0x4U, 0, 0, 0x401F80E0U</td></tr>
+<tr class="separator:ga81e1d1b851a8f55d7dc545dea6b1af35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga586d814f507c44a19821eaeab3524a2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga586d814f507c44a19821eaeab3524a2f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_06_GPIOMUX_IO20</b>&#160;&#160;&#160;0x401F8030U, 0x5U, 0, 0, 0x401F80E0U</td></tr>
+<tr class="separator:ga586d814f507c44a19821eaeab3524a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae57093074b2f79d08ae16fcb0ff6efe4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae57093074b2f79d08ae16fcb0ff6efe4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_06_LPI2C1_HREQ</b>&#160;&#160;&#160;0x401F8030U, 0x6U, 0x401F81BCU, 0x0U, 0x401F80E0U</td></tr>
+<tr class="separator:gae57093074b2f79d08ae16fcb0ff6efe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ad7257f155e63607d7af58a24b08394"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6ad7257f155e63607d7af58a24b08394"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_05_LPSPI1_PCS0</b>&#160;&#160;&#160;0x401F8034U, 0x0U, 0x401F81D0U, 0x0U, 0x401F80E4U</td></tr>
+<tr class="separator:ga6ad7257f155e63607d7af58a24b08394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33eb4ab58545a066bd4956acc3272703"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga33eb4ab58545a066bd4956acc3272703"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_05_PIT_TRIGGER01</b>&#160;&#160;&#160;0x401F8034U, 0x1U, 0, 0, 0x401F80E4U</td></tr>
+<tr class="separator:ga33eb4ab58545a066bd4956acc3272703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71c2d6387765107eba67454d0f86d201"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga71c2d6387765107eba67454d0f86d201"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_05_FLEXPWM1_PWM3_B</b>&#160;&#160;&#160;0x401F8034U, 0x2U, 0x401F8190U, 0x0U, 0x401F80E4U</td></tr>
+<tr class="separator:ga71c2d6387765107eba67454d0f86d201"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac74cd4df87b8cd2709d556bb84d96f17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac74cd4df87b8cd2709d556bb84d96f17"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_05_KPP_ROW01</b>&#160;&#160;&#160;0x401F8034U, 0x3U, 0x401F81B0U, 0x1U, 0x401F80E4U</td></tr>
+<tr class="separator:gac74cd4df87b8cd2709d556bb84d96f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8a83c03510efb7d8f51fcf6f8faab22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae8a83c03510efb7d8f51fcf6f8faab22"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_05_GPT2_CAPTURE1</b>&#160;&#160;&#160;0x401F8034U, 0x4U, 0, 0, 0x401F80E4U</td></tr>
+<tr class="separator:gae8a83c03510efb7d8f51fcf6f8faab22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32b3e1306667da2221d21fa04e36cb5e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga32b3e1306667da2221d21fa04e36cb5e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_05_GPIOMUX_IO19</b>&#160;&#160;&#160;0x401F8034U, 0x5U, 0, 0, 0x401F80E4U</td></tr>
+<tr class="separator:ga32b3e1306667da2221d21fa04e36cb5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae97eb26312a1c093ee55ad2bf5ee20e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae97eb26312a1c093ee55ad2bf5ee20e0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_04_LPSPI1_SDO</b>&#160;&#160;&#160;0x401F8038U, 0x0U, 0x401F81DCU, 0x0U, 0x401F80E8U</td></tr>
+<tr class="separator:gae97eb26312a1c093ee55ad2bf5ee20e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab34897a5b9ebb3fb4a09bce46599bb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaab34897a5b9ebb3fb4a09bce46599bb9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_04_PIT_TRIGGER02</b>&#160;&#160;&#160;0x401F8038U, 0x1U, 0, 0, 0x401F80E8U</td></tr>
+<tr class="separator:gaab34897a5b9ebb3fb4a09bce46599bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23fde805ed1a09f6e8a942b267350ba5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga23fde805ed1a09f6e8a942b267350ba5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_04_FLEXPWM1_PWM2_A</b>&#160;&#160;&#160;0x401F8038U, 0x2U, 0x401F817CU, 0x0U, 0x401F80E8U</td></tr>
+<tr class="separator:ga23fde805ed1a09f6e8a942b267350ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50f8676396c225db456b36841bd40364"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga50f8676396c225db456b36841bd40364"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_04_KPP_COL02</b>&#160;&#160;&#160;0x401F8038U, 0x3U, 0x401F81A4U, 0x1U, 0x401F80E8U</td></tr>
+<tr class="separator:ga50f8676396c225db456b36841bd40364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga694fe58a73310b34f1e887bfa14b1443"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga694fe58a73310b34f1e887bfa14b1443"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_04_GPT2_COMPARE1</b>&#160;&#160;&#160;0x401F8038U, 0x4U, 0, 0, 0x401F80E8U</td></tr>
+<tr class="separator:ga694fe58a73310b34f1e887bfa14b1443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf32e5f13924d5dde1559aa3ad4eb1ab4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf32e5f13924d5dde1559aa3ad4eb1ab4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_04_GPIOMUX_IO18</b>&#160;&#160;&#160;0x401F8038U, 0x5U, 0, 0, 0x401F80E8U</td></tr>
+<tr class="separator:gaf32e5f13924d5dde1559aa3ad4eb1ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22f610a658740a12a8290d05f019c7b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga22f610a658740a12a8290d05f019c7b1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_04_SNVS_VIO_5_CTL</b>&#160;&#160;&#160;0x401F8038U, 0x6U, 0, 0, 0x401F80E8U</td></tr>
+<tr class="separator:ga22f610a658740a12a8290d05f019c7b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4214cde94c0ee981e812016463be0a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae4214cde94c0ee981e812016463be0a4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_LPSPI1_SDI</b>&#160;&#160;&#160;0x401F803CU, 0x0U, 0x401F81D8U, 0x0U, 0x401F80ECU</td></tr>
+<tr class="separator:gae4214cde94c0ee981e812016463be0a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa52206fd41717cb3d57c1b7c0c3ca092"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa52206fd41717cb3d57c1b7c0c3ca092"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_PIT_TRIGGER03</b>&#160;&#160;&#160;0x401F803CU, 0x1U, 0, 0, 0x401F80ECU</td></tr>
+<tr class="separator:gaa52206fd41717cb3d57c1b7c0c3ca092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb82e75e053fd0fa56fb032e241ab0ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadb82e75e053fd0fa56fb032e241ab0ed"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_FLEXPWM1_PWM2_B</b>&#160;&#160;&#160;0x401F803CU, 0x2U, 0x401F818CU, 0x0U, 0x401F80ECU</td></tr>
+<tr class="separator:gadb82e75e053fd0fa56fb032e241ab0ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2162cd83f39cc5f348e2a59b311d9b54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2162cd83f39cc5f348e2a59b311d9b54"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_KPP_ROW02</b>&#160;&#160;&#160;0x401F803CU, 0x3U, 0x401F81B4U, 0x1U, 0x401F80ECU</td></tr>
+<tr class="separator:ga2162cd83f39cc5f348e2a59b311d9b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga993402a80323631c25b2ab35293eed78"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga993402a80323631c25b2ab35293eed78"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_GPT2_CLK</b>&#160;&#160;&#160;0x401F803CU, 0x4U, 0, 0, 0x401F80ECU</td></tr>
+<tr class="separator:ga993402a80323631c25b2ab35293eed78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4d744a57de3ff03e83574959d02f1c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae4d744a57de3ff03e83574959d02f1c2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_GPIOMUX_IO17</b>&#160;&#160;&#160;0x401F803CU, 0x5U, 0, 0, 0x401F80ECU</td></tr>
+<tr class="separator:gae4d744a57de3ff03e83574959d02f1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f8991240e06cc665f12568e827fcdf9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6f8991240e06cc665f12568e827fcdf9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_SNVS_VIO_5_B</b>&#160;&#160;&#160;0x401F803CU, 0x6U, 0, 0, 0x401F80ECU</td></tr>
+<tr class="separator:ga6f8991240e06cc665f12568e827fcdf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga861e0d35b697c5b73807fe861bc4cfed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga861e0d35b697c5b73807fe861bc4cfed"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_03_JTAG_DE_B</b>&#160;&#160;&#160;0x401F803CU, 0x7U, 0, 0, 0x401F80ECU</td></tr>
+<tr class="separator:ga861e0d35b697c5b73807fe861bc4cfed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7502067ebba3f68b137bd1fc62681a4e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7502067ebba3f68b137bd1fc62681a4e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_02_LPUART4_TXD</b>&#160;&#160;&#160;0x401F8040U, 0x0U, 0x401F820CU, 0x0U, 0x401F80F0U</td></tr>
+<tr class="separator:ga7502067ebba3f68b137bd1fc62681a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb50fb98818b9dbecfdea8372e0a6240"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadb50fb98818b9dbecfdea8372e0a6240"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_02_LPSPI1_PCS1</b>&#160;&#160;&#160;0x401F8040U, 0x1U, 0, 0, 0x401F80F0U</td></tr>
+<tr class="separator:gadb50fb98818b9dbecfdea8372e0a6240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb43bfe33797c9e054ae8ac32d28e2e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacb43bfe33797c9e054ae8ac32d28e2e8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_02_WDOG2_B</b>&#160;&#160;&#160;0x401F8040U, 0x2U, 0, 0, 0x401F80F0U</td></tr>
+<tr class="separator:gacb43bfe33797c9e054ae8ac32d28e2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c71a2de52558e00fa91ccb7707be5a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c71a2de52558e00fa91ccb7707be5a7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_02_LPI2C2_SCL</b>&#160;&#160;&#160;0x401F8040U, 0x3U, 0x401F81C8U, 0x1U, 0x401F80F0U</td></tr>
+<tr class="separator:ga8c71a2de52558e00fa91ccb7707be5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48aaf2fa0c092c16fa074b18d2d6b3d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga48aaf2fa0c092c16fa074b18d2d6b3d7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_02_MQS_RIGHT</b>&#160;&#160;&#160;0x401F8040U, 0x4U, 0, 0, 0x401F80F0U</td></tr>
+<tr class="separator:ga48aaf2fa0c092c16fa074b18d2d6b3d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70997f46bf8fe1eaab7bf45e862fb162"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga70997f46bf8fe1eaab7bf45e862fb162"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_02_GPIOMUX_IO16</b>&#160;&#160;&#160;0x401F8040U, 0x5U, 0, 0, 0x401F80F0U</td></tr>
+<tr class="separator:ga70997f46bf8fe1eaab7bf45e862fb162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf585952f9698900bc533411524055109"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf585952f9698900bc533411524055109"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_02_ARM_TRACE_CLK</b>&#160;&#160;&#160;0x401F8040U, 0x7U, 0, 0, 0x401F80F0U</td></tr>
+<tr class="separator:gaf585952f9698900bc533411524055109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga229646f08907998505eb45d2e887c00f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga229646f08907998505eb45d2e887c00f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_LPUART4_RXD</b>&#160;&#160;&#160;0x401F8044U, 0x0U, 0x401F8208U, 0x0U, 0x401F80F4U</td></tr>
+<tr class="separator:ga229646f08907998505eb45d2e887c00f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad924ed6d618da2148e6a068a90616e48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad924ed6d618da2148e6a068a90616e48"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_LPSPI2_PCS1</b>&#160;&#160;&#160;0x401F8044U, 0x1U, 0, 0, 0x401F80F4U</td></tr>
+<tr class="separator:gad924ed6d618da2148e6a068a90616e48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5efa785ec3d79c0844b0202de20e9b49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5efa785ec3d79c0844b0202de20e9b49"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_WDOG1_ANY</b>&#160;&#160;&#160;0x401F8044U, 0x2U, 0, 0, 0x401F80F4U</td></tr>
+<tr class="separator:ga5efa785ec3d79c0844b0202de20e9b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga408202901fbe3eb6f6062671491ef5dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga408202901fbe3eb6f6062671491ef5dd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_LPI2C2_SDA</b>&#160;&#160;&#160;0x401F8044U, 0x3U, 0x401F81CCU, 0x1U, 0x401F80F4U</td></tr>
+<tr class="separator:ga408202901fbe3eb6f6062671491ef5dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2fe233b03baeff3cdf3c6f9c28fe7891"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2fe233b03baeff3cdf3c6f9c28fe7891"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_MQS_LEFT</b>&#160;&#160;&#160;0x401F8044U, 0x4U, 0, 0, 0x401F80F4U</td></tr>
+<tr class="separator:ga2fe233b03baeff3cdf3c6f9c28fe7891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga686fed9c76dbf7c3ec19ad429d4570e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga686fed9c76dbf7c3ec19ad429d4570e9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_GPIOMUX_IO15</b>&#160;&#160;&#160;0x401F8044U, 0x5U, 0, 0, 0x401F80F4U</td></tr>
+<tr class="separator:ga686fed9c76dbf7c3ec19ad429d4570e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0af214f8a21d69506922a8811b259229"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0af214f8a21d69506922a8811b259229"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_USB_OTG1_OC</b>&#160;&#160;&#160;0x401F8044U, 0x6U, 0x401F821CU, 0x0U, 0x401F80F4U</td></tr>
+<tr class="separator:ga0af214f8a21d69506922a8811b259229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacda95bc3d1b6d56ea2eff1dd14d77c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaacda95bc3d1b6d56ea2eff1dd14d77c3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_01_ARM_TRACE_SWO</b>&#160;&#160;&#160;0x401F8044U, 0x7U, 0, 0, 0x401F80F4U</td></tr>
+<tr class="separator:gaacda95bc3d1b6d56ea2eff1dd14d77c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e7734695cbe7e72b97647ff7d913901"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0e7734695cbe7e72b97647ff7d913901"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_LPUART2_TXD</b>&#160;&#160;&#160;0x401F8048U, 0x0U, 0x401F81FCU, 0x0U, 0x401F80F8U</td></tr>
+<tr class="separator:ga0e7734695cbe7e72b97647ff7d913901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62bcd53e22dc9307c08b9d829d5a2a89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga62bcd53e22dc9307c08b9d829d5a2a89"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_LPSPI1_PCS2</b>&#160;&#160;&#160;0x401F8048U, 0x1U, 0, 0, 0x401F80F8U</td></tr>
+<tr class="separator:ga62bcd53e22dc9307c08b9d829d5a2a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga822abfdb87a475315d55145a78150d66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga822abfdb87a475315d55145a78150d66"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_KPP_COL03</b>&#160;&#160;&#160;0x401F8048U, 0x2U, 0x401F81A8U, 0x0U, 0x401F80F8U</td></tr>
+<tr class="separator:ga822abfdb87a475315d55145a78150d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf74f357d7be001cb730361b6d3830a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaf74f357d7be001cb730361b6d3830a4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_USB_OTG1_PWR</b>&#160;&#160;&#160;0x401F8048U, 0x3U, 0, 0, 0x401F80F8U</td></tr>
+<tr class="separator:gaaf74f357d7be001cb730361b6d3830a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa06e37504136042198e854277948b2e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa06e37504136042198e854277948b2e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_FLEXIO1_IO20</b>&#160;&#160;&#160;0x401F8048U, 0x4U, 0, 0, 0x401F80F8U</td></tr>
+<tr class="separator:gaa06e37504136042198e854277948b2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabe5d9f58d8bd78b65a9920ac7a790fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaabe5d9f58d8bd78b65a9920ac7a790fe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_GPIOMUX_IO14</b>&#160;&#160;&#160;0x401F8048U, 0x5U, 0, 0, 0x401F80F8U</td></tr>
+<tr class="separator:gaabe5d9f58d8bd78b65a9920ac7a790fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d5012d43e32a4a61323462fa2d899ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1d5012d43e32a4a61323462fa2d899ea"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_ARM_NMI</b>&#160;&#160;&#160;0x401F8048U, 0x6U, 0x401F8210U, 0x1U, 0x401F80F8U</td></tr>
+<tr class="separator:ga1d5012d43e32a4a61323462fa2d899ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3d77f6a9565138c036965fd7f3beebd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa3d77f6a9565138c036965fd7f3beebd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_AD_00_ARM_TRACE0</b>&#160;&#160;&#160;0x401F8048U, 0x7U, 0, 0, 0x401F80F8U</td></tr>
+<tr class="separator:gaa3d77f6a9565138c036965fd7f3beebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga119a80ea239b9a70c92e6f57069df089"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga119a80ea239b9a70c92e6f57069df089"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_14_FLEXSPI_A_DQS</b>&#160;&#160;&#160;0x401F804CU, 0x0U, 0x401F8194U, 0x0U, 0x401F80FCU</td></tr>
+<tr class="separator:ga119a80ea239b9a70c92e6f57069df089"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae304da72c8f1c9d234da099095797e86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae304da72c8f1c9d234da099095797e86"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_14_FLEXSPI_B_DQS</b>&#160;&#160;&#160;0x401F804CU, 0x1U, 0x401F8198U, 0x0U, 0x401F80FCU</td></tr>
+<tr class="separator:gae304da72c8f1c9d234da099095797e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1890a0e36b09957b27e21c2cff2c3734"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1890a0e36b09957b27e21c2cff2c3734"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_13_FLEXSPI_B_SCLK</b>&#160;&#160;&#160;0x401F8050U, 0x0U, 0, 0, 0x401F8100U</td></tr>
+<tr class="separator:ga1890a0e36b09957b27e21c2cff2c3734"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca66613726f013a8460cae21c2496067"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaca66613726f013a8460cae21c2496067"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_13_SAI3_RX_BCLK</b>&#160;&#160;&#160;0x401F8050U, 0x1U, 0, 0, 0x401F8100U</td></tr>
+<tr class="separator:gaca66613726f013a8460cae21c2496067"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c91a4520dfd6d96fa6ebf8c643d667a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9c91a4520dfd6d96fa6ebf8c643d667a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_13_ARM_CM7_TXEV</b>&#160;&#160;&#160;0x401F8050U, 0x2U, 0, 0, 0x401F8100U</td></tr>
+<tr class="separator:ga9c91a4520dfd6d96fa6ebf8c643d667a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9505b5f7463aedf26e0484fadc52d80e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9505b5f7463aedf26e0484fadc52d80e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_13_CCM_PMIC_RDY</b>&#160;&#160;&#160;0x401F8050U, 0x3U, 0, 0, 0x401F8100U</td></tr>
+<tr class="separator:ga9505b5f7463aedf26e0484fadc52d80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92b16be45fde870fc9fb8fca8f58fce5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga92b16be45fde870fc9fb8fca8f58fce5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_13_FLEXIO1_IO19</b>&#160;&#160;&#160;0x401F8050U, 0x4U, 0, 0, 0x401F8100U</td></tr>
+<tr class="separator:ga92b16be45fde870fc9fb8fca8f58fce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b6effa13a161d9b309b2198137b80fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5b6effa13a161d9b309b2198137b80fd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_13_GPIO2_IO13</b>&#160;&#160;&#160;0x401F8050U, 0x5U, 0, 0, 0x401F8100U</td></tr>
+<tr class="separator:ga5b6effa13a161d9b309b2198137b80fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad91f309dae34629ae8c2b6772dbdb7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaad91f309dae34629ae8c2b6772dbdb7b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_13_SRC_BT_CFG03</b>&#160;&#160;&#160;0x401F8050U, 0x6U, 0, 0, 0x401F8100U</td></tr>
+<tr class="separator:gaad91f309dae34629ae8c2b6772dbdb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fd25c5943525507226aaabf16979b59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0fd25c5943525507226aaabf16979b59"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_12_FLEXSPI_A_DQS</b>&#160;&#160;&#160;0x401F8054U, 0x0U, 0x401F8194U, 0x1U, 0x401F8104U</td></tr>
+<tr class="separator:ga0fd25c5943525507226aaabf16979b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc96feee74f454fe3c02044df5e4f084"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafc96feee74f454fe3c02044df5e4f084"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_12_LPSPI2_PCS0</b>&#160;&#160;&#160;0x401F8054U, 0x1U, 0x401F81E0U, 0x1U, 0x401F8104U</td></tr>
+<tr class="separator:gafc96feee74f454fe3c02044df5e4f084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb6471ad1f55426e046672637f5d480d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadb6471ad1f55426e046672637f5d480d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_12_LPUART1_TXD</b>&#160;&#160;&#160;0x401F8054U, 0x2U, 0x401F81F4U, 0x0U, 0x401F8104U</td></tr>
+<tr class="separator:gadb6471ad1f55426e046672637f5d480d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18276a62a07dec02db09373a4623fc61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga18276a62a07dec02db09373a4623fc61"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_12_FLEXIO1_IO18</b>&#160;&#160;&#160;0x401F8054U, 0x4U, 0, 0, 0x401F8104U</td></tr>
+<tr class="separator:ga18276a62a07dec02db09373a4623fc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a24c4a24012221374e3bbab5c0ca358"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6a24c4a24012221374e3bbab5c0ca358"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_12_GPIO2_IO12</b>&#160;&#160;&#160;0x401F8054U, 0x5U, 0, 0, 0x401F8104U</td></tr>
+<tr class="separator:ga6a24c4a24012221374e3bbab5c0ca358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad796bf43e0c5e3262c054b277f373eb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad796bf43e0c5e3262c054b277f373eb8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_12_WDOG2_RST_B_DEB</b>&#160;&#160;&#160;0x401F8054U, 0x6U, 0, 0, 0x401F8104U</td></tr>
+<tr class="separator:gad796bf43e0c5e3262c054b277f373eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1341ecf8c1ea8dbc07a4ec48d8b4759"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf1341ecf8c1ea8dbc07a4ec48d8b4759"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_11_FLEXSPI_A_DATA3</b>&#160;&#160;&#160;0x401F8058U, 0x0U, 0, 0, 0x401F8108U</td></tr>
+<tr class="separator:gaf1341ecf8c1ea8dbc07a4ec48d8b4759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec55c10a896654e23a69ef1f8d4e043c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaec55c10a896654e23a69ef1f8d4e043c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_11_LPSPI2_SCK</b>&#160;&#160;&#160;0x401F8058U, 0x1U, 0x401F81E4U, 0x1U, 0x401F8108U</td></tr>
+<tr class="separator:gaec55c10a896654e23a69ef1f8d4e043c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72bc57936666f388d9c4b733509158ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga72bc57936666f388d9c4b733509158ac"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_11_LPUART1_RXD</b>&#160;&#160;&#160;0x401F8058U, 0x2U, 0x401F81F0U, 0x0U, 0x401F8108U</td></tr>
+<tr class="separator:ga72bc57936666f388d9c4b733509158ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6397cd337168b039b630c4c9c0d8f4a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6397cd337168b039b630c4c9c0d8f4a5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_11_FLEXIO1_IO17</b>&#160;&#160;&#160;0x401F8058U, 0x4U, 0, 0, 0x401F8108U</td></tr>
+<tr class="separator:ga6397cd337168b039b630c4c9c0d8f4a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefef605832dade9e743b6abec0f86a1c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaefef605832dade9e743b6abec0f86a1c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_11_GPIO2_IO11</b>&#160;&#160;&#160;0x401F8058U, 0x5U, 0, 0, 0x401F8108U</td></tr>
+<tr class="separator:gaefef605832dade9e743b6abec0f86a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfa03d85bb49214d36f83e39682e7b9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadfa03d85bb49214d36f83e39682e7b9d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_11_WDOG1_RST_B_DEB</b>&#160;&#160;&#160;0x401F8058U, 0x6U, 0, 0, 0x401F8108U</td></tr>
+<tr class="separator:gadfa03d85bb49214d36f83e39682e7b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a5c6a71fd8563857bd635e894ffedcb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3a5c6a71fd8563857bd635e894ffedcb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_10_FLEXSPI_A_SCLK</b>&#160;&#160;&#160;0x401F805CU, 0x0U, 0, 0, 0x401F810CU</td></tr>
+<tr class="separator:ga3a5c6a71fd8563857bd635e894ffedcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacee6f2d7d24bd62f81ff0d760fce0ade"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacee6f2d7d24bd62f81ff0d760fce0ade"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_10_LPSPI2_SDO</b>&#160;&#160;&#160;0x401F805CU, 0x1U, 0x401F81ECU, 0x1U, 0x401F810CU</td></tr>
+<tr class="separator:gacee6f2d7d24bd62f81ff0d760fce0ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad16430b0a6454b1234d4395156bf19a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad16430b0a6454b1234d4395156bf19a6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_10_LPUART2_TXD</b>&#160;&#160;&#160;0x401F805CU, 0x2U, 0x401F81FCU, 0x1U, 0x401F810CU</td></tr>
+<tr class="separator:gad16430b0a6454b1234d4395156bf19a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b05245a9a7a48844d1e5d62c5db3849"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4b05245a9a7a48844d1e5d62c5db3849"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_10_FLEXIO1_IO16</b>&#160;&#160;&#160;0x401F805CU, 0x4U, 0, 0, 0x401F810CU</td></tr>
+<tr class="separator:ga4b05245a9a7a48844d1e5d62c5db3849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga288662d9fbb48c775d0567c080ea0b95"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga288662d9fbb48c775d0567c080ea0b95"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_10_GPIO2_IO10</b>&#160;&#160;&#160;0x401F805CU, 0x5U, 0, 0, 0x401F810CU</td></tr>
+<tr class="separator:ga288662d9fbb48c775d0567c080ea0b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29198392180940f80254b5277c44b75b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29198392180940f80254b5277c44b75b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_09_FLEXSPI_A_DATA0</b>&#160;&#160;&#160;0x401F8060U, 0x0U, 0, 0, 0x401F8110U</td></tr>
+<tr class="separator:ga29198392180940f80254b5277c44b75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad39cacc11b0d44e2f41382ca7af48349"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad39cacc11b0d44e2f41382ca7af48349"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_09_LPSPI2_SDI</b>&#160;&#160;&#160;0x401F8060U, 0x1U, 0x401F81E8U, 0x1U, 0x401F8110U</td></tr>
+<tr class="separator:gad39cacc11b0d44e2f41382ca7af48349"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabfab2776171777cea2747617c95f1bfe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabfab2776171777cea2747617c95f1bfe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_09_LPUART2_RXD</b>&#160;&#160;&#160;0x401F8060U, 0x2U, 0x401F81F8U, 0x0U, 0x401F8110U</td></tr>
+<tr class="separator:gabfab2776171777cea2747617c95f1bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34a9948bdbeabd73c776b74db85ffde3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga34a9948bdbeabd73c776b74db85ffde3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_09_FLEXIO1_IO15</b>&#160;&#160;&#160;0x401F8060U, 0x4U, 0, 0, 0x401F8110U</td></tr>
+<tr class="separator:ga34a9948bdbeabd73c776b74db85ffde3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga911132b7824fabf543a785488b596410"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga911132b7824fabf543a785488b596410"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_09_GPIO2_IO09</b>&#160;&#160;&#160;0x401F8060U, 0x5U, 0, 0, 0x401F8110U</td></tr>
+<tr class="separator:ga911132b7824fabf543a785488b596410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1ef4747403f85ca606d313db9e4b096"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac1ef4747403f85ca606d313db9e4b096"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_08_FLEXSPI_A_DATA2</b>&#160;&#160;&#160;0x401F8064U, 0x0U, 0, 0, 0x401F8114U</td></tr>
+<tr class="separator:gac1ef4747403f85ca606d313db9e4b096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6bb51fb6774505a7008b4cfa82ab44e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6bb51fb6774505a7008b4cfa82ab44e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_08_LPI2C2_SCL</b>&#160;&#160;&#160;0x401F8064U, 0x1U, 0x401F81C8U, 0x2U, 0x401F8114U</td></tr>
+<tr class="separator:gaf6bb51fb6774505a7008b4cfa82ab44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8810e8a42086bd72290fc7ab67999e07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8810e8a42086bd72290fc7ab67999e07"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_08_LPSPI1_SCK</b>&#160;&#160;&#160;0x401F8064U, 0x2U, 0x401F81D4U, 0x1U, 0x401F8114U</td></tr>
+<tr class="separator:ga8810e8a42086bd72290fc7ab67999e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f427d20a61b9145492c7f24cc2efd5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7f427d20a61b9145492c7f24cc2efd5f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_08_FLEXIO1_IO14</b>&#160;&#160;&#160;0x401F8064U, 0x4U, 0, 0, 0x401F8114U</td></tr>
+<tr class="separator:ga7f427d20a61b9145492c7f24cc2efd5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab352ffdd97e467e01989647c5bc77e27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab352ffdd97e467e01989647c5bc77e27"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_08_GPIO2_IO08</b>&#160;&#160;&#160;0x401F8064U, 0x5U, 0, 0, 0x401F8114U</td></tr>
+<tr class="separator:gab352ffdd97e467e01989647c5bc77e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaebcfcd4086332736d371a4c39916e15e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaebcfcd4086332736d371a4c39916e15e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_07_FLEXSPI_A_DATA1</b>&#160;&#160;&#160;0x401F8068U, 0x0U, 0, 0, 0x401F8118U</td></tr>
+<tr class="separator:gaebcfcd4086332736d371a4c39916e15e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbcb52e7677a15d1dcdff11bf948f1cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadbcb52e7677a15d1dcdff11bf948f1cb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_07_LPI2C2_SDA</b>&#160;&#160;&#160;0x401F8068U, 0x1U, 0x401F81CCU, 0x2U, 0x401F8118U</td></tr>
+<tr class="separator:gadbcb52e7677a15d1dcdff11bf948f1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b82de49da3b9d283c4e76800cc18f30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5b82de49da3b9d283c4e76800cc18f30"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_07_LPSPI1_PCS0</b>&#160;&#160;&#160;0x401F8068U, 0x2U, 0x401F81D0U, 0x1U, 0x401F8118U</td></tr>
+<tr class="separator:ga5b82de49da3b9d283c4e76800cc18f30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac319fbf8caa189e3554de357cc58adb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac319fbf8caa189e3554de357cc58adb8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_07_FLEXIO1_IO13</b>&#160;&#160;&#160;0x401F8068U, 0x4U, 0, 0, 0x401F8118U</td></tr>
+<tr class="separator:gac319fbf8caa189e3554de357cc58adb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga108fb85827641fed8f115cc336e8f63e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga108fb85827641fed8f115cc336e8f63e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_07_GPIO2_IO07</b>&#160;&#160;&#160;0x401F8068U, 0x5U, 0, 0, 0x401F8118U</td></tr>
+<tr class="separator:ga108fb85827641fed8f115cc336e8f63e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga088fd54a33d17460d9e33d397ef99f69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga088fd54a33d17460d9e33d397ef99f69"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_06_FLEXSPI_A_SS0_B</b>&#160;&#160;&#160;0x401F806CU, 0x0U, 0, 0, 0x401F811CU</td></tr>
+<tr class="separator:ga088fd54a33d17460d9e33d397ef99f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92e2efb441723636763002fecc06ad98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga92e2efb441723636763002fecc06ad98"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_06_LPI2C1_SCL</b>&#160;&#160;&#160;0x401F806CU, 0x1U, 0x401F81C0U, 0x1U, 0x401F811CU</td></tr>
+<tr class="separator:ga92e2efb441723636763002fecc06ad98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cfc274d7d75f1edad5933a99408f6ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6cfc274d7d75f1edad5933a99408f6ce"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_06_LPSPI1_SDO</b>&#160;&#160;&#160;0x401F806CU, 0x2U, 0x401F81DCU, 0x1U, 0x401F811CU</td></tr>
+<tr class="separator:ga6cfc274d7d75f1edad5933a99408f6ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga100d2a440698f7f36bf6060c21783b80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga100d2a440698f7f36bf6060c21783b80"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_06_FLEXIO1_IO12</b>&#160;&#160;&#160;0x401F806CU, 0x4U, 0, 0, 0x401F811CU</td></tr>
+<tr class="separator:ga100d2a440698f7f36bf6060c21783b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a866fb4bbbd4ac1786de445a2843247"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6a866fb4bbbd4ac1786de445a2843247"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_06_GPIO2_IO06</b>&#160;&#160;&#160;0x401F806CU, 0x5U, 0, 0, 0x401F811CU</td></tr>
+<tr class="separator:ga6a866fb4bbbd4ac1786de445a2843247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77ff7a205a9125c69c4121e30b9af90c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga77ff7a205a9125c69c4121e30b9af90c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_05_FLEXSPI_A_SS1_B</b>&#160;&#160;&#160;0x401F8070U, 0x0U, 0, 0, 0x401F8120U</td></tr>
+<tr class="separator:ga77ff7a205a9125c69c4121e30b9af90c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dae34cfcdc4a4d475f70add87f26277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6dae34cfcdc4a4d475f70add87f26277"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_05_LPI2C1_SDA</b>&#160;&#160;&#160;0x401F8070U, 0x1U, 0x401F81C4U, 0x1U, 0x401F8120U</td></tr>
+<tr class="separator:ga6dae34cfcdc4a4d475f70add87f26277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3591572a882f192c0f3ee7dd4b4bed5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3591572a882f192c0f3ee7dd4b4bed5a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_05_LPSPI1_SDI</b>&#160;&#160;&#160;0x401F8070U, 0x2U, 0x401F81D8U, 0x1U, 0x401F8120U</td></tr>
+<tr class="separator:ga3591572a882f192c0f3ee7dd4b4bed5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23a346c9349e0148b2dcecd8e394013a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga23a346c9349e0148b2dcecd8e394013a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_05_FLEXIO1_IO11</b>&#160;&#160;&#160;0x401F8070U, 0x4U, 0, 0, 0x401F8120U</td></tr>
+<tr class="separator:ga23a346c9349e0148b2dcecd8e394013a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga442c5172f0724929407b8cf42ec91e6c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga442c5172f0724929407b8cf42ec91e6c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_05_GPIO2_IO05</b>&#160;&#160;&#160;0x401F8070U, 0x5U, 0, 0, 0x401F8120U</td></tr>
+<tr class="separator:ga442c5172f0724929407b8cf42ec91e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff36d872eed7aff6c7ce19b56e61c7a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff36d872eed7aff6c7ce19b56e61c7a2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_04_FLEXPWM1_PWM1_A</b>&#160;&#160;&#160;0x401F8074U, 0x2U, 0x401F8178U, 0x0U, 0x401F8124U</td></tr>
+<tr class="separator:gaff36d872eed7aff6c7ce19b56e61c7a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc98774a66d7152c25bc5d8b6a40dfb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafc98774a66d7152c25bc5d8b6a40dfb4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_04_CCM_WAIT</b>&#160;&#160;&#160;0x401F8074U, 0x3U, 0, 0, 0x401F8124U</td></tr>
+<tr class="separator:gafc98774a66d7152c25bc5d8b6a40dfb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacd7e770db6494ad8db6d7d0a2041056"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaacd7e770db6494ad8db6d7d0a2041056"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_04_FLEXIO1_IO10</b>&#160;&#160;&#160;0x401F8074U, 0x4U, 0, 0, 0x401F8124U</td></tr>
+<tr class="separator:gaacd7e770db6494ad8db6d7d0a2041056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec8d5ba9b41a0646f3478d11b1993106"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaec8d5ba9b41a0646f3478d11b1993106"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_04_GPIO2_IO04</b>&#160;&#160;&#160;0x401F8074U, 0x5U, 0, 0, 0x401F8124U</td></tr>
+<tr class="separator:gaec8d5ba9b41a0646f3478d11b1993106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c79976e1b15efd5984427badb3d3678"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c79976e1b15efd5984427badb3d3678"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_04_SRC_BOOT_MODE00</b>&#160;&#160;&#160;0x401F8074U, 0x6U, 0, 0, 0x401F8124U</td></tr>
+<tr class="separator:ga0c79976e1b15efd5984427badb3d3678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga485e9693636820d3046540b24023b273"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga485e9693636820d3046540b24023b273"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_04_FLEXSPI_B_DATA03</b>&#160;&#160;&#160;0x401F8074U, 0x0U, 0, 0, 0x401F8124U</td></tr>
+<tr class="separator:ga485e9693636820d3046540b24023b273"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d14d31ce135790b5f3a8a4651b7a3d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0d14d31ce135790b5f3a8a4651b7a3d2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_04_SAI3_RX_SYNC</b>&#160;&#160;&#160;0x401F8074U, 0x1U, 0, 0, 0x401F8124U</td></tr>
+<tr class="separator:ga0d14d31ce135790b5f3a8a4651b7a3d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga859b94de35562b26c9679e7c7e327ba9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga859b94de35562b26c9679e7c7e327ba9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_03_FLEXSPI_B_DATA00</b>&#160;&#160;&#160;0x401F8078U, 0x0U, 0, 0, 0x401F8128U</td></tr>
+<tr class="separator:ga859b94de35562b26c9679e7c7e327ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1bc78b0ce0f6b18a66e827aed8e2bd8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1bc78b0ce0f6b18a66e827aed8e2bd8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_03_SAI3_RX_DATA</b>&#160;&#160;&#160;0x401F8078U, 0x1U, 0, 0, 0x401F8128U</td></tr>
+<tr class="separator:gab1bc78b0ce0f6b18a66e827aed8e2bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb935dfb619b55f5806ace53add1c0e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeb935dfb619b55f5806ace53add1c0e2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_03_FLEXPWM1_PWM1_B</b>&#160;&#160;&#160;0x401F8078U, 0x2U, 0x401F8188U, 0x0U, 0x401F8128U</td></tr>
+<tr class="separator:gaeb935dfb619b55f5806ace53add1c0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa770c7c4d8a15363a44fcbbae4458cb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa770c7c4d8a15363a44fcbbae4458cb0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_03_CCM_REF_EN_B</b>&#160;&#160;&#160;0x401F8078U, 0x3U, 0, 0, 0x401F8128U</td></tr>
+<tr class="separator:gaa770c7c4d8a15363a44fcbbae4458cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6cce62ee0a94f6d192f7713a9c07652"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa6cce62ee0a94f6d192f7713a9c07652"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_03_FLEXIO1_IO09</b>&#160;&#160;&#160;0x401F8078U, 0x4U, 0, 0, 0x401F8128U</td></tr>
+<tr class="separator:gaa6cce62ee0a94f6d192f7713a9c07652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91527e89db4068f2aacb2891cbb04131"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga91527e89db4068f2aacb2891cbb04131"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_03_GPIO2_IO03</b>&#160;&#160;&#160;0x401F8078U, 0x5U, 0, 0, 0x401F8128U</td></tr>
+<tr class="separator:ga91527e89db4068f2aacb2891cbb04131"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga001f6b9a86d701e3c23b33462959231b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga001f6b9a86d701e3c23b33462959231b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_03_SRC_BOOT_MODE01</b>&#160;&#160;&#160;0x401F8078U, 0x6U, 0, 0, 0x401F8128U</td></tr>
+<tr class="separator:ga001f6b9a86d701e3c23b33462959231b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddd3c10c4f93cf631a4660e1890236e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaddd3c10c4f93cf631a4660e1890236e1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_02_FLEXSPI_B_DATA02</b>&#160;&#160;&#160;0x401F807CU, 0x0U, 0, 0, 0x401F812CU</td></tr>
+<tr class="separator:gaddd3c10c4f93cf631a4660e1890236e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8535491ebada6fc75af568c3d2f14c04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8535491ebada6fc75af568c3d2f14c04"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_02_SAI3_TX_DATA</b>&#160;&#160;&#160;0x401F807CU, 0x1U, 0, 0, 0x401F812CU</td></tr>
+<tr class="separator:ga8535491ebada6fc75af568c3d2f14c04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72b5847f3007ed33504eb7c357c54be3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga72b5847f3007ed33504eb7c357c54be3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_02_FLEXPWM1_PWM0_A</b>&#160;&#160;&#160;0x401F807CU, 0x2U, 0x401F8174U, 0x0U, 0x401F812CU</td></tr>
+<tr class="separator:ga72b5847f3007ed33504eb7c357c54be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ff69104b0411f78871bd8d181f41d9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2ff69104b0411f78871bd8d181f41d9e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_02_CCM_CLKO1</b>&#160;&#160;&#160;0x401F807CU, 0x3U, 0, 0, 0x401F812CU</td></tr>
+<tr class="separator:ga2ff69104b0411f78871bd8d181f41d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b6f506bf6f1c1e76b4d69fc15ad5fc1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5b6f506bf6f1c1e76b4d69fc15ad5fc1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_02_FLEXIO1_IO08</b>&#160;&#160;&#160;0x401F807CU, 0x4U, 0, 0, 0x401F812CU</td></tr>
+<tr class="separator:ga5b6f506bf6f1c1e76b4d69fc15ad5fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b731f27d32393bd7116f99a98252727"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8b731f27d32393bd7116f99a98252727"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_02_GPIO2_IO02</b>&#160;&#160;&#160;0x401F807CU, 0x5U, 0, 0, 0x401F812CU</td></tr>
+<tr class="separator:ga8b731f27d32393bd7116f99a98252727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6fd67cffe4bfdedc28af79a389bf312"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab6fd67cffe4bfdedc28af79a389bf312"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_02_SRC_BT_CFG00</b>&#160;&#160;&#160;0x401F807CU, 0x6U, 0, 0, 0x401F812CU</td></tr>
+<tr class="separator:gab6fd67cffe4bfdedc28af79a389bf312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97396ecf08790c3c6dc8d73361d86e4e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga97396ecf08790c3c6dc8d73361d86e4e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_01_FLEXSPI_B_DATA01</b>&#160;&#160;&#160;0x401F8080U, 0x0U, 0, 0, 0x401F8130U</td></tr>
+<tr class="separator:ga97396ecf08790c3c6dc8d73361d86e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74d9b548e1cdcbdde569b6187ee00907"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga74d9b548e1cdcbdde569b6187ee00907"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_01_SAI3_TX_BCLK</b>&#160;&#160;&#160;0x401F8080U, 0x1U, 0, 0, 0x401F8130U</td></tr>
+<tr class="separator:ga74d9b548e1cdcbdde569b6187ee00907"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01926d97bbcc47f1b84d421888a1d48a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga01926d97bbcc47f1b84d421888a1d48a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_01_FLEXPWM1_PWM0_B</b>&#160;&#160;&#160;0x401F8080U, 0x2U, 0x401F8184U, 0x0U, 0x401F8130U</td></tr>
+<tr class="separator:ga01926d97bbcc47f1b84d421888a1d48a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80fb6bd6bfddfd37368bd10eb8fcc1a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga80fb6bd6bfddfd37368bd10eb8fcc1a2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_01_CCM_CLKO2</b>&#160;&#160;&#160;0x401F8080U, 0x3U, 0, 0, 0x401F8130U</td></tr>
+<tr class="separator:ga80fb6bd6bfddfd37368bd10eb8fcc1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f6f69ad77c6d1fca63235efab486a18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5f6f69ad77c6d1fca63235efab486a18"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_01_FLEXIO1_IO07</b>&#160;&#160;&#160;0x401F8080U, 0x4U, 0, 0, 0x401F8130U</td></tr>
+<tr class="separator:ga5f6f69ad77c6d1fca63235efab486a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9bde08eacf73cbb075973ff2da413d0a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9bde08eacf73cbb075973ff2da413d0a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_01_GPIO2_IO01</b>&#160;&#160;&#160;0x401F8080U, 0x5U, 0, 0, 0x401F8130U</td></tr>
+<tr class="separator:ga9bde08eacf73cbb075973ff2da413d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09c01d12d0a2fbfbac822735e06b8a49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga09c01d12d0a2fbfbac822735e06b8a49"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_01_SRC_BT_CFG01</b>&#160;&#160;&#160;0x401F8080U, 0x6U, 0, 0, 0x401F8130U</td></tr>
+<tr class="separator:ga09c01d12d0a2fbfbac822735e06b8a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcfb6abf2bfa8198943a8781b542d287"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabcfb6abf2bfa8198943a8781b542d287"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_00_FLEXSPI_B_SS0_B</b>&#160;&#160;&#160;0x401F8084U, 0x0U, 0, 0, 0x401F8134U</td></tr>
+<tr class="separator:gabcfb6abf2bfa8198943a8781b542d287"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3fe50f2bc3e9fca4940adf05c636863"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac3fe50f2bc3e9fca4940adf05c636863"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_00_SAI3_TX_SYNC</b>&#160;&#160;&#160;0x401F8084U, 0x1U, 0, 0, 0x401F8134U</td></tr>
+<tr class="separator:gac3fe50f2bc3e9fca4940adf05c636863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad193bdf9b7c1fbae068aba6582c3d374"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad193bdf9b7c1fbae068aba6582c3d374"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_00_ARM_CM7_RXEV</b>&#160;&#160;&#160;0x401F8084U, 0x2U, 0x401F8220U, 0x1U, 0x401F8134U</td></tr>
+<tr class="separator:gad193bdf9b7c1fbae068aba6582c3d374"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5b1f40185b4cfa4f2af83e93a0425de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae5b1f40185b4cfa4f2af83e93a0425de"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_00_CCM_STOP</b>&#160;&#160;&#160;0x401F8084U, 0x3U, 0, 0, 0x401F8134U</td></tr>
+<tr class="separator:gae5b1f40185b4cfa4f2af83e93a0425de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf98c6cb7202971a5adc7c0ab5043dde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaf98c6cb7202971a5adc7c0ab5043dde"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_00_FLEXIO1_IO06</b>&#160;&#160;&#160;0x401F8084U, 0x4U, 0, 0, 0x401F8134U</td></tr>
+<tr class="separator:gaaf98c6cb7202971a5adc7c0ab5043dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf642b8371c684ac1e7bc017873db2eec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf642b8371c684ac1e7bc017873db2eec"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_00_GPIO2_IO00</b>&#160;&#160;&#160;0x401F8084U, 0x5U, 0, 0, 0x401F8134U</td></tr>
+<tr class="separator:gaf642b8371c684ac1e7bc017873db2eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1814dfdc2ae7c85db2fe118c325d7925"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1814dfdc2ae7c85db2fe118c325d7925"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_SD_00_SRC_BT_CFG02</b>&#160;&#160;&#160;0x401F8084U, 0x6U, 0, 0, 0x401F8134U</td></tr>
+<tr class="separator:ga1814dfdc2ae7c85db2fe118c325d7925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ab9dc4c2dd7d80fc774abb495d02679"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9ab9dc4c2dd7d80fc774abb495d02679"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_LPUART2_RXD</b>&#160;&#160;&#160;0x401F8088U, 0x0U, 0x401F81F8U, 0x1U, 0x401F8138U</td></tr>
+<tr class="separator:ga9ab9dc4c2dd7d80fc774abb495d02679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85b91a91b18a7a62936a907221a27525"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga85b91a91b18a7a62936a907221a27525"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_LPSPI2_PCS2</b>&#160;&#160;&#160;0x401F8088U, 0x1U, 0, 0, 0x401F8138U</td></tr>
+<tr class="separator:ga85b91a91b18a7a62936a907221a27525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70b24123126ad40cfac8377ae6242e8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga70b24123126ad40cfac8377ae6242e8f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_KPP_ROW03</b>&#160;&#160;&#160;0x401F8088U, 0x2U, 0x401F81B8U, 0x0U, 0x401F8138U</td></tr>
+<tr class="separator:ga70b24123126ad40cfac8377ae6242e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a353c42c493f5cb6dff48e295b5b450"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a353c42c493f5cb6dff48e295b5b450"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_USB_OTG1_ID</b>&#160;&#160;&#160;0x401F8088U, 0x3U, 0x401F8170U, 0x1U, 0x401F8138U</td></tr>
+<tr class="separator:ga2a353c42c493f5cb6dff48e295b5b450"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05431998b229b881db332ddefc1881e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga05431998b229b881db332ddefc1881e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_FLEXIO1_IO05</b>&#160;&#160;&#160;0x401F8088U, 0x4U, 0, 0, 0x401F8138U</td></tr>
+<tr class="separator:ga05431998b229b881db332ddefc1881e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb3777937ea0fc0871975abf655f9bed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafb3777937ea0fc0871975abf655f9bed"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_GPIOMUX_IO13</b>&#160;&#160;&#160;0x401F8088U, 0x5U, 0, 0, 0x401F8138U</td></tr>
+<tr class="separator:gafb3777937ea0fc0871975abf655f9bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b554dc0065e48eeb918dd946e36fc93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b554dc0065e48eeb918dd946e36fc93"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_SPDIF_LOCK</b>&#160;&#160;&#160;0x401F8088U, 0x6U, 0, 0, 0x401F8138U</td></tr>
+<tr class="separator:ga2b554dc0065e48eeb918dd946e36fc93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec5e277030e6c7379ea0624541c25b5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaec5e277030e6c7379ea0624541c25b5f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_13_ARM_TRACE1</b>&#160;&#160;&#160;0x401F8088U, 0x7U, 0, 0, 0x401F8138U</td></tr>
+<tr class="separator:gaec5e277030e6c7379ea0624541c25b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1d46ca49af1589290e87e964270e8e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa1d46ca49af1589290e87e964270e8e0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_LPUART3_TXD</b>&#160;&#160;&#160;0x401F808CU, 0x0U, 0x401F8204U, 0x1U, 0x401F813CU</td></tr>
+<tr class="separator:gaa1d46ca49af1589290e87e964270e8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5afa3392039bd586f3577c788a02db48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5afa3392039bd586f3577c788a02db48"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_LPI2C1_SCL</b>&#160;&#160;&#160;0x401F808CU, 0x1U, 0x401F81C0U, 0x2U, 0x401F813CU</td></tr>
+<tr class="separator:ga5afa3392039bd586f3577c788a02db48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99d498250890ab3afcc06e9553229fe7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga99d498250890ab3afcc06e9553229fe7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_KPP_COL00</b>&#160;&#160;&#160;0x401F808CU, 0x2U, 0x401F819CU, 0x1U, 0x401F813CU</td></tr>
+<tr class="separator:ga99d498250890ab3afcc06e9553229fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bbbd07f098b70170f66557346216168"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7bbbd07f098b70170f66557346216168"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_USB_OTG1_OC</b>&#160;&#160;&#160;0x401F808CU, 0x3U, 0x401F821CU, 0x1U, 0x401F813CU</td></tr>
+<tr class="separator:ga7bbbd07f098b70170f66557346216168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0a2fd7790141b0c16ae2ff92b40a9c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad0a2fd7790141b0c16ae2ff92b40a9c9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_FLEXIO1_IO04</b>&#160;&#160;&#160;0x401F808CU, 0x4U, 0, 0, 0x401F813CU</td></tr>
+<tr class="separator:gad0a2fd7790141b0c16ae2ff92b40a9c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1386b29bac0b214a02b800cab822108f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1386b29bac0b214a02b800cab822108f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_GPIOMUX_IO12</b>&#160;&#160;&#160;0x401F808CU, 0x5U, 0, 0, 0x401F813CU</td></tr>
+<tr class="separator:ga1386b29bac0b214a02b800cab822108f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab887499cacce6bb4b7fa291ea124510c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab887499cacce6bb4b7fa291ea124510c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_SPDIF_EXT_CLK</b>&#160;&#160;&#160;0x401F808CU, 0x6U, 0x401F8218U, 0x0U, 0x401F813CU</td></tr>
+<tr class="separator:gab887499cacce6bb4b7fa291ea124510c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4476bdb19712091707d9140a3c46f651"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4476bdb19712091707d9140a3c46f651"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_12_ARM_TRACE2</b>&#160;&#160;&#160;0x401F808CU, 0x7U, 0, 0, 0x401F813CU</td></tr>
+<tr class="separator:ga4476bdb19712091707d9140a3c46f651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga60e3a848a9ff27e7638086ccd9586365"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga60e3a848a9ff27e7638086ccd9586365"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_LPUART3_RXD</b>&#160;&#160;&#160;0x401F8090U, 0x0U, 0x401F8200U, 0x1U, 0x401F8140U</td></tr>
+<tr class="separator:ga60e3a848a9ff27e7638086ccd9586365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a72c5f6b4a931cb50b465564690ade9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0a72c5f6b4a931cb50b465564690ade9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_LPI2C1_SDA</b>&#160;&#160;&#160;0x401F8090U, 0x1U, 0x401F81C4U, 0x2U, 0x401F8140U</td></tr>
+<tr class="separator:ga0a72c5f6b4a931cb50b465564690ade9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaaab2cebb5b9caaa2e07205e65e94483"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaaab2cebb5b9caaa2e07205e65e94483"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_KPP_ROW00</b>&#160;&#160;&#160;0x401F8090U, 0x2U, 0x401F81ACU, 0x1U, 0x401F8140U</td></tr>
+<tr class="separator:gaaaab2cebb5b9caaa2e07205e65e94483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fabd298282cc2323c56e7b6da881b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga31fabd298282cc2323c56e7b6da881b4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_FLEXSPI_B_SS1_B</b>&#160;&#160;&#160;0x401F8090U, 0x3U, 0, 0, 0x401F8140U</td></tr>
+<tr class="separator:ga31fabd298282cc2323c56e7b6da881b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0385ed3c0fdd3909dd8917216eb6c0af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0385ed3c0fdd3909dd8917216eb6c0af"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_FLEXIO1_IO03</b>&#160;&#160;&#160;0x401F8090U, 0x4U, 0, 0, 0x401F8140U</td></tr>
+<tr class="separator:ga0385ed3c0fdd3909dd8917216eb6c0af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdc1835b37646ce4dd220e7e852074a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafdc1835b37646ce4dd220e7e852074a8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_GPIOMUX_IO11</b>&#160;&#160;&#160;0x401F8090U, 0x5U, 0, 0, 0x401F8140U</td></tr>
+<tr class="separator:gafdc1835b37646ce4dd220e7e852074a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd8542c7ce0206ceaff1c13c1d5dde85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd8542c7ce0206ceaff1c13c1d5dde85"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_SPDIF_OUT</b>&#160;&#160;&#160;0x401F8090U, 0x6U, 0, 0, 0x401F8140U</td></tr>
+<tr class="separator:gafd8542c7ce0206ceaff1c13c1d5dde85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3363bb05eb9fb55cc9dbe1bb2e91bd5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3363bb05eb9fb55cc9dbe1bb2e91bd5f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_11_ARM_TRACE3</b>&#160;&#160;&#160;0x401F8090U, 0x7U, 0, 0, 0x401F8140U</td></tr>
+<tr class="separator:ga3363bb05eb9fb55cc9dbe1bb2e91bd5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga491221afe5fce2b39e32c8936a3c238b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga491221afe5fce2b39e32c8936a3c238b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_10_LPUART1_TXD</b>&#160;&#160;&#160;0x401F8094U, 0x0U, 0x401F81F4U, 0x1U, 0x401F8144U</td></tr>
+<tr class="separator:ga491221afe5fce2b39e32c8936a3c238b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac19002e0591e7882660eb46667bd935d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac19002e0591e7882660eb46667bd935d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_10_LPI2C1_HREQ</b>&#160;&#160;&#160;0x401F8094U, 0x1U, 0x401F81BCU, 0x1U, 0x401F8144U</td></tr>
+<tr class="separator:gac19002e0591e7882660eb46667bd935d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e93f7d90429fb6c82dd4dc0c7e73c26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e93f7d90429fb6c82dd4dc0c7e73c26"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_10_EWM_OUT_B</b>&#160;&#160;&#160;0x401F8094U, 0x2U, 0, 0, 0x401F8144U</td></tr>
+<tr class="separator:ga5e93f7d90429fb6c82dd4dc0c7e73c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51cd71515a0c4760d84876a663db8cad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga51cd71515a0c4760d84876a663db8cad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_10_LPI2C2_SCL</b>&#160;&#160;&#160;0x401F8094U, 0x3U, 0x401F81C8U, 0x3U, 0x401F8144U</td></tr>
+<tr class="separator:ga51cd71515a0c4760d84876a663db8cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2037d580ee8706af45a2116662842f9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2037d580ee8706af45a2116662842f9d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_10_FLEXIO1_IO02</b>&#160;&#160;&#160;0x401F8094U, 0x4U, 0, 0, 0x401F8144U</td></tr>
+<tr class="separator:ga2037d580ee8706af45a2116662842f9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5564ea52fd4ae598289a03ac18d52fbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5564ea52fd4ae598289a03ac18d52fbc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_10_GPIOMUX_IO10</b>&#160;&#160;&#160;0x401F8094U, 0x5U, 0, 0, 0x401F8144U</td></tr>
+<tr class="separator:ga5564ea52fd4ae598289a03ac18d52fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada590a96f4166dffab2b35a3a157a2e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gada590a96f4166dffab2b35a3a157a2e1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_10_SPDIF_IN</b>&#160;&#160;&#160;0x401F8094U, 0x6U, 0x401F8214U, 0x0U, 0x401F8144U</td></tr>
+<tr class="separator:gada590a96f4166dffab2b35a3a157a2e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ed04586da58cd7f79baa1e1d44eef0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3ed04586da58cd7f79baa1e1d44eef0d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_09_LPUART1_RXD</b>&#160;&#160;&#160;0x401F8098U, 0x0U, 0x401F81F0U, 0x1U, 0x401F8148U</td></tr>
+<tr class="separator:ga3ed04586da58cd7f79baa1e1d44eef0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace4bec58ff9415b608833ef9e92463b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gace4bec58ff9415b608833ef9e92463b8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_09_WDOG1_B</b>&#160;&#160;&#160;0x401F8098U, 0x1U, 0, 0, 0x401F8148U</td></tr>
+<tr class="separator:gace4bec58ff9415b608833ef9e92463b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7efeeb7ea5a1692aadbec2801d3c80f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab7efeeb7ea5a1692aadbec2801d3c80f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_09_FLEXSPI_A_SS1_B</b>&#160;&#160;&#160;0x401F8098U, 0x2U, 0, 0, 0x401F8148U</td></tr>
+<tr class="separator:gab7efeeb7ea5a1692aadbec2801d3c80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a239aa8e92ba3270680de2083761353"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0a239aa8e92ba3270680de2083761353"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_09_LPI2C2_SDA</b>&#160;&#160;&#160;0x401F8098U, 0x3U, 0x401F81CCU, 0x3U, 0x401F8148U</td></tr>
+<tr class="separator:ga0a239aa8e92ba3270680de2083761353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga059069d54f810d2ea184716f5e87c64c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga059069d54f810d2ea184716f5e87c64c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_09_FLEXIO1_IO01</b>&#160;&#160;&#160;0x401F8098U, 0x4U, 0, 0, 0x401F8148U</td></tr>
+<tr class="separator:ga059069d54f810d2ea184716f5e87c64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa01fd79cb5e6e79629461b6cb4bfaec0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa01fd79cb5e6e79629461b6cb4bfaec0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_09_GPIOMUX_IO09</b>&#160;&#160;&#160;0x401F8098U, 0x5U, 0, 0, 0x401F8148U</td></tr>
+<tr class="separator:gaa01fd79cb5e6e79629461b6cb4bfaec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c9acf1e7b7e27be94f81199b55ba59b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3c9acf1e7b7e27be94f81199b55ba59b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_09_SPDIF_SR_CLK</b>&#160;&#160;&#160;0x401F8098U, 0x6U, 0, 0, 0x401F8148U</td></tr>
+<tr class="separator:ga3c9acf1e7b7e27be94f81199b55ba59b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec86d487ae066c8b2bdb31e21f7d7ab3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaec86d487ae066c8b2bdb31e21f7d7ab3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_08_SAI1_MCLK</b>&#160;&#160;&#160;0x401F809CU, 0x0U, 0, 0, 0x401F814CU</td></tr>
+<tr class="separator:gaec86d487ae066c8b2bdb31e21f7d7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5babfa426b482c159ce9b6cbc5d80614"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5babfa426b482c159ce9b6cbc5d80614"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_08_GPT1_CLK</b>&#160;&#160;&#160;0x401F809CU, 0x1U, 0, 0, 0x401F814CU</td></tr>
+<tr class="separator:ga5babfa426b482c159ce9b6cbc5d80614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga728cde86798089556dd7dd3bffb4862c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga728cde86798089556dd7dd3bffb4862c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_08_FLEXPWM1_PWM3_A</b>&#160;&#160;&#160;0x401F809CU, 0x2U, 0x401F8180U, 0x1U, 0x401F814CU</td></tr>
+<tr class="separator:ga728cde86798089556dd7dd3bffb4862c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96ce41f51844a1039101569ff4046b9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga96ce41f51844a1039101569ff4046b9b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_08_LPUART3_TXD</b>&#160;&#160;&#160;0x401F809CU, 0x3U, 0x401F8204U, 0x2U, 0x401F814CU</td></tr>
+<tr class="separator:ga96ce41f51844a1039101569ff4046b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad910dd9a55d0c46c8414469fda7d2c6b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad910dd9a55d0c46c8414469fda7d2c6b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_08_FLEXIO1_IO00</b>&#160;&#160;&#160;0x401F809CU, 0x4U, 0, 0, 0x401F814CU</td></tr>
+<tr class="separator:gad910dd9a55d0c46c8414469fda7d2c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5f8b4a7e8c8ff34ab19967f487a11d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae5f8b4a7e8c8ff34ab19967f487a11d9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_08_GPIOMUX_IO08</b>&#160;&#160;&#160;0x401F809CU, 0x5U, 0, 0, 0x401F814CU</td></tr>
+<tr class="separator:gae5f8b4a7e8c8ff34ab19967f487a11d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab37708171a8bf19c90ed9383170cad91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab37708171a8bf19c90ed9383170cad91"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_08_LPUART1_CTS_B</b>&#160;&#160;&#160;0x401F809CU, 0x6U, 0, 0, 0x401F814CU</td></tr>
+<tr class="separator:gab37708171a8bf19c90ed9383170cad91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga930f3981e213a223022b84e605918666"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga930f3981e213a223022b84e605918666"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_07_SAI1_TX_SYNC</b>&#160;&#160;&#160;0x401F80A0U, 0x0U, 0, 0, 0x401F8150U</td></tr>
+<tr class="separator:ga930f3981e213a223022b84e605918666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94b2d77c6311a3bb026f5d4b917f84d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga94b2d77c6311a3bb026f5d4b917f84d7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_07_GPT1_COMPARE1</b>&#160;&#160;&#160;0x401F80A0U, 0x1U, 0, 0, 0x401F8150U</td></tr>
+<tr class="separator:ga94b2d77c6311a3bb026f5d4b917f84d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8fba9e45c5ed117bfea4f33a95964ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae8fba9e45c5ed117bfea4f33a95964ee"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_07_FLEXPWM1_PWM3_B</b>&#160;&#160;&#160;0x401F80A0U, 0x2U, 0x401F8190U, 0x1U, 0x401F8150U</td></tr>
+<tr class="separator:gae8fba9e45c5ed117bfea4f33a95964ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3c54dcb12248bc3cb5680c51e06623a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad3c54dcb12248bc3cb5680c51e06623a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_07_LPUART3_RXD</b>&#160;&#160;&#160;0x401F80A0U, 0x3U, 0x401F8200U, 0x2U, 0x401F8150U</td></tr>
+<tr class="separator:gad3c54dcb12248bc3cb5680c51e06623a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb4f0b4e96faceb28bb0c8924c492b05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadb4f0b4e96faceb28bb0c8924c492b05"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_07_SPDIF_LOCK</b>&#160;&#160;&#160;0x401F80A0U, 0x4U, 0, 0, 0x401F8150U</td></tr>
+<tr class="separator:gadb4f0b4e96faceb28bb0c8924c492b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48eff4644f0661766a609bee07b45d7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga48eff4644f0661766a609bee07b45d7d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_07_GPIOMUX_IO07</b>&#160;&#160;&#160;0x401F80A0U, 0x5U, 0, 0, 0x401F8150U</td></tr>
+<tr class="separator:ga48eff4644f0661766a609bee07b45d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga346efc32ee5baa79bc5d093f8cc5601d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga346efc32ee5baa79bc5d093f8cc5601d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_07_LPUART1_RTS_B</b>&#160;&#160;&#160;0x401F80A0U, 0x6U, 0, 0, 0x401F8150U</td></tr>
+<tr class="separator:ga346efc32ee5baa79bc5d093f8cc5601d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36e97c84cf591ebed6fefb42fb866425"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga36e97c84cf591ebed6fefb42fb866425"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_06_SAI1_TX_BCLK</b>&#160;&#160;&#160;0x401F80A4U, 0x0U, 0, 0, 0x401F8154U</td></tr>
+<tr class="separator:ga36e97c84cf591ebed6fefb42fb866425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2106d7063756460319f4139e1ad7e60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab2106d7063756460319f4139e1ad7e60"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_06_GPT1_CAPTURE1</b>&#160;&#160;&#160;0x401F80A4U, 0x1U, 0, 0, 0x401F8154U</td></tr>
+<tr class="separator:gab2106d7063756460319f4139e1ad7e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5584ba77f92fcd45dbae3c5616adb29a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5584ba77f92fcd45dbae3c5616adb29a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_06_FLEXPWM1_PWM2_A</b>&#160;&#160;&#160;0x401F80A4U, 0x2U, 0x401F817CU, 0x1U, 0x401F8154U</td></tr>
+<tr class="separator:ga5584ba77f92fcd45dbae3c5616adb29a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d4b176c468e2204b52754c8a7cd646d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1d4b176c468e2204b52754c8a7cd646d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_06_LPUART4_TXD</b>&#160;&#160;&#160;0x401F80A4U, 0x3U, 0x401F820CU, 0x1U, 0x401F8154U</td></tr>
+<tr class="separator:ga1d4b176c468e2204b52754c8a7cd646d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20cb08522a029c5a91c628d870f04c91"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga20cb08522a029c5a91c628d870f04c91"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_06_SPDIF_EXT_CLK</b>&#160;&#160;&#160;0x401F80A4U, 0x4U, 0x401F8218U, 0x1U, 0x401F8154U</td></tr>
+<tr class="separator:ga20cb08522a029c5a91c628d870f04c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga227e458bff28832308b0c3f093343cff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga227e458bff28832308b0c3f093343cff"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_06_GPIOMUX_IO06</b>&#160;&#160;&#160;0x401F80A4U, 0x5U, 0, 0, 0x401F8154U</td></tr>
+<tr class="separator:ga227e458bff28832308b0c3f093343cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad11ff3e58d1ec324c929602de83e66f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad11ff3e58d1ec324c929602de83e66f7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_05_SAI1_TX_DATA01</b>&#160;&#160;&#160;0x401F80A8U, 0x0U, 0, 0, 0x401F8158U</td></tr>
+<tr class="separator:gad11ff3e58d1ec324c929602de83e66f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac504e9b5fab7e23bb444acc219331d2a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac504e9b5fab7e23bb444acc219331d2a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_05_GPT1_COMPARE2</b>&#160;&#160;&#160;0x401F80A8U, 0x1U, 0, 0, 0x401F8158U</td></tr>
+<tr class="separator:gac504e9b5fab7e23bb444acc219331d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1707f96c829fd86f35b1fb4e6a3d77f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1707f96c829fd86f35b1fb4e6a3d77f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_05_FLEXPWM1_PWM2_B</b>&#160;&#160;&#160;0x401F80A8U, 0x2U, 0x401F818CU, 0x1U, 0x401F8158U</td></tr>
+<tr class="separator:gab1707f96c829fd86f35b1fb4e6a3d77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13cc2e278af6b2b4fc5686d3dbe82468"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga13cc2e278af6b2b4fc5686d3dbe82468"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_05_LPUART4_RXD</b>&#160;&#160;&#160;0x401F80A8U, 0x3U, 0x401F8208U, 0x1U, 0x401F8158U</td></tr>
+<tr class="separator:ga13cc2e278af6b2b4fc5686d3dbe82468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga039c0923ce04f0ff932ec094c8389b92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga039c0923ce04f0ff932ec094c8389b92"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_05_SPDIF_OUT</b>&#160;&#160;&#160;0x401F80A8U, 0x4U, 0, 0, 0x401F8158U</td></tr>
+<tr class="separator:ga039c0923ce04f0ff932ec094c8389b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71f53ffad02894196585231966ac0633"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga71f53ffad02894196585231966ac0633"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_05_GPIOMUX_IO05</b>&#160;&#160;&#160;0x401F80A8U, 0x5U, 0, 0, 0x401F8158U</td></tr>
+<tr class="separator:ga71f53ffad02894196585231966ac0633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab65702bbf456853e2fb9bb587869ba9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab65702bbf456853e2fb9bb587869ba9c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_04_SAI1_TX_DATA00</b>&#160;&#160;&#160;0x401F80ACU, 0x0U, 0, 0, 0x401F815CU</td></tr>
+<tr class="separator:gab65702bbf456853e2fb9bb587869ba9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a070f5dd2bed45b93289e411113b1ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a070f5dd2bed45b93289e411113b1ea"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_04_GPT1_CAPTURE2</b>&#160;&#160;&#160;0x401F80ACU, 0x1U, 0, 0, 0x401F815CU</td></tr>
+<tr class="separator:ga5a070f5dd2bed45b93289e411113b1ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0131ad602d36f82e10d3252ae48b4a92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0131ad602d36f82e10d3252ae48b4a92"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_04_FLEXPWM1_PWM1_A</b>&#160;&#160;&#160;0x401F80ACU, 0x2U, 0x401F8178U, 0x1U, 0x401F815CU</td></tr>
+<tr class="separator:ga0131ad602d36f82e10d3252ae48b4a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a19430a267e6eec9aaef990196cd836"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6a19430a267e6eec9aaef990196cd836"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_04_SPDIF_IN</b>&#160;&#160;&#160;0x401F80ACU, 0x4U, 0x401F8214U, 0x1U, 0x401F815CU</td></tr>
+<tr class="separator:ga6a19430a267e6eec9aaef990196cd836"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga405c0a836d3fa0068bbe054c95c6a710"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga405c0a836d3fa0068bbe054c95c6a710"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_04_GPIOMUX_IO04</b>&#160;&#160;&#160;0x401F80ACU, 0x5U, 0, 0, 0x401F815CU</td></tr>
+<tr class="separator:ga405c0a836d3fa0068bbe054c95c6a710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5288344b1dba388607f48d452a9e42f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5288344b1dba388607f48d452a9e42f7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_03_SAI1_RX_DATA00</b>&#160;&#160;&#160;0x401F80B0U, 0x0U, 0, 0, 0x401F8160U</td></tr>
+<tr class="separator:ga5288344b1dba388607f48d452a9e42f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe0b783bc8e4c44fc1cd30f56f533561"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafe0b783bc8e4c44fc1cd30f56f533561"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_03_GPT1_COMPARE3</b>&#160;&#160;&#160;0x401F80B0U, 0x1U, 0, 0, 0x401F8160U</td></tr>
+<tr class="separator:gafe0b783bc8e4c44fc1cd30f56f533561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad87b5d5727704a86e126cddfa5a67d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaad87b5d5727704a86e126cddfa5a67d1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_03_FLEXPWM1_PWM1_B</b>&#160;&#160;&#160;0x401F80B0U, 0x2U, 0x401F8188U, 0x1U, 0x401F8160U</td></tr>
+<tr class="separator:gaad87b5d5727704a86e126cddfa5a67d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a4040d6151ca288d001b6be8dc0ba3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9a4040d6151ca288d001b6be8dc0ba3e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_03_SPDIF_SR_CLK</b>&#160;&#160;&#160;0x401F80B0U, 0x4U, 0, 0, 0x401F8160U</td></tr>
+<tr class="separator:ga9a4040d6151ca288d001b6be8dc0ba3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4782ca49649edb8528d843627722abb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac4782ca49649edb8528d843627722abb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_03_GPIOMUX_IO03</b>&#160;&#160;&#160;0x401F80B0U, 0x5U, 0, 0, 0x401F8160U</td></tr>
+<tr class="separator:gac4782ca49649edb8528d843627722abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00ff69d5dbcb584a8832d9071d515ce1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga00ff69d5dbcb584a8832d9071d515ce1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_02_SAI1_RX_SYNC</b>&#160;&#160;&#160;0x401F80B4U, 0x0U, 0, 0, 0x401F8164U</td></tr>
+<tr class="separator:ga00ff69d5dbcb584a8832d9071d515ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d3a5a402bdd744f0d3c2789c73ef6f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6d3a5a402bdd744f0d3c2789c73ef6f4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_02_WDOG2_B</b>&#160;&#160;&#160;0x401F80B4U, 0x1U, 0, 0, 0x401F8164U</td></tr>
+<tr class="separator:ga6d3a5a402bdd744f0d3c2789c73ef6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22f3efedd8496041d1d0b30f6297b0e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga22f3efedd8496041d1d0b30f6297b0e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_02_FLEXPWM1_PWM0_A</b>&#160;&#160;&#160;0x401F80B4U, 0x2U, 0x401F8174U, 0x1U, 0x401F8164U</td></tr>
+<tr class="separator:ga22f3efedd8496041d1d0b30f6297b0e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93a5bb71b43c47d816df96f35cc88014"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga93a5bb71b43c47d816df96f35cc88014"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_02_LPI2C1_SCL</b>&#160;&#160;&#160;0x401F80B4U, 0x3U, 0x401F81C0U, 0x3U, 0x401F8164U</td></tr>
+<tr class="separator:ga93a5bb71b43c47d816df96f35cc88014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b74b41cab965e53e83ef3fca43db8e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9b74b41cab965e53e83ef3fca43db8e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_02_KPP_COL03</b>&#160;&#160;&#160;0x401F80B4U, 0x4U, 0x401F81A8U, 0x1U, 0x401F8164U</td></tr>
+<tr class="separator:ga9b74b41cab965e53e83ef3fca43db8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadac541bab3c89f626ad309d57ec8b063"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadac541bab3c89f626ad309d57ec8b063"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_02_GPIOMUX_IO02</b>&#160;&#160;&#160;0x401F80B4U, 0x5U, 0, 0, 0x401F8164U</td></tr>
+<tr class="separator:gadac541bab3c89f626ad309d57ec8b063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4913691d6c82d98e1ae32b45621b2ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab4913691d6c82d98e1ae32b45621b2ee"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_01_SAI1_RX_BCLK</b>&#160;&#160;&#160;0x401F80B8U, 0x0U, 0, 0, 0x401F8168U</td></tr>
+<tr class="separator:gab4913691d6c82d98e1ae32b45621b2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0498943fb78092452bf97d335c6eed70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0498943fb78092452bf97d335c6eed70"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_01_WDOG1_ANY</b>&#160;&#160;&#160;0x401F80B8U, 0x1U, 0, 0, 0x401F8168U</td></tr>
+<tr class="separator:ga0498943fb78092452bf97d335c6eed70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30fd9a19d90a81a8923788381016febc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga30fd9a19d90a81a8923788381016febc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_01_FLEXPWM1_PWM0_B</b>&#160;&#160;&#160;0x401F80B8U, 0x2U, 0x401F8184U, 0x1U, 0x401F8168U</td></tr>
+<tr class="separator:ga30fd9a19d90a81a8923788381016febc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddc354722d47bc559316ea5a4a457271"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaddc354722d47bc559316ea5a4a457271"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_01_LPI2C1_SDA</b>&#160;&#160;&#160;0x401F80B8U, 0x3U, 0x401F81C4U, 0x3U, 0x401F8168U</td></tr>
+<tr class="separator:gaddc354722d47bc559316ea5a4a457271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a03fd97748b5414302cd7e329bea064"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a03fd97748b5414302cd7e329bea064"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_01_KPP_ROW03</b>&#160;&#160;&#160;0x401F80B8U, 0x4U, 0x401F81B8U, 0x1U, 0x401F8168U</td></tr>
+<tr class="separator:ga2a03fd97748b5414302cd7e329bea064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c8464bb8c1b35bf85ab1d2d208ab165"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7c8464bb8c1b35bf85ab1d2d208ab165"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_01_GPIOMUX_IO01</b>&#160;&#160;&#160;0x401F80B8U, 0x5U, 0, 0, 0x401F8168U</td></tr>
+<tr class="separator:ga7c8464bb8c1b35bf85ab1d2d208ab165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93079ef2cbc0a476738c15bbd7638afd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga93079ef2cbc0a476738c15bbd7638afd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_00_FLEXSPI_B_DQS</b>&#160;&#160;&#160;0x401F80BCU, 0x0U, 0x401F8198U, 0x1U, 0x401F816CU</td></tr>
+<tr class="separator:ga93079ef2cbc0a476738c15bbd7638afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9bb62bc92be80c575088044c2807d153"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9bb62bc92be80c575088044c2807d153"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_00_SAI3_MCLK</b>&#160;&#160;&#160;0x401F80BCU, 0x1U, 0, 0, 0x401F816CU</td></tr>
+<tr class="separator:ga9bb62bc92be80c575088044c2807d153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd9e7f6e4950d02d8f550f908a150113"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacd9e7f6e4950d02d8f550f908a150113"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_00_LPSPI2_PCS3</b>&#160;&#160;&#160;0x401F80BCU, 0x2U, 0, 0, 0x401F816CU</td></tr>
+<tr class="separator:gacd9e7f6e4950d02d8f550f908a150113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0569f5ed1b0491116863c664a701dd02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0569f5ed1b0491116863c664a701dd02"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_00_LPSPI1_PCS3</b>&#160;&#160;&#160;0x401F80BCU, 0x3U, 0, 0, 0x401F816CU</td></tr>
+<tr class="separator:ga0569f5ed1b0491116863c664a701dd02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga378038e6b0fe3639178dfa6537644f44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga378038e6b0fe3639178dfa6537644f44"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_00_PIT_TRIGGER00</b>&#160;&#160;&#160;0x401F80BCU, 0x4U, 0, 0, 0x401F816CU</td></tr>
+<tr class="separator:ga378038e6b0fe3639178dfa6537644f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga184939ace8cdf6c39e6ed7aadbc6ca27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga184939ace8cdf6c39e6ed7aadbc6ca27"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_GPIO_00_GPIOMUX_IO00</b>&#160;&#160;&#160;0x401F80BCU, 0x5U, 0, 0, 0x401F816CU</td></tr>
+<tr class="separator:ga184939ace8cdf6c39e6ed7aadbc6ca27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga439002b6a67b8e08ac7061ac94fb83f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga439002b6a67b8e08ac7061ac94fb83f0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_SNVS_PMIC_ON_REQ_SNVS_LP_PMIC_ON_REQ</b>&#160;&#160;&#160;0x400A8000U, 0x0U, 0, 0, 0x400A8010U</td></tr>
+<tr class="separator:ga439002b6a67b8e08ac7061ac94fb83f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25964a86c98dece711bcf2413b0e734a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga25964a86c98dece711bcf2413b0e734a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_SNVS_PMIC_ON_REQ_GPIO5_IO00</b>&#160;&#160;&#160;0x400A8000U, 0x5U, 0, 0, 0x400A8010U</td></tr>
+<tr class="separator:ga25964a86c98dece711bcf2413b0e734a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb942f6737f76ec34f13cd5395dfc9d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafb942f6737f76ec34f13cd5395dfc9d4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_SNVS_TEST_MODE</b>&#160;&#160;&#160;0, 0, 0, 0, 0x400A8004U</td></tr>
+<tr class="separator:gafb942f6737f76ec34f13cd5395dfc9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae3e04c7367d0aa23d5ccb9cffe51398c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae3e04c7367d0aa23d5ccb9cffe51398c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_SNVS_POR_B</b>&#160;&#160;&#160;0, 0, 0, 0, 0x400A8008U</td></tr>
+<tr class="separator:gae3e04c7367d0aa23d5ccb9cffe51398c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac78420e6e69720b615512fec0c799021"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac78420e6e69720b615512fec0c799021"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IOMUXC_SNVS_ONOFF</b>&#160;&#160;&#160;0, 0, 0, 0, 0x400A800CU</td></tr>
+<tr class="separator:gac78420e6e69720b615512fec0c799021"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMAMUX Channel Operation</h2></td></tr>
-<tr class="memitem:gaecac68802d961c31a06389caa97387f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:gaecac68802d961c31a06389caa97387f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX channel.  <a href="#gaecac68802d961c31a06389caa97387f5">More...</a><br/></td></tr>
-<tr class="separator:gaecac68802d961c31a06389caa97387f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga4d68cf7796e4a6a9cd0c4289712ca120">DMAMUX_DisableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX channel.  <a href="#ga4d68cf7796e4a6a9cd0c4289712ca120">More...</a><br/></td></tr>
-<tr class="separator:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97083a74f4af599de628cdd8864d6676"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga97083a74f4af599de628cdd8864d6676">DMAMUX_SetSource</a> (DMAMUX_Type *base, uint32_t channel, uint32_t source)</td></tr>
-<tr class="memdesc:ga97083a74f4af599de628cdd8864d6676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the DMAMUX channel source.  <a href="#ga97083a74f4af599de628cdd8864d6676">More...</a><br/></td></tr>
-<tr class="separator:ga97083a74f4af599de628cdd8864d6676"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b873510e45bcc998b5cede12ed359d0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga9b873510e45bcc998b5cede12ed359d0">DMAMUX_EnablePeriodTrigger</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga9b873510e45bcc998b5cede12ed359d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX period trigger.  <a href="#ga9b873510e45bcc998b5cede12ed359d0">More...</a><br/></td></tr>
-<tr class="separator:ga9b873510e45bcc998b5cede12ed359d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga7a632ca1a6bd05a936a4f4ba1295e158">DMAMUX_DisablePeriodTrigger</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX period trigger.  <a href="#ga7a632ca1a6bd05a936a4f4ba1295e158">More...</a><br/></td></tr>
-<tr class="separator:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga70912895b0619dcfb911663501cb03f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga70912895b0619dcfb911663501cb03f5">DMAMUX_EnableAlwaysOn</a> (DMAMUX_Type *base, uint32_t channel, bool enable)</td></tr>
-<tr class="memdesc:ga70912895b0619dcfb911663501cb03f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMA channel to be always ON.  <a href="#ga70912895b0619dcfb911663501cb03f5">More...</a><br/></td></tr>
-<tr class="separator:ga70912895b0619dcfb911663501cb03f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Configuration</h2></td></tr>
+<tr class="memitem:gaff65bf655b0d541b868b4a9d15415ce8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gaff65bf655b0d541b868b4a9d15415ce8">IOMUXC_SetPinMux</a> (uint32_t muxRegister, uint32_t muxMode, uint32_t inputRegister, uint32_t inputDaisy, uint32_t configRegister, uint32_t inputOnfield)</td></tr>
+<tr class="memdesc:gaff65bf655b0d541b868b4a9d15415ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IOMUXC pin mux mode.  <a href="#gaff65bf655b0d541b868b4a9d15415ce8">More...</a><br/></td></tr>
+<tr class="separator:gaff65bf655b0d541b868b4a9d15415ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7a6f9e42bd00d9e80457b53712748de"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gab7a6f9e42bd00d9e80457b53712748de">IOMUXC_SetPinConfig</a> (uint32_t muxRegister, uint32_t muxMode, uint32_t inputRegister, uint32_t inputDaisy, uint32_t configRegister, uint32_t configValue)</td></tr>
+<tr class="memdesc:gab7a6f9e42bd00d9e80457b53712748de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IOMUXC pin configuration.  <a href="#gab7a6f9e42bd00d9e80457b53712748de">More...</a><br/></td></tr>
+<tr class="separator:gab7a6f9e42bd00d9e80457b53712748de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeba2c5aab7783f6458d02bd78ffc8cf9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gaeba2c5aab7783f6458d02bd78ffc8cf9">IOMUXC_EnableMode</a> (IOMUXC_GPR_Type *base, uint32_t mode, bool enable)</td></tr>
+<tr class="memdesc:gaeba2c5aab7783f6458d02bd78ffc8cf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets IOMUXC general configuration for some mode.  <a href="#gaeba2c5aab7783f6458d02bd78ffc8cf9">More...</a><br/></td></tr>
+<tr class="separator:gaeba2c5aab7783f6458d02bd78ffc8cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga540a7b7a45e2c47b277acc52b6fe045b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga540a7b7a45e2c47b277acc52b6fe045b">IOMUXC_SetSaiMClkClockSource</a> (IOMUXC_GPR_Type *base, iomuxc_gpr_saimclk_t mclk, uint8_t clkSrc)</td></tr>
+<tr class="memdesc:ga540a7b7a45e2c47b277acc52b6fe045b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets IOMUXC general configuration for SAI MCLK selection.  <a href="#ga540a7b7a45e2c47b277acc52b6fe045b">More...</a><br/></td></tr>
+<tr class="separator:ga540a7b7a45e2c47b277acc52b6fe045b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab11fd4c56268fce42153f1a9b310f6a5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gab11fd4c56268fce42153f1a9b310f6a5">IOMUXC_MQSEnterSoftwareReset</a> (IOMUXC_GPR_Type *base, bool enable)</td></tr>
+<tr class="memdesc:gab11fd4c56268fce42153f1a9b310f6a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters or exit MQS software reset.  <a href="#gab11fd4c56268fce42153f1a9b310f6a5">More...</a><br/></td></tr>
+<tr class="separator:gab11fd4c56268fce42153f1a9b310f6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga252dddec1e615b8efc9a1771e5de0f3c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ga252dddec1e615b8efc9a1771e5de0f3c">IOMUXC_MQSEnable</a> (IOMUXC_GPR_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga252dddec1e615b8efc9a1771e5de0f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables MQS.  <a href="#ga252dddec1e615b8efc9a1771e5de0f3c">More...</a><br/></td></tr>
+<tr class="separator:ga252dddec1e615b8efc9a1771e5de0f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafab34e7bfa5e484026e28addd0daa418"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#gafab34e7bfa5e484026e28addd0daa418">IOMUXC_MQSConfig</a> (IOMUXC_GPR_Type *base, iomuxc_mqs_pwm_oversample_rate_t rate, uint8_t divider)</td></tr>
+<tr class="memdesc:gafab34e7bfa5e484026e28addd0daa418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure MQS PWM oversampling rate compared with mclk and divider ratio control for mclk from hmclk.  <a href="#gafab34e7bfa5e484026e28addd0daa418">More...</a><br/></td></tr>
+<tr class="separator:gafab34e7bfa5e484026e28addd0daa418"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga52b927e4f978ddf42faf0acf6de3df57"></a>
+<a class="anchor" id="gaa82996f29b9fa7947fdc478b7a874757"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_DMAMUX_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00208.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td>
+          <td class="memname">#define FSL_IOMUXC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -160,53 +1055,7 @@ DMAMUX Channel Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga850545ac61a004df8ca312db2ca9db73"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DMAMUX_Init </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function ungates the DMAMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab663257d094b9b7b6fa1b894fbf8000b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DMAMUX_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the DMAMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaecac68802d961c31a06389caa97387f5"></a>
+<a class="anchor" id="gaff65bf655b0d541b868b4a9d15415ce8"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -214,16 +1063,40 @@ DMAMUX Channel Operation</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void DMAMUX_EnableChannel </td>
+          <td class="memname">static void IOMUXC_SetPinMux </td>
           <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>muxRegister</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
+          <td class="paramname"><em>muxMode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>inputRegister</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>inputDaisy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>configRegister</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>inputOnfield</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -237,18 +1110,28 @@ DMAMUX Channel Operation</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function enables the DMAMUX channel.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<dl class="section note"><dt>Note</dt><dd>The first five parameters can be filled with the pin function ID macros.</dd></dl>
+<p>This is an example to set the PTA6 as the lpuart0_tx: </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00211.html#gaff65bf655b0d541b868b4a9d15415ce8">IOMUXC_SetPinMux</a>(IOMUXC_PTA6_LPUART0_TX, 0);</div>
+<div class="line">* </div>
+</div><!-- fragment --><p>This is an example to set the PTA0 as GPIOA0: </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00211.html#gaff65bf655b0d541b868b4a9d15415ce8">IOMUXC_SetPinMux</a>(IOMUXC_PTA0_GPIOA0, 0);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+    <tr><td class="paramname">muxRegister</td><td>The pin mux register. </td></tr>
+    <tr><td class="paramname">muxMode</td><td>The pin mux mode. </td></tr>
+    <tr><td class="paramname">inputRegister</td><td>The select input register. </td></tr>
+    <tr><td class="paramname">inputDaisy</td><td>The input daisy. </td></tr>
+    <tr><td class="paramname">configRegister</td><td>The config register. </td></tr>
+    <tr><td class="paramname">inputOnfield</td><td>Software input on field. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4d68cf7796e4a6a9cd0c4289712ca120"></a>
+<a class="anchor" id="gab7a6f9e42bd00d9e80457b53712748de"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -256,16 +1139,40 @@ DMAMUX Channel Operation</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void DMAMUX_DisableChannel </td>
+          <td class="memname">static void IOMUXC_SetPinConfig </td>
           <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>muxRegister</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
+          <td class="paramname"><em>muxMode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>inputRegister</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>inputDaisy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>configRegister</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>configValue</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -279,19 +1186,25 @@ DMAMUX Channel Operation</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function disables the DMAMUX channel.</p>
-<dl class="section note"><dt>Note</dt><dd>The user must disable the DMAMUX channel before configuring it. </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<dl class="section note"><dt>Note</dt><dd>The previous five parameters can be filled with the pin function ID macros.</dd></dl>
+<p>This is an example to set pin configuration for IOMUXC_PTA3_LPI2C0_SCLS: </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00211.html#gab7a6f9e42bd00d9e80457b53712748de">IOMUXC_SetPinConfig</a>(IOMUXC_PTA3_LPI2C0_SCLS,IOMUXC_SW_PAD_CTL_PAD_PUS_MASK|IOMUXC_SW_PAD_CTL_PAD_PUS(2U))</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+    <tr><td class="paramname">muxRegister</td><td>The pin mux register. </td></tr>
+    <tr><td class="paramname">muxMode</td><td>The pin mux mode. </td></tr>
+    <tr><td class="paramname">inputRegister</td><td>The select input register. </td></tr>
+    <tr><td class="paramname">inputDaisy</td><td>The input daisy. </td></tr>
+    <tr><td class="paramname">configRegister</td><td>The config register. </td></tr>
+    <tr><td class="paramname">configValue</td><td>The pin config value. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga97083a74f4af599de628cdd8864d6676"></a>
+<a class="anchor" id="gaeba2c5aab7783f6458d02bd78ffc8cf9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -299,148 +1212,16 @@ DMAMUX Channel Operation</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void DMAMUX_SetSource </td>
+          <td class="memname">static void IOMUXC_EnableMode </td>
           <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramtype">IOMUXC_GPR_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>source</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-    <tr><td class="paramname">source</td><td>Channel source, which is used to trigger the DMA transfer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9b873510e45bcc998b5cede12ed359d0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_EnablePeriodTrigger </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the DMAMUX period trigger feature.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7a632ca1a6bd05a936a4f4ba1295e158"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_DisablePeriodTrigger </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function disables the DMAMUX period trigger.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga70912895b0619dcfb911663501cb03f5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_EnableAlwaysOn </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
+          <td class="paramname"><em>mode</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -460,12 +1241,189 @@ DMAMUX Channel Operation</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function enables the DMAMUX channel always ON feature.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-    <tr><td class="paramname">enable</td><td>Switcher of the always ON feature. "true" means enabled, "false" means disabled. </td></tr>
+    <tr><td class="paramname">base</td><td>The IOMUXC GPR base address. </td></tr>
+    <tr><td class="paramname">mode</td><td>The mode for setting. the mode is the logical OR of "iomuxc_gpr_mode" </td></tr>
+    <tr><td class="paramname">enable</td><td>True enable false disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga540a7b7a45e2c47b277acc52b6fe045b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void IOMUXC_SetSaiMClkClockSource </td>
+          <td>(</td>
+          <td class="paramtype">IOMUXC_GPR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">iomuxc_gpr_saimclk_t&#160;</td>
+          <td class="paramname"><em>mclk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>clkSrc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The IOMUXC GPR base address. </td></tr>
+    <tr><td class="paramname">mclk</td><td>The SAI MCLK. </td></tr>
+    <tr><td class="paramname">clkSrc</td><td>The clock source. Take refer to register setting details for the clock source in RM. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab11fd4c56268fce42153f1a9b310f6a5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void IOMUXC_MQSEnterSoftwareReset </td>
+          <td>(</td>
+          <td class="paramtype">IOMUXC_GPR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The IOMUXC GPR base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enter or exit MQS software reset. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga252dddec1e615b8efc9a1771e5de0f3c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void IOMUXC_MQSEnable </td>
+          <td>(</td>
+          <td class="paramtype">IOMUXC_GPR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The IOMUXC GPR base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable or disable the MQS. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gafab34e7bfa5e484026e28addd0daa418"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void IOMUXC_MQSConfig </td>
+          <td>(</td>
+          <td class="paramtype">IOMUXC_GPR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">iomuxc_mqs_pwm_oversample_rate_t&#160;</td>
+          <td class="paramname"><em>rate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>divider</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The IOMUXC GPR base address. </td></tr>
+    <tr><td class="paramname">rate</td><td>The MQS PWM oversampling rate, refer to "iomuxc_mqs_pwm_oversample_rate_t". </td></tr>
+    <tr><td class="paramname">divider</td><td>The divider ratio control for mclk from hmclk. mclk freq = 1 /(divider + 1) * hmclk freq. </td></tr>
   </table>
   </dd>
 </dl>

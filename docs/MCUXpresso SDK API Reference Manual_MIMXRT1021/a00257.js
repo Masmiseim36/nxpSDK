@@ -1,10 +1,20 @@
 var a00257 =
 [
-    [ "FlexIO Camera Driver", "a00025.html", "a00025" ],
-    [ "FlexIO Driver", "a00027.html", "a00027" ],
-    [ "FlexIO I2C Master Driver", "a00028.html", "a00028" ],
-    [ "FlexIO I2S Driver", "a00029.html", "a00029" ],
-    [ "FlexIO MCU Interface LCD Driver", "a00031.html", "a00031" ],
-    [ "FlexIO SPI Driver", "a00033.html", "a00033" ],
-    [ "FlexIO UART Driver", "a00035.html", "a00035" ]
+    [ "FSL_CACHE_DRIVER_VERSION", "a00257.html#gac954b8be2bb59a983a9594c59e4b4fa5", null ],
+    [ "L1CACHE_EnableICache", "a00257.html#gaea07bb3879fa96b03f1ecaa6bf821c74", null ],
+    [ "L1CACHE_DisableICache", "a00257.html#gafa6d1a14a0499342890eee0e104c8d96", null ],
+    [ "L1CACHE_InvalidateICache", "a00257.html#gabce0ccbe1684fef7eff231f3704025b6", null ],
+    [ "L1CACHE_InvalidateICacheByRange", "a00257.html#gaf66ed6d9a7b881ef98707861484d7530", null ],
+    [ "L1CACHE_EnableDCache", "a00257.html#ga52d071c691c4ce9ead828e086f07f457", null ],
+    [ "L1CACHE_DisableDCache", "a00257.html#gae6eb154e5afc3a877aad4155cb90bca9", null ],
+    [ "L1CACHE_InvalidateDCache", "a00257.html#gad6bb45d3f9feb8ed2a63b174d204f277", null ],
+    [ "L1CACHE_CleanDCache", "a00257.html#gab1dcfc930ee90724a807f69428a1f269", null ],
+    [ "L1CACHE_CleanInvalidateDCache", "a00257.html#ga49c6ba08328943022264442f6ce2c090", null ],
+    [ "L1CACHE_InvalidateDCacheByRange", "a00257.html#ga9baff800f4d60a09efc4e4ce309dd583", null ],
+    [ "L1CACHE_CleanDCacheByRange", "a00257.html#gad120776b1a7f2f3f21b2bf017dbab095", null ],
+    [ "L1CACHE_CleanInvalidateDCacheByRange", "a00257.html#ga4837708efaec2927416b268d75412361", null ],
+    [ "ICACHE_InvalidateByRange", "a00257.html#ga00cdccb5c53201a747f2a3e2009f43cc", null ],
+    [ "DCACHE_InvalidateByRange", "a00257.html#gab5c47d7193562d7a763b1bc1bd91b28c", null ],
+    [ "DCACHE_CleanByRange", "a00257.html#ga893959336987f85910fe98ab9f7f8648", null ],
+    [ "DCACHE_CleanInvalidateByRange", "a00257.html#gac20095b525889cf55c105658877c2c84", null ]
 ];

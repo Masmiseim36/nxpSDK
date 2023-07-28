@@ -94,6 +94,7 @@ void main_ftp_client_operations (void)
     UINT16 size;
     UINT16 hci_handle;
 
+    UCHAR *file_name_without_path;
     FTP_REQUEST_STRUCT req_info;
     FTP_HEADER_STRUCT name_info, body_info;
 
@@ -243,7 +244,7 @@ void main_ftp_client_operations (void)
             LOG_DEBUG("Enter FTP Server's BD Address: ");
 
             /* Read the BD_ADDR of Remote Device */
-            appl_get_bd_addr(ftpc_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(ftpc_bd_addr);
 
             retval = BT_hci_create_connection
                      (
@@ -394,9 +395,9 @@ void main_ftp_client_operations (void)
 
             LOG_DEBUG ("Enter the object name to be sent: ");
             scanf ("%s", file_name);
-            file_name_len = (UINT16)BT_str_n_len (file_name, sizeof(file_name)) + 1U /* NULL Char */;
+            file_name_len = (UINT16)BT_str_n_len (file_name, sizeof(file_name));
 
-            if (file_name_len > FTP_FILE_NAME_LEN)
+            if (file_name_len >= sizeof(file_name))
             {
                 LOG_DEBUG ("\nMax File Name Length Limit error\n");
                 break; /* return; */
@@ -410,6 +411,11 @@ void main_ftp_client_operations (void)
                 file_object
             );
 
+            file_name_without_path =
+                (BT_str_rchr(file_name, '\\') ? ((UCHAR *)BT_str_rchr(file_name, '\\') + 1) : file_name);
+            file_name_len = (UINT16)BT_str_n_len(file_name_without_path, (sizeof(file_name_without_path) - 1)) + 1U /* NULL Char */;
+            printf("file_name_without_path = %s, file_name_len = %d\n", file_name_without_path, file_name_len);
+
 #ifndef OBEX_ASCII_TO_FROM_UNICODE
             /**
              * Encode ASCII Text to UNICODE Text
@@ -418,7 +424,7 @@ void main_ftp_client_operations (void)
             j = 0U;
             for (i = 0U; i < file_name_len; i++)
             {
-                file_name_in_unicode_frmt[j + 1U] = file_name[i];
+                file_name_in_unicode_frmt[j + 1U] = file_name_without_path[i];
                 j += 2U;
             }
 
@@ -427,7 +433,7 @@ void main_ftp_client_operations (void)
             name_info.length = file_name_len * 2U;
 #else
             /* Fill name hdr values */
-            name_info.value = file_name;
+            name_info.value = file_name_without_path;
             name_info.length = file_name_len;
 #endif /* OBEX_ASCII_TO_FROM_UNICODE */
 
@@ -508,6 +514,14 @@ void main_ftp_client_operations (void)
             /* Update object size sent & remaining to send */
             sent += actual;
             remaining = fsize - sent;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
 
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
@@ -1067,14 +1081,6 @@ API_RESULT appl_ftp_client_callback
             /* Open file for dumping received GetFolderListing request data */
             if (NULL == ftp_rx_fp)
             {
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_vfops_create_object_name
-                (
-                    (UCHAR *)FTP_ROOT_FOLDER_BASE,
-                    file_name,
-                    file_object
-                );
-
                 retval = BT_fops_file_open
                          (
                              (UCHAR *)FOLDERLISTING_FILE,
@@ -1247,6 +1253,14 @@ API_RESULT appl_ftp_client_callback
             /* Update object size sent & remaining to send */
             sent += actual;
             remaining = fsize - sent;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
 
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))

@@ -42,9 +42,9 @@ static const char main_avdtp_options[] = " \n\
  \n\
 Your Option ? ";
 
-UCHAR appl_response_buf[100U];
-AVDTP_HANDLE appl_avdtp_handle [APPL_MAX_AVDTP_HANDLES];
-UCHAR appl_avdtp_codec_ie[4U] = {0x1AU, 0x2BU, 0x3CU, 0x4DU};
+DECL_STATIC UCHAR appl_response_buf[100U];
+DECL_STATIC AVDTP_HANDLE appl_avdtp_handle [APPL_MAX_AVDTP_HANDLES];
+DECL_STATIC UCHAR appl_avdtp_codec_ie[4U] = {0x1AU, 0x2BU, 0x3CU, 0x4DU};
 
 
 void appl_avdtp_init_handles ( void )
@@ -115,7 +115,7 @@ void appl_avdtp_set_handle_params ( void )
     if (1U == read_val)
     {
         LOG_DEBUG("Enter BD_ADDR = ");
-        appl_get_bd_addr(bd_addr);
+        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
         AVDTP_SET_HANDLE_BD_ADDR(appl_avdtp_handle[index], bd_addr);
     }
     LOG_DEBUG("\n");

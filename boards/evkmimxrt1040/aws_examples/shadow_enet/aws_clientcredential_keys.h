@@ -98,4 +98,19 @@
 #define keyCLIENT_PRIVATE_KEY_PEM NULL
 #endif
 
+/*
+ * @brief PEM-encoded public key used for code signature verification
+ *
+ * @todo If you are running OTA Amazon FreeRTOS demo projects, set this
+ * to the public key that will be used for code signature verification.
+ *
+ * @note Must include the PEM header and footer:
+ * "-----BEGIN PUBLIC KEY-----\n"\
+ * "...base64 data...\n"\
+ * "-----END PUBLIC KEY-----\n"
+ */
+#ifndef keyCODE_VERIFY_PUB_KEY_PEM
+#define keyCODE_VERIFY_PUB_KEY_PEM NULL
+#endif
+
 #endif /* AWS_CLIENT_CREDENTIAL_KEYS_H */

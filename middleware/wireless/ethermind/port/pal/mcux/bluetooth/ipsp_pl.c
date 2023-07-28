@@ -24,9 +24,10 @@
 static struct netif ipsp_netif;
 
 err_t ipsp_read_pl (struct netif *netif, struct pbuf *p);
-static void (* ipsp_read)(UCHAR *data, UINT16 datalen);
+static void (* ipsp_read)(UCHAR *data, UINT16 datalen) = NULL;
 
 /* --------------------------------------------- Functions */
+#ifdef IPSP_HAVE_6LO_NIFACE
 void ipsp_init_pl
      (
          BT_DEVICE_ADDR * local_mac,
@@ -51,7 +52,10 @@ void ipsp_init_pl
 
     if (BT_TRUE == is_router)
     {
+      /*Since there is no Ethernet interface on the RW610 board, Just disable it for IPSP Profile*/
+#if !defined(RW610_SERIES) && !defined(RW612_SERIES)
         niface_setup();
+#endif
     }
 
     /* Add the NetIF to the LwIP */
@@ -86,7 +90,7 @@ void ipsp_init_pl
 
     return;
 }
-
+#endif
 void ipsp_start_pl (BT_DEVICE_ADDR * remote_mac)
 {
     /* Update Remote MAC to LwIP 6Lo */

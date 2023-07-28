@@ -66,6 +66,14 @@ typedef struct _fops_file_handle
 
 static void fops_display_file_info(FILINFO *fileInfo);
 static void fops_list_directory (CHAR *path);
+
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+static void EM_fops_file_flush_pending_write
+(
+    /* IN */  EM_fops_file_handle  file_handle
+);
+#endif
+
 #define fops_echo    printf
 
 /* ----------------------------------------- static Functions */
@@ -846,6 +854,10 @@ EM_RESULT EM_fops_file_read
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
 
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
+
     fhandle = (fops_file_handle_t *)file_handle;
     retval = EM_SUCCESS;
     ret = f_read((FIL *)&fhandle->fileHandle, buffer, buf_length, &actual);
@@ -891,6 +903,10 @@ EM_RESULT EM_fops_file_print
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
 
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
+
     va_start(parg, fmt);
     f_printf(file_handle, fmt, parg);
     va_end(parg);
@@ -929,6 +945,10 @@ EM_RESULT EM_fops_file_put
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
 
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
+
     (void) f_puts((TCHAR*)buffer, file_handle);
 
     return EM_SUCCESS;
@@ -966,6 +986,10 @@ EM_RESULT EM_fops_file_get
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
+
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
 
     buf = f_gets((TCHAR*)buffer, *buf_length, file_handle);
     retval = (NULL == buf) ? EM_FAILURE : EM_SUCCESS;
@@ -1011,6 +1035,10 @@ EM_RESULT EM_fops_file_get_formatted
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
+
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
 
     /* If length is Not NULL it is a string read */
     if (NULL != length)
@@ -1224,6 +1252,48 @@ EM_RESULT EM_fops_file_close
 
 
 /**
+ *  \fn EM_fops_file_sync
+ *
+ *  \brief To sync the bufferred data to disk
+ *
+ *  \param [in] file_name
+ *
+ *  \return EM_RESULT: EM_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+EM_RESULT EM_fops_file_sync
+           (
+               /* IN */  EM_fops_file_handle  file_handle
+           )
+{
+    fops_file_handle_t *fhandle;
+    FRESULT ret;
+    EM_RESULT retval;
+    
+    /* NULL Check */
+    if (NULL == file_handle)
+    {
+        return EM_FOPS_INVALID_PARAMETER_VALUE;
+    }
+
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
+
+    fhandle = (fops_file_handle_t *)file_handle;
+
+    retval = EM_SUCCESS;
+    ret = f_sync((FIL *)&fhandle->fileHandle);
+    
+    if (0 != ret)
+    {
+        retval = EM_FAILURE;
+    }
+    
+    return retval;
+}
+
+/**
  *  \fn EM_fops_object_delete
  *
  *  \brief To open file
@@ -1291,6 +1361,10 @@ EM_RESULT EM_fops_file_size
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
 
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
+
     fhandle = (fops_file_handle_t *)file_handle;
 
     *file_size = f_size((FIL *)&fhandle->fileHandle);
@@ -1328,6 +1402,10 @@ EM_RESULT EM_fops_file_seek
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
+
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+    EM_fops_file_flush_pending_write(file_handle);
+#endif
 
     fhandle = (fops_file_handle_t *)file_handle;
 
@@ -1680,7 +1758,7 @@ static void fops_idle(osa_task_param_t arg)
 {
     FRESULT ret;
     fops_file_handle_t *fhandle;
-    uint32_t regMask;
+    uint32_t regMask = 0U;
     osa_status_t osaRet;
     fops_file_write_buffer_node_t *node;
     uint8_t sync;

@@ -136,7 +136,7 @@ void main_ctn_cce_operations (void)
                 LOG_DEBUG("Enter CTN CSE's Bluetooth Device Address\n");
 
                 /* Read the BD_ADDR of Remote Device */
-                appl_get_bd_addr(ctnc_bd_addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(ctnc_bd_addr);
                 break;
 
             case 3:
@@ -222,6 +222,12 @@ void main_ctn_cce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 if (val == 1U)
                 {
@@ -369,6 +375,12 @@ void main_ctn_cce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
     #if 0
                 connect_info.bd_addr = bd_addr;
 
@@ -409,6 +421,12 @@ void main_ctn_cce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+               if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 LOG_DEBUG ("Disconnecting on CTN CCE Instance %d\n", handle);
                 retval = BT_ctn_cce_disconnect (&cas_instance[handle].instance.handle);
                 LOG_DEBUG ("Retval - 0x%04X\n", retval);
@@ -419,6 +437,12 @@ void main_ctn_cce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 LOG_DEBUG ("Closing on CTN CCE Instance %d\n", handle);
                 retval = BT_ctn_cce_transport_close (&cas_instance[handle].instance.handle);
@@ -431,6 +455,12 @@ void main_ctn_cce_operations (void)
                 LOG_DEBUG("Select Application Instance: ");
                 scanf("%d", &handle);
 
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 LOG_DEBUG("Closing on CTN CCE Instance %d\n", handle);
                 retval = BT_ctn_cce_ns_transport_close (&cas_instance[handle].instance.handle);
                 LOG_DEBUG("Retval - 0x%04X\n", retval);
@@ -441,6 +471,12 @@ void main_ctn_cce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 CTN_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
@@ -584,6 +620,12 @@ void main_ctn_cce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 CTN_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
                 /* Update request info */
@@ -671,6 +713,12 @@ void main_ctn_cce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 CTN_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
                 /* Update request info */
@@ -751,6 +799,12 @@ void main_ctn_cce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 CTN_INIT_HEADER_STRUCT(name_req);
                 CTN_INIT_HEADER_STRUCT(body_req);
@@ -854,16 +908,24 @@ void main_ctn_cce_operations (void)
                 actual = 0;
                 LOG_DEBUG ("Requesting to Push CTN Object...\n");
                 retval = BT_ctn_cce_push_object
-                            (
-                                &cas_instance[handle].instance.handle,
-                                &put_info,
-                                more,
-                                &actual
-                            );
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                         (
+                             &cas_instance[handle].instance.handle,
+                             &put_info,
+                             more,
+                             &actual
+                         );
+                LOG_DEBUG("Retval - 0x%04X\n", retval);
 
                 sent += actual;
                 remaining = fsize - sent;
+
+                /* Adjust the file read pointer to the actual bytes transmitted */
+                if (body_req.length != actual)
+                {
+                    printf("read length = %d, actual sent = %d\n", body_req.length, actual);
+                    printf("Adjusting the file read pointer\n");
+                    (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+                }
 
                 /* If operation has failed or completed, perform cleanup */
                 if ((API_SUCCESS != retval) || (0U == remaining))
@@ -887,16 +949,25 @@ void main_ctn_cce_operations (void)
             case 24: /* Forward CTN Object */
                 ctn_cce_print_appl_instances();
 
-                LOG_DEBUG ("Select Application Instance: ");
-                scanf ("%d", &handle);
+                printf ("Select Application Instance: ");
+                retval = appl_validate_params(&handle,1U,0U,CTN_CLIENT_NUM_INSTANCES - 1U);
+                if (API_SUCCESS != retval)
+                {
+                    break;
+                }
 
                 CTN_INIT_HEADER_STRUCT(name_req);
                 CTN_INIT_HEADER_STRUCT(description_req);
 
+                BT_mem_set(name, 0, sizeof(name));
                 /* TODO: See how to get this 16 gigit UNICODE input */
                 LOG_DEBUG ("Enter object handle to forward: ");
                 scanf ("%s", name);
-
+                retval = appl_validate_strparams(name,32U);
+                if (API_SUCCESS != retval)
+                {
+                    break;
+                }
                 /* Update Name info */
                 name_req.length = (UINT16)(BT_str_len(name) + 1U);
                 name_req.value = name;
@@ -923,6 +994,12 @@ void main_ctn_cce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 CTN_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
@@ -954,12 +1031,18 @@ void main_ctn_cce_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Requesting to Sync Account...\n");
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Requesting to Sync Account...\n");
                 retval = BT_ctn_cce_sync_account
-                            (
-                                &cas_instance[handle].instance.handle
-                            );
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                         (
+                             &cas_instance[handle].instance.handle
+                         );
+                printf ("Retval - 0x%04X\n", retval);
                 break;
 
             case 28:
@@ -968,6 +1051,12 @@ void main_ctn_cce_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (CTN_CLIENT_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 CTN_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
@@ -998,11 +1087,11 @@ void main_ctn_cce_operations (void)
 
                 LOG_DEBUG ("Requesting Notification Registration...\n");
                 retval = BT_ctn_cce_set_ntf_registration
-                            (
-                                &cas_instance[handle].instance.handle,
-                                &set_info
-                            );
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                         (
+                             &cas_instance[handle].instance.handle,
+                             &set_info
+                         );
+                printf ("Retval - 0x%04X\n", retval);
     #else
                 LOG_DEBUG ("CTN Notification NOT Enabled\n");
     #endif /* CTN_SUPPORT_NOTIFICATION */
@@ -1036,7 +1125,7 @@ void main_ctn_cce_operations (void)
             case 50:
                 LOG_DEBUG("Enter the path: ");
                 scanf("%s", path);
-                EM_fops_list_directory(path);
+                (void)BT_fops_list_directory(path);
                 break;
 
             default:
@@ -2008,6 +2097,14 @@ API_RESULT appl_ctn_cce_callback
 
             sent += actual;
             remaining = fsize - sent;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_req.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_req.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
 
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))

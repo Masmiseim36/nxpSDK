@@ -5,19 +5,12 @@
       <name>all</name>
       <member>
         <project>host_msd_command_bm</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>host_msd_command_bm</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>host_msd_command_bm</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
       <member>
         <project>host_msd_command_bm</project>
         <configuration>release</configuration>
@@ -35,6 +28,13 @@
       <member>
         <project>host_msd_command_bm</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>host_msd_command_bm</project>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

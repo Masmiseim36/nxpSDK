@@ -141,8 +141,8 @@ AudioSrcStreamErrorType audio_src_pcmrtos_deinit_device(ElementAudioSrc *audio_s
 
     dev_info->device_state = AUDIO_SRC_DEVICE_STATE_CLOSED;
 
-    OSA_MemoryFree(dev_info);
-    dev_info = NULL;
+    OSA_MemoryFree(audio_src_element->device_info);
+    audio_src_element->device_info = NULL;
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
 
@@ -180,14 +180,6 @@ AudioSrcStreamErrorType audio_src_pcmrtos_start_device(ElementAudioSrc *audio_sr
         return AUDIOSRC_FAILED;
     }
 
-    /*  if (audio_src_element->dummy_tx)
-      {
-        pcm_rtos_t * pcm_rtos;
-        pcm_rtos = (pcm_rtos_t *) dev_info->pcm_handle;
-        pcm_rtos->dummy_tx_enable = true;
-      }
-    */
-
     audio_src_element->chunk_size = audio_src_element->pkt_hdr.sample_rate *
                                     audio_src_element->pkt_hdr.bits_per_sample / 8 *
                                     audio_src_element->pkt_hdr.num_channels * audio_src_element->frame_ms / 1000;
@@ -206,8 +198,6 @@ AudioSrcStreamErrorType audio_src_pcmrtos_start_device(ElementAudioSrc *audio_sr
             return AUDIOSRC_ERROR_OUT_OF_HEAP_MEMORY;
         }
     }
-
-    audiosrc_pcmrtos_init_params(audio_src_element);
 
     streamer_pcm_start(dev_info->pcm_handle);
 
@@ -303,41 +293,50 @@ AudioSrcStreamErrorType audio_src_pcmrtos_read_device(ElementAudioSrc *audio_src
             return AUDIOSRC_FAILED;
         }
 
+        dev_info->buffer_queue.read_idx  = 0;
+        dev_info->buffer_queue.write_idx = 0;
+        dev_info->buffer_queue.size      = sizeof(dev_info->buffer_queue.buffer_idx);
+
         STREAMER_LOG_DEBUG(DBG_AUDIO_SRC, "[Audio SRC] Init params done\n");
     }
 
     pkt_hdr             = (AudioPacketHeader *)(&audio_src_element->pkt_hdr);
     pkt_hdr->chunk_size = audio_src_element->chunk_size;
 
-    if (audio_src_element->first_run)
-    {
-        memcpy(dev_info->audbuf[dev_info->buff_index], pkt_hdr, sizeof(AudioPacketHeader));
-        buf->size                    = sizeof(AudioPacketHeader);
-        audio_src_element->first_run = false;
-    }
-    else
-    {
-        buf->size = dev_info->buff_size[dev_info->buff_index] + sizeof(AudioPacketHeader);
-    }
-
     next_index                      = ((int8_t)dev_info->buff_index + 1) % AUDIO_SRC_BUFFER_NUM;
     buffer_ptr                      = dev_info->audbuf[next_index];
     dev_info->buff_size[next_index] = pkt_hdr->chunk_size;
 
-    memset(buffer_ptr, 0, dev_info->buff_size[next_index] + sizeof(AudioPacketHeader));
     memcpy(buffer_ptr, pkt_hdr, sizeof(AudioPacketHeader));
     ret = streamer_pcm_read(dev_info->pcm_handle, (uint8_t *)(buffer_ptr + sizeof(AudioPacketHeader)),
                             dev_info->buff_size[next_index]);
 
-    if (ret != 0)
+    dev_info->buffer_queue.buffer_idx[dev_info->buffer_queue.write_idx] = next_index;
+    dev_info->buffer_queue.write_idx = (dev_info->buffer_queue.write_idx + 1) % dev_info->buffer_queue.size;
+
+    if (ret < 0)
     {
         STREAMER_LOG_ERR(DBG_AUDIO_SRC, ERRCODE_BUSY, "[Audio SRC] failed to read data from mic\n");
         STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
         return AUDIOSRC_FAILED;
     }
+    else if ((ret == 0) && (!audio_src_element->first_run))
+    {
+        buf->buffer = (int8_t *)dev_info->audbuf[dev_info->buffer_queue.buffer_idx[dev_info->buffer_queue.read_idx]];
+        buf->size   = dev_info->buff_size[dev_info->buff_index] + sizeof(AudioPacketHeader);
+        dev_info->buffer_queue.read_idx = (dev_info->buffer_queue.read_idx + 1) % dev_info->buffer_queue.size;
+    }
     else
     {
+        if (audio_src_element->first_run)
+        {
+            memcpy(dev_info->audbuf[dev_info->buff_index], pkt_hdr, sizeof(AudioPacketHeader));
+            audio_src_element->first_run = false;
+        }
+
+        /* Buffer with only audioPacket header */
         buf->buffer = (int8_t *)dev_info->audbuf[dev_info->buff_index];
+        buf->size   = sizeof(AudioPacketHeader);
     }
 
     dev_info->buff_index = (dev_info->buff_index + 1U) % (uint8_t)AUDIO_SRC_BUFFER_NUM;

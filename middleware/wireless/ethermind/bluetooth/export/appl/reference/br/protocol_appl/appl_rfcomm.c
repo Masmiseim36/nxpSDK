@@ -37,9 +37,9 @@ static const char main_rfcomm_options[] = "\n\
     5.  RFCOMM Channel Accept Cancel. \n\
  \n\
     11. RFCOMM Channel Write. \n\
-    12. RFCOMM Receive File. \n\
+    12. RFCOMM Receive Rx Data to File. \n\
     13. RFCOMM Send File. \n\
-    14. RFCOMM Stop Receiving File. \n\
+    14. RFCOMM Stop Receiving Rx Data to File. \n\
  \n\
     20. RFCOMM Session Open. \n\
     21. RFCOMM Session Close. \n\
@@ -439,7 +439,7 @@ void appl_rfcomm_recv_file (void)
     BT_str_print(rfcomm_recv_file_name, "%s%s", BT_FOPS_BASE, BT_FOPS_PATH_SEP);
 
     /* Read the name of the file to store */
-    printf("Enter File Name\n");
+    printf("Enter File Name to Receive Rx Data\n");
     scanf("%s", &rfcomm_recv_file_name[BT_str_len(rfcomm_recv_file_name)]);
 
     retval = BT_fops_file_open
@@ -539,7 +539,7 @@ void appl_rfcomm_stop_recv_file (void)
 {
 #ifdef RFCOMM_FILE_OPERATION
     /* Read the name of the file to store */
-    printf("Aborting Receive File\n");
+    printf("Stop Receive Rx Data to File\n");
 
     rfcomm_recv_file_operation = APPL_RFCOMM_FILE_NOOP;
 
@@ -690,7 +690,7 @@ void appl_rfcomm_session_fc_off (void)
     BT_mem_set(bd_addr, 0, BT_BD_ADDR_SIZE);
 
     printf("Enter BD_ADDR: ");
-    appl_get_bd_addr(bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
     RFCOMM_SET_HANDLE(&local_handle, bd_addr, 0x0U, appl_rfcomm_callback);
 
     printf("Initiating RFCOMM Session FC Off ... "); fflush (stdout);
@@ -722,7 +722,7 @@ void appl_rfcomm_session_fc_on (void)
     BT_mem_set(bd_addr, 0, BT_BD_ADDR_SIZE);
 
     printf("Enter BD_ADDR: ");
-    appl_get_bd_addr(bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
     RFCOMM_SET_HANDLE(&local_handle, bd_addr, 0x0U, appl_rfcomm_callback);
 
     printf("Initiating RFCOMM Session FC On ... "); fflush (stdout);
@@ -757,7 +757,7 @@ void appl_rfcomm_session_test (void)
 
     printf("Test Data Length = "); fflush (stdout);
     scanf("%d", &test_datalen);
-    if (test_datalen < 0)
+    if (0 > test_datalen)
     {
         printf("Invalid Data Length \n");
         /* return; */
@@ -776,7 +776,7 @@ void appl_rfcomm_session_test (void)
             BT_mem_set(test_req.data, 0xABU, test_req.datalen);
 
             printf("Enter BD_ADDR: ");
-            appl_get_bd_addr(bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
             RFCOMM_SET_HANDLE(&local_handle, bd_addr, 0x0, appl_rfcomm_callback);
 
             printf("Initiating RFCOMM Session Test ... "); fflush(stdout);
@@ -812,7 +812,7 @@ void appl_rfcomm_send_dlc_pn (void)
     pn.frame_size = 500U;
     appl_rfcomm_handle.server_channel = 0x1U;
     printf("Enter BD_ADDR: ");
-    appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
 
     printf("Initiating RFCOMM Send PN ... "); fflush (stdout);
     retval = BT_rfcomm_send_pn (&appl_rfcomm_handle, &pn);
@@ -844,7 +844,7 @@ void appl_rfcomm_send_dlc_rpn (void)
     appl_rfcomm_handle.server_channel = 0x1U;
 
     printf("Enter BD_ADDR: ");
-    appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
     BT_mem_set(&rpn, 0x0, sizeof(RFCOMM_RPN));
 
     printf("Choose RPN Option:\n");
@@ -944,7 +944,7 @@ void appl_rfcomm_send_dlc_rls (void)
      *
      *    L2-L4:
      *    100: Overrun Error - Received character overwrote an unread character
-     *    010: Parity Error - Received character’s parity was incorrect
+     *    010: Parity Error - Received character's parity was incorrect
      *    001: Framing Error - a character did not terminate with a stop bit
      */
 
@@ -980,7 +980,7 @@ void appl_rfcomm_enable_credit_tx(void)
 
     appl_rfcomm_handle.server_channel = 0x1U;
     printf("Enter BD_ADDR: ");
-    appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
 
     printf("Enabling RFCOMM Credit Tx ... "); fflush(stdout);
     flag = RFCOMM_CREDIT_TX_ENABLED;
@@ -1002,7 +1002,7 @@ void appl_rfcomm_disable_credit_tx(void)
 
     appl_rfcomm_handle.server_channel = 0x1U;
     printf("Enter BD_ADDR: ");
-    appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_rfcomm_handle.bd_addr);
 
     printf("Disabling RFCOMM Credit Tx ... "); fflush(stdout);
     flag = RFCOMM_CREDIT_TX_DISABLED;

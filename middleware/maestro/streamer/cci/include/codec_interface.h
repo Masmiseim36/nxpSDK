@@ -86,7 +86,7 @@ typedef struct _codec_interface_function_table
 extern const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT];
 
 /* MP3 */
-#ifdef CASCFG_ENABLE_MP3_CODEC
+#ifdef MP3_DEC
 extern int32_t MP3DecoderGetMemorySize();
 extern int32_t MP3DecoderInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
 extern int32_t MP3DecoderDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);
@@ -95,7 +95,7 @@ extern int32_t MP3DecoderGetIOFrameSize(int32_t *in_size, int32_t *out_size);
 #endif
 
 /* WAV */
-#ifdef CASCFG_ENABLE_WAV_CODEC
+#ifdef WAV_DEC
 extern int32_t WAVDecoderGetMemorySize();
 extern int32_t WAVDecoderInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
 extern int32_t WAVDecoderDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);
@@ -124,7 +124,7 @@ extern int32_t OggOPUSGetIOFrameSize(int32_t *in_size, int32_t *out_size);
 #endif
 
 /* AAC */
-#if defined(CASCFG_ENABLE_AAC_CODEC) && !defined(__ICCARM__)
+#if defined(AAC_DEC) && !defined(__ICCARM__)
 extern int32_t AACDecoderGetMemorySize();
 extern int32_t AACDecoderInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
 extern int32_t AACDecoderDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);
@@ -135,7 +135,7 @@ extern int32_t AACDecodergetMetaData(int32_t *memory[], int32_t *callback_fn[], 
 #endif
 
 /* FLAC */
-#ifdef CASCFG_ENABLE_FLAC_CODEC
+#ifdef FLAC_DEC
 extern int32_t FLACDecoderGetMemorySize();
 extern int32_t FLACDecoderInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
 extern int32_t FLACDecoderDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);

@@ -33,7 +33,7 @@
  *
  * @retval Decoder Type
  */
-const int32_t stream_type_conversion(int32_t stream_type)
+int32_t stream_type_conversion(int32_t stream_type)
 {
     int32_t decoder_type;
 
@@ -67,7 +67,7 @@ const int32_t stream_type_conversion(int32_t stream_type)
  *
  * @retval CCI Stream Type
  */
-const uint8_t cci_decoder_type_conversion(DecoderType decoder_type)
+uint8_t cci_decoder_type_conversion(DecoderType decoder_type)
 {
     audio_stream_type_t cci_type;
 

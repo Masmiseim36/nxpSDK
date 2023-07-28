@@ -1,47 +1,62 @@
 var a00078 =
 [
-    [ "trng_statistical_check_limit_t", "a00078.html#a00523", [
-      [ "maximum", "a00078.html#a8ab9b19ce415bf6823de58a1bbf6cb66", null ],
-      [ "minimum", "a00078.html#aa3400c3e1329406d70f62165f8e4c4f0", null ]
+    [ "snvs_lp_passive_tamper_t", "a00078.html#a00537", null ],
+    [ "snvs_lp_srtc_datetime_t", "a00078.html#a00539", [
+      [ "year", "a00078.html#a03a4361ff2481ab7ed890c60f3ac68b7", null ],
+      [ "month", "a00078.html#afeeab32d19b15b5dd7ebbcd3c1322e28", null ],
+      [ "day", "a00078.html#a8325ab17dc714294c88414f24d03320d", null ],
+      [ "hour", "a00078.html#a4a70a512ba988adb1fb1e4e62ba11f29", null ],
+      [ "minute", "a00078.html#a266253051fa3ee775a27bffb92d9be5b", null ],
+      [ "second", "a00078.html#a24f3ad7303d4b70ca927c385490a3448", null ]
     ] ],
-    [ "trng_config_t", "a00078.html#a00522", [
-      [ "lock", "a00078.html#a5350c101fa633dcebef81476a2ca81b2", null ],
-      [ "clockMode", "a00078.html#a2f0603394bb7074023fe0f42b36cd235", null ],
-      [ "ringOscDiv", "a00078.html#a14de599122f62cc47ab0beed10940e06", null ],
-      [ "sampleMode", "a00078.html#ac0d23238419cd87722c357754bdffc5c", null ],
-      [ "entropyDelay", "a00078.html#aad6e0857e5ce9f472da8d40a1c1c3638", null ],
-      [ "sampleSize", "a00078.html#a63ad878804f8ce9c1a6c68ec51c45f21", null ],
-      [ "sparseBitLimit", "a00078.html#aa13e97aea012bac044c8b468b96a346a", null ],
-      [ "retryCount", "a00078.html#a3a5a504af9df6ac82e14c1a50c018986", null ],
-      [ "longRunMaxLimit", "a00078.html#a8931a55ae0023f04ac89d136047493b6", null ],
-      [ "monobitLimit", "a00078.html#ac3e3d53ec411f36076baa8a602ea7e1e", null ],
-      [ "runBit1Limit", "a00078.html#a690b392b63f4ed4dabe11f42339d2ca6", null ],
-      [ "runBit2Limit", "a00078.html#a7c457b56026bf08724e4dfb0e9347ced", null ],
-      [ "runBit3Limit", "a00078.html#a03cfe0feba7d20ef1bb67b6d774f689a", null ],
-      [ "runBit4Limit", "a00078.html#aeb24ae2dc10008e0093887501f653019", null ],
-      [ "runBit5Limit", "a00078.html#a64f977e88bb179f321bf325b016b6df7", null ],
-      [ "runBit6PlusLimit", "a00078.html#a1ef1a1672daaeb22f465f1400ac4e33a", null ],
-      [ "pokerLimit", "a00078.html#aa5c11626ca0892f8be5e88a39892b518", null ],
-      [ "frequencyCountLimit", "a00078.html#a75840750418fdffabbae7ba0d66709d6", null ]
+    [ "snvs_lp_srtc_config_t", "a00078.html#a00538", [
+      [ "srtcCalEnable", "a00078.html#a876e4c24fd02f7b939354f625e81b0a3", null ],
+      [ "srtcCalValue", "a00078.html#a86c9d09f47c6c6fa4dd60c24088f2d4f", null ]
     ] ],
-    [ "FSL_TRNG_DRIVER_VERSION", "a00078.html#ga0d809ab2bf96ed21a28c531679c1cffe", null ],
-    [ "trng_sample_mode_t", "a00078.html#ga6743806ab1ae5e2511aed3f8a30814c8", [
-      [ "kTRNG_SampleModeVonNeumann", "a00078.html#gga6743806ab1ae5e2511aed3f8a30814c8af9f812a5ba8dddf6800fe42db487f5e7", null ],
-      [ "kTRNG_SampleModeRaw", "a00078.html#gga6743806ab1ae5e2511aed3f8a30814c8a2411d65d49169b9244b0c975442ff898", null ],
-      [ "kTRNG_SampleModeVonNeumannRaw", "a00078.html#gga6743806ab1ae5e2511aed3f8a30814c8a12725a856bdf7ea64e16156fc1f6792c", null ]
+    [ "FSL_SNVS_LP_DRIVER_VERSION", "a00078.html#gac5e0fc5d0c368b596733f3d40b212366", null ],
+    [ "SNVS_ZMK_REG_COUNT", "a00078.html#ga0eb6096d8a29431a527f42d2207df7bd", null ],
+    [ "SNVS_LP_MAX_TAMPER", "a00078.html#ga5e9e92e31bccf270bf2355cc6e80041a", null ],
+    [ "snvs_lp_srtc_interrupts_t", "a00078.html#ga806041c275061b615faf70ee97505a00", [
+      [ "kSNVS_SRTC_AlarmInterrupt", "a00078.html#gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515", null ]
     ] ],
-    [ "trng_clock_mode_t", "a00078.html#ga20c19c3f8b8f14572d91b034cd8f8387", [
-      [ "kTRNG_ClockModeRingOscillator", "a00078.html#gga20c19c3f8b8f14572d91b034cd8f8387a10eb7dda9879280deaab08f87158ebbc", null ],
-      [ "kTRNG_ClockModeSystem", "a00078.html#gga20c19c3f8b8f14572d91b034cd8f8387a066582671741cf64617d6cde5d929937", null ]
+    [ "snvs_lp_srtc_status_flags_t", "a00078.html#gadcecf6b4fd6c8c56133821ebbd2df9de", [
+      [ "kSNVS_SRTC_AlarmInterruptFlag", "a00078.html#ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1", null ]
     ] ],
-    [ "trng_ring_osc_div_t", "a00078.html#gaaa7094b265c437185a9ba211962ae925", [
-      [ "kTRNG_RingOscDiv0", "a00078.html#ggaaa7094b265c437185a9ba211962ae925a557465d3f4d88b544fcf818085032b51", null ],
-      [ "kTRNG_RingOscDiv2", "a00078.html#ggaaa7094b265c437185a9ba211962ae925af420c1e0c4bd6a0a181464866ae70764", null ],
-      [ "kTRNG_RingOscDiv4", "a00078.html#ggaaa7094b265c437185a9ba211962ae925ad03f20e54add497bca2cab5084e409d8", null ],
-      [ "kTRNG_RingOscDiv8", "a00078.html#ggaaa7094b265c437185a9ba211962ae925a207ca5ecd9403ce8299085a1bf2f9ca2", null ]
+    [ "snvs_lp_external_tamper_status_t", "a00078.html#ga123f0196672467755ef8b828db230b24", null ],
+    [ "snvs_lp_external_tamper_polarity_t", "a00078.html#gae5f4aea285aec7abf629056ef0eb3163", null ],
+    [ "snvs_lp_zmk_program_mode_t", "a00078.html#gae44e3f9132afa438f0bfd6233928355f", [
+      [ "kSNVS_ZMKSoftwareProgram", "a00078.html#ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614", null ],
+      [ "kSNVS_ZMKHardwareProgram", "a00078.html#ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f", null ]
     ] ],
-    [ "TRNG_GetDefaultConfig", "a00078.html#ga3f90793dd83a0ac2249fdcb8fa762c6a", null ],
-    [ "TRNG_Init", "a00078.html#gaefef4539a93045832f10d28f094d26ea", null ],
-    [ "TRNG_Deinit", "a00078.html#gacdcc7542e374e611c888008a227b878c", null ],
-    [ "TRNG_GetRandomData", "a00078.html#gaac12716aedb0b05e8be3e96433c8ad56", null ]
+    [ "snvs_lp_master_key_mode_t", "a00078.html#ga10b65b574393c82d6b6f3e5033c55d7b", [
+      [ "kSNVS_OTPMK", "a00078.html#gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62", null ],
+      [ "kSNVS_ZMK", "a00078.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe", null ],
+      [ "kSNVS_CMK", "a00078.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e", null ]
+    ] ],
+    [ "SNVS_LP_Init", "a00078.html#ga742e45feb782fa6b454e20f405d1f3d9", null ],
+    [ "SNVS_LP_Deinit", "a00078.html#gaf6184db24094f481adb2fa4511fdaa6a", null ],
+    [ "SNVS_LP_SRTC_Init", "a00078.html#gad2bc4630c869c62dcaee50c1bcd0897e", null ],
+    [ "SNVS_LP_SRTC_Deinit", "a00078.html#ga5d3d092911324c7436c84516a3cc53ab", null ],
+    [ "SNVS_LP_SRTC_GetDefaultConfig", "a00078.html#gab52bbf92230eca2bcfc590ad5733d6aa", null ],
+    [ "SNVS_LP_SRTC_SetDatetime", "a00078.html#ga3c35b4b1671c53939c335097411b6e7d", null ],
+    [ "SNVS_LP_SRTC_GetDatetime", "a00078.html#gaf65b902de3d06aa9940686ae86b7f8fd", null ],
+    [ "SNVS_LP_SRTC_SetAlarm", "a00078.html#gadb419ef8b369945b4858abcb76e36462", null ],
+    [ "SNVS_LP_SRTC_GetAlarm", "a00078.html#gab9120c6c286567d4144763b875725ac3", null ],
+    [ "SNVS_LP_SRTC_EnableInterrupts", "a00078.html#gabff8182f0b6daa2a2bbafcaab0caf582", null ],
+    [ "SNVS_LP_SRTC_DisableInterrupts", "a00078.html#gaecc4336193810a19ed278327f1d9b320", null ],
+    [ "SNVS_LP_SRTC_GetEnabledInterrupts", "a00078.html#gada2c47f87ffb9ff6eaeabe62796627bd", null ],
+    [ "SNVS_LP_SRTC_GetStatusFlags", "a00078.html#ga8d98bd36bcee5f9639346172eba5294b", null ],
+    [ "SNVS_LP_SRTC_ClearStatusFlags", "a00078.html#ga4b35224486431ebc7dd76707e5ab2c84", null ],
+    [ "SNVS_LP_SRTC_StartTimer", "a00078.html#gaa4af8e629107ca2df7b64d11a5afa01e", null ],
+    [ "SNVS_LP_SRTC_StopTimer", "a00078.html#ga413bc4eb1389aec4a61e3e54a08ec5f3", null ],
+    [ "SNVS_LP_PassiveTamperPin_GetDefaultConfig", "a00078.html#ga5b3b4bc95b7ad64a7c37d75f94f57a05", null ],
+    [ "SNVS_LP_EnableMonotonicCounter", "a00078.html#gaef92c80f282401b4db14ae4899997f20", null ],
+    [ "SNVS_LP_GetMonotonicCounter", "a00078.html#ga5a8eacfd2bae28cc0417785f8355f141", null ],
+    [ "SNVS_LP_IncreaseMonotonicCounter", "a00078.html#ga47bb73abadc43aa50a4dfdaa86a78293", null ],
+    [ "SNVS_LP_WriteZeroizableMasterKey", "a00078.html#ga10144a7135dd4a278c541d5e37a27ba1", null ],
+    [ "SNVS_LP_SetZeroizableMasterKeyValid", "a00078.html#ga4f8c7a22bd75612f3ecfcc64b2ca12d9", null ],
+    [ "SNVS_LP_GetZeroizableMasterKeyValid", "a00078.html#ga84aa6371b64d17ad9dd059a32cfcf0ba", null ],
+    [ "SNVS_LP_SetZeroizableMasterKeyProgramMode", "a00078.html#gaa4468c4f948d4529d21d2717f9af21fb", null ],
+    [ "SNVS_LP_EnableZeroizableMasterKeyECC", "a00078.html#ga9f0c2c01a10193906563254794af6f2b", null ],
+    [ "SNVS_LP_SetMasterKeyMode", "a00078.html#gaf546c45ff65189f400d757cf5f35223f", null ]
 ];

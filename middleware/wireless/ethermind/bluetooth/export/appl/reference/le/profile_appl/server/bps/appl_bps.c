@@ -21,7 +21,8 @@
  *      e. appl_manage_transfer routine takes care of handling peer
  *         configuration. This handling would be needed:
  *           - When Peer Configures Measurement Transfer by writing to the
- *             Characteristic Client Configuration of Blood Pressure Measurement.
+ *             Characteristic Client Configuration of Blood Pressure
+ *             Measurement.
  *           - Subsequent reconnection with bonded device that had already
  *             configured the device for transfer. Please note it is mandatory
  *             for GATT Servers to remember the configurations of bonded GATT
@@ -52,14 +53,32 @@
 
 #if (defined ATT && defined BPS)
 /* --------------------------------------------- Global Definitions */
+/** Current Blood Pressure Measurement Time Interval */
 #define APPL_BP_MEASUREMENT_INTERVAL                 5U
 #define APPL_BLOOD_PRESSURE_MEASUREMENT_LENGTH       19U
 #define APPL_IM_BLOOD_PRESSURE_MEASUREMENT_LENGTH    19U
 #define APPL_IM_BLOOD_PRESSURE_COUNT                 3U
 
+#define APPL_BPS_DEFAULT_ADV_SWITCH_BACK_INTERVAL    5U
+/**
+ * Complete Advertisement Data Length used by
+ * Blood Pressure Advertisement.
+ * This typically is the same value as the
+ * "appl_gap_adv_data.datalen" which is present in the
+ * BPS specific "appl_bps_gap_config_params.c" file.
+ */
 #define APPL_BPS_ADV_DATA_LEN                        19U
 
+
 /* --------------------------------------------- External Global Variables */
+/**
+ * External global varible defined in "appl_bps_gap_config_params.c" file
+ * which corresponds to the Blood Pressure related ADV data.
+ */
+extern APPL_GAP_ADV_DATA appl_gap_adv_data;
+
+/** External global variable related to the Current Connected Peer Address */
+extern BT_DEVICE_ADDR g_bd_addr;
 
 /* --------------------------------------------- Exported Global Variables */
 
@@ -80,6 +99,40 @@ static UCHAR           im_bpm_enabled = BT_FALSE;
 static UCHAR           bpm_enabled;
 UCHAR                  timer_started;
 static UINT16          appl_msrmt_intrvl;
+
+/**
+ * Holding a constant Template of Blood Pressure ADV Data
+ * To be used by application after disconnection if needed
+ * by the application(to reset back any modified ADV Data)
+ */
+DECL_CONST UCHAR appl_default_adv_data[APPL_BPS_ADV_DATA_LEN] =
+{
+    /**
+     *  Flags:
+     *      0x01: LE Limited Discoverable Mode
+     *      0x02: LE General Discoverable Mode
+     *      0x04: BR/EDR Not Supported
+     *      0x08: Simultaneous LE and BR/EDR to Same Device
+     *            Capable (Controller)
+     *      0x10: Simultaneous LE and BR/EDR to Same Device
+     *            Capable (Host)
+     */
+    0x02U, 0x01U,
+    (BT_AD_FLAGS_LE_GENERAL_DISC_MODE | BT_AD_FLAGS_LE_BR_EDR_HOST),
+
+    /**
+     *  Service UUID List:
+     *      Battery Service (0x180F)
+     *      DeviceInformation Service (0x180A)
+     *      Blood Pressure Service (0x1810)
+     */
+    0x07U, 0x03U, 0x0FU, 0x18U, 0x0AU, 0x18U, 0x10U, 0x18U,
+
+    /**
+     *  Shortened Device Name: Mt-BPS
+     */
+    0x07U, 0x08U, 'M', 't', '-', 'B', 'P', 'S'
+};
 
 /* Blood Pressure Measurement Format SFLOAT */
 static UCHAR bp_obs_data[APPL_BLOOD_PRESSURE_MEASUREMENT_LENGTH] =
@@ -149,6 +202,15 @@ static UCHAR intrm_bp_obs_data\
 
 UCHAR appl_bps_feature_value[] = { 0x00U, 0x00U };
 
+/* Variables used to know the current Target Address and Multi Bond Support */
+DECL_STATIC UCHAR target_addr_set;
+DECL_STATIC UCHAR appl_bps_multi_bond_set;
+DECL_STATIC UCHAR appl_bps_update_body_movement_set;
+DECL_STATIC UCHAR appl_bps_update_cuff_fit_Detection_set;
+DECL_STATIC UCHAR appl_bps_update_irregular_pulse_set;
+DECL_STATIC UCHAR appl_bps_update_pulse_rate_range_set;
+DECL_STATIC UCHAR appl_bps_update_measurment_position_set;
+
 /* --------------------------------------------- Functions */
 void appl_bps_init(void)
 {
@@ -159,8 +221,15 @@ void appl_bps_init(void)
     API_RESULT      retval = API_FAILURE;
 #endif /* GATT_DB_DYNAMIC */
 
-    im_bpm_enabled = BT_FALSE;
-    bpm_enabled    = BT_FALSE;
+    im_bpm_enabled          = BT_FALSE;
+    bpm_enabled             = BT_FALSE;
+    target_addr_set         = BT_FALSE;
+    appl_bps_multi_bond_set = BT_TRUE;
+    appl_bps_update_body_movement_set       = BT_FALSE;
+    appl_bps_update_cuff_fit_Detection_set  = BT_FALSE;
+    appl_bps_update_irregular_pulse_set     = BT_FALSE;
+    appl_bps_update_pulse_rate_range_set    = BT_FALSE;
+    appl_bps_update_measurment_position_set = BT_FALSE;
 
     /* Initialize the Measurement Interval */
     appl_msrmt_intrvl = APPL_BP_MEASUREMENT_INTERVAL;
@@ -182,9 +251,6 @@ void appl_bps_init(void)
 
     APPL_TRC(
     "[BPS]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for BP Measurement */
@@ -230,6 +296,11 @@ void appl_bps_connect(DEVICE_HANDLE  * dq_handle)
     API_RESULT        retval;
 
     cli_cnfg = 0U;
+    /* Set the Public or random target address in the adv data */
+    if (BT_TRUE == target_addr_set)
+    {
+        appl_bps_set_target_address_in_adv_data(APPL_BPS_ADV_DATA_LEN);
+    }
 
     appl_bps_db_handle.device_id  = (*dq_handle);
     appl_bps_db_handle.char_id = (UCHAR)GATT_CHAR_BPS_BP_MSRMNT_INST;
@@ -280,20 +351,97 @@ void appl_bps_connect(DEVICE_HANDLE  * dq_handle)
         &appl_im_blood_pressure_hndl
     );
 
-#ifdef APPL_BPS_SINGLE_BOND_SUPPORT
     appl_bps_db_handle.char_id = (UCHAR)GATT_CHAR_BPS_BP_FEATURE_INST;
 
-    value.val = appl_bps_feature_value;
-    value.len = sizeof(appl_bps_feature_value);
+    retval = BT_gatt_db_get_char_val
+             (
+                 &appl_bps_db_handle,
+                 &value
+             );
 
-    /* Set Multi Bond bit in BPS feature to zero */
+    if (BT_TRUE == appl_bps_multi_bond_set)
+    {
+        /* Set Multiple Bond Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) | 0x0020U);
+         LOG_DEBUG("Muti_Bond Enable \n");
+    }
+    else
+    {
+        /* Reset Multiple Bond Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) & 0xFFDFU);
+        LOG_DEBUG("Muti_Bond Disable \n");
+    }
+
+    if (BT_TRUE == appl_bps_update_body_movement_set)
+    {
+        /* Set body_movement Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) | 0x0001U);
+        LOG_DEBUG("body_movement Enable \n");
+    }
+    else
+    {
+        /* Reset body_movement Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) & 0xFFFEU);
+        LOG_DEBUG("body_movement Disable \n");
+    }
+
+    if (BT_TRUE == appl_bps_update_cuff_fit_Detection_set )
+    {
+        /* Set cuff_fit_Detection Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) | 0x0002U);
+        LOG_DEBUG("cuff_fit_Detection Enable \n");
+    }
+    else
+    {
+        /* Reset cuff_fit_Detection  Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) & 0xFFFDU);
+        LOG_DEBUG("cuff_fit_Detection Disable \n");
+    }
+
+    if (BT_TRUE == appl_bps_update_irregular_pulse_set)
+    {
+        /* Set irregular_pulse Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) | 0x0004U);
+        LOG_DEBUG("irregular_pulse Enable \n");
+    }
+    else
+    {
+        /* Reset irregular_pulse Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) & 0xFFFBU);
+        LOG_DEBUG("irregular_pulse Disable \n");
+    }
+
+    if (BT_TRUE == appl_bps_update_pulse_rate_range_set)
+    {
+        /* Set pulse_rate_range Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) | 0x0008U);
+        LOG_DEBUG("pulse_rate_range Enable \n");
+    }
+    else
+    {
+        /* Reset pulse_rate_range Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) & 0xFFF7U);
+        LOG_DEBUG("pulse_rate_range Disable \n");
+    }
+
+    if (BT_TRUE == appl_bps_update_measurment_position_set)
+    {
+        /* Set measurment_position Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) | 0x0010U);
+        LOG_DEBUG("measurment_position Enable \n");
+    }
+    else
+    {
+        /* Reset measurment_position Support bit in Blood pressure feature char */
+        *value.val = ((*value.val) & 0xFFEFU);
+        LOG_DEBUG("measurment_position Disable \n");
+    }
+
     retval = BT_gatt_db_set_char_val
              (
                 &appl_bps_db_handle,
                 &value
              );
-#endif /* APPL_BPS_SINGLE_BOND_SUPPORT */
-
 }
 
 
@@ -370,7 +518,8 @@ void appl_manage_trasnfer (GATT_DB_HANDLE handle, UINT16 config)
                 {
                     im_bpm_enabled = BT_FALSE;
 
-                    if ((BT_FALSE == bpm_enabled) && (BT_FALSE == im_bpm_enabled))
+                    if ((BT_FALSE == bpm_enabled) &&
+                        (BT_FALSE == im_bpm_enabled))
                     {
                         /* Stop transfer simulate Blood Pressure measurements
                          * only if both BPM and IM_CUFF are disabled
@@ -380,8 +529,8 @@ void appl_manage_trasnfer (GATT_DB_HANDLE handle, UINT16 config)
                             BT_stop_timer (timer_handle);
 
                             APPL_ERR(
-                            "[BPS]: **ERR** Blood Pressure Measurement Timer %p Stopped\n",
-                            timer_handle);
+                            "[BPS]: **ERR** Blood Pressure Measurement Timer"
+                            " %p Stopped\n", timer_handle);
 
                             timer_handle = BT_TIMER_HANDLE_INIT_VAL;
                         }
@@ -468,11 +617,41 @@ void appl_bps_server_reinitialize (void)
 
     timer_started = BT_FALSE;
 
+    if (BT_FALSE != target_addr_set)
+    {
+        target_addr_set = BT_FALSE;
+
+        /**
+         * Start Timer to set the default advertising data after
+         * "APPL_BPS_DEFAULT_ADV_SWITCH_BACK_INTERVAL" seconds
+         */
+        BT_start_timer
+        (
+            &timer_handle,
+            APPL_BPS_DEFAULT_ADV_SWITCH_BACK_INTERVAL,
+            appl_bps_timer_expiry_hndlr,
+            NULL,
+            0U
+        );
+
+        APPL_TRC(
+        "[APPL]: Started Timer %p\n", timer_handle);
+    }
+
 #if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
     if (BT_TRUE == APPL_IS_GAP_PERIPHERAL_ROLE())
     {
         /* Configure and Enable Advertising */
-        appl_service_configure_adv(APPL_GAP_PROC_NORMAL, HCI_ADV_IND, 0x00U, 0x00U, NULL, 0x00U);
+        appl_service_configure_adv
+        (
+            APPL_GAP_PROC_NORMAL,
+            HCI_ADV_IND,
+            0x00U,
+            0x00U,
+            NULL,
+            0x00U
+        );
+
         appl_service_enable_adv(0x01U);
     }
 #endif /* ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL)) */
@@ -485,6 +664,24 @@ void appl_bps_server_reinitialize (void)
         appl_service_enable_scan(0x01U);
     }
 #endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
+}
+
+void appl_bps_timer_expiry_hndlr(void *data, UINT16 datalen)
+{
+    BT_IGNORE_UNUSED_PARAM(data);
+    BT_IGNORE_UNUSED_PARAM(datalen);
+
+    /* Stop timer */
+    if (BT_TIMER_HANDLE_INIT_VAL != timer_handle)
+    {
+        APPL_TRC(
+        "[APPL]: Timeout Occurred: %p\n", timer_handle);
+
+        timer_handle = BT_TIMER_HANDLE_INIT_VAL;
+    }
+
+    /* Reset to Default ADV Data */
+    appl_reset_adv_data_to_default_value();
 }
 
 void appl_send_blood_pressure_measurement (APPL_HANDLE    * handle)
@@ -510,7 +707,7 @@ void appl_send_blood_pressure_measurement (APPL_HANDLE    * handle)
                      (
                          &APPL_GET_ATT_INSTANCE(*handle),
                          &hndl_val_param
-                      );
+                     );
             im_index++;
         }while (im_index < APPL_IM_BLOOD_PRESSURE_COUNT);
     }
@@ -526,44 +723,134 @@ void appl_send_blood_pressure_measurement (APPL_HANDLE    * handle)
                      &APPL_GET_ATT_INSTANCE(*handle),
                      &hndl_val_param
                   );
+
         if (API_SUCCESS != retval)
         {
-            APPL_ERR("[BPS]: **ERR** Failed to send measurement, reason 0x%04X\n",
+            APPL_ERR(
+            "[BPS]: **ERR** Failed to send measurement, reason 0x%04X\n",
             retval);
         }
     }
 }
 
 void appl_bps_handle_ind_complete
-(
-    APPL_HANDLE* handle,
-    UINT16      evt_result
-)
+     (
+         APPL_HANDLE* handle,
+         UINT16      evt_result
+     )
 {
-    CONSOLE_OUT("\n[BPS]: IND Completed for Appl Handle 0x%02X with result 0x%04X\n",
-        *handle, evt_result);
+    CONSOLE_OUT(
+    "\n[BPS]: IND Completed for Appl Handle 0x%02X with result 0x%04X\n",
+    *handle, evt_result);
 }
 
 void appl_bps_handle_ntf_complete
-(
-    APPL_HANDLE* handle,
-    UCHAR* event_data,
-    UINT16      datalen
-)
+     (
+         APPL_HANDLE* handle,
+         UCHAR* event_data,
+         UINT16      datalen
+     )
 {
     CONSOLE_OUT("\n[BPS]: NTF Sent for Appl Handle 0x%02X\n", *handle);
     appl_dump_bytes(event_data, datalen);
 }
 
 void appl_bps_handle_mtu_update_complete
-(
-    APPL_HANDLE* handle,
-    UINT16      mtu
-)
+     (
+         APPL_HANDLE* handle,
+         UINT16      mtu
+     )
 {
     CONSOLE_OUT("\n[BPS]: Updated MTU is %d for Appl Handle 0x%02X\n",
     mtu, *handle);
 }
 
-#endif /* (defined ATT && defined BPS) */
+void appl_bps_set_target_address_in_adv_data(UCHAR offset)
+{
+#if ((defined APPL_GAP_BROADCASTER) || (defined APPL_GAP_PERIPHERAL))
+    /* Add Target Address AD Type Length */
+    appl_gap_adv_data.data[offset] =
+        BT_BD_ADDR_SIZE + 1U;
+
+    /* Add Target Address AD Type. Public/Random */
+    if (BT_BD_PUBLIC_ADDRESS_TYPE == g_bd_addr.type)
+    {
+        appl_gap_adv_data.data[offset + 1U] =
+            HCI_AD_TYPE_PUBLIC_TARGET_ADDRESS;
+    }
+    else
+    {
+        appl_gap_adv_data.data[offset + 1U] =
+            HCI_AD_TYPE_RANDOM_TARGET_ADDRESS;
+    }
+
+    /* Add Target Address */
+    BT_COPY_BD_ADDR
+    (
+        appl_gap_adv_data.data + offset + 2U,
+        g_bd_addr.addr
+    );
+
+    /* Update the actual length of advertising data */
+    appl_gap_adv_data.datalen = offset + BT_BD_ADDR_SIZE + 2U;
+#endif /* ((defined APPL_GAP_BROADCASTER) || (defined APPL_GAP_PERIPHERAL)) */
+}
+
+void appl_reset_adv_data_to_default_value(void)
+{
+    /* Copy the Default Template ADV Data for next usage */
+    BT_mem_copy
+    (
+        appl_gap_adv_data.data,
+        appl_default_adv_data,
+        sizeof(appl_default_adv_data)
+    );
+
+    appl_gap_adv_data.datalen = sizeof(appl_default_adv_data);
+}
+
+void appl_bps_update_multi_bond_flag(UCHAR flag)
+{
+    /* Set the Multi Bond Usage Flag */
+    appl_bps_multi_bond_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+    LOG_DEBUG("appl_bps_multi_bond_set = %d \n",appl_bps_multi_bond_set);
+}
+
+void appl_bps_update_target_addr_flag(UCHAR flag)
+{
+    /* Set the Target Address Usage value */
+    target_addr_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+    LOG_DEBUG("target_addr_set = %d\n",target_addr_set);
+}
+void appl_bps_update_body_movement_flag(UCHAR flag)
+{
+	appl_bps_update_body_movement_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+	LOG_DEBUG("appl_bps_update_body_movement_set = %d \n",appl_bps_update_body_movement_set);
+}
+
+void appl_bps_update_cuff_fit_Detection_flag(UCHAR flag)
+{
+	appl_bps_update_cuff_fit_Detection_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+	LOG_DEBUG("appl_bps_update_cuff_fit_Detection_set = %d \n",appl_bps_update_cuff_fit_Detection_set);
+}
+
+void appl_bps_update_irregular_pulse_flag(UCHAR flag)
+{
+	appl_bps_update_irregular_pulse_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+	LOG_DEBUG("appl_bps_update_irregular_pulse_set = %d \n",appl_bps_update_irregular_pulse_set);
+}
+
+void appl_bps_update_pulse_rate_range_flag(UCHAR flag)
+{
+	appl_bps_update_pulse_rate_range_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+	LOG_DEBUG("appl_bps_update_pulse_rate_range_set = %d \n",appl_bps_update_pulse_rate_range_set);
+}
+
+void appl_bps_update_measurment_position_flag(UCHAR flag)
+{
+	appl_bps_update_measurment_position_set = (BT_TRUE == flag) ? BT_TRUE : BT_FALSE;
+	LOG_DEBUG("appl_bps_update_measurment_position_set = %d \n",appl_bps_update_measurment_position_set);
+}
+
+#endif /* BPS */
 

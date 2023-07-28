@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2022 NXP.
+ * Copyright 2020-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -117,8 +117,10 @@ static void DISPLAY_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 
 #if (ENABLE_FB_CHEKSUM == 1)
     display_dev_private_capability_t *cap = param;
-    uint32_t chksum = DCIC_GetRegionCalculatedCrc(APP_DCIC, 0);
-    if (cap->callback != NULL) cap->callback(NULL, MPP_EVENT_INTERNAL_TEST_RESERVED, (void *) &chksum, cap->user_data);
+    checksum_data_t checksum;
+    checksum.type = CHECKSUM_TYPE_CRC_ELCDIF;
+    checksum.value = DCIC_GetRegionCalculatedCrc(APP_DCIC, 0);
+    if (cap->callback != NULL) cap->callback(NULL, MPP_EVENT_INTERNAL_TEST_RESERVED, (void *) &checksum, cap->user_data);
 #endif
 }
 

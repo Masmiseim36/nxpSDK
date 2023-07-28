@@ -191,14 +191,14 @@ UCHAR appl_read_racp_command_operand
     UINT32 i;
     int read_val;
 
-    LOG_DEBUG ("Enter Filter Type :\n");
-    LOG_DEBUG (" 1. Sequence Number [UINT16)\n");
-    LOG_DEBUG (" 2. User Facing Time (Base Time)\n");
+    CONSOLE_OUT ("Enter Filter Type :\n");
+    CONSOLE_OUT (" 1. Sequence Number [UINT16)\n");
+    CONSOLE_OUT (" 2. User Facing Time (Base Time)\n");
     CONSOLE_IN ("%d", &read_val);
 
     if ((1U > read_val) || (2U < read_val))
     {
-        LOG_DEBUG ("Invalid Filter Type..\n");
+        CONSOLE_OUT ("Invalid Filter Type..\n");
         return 0U;
     }
 
@@ -206,7 +206,7 @@ UCHAR appl_read_racp_command_operand
 
     if (SEQUENCE_NUMBER_FILTER_TYPE == (*filter_type))
     {
-        LOG_DEBUG ("Enter Sequence Number[In Decimal] %s:\n",(is_pair)?"Pair":"");
+        CONSOLE_OUT ("Enter Sequence Number[In Decimal] %s:\n",(is_pair)?"Pair":"");
         for (i = 0U; i < ((is_pair + 1U) * SEQUENCE_NUMBER_LEN); i+=SEQUENCE_NUMBER_LEN)
         {
             CONSOLE_IN ("%d", &read_val);
@@ -216,25 +216,25 @@ UCHAR appl_read_racp_command_operand
     }
     else if (USER_FACING_TIME_FILTER_TYPE == (*filter_type))
     {
-        LOG_DEBUG ("Enter User Facing Time %s:\n",(is_pair)?"Pair":"");
+        CONSOLE_OUT ("Enter User Facing Time %s:\n",(is_pair)?"Pair":"");
         for (i = 0U; i < ((is_pair + 1U) * USER_FACING_TIME_LEN); i+=USER_FACING_TIME_LEN)
         {
-            LOG_DEBUG ("Year[In Decimal] : ");
+            CONSOLE_OUT ("Year[In Decimal] : ");
             CONSOLE_IN ("%d", &read_val);
             BT_PACK_LE_2_BYTE_VAL(&operand[i],(UINT16)read_val);
-            LOG_DEBUG ("Month[In Decimal] : ");
+            CONSOLE_OUT ("Month[In Decimal] : ");
             CONSOLE_IN ("%d", &read_val);
             operand[i+2U] = (UCHAR) read_val;
-            LOG_DEBUG ("Day[In Decimal] : ");
+            CONSOLE_OUT ("Day[In Decimal] : ");
             CONSOLE_IN ("%d", &read_val);
             operand[i+3U] = (UCHAR) read_val;
-            LOG_DEBUG ("Hour[In Decimal] : ");
+            CONSOLE_OUT ("Hour[In Decimal] : ");
             CONSOLE_IN ("%d", &read_val);
             operand[i+4U] = (UCHAR) read_val;
-            LOG_DEBUG ("Minute[In Decimal] : ");
+            CONSOLE_OUT ("Minute[In Decimal] : ");
             CONSOLE_IN("%d", &read_val);
             operand[i+5U] = (UCHAR) read_val;
-            LOG_DEBUG ("Second[In Decimal] : ");
+            CONSOLE_OUT ("Second[In Decimal] : ");
             CONSOLE_IN("%d", &read_val);
             operand[i+6U] = (UCHAR) read_val;
         }
@@ -261,8 +261,8 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
 
     if (ABORT_OPERATION_OPCODE != opcode)
     {
-        LOG_DEBUG ("Enter the Operator :\n");
-        LOG_DEBUG ("%s", glc_racp_operator_menu);
+        CONSOLE_OUT ("Enter the Operator :\n");
+        CONSOLE_OUT ("%s", glc_racp_operator_menu);
         CONSOLE_IN ("%d", &read_val);
         oprtr = (UCHAR) read_val;
     }
@@ -280,7 +280,7 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
                     (*value)[0U] = opcode;
                     (*value)[1U] = oprtr;
                     length = RACP_NO_OPERAND_LEN;
-                    LOG_DEBUG("After decoding value");
+                    CONSOLE_OUT("After decoding value");
                     break;
 
                 case GREATER_THAN_OR_EQUAL_TO_OPERATOR: /* Fall Through */
@@ -299,7 +299,7 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
                             (*value)[2U] = SEQUENCE_NUMBER_FILTER_TYPE;
                             BT_mem_copy
                             (
-                               value[3U],
+                               &((*value)[3U]),
                                operand,
                                SEQUENCE_NUMBER_LEN
                             );
@@ -310,7 +310,7 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
                             (*value)[2U] = USER_FACING_TIME_FILTER_TYPE;
                             BT_mem_copy
                             (
-                               value[3U],
+                               &((*value)[3U]),
                                operand,
                                USER_FACING_TIME_LEN
                             );
@@ -334,7 +334,7 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
                             (*value)[2U] = SEQUENCE_NUMBER_FILTER_TYPE;
                             BT_mem_copy
                             (
-                               value[3U],
+                               &((*value)[3U]),
                                operand,
                                (2U*SEQUENCE_NUMBER_LEN)
                             );
@@ -345,7 +345,7 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
                             (*value)[2U] = USER_FACING_TIME_FILTER_TYPE;
                             BT_mem_copy
                             (
-                               value[3U],
+                               &((*value)[3U]),
                                operand,
                                (2U*USER_FACING_TIME_LEN)
                             );
@@ -355,7 +355,7 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
                     break;
 
                 default:
-                    LOG_DEBUG("Invalid Operator: 0x%02X\n", oprtr);
+                    CONSOLE_OUT("Invalid Operator: 0x%02X\n", oprtr);
                     break;
             }
             break;
@@ -367,7 +367,7 @@ UCHAR appl_handle_racp_opcode (UCHAR opcode, UCHAR **value)
             break;
 
         default:
-            LOG_DEBUG("Invalid Opcode: 0x%02X\n", opcode);
+            CONSOLE_OUT("Invalid Opcode: 0x%02X\n", opcode);
             break;
     }
 
@@ -572,7 +572,7 @@ void glc_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

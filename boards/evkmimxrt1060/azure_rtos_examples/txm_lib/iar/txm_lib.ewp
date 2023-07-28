@@ -228,8 +228,8 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1062DVL6A</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1072,7 +1072,7 @@
         </option>
         <option>
           <name>IarchiveOutput</name>
-          <state>$PROJ_DIR$/debug/libtxm.a</state>
+          <state>$PROJ_DIR$/debug/$PROJ_FNAME$.bin</state>
         </option>
       </data>
     </settings>
@@ -1304,8 +1304,8 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6A</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2148,7 +2148,7 @@
         </option>
         <option>
           <name>IarchiveOutput</name>
-          <state>$PROJ_DIR$/release/libtxm.a</state>
+          <state>$PROJ_DIR$/release/$PROJ_FNAME$.bin</state>
         </option>
       </data>
     </settings>

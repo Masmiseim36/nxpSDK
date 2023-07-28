@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -225,8 +225,8 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1042XJM5B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -364,6 +364,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1040/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -486,7 +487,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -690,7 +691,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1099,7 +1100,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1186,7 +1187,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1203,7 +1204,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1226,7 +1227,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1305,7 +1306,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1315,8 +1316,8 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1042XJM5B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1454,6 +1455,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1040/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1576,7 +1578,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1780,7 +1782,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2189,7 +2191,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2276,7 +2278,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2293,7 +2295,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2316,7 +2318,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2395,7 +2397,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2405,8 +2407,8 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1042XJM5B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2544,6 +2546,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1040/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2666,7 +2669,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2870,7 +2873,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3279,7 +3282,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3366,7 +3369,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3383,7 +3386,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3406,7 +3409,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3485,7 +3488,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3493,8 +3496,8 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1042XJM5B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3632,6 +3635,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1040/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3754,7 +3758,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3958,7 +3962,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4367,7 +4371,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4454,7 +4458,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4471,7 +4475,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4494,7 +4498,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4573,7 +4577,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4583,8 +4587,8 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1042XJM5B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4722,6 +4726,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1040/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4844,7 +4849,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5048,7 +5053,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5457,7 +5462,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5544,7 +5549,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5561,7 +5566,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5584,7 +5589,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5663,7 +5668,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5673,8 +5678,8 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1042XJM5B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5812,6 +5817,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1040/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1042/template</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5934,7 +5940,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6138,7 +6144,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6540,19 +6546,19 @@
   <group>
     <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../evkmimxrt1040.c</name>
+      <name>$PROJ_DIR$/../evkmimxrt1040.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../evkmimxrt1040.h</name>
+      <name>$PROJ_DIR$/../evkmimxrt1040.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../frdm_stbi_a8974_shield.h</name>
+      <name>$PROJ_DIR$/../frdm_stbi_a8974_shield.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../issdk_hal.h</name>
+      <name>$PROJ_DIR$/../issdk_hal.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../RTE_Device.h</name>
+      <name>$PROJ_DIR$/../RTE_Device.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
@@ -6806,6 +6812,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -6813,12 +6825,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -6854,30 +6860,27 @@
   </group>
   <group>
     <name>CMSIS_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_I2C.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_I2C.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
-    </file>
+    <group>
+      <name>Include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_I2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_USART.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>CMSIS</name>

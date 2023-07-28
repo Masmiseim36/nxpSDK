@@ -91,8 +91,8 @@ ESESTATUS phPalEse_i2c_open_and_configure(pphPalEse_Config_t pConfig)
 
     LOG_D("%s Opening port", __FUNCTION__);
     /* open port */
-    /*Disable as interface reset happens on every session open*/
-    //se05x_ic_reset();
+    /* Reset will happen on every session open*/
+    se05x_ic_reset();
 retry:
     i2c_ret = axI2CInit(&conn_ctx, (const char *)pConfig->pDevName);
     if (i2c_ret != I2C_OK) {

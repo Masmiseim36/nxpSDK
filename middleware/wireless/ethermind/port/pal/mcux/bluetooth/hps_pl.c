@@ -57,7 +57,7 @@ BT_DEFINE_COND(hps_sock_cond)
 /** Buffer to Read the Incoming Data */
 static UCHAR hps_sock_read_buf [HPS_BUF_SIZE_PL];
 
-static HPS_TRANSPORT_CB_PL hps_appl_cb;
+static HPS_TRANSPORT_CB_PL hps_appl_cb = NULL;
 
 /* ----------------------------------------- Functions */
 /** HPS PL interface for transport Initialization */
@@ -69,6 +69,21 @@ API_RESULT hps_transport_init_pl
     BT_thread_type      tid;
     API_RESULT          retval;
     BT_thread_attr_type hps_task_attr;
+
+    niface_stack_setup();
+    /*Not applicable for RW610,can not init successful*/
+#if !defined(RW610_SERIES) && !defined(RW612_SERIES)
+    niface_setup();
+#endif
+
+    /* Return if transport already initialized */
+    if (NULL != hps_appl_cb)
+    {
+        HPS_PL_TRC(
+        "[HPS-PL] HPS Transport Already INitialized!\n");
+
+        return API_FAILURE;
+    }
 
     /* Initialize */
     retval = API_FAILURE;
@@ -103,9 +118,6 @@ API_RESULT hps_transport_init_pl
 
     /* Initialize HPS Transport Socket State */
     hps_transport_state_pl = 0x0U;
-
-    niface_stack_setup();
-    niface_setup();
 
     HPS_PL_TRC(
     "[HPS-PL] Initialized Platform LWIP Stack and DHCP.\n");

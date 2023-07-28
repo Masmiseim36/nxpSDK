@@ -40,7 +40,7 @@ typedef struct
     printf("Executing System Command: '%s'\n", (cmd_str)); \
     system ((cmd_str));
 
-
+#define INVALID_VALUE                   0xFFU
 /* ---------------------------------------- Function Declarations */
 void main_pan_operations ( void );
 

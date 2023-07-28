@@ -133,7 +133,9 @@ API_RESULT gatt_db_tis_rtus_handler
         break;
 
     default:
-        CONSOLE_OUT("Invalid Operation\n");
+        CONSOLE_OUT(
+        "No Specific Application Handling Required for Operation 0x%02X\n",
+        params->db_op);
         break;
     }
 
@@ -160,7 +162,9 @@ API_RESULT gatt_db_tis_ndcs_handler
         }
         break;
     default:
-        CONSOLE_OUT("Invalid Operation\n");
+        CONSOLE_OUT(
+        "No Specific Application Handling Required for Operation 0x%02X\n",
+        params->db_op);
         break;
     }
 

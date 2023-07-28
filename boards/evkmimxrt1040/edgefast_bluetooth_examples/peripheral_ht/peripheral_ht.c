@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016 Intel Corporation
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -20,6 +20,10 @@
 #include <bluetooth/services/hts.h>
 #include <fsl_debug_console.h>
 #include <host_msd_fatfs.h>
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+#include "PWR_Interface.h"
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -123,13 +127,15 @@ static void bt_ready(int err)
         PRINTF("Bluetooth init failed (err %d)\n", err);
         return;
     }
-    if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
-    {
-        settings_load();
-    }
+
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
+    settings_load();
+#endif /* CONFIG_BT_SETTINGS */
+
     PRINTF("Bluetooth initialized\n");
 
     bt_conn_cb_register(&conn_callbacks);
+
 #if CONFIG_BT_SMP
     bt_conn_auth_cb_register(&auth_cb_display);
 #endif
@@ -142,12 +148,19 @@ static void bt_ready(int err)
     }
 
     PRINTF("Advertising successfully started\n");
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+    /* Release the WFI constraint, and allow the device to go to DeepSleep to allow for better power saving */
+    PWR_ReleaseLowPowerModeConstraint(PWR_WFI);
+    PWR_SetLowPowerModeConstraint(PWR_DeepSleep);
+#endif
 }
 
 void peripheral_ht_task(void *pvParameters)
 {
     int err;
 
+    PRINTF("BLE Peripheral HT demo start...\n");
     err = bt_enable(bt_ready);
     if (err)
     {

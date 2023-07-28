@@ -5,6 +5,15 @@ This basic example shows how to use the library to create a
 simple camera preview pipeline.
 This example also shows how to stop and re-start the pipeline after 3 seconds.
 
+Toolchains supported
+====================
+- MCUXpresso, version 11.8.0
+- GCC Arm Embedded, version 12.2.Rel1
+
+Hardware requirements
+=====================
+Refer to board.readme for hardware setup requirements.
+
 Pipelines Description
 =====================
 
@@ -30,17 +39,3 @@ EXPECTED OUTPUTS:
 The expected outputs of the example are:
 - The images captured by the camera should be displayed on the screen
 
-Important notes
-===============
-
-This project embeds TensorFlow Lite Micro framework by default.
-TensorFLow Lite Micro framework is an optional component of MPP.
-It has some dependencies on the operations that must be built to support a specific TensorFlow Lite model.
-This dependency must be resolved by the definition of a function called:
-
-tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter)
-
-The example uses a dummy TFLite operations resolver by setting the flag TFLITE_CUSTOM_OPS_DUMMY_RESOLVER.
-If this example is modified to use TensorFlow Inference Element, the flag TFLITE_CUSTOM_OPS_DUMMY_RESOLVER must be removed.
-Then the user may either set the flag TFLITE_ALL_OPS_RESOLVER,
-or implement its own function MODEL_GetOpsResolver for smaller memory footprint.

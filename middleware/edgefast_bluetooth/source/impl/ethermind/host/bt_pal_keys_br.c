@@ -122,8 +122,9 @@ void bt_keys_link_key_clear_addr(const bt_addr_t *addr)
 
 
     memcpy(bd_addr, addr->val, sizeof(bd_addr));
-
+#if IS_ENABLED(CONFIG_BT_BREDR)
 	retval = BT_sm_delete_device (bd_addr, SM_ANY_LIST);
+#endif  /* CONFIG_BT_BREDR */
 	(void)retval;
 
 	if (!addr) {

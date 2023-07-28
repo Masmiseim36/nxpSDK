@@ -57,7 +57,7 @@ static const char avctp_test_options[] = " \n\
    19. AVCTP_N_18 \n\
 Your Option ? ";
 
-AVCTP_HANDLE avctp_handle [APPL_MAX_AVCTP_HANDLES];
+DECL_STATIC AVCTP_HANDLE avctp_handle [APPL_MAX_AVCTP_HANDLES];
 
 void appl_avctp_init_handles ( void )
 {
@@ -327,7 +327,7 @@ void appl_avctp_connect_req ( void )
     LOG_DEBUG("Starting AVCTP Connect ... "); fflush(stdout);
     LOG_DEBUG("\nEnter Remote Device BD_ADDR:");
 
-    appl_get_bd_addr(bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
 
     retval = BT_avctp_connect_req
              (

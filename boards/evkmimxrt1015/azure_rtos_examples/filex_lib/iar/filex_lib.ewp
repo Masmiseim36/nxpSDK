@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -228,9 +228,9 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -473,7 +473,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -677,7 +677,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1074,7 +1074,7 @@
         </option>
         <option>
           <name>IarchiveOutput</name>
-          <state>$PROJ_DIR$/debug/libfilex.a</state>
+          <state>$PROJ_DIR$/debug/filex_lib.out</state>
         </option>
       </data>
     </settings>
@@ -1089,7 +1089,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1176,7 +1176,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1193,7 +1193,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1216,7 +1216,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1295,7 +1295,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1306,9 +1306,9 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1551,7 +1551,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1755,7 +1755,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2152,7 +2152,7 @@
         </option>
         <option>
           <name>IarchiveOutput</name>
-          <state>$PROJ_DIR$/release/libfilex.a</state>
+          <state>$PROJ_DIR$/release/filex_lib.out</state>
         </option>
       </data>
     </settings>

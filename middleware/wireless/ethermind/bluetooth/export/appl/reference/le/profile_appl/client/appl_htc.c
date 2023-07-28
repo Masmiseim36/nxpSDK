@@ -273,7 +273,7 @@ void htc_profile_operations (void)
             break;
 
         case 16:
-            LOG_DEBUG ("Please enter the new measurement interval[Dec]: ");
+            CONSOLE_OUT ("Please enter the new measurement interval[Dec]: ");
             CONSOLE_IN ("%u", &choice);
             msrmt_intrvl = (UINT16)choice;
             BT_PACK_LE_2_BYTE(cfg_val, &msrmt_intrvl);
@@ -359,7 +359,7 @@ void htc_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

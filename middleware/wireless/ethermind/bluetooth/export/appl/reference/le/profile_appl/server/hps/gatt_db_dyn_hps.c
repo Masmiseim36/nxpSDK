@@ -34,7 +34,7 @@ UINT16 GATT_CHAR_HPS_HTTP_STATUS_CODE_INST;
 UINT16 GATT_CHAR_HPS_HTTP_ENTITY_BODY_INST;
 UINT16 GATT_CHAR_HPS_HTTP_CONTROL_POINT_INST;
 UINT16 GATT_CHAR_HPS_HTTP_SECURITY_INST;
-UINT16 GATT_DB_MAX_ATTRIBUTES;
+
 /* --------------------------------------------- Static Global Variables */
 
 /* --------------------------------------------- Functions */
@@ -371,13 +371,13 @@ API_RESULT appl_hps_add_bas(void)
                 /* Presentation Format for BatteryLevel */
                 /**
                  * Characteristic Presentation Format for BatteryLevel
-                 * - Format            (1 octet)
-                 * - Exponent          (1 octet)
-                 * - Unit              (2 octet)
-                 * - Name Space        (1 octet)
-                 * - Description       (2 octet)
+                 * - Format            (1 octet) 0x04   - unsigned 8-bit integer
+                 * - Exponent          (1 octet) 0x00   - None
+                 * - Unit              (2 octet) 0x27AD - "Percentage"
+                 * - Name Space        (1 octet) 0x01   - BT SIG
+                 * - Description       (2 octet) 0x0106 - "main"
                  */
-                UCHAR presentation_format[] = { 0x04U, 0x00U, 0xADU, 0x27U, 0x01U, 0x00U, 0x00U };
+                UCHAR presentation_format[] = { 0x04U, 0x00U, 0xADU, 0x27U, 0x01U, 0x06U, 0x01U };
 
                 /* Add Presentation Format */
                 retval = appl_add_presentation_format
@@ -436,16 +436,14 @@ API_RESULT appl_hps_add_dis(void)
 
         /* ManufacturerName */
         {
-            /* Mindtree Limited */
-            UCHAR manufacturer_name[] = { 'M', 'i', 'n', 'd', 't', 'r', 'e', 'e', ' ', 'L', 'i', 'm', 'i', 't', 'e', 'd' };
             char_uuid.uuid_format     = ATT_16_BIT_UUID_FORMAT;
             char_uuid.uuid.uuid_16    = GATT_MANUFACTURER_NAME_CHARACTERISTIC;
 
             perm                      = GATT_DB_PERM_READ;
             property                  = GATT_DB_CHAR_READ_PROPERTY;
 
-            char_value.val            = manufacturer_name;
-            char_value.len            = sizeof(manufacturer_name);
+            char_value.val            = appl_manufacturer_name_ext;
+            char_value.len            = sizeof(APPL_MANUFACTURER_NAME);
             char_value.actual_len     = char_value.len;
 
             retval = BT_gatt_db_add_characteristic
@@ -694,8 +692,8 @@ API_RESULT appl_hps_add_dis(void)
 
         /* PnPID */
         {
-            /* Vendor: 0x006A[Mindtree], Product: 0x014D, Version: 0x100 */
-            UCHAR pnp_id[]         = {0x01U, 0x6AU, 0x00U, 0x4DU, 0x01U, 0x00U, 0x01U};
+            /* Vendor: 0x0025[NXP], Product: 0x0000, Version: 0x0001 */
+            UCHAR pnp_id[]         = {0x01U, 0x25U, 0x00U, 0x00U, 0x00U, 0x01U, 0x00U};
             char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
             char_uuid.uuid.uuid_16 = GATT_PNP_ID_CHARACTERISTIC;
 

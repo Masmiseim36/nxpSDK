@@ -10,13 +10,39 @@
 #include <math.h>
 
 #include "app_definitions.h"
+#include "streamer.h"
 #include "fsl_debug_console.h"
 #include "fsl_os_abstraction.h"
 
 #include "vit_proc.h"
-#include "VIT_Model_en.h"
-#include "VIT_Model_cn.h"
 #include "VIT.h"
+#ifdef VIT_MODEL_EN
+#include "VIT_Model_en.h"
+#endif
+#ifdef VIT_MODEL_CN
+#include "VIT_Model_cn.h"
+#endif
+#ifdef VIT_MODEL_DE
+#include "VIT_Model_de.h"
+#endif
+#ifdef VIT_MODEL_ES
+#include "VIT_Model_es.h"
+#endif
+#ifdef VIT_MODEL_FR
+#include "VIT_Model_fr.h"
+#endif
+#ifdef VIT_MODEL_IT
+#include "VIT_Model_it.h"
+#endif
+#ifdef VIT_MODEL_JA
+#include "VIT_Model_ja.h"
+#endif
+#ifdef VIT_MODEL_KO
+#include "VIT_Model_ko.h"
+#endif
+#ifdef VIT_MODEL_TR
+#include "VIT_Model_tr.h"
+#endif
 
 #ifdef VOICE_SEEKER_PROC
 #include "libVoiceSeekerLight.h"
@@ -29,23 +55,27 @@
 
 #if defined(PLATFORM_RT1040)
 #define DEVICE_ID      VIT_IMXRT1040
-#define MODEL_LOCATION VIT_MODEL_IN_RAM
+#define MODEL_LOCATION VIT_MODEL_IN_FAST_MEM
 
 #elif defined(PLATFORM_RT1050)
 #define DEVICE_ID      VIT_IMXRT1050
-#define MODEL_LOCATION VIT_MODEL_IN_ROM
+#define MODEL_LOCATION VIT_MODEL_IN_SLOW_MEM
 
 #elif defined(PLATFORM_RT1060)
 #define DEVICE_ID      VIT_IMXRT1060
-#define MODEL_LOCATION VIT_MODEL_IN_ROM
+#define MODEL_LOCATION VIT_MODEL_IN_SLOW_MEM
 
 #elif defined(PLATFORM_RT1160)
 #define DEVICE_ID      VIT_IMXRT1160
-#define MODEL_LOCATION VIT_MODEL_IN_ROM
+#define MODEL_LOCATION VIT_MODEL_IN_SLOW_MEM
 
 #elif defined(PLATFORM_RT1170)
 #define DEVICE_ID      VIT_IMXRT1170
-#define MODEL_LOCATION VIT_MODEL_IN_ROM
+#define MODEL_LOCATION VIT_MODEL_IN_SLOW_MEM
+
+#elif defined(PLATFORM_LPC55S69)
+#define DEVICE_ID      VIT_LPC55S69
+#define MODEL_LOCATION VIT_MODEL_IN_FAST_MEM
 
 #else
 #error "No platform selected"
@@ -53,13 +83,11 @@
 #endif
 
 #ifdef VOICE_SEEKER_PROC
-#define SAMPLES_PER_FRAME VIT_SAMPLES_PER_30MS_FRAME
 extern RETUNE_VOICESEEKERLIGHT_plugin_t vsl;
-#else
-#define SAMPLES_PER_FRAME VIT_SAMPLES_PER_10MS_FRAME
 #endif
 
-#define MEMORY_ALIGNMENT 8 // in bytes
+#define SAMPLES_PER_FRAME VIT_SAMPLES_PER_30MS_FRAME
+#define MEMORY_ALIGNMENT 8                    // in bytes
 
 static VIT_Handle_t VITHandle = PL_NULL;      // VIT handle pointer
 static VIT_InstanceParams_st VITInstParams;   // VIT instance parameters structure
@@ -159,11 +187,53 @@ int VIT_Initialize(void *arg)
 
     switch (Vit_Language)
     {
+#ifdef VIT_MODEL_CN
         case CN:
             VIT_Status = VIT_SetModel(VIT_Model_cn, MODEL_LOCATION);
             break;
-        default:
+#endif
+#ifdef VIT_MODEL_DE
+        case DE:
+            VIT_Status = VIT_SetModel(VIT_Model_de, MODEL_LOCATION);
+            break;
+#endif
+#ifdef VIT_MODEL_EN
+        case EN:
             VIT_Status = VIT_SetModel(VIT_Model_en, MODEL_LOCATION);
+            break;
+#endif
+#ifdef VIT_MODEL_ES
+        case ES:
+            VIT_Status = VIT_SetModel(VIT_Model_es, MODEL_LOCATION);
+            break;
+#endif
+#ifdef VIT_MODEL_FR
+        case FR:
+            VIT_Status = VIT_SetModel(VIT_Model_fr, MODEL_LOCATION);
+            break;
+#endif
+#ifdef VIT_MODEL_IT
+        case IT:
+            VIT_Status = VIT_SetModel(VIT_Model_it, MODEL_LOCATION);
+            break;
+#endif
+#ifdef VIT_MODEL_JA
+        case JA:
+            VIT_Status = VIT_SetModel(VIT_Model_ja, MODEL_LOCATION);
+            break;
+#endif
+#ifdef VIT_MODEL_KO
+        case KO:
+            VIT_Status = VIT_SetModel(VIT_Model_ko, MODEL_LOCATION);
+            break;
+#endif
+#ifdef VIT_MODEL_TR
+        case TR:
+            VIT_Status = VIT_SetModel(VIT_Model_tr, MODEL_LOCATION);
+            break;
+#endif
+        default:
+            return VIT_INVALID_MODEL;
     }
     if (VIT_Status != VIT_SUCCESS)
     {
@@ -301,11 +371,21 @@ int VIT_Initialize(void *arg)
 
 int VIT_Execute(void *arg, void *inputBuffer, int size)
 {
+    StreamBuffer *buf    = (StreamBuffer *)inputBuffer;
+    int8_t *pkt_hdr_size = (int8_t *)arg;
+    void *buffer         = NULL;
     VIT_ReturnStatus_en VIT_Status;
-    VIT_VoiceCommand_st VoiceCommand; // Voice Command info
-    VIT_WakeWord_st WakeWord;         // Wakeword info
-
+    VIT_VoiceCommand_st VoiceCommand;                               // Voice Command info
+    VIT_WakeWord_st WakeWord;                                       // Wakeword info
     VIT_DetectionStatus_en VIT_DetectionResults = VIT_NO_DETECTION; // VIT detection result
+
+    if ((buf == NULL) || (pkt_hdr_size == NULL))
+    {
+        return VIT_INVALID_NULLADDRESS;
+    }
+
+    /* Initialization of the variables */
+    buffer = (void *)(buf->buffer + *pkt_hdr_size);
 
     if (size != SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS * BYTE_DEPTH)
     {
@@ -314,7 +394,7 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
     }
 
     VIT_Status = VIT_Process(VITHandle,
-                             inputBuffer, // temporal audio input data
+                             buffer, // temporal audio input data
                              &VIT_DetectionResults);
 
     if (VIT_Status != VIT_SUCCESS)
@@ -379,8 +459,8 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
 
 int VIT_Deinit(void)
 {
-    VIT_ReturnStatus_en VIT_Status; /* Function call status */
-                                    // retrieve size of the different MEM tables allocated
+    VIT_ReturnStatus_en VIT_Status;   /* Function call status */
+                                      // retrieve size of the different MEM tables allocated
     VIT_Status =
         VIT_GetMemoryTable(VITHandle, // Should provide VIT_Handle to retrieve the size of the different MemTabs
                            &VITMemoryTable, &VITInstParams);

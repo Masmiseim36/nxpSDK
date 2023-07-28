@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CODEC Adapter</title>
+<title>MCUXpresso SDK API Reference Manual: Serial Port Uart</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,91 +99,85 @@ $(document).ready(function(){initNavTree('a00299.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">CODEC Adapter<div class="ingroups"><a class="el" href="a00013.html">CODEC Common Driver</a></div></div>  </div>
+<div class="title">Serial Port Uart<div class="ingroups"><a class="el" href="a00070.html">Serial Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaff6176ea2af7001a012172a47622e204"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff6176ea2af7001a012172a47622e204"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#gaff6176ea2af7001a012172a47622e204">SERIAL_PORT_UART_DMA_RECEIVE_DATA_LENGTH</a>&#160;&#160;&#160;(64U)</td></tr>
+<tr class="memdesc:gaff6176ea2af7001a012172a47622e204"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart handle size <br/></td></tr>
+<tr class="separator:gaff6176ea2af7001a012172a47622e204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29c0fa5c543615a75f63bdcb7e086b16"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga29c0fa5c543615a75f63bdcb7e086b16">SERIAL_USE_CONFIGURE_STRUCTURE</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the confgure structure pointer. <br/></td></tr>
+<tr class="separator:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga9b29769343da78881f442e657eb62b6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6eacb2ee31cd4ee06712e3cf445e12cb389">kCODEC_WM8904</a>, 
+<tr class="memitem:ga89a4bbed0c24cfe5e085194add680ccc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga89a4bbed0c24cfe5e085194add680ccc">serial_port_uart_parity_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00299.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6eaa15237d33f0b971a6596458ef7aa8d99">kCODEC_WM8960</a>, 
+&#160;&#160;<a class="el" href="a00299.html#gga89a4bbed0c24cfe5e085194add680ccca7d9d6f05fb6e1099fdfbf1f79a699356">kSerialManager_UartParityEven</a> = 0x2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea57b2941cff245c37272e1ea4598c3ab0">kCODEC_WM8524</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea870028cfe305a220c90a187029ae3408">kCODEC_SGTL5000</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea533359b62306ff77d6cd4a6aeaf075ab">kCODEC_DA7212</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6eae667850df8261ea1e8c02201e1ccafee">kCODEC_CS42888</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea32073f5e23a3c6e7960d937c0816286b">kCODEC_CS42448</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea58d64d2b7b432eb8ede4e22a811cadf1">kCODEC_AK4497</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea67f0293553ad8cc4bbb432b6b09f6900">kCODEC_AK4458</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea448b697ab0cc0c28740e77484faad04f">kCODEC_TFA9XXX</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea899f42fede26bf5fd37ea863fb4e5624">kCODEC_TFA9896</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00299.html#gga9b29769343da78881f442e657eb62b6ea018d6b6d07eab64fe414983199950dc8">kCODEC_WM8962</a>
+&#160;&#160;<a class="el" href="a00299.html#gga89a4bbed0c24cfe5e085194add680ccca15bc11791c1f07fac71c808d083515db">kSerialManager_UartParityOdd</a> = 0x3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga9b29769343da78881f442e657eb62b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec type  <a href="a00299.html#ga9b29769343da78881f442e657eb62b6e">More...</a><br/></td></tr>
-<tr class="separator:ga9b29769343da78881f442e657eb62b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga89a4bbed0c24cfe5e085194add680ccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart parity mode  <a href="a00299.html#ga89a4bbed0c24cfe5e085194add680ccc">More...</a><br/></td></tr>
+<tr class="separator:ga89a4bbed0c24cfe5e085194add680ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bdf0213026f54fd54c21971e07f2d56"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00299.html#ga8bdf0213026f54fd54c21971e07f2d56">serial_port_uart_stop_bit_count_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00299.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00299.html#gga8bdf0213026f54fd54c21971e07f2d56a83eb7aee91f3fd8964d283c0057880dc">kSerialManager_UartTwoStopBit</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga8bdf0213026f54fd54c21971e07f2d56"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart stop bit count  <a href="a00299.html#ga8bdf0213026f54fd54c21971e07f2d56">More...</a><br/></td></tr>
+<tr class="separator:ga8bdf0213026f54fd54c21971e07f2d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga9b29769343da78881f442e657eb62b6e"></a>
+<a class="anchor" id="ga89a4bbed0c24cfe5e085194add680ccc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00299.html#ga89a4bbed0c24cfe5e085194add680ccc">serial_port_uart_parity_mode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="anchor" id="_codec_type"></a></p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6eacb2ee31cd4ee06712e3cf445e12cb389"></a>kCODEC_WM8904</em>&nbsp;</td><td class="fielddoc">
-<p>wm8904 </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1"></a>kSerialManager_UartParityDisabled</em>&nbsp;</td><td class="fielddoc">
+<p>Parity disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6eaa15237d33f0b971a6596458ef7aa8d99"></a>kCODEC_WM8960</em>&nbsp;</td><td class="fielddoc">
-<p>wm8960 </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga89a4bbed0c24cfe5e085194add680ccca7d9d6f05fb6e1099fdfbf1f79a699356"></a>kSerialManager_UartParityEven</em>&nbsp;</td><td class="fielddoc">
+<p>Parity even enabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea57b2941cff245c37272e1ea4598c3ab0"></a>kCODEC_WM8524</em>&nbsp;</td><td class="fielddoc">
-<p>wm8524 </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga89a4bbed0c24cfe5e085194add680ccca15bc11791c1f07fac71c808d083515db"></a>kSerialManager_UartParityOdd</em>&nbsp;</td><td class="fielddoc">
+<p>Parity odd enabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea870028cfe305a220c90a187029ae3408"></a>kCODEC_SGTL5000</em>&nbsp;</td><td class="fielddoc">
-<p>sgtl5000 </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga8bdf0213026f54fd54c21971e07f2d56"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00299.html#ga8bdf0213026f54fd54c21971e07f2d56">serial_port_uart_stop_bit_count_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039"></a>kSerialManager_UartOneStopBit</em>&nbsp;</td><td class="fielddoc">
+<p>One stop bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea533359b62306ff77d6cd4a6aeaf075ab"></a>kCODEC_DA7212</em>&nbsp;</td><td class="fielddoc">
-<p>da7212 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6eae667850df8261ea1e8c02201e1ccafee"></a>kCODEC_CS42888</em>&nbsp;</td><td class="fielddoc">
-<p>CS42888. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea32073f5e23a3c6e7960d937c0816286b"></a>kCODEC_CS42448</em>&nbsp;</td><td class="fielddoc">
-<p>CS42448. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea58d64d2b7b432eb8ede4e22a811cadf1"></a>kCODEC_AK4497</em>&nbsp;</td><td class="fielddoc">
-<p>AK4497. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea67f0293553ad8cc4bbb432b6b09f6900"></a>kCODEC_AK4458</em>&nbsp;</td><td class="fielddoc">
-<p>ak4458 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea448b697ab0cc0c28740e77484faad04f"></a>kCODEC_TFA9XXX</em>&nbsp;</td><td class="fielddoc">
-<p>tfa9xxx </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea899f42fede26bf5fd37ea863fb4e5624"></a>kCODEC_TFA9896</em>&nbsp;</td><td class="fielddoc">
-<p>tfa9896 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b29769343da78881f442e657eb62b6ea018d6b6d07eab64fe414983199950dc8"></a>kCODEC_WM8962</em>&nbsp;</td><td class="fielddoc">
-<p>wm8962 </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8bdf0213026f54fd54c21971e07f2d56a83eb7aee91f3fd8964d283c0057880dc"></a>kSerialManager_UartTwoStopBit</em>&nbsp;</td><td class="fielddoc">
+<p>Two stop bits. </p>
 </td></tr>
 </table>
 

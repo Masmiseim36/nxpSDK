@@ -174,6 +174,7 @@ API_RESULT ethermind_l2ca_tx_credit_ind_cb (UINT16 lcid, UINT16 result, UINT16 c
 API_RESULT ethermind_l2ca_data_write_cb(UINT16 lcid, UINT16 result, UCHAR *buffer, UINT16 buffer_len);
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
 
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 static uint8_t get_ident(void)
 {
 	static uint8_t ident;
@@ -186,6 +187,7 @@ static uint8_t get_ident(void)
 
 	return ident;
 }
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
 
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
 static struct bt_l2cap_le_chan *l2cap_chan_alloc_cid(struct bt_conn *conn,
@@ -361,6 +363,8 @@ destroy:
 }
 
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
+
+#if 0
 static void l2cap_rtx_timeout(struct k_work *work)
 {
 	struct bt_l2cap_le_chan *chan = LE_CHAN_RTX(work);
@@ -376,6 +380,7 @@ static void l2cap_rtx_timeout(struct k_work *work)
 		bt_l2cap_chan_del(&chan->chan);
 	}
 }
+#endif
 
 static void l2cap_chan_le_recv(struct bt_l2cap_le_chan *chan,
 			       struct net_buf *buf);
@@ -1430,6 +1435,8 @@ static uint16_t l2cap_check_security(struct bt_conn *conn,
 		return BT_L2CAP_LE_SUCCESS;
 	}
 #else
+
+#if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0))
 	if (conn->sec_level >= server->sec_level) {
 		return BT_L2CAP_LE_SUCCESS;
 	}
@@ -1437,6 +1444,7 @@ static uint16_t l2cap_check_security(struct bt_conn *conn,
 	if (conn->sec_level > BT_SECURITY_L1) {
 		return BT_L2CAP_LE_ERR_AUTHENTICATION;
 	}
+#endif /* CONFIG_BT_SMP */
 
 	if (keys) {
 		if (conn->role == BT_HCI_ROLE_CENTRAL) {
@@ -3773,7 +3781,9 @@ API_RESULT ethermind_l2ca_connect_ind_cb
     struct bt_conn *conn;
 	uint16_t mtu, mps, credits;
 	uint16_t result;
+#if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0u))
 	uint16_t security_result;
+#endif
     L2CAP_CBFC_CONNECT_PARAM connect_param;
     API_RESULT retval;
     UINT16 response = L2CAP_CONNECTION_SUCCESSFUL;
@@ -4244,6 +4254,7 @@ static API_RESULT ethermind_ecbfc_get_edgefast_state(DEVICE_HANDLE *handle, stru
     assert(NULL != state->l2cap_att_sig_chan);
     if (NULL == state->l2cap_att_sig_chan)
     {
+		bt_conn_unref(state->conn);
         return API_FAILURE;
     }
 
@@ -4258,6 +4269,7 @@ static API_RESULT ethermind_ecbfc_get_edgefast_state(DEVICE_HANDLE *handle, stru
 
     if (state->buf == NULL)
     {
+		bt_conn_unref(state->conn);
         return API_FAILURE;
     }
 
@@ -4335,6 +4347,7 @@ static API_RESULT ethermind_l2ca_ecbfc_connect_ind_cb
     {
         return API_FAILURE;
     }
+	bt_conn_unref(state.conn);
 
     buf = state.buf;
     l2cap_att_sig_chan = state.l2cap_att_sig_chan;
@@ -4416,6 +4429,7 @@ static API_RESULT ethermind_l2ca_ecbfc_connect_cnf_cb
             }
         }
     }
+	bt_conn_unref(state.conn);
     hdr.len = sizeof(rsp) + param->num_cids * 2u;
     (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
 
@@ -4458,6 +4472,7 @@ static API_RESULT ethermind_l2ca_ecbfc_reconfig_ind_cb
     {
         return API_FAILURE;
     }
+	bt_conn_unref(state.conn);
 
     buf = state.buf;
     l2cap_att_sig_chan = state.l2cap_att_sig_chan;
@@ -4520,6 +4535,7 @@ static API_RESULT ethermind_l2ca_ecbfc_reconfig_cnf_cb
 			}
 		}
 	}
+	bt_conn_unref(state.conn);
     hdr.len = sizeof(rsp);
     (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
 

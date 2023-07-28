@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Secure Non-Volatile Storage Low-Power</title>
+<title>MCUXpresso SDK API Reference Manual: SGTL5000 Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -104,467 +104,555 @@ $(document).ready(function(){initNavTree('a00070.html','');});
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Secure Non-Volatile Storage Low-Power<div class="ingroups"><a class="el" href="a00268.html">SNVS: Secure Non-Volatile Storage</a></div></div>  </div>
+<div class="title">SGTL5000 Driver<div class="ingroups"><a class="el" href="a00286.html">CODEC Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Secure Non-Volatile Storage Low-Power (SNVS-LP) module.<br/>
- <br/>
-The SNVS_LP is a data storage subsystem. Its purpose is to store and protect system data, regardless of the main system power state. The SNVS _LP is in the always-powered-up domain, which is a separate power domain with its own power supply. <br/>
-</p>
+<p>The sgtl5000 driver provides a codec control interface. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00482"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00482">snvs_lp_passive_tamper_t</a></td></tr>
-<tr class="memdesc:a00482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to configure SNVS LP passive tamper pins.  <a href="a00070.html#a00482">More...</a><br/></td></tr>
-<tr class="separator:a00482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00484"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a></td></tr>
-<tr class="memdesc:a00484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to hold the date and time.  <a href="a00070.html#a00484">More...</a><br/></td></tr>
-<tr class="separator:a00484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00483"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00483">snvs_lp_srtc_config_t</a></td></tr>
-<tr class="memdesc:a00483"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP config structure.  <a href="a00070.html#a00483">More...</a><br/></td></tr>
-<tr class="separator:a00483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00496"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00496">sgtl_audio_format_t</a></td></tr>
+<tr class="memdesc:a00496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio format configuration.  <a href="a00070.html#a00496">More...</a><br/></td></tr>
+<tr class="separator:a00496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00497"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00497">sgtl_config_t</a></td></tr>
+<tr class="memdesc:a00497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initailize structure of sgtl5000.  <a href="a00070.html#a00497">More...</a><br/></td></tr>
+<tr class="separator:a00497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00498"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a></td></tr>
+<tr class="memdesc:a00498"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL codec handler.  <a href="a00070.html#a00498">More...</a><br/></td></tr>
+<tr class="separator:a00498"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0eb6096d8a29431a527f42d2207df7bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0eb6096d8a29431a527f42d2207df7bd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga0eb6096d8a29431a527f42d2207df7bd">SNVS_ZMK_REG_COUNT</a>&#160;&#160;&#160;8U /* 8 Zeroizable Master Key registers. */</td></tr>
-<tr class="memdesc:ga0eb6096d8a29431a527f42d2207df7bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define of SNVS_LP Zeroizable Master Key registers. <br/></td></tr>
-<tr class="separator:ga0eb6096d8a29431a527f42d2207df7bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e9e92e31bccf270bf2355cc6e80041a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga5e9e92e31bccf270bf2355cc6e80041a">SNVS_LP_MAX_TAMPER</a>&#160;&#160;&#160;kSNVS_ExternalTamper1</td></tr>
-<tr class="memdesc:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define of SNVS_LP Max possible tamper. <br/></td></tr>
-<tr class="separator:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0aa3e54cd2934b67b9882957456c391"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gab0aa3e54cd2934b67b9882957456c391">CHIP_ID</a>&#160;&#160;&#160;0x0000U</td></tr>
+<tr class="memdesc:gab0aa3e54cd2934b67b9882957456c391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the register address of sgtl5000.  <a href="#gab0aa3e54cd2934b67b9882957456c391">More...</a><br/></td></tr>
+<tr class="separator:gab0aa3e54cd2934b67b9882957456c391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b4c16e15a52d1a940e4d47bf3574752"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5b4c16e15a52d1a940e4d47bf3574752"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga5b4c16e15a52d1a940e4d47bf3574752">SGTL5000_HEADPHONE_MAX_VOLUME_VALUE</a>&#160;&#160;&#160;0x7FU</td></tr>
+<tr class="memdesc:ga5b4c16e15a52d1a940e4d47bf3574752"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL5000 volume setting range. <br/></td></tr>
+<tr class="separator:ga5b4c16e15a52d1a940e4d47bf3574752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58ceb20f920b2b006c74eeeae992830a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga58ceb20f920b2b006c74eeeae992830a">SGTL5000_I2C_ADDR</a>&#160;&#160;&#160;0x0A</td></tr>
+<tr class="memdesc:ga58ceb20f920b2b006c74eeeae992830a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL5000 I2C address.  <a href="#ga58ceb20f920b2b006c74eeeae992830a">More...</a><br/></td></tr>
+<tr class="separator:ga58ceb20f920b2b006c74eeeae992830a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a006451f9e990a4d3255ed7265ff1ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a006451f9e990a4d3255ed7265ff1ad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga5a006451f9e990a4d3255ed7265ff1ad">SGTL_I2C_HANDLER_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00015.html#ga708be0fda3516367fe0461a5f054118c">CODEC_I2C_MASTER_HANDLER_SIZE</a></td></tr>
+<tr class="memdesc:ga5a006451f9e990a4d3255ed7265ff1ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl handle size <br/></td></tr>
+<tr class="separator:ga5a006451f9e990a4d3255ed7265ff1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bf82c8b0e6415457b6f42f50af4230d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7bf82c8b0e6415457b6f42f50af4230d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga7bf82c8b0e6415457b6f42f50af4230d">SGTL_I2C_BITRATE</a>&#160;&#160;&#160;100000U</td></tr>
+<tr class="memdesc:ga7bf82c8b0e6415457b6f42f50af4230d"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl i2c baudrate <br/></td></tr>
+<tr class="separator:ga7bf82c8b0e6415457b6f42f50af4230d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga806041c275061b615faf70ee97505a00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga806041c275061b615faf70ee97505a00">snvs_lp_srtc_interrupts_t</a> { <a class="el" href="a00070.html#gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515">kSNVS_SRTC_AlarmInterrupt</a> = SNVS_LPCR_LPTA_EN_MASK
- }</td></tr>
-<tr class="memdesc:ga806041c275061b615faf70ee97505a00"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP interrupts.  <a href="a00070.html#ga806041c275061b615faf70ee97505a00">More...</a><br/></td></tr>
-<tr class="separator:ga806041c275061b615faf70ee97505a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gadcecf6b4fd6c8c56133821ebbd2df9de">snvs_lp_srtc_status_flags_t</a> { <a class="el" href="a00070.html#ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1">kSNVS_SRTC_AlarmInterruptFlag</a> = SNVS_LPSR_LPTA_MASK
- }</td></tr>
-<tr class="memdesc:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP flags.  <a href="a00070.html#gadcecf6b4fd6c8c56133821ebbd2df9de">More...</a><br/></td></tr>
-<tr class="separator:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga123f0196672467755ef8b828db230b24"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga123f0196672467755ef8b828db230b24">snvs_lp_external_tamper_status_t</a> </td></tr>
-<tr class="memdesc:ga123f0196672467755ef8b828db230b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP external tampers status. <br/></td></tr>
-<tr class="separator:ga123f0196672467755ef8b828db230b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5f4aea285aec7abf629056ef0eb3163"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gae5f4aea285aec7abf629056ef0eb3163">snvs_lp_external_tamper_polarity_t</a> </td></tr>
-<tr class="memdesc:gae5f4aea285aec7abf629056ef0eb3163"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP external tamper polarity. <br/></td></tr>
-<tr class="separator:gae5f4aea285aec7abf629056ef0eb3163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae44e3f9132afa438f0bfd6233928355f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614">kSNVS_ZMKSoftwareProgram</a>, 
+<tr class="memitem:gaf78d5250d200a4cc76a60dcff249a4d3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3aeff780e31f47de5bd4ae4f7c2247a943">kSGTL_ModuleADC</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f">kSNVS_ZMKHardwareProgram</a>
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3ac97955a1a57467c8a7a93629468c0ae5">kSGTL_ModuleDAC</a>, 
 <br/>
- }</td></tr>
-<tr class="memdesc:gae44e3f9132afa438f0bfd6233928355f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Zeroizable Master Key programming mode.  <a href="a00070.html#gae44e3f9132afa438f0bfd6233928355f">More...</a><br/></td></tr>
-<tr class="separator:gae44e3f9132afa438f0bfd6233928355f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62">kSNVS_OTPMK</a> = 0, 
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a6db304a2a1838b8733167b535efd1cc6">kSGTL_ModuleDAP</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> = 2, 
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a7c3ca8ea568a0109f5858469734f1f22">kSGTL_ModuleHP</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> = 3
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a5eec6607385362c2f1f67574f98bab7f">kSGTL_ModuleI2SIN</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3ad549fbd25f776da2e48029e7defb136d">kSGTL_ModuleI2SOUT</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a3cf24e3ca184744b13ce10adb648afcd">kSGTL_ModuleLineIn</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a04e0f93df81aacf8114308d95703248f">kSGTL_ModuleLineOut</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a4d7e27445f7842c7d420a3621ac73e72">kSGTL_ModuleMicin</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Master Key mode.  <a href="a00070.html#ga10b65b574393c82d6b6f3e5033c55d7b">More...</a><br/></td></tr>
-<tr class="separator:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaf78d5250d200a4cc76a60dcff249a4d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modules in Sgtl5000 board.  <a href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">More...</a><br/></td></tr>
+<tr class="separator:gaf78d5250d200a4cc76a60dcff249a4d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78ef5545b50946b6d168203283c20820"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga78ef5545b50946b6d168203283c20820">sgtl_route_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga78ef5545b50946b6d168203283c20820a1ea39c5bbafcc616613e8755b70573e9">kSGTL_RouteBypass</a> = 0x0, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga78ef5545b50946b6d168203283c20820ad379b8e67ddbbb27bc44c6d6f3cf7c0e">kSGTL_RoutePlayback</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga78ef5545b50946b6d168203283c20820ae11f7c67b7d1ab7e4dce3d927be7da00">kSGTL_RoutePlaybackandRecord</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga78ef5545b50946b6d168203283c20820ae79c7286d52a67b618e4e23a1f1306b6">kSGTL_RoutePlaybackwithDAP</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga78ef5545b50946b6d168203283c20820a53052344996dc1f90cf6457e2b81eb18">kSGTL_RoutePlaybackwithDAPandRecord</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga78ef5545b50946b6d168203283c20820a0c28a072be0500106b9b32a16f05f000">kSGTL_RouteRecord</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga78ef5545b50946b6d168203283c20820"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sgtl5000 data route.  <a href="a00070.html#ga78ef5545b50946b6d168203283c20820">More...</a><br/></td></tr>
+<tr class="separator:ga78ef5545b50946b6d168203283c20820"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9bd346f7776a687fe345e336127e5426"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga9bd346f7776a687fe345e336127e5426">sgtl_protocol_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga9bd346f7776a687fe345e336127e5426ab56aded98ae08bb3dd4c431e036eb9b7">kSGTL_BusI2S</a> = 0x0, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga9bd346f7776a687fe345e336127e5426a99d80a1bbb2ca42f8d8b9ded7d0fe156">kSGTL_BusLeftJustified</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga9bd346f7776a687fe345e336127e5426a742196d31e1ede4eb6d0b1bd6afcdc50">kSGTL_BusRightJustified</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga9bd346f7776a687fe345e336127e5426aae65c2ae38164483661ce81683e2cf6d">kSGTL_BusPCMA</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga9bd346f7776a687fe345e336127e5426a165348d47026247f859a40813f449cfd">kSGTL_BusPCMB</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga9bd346f7776a687fe345e336127e5426"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="a00070.html#ga9bd346f7776a687fe345e336127e5426">More...</a><br/></td></tr>
+<tr class="separator:ga9bd346f7776a687fe345e336127e5426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39b4e25c4e8f5fed29720be17a532fa8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga39b4e25c4e8f5fed29720be17a532fa8a4438d9d23b966a384697ac3959ec180c">kSGTL_HeadphoneLeft</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga39b4e25c4e8f5fed29720be17a532fa8a7c3a64195b071d4d17957f2de39a45a7">kSGTL_HeadphoneRight</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga39b4e25c4e8f5fed29720be17a532fa8aea79ecce1f81bf12000fcf64671502ea">kSGTL_LineoutLeft</a> = 2, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga39b4e25c4e8f5fed29720be17a532fa8abe25d4199f174f03f271a2ac335904bb">kSGTL_LineoutRight</a> = 3
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga39b4e25c4e8f5fed29720be17a532fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl play channel  <a href="a00070.html#ga39b4e25c4e8f5fed29720be17a532fa8">More...</a><br/></td></tr>
+<tr class="separator:ga39b4e25c4e8f5fed29720be17a532fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4efaf4e07364d6302f598569aa7e55dc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga4efaf4e07364d6302f598569aa7e55dca358889525fbd4a6d5998c17a2382ac16">kSGTL_RecordSourceLineIn</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga4efaf4e07364d6302f598569aa7e55dca3c1289899ca6bdbe2ee24346890a19e2">kSGTL_RecordSourceMic</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga4efaf4e07364d6302f598569aa7e55dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl record source _sgtl_record_source  <a href="a00070.html#ga4efaf4e07364d6302f598569aa7e55dc">More...</a><br/></td></tr>
+<tr class="separator:ga4efaf4e07364d6302f598569aa7e55dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34df7cc7f69a8ec535eec8a524dcbaf9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga34df7cc7f69a8ec535eec8a524dcbaf9ad99308b50ee139be94b584a66d999caf">kSGTL_PlaySourceLineIn</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a9c7fa540632ee8e4c733fb4ccebc8601">kSGTL_PlaySourceDAC</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga34df7cc7f69a8ec535eec8a524dcbaf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl play source _stgl_play_source  <a href="a00070.html#ga34df7cc7f69a8ec535eec8a524dcbaf9">More...</a><br/></td></tr>
+<tr class="separator:ga34df7cc7f69a8ec535eec8a524dcbaf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d2c82787cda907a0ac8646e11171db8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga1d2c82787cda907a0ac8646e11171db8">sgtl_sclk_edge_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga1d2c82787cda907a0ac8646e11171db8aa89baee03025ca12e2fd8eb03909724c">kSGTL_SclkValidEdgeRising</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga1d2c82787cda907a0ac8646e11171db8a0e8f446d380d7f3c859b68ffe5a64a08">kSGTL_SclkValidEdgeFailling</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1d2c82787cda907a0ac8646e11171db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">SGTL SCLK valid edge.  <a href="a00070.html#ga1d2c82787cda907a0ac8646e11171db8">More...</a><br/></td></tr>
+<tr class="separator:ga1d2c82787cda907a0ac8646e11171db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gad2bc4630c869c62dcaee50c1bcd0897e">SNVS_LP_SRTC_Init</a> (SNVS_Type *base, const <a class="el" href="a00070.html#a00483">snvs_lp_srtc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the SNVS clock and configures the peripheral for basic operation.  <a href="#gad2bc4630c869c62dcaee50c1bcd0897e">More...</a><br/></td></tr>
-<tr class="separator:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d3d092911324c7436c84516a3cc53ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga5d3d092911324c7436c84516a3cc53ab">SNVS_LP_SRTC_Deinit</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga5d3d092911324c7436c84516a3cc53ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the SRTC timer.  <a href="#ga5d3d092911324c7436c84516a3cc53ab">More...</a><br/></td></tr>
-<tr class="separator:ga5d3d092911324c7436c84516a3cc53ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gab52bbf92230eca2bcfc590ad5733d6aa">SNVS_LP_SRTC_GetDefaultConfig</a> (<a class="el" href="a00070.html#a00483">snvs_lp_srtc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SNVS_LP config struct with the default settings.  <a href="#gab52bbf92230eca2bcfc590ad5733d6aa">More...</a><br/></td></tr>
-<tr class="separator:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dd1b8225b23f6e47c4abed5bf74709f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga5dd1b8225b23f6e47c4abed5bf74709f">SGTL_Init</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#a00497">sgtl_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga5dd1b8225b23f6e47c4abed5bf74709f"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl5000 initialize function.  <a href="#ga5dd1b8225b23f6e47c4abed5bf74709f">More...</a><br/></td></tr>
+<tr class="separator:ga5dd1b8225b23f6e47c4abed5bf74709f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ef9c339bf1ac795d7e5f3c42cebafb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga1ef9c339bf1ac795d7e5f3c42cebafb7">SGTL_SetDataRoute</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#ga78ef5545b50946b6d168203283c20820">sgtl_route_t</a> route)</td></tr>
+<tr class="memdesc:ga1ef9c339bf1ac795d7e5f3c42cebafb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set audio data route in sgtl5000.  <a href="#ga1ef9c339bf1ac795d7e5f3c42cebafb7">More...</a><br/></td></tr>
+<tr class="separator:ga1ef9c339bf1ac795d7e5f3c42cebafb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8087efbfa0ae9c2644d6191f441d9df0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga8087efbfa0ae9c2644d6191f441d9df0">SGTL_SetProtocol</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#ga9bd346f7776a687fe345e336127e5426">sgtl_protocol_t</a> protocol)</td></tr>
+<tr class="memdesc:ga8087efbfa0ae9c2644d6191f441d9df0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the audio transfer protocol.  <a href="#ga8087efbfa0ae9c2644d6191f441d9df0">More...</a><br/></td></tr>
+<tr class="separator:ga8087efbfa0ae9c2644d6191f441d9df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga872cb128c9d0445c60dee6dbc044c7b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga872cb128c9d0445c60dee6dbc044c7b3">SGTL_SetMasterSlave</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, bool master)</td></tr>
+<tr class="memdesc:ga872cb128c9d0445c60dee6dbc044c7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set sgtl5000 as master or slave.  <a href="#ga872cb128c9d0445c60dee6dbc044c7b3">More...</a><br/></td></tr>
+<tr class="separator:ga872cb128c9d0445c60dee6dbc044c7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga88af855c5959f6d814bd8f8327e168d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga88af855c5959f6d814bd8f8327e168d5">SGTL_SetVolume</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a> module, uint32_t volume)</td></tr>
+<tr class="memdesc:ga88af855c5959f6d814bd8f8327e168d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the volume of different modules in sgtl5000.  <a href="#ga88af855c5959f6d814bd8f8327e168d5">More...</a><br/></td></tr>
+<tr class="separator:ga88af855c5959f6d814bd8f8327e168d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d0af6998eff44ee5765988e05d68434"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga6d0af6998eff44ee5765988e05d68434">SGTL_GetVolume</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a> module)</td></tr>
+<tr class="memdesc:ga6d0af6998eff44ee5765988e05d68434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the volume of different modules in sgtl5000.  <a href="#ga6d0af6998eff44ee5765988e05d68434">More...</a><br/></td></tr>
+<tr class="separator:ga6d0af6998eff44ee5765988e05d68434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c3a087636393265417c9435b6fc57c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga4c3a087636393265417c9435b6fc57c2">SGTL_SetMute</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a> module, bool mute)</td></tr>
+<tr class="memdesc:ga4c3a087636393265417c9435b6fc57c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute/unmute modules in sgtl5000.  <a href="#ga4c3a087636393265417c9435b6fc57c2">More...</a><br/></td></tr>
+<tr class="separator:ga4c3a087636393265417c9435b6fc57c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51bf307e712104f5942d4cf64c60e624"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga51bf307e712104f5942d4cf64c60e624">SGTL_EnableModule</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a> module)</td></tr>
+<tr class="memdesc:ga51bf307e712104f5942d4cf64c60e624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable expected devices.  <a href="#ga51bf307e712104f5942d4cf64c60e624">More...</a><br/></td></tr>
+<tr class="separator:ga51bf307e712104f5942d4cf64c60e624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga26a3dba16af7a79e072f71d179dc00e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga26a3dba16af7a79e072f71d179dc00e6">SGTL_DisableModule</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, <a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a> module)</td></tr>
+<tr class="memdesc:ga26a3dba16af7a79e072f71d179dc00e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable expected devices.  <a href="#ga26a3dba16af7a79e072f71d179dc00e6">More...</a><br/></td></tr>
+<tr class="separator:ga26a3dba16af7a79e072f71d179dc00e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga27221640262b10948a03f3178e379814"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga27221640262b10948a03f3178e379814">SGTL_Deinit</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga27221640262b10948a03f3178e379814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit the sgtl5000 codec.  <a href="#ga27221640262b10948a03f3178e379814">More...</a><br/></td></tr>
+<tr class="separator:ga27221640262b10948a03f3178e379814"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga120c853dc3a86f5c70c4fbef309b6ef5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga120c853dc3a86f5c70c4fbef309b6ef5">SGTL_ConfigDataFormat</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits)</td></tr>
+<tr class="memdesc:ga120c853dc3a86f5c70c4fbef309b6ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the data format of audio data.  <a href="#ga120c853dc3a86f5c70c4fbef309b6ef5">More...</a><br/></td></tr>
+<tr class="separator:ga120c853dc3a86f5c70c4fbef309b6ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3052a63c17bdfdfeac94d1011434af5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3052a63c17bdfdfeac94d1011434af5d">SGTL_SetPlay</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, uint32_t playSource)</td></tr>
+<tr class="memdesc:ga3052a63c17bdfdfeac94d1011434af5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">select SGTL codec play source.  <a href="#ga3052a63c17bdfdfeac94d1011434af5d">More...</a><br/></td></tr>
+<tr class="separator:ga3052a63c17bdfdfeac94d1011434af5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf929ad37a6dd584cd5f17d52560ef7df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaf929ad37a6dd584cd5f17d52560ef7df">SGTL_SetRecord</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, uint32_t recordSource)</td></tr>
+<tr class="memdesc:gaf929ad37a6dd584cd5f17d52560ef7df"><td class="mdescLeft">&#160;</td><td class="mdescRight">select SGTL codec record source.  <a href="#gaf929ad37a6dd584cd5f17d52560ef7df">More...</a><br/></td></tr>
+<tr class="separator:gaf929ad37a6dd584cd5f17d52560ef7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f0eb0cad0476f34f65811b99d58752f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga1f0eb0cad0476f34f65811b99d58752f">SGTL_WriteReg</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, uint16_t reg, uint16_t val)</td></tr>
+<tr class="memdesc:ga1f0eb0cad0476f34f65811b99d58752f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register to sgtl using I2C.  <a href="#ga1f0eb0cad0476f34f65811b99d58752f">More...</a><br/></td></tr>
+<tr class="separator:ga1f0eb0cad0476f34f65811b99d58752f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad044b5a578bac8480229730d610f22b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gad044b5a578bac8480229730d610f22b6">SGTL_ReadReg</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, uint16_t reg, uint16_t *val)</td></tr>
+<tr class="memdesc:gad044b5a578bac8480229730d610f22b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read register from sgtl using I2C.  <a href="#gad044b5a578bac8480229730d610f22b6">More...</a><br/></td></tr>
+<tr class="separator:gad044b5a578bac8480229730d610f22b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43f1ac7cec503ad6e6ea178b6fb691ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga43f1ac7cec503ad6e6ea178b6fb691ac">SGTL_ModifyReg</a> (<a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *handle, uint16_t reg, uint16_t clr_mask, uint16_t val)</td></tr>
+<tr class="memdesc:ga43f1ac7cec503ad6e6ea178b6fb691ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify some bits in the register using I2C.  <a href="#ga43f1ac7cec503ad6e6ea178b6fb691ac">More...</a><br/></td></tr>
+<tr class="separator:ga43f1ac7cec503ad6e6ea178b6fb691ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gac5e0fc5d0c368b596733f3d40b212366"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac5e0fc5d0c368b596733f3d40b212366"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gac5e0fc5d0c368b596733f3d40b212366">FSL_SNVS_LP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00249.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 4))</td></tr>
-<tr class="memdesc:gac5e0fc5d0c368b596733f3d40b212366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.4.4. <br/></td></tr>
-<tr class="separator:gac5e0fc5d0c368b596733f3d40b212366"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga742e45feb782fa6b454e20f405d1f3d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga742e45feb782fa6b454e20f405d1f3d9">SNVS_LP_Init</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga742e45feb782fa6b454e20f405d1f3d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the SNVS clock and configures the peripheral for basic operation.  <a href="#ga742e45feb782fa6b454e20f405d1f3d9">More...</a><br/></td></tr>
-<tr class="separator:ga742e45feb782fa6b454e20f405d1f3d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6184db24094f481adb2fa4511fdaa6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaf6184db24094f481adb2fa4511fdaa6a">SNVS_LP_Deinit</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:gaf6184db24094f481adb2fa4511fdaa6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit the SNVS LP section.  <a href="#gaf6184db24094f481adb2fa4511fdaa6a">More...</a><br/></td></tr>
-<tr class="separator:gaf6184db24094f481adb2fa4511fdaa6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Secure RTC (SRTC) current Time &amp; Alarm</h2></td></tr>
-<tr class="memitem:ga3c35b4b1671c53939c335097411b6e7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3c35b4b1671c53939c335097411b6e7d">SNVS_LP_SRTC_SetDatetime</a> (SNVS_Type *base, const <a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
-<tr class="memdesc:ga3c35b4b1671c53939c335097411b6e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS SRTC date and time according to the given time structure.  <a href="#ga3c35b4b1671c53939c335097411b6e7d">More...</a><br/></td></tr>
-<tr class="separator:ga3c35b4b1671c53939c335097411b6e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaf65b902de3d06aa9940686ae86b7f8fd">SNVS_LP_SRTC_GetDatetime</a> (SNVS_Type *base, <a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
-<tr class="memdesc:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SNVS SRTC time and stores it in the given time structure.  <a href="#gaf65b902de3d06aa9940686ae86b7f8fd">More...</a><br/></td></tr>
-<tr class="separator:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb419ef8b369945b4858abcb76e36462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gadb419ef8b369945b4858abcb76e36462">SNVS_LP_SRTC_SetAlarm</a> (SNVS_Type *base, const <a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *alarmTime)</td></tr>
-<tr class="memdesc:gadb419ef8b369945b4858abcb76e36462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS SRTC alarm time.  <a href="#gadb419ef8b369945b4858abcb76e36462">More...</a><br/></td></tr>
-<tr class="separator:gadb419ef8b369945b4858abcb76e36462"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9120c6c286567d4144763b875725ac3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gab9120c6c286567d4144763b875725ac3">SNVS_LP_SRTC_GetAlarm</a> (SNVS_Type *base, <a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
-<tr class="memdesc:gab9120c6c286567d4144763b875725ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the SNVS SRTC alarm time.  <a href="#gab9120c6c286567d4144763b875725ac3">More...</a><br/></td></tr>
-<tr class="separator:gab9120c6c286567d4144763b875725ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupt Interface</h2></td></tr>
-<tr class="memitem:gabff8182f0b6daa2a2bbafcaab0caf582"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gabff8182f0b6daa2a2bbafcaab0caf582">SNVS_LP_SRTC_EnableInterrupts</a> (SNVS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gabff8182f0b6daa2a2bbafcaab0caf582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected SNVS interrupts.  <a href="#gabff8182f0b6daa2a2bbafcaab0caf582">More...</a><br/></td></tr>
-<tr class="separator:gabff8182f0b6daa2a2bbafcaab0caf582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecc4336193810a19ed278327f1d9b320"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaecc4336193810a19ed278327f1d9b320">SNVS_LP_SRTC_DisableInterrupts</a> (SNVS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaecc4336193810a19ed278327f1d9b320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected SNVS interrupts.  <a href="#gaecc4336193810a19ed278327f1d9b320">More...</a><br/></td></tr>
-<tr class="separator:gaecc4336193810a19ed278327f1d9b320"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada2c47f87ffb9ff6eaeabe62796627bd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gada2c47f87ffb9ff6eaeabe62796627bd">SNVS_LP_SRTC_GetEnabledInterrupts</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:gada2c47f87ffb9ff6eaeabe62796627bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled SNVS interrupts.  <a href="#gada2c47f87ffb9ff6eaeabe62796627bd">More...</a><br/></td></tr>
-<tr class="separator:gada2c47f87ffb9ff6eaeabe62796627bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status Interface</h2></td></tr>
-<tr class="memitem:ga8d98bd36bcee5f9639346172eba5294b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga8d98bd36bcee5f9639346172eba5294b">SNVS_LP_SRTC_GetStatusFlags</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga8d98bd36bcee5f9639346172eba5294b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SNVS status flags.  <a href="#ga8d98bd36bcee5f9639346172eba5294b">More...</a><br/></td></tr>
-<tr class="separator:ga8d98bd36bcee5f9639346172eba5294b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b35224486431ebc7dd76707e5ab2c84"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga4b35224486431ebc7dd76707e5ab2c84">SNVS_LP_SRTC_ClearStatusFlags</a> (SNVS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga4b35224486431ebc7dd76707e5ab2c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the SNVS status flags.  <a href="#ga4b35224486431ebc7dd76707e5ab2c84">More...</a><br/></td></tr>
-<tr class="separator:ga4b35224486431ebc7dd76707e5ab2c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Timer Start and Stop</h2></td></tr>
-<tr class="memitem:gaa4af8e629107ca2df7b64d11a5afa01e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaa4af8e629107ca2df7b64d11a5afa01e">SNVS_LP_SRTC_StartTimer</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:gaa4af8e629107ca2df7b64d11a5afa01e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the SNVS SRTC time counter.  <a href="#gaa4af8e629107ca2df7b64d11a5afa01e">More...</a><br/></td></tr>
-<tr class="separator:gaa4af8e629107ca2df7b64d11a5afa01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga413bc4eb1389aec4a61e3e54a08ec5f3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga413bc4eb1389aec4a61e3e54a08ec5f3">SNVS_LP_SRTC_StopTimer</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga413bc4eb1389aec4a61e3e54a08ec5f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the SNVS SRTC time counter.  <a href="#ga413bc4eb1389aec4a61e3e54a08ec5f3">More...</a><br/></td></tr>
-<tr class="separator:ga413bc4eb1389aec4a61e3e54a08ec5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-External tampering</h2></td></tr>
-<tr class="memitem:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga5b3b4bc95b7ad64a7c37d75f94f57a05">SNVS_LP_PassiveTamperPin_GetDefaultConfig</a> (<a class="el" href="a00070.html#a00482">snvs_lp_passive_tamper_t</a> *config)</td></tr>
-<tr class="memdesc:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SNVS tamper pin config struct with the default settings.  <a href="#ga5b3b4bc95b7ad64a7c37d75f94f57a05">More...</a><br/></td></tr>
-<tr class="separator:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Monotonic Counter (MC)</h2></td></tr>
-<tr class="memitem:gaef92c80f282401b4db14ae4899997f20"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaef92c80f282401b4db14ae4899997f20">SNVS_LP_EnableMonotonicCounter</a> (SNVS_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaef92c80f282401b4db14ae4899997f20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the Monotonic Counter.  <a href="#gaef92c80f282401b4db14ae4899997f20">More...</a><br/></td></tr>
-<tr class="separator:gaef92c80f282401b4db14ae4899997f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a8eacfd2bae28cc0417785f8355f141"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga5a8eacfd2bae28cc0417785f8355f141">SNVS_LP_GetMonotonicCounter</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga5a8eacfd2bae28cc0417785f8355f141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current Monotonic Counter.  <a href="#ga5a8eacfd2bae28cc0417785f8355f141">More...</a><br/></td></tr>
-<tr class="separator:ga5a8eacfd2bae28cc0417785f8355f141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47bb73abadc43aa50a4dfdaa86a78293"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga47bb73abadc43aa50a4dfdaa86a78293">SNVS_LP_IncreaseMonotonicCounter</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga47bb73abadc43aa50a4dfdaa86a78293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the Monotonic Counter.  <a href="#ga47bb73abadc43aa50a4dfdaa86a78293">More...</a><br/></td></tr>
-<tr class="separator:ga47bb73abadc43aa50a4dfdaa86a78293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Zeroizable Master Key (ZMK)</h2></td></tr>
-<tr class="memitem:ga10144a7135dd4a278c541d5e37a27ba1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga10144a7135dd4a278c541d5e37a27ba1">SNVS_LP_WriteZeroizableMasterKey</a> (SNVS_Type *base, uint32_t ZMKey[<a class="el" href="a00070.html#ga0eb6096d8a29431a527f42d2207df7bd">SNVS_ZMK_REG_COUNT</a>])</td></tr>
-<tr class="memdesc:ga10144a7135dd4a278c541d5e37a27ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write Zeroizable Master Key (ZMK) to the SNVS registers.  <a href="#ga10144a7135dd4a278c541d5e37a27ba1">More...</a><br/></td></tr>
-<tr class="separator:ga10144a7135dd4a278c541d5e37a27ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f8c7a22bd75612f3ecfcc64b2ca12d9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga4f8c7a22bd75612f3ecfcc64b2ca12d9">SNVS_LP_SetZeroizableMasterKeyValid</a> (SNVS_Type *base, bool valid)</td></tr>
-<tr class="memdesc:ga4f8c7a22bd75612f3ecfcc64b2ca12d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Zeroizable Master Key valid.  <a href="#ga4f8c7a22bd75612f3ecfcc64b2ca12d9">More...</a><br/></td></tr>
-<tr class="separator:ga4f8c7a22bd75612f3ecfcc64b2ca12d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga84aa6371b64d17ad9dd059a32cfcf0ba">SNVS_LP_GetZeroizableMasterKeyValid</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Zeroizable Master Key valid status.  <a href="#ga84aa6371b64d17ad9dd059a32cfcf0ba">More...</a><br/></td></tr>
-<tr class="separator:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4468c4f948d4529d21d2717f9af21fb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaa4468c4f948d4529d21d2717f9af21fb">SNVS_LP_SetZeroizableMasterKeyProgramMode</a> (SNVS_Type *base, <a class="el" href="a00070.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a> mode)</td></tr>
-<tr class="memdesc:gaa4468c4f948d4529d21d2717f9af21fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Zeroizable Master Key programming mode.  <a href="#gaa4468c4f948d4529d21d2717f9af21fb">More...</a><br/></td></tr>
-<tr class="separator:gaa4468c4f948d4529d21d2717f9af21fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f0c2c01a10193906563254794af6f2b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga9f0c2c01a10193906563254794af6f2b">SNVS_LP_EnableZeroizableMasterKeyECC</a> (SNVS_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga9f0c2c01a10193906563254794af6f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable Zeroizable Master Key ECC.  <a href="#ga9f0c2c01a10193906563254794af6f2b">More...</a><br/></td></tr>
-<tr class="separator:ga9f0c2c01a10193906563254794af6f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf546c45ff65189f400d757cf5f35223f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaf546c45ff65189f400d757cf5f35223f">SNVS_LP_SetMasterKeyMode</a> (SNVS_Type *base, <a class="el" href="a00070.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a> mode)</td></tr>
-<tr class="memdesc:gaf546c45ff65189f400d757cf5f35223f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set SNVS Master Key mode.  <a href="#gaf546c45ff65189f400d757cf5f35223f">More...</a><br/></td></tr>
-<tr class="separator:gaf546c45ff65189f400d757cf5f35223f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb25f9b960a10309cc4b9b2cb0f0c063"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gacb25f9b960a10309cc4b9b2cb0f0c063">FSL_SGTL5000_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
+<tr class="memdesc:gacb25f9b960a10309cc4b9b2cb0f0c063"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.1.1.  <a href="#gacb25f9b960a10309cc4b9b2cb0f0c063">More...</a><br/></td></tr>
+<tr class="separator:gacb25f9b960a10309cc4b9b2cb0f0c063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00482" id="a00482"></a>
+<a name="a00496" id="a00496"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct snvs_lp_passive_tamper_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<a name="a00484" id="a00484"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct snvs_lp_srtc_datetime_t</td>
+          <td class="memname">struct sgtl_audio_format_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a03a4361ff2481ab7ed890c60f3ac68b7">year</a></td></tr>
-<tr class="memdesc:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1970 to 2099.  <a href="#a03a4361ff2481ab7ed890c60f3ac68b7">More...</a><br/></td></tr>
-<tr class="separator:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#afeeab32d19b15b5dd7ebbcd3c1322e28">month</a></td></tr>
-<tr class="memdesc:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 12.  <a href="#afeeab32d19b15b5dd7ebbcd3c1322e28">More...</a><br/></td></tr>
-<tr class="separator:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8325ab17dc714294c88414f24d03320d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a8325ab17dc714294c88414f24d03320d">day</a></td></tr>
-<tr class="memdesc:a8325ab17dc714294c88414f24d03320d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 31 (depending on month).  <a href="#a8325ab17dc714294c88414f24d03320d">More...</a><br/></td></tr>
-<tr class="separator:a8325ab17dc714294c88414f24d03320d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a4a70a512ba988adb1fb1e4e62ba11f29">hour</a></td></tr>
-<tr class="memdesc:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 23.  <a href="#a4a70a512ba988adb1fb1e4e62ba11f29">More...</a><br/></td></tr>
-<tr class="separator:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a266253051fa3ee775a27bffb92d9be5b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a266253051fa3ee775a27bffb92d9be5b">minute</a></td></tr>
-<tr class="memdesc:a266253051fa3ee775a27bffb92d9be5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a266253051fa3ee775a27bffb92d9be5b">More...</a><br/></td></tr>
-<tr class="separator:a266253051fa3ee775a27bffb92d9be5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24f3ad7303d4b70ca927c385490a3448"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a24f3ad7303d4b70ca927c385490a3448">second</a></td></tr>
-<tr class="memdesc:a24f3ad7303d4b70ca927c385490a3448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a24f3ad7303d4b70ca927c385490a3448">More...</a><br/></td></tr>
-<tr class="separator:a24f3ad7303d4b70ca927c385490a3448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0edadf6baf0a743e4765421ad2abc3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0edadf6baf0a743e4765421ad2abc3f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ae0edadf6baf0a743e4765421ad2abc3f">mclk_HZ</a></td></tr>
+<tr class="memdesc:ae0edadf6baf0a743e4765421ad2abc3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">master clock <br/></td></tr>
+<tr class="separator:ae0edadf6baf0a743e4765421ad2abc3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47b2d7178ab3a15a56b8972b2d2eac29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47b2d7178ab3a15a56b8972b2d2eac29"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a47b2d7178ab3a15a56b8972b2d2eac29">sampleRate</a></td></tr>
+<tr class="memdesc:a47b2d7178ab3a15a56b8972b2d2eac29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample rate. <br/></td></tr>
+<tr class="separator:a47b2d7178ab3a15a56b8972b2d2eac29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78334148115e196b31db9b1a302a4941"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78334148115e196b31db9b1a302a4941"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a78334148115e196b31db9b1a302a4941">bitWidth</a></td></tr>
+<tr class="memdesc:a78334148115e196b31db9b1a302a4941"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bit width. <br/></td></tr>
+<tr class="separator:a78334148115e196b31db9b1a302a4941"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cdfd73fb1b74ee97d94e2e183af5a00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cdfd73fb1b74ee97d94e2e183af5a00"></a>
+<a class="el" href="a00070.html#ga1d2c82787cda907a0ac8646e11171db8">sgtl_sclk_edge_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a9cdfd73fb1b74ee97d94e2e183af5a00">sclkEdge</a></td></tr>
+<tr class="memdesc:a9cdfd73fb1b74ee97d94e2e183af5a00"><td class="mdescLeft">&#160;</td><td class="mdescRight">sclk valid edge <br/></td></tr>
+<tr class="separator:a9cdfd73fb1b74ee97d94e2e183af5a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00497" id="a00497"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct sgtl_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a8c4ed2bb6162b218a0aa8077d9bab4aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#ga78ef5545b50946b6d168203283c20820">sgtl_route_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a8c4ed2bb6162b218a0aa8077d9bab4aa">route</a></td></tr>
+<tr class="memdesc:a8c4ed2bb6162b218a0aa8077d9bab4aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio data route.  <a href="#a8c4ed2bb6162b218a0aa8077d9bab4aa">More...</a><br/></td></tr>
+<tr class="separator:a8c4ed2bb6162b218a0aa8077d9bab4aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1991cd986722d22c8964f08bc9d8c21d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1991cd986722d22c8964f08bc9d8c21d"></a>
+<a class="el" href="a00070.html#ga9bd346f7776a687fe345e336127e5426">sgtl_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a1991cd986722d22c8964f08bc9d8c21d">bus</a></td></tr>
+<tr class="memdesc:a1991cd986722d22c8964f08bc9d8c21d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio transfer protocol. <br/></td></tr>
+<tr class="separator:a1991cd986722d22c8964f08bc9d8c21d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4daf6a63ca5b405aac9332ca477c3501"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a4daf6a63ca5b405aac9332ca477c3501">master_slave</a></td></tr>
+<tr class="memdesc:a4daf6a63ca5b405aac9332ca477c3501"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master or slave.  <a href="#a4daf6a63ca5b405aac9332ca477c3501">More...</a><br/></td></tr>
+<tr class="separator:a4daf6a63ca5b405aac9332ca477c3501"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af41c4ad8e8dfb29b4fde75d76f9f43c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af41c4ad8e8dfb29b4fde75d76f9f43c8"></a>
+<a class="el" href="a00070.html#a00496">sgtl_audio_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#af41c4ad8e8dfb29b4fde75d76f9f43c8">format</a></td></tr>
+<tr class="memdesc:af41c4ad8e8dfb29b4fde75d76f9f43c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio format <br/></td></tr>
+<tr class="separator:af41c4ad8e8dfb29b4fde75d76f9f43c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdee01c708fa6a6beaf93e371347c590"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdee01c708fa6a6beaf93e371347c590"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#abdee01c708fa6a6beaf93e371347c590">slaveAddress</a></td></tr>
+<tr class="memdesc:abdee01c708fa6a6beaf93e371347c590"><td class="mdescLeft">&#160;</td><td class="mdescRight">code device slave address <br/></td></tr>
+<tr class="separator:abdee01c708fa6a6beaf93e371347c590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0552d0239f157964cdc500d73350d11d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0552d0239f157964cdc500d73350d11d"></a>
+<a class="el" href="a00015.html#a00346">codec_i2c_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a0552d0239f157964cdc500d73350d11d">i2cConfig</a></td></tr>
+<tr class="memdesc:a0552d0239f157964cdc500d73350d11d"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c bus configuration <br/></td></tr>
+<tr class="separator:a0552d0239f157964cdc500d73350d11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a03a4361ff2481ab7ed890c60f3ac68b7"></a>
+<a class="anchor" id="a8c4ed2bb6162b218a0aa8077d9bab4aa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t snvs_lp_srtc_datetime_t::year</td>
+          <td class="memname"><a class="el" href="a00070.html#ga78ef5545b50946b6d168203283c20820">sgtl_route_t</a> sgtl_config_t::route</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afeeab32d19b15b5dd7ebbcd3c1322e28"></a>
+<a class="anchor" id="a4daf6a63ca5b405aac9332ca477c3501"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::month</td>
+          <td class="memname">bool sgtl_config_t::master_slave</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8325ab17dc714294c88414f24d03320d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::day</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4a70a512ba988adb1fb1e4e62ba11f29"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::hour</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a266253051fa3ee775a27bffb92d9be5b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::minute</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a24f3ad7303d4b70ca927c385490a3448"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::second</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>True means master, false means slave. </p>
 
 </div>
 </div>
 
 </div>
 </div>
-<a name="a00483" id="a00483"></a>
+<a name="a00498" id="a00498"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct snvs_lp_srtc_config_t</td>
+          <td class="memname">struct sgtl_handle_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration settings for the SNVS_LP peripheral. To initialize this structure to reasonable defaults, call the SNVS_LP_GetDefaultConfig() function and pass a pointer to your config structure instance.</p>
-<p>The config struct can be made const so it resides in flash </p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a876e4c24fd02f7b939354f625e81b0a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a876e4c24fd02f7b939354f625e81b0a3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a876e4c24fd02f7b939354f625e81b0a3">srtcCalEnable</a></td></tr>
-<tr class="memdesc:a876e4c24fd02f7b939354f625e81b0a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: SRTC calibration mechanism is enabled; false: No calibration is used <br/></td></tr>
-<tr class="separator:a876e4c24fd02f7b939354f625e81b0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86c9d09f47c6c6fa4dd60c24088f2d4f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a86c9d09f47c6c6fa4dd60c24088f2d4f">srtcCalValue</a></td></tr>
-<tr class="memdesc:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines signed calibration value for SRTC; This is a 5-bit 2's complement value, range from -16 to +15. <br/></td></tr>
-<tr class="separator:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2187719e2579f70c815eff00bd8d7b98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2187719e2579f70c815eff00bd8d7b98"></a>
+<a class="el" href="a00070.html#a00497">sgtl_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a2187719e2579f70c815eff00bd8d7b98">config</a></td></tr>
+<tr class="memdesc:a2187719e2579f70c815eff00bd8d7b98"><td class="mdescLeft">&#160;</td><td class="mdescRight">sgtl config pointer <br/></td></tr>
+<tr class="separator:a2187719e2579f70c815eff00bd8d7b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee64ef7e3a76d06780a73c63d68d2a98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee64ef7e3a76d06780a73c63d68d2a98"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#aee64ef7e3a76d06780a73c63d68d2a98">i2cHandle</a> [<a class="el" href="a00070.html#ga5a006451f9e990a4d3255ed7265ff1ad">SGTL_I2C_HANDLER_SIZE</a>]</td></tr>
+<tr class="memdesc:aee64ef7e3a76d06780a73c63d68d2a98"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c handle <br/></td></tr>
+<tr class="separator:aee64ef7e3a76d06780a73c63d68d2a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gacb25f9b960a10309cc4b9b2cb0f0c063"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_SGTL5000_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gab0aa3e54cd2934b67b9882957456c391"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CHIP_ID&#160;&#160;&#160;0x0000U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga58ceb20f920b2b006c74eeeae992830a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SGTL5000_I2C_ADDR&#160;&#160;&#160;0x0A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga806041c275061b615faf70ee97505a00"></a>
+<a class="anchor" id="gaf78d5250d200a4cc76a60dcff249a4d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00070.html#ga806041c275061b615faf70ee97505a00">snvs_lp_srtc_interrupts_t</a></td>
+          <td class="memname">enum <a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515"></a>kSNVS_SRTC_AlarmInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>SRTC time alarm. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3aeff780e31f47de5bd4ae4f7c2247a943"></a>kSGTL_ModuleADC</em>&nbsp;</td><td class="fielddoc">
+<p>ADC module in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3ac97955a1a57467c8a7a93629468c0ae5"></a>kSGTL_ModuleDAC</em>&nbsp;</td><td class="fielddoc">
+<p>DAC module in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3a6db304a2a1838b8733167b535efd1cc6"></a>kSGTL_ModuleDAP</em>&nbsp;</td><td class="fielddoc">
+<p>DAP module in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3a7c3ca8ea568a0109f5858469734f1f22"></a>kSGTL_ModuleHP</em>&nbsp;</td><td class="fielddoc">
+<p>Headphone module in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3a5eec6607385362c2f1f67574f98bab7f"></a>kSGTL_ModuleI2SIN</em>&nbsp;</td><td class="fielddoc">
+<p>I2S-IN module in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3ad549fbd25f776da2e48029e7defb136d"></a>kSGTL_ModuleI2SOUT</em>&nbsp;</td><td class="fielddoc">
+<p>I2S-OUT module in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3a3cf24e3ca184744b13ce10adb648afcd"></a>kSGTL_ModuleLineIn</em>&nbsp;</td><td class="fielddoc">
+<p>Line-in moudle in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3a04e0f93df81aacf8114308d95703248f"></a>kSGTL_ModuleLineOut</em>&nbsp;</td><td class="fielddoc">
+<p>Line-out module in SGTL5000. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf78d5250d200a4cc76a60dcff249a4d3a4d7e27445f7842c7d420a3621ac73e72"></a>kSGTL_ModuleMicin</em>&nbsp;</td><td class="fielddoc">
+<p>Micphone module in SGTL5000. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gadcecf6b4fd6c8c56133821ebbd2df9de"></a>
+<a class="anchor" id="ga78ef5545b50946b6d168203283c20820"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00070.html#gadcecf6b4fd6c8c56133821ebbd2df9de">snvs_lp_srtc_status_flags_t</a></td>
+          <td class="memname">enum <a class="el" href="a00070.html#ga78ef5545b50946b6d168203283c20820">sgtl_route_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>Only provide some typical data route, not all route listed. Users cannot combine any routes, once a new route is set, the precios one would be replaced. </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1"></a>kSNVS_SRTC_AlarmInterruptFlag</em>&nbsp;</td><td class="fielddoc">
-<p>SRTC time alarm flag. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga78ef5545b50946b6d168203283c20820a1ea39c5bbafcc616613e8755b70573e9"></a>kSGTL_RouteBypass</em>&nbsp;</td><td class="fielddoc">
+<p>LINEIN-&gt;Headphone. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78ef5545b50946b6d168203283c20820ad379b8e67ddbbb27bc44c6d6f3cf7c0e"></a>kSGTL_RoutePlayback</em>&nbsp;</td><td class="fielddoc">
+<p>I2SIN-&gt;DAC-&gt;Headphone. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78ef5545b50946b6d168203283c20820ae11f7c67b7d1ab7e4dce3d927be7da00"></a>kSGTL_RoutePlaybackandRecord</em>&nbsp;</td><td class="fielddoc">
+<p>I2SIN-&gt;DAC-&gt;Headphone, LINEIN-&gt;ADC-&gt;I2SOUT. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78ef5545b50946b6d168203283c20820ae79c7286d52a67b618e4e23a1f1306b6"></a>kSGTL_RoutePlaybackwithDAP</em>&nbsp;</td><td class="fielddoc">
+<p>I2SIN-&gt;DAP-&gt;DAC-&gt;Headphone. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78ef5545b50946b6d168203283c20820a53052344996dc1f90cf6457e2b81eb18"></a>kSGTL_RoutePlaybackwithDAPandRecord</em>&nbsp;</td><td class="fielddoc">
+<p>I2SIN-&gt;DAP-&gt;DAC-&gt;HP, LINEIN-&gt;ADC-&gt;I2SOUT. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78ef5545b50946b6d168203283c20820a0c28a072be0500106b9b32a16f05f000"></a>kSGTL_RouteRecord</em>&nbsp;</td><td class="fielddoc">
+<p>LINEIN-&gt;ADC-&gt;I2SOUT. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gae44e3f9132afa438f0bfd6233928355f"></a>
+<a class="anchor" id="ga9bd346f7776a687fe345e336127e5426"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00070.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00070.html#ga9bd346f7776a687fe345e336127e5426">sgtl_protocol_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sgtl5000 only supports I2S format and PCM format. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614"></a>kSNVS_ZMKSoftwareProgram</em>&nbsp;</td><td class="fielddoc">
-<p>Software programming mode. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9bd346f7776a687fe345e336127e5426ab56aded98ae08bb3dd4c431e036eb9b7"></a>kSGTL_BusI2S</em>&nbsp;</td><td class="fielddoc">
+<p>I2S Type. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f"></a>kSNVS_ZMKHardwareProgram</em>&nbsp;</td><td class="fielddoc">
-<p>Hardware programming mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9bd346f7776a687fe345e336127e5426a99d80a1bbb2ca42f8d8b9ded7d0fe156"></a>kSGTL_BusLeftJustified</em>&nbsp;</td><td class="fielddoc">
+<p>Left justified. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9bd346f7776a687fe345e336127e5426a742196d31e1ede4eb6d0b1bd6afcdc50"></a>kSGTL_BusRightJustified</em>&nbsp;</td><td class="fielddoc">
+<p>Right Justified. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9bd346f7776a687fe345e336127e5426aae65c2ae38164483661ce81683e2cf6d"></a>kSGTL_BusPCMA</em>&nbsp;</td><td class="fielddoc">
+<p>PCMA. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9bd346f7776a687fe345e336127e5426a165348d47026247f859a40813f449cfd"></a>kSGTL_BusPCMB</em>&nbsp;</td><td class="fielddoc">
+<p>PCMB. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga10b65b574393c82d6b6f3e5033c55d7b"></a>
+<a class="anchor" id="ga39b4e25c4e8f5fed29720be17a532fa8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00070.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a></td>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="anchor" id="_sgtl_play_channel"></a></p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga39b4e25c4e8f5fed29720be17a532fa8a4438d9d23b966a384697ac3959ec180c"></a>kSGTL_HeadphoneLeft</em>&nbsp;</td><td class="fielddoc">
+<p>headphone left channel </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga39b4e25c4e8f5fed29720be17a532fa8a7c3a64195b071d4d17957f2de39a45a7"></a>kSGTL_HeadphoneRight</em>&nbsp;</td><td class="fielddoc">
+<p>headphone right channel </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga39b4e25c4e8f5fed29720be17a532fa8aea79ecce1f81bf12000fcf64671502ea"></a>kSGTL_LineoutLeft</em>&nbsp;</td><td class="fielddoc">
+<p>lineout left channel </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga39b4e25c4e8f5fed29720be17a532fa8abe25d4199f174f03f271a2ac335904bb"></a>kSGTL_LineoutRight</em>&nbsp;</td><td class="fielddoc">
+<p>lineout right channel </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga4efaf4e07364d6302f598569aa7e55dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62"></a>kSNVS_OTPMK</em>&nbsp;</td><td class="fielddoc">
-<p>One Time Programmable Master Key. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4efaf4e07364d6302f598569aa7e55dca358889525fbd4a6d5998c17a2382ac16"></a>kSGTL_RecordSourceLineIn</em>&nbsp;</td><td class="fielddoc">
+<p>record source line in </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe"></a>kSNVS_ZMK</em>&nbsp;</td><td class="fielddoc">
-<p>Zeroizable Master Key. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4efaf4e07364d6302f598569aa7e55dca3c1289899ca6bdbe2ee24346890a19e2"></a>kSGTL_RecordSourceMic</em>&nbsp;</td><td class="fielddoc">
+<p>record source single end </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e"></a>kSNVS_CMK</em>&nbsp;</td><td class="fielddoc">
-<p>Combined Master Key, it is XOR of OPTMK and ZMK. </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga34df7cc7f69a8ec535eec8a524dcbaf9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga34df7cc7f69a8ec535eec8a524dcbaf9ad99308b50ee139be94b584a66d999caf"></a>kSGTL_PlaySourceLineIn</em>&nbsp;</td><td class="fielddoc">
+<p>play source line in </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga34df7cc7f69a8ec535eec8a524dcbaf9a9c7fa540632ee8e4c733fb4ccebc8601"></a>kSGTL_PlaySourceDAC</em>&nbsp;</td><td class="fielddoc">
+<p>play source line in </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga1d2c82787cda907a0ac8646e11171db8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00070.html#ga1d2c82787cda907a0ac8646e11171db8">sgtl_sclk_edge_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1d2c82787cda907a0ac8646e11171db8aa89baee03025ca12e2fd8eb03909724c"></a>kSGTL_SclkValidEdgeRising</em>&nbsp;</td><td class="fielddoc">
+<p>SCLK valid edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1d2c82787cda907a0ac8646e11171db8a0e8f446d380d7f3c859b68ffe5a64a08"></a>kSGTL_SclkValidEdgeFailling</em>&nbsp;</td><td class="fielddoc">
+<p>SCLK failling edge. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga742e45feb782fa6b454e20f405d1f3d9"></a>
+<a class="anchor" id="ga5dd1b8225b23f6e47c4abed5bf74709f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SNVS_LP_Init </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_Init </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the SNVS driver.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf6184db24094f481adb2fa4511fdaa6a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad2bc4630c869c62dcaee50c1bcd0897e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_Init </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00070.html#a00483">snvs_lp_srtc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00497">sgtl_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -574,80 +662,39 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the SNVS driver.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5d3d092911324c7436c84516a3cc53ab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab52bbf92230eca2bcfc590ad5733d6aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_GetDefaultConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00070.html#a00483">snvs_lp_srtc_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default values are as follows. </p>
-<div class="fragment"><div class="line">*    config-&gt;srtccalenable = <span class="keyword">false</span>;</div>
-<div class="line">*    config-&gt;srtccalvalue = 0U;</div>
+<p>This function calls SGTL_I2CInit(), and in this function, some configurations are fixed. The second parameter can be NULL. If users want to change the SGTL5000 settings, a configure structure should be prepared. </p>
+<dl class="section note"><dt>Note</dt><dd>If the codec_config is NULL, it would initialize sgtl5000 using default settings. The default setting: <div class="fragment"><div class="line">* sgtl_init_t codec_config</div>
+<div class="line">* codec_config.route = <a class="code" href="a00070.html#gga78ef5545b50946b6d168203283c20820ae11f7c67b7d1ab7e4dce3d927be7da00">kSGTL_RoutePlaybackandRecord</a></div>
+<div class="line">* codec_config.bus = <a class="code" href="a00070.html#gga9bd346f7776a687fe345e336127e5426ab56aded98ae08bb3dd4c431e036eb9b7">kSGTL_BusI2S</a></div>
+<div class="line">* codec_config.master = slave</div>
 <div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">config</td><td>sgtl5000 configuration structure. If this pointer equals to NULL, it means using the default configuration. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Initialization status </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3c35b4b1671c53939c335097411b6e7d"></a>
+<a class="anchor" id="ga1ef9c339bf1ac795d7e5f3c42cebafb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetDatetime </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetDataRoute </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>datetime</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#ga78ef5545b50946b6d168203283c20820">sgtl_route_t</a>&#160;</td>
+          <td class="paramname"><em>route</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -656,32 +703,33 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function would set the data route according to route. The route cannot be combined, as all route would enable different modules.</p>
+<dl class="section note"><dt>Note</dt><dd>If a new route is set, the previous route would not work. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the date and time details are stored.</td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">route</td><td>Audio data route in sgtl5000. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success: Success in setting the time and starting the SNVS SRTC kStatus_InvalidArgument: Error because the datetime format is incorrect </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf65b902de3d06aa9940686ae86b7f8fd"></a>
+<a class="anchor" id="ga8087efbfa0ae9c2644d6191f441d9df0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SNVS_LP_SRTC_GetDatetime </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetProtocol </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>datetime</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#ga9bd346f7776a687fe345e336127e5426">sgtl_protocol_t</a>&#160;</td>
+          <td class="paramname"><em>protocol</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -690,354 +738,32 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sgtl5000 only supports I2S, I2S left, I2S right, PCM A, PCM B format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the date and time details are stored. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">protocol</td><td>Audio data transfer protocol. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gadb419ef8b369945b4858abcb76e36462"></a>
+<a class="anchor" id="ga872cb128c9d0445c60dee6dbc044c7b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetAlarm </td>
+          <td class="memname">void SGTL_SetMasterSlave </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>alarmTime</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The function sets the SRTC alarm. It also checks whether the specified alarm time is greater than the present time. If not, the function does not set the alarm and returns an error. Please note, that SRTC alarm has limited resolution because only 32 most significant bits of SRTC counter are compared to SRTC Alarm register. If the alarm time is beyond SRTC resolution, the function does not set the alarm and returns an error.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">alarmTime</td><td>Pointer to the structure where the alarm time is stored.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success: success in setting the SNVS SRTC alarm kStatus_InvalidArgument: Error because the alarm datetime format is incorrect kStatus_Fail: Error because the alarm time has already passed or is beyond resolution </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab9120c6c286567d4144763b875725ac3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_GetAlarm </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00070.html#a00484">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>datetime</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the alarm date and time details are stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabff8182f0b6daa2a2bbafcaab0caf582"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration :: _snvs_lp_srtc_interrupts </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaecc4336193810a19ed278327f1d9b320"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration :: _snvs_lp_srtc_interrupts </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gada2c47f87ffb9ff6eaeabe62796627bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SNVS_LP_SRTC_GetEnabledInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration :: _snvs_lp_srtc_interrupts </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8d98bd36bcee5f9639346172eba5294b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SNVS_LP_SRTC_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration :: _snvs_lp_srtc_status_flags </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4b35224486431ebc7dd76707e5ab2c84"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration :: _snvs_lp_srtc_status_flags </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa4af8e629107ca2df7b64d11a5afa01e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_StartTimer </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga413bc4eb1389aec4a61e3e54a08ec5f3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_StopTimer </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5b3b4bc95b7ad64a7c37d75f94f57a05"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_PassiveTamperPin_GetDefaultConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00070.html#a00482">snvs_lp_passive_tamper_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default values are as follows. code config-&gt;polarity = 0U; config-&gt;filterenable = 0U; if available on SoC config-&gt;filter = 0U; if available on SoC endcode </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaef92c80f282401b4db14ae4899997f20"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_EnableMonotonicCounter </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramname"><em>master</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1045,91 +771,38 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">enable</td><td>Pass true to enable, false to disable. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">master</td><td>1 represent master, 0 represent slave. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5a8eacfd2bae28cc0417785f8355f141"></a>
+<a class="anchor" id="ga88af855c5959f6d814bd8f8327e168d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t SNVS_LP_GetMonotonicCounter </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetVolume </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Current Monotonic Counter value. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga47bb73abadc43aa50a4dfdaa86a78293"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
         <tr>
-          <td class="memname">static void SNVS_LP_IncreaseMonotonicCounter </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Increase the Monotonic Counter by 1.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga10144a7135dd4a278c541d5e37a27ba1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_WriteZeroizableMasterKey </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a>&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>ZMKey</em>[SNVS_ZMK_REG_COUNT]&#160;</td>
+          <td class="paramname"><em>volume</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1138,34 +811,75 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function would set the volume of sgtl5000 modules. This interface set module volume. The function assume that left channel and right channel has the same volume.</p>
+<p>kSGTL_ModuleADC volume range: 0 - 0xF, 0dB - 22.5dB kSGTL_ModuleDAC volume range: 0x3C - 0xF0, 0dB - -90dB kSGTL_ModuleHP volume range: 0 - 0x7F, 12dB - -51.5dB kSGTL_ModuleLineOut volume range: 0 - 0x1F, 0.5dB steps</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">ZMKey</td><td>The ZMK write to the SNVS register. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">module</td><td>Sgtl5000 module, such as DAC, ADC and etc. </td></tr>
+    <tr><td class="paramname">volume</td><td>Volume value need to be set. The value is the exact value in register. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4f8c7a22bd75612f3ecfcc64b2ca12d9"></a>
+<a class="anchor" id="ga6d0af6998eff44ee5765988e05d68434"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SNVS_LP_SetZeroizableMasterKeyValid </td>
+          <td class="memname">uint32_t SGTL_GetVolume </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a>&#160;</td>
+          <td class="paramname"><em>module</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gets the volume of sgtl5000 modules. This interface get DAC module volume. The function assume that left channel and right channel has the same volume. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">module</td><td>Sgtl5000 module, such as DAC, ADC and etc. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Module value, the value is exact value in register. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4c3a087636393265417c9435b6fc57c2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetMute </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a>&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>valid</em>&#160;</td>
+          <td class="paramname"><em>mute</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1173,73 +887,33 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This API could only be called when using software programming mode. After writing ZMK using <a class="el" href="a00070.html#ga10144a7135dd4a278c541d5e37a27ba1">SNVS_LP_WriteZeroizableMasterKey</a>, call this API to make the ZMK valid.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">valid</td><td>Pass true to set valid, false to set invalid. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">module</td><td>Sgtl5000 module, such as DAC, ADC and etc. </td></tr>
+    <tr><td class="paramname">mute</td><td>True means mute, and false means unmute. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga84aa6371b64d17ad9dd059a32cfcf0ba"></a>
+<a class="anchor" id="ga51bf307e712104f5942d4cf64c60e624"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool SNVS_LP_GetZeroizableMasterKeyValid </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_EnableModule </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>In hardware programming mode, call this API to check whether the ZMK is valid.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if valid, false if invalid. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa4468c4f948d4529d21d2717f9af21fb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SetZeroizableMasterKeyProgramMode </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00070.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a>&#160;</td>
+          <td class="paramname"><em>module</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1247,40 +921,32 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mode</td><td>ZMK programming mode. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">module</td><td>Module expected to enable. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9f0c2c01a10193906563254794af6f2b"></a>
+<a class="anchor" id="ga26a3dba16af7a79e072f71d179dc00e6"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SNVS_LP_EnableZeroizableMasterKeyECC </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_DisableModule </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3">sgtl_module_t</a>&#160;</td>
+          <td class="paramname"><em>module</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1288,40 +954,67 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">enable</td><td>Pass true to enable, false to disable. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">module</td><td>Module expected to enable. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf546c45ff65189f400d757cf5f35223f"></a>
+<a class="anchor" id="ga27221640262b10948a03f3178e379814"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SNVS_LP_SetMasterKeyMode </td>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_Deinit </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Shut down Sgtl5000 modules. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga120c853dc3a86f5c70c4fbef309b6ef5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_ConfigDataFormat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00070.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mclk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sample_rate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bits</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1329,20 +1022,212 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>This function would configure the registers about the sample rate, bit depths. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mode</td><td>Master Key mode. </td></tr>
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
+    <tr><td class="paramname">mclk</td><td>Master clock frequency of I2S. </td></tr>
+    <tr><td class="paramname">sample_rate</td><td>Sample rate of audio file running in sgtl5000. Sgtl5000 now supports 8k, 11.025k, 12k, 16k, 22.05k, 24k, 32k, 44.1k, 48k and 96k sample rate. </td></tr>
+    <tr><td class="paramname">bits</td><td>Bit depth of audio file (Sgtl5000 only supports 16bit, 20bit, 24bit and 32 bit in HW). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>When <a class="el" href="a00070.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> or <a class="el" href="a00070.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> used, the SNVS_HP must be configured to enable the master key selection. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3052a63c17bdfdfeac94d1011434af5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetPlay </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>playSource</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
+    <tr><td class="paramname">playSource</td><td>play source value, reference _sgtl_play_source.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success, else failed. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf929ad37a6dd584cd5f17d52560ef7df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_SetRecord </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>recordSource</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure pointer. </td></tr>
+    <tr><td class="paramname">recordSource</td><td>record source value, reference _sgtl_record_source.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success, else failed. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1f0eb0cad0476f34f65811b99d58752f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_WriteReg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">reg</td><td>The register address in sgtl. </td></tr>
+    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad044b5a578bac8480229730d610f22b6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_ReadReg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">reg</td><td>The register address in sgtl. </td></tr>
+    <tr><td class="paramname">val</td><td>Value written to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga43f1ac7cec503ad6e6ea178b6fb691ac"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SGTL_ModifyReg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00498">sgtl_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>clr_mask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>Sgtl5000 handle structure. </td></tr>
+    <tr><td class="paramname">reg</td><td>The register address in sgtl. </td></tr>
+    <tr><td class="paramname">clr_mask</td><td>The mask code for the bits want to write. The bit you want to write should be 0. </td></tr>
+    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

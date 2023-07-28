@@ -126,9 +126,6 @@ void appl_hrs_init(void)
 
     APPL_TRC(
     "[HRS]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for Heart rate measurement */
@@ -377,23 +374,21 @@ void appl_hrs_server_reinitialize (void)
     hr_count = 0U;
 
 #if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
-    /* Configure and Enable Advertising */
-    if (BT_TRUE == APPL_IS_GAP_PERIPHERAL_ROLE())
-    {
-        appl_service_configure_adv(APPL_GAP_PROC_NORMAL, HCI_ADV_IND, 0x00U,
-                                   0x00U, NULL, 0x00U);
-        appl_service_enable_adv(0x01U);
-    }
+        if (BT_TRUE == APPL_IS_GAP_PERIPHERAL_ROLE())
+        {
+            /* Configure and Enable Advertising */
+            appl_service_configure_adv(APPL_GAP_PROC_NORMAL, HCI_ADV_IND, 0x00U, 0x00U, NULL, 0x00U);
+            appl_service_enable_adv(0x01U);
+        }
 #endif /* ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL)) */
 
 #if ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL))
-    /* Configure and Enable Scanning */
-    if (BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE())
-    {
-        appl_service_configure_scan(APPL_GAP_PROC_NORMAL, 0x00U, 0x00U,
-                                    0x00U);
-        appl_service_enable_scan(0x01U);
-    }
+        if (BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE())
+        {
+            /* Configure and Enable Scanning */
+            appl_service_configure_scan(APPL_GAP_PROC_NORMAL, 0x00U, 0x00U, 0x00U);
+            appl_service_enable_scan(0x01U);
+        }
 #endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
 }
 

@@ -1,25 +1,28 @@
 var a00035 =
 [
-    [ "kpp_config_t", "a00035.html#a00329", [
-      [ "activeRow", "a00035.html#affe1c0fe7c98a7bbd90e5da557a77029", null ],
-      [ "activeColumn", "a00035.html#a17262e678dbf479fc6fea48e685e94be", null ],
-      [ "interrupt", "a00035.html#a3f6f88fe9bcaf13690da0506e52f8bd9", null ]
+    [ "flexspi_edma_handle_t", "a00035.html#a00261", [
+      [ "txDmaHandle", "a00035.html#a3d0d98f2c483c09c5332d82d4811e1e5", null ],
+      [ "rxDmaHandle", "a00035.html#a2ea3c9da9a52a5a86aea6bfdf597464c", null ],
+      [ "transferSize", "a00035.html#a735f036ea3a12686df32463d71d135db", null ],
+      [ "nsize", "a00035.html#a59a42210dd29144ff40f14dc2f8c3a45", null ],
+      [ "nbytes", "a00035.html#aac19ce5f377eaa98f681f52522fe38ea", null ],
+      [ "count", "a00035.html#a320bc95b94f27763636e906dfa8fd482", null ],
+      [ "state", "a00035.html#a53cdf0a6ba8c3b69128d11fb31c6d064", null ],
+      [ "completionCallback", "a00035.html#a5169aca6ccaf34647525e4c6c6161580", null ],
+      [ "userData", "a00035.html#a5de6ceb6916611757b5fea0dcb1b2bc0", null ]
     ] ],
-    [ "FSL_KPP_DRIVER_VERSION", "a00035.html#ga35c20878a9d0b578ca2bbf50d98666a8", null ],
-    [ "kpp_interrupt_enable_t", "a00035.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72", [
-      [ "kKPP_keyDepressInterrupt", "a00035.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2", null ],
-      [ "kKPP_keyReleaseInterrupt", "a00035.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df", null ]
+    [ "FSL_FLEXSPI_EDMA_DRIVER_VERSION", "a00035.html#gaa636d92d25b3e2c9055df861b900886f", null ],
+    [ "flexspi_edma_callback_t", "a00035.html#ga18c417694a255c05206b53e1d882d9c3", null ],
+    [ "flexspi_edma_transfer_nsize_t", "a00035.html#gad06198fd35b6b1f821b671f6d836c3d4", [
+      [ "kFLEXPSI_EDMAnSize1Bytes", "a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4aac495b3503a41ac7ed4de613633acd6e", null ],
+      [ "kFLEXPSI_EDMAnSize2Bytes", "a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4a8f37b34be5953a3ca359ec23140c63d3", null ],
+      [ "kFLEXPSI_EDMAnSize4Bytes", "a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4aa682f158980e25274dd2588392c6e94d", null ],
+      [ "kFLEXPSI_EDMAnSize8Bytes", "a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4add962c3ad735e00107a4df51ded158ec", null ],
+      [ "kFLEXPSI_EDMAnSize32Bytes", "a00035.html#ggad06198fd35b6b1f821b671f6d836c3d4aedff211dd9ab9868632e0c3a8fe231fa", null ]
     ] ],
-    [ "kpp_sync_operation_t", "a00035.html#ga0c44e479c6d310cf4d9a701c09f73485", [
-      [ "kKPP_ClearKeyDepressSyncChain", "a00035.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b", null ],
-      [ "kKPP_SetKeyReleasesSyncChain", "a00035.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5", null ]
-    ] ],
-    [ "KPP_Init", "a00035.html#ga773203cef9b50a6c5864f78c05cb0c83", null ],
-    [ "KPP_Deinit", "a00035.html#ga910f3aec15296a1d993f9b4963a152fd", null ],
-    [ "KPP_EnableInterrupts", "a00035.html#ga4d8bc3929af0678c182047884c50f7db", null ],
-    [ "KPP_DisableInterrupts", "a00035.html#gaa7de1f02a42c4176605cf7053f78baab", null ],
-    [ "KPP_GetStatusFlag", "a00035.html#ga7e0b699fd3ac19ce1bbb95418871ab3e", null ],
-    [ "KPP_ClearStatusFlag", "a00035.html#gad5f48c3a6027700e16a3f9bf477fa7e6", null ],
-    [ "KPP_SetSynchronizeChain", "a00035.html#ga7a240001a7a2b5fb84754a9a75afcb86", null ],
-    [ "KPP_keyPressScanning", "a00035.html#ga636803e3b1c99ec6dc9756548d9ef7b9", null ]
+    [ "FLEXSPI_TransferCreateHandleEDMA", "a00035.html#ga73da3b504891554a3f5306c61d544035", null ],
+    [ "FLEXSPI_TransferUpdateSizeEDMA", "a00035.html#gab00370842d3c81263d34b672f0b2105b", null ],
+    [ "FLEXSPI_TransferEDMA", "a00035.html#ga2048a6a5bf9b8522297e3aea525bd4d4", null ],
+    [ "FLEXSPI_TransferAbortEDMA", "a00035.html#ga7cfea2cf3ddab6b2615906345a473f11", null ],
+    [ "FLEXSPI_TransferGetTransferCountEDMA", "a00035.html#gaa6edf877e695b01269c5a652ba6e4bd4", null ]
 ];

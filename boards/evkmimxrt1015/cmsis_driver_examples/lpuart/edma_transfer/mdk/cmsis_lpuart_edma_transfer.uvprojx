@@ -333,7 +333,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Driver/Include;../../../../../../devices/MIMXRT1015/template;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <ScatterFile>MIMXRT1015xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -660,6 +660,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -696,21 +711,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1046,7 +1046,7 @@
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Driver/Include;../../../../../../devices/MIMXRT1015/template;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1080,7 +1080,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1373,6 +1373,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1409,21 +1424,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1759,7 +1759,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Driver/Include;../../../../../../devices/MIMXRT1015/template;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1793,7 +1793,7 @@
             <ScatterFile>MIMXRT1015xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2086,6 +2086,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2122,21 +2137,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2472,7 +2472,7 @@
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1015DAF5A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../../devices/MIMXRT1015;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../CMSIS/Driver/Include;../../../../../../devices/MIMXRT1015/template;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2506,7 +2506,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2799,6 +2799,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2835,21 +2850,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>

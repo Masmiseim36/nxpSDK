@@ -98,7 +98,7 @@ DECL_STATIC APPL_HID_HOST_DEVICE_INFO hid_device_handle_list[BT_HID_HOST_MAX_DEV
 DECL_STATIC UCHAR hid_device_num_handles_free;
 
 /* SDP Handle */
-DECL_STATIC SDP_HANDLE sdp_handle ;
+DECL_STATIC SDP_HANDLE hid_host_sdp_handle ;
 
 /* HID host initialized. */
 DECL_STATIC UCHAR hid_host_initialized = 0x0U;
@@ -447,12 +447,12 @@ void main_hid_host_operations (void)
             /* Set the SDP Handle */
             SDP_SET_HANDLE
             (
-                sdp_handle,
+                hid_host_sdp_handle,
                 hid_device_bd_addr,
                 hid_host_sdp_cb
             );
 
-            retval = BT_sdp_open(&sdp_handle);
+            retval = BT_sdp_open(&hid_host_sdp_handle);
             if(API_SUCCESS != retval)
             {
                 LOG_DEBUG("SDP Open Failed. Reason: 0x%04X\n",
@@ -1367,6 +1367,9 @@ void hid_host_sdp_cb
 
     S_UUID     uuid[2U];
     UCHAR      num_uuids                = 2U;
+    
+    UINT32     attrib_id_range[1U];
+    UINT16     num_attrib_range = 0U;
 
     UINT16     attrib_ids[10U];
     UINT16     num_attribs              = 0U;
@@ -1395,7 +1398,7 @@ void hid_host_sdp_cb
     }
     else
     {
-        retval = BT_hid_host_get_handle_from_addr(sdp_handle.bd_addr, &handle);
+        retval = BT_hid_host_get_handle_from_addr(hid_host_sdp_handle.bd_addr, &handle);
         if (API_SUCCESS != retval)
         {
             LOG_DEBUG("Failed to get a valid handle\n");
@@ -1413,7 +1416,7 @@ void hid_host_sdp_cb
                 if(NULL == attrib_data)
                 {
                     LOG_DEBUG ("Allocation for Attribute data Failed.\n");
-                    (BT_IGNORE_RETURN_VALUE) BT_sdp_close (&sdp_handle);
+                    (BT_IGNORE_RETURN_VALUE) BT_sdp_close (&hid_host_sdp_handle);
                     break;
                 }
 
@@ -1422,7 +1425,12 @@ void hid_host_sdp_cb
 
                 uuid[0U].uuid_union.uuid_16 = HID_SERVICE_UUID;
                 uuid[1U].uuid_union.uuid_16 = L2CAP_UUID;
+#ifdef HID_APPL_HAVE_SDP_ATTR_RANGE
+                /* Attribute ID Range for 0x0000 to 0xFFFF */
+                attrib_id_range[0U] = 0x0000FFFFU;
 
+                num_attrib_range = 1U;
+#else /* HID_APPL_HAVE_SDP_ATTR_RANGE */
                 /* Attribute ID for Protocol Descriptor List */
                 attrib_ids[0U] = PROTOCOL_DESC_LIST;
 
@@ -1450,16 +1458,18 @@ void hid_host_sdp_cb
                 num_attribs += 2U;
     #endif /* HID_1_1 */
 
+#endif /* HID_APPL_HAVE_SDP_ATTR_RANGE */
+
                 /* Do Service Search Request */
                 retval = BT_sdp_servicesearchattributerequest
                          (
-                             &sdp_handle,
+                             &hid_host_sdp_handle,
                              uuid,
                              num_uuids,
                              attrib_ids,
                              num_attribs,
-                             NULL,
-                             0x00U,
+                             attrib_id_range,
+                             num_attrib_range,
                              attrib_data,
                              &len_attrib_data
                          );
@@ -1467,7 +1477,7 @@ void hid_host_sdp_cb
                 if(API_SUCCESS != retval)
                 {
                     BT_free_mem(attrib_data);
-                    (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&sdp_handle);
+                    (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&hid_host_sdp_handle);
                 }
                 break;
 
@@ -1530,24 +1540,26 @@ void hid_host_sdp_cb
                 ssr_len = sizeof(ssr_val);
                 if (API_SUCCESS != BT_sdp_get_attr_value(HID_SSR_HOST_MAX_LATENCY_ATTR_ID, data, ssr_val, &ssr_len))
                 {
-                    LOG_DEBUG("BT_sdp_get_attr_val unsuccessful.\n");
+                    printf("BT_sdp_get_attr_val unsuccessful for SSR Latency.\n");
                     BT_free_mem(data);
                     break;
                 }
-                BT_UNPACK_BE_2_BYTE(&ssr_latency, ssr_val);
+                BT_UNPACK_LE_2_BYTE(&ssr_latency, ssr_val);
+                printf ("SSR Latency - 0x%04X\n", ssr_latency);
 
                 /* Obtain the HIDSSRTimeout attribute value */
                 ssr_len = sizeof(ssr_val);
                 if (API_SUCCESS != BT_sdp_get_attr_value(HID_SSR_HOST_MIN_TIMEOUT_ATTR_ID, data, ssr_val, &ssr_len))
                 {
-                    LOG_DEBUG("BT_sdp_get_attr_val unsuccessful.\n");
+                    printf("BT_sdp_get_attr_val unsuccessful for SSR Timeout.\n");
                     BT_free_mem(data);
                     break;
                 }
-                BT_UNPACK_BE_2_BYTE(&ssr_timeout, ssr_val);
+                BT_UNPACK_LE_2_BYTE(&ssr_timeout, ssr_val);
+                LOG_DEBUG ("SSR Timeout - 0x%04X\n", ssr_timeout);
 #endif /* HID_1_1 */
 
-                (BT_IGNORE_RETURN_VALUE) BT_sdp_close ( &sdp_handle );
+                (BT_IGNORE_RETURN_VALUE) BT_sdp_close ( &hid_host_sdp_handle );
                 break;
 
             case SDP_ErrorResponse:
@@ -1596,6 +1608,9 @@ HID_HOST_DEV_HANDLE hid_device_get_handle(void)
 
     retval = API_SUCCESS;
 
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    read_val = 0;
+
     if (BT_HID_HOST_MAX_DEVS == hid_device_num_handles_free)
     {
         LOG_DEBUG("Error: No devices are added in the list. \n");
@@ -1630,12 +1645,11 @@ HID_HOST_DEV_HANDLE hid_device_get_handle(void)
         }
 
         LOG_DEBUG("Choose the handle to be used:\n");
-        scanf("%d",&read_val);
-
-        handle = (HID_HOST_DEV_HANDLE)read_val;
-
-        if (handle < BT_HID_HOST_MAX_DEVS)
+        retval = appl_validate_params(&read_val,1U,0U,BT_HID_HOST_MAX_DEVS - 1U);
+        if (API_SUCCESS == retval)
         {
+            handle = (HID_HOST_DEV_HANDLE)read_val;
+
             /* Check if a valid handle is eneterd. */
             if (BT_HID_INVALID_HANDLE == hid_device_handle_list[handle].handle)
             {

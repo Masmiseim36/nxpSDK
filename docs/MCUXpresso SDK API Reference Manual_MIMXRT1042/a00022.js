@@ -1,10 +1,10 @@
 var a00022 =
 [
-    [ "elcdif_pixel_format_reg_t", "a00022.html#a00376", [
+    [ "elcdif_pixel_format_reg_t", "a00022.html#a00382", [
       [ "regCtrl", "a00022.html#a243f7bcead2cd9765740179f868418a9", null ],
       [ "regCtrl1", "a00022.html#ad31198998ee25bf96a29ba270ba0841d", null ]
     ] ],
-    [ "elcdif_rgb_mode_config_t", "a00022.html#a00377", [
+    [ "elcdif_rgb_mode_config_t", "a00022.html#a00383", [
       [ "panelWidth", "a00022.html#a6019faab572a2ca590379f05c6e46c51", null ],
       [ "panelHeight", "a00022.html#a1a4d5e151baba11eb7ce004ae1348b7b", null ],
       [ "hsw", "a00022.html#ac780ae2b80426ec933a490f824b08b5b", null ],
@@ -18,11 +18,11 @@ var a00022 =
       [ "pixelFormat", "a00022.html#ae3a7b3acf215c33febaf5c52cec9ea2c", null ],
       [ "dataBus", "a00022.html#a7a9bf62b63fba18f0cb9f4fb390b8217", null ]
     ] ],
-    [ "elcdif_as_buffer_config_t", "a00022.html#a00375", [
+    [ "elcdif_as_buffer_config_t", "a00022.html#a00381", [
       [ "bufferAddr", "a00022.html#af166d7fd726cc4bc90abf3fa5140c15d", null ],
       [ "pixelFormat", "a00022.html#a03873f7e13d6a3a2a549ba2a337bce8a", null ]
     ] ],
-    [ "elcdif_as_blend_config_t", "a00022.html#a00374", [
+    [ "elcdif_as_blend_config_t", "a00022.html#a00380", [
       [ "alpha", "a00022.html#a7259ea82353b9bdf03fd1a6fbbcde0be", null ],
       [ "invertAlpha", "a00022.html#a5be27ea072fae0fc346b4a26f89c1431", null ],
       [ "alphaMode", "a00022.html#a84b9c9865f5f08218e977b3102a47cbf", null ],

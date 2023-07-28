@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -57,112 +65,22 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkmimxrt1060
     ${SdkRootDirPath}/boards/evkmimxrt1060/wifi_examples/common
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
-    ${SdkRootDirPath}/middleware/wifi_nxp
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
-    ${SdkRootDirPath}/middleware/sdmmc
-    ${SdkRootDirPath}/components/gpio
-    ${SdkRootDirPath}/middleware/lwip
-    ${SdkRootDirPath}/devices/MIMXRT1062
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1062/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1060/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/components/osa
-    ${SdkRootDirPath}/components/wifi_bt_module
-)
+set_source_files_properties("${ProjDirPath}/../app_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../wifi_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 
-# include modules
-include(driver_cache_armv7_m7_MIMXRT1062)
-
-include(middleware_wifi_wifidriver_MIMXRT1062)
-
-include(middleware_freertos-kernel_MIMXRT1062)
-
-include(utility_debug_console_MIMXRT1062)
-
-include(middleware_wifi_sdio_MIMXRT1062)
-
-include(middleware_wifi_fwdnld_MIMXRT1062)
-
-include(middleware_sdmmc_sdio_MIMXRT1062)
-
-include(middleware_sdmmc_common_MIMXRT1062)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT1062)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1062)
-
-include(component_igpio_adapter_MIMXRT1062)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT1062)
-
-include(middleware_lwip_MIMXRT1062)
-
-include(middleware_wifi_MIMXRT1062)
-
-include(middleware_lwip_apps_lwiperf_MIMXRT1062)
-
-include(middleware_wifi_cli_MIMXRT1062)
-
-include(driver_clock_MIMXRT1062)
-
-include(driver_common_MIMXRT1062)
-
-include(device_MIMXRT1062_CMSIS_MIMXRT1062)
-
-include(component_lpuart_adapter_MIMXRT1062)
-
-include(component_serial_manager_MIMXRT1062)
-
-include(component_lists_MIMXRT1062)
-
-include(component_serial_manager_uart_MIMXRT1062)
-
-include(driver_lpuart_MIMXRT1062)
-
-include(device_MIMXRT1062_startup_MIMXRT1062)
-
-include(driver_iomuxc_MIMXRT1062)
-
-include(utility_assert_MIMXRT1062)
-
-include(driver_igpio_MIMXRT1062)
-
-include(driver_xip_device_MIMXRT1062)
-
-include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
-
-include(CMSIS_Include_core_cm_MIMXRT1062)
-
-include(middleware_freertos-kernel_extension_MIMXRT1062)
-
-include(middleware_wifi_sdio-2_MIMXRT1062)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT1062)
-
-include(component_osa_free_rtos_MIMXRT1062)
-
-include(driver_usdhc_MIMXRT1062)
-
-include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1062)
-
-include(middleware_wifi_common_files_MIMXRT1062)
-
-include(utilities_misc_utilities_MIMXRT1062)
-
-include(device_MIMXRT1062_system_MIMXRT1062)
-
+include(${SdkRootDirPath}/devices/MIMXRT1062/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -174,4 +92,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

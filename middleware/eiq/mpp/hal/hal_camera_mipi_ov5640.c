@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP.
+ * Copyright 2019-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -272,6 +272,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Init(
     dev->config.width = config->width;
     dev->config.height = config->height;
     dev->config.framerate = config->fps;
+    dev->config.format = config->format;
     dev->cap.callback = callback;
     dev->cap.param    = param;
 
@@ -286,11 +287,11 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Init(
     switch(config->format) {
     case MPP_PIXEL_YUV1P444:
     /* CSI input data bus is 24-bit, and save as XYUV8888.. */
-        cameraConfig.pixelFormat   = dev->config.format = kVIDEO_PixelFormatXYUV;
+        cameraConfig.pixelFormat   = kVIDEO_PixelFormatXYUV;
         cameraConfig.bytesPerPixel = 4;
         break;
     case MPP_PIXEL_ARGB:
-        cameraConfig.pixelFormat   = dev->config.format = kVIDEO_PixelFormatXRGB8888;
+        cameraConfig.pixelFormat   = kVIDEO_PixelFormatXRGB8888;
         cameraConfig.bytesPerPixel = 4;
         break;
     default:
@@ -429,7 +430,7 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Dequeue(const camera_dev_t *dev, vo
     }
 
     *data   = (void *)gCurrentBufferAddr;
-    *format = hal_fsl_to_mpp_pixeltype(dev->config.format);
+    *format = dev->config.format;
     HAL_LOGD("--HAL_CameraDev_MipiOv5640_Dequeue\n");
     return ret;
 }

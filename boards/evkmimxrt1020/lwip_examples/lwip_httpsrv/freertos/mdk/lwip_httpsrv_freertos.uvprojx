@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../components/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=2048" --predefine="-D__heap_size__=60000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=2048" --predefine="-D__heap_size__=60000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -506,6 +506,16 @@
               <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_enet.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
@@ -524,16 +534,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1756,16 +1756,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -1774,6 +1764,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2051,6 +2051,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2064,16 +2074,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2124,46 +2124,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2334,6 +2294,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2664,9 +2664,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../components/phy;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2700,7 +2700,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=2048" --predefine="-D__heap_size__=60000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=2048" --predefine="-D__heap_size__=60000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2842,6 +2842,16 @@
               <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_enet.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_common.h</FilePath>
@@ -2860,16 +2870,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4092,16 +4092,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -4110,6 +4100,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4387,6 +4387,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4400,16 +4410,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4460,46 +4460,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4670,6 +4630,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

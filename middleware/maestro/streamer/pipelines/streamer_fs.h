@@ -82,7 +82,4 @@ int streamer_get_fs_pipeline_config(char *filename, StreamerFileSrcConfig *confi
  * Externs
  */
 
-extern const int32_t stream_type_conversion(int32_t stream_type);
-extern const uint8_t cci_decoder_type_conversion(DecoderType audio_type);
-
 #endif /* _STREAMER_FS_H_ */

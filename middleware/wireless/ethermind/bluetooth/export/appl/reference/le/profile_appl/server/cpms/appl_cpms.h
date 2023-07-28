@@ -225,7 +225,7 @@ void appl_cpms_gatt_db_register(void);
 /* Profile Initialization */
 #define APPL_PROFILE_INIT() appl_cpms_init()
 #define APPL_PROFILE_BT_INIT() appl_cpms_bt_init()
-#define APPL_PROFILE_BT_DEINIT() appl_cmps_bt_deinit()
+#define APPL_PROFILE_BT_DEINIT() appl_cpms_bt_deinit()
 
 /* Profile Connection */
 #define APPL_PROFILE_CONNECT(x) \

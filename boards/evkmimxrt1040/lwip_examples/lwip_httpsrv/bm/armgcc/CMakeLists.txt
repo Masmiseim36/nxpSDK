@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -24,7 +32,7 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(lwip_httpsrv_bm)
 
-set(MCUX_BUILD_TYPES sdram_debug sdram_release debug release flexspi_nor_debug flexspi_nor_release)
+set(MCUX_BUILD_TYPES sdram_release release flexspi_nor_debug flexspi_nor_release)
 
 set(MCUX_SDK_PROJECT_NAME lwip_httpsrv_bm.elf)
 
@@ -49,84 +57,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/phy/device/phyksz8081
-    ${SdkRootDirPath}/devices/MIMXRT1042/drivers
-    ${SdkRootDirPath}/components/silicon_id
-    ${SdkRootDirPath}/components/silicon_id/socs/rt10xx
-    ${SdkRootDirPath}/middleware/lwip
-    ${SdkRootDirPath}/components/phy
-    ${SdkRootDirPath}/devices/MIMXRT1042
-    ${SdkRootDirPath}/devices/MIMXRT1042/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1042/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1040/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
 
-# include modules
-include(driver_phy-device-ksz8081_MIMXRT1042)
-
-include(driver_cache_armv7_m7_MIMXRT1042)
-
-include(component_silicon_id_MIMXRT1042)
-
-include(driver_common_MIMXRT1042)
-
-include(component_silicon_id_rt10xx_MIMXRT1042)
-
-include(middleware_lwip_enet_ethernetif_MIMXRT1042)
-
-include(middleware_lwip_MIMXRT1042)
-
-include(driver_phy-common_MIMXRT1042)
-
-include(driver_enet_MIMXRT1042)
-
-include(middleware_lwip_apps_httpd_MIMXRT1042)
-
-include(driver_clock_MIMXRT1042)
-
-include(device_MIMXRT1042_CMSIS_MIMXRT1042)
-
-include(utility_debug_console_MIMXRT1042)
-
-include(component_lpuart_adapter_MIMXRT1042)
-
-include(component_serial_manager_MIMXRT1042)
-
-include(component_lists_MIMXRT1042)
-
-include(component_serial_manager_uart_MIMXRT1042)
-
-include(driver_lpuart_MIMXRT1042)
-
-include(device_MIMXRT1042_startup_MIMXRT1042)
-
-include(driver_iomuxc_MIMXRT1042)
-
-include(utility_assert_MIMXRT1042)
-
-include(driver_igpio_MIMXRT1042)
-
-include(driver_xip_device_MIMXRT1042)
-
-include(driver_xip_board_evkmimxrt1040_MIMXRT1042)
-
-include(CMSIS_Include_core_cm_MIMXRT1042)
-
-include(middleware_lwip_apps_httpd_support_MIMXRT1042)
-
-include(utilities_misc_utilities_MIMXRT1042)
-
-include(device_MIMXRT1042_system_MIMXRT1042)
-
+include(${SdkRootDirPath}/devices/MIMXRT1042/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -138,4 +75,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

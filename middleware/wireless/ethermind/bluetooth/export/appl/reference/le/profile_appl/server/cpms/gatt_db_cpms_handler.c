@@ -104,7 +104,9 @@ API_RESULT gatt_db_cpms_measurment_handler
         appl_cpm_manage_brodcast (config);
         break;
     default:
-        CONSOLE_OUT("Invalid...\n");
+        CONSOLE_OUT(
+        "No Specific Application Handling Required for Operation 0x%02X\n",
+         params->db_op);
         break;
     }
     return retval;

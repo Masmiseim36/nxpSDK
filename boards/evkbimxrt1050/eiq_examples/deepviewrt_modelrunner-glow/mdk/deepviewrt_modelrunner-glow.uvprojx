@@ -127,7 +127,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -330,9 +330,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, USE_RTOS=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/eiq/glow/bundle_utils;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../middleware/eiq/glow/bundle_utils;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -363,10 +363,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../middleware/eiq/deepviewrt/boards/evkbimxrt1050/modelrunner/MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -546,6 +546,201 @@
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
             </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel</GroupName>
+          <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <Files>
+            <File>
+              <FileName>atomic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+            <File>
+              <FileName>heap_3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -674,13 +869,118 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/port</GroupName>
+          <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/port/sys_arch.c</FilePath>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/port</GroupName>
+          <Files>
             <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
@@ -720,6 +1020,11 @@
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1864,198 +2169,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel</GroupName>
-          <Files>
-            <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/include</GroupName>
-          <Files>
-            <File>
-              <FileName>atomic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
-            </File>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_prototypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-            <File>
-              <FileName>heap_3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/phy</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
@@ -2066,131 +2181,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpi2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
+              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>component/silicon_id</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
@@ -2200,6 +2200,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2497,6 +2507,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2510,16 +2530,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2789,7 +2799,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -2992,9 +3002,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, USE_RTOS=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id;../../../../../components/silicon_id/socs;../../../../../middleware/eiq/glow/bundle_utils;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy/device/phyksz8081;../../../../../components/silicon_id/socs;../../../../../components/silicon_id;../../../../../middleware/eiq/glow/bundle_utils;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3025,10 +3035,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../middleware/eiq/deepviewrt/boards/evkbimxrt1050/modelrunner/MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3208,6 +3218,201 @@
               <FileType>1</FileType>
               <FilePath>../board.c</FilePath>
             </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel</GroupName>
+          <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/include</GroupName>
+          <Files>
+            <File>
+              <FileName>atomic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>deprecated_definitions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
+            </File>
+            <File>
+              <FileName>message_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_prototypes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>portable.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
+            </File>
+            <File>
+              <FileName>projdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>semphr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
+            </File>
+            <File>
+              <FileName>stack_macros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
+              <FileName>stream_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
+            </File>
+            <File>
+              <FileName>timers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+            <File>
+              <FileName>heap_3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3336,13 +3541,118 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/port</GroupName>
+          <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>sys_arch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/port/sys_arch.c</FilePath>
+              <FileName>fsl_enet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/port</GroupName>
+          <Files>
             <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
@@ -3382,6 +3692,11 @@
               <FileName>enet_ethernetif_kinetis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4526,198 +4841,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos-kernel</GroupName>
-          <Files>
-            <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/croutine.c</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/timers.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/include</GroupName>
-          <Files>
-            <File>
-              <FileName>atomic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/atomic.h</FilePath>
-            </File>
-            <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>deprecated_definitions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</FilePath>
-            </File>
-            <File>
-              <FileName>event_groups.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</FilePath>
-            </File>
-            <File>
-              <FileName>list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/list.h</FilePath>
-            </File>
-            <File>
-              <FileName>message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_prototypes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_wrappers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</FilePath>
-            </File>
-            <File>
-              <FileName>portable.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/portable.h</FilePath>
-            </File>
-            <File>
-              <FileName>projdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>semphr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/semphr.h</FilePath>
-            </File>
-            <File>
-              <FileName>stack_macros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
-              <FileName>stdint.readme</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</FilePath>
-            </File>
-            <File>
-              <FileName>stream_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/task.h</FilePath>
-            </File>
-            <File>
-              <FileName>timers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/timers.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/GCC/ARM_CM4F</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-            <File>
-              <FileName>heap_3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/phy</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_phyksz8081.h</FileName>
               <FileType>5</FileType>
@@ -4728,131 +4853,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_enet.h</FileName>
+              <FileName>fsl_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpi2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
+              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>component/silicon_id</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
@@ -4862,6 +4872,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5159,6 +5179,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -5172,16 +5202,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>

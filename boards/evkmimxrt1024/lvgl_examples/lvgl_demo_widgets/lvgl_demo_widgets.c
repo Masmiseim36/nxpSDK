@@ -21,9 +21,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define LPSPI_MASTER_DMA_BASEADDR     DMA0
 #define LPSPI_MASTER_DMA_MUX_BASEADDR DMAMUX
+
 static volatile bool s_lvgl_initialized = false;
 
 /*******************************************************************************

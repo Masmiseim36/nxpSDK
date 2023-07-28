@@ -175,7 +175,7 @@ void main_obex_client_operations (void)
             /**
              * Read the BD_ADDR of Remote Device
              */
-            appl_get_bd_addr(bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
 
             retval = BT_hci_create_connection
                      (
@@ -221,7 +221,7 @@ void main_obex_client_operations (void)
             scanf ("%d", &handle);
 
             printf ("Enter peer device address: ");
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
             connect_info.bd_addr = bd_addr;
 
 #ifdef OBEX_OVER_L2CAP

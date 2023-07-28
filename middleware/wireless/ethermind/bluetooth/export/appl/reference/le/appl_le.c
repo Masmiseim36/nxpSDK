@@ -18,11 +18,17 @@
 #include "appl_l2cap_le.h"
 #include "appl_smp.h"
 
-#include "appl_service.h"
+#ifdef BT_DUAL_MODE
 #include "appl_sdp.h"
+#endif /* BT_DUAL_MODE */
+
+#ifdef BT_GAM
+#include "appl_ga.h"
+#else /* BT_GAM */
+#include "appl_service.h"
+#endif /* BT_GAM */
 
 #ifdef BT_LE
-
 #ifdef APPL_FSM_SUPPORT
 #include "appl_fsm.h"
 #endif /* APPL_FSM_SUPPORT */
@@ -160,9 +166,18 @@ int appl_init(void)
     /* Initialize GATT DB Module */
     appl_gatt_db_module_init();
 
+#ifndef BT_GAM
     /* Initialize the Service */
     appl_service_init();
+#else /* BT_GAM */
+    (GA_IGNORE_RETURN_VALUE)appl_ga_add_gaps();
+    (GA_IGNORE_RETURN_VALUE)appl_ga_add_gatts();
+    (GA_IGNORE_RETURN_VALUE)appl_ga_add_bas();
+    (GA_IGNORE_RETURN_VALUE)appl_ga_add_dis();
 
+    APPL_TRC(
+    "Initialize all required GA modules and then register the database.\n");
+#endif /* BT_GAM */
 #endif /* BT_LE */
 
     return 0U;
@@ -185,9 +200,10 @@ void appl_init_complete(void)
     appl_gatt_init ();
 #endif /* ATT */
 
+#ifndef BT_GAM
     /* Inform BT ON Complete to Service layer */
     appl_service_bt_init();
-
+#endif /* BT_GAM */
 #endif /* BT_LE */
 }
 
@@ -204,6 +220,12 @@ void appl_gatt_db_module_init(void)
 
     /* Initialize dynamic configuration structure with default values */
     GATT_DB_INIT_DYNAMIC_CONFIG(appl_bt_gatt_db_config);
+
+#ifdef BT_GAM
+    /* Update the number of attributes if for GA */
+    appl_bt_gatt_db_config.config_GATT_DB_DYN_MAX_ATTRIBUTES = 512U; /* 256U */
+    appl_bt_gatt_db_config.config_GATT_DB_DYN_CHARACTERISTIC_COUNT = 256U; /* 128U */
+#endif /* BT_GAM */
 
     config_ptr = (void *)&appl_bt_gatt_db_config;
 #else /* BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY */
@@ -224,23 +246,29 @@ void appl_gatt_db_module_deinit(void)
 #endif /* GATT_DB */
 }
 
+#ifdef INCLUDE_NIFACE
 void appl_niface_deinit(void)
 {
     /*de-initialize network interface module*/
     niface_setup_down();
     niface_stack_down();
 }
+#endif /* INCLUDE_NIFACE */
 
 void appl_deinit(void)
 {
-    /*de-initialize network interface module*/
-    appl_niface_deinit();
-
     /* De-initialize GATT DB Module */
     appl_gatt_db_module_deinit();
 
+#ifndef BT_GAM
     /* Inform BT OFF to Service layer */
     appl_service_bt_deinit();
+#endif /* BT_GAM */
+
+#ifdef INCLUDE_NIFACE
+    /* De-initialize network interface module */
+    appl_niface_deinit();
+#endif /* INCLUDE_NIFACE */
 }
 
 void appl_set_all_state(APPL_STATE_T state)
@@ -559,6 +587,7 @@ API_RESULT appl_set_gatt_service_in_sdp_record
                UCHAR sdp_instance
            )
 {
+#ifndef BT_GAM
     GATT_DB_SERVICE service_info;
     API_RESULT retval;
 
@@ -589,8 +618,15 @@ API_RESULT appl_set_gatt_service_in_sdp_record
     }
 
     return retval;
-}
+#else /* BT_GAM */
 
+    BT_IGNORE_UNUSED_PARAM(service_instance);
+    BT_IGNORE_UNUSED_PARAM(sdp_instance);
+
+    return API_FAILURE;
+#endif /* BT_GAM */
+
+}
 #endif /* BT_DUAL_MODE */
 #endif /* BT_LE */
 

@@ -1,93 +1,85 @@
 var a00043 =
 [
-    [ "lpi2c_slave_config_t", "a00043.html#a00409", [
-      [ "enableSlave", "a00043.html#ad220cfa81b4117fd1d952b43ff0d5511", null ],
-      [ "address0", "a00043.html#a16f171990f815872142d3fe73eb74ff4", null ],
-      [ "address1", "a00043.html#afb3035cd87a9746bdbe5c6618a492034", null ],
-      [ "addressMatchMode", "a00043.html#a1dc82ff6416b69128c0d6d78d533b093", null ],
-      [ "filterDozeEnable", "a00043.html#a4cbbafe55351cb52d25b3de1a71e2231", null ],
-      [ "filterEnable", "a00043.html#a6fcca02d50a48b5a3a2923ea449316ce", null ],
-      [ "enableGeneralCall", "a00043.html#a061ed35a72d6e8ffe9a02be00f633f87", null ],
-      [ "enableAck", "a00043.html#ab2cd4a19f68523031122851dd0ab1386", null ],
-      [ "enableTx", "a00043.html#ad0fea92e29e7afff3d7072ab3c722bc8", null ],
-      [ "enableRx", "a00043.html#aff856d2084ff0ede49f0ff25e6cf5529", null ],
-      [ "enableAddress", "a00043.html#a6ec794389bd9fb5e51c802bb0b9ee26b", null ],
-      [ "ignoreAck", "a00043.html#ae68493537f90f7bff4a421ff534fb7a1", null ],
-      [ "enableReceivedAddressRead", "a00043.html#ac273a825233fe937aa16d98e38664812", null ],
-      [ "sdaGlitchFilterWidth_ns", "a00043.html#a7c28ef56af23d2e059942e8d80e5cd15", null ],
-      [ "sclGlitchFilterWidth_ns", "a00043.html#a793ea7dd26bfb1f68daae2523e70d5a5", null ],
-      [ "dataValidDelay_ns", "a00043.html#a920288e7667b3b363f019384ebc58606", null ],
-      [ "clockHoldTime_ns", "a00043.html#a2e672f5446e7d86eb9d74bdc785df0fb", null ]
+    [ "gpt_config_t", "a00043.html#a00427", [
+      [ "clockSource", "a00043.html#a25f268bc5fecec8069a572c4c3b58fc7", null ],
+      [ "divider", "a00043.html#a2407ae05cf065f7670679b3e1c2c2b50", null ],
+      [ "enableFreeRun", "a00043.html#aae502b9cc970005480f6ff1658972d53", null ],
+      [ "enableRunInWait", "a00043.html#a4ddfd1bd9f2f22b721a2bff60673fac5", null ],
+      [ "enableRunInStop", "a00043.html#a10b8bb88a27214987d3e877a6c0371db", null ],
+      [ "enableRunInDoze", "a00043.html#a0cfe8142bf85397f51921301055b1bb8", null ],
+      [ "enableRunInDbg", "a00043.html#a5c3a30242ed5d7d2675be2d300eed4d1", null ],
+      [ "enableMode", "a00043.html#a0c9bf1a239e33da721076aabd0c2b079", null ]
     ] ],
-    [ "lpi2c_slave_transfer_t", "a00043.html#a00410", [
-      [ "event", "a00043.html#a19df3bc5c35ed8ae03a927dcc89daa48", null ],
-      [ "receivedAddress", "a00043.html#a336e15a483043ed7ace990517fff6686", null ],
-      [ "data", "a00043.html#a54436075594000b4d56471b29dd6734f", null ],
-      [ "dataSize", "a00043.html#afcd4de20f8efd725bd93d72180b32f2d", null ],
-      [ "completionStatus", "a00043.html#aafd14bc835c1c23de6bf06834d1a0b3c", null ],
-      [ "transferredCount", "a00043.html#a67e03ab90367cb1d48d42b718e6438f5", null ]
+    [ "gpt_clock_source_t", "a00043.html#gad0ed5e094d0bec112a065a0c6b057e56", [
+      [ "kGPT_ClockSource_Off", "a00043.html#ggad0ed5e094d0bec112a065a0c6b057e56a398f5e7765f47a492d625a7cb26bf499", null ],
+      [ "kGPT_ClockSource_Periph", "a00043.html#ggad0ed5e094d0bec112a065a0c6b057e56a728cff5c785288f3884d4c2cbdf0b466", null ],
+      [ "kGPT_ClockSource_HighFreq", "a00043.html#ggad0ed5e094d0bec112a065a0c6b057e56a1a2644f7461698f6515c3da0a7c1cbab", null ],
+      [ "kGPT_ClockSource_Ext", "a00043.html#ggad0ed5e094d0bec112a065a0c6b057e56ab76385e941d5ce14116ac5a55aaf5815", null ],
+      [ "kGPT_ClockSource_LowFreq", "a00043.html#ggad0ed5e094d0bec112a065a0c6b057e56acb33521779fb2addb21bb22f850c837d", null ],
+      [ "kGPT_ClockSource_Osc", "a00043.html#ggad0ed5e094d0bec112a065a0c6b057e56a9df479d2e5f5d539b053425ab986ad20", null ]
     ] ],
-    [ "lpi2c_slave_handle_t", "a00043.html#a00306", [
-      [ "transfer", "a00043.html#aed2dec763e40c6caa129c082603852d5", null ],
-      [ "isBusy", "a00043.html#a8f0662c2c78df7b8e8b5ed4c1119823d", null ],
-      [ "wasTransmit", "a00043.html#af0a187d43f251bc67fb9c34dedbf9253", null ],
-      [ "eventMask", "a00043.html#a5bceee16dd6f07c8cb6918580e45e540", null ],
-      [ "transferredCount", "a00043.html#ac9f4d0665e8ec4c56eb89e816c4b5324", null ],
-      [ "callback", "a00043.html#a0e16ba71a57adfe84058af632a604e40", null ],
-      [ "userData", "a00043.html#aa394f46d8677c977aa39b64fb0c353ce", null ]
+    [ "gpt_input_capture_channel_t", "a00043.html#gad36eff6489251bee506c6806c64a86d0", [
+      [ "kGPT_InputCapture_Channel1", "a00043.html#ggad36eff6489251bee506c6806c64a86d0a083b8ef10ac54db99013fdadaf40ea12", null ],
+      [ "kGPT_InputCapture_Channel2", "a00043.html#ggad36eff6489251bee506c6806c64a86d0a8ef1e1b7eee2eefaef9d4f9776bafe4a", null ]
     ] ],
-    [ "lpi2c_slave_transfer_callback_t", "a00043.html#ga2640285a708842a5e0e7c4c0090a2f58", null ],
-    [ "_lpi2c_slave_flags", "a00043.html#gabd50effc706692c03b42faa72c34269b", [
-      [ "kLPI2C_SlaveTxReadyFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba80486f66e12276c945b8813269b90c0e", null ],
-      [ "kLPI2C_SlaveRxReadyFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba01265ce6645e4a978b823b1f130a419f", null ],
-      [ "kLPI2C_SlaveAddressValidFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269baf34a60fee419e0b3d387b353a38b4772", null ],
-      [ "kLPI2C_SlaveTransmitAckFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff", null ],
-      [ "kLPI2C_SlaveRepeatedStartDetectFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e", null ],
-      [ "kLPI2C_SlaveStopDetectFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7", null ],
-      [ "kLPI2C_SlaveBitErrFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03", null ],
-      [ "kLPI2C_SlaveFifoErrFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8", null ],
-      [ "kLPI2C_SlaveAddressMatch0Flag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba9fb3f57d810e280effee1dae37d062bb", null ],
-      [ "kLPI2C_SlaveAddressMatch1Flag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba62cc9694d6891b21af074122eeedca85", null ],
-      [ "kLPI2C_SlaveGeneralCallFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba6a0fa821b530336ea8d1f19aadcbe1dc", null ],
-      [ "kLPI2C_SlaveBusyFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d", null ],
-      [ "kLPI2C_SlaveBusBusyFlag", "a00043.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b", null ],
-      [ "kLPI2C_SlaveClearFlags", "a00043.html#ggabd50effc706692c03b42faa72c34269ba67a26ff8ddd90c39e772518636f4e832", null ],
-      [ "kLPI2C_SlaveIrqFlags", "a00043.html#ggabd50effc706692c03b42faa72c34269baaf5e40570c34c37fd532dad21b1dca1f", null ],
-      [ "kLPI2C_SlaveErrorFlags", "a00043.html#ggabd50effc706692c03b42faa72c34269bacb3e0258d950773e55c13829e787de36", null ]
+    [ "gpt_input_operation_mode_t", "a00043.html#ga22997c2d644f6249b9c704afc230eedf", [
+      [ "kGPT_InputOperation_Disabled", "a00043.html#gga22997c2d644f6249b9c704afc230eedfaf7ecc55be6dd63a6be40d96dc9f8d24e", null ],
+      [ "kGPT_InputOperation_RiseEdge", "a00043.html#gga22997c2d644f6249b9c704afc230eedfa17ede75d0bb581f4fed42f678e1b81d1", null ],
+      [ "kGPT_InputOperation_FallEdge", "a00043.html#gga22997c2d644f6249b9c704afc230eedfaa0dcd1649563ba92f8f1e8230284edfa", null ],
+      [ "kGPT_InputOperation_BothEdge", "a00043.html#gga22997c2d644f6249b9c704afc230eedfa5ad14d26a16fa7d607a446440c88b735", null ]
     ] ],
-    [ "lpi2c_slave_address_match_t", "a00043.html#gac3564395ccab19eb1ce6ab46b36bb5bb", [
-      [ "kLPI2C_MatchAddress0", "a00043.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5", null ],
-      [ "kLPI2C_MatchAddress0OrAddress1", "a00043.html#ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675", null ],
-      [ "kLPI2C_MatchAddress0ThroughAddress1", "a00043.html#ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb", null ]
+    [ "gpt_output_compare_channel_t", "a00043.html#gae6c9b96e71d6a276ce8437708acddfda", [
+      [ "kGPT_OutputCompare_Channel1", "a00043.html#ggae6c9b96e71d6a276ce8437708acddfdaa68b52504e269393df3fc389c9b78c2d8", null ],
+      [ "kGPT_OutputCompare_Channel2", "a00043.html#ggae6c9b96e71d6a276ce8437708acddfdaa1be13c4fe09bed476ee7656b59f25d37", null ],
+      [ "kGPT_OutputCompare_Channel3", "a00043.html#ggae6c9b96e71d6a276ce8437708acddfdaa55da6b048e4471add16448bd43a6829c", null ]
     ] ],
-    [ "lpi2c_slave_transfer_event_t", "a00043.html#ga0d99b4dba3841a4e02f7c431a59006c8", [
-      [ "kLPI2C_SlaveAddressMatchEvent", "a00043.html#gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef", null ],
-      [ "kLPI2C_SlaveTransmitEvent", "a00043.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49", null ],
-      [ "kLPI2C_SlaveReceiveEvent", "a00043.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18", null ],
-      [ "kLPI2C_SlaveTransmitAckEvent", "a00043.html#gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0", null ],
-      [ "kLPI2C_SlaveRepeatedStartEvent", "a00043.html#gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4", null ],
-      [ "kLPI2C_SlaveCompletionEvent", "a00043.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c", null ],
-      [ "kLPI2C_SlaveAllEvents", "a00043.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec", null ]
+    [ "gpt_output_operation_mode_t", "a00043.html#ga54e26b65b23236492c81c572ba36ab20", [
+      [ "kGPT_OutputOperation_Disconnected", "a00043.html#gga54e26b65b23236492c81c572ba36ab20adedc5e02092eeab85600f919bf2dec82", null ],
+      [ "kGPT_OutputOperation_Toggle", "a00043.html#gga54e26b65b23236492c81c572ba36ab20acd8732f3636757f56665c6549a27c887", null ],
+      [ "kGPT_OutputOperation_Clear", "a00043.html#gga54e26b65b23236492c81c572ba36ab20ab74f183a3e8eb815a40a39eb033dc532", null ],
+      [ "kGPT_OutputOperation_Set", "a00043.html#gga54e26b65b23236492c81c572ba36ab20aae9329b2a4b5ea63e66ca10239efe669", null ],
+      [ "kGPT_OutputOperation_Activelow", "a00043.html#gga54e26b65b23236492c81c572ba36ab20a5bd080fd627f26d074da1b3dab7535f2", null ]
     ] ],
-    [ "LPI2C_SlaveGetDefaultConfig", "a00043.html#gadf34085d4557ceb3081fff9fe0e3189a", null ],
-    [ "LPI2C_SlaveInit", "a00043.html#gae5cc8a03c784a99bb58b69852dfda5a5", null ],
-    [ "LPI2C_SlaveDeinit", "a00043.html#gaa1a5cfe78acec0e1f8dd4af63a0f87f8", null ],
-    [ "LPI2C_SlaveReset", "a00043.html#gaf58f9ebf437d62936c45c201a68fb5d7", null ],
-    [ "LPI2C_SlaveEnable", "a00043.html#gae83a936eb8303218278cd704d8238a08", null ],
-    [ "LPI2C_SlaveGetStatusFlags", "a00043.html#ga18055724e510f601f35cc00940e9155c", null ],
-    [ "LPI2C_SlaveClearStatusFlags", "a00043.html#ga3b5306231d96d7fa38ef26d9ca6526b1", null ],
-    [ "LPI2C_SlaveEnableInterrupts", "a00043.html#gaf5b7a33a341fd95ca77dcb6fe7f1bf3c", null ],
-    [ "LPI2C_SlaveDisableInterrupts", "a00043.html#ga9422103623a9866f350dd03aea984741", null ],
-    [ "LPI2C_SlaveGetEnabledInterrupts", "a00043.html#ga3d1fb84d337b8eb5cc19cbeced06c2a1", null ],
-    [ "LPI2C_SlaveEnableDMA", "a00043.html#gaa13d0c04083818cf91af19a6add0e08f", null ],
-    [ "LPI2C_SlaveGetBusIdleState", "a00043.html#ga155ee1b5bc8c621b60b349b191c078fc", null ],
-    [ "LPI2C_SlaveTransmitAck", "a00043.html#ga417e07e45369a955f7fecaa26e13b335", null ],
-    [ "LPI2C_SlaveGetReceivedAddress", "a00043.html#ga8219a79b748dc59c982c7c3a8470c3a6", null ],
-    [ "LPI2C_SlaveSend", "a00043.html#gacb2d085904e83ee63ee84f7c8402024c", null ],
-    [ "LPI2C_SlaveReceive", "a00043.html#ga36dd1b211a7fe488bfc062a1d8e74fc8", null ],
-    [ "LPI2C_SlaveTransferCreateHandle", "a00043.html#ga6afdc286db9c700bc057038518a19285", null ],
-    [ "LPI2C_SlaveTransferNonBlocking", "a00043.html#ga1ba7c9d0c254de8fe8c04091c007edff", null ],
-    [ "LPI2C_SlaveTransferGetCount", "a00043.html#ga755b38638cbade1b05587146e9f7267d", null ],
-    [ "LPI2C_SlaveTransferAbort", "a00043.html#ga7d46d488aa043ab93bfa1574277a3985", null ],
-    [ "LPI2C_SlaveTransferHandleIRQ", "a00043.html#ga712654857bc4490644b46220c0c460bf", null ]
+    [ "gpt_interrupt_enable_t", "a00043.html#gac1d66bcf23acefc1a50049c7e24d77bb", [
+      [ "kGPT_OutputCompare1InterruptEnable", "a00043.html#ggac1d66bcf23acefc1a50049c7e24d77bba61170acbca36f4757633d1d12d3246ba", null ],
+      [ "kGPT_OutputCompare2InterruptEnable", "a00043.html#ggac1d66bcf23acefc1a50049c7e24d77bba4ebb7fc65d182cd6643fe237d60d91ed", null ],
+      [ "kGPT_OutputCompare3InterruptEnable", "a00043.html#ggac1d66bcf23acefc1a50049c7e24d77bba5141f4b482113c7763819b89c4abcc09", null ],
+      [ "kGPT_InputCapture1InterruptEnable", "a00043.html#ggac1d66bcf23acefc1a50049c7e24d77bba21a3c64b4edc196b24be9e12c061fe88", null ],
+      [ "kGPT_InputCapture2InterruptEnable", "a00043.html#ggac1d66bcf23acefc1a50049c7e24d77bbaf6dc605de633b7e545065bc952409562", null ],
+      [ "kGPT_RollOverFlagInterruptEnable", "a00043.html#ggac1d66bcf23acefc1a50049c7e24d77bba2bbf44ee3464387de1fd11a2c28a5132", null ]
+    ] ],
+    [ "gpt_status_flag_t", "a00043.html#ga21ce3ba40810ea60cf4b59a488e73cc5", [
+      [ "kGPT_OutputCompare1Flag", "a00043.html#gga21ce3ba40810ea60cf4b59a488e73cc5a241fcd87ab22fa9a7212739a39134dfe", null ],
+      [ "kGPT_OutputCompare2Flag", "a00043.html#gga21ce3ba40810ea60cf4b59a488e73cc5a75f50bb95d6a232c6bbb0b6c52db60e5", null ],
+      [ "kGPT_OutputCompare3Flag", "a00043.html#gga21ce3ba40810ea60cf4b59a488e73cc5abfc4b1e05ade49b83461447d4b4464b1", null ],
+      [ "kGPT_InputCapture1Flag", "a00043.html#gga21ce3ba40810ea60cf4b59a488e73cc5af8d82fdf4783ec7125f8f4cdedaed062", null ],
+      [ "kGPT_InputCapture2Flag", "a00043.html#gga21ce3ba40810ea60cf4b59a488e73cc5a64ff7cb952a6cd9c1d85d3dcffc1a50b", null ],
+      [ "kGPT_RollOverFlag", "a00043.html#gga21ce3ba40810ea60cf4b59a488e73cc5ae238e6b78d934129211d8e7aafef59a1", null ]
+    ] ],
+    [ "GPT_Init", "a00043.html#ga6aeb20e99444bdaf31dd9c39c108e79f", null ],
+    [ "GPT_Deinit", "a00043.html#ga90be090ee63035f2a2b014adcfd8c60b", null ],
+    [ "GPT_GetDefaultConfig", "a00043.html#ga0f60fd16354f3fcf7bd02f1ccbee80e4", null ],
+    [ "GPT_SoftwareReset", "a00043.html#ga9cbb3514413d2eb8783bbce110451d60", null ],
+    [ "GPT_SetClockSource", "a00043.html#ga0328dbdc7fe6c17155f776f27692e3c1", null ],
+    [ "GPT_GetClockSource", "a00043.html#ga2ef3c43a4ea5e27291686fcf52a01c53", null ],
+    [ "GPT_SetClockDivider", "a00043.html#ga941a31e66563ec733dc4c69ab430af3f", null ],
+    [ "GPT_GetClockDivider", "a00043.html#ga9e4fc77424a6dccfb8a80f33145aa85f", null ],
+    [ "GPT_SetOscClockDivider", "a00043.html#ga81c59ed87813049b1b1931547c229688", null ],
+    [ "GPT_GetOscClockDivider", "a00043.html#ga7f55308a463986caceb5dc78f97f72ea", null ],
+    [ "GPT_StartTimer", "a00043.html#gafd643e0c52bdf9cb0ea78819cd5d1ca9", null ],
+    [ "GPT_StopTimer", "a00043.html#ga7d3298caf68180acb777d0bed3585a95", null ],
+    [ "GPT_GetCurrentTimerCount", "a00043.html#ga27f113c6b601234c6493e04ff7699f84", null ],
+    [ "GPT_SetInputOperationMode", "a00043.html#gaa0d5805eba17bbc982af80077e780bb0", null ],
+    [ "GPT_GetInputOperationMode", "a00043.html#ga075a62145685b5e150392b5bf0162af7", null ],
+    [ "GPT_GetInputCaptureValue", "a00043.html#ga613c750bc61498e596cc34bf3d7c8705", null ],
+    [ "GPT_SetOutputOperationMode", "a00043.html#ga2b4b3962e3f263e53d83ccabf2f3b489", null ],
+    [ "GPT_GetOutputOperationMode", "a00043.html#gaa4ed0958938a4a9c3c58050e26511026", null ],
+    [ "GPT_SetOutputCompareValue", "a00043.html#gab4482de4377738cf0ee065f6ad7d3547", null ],
+    [ "GPT_GetOutputCompareValue", "a00043.html#gaf152c66a815fd38352742ed4ba01d507", null ],
+    [ "GPT_ForceOutput", "a00043.html#ga82938d7d324ba16a8462f1b68284b6ba", null ],
+    [ "GPT_EnableInterrupts", "a00043.html#gaf441b1f196d31f08319db26487bbe496", null ],
+    [ "GPT_DisableInterrupts", "a00043.html#gaa4fd7eccba69c67e4facf6e9a5e9c62e", null ],
+    [ "GPT_GetEnabledInterrupts", "a00043.html#ga471739441f35a3f65707e40e8d5f0649", null ],
+    [ "GPT_GetStatusFlags", "a00043.html#ga9e19600458e9121125a370720b4f6f6d", null ],
+    [ "GPT_ClearStatusFlags", "a00043.html#gad0cdd59a23d43441a5a160bf01351754", null ]
 ];

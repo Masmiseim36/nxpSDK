@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP.
+ * Copyright 2018-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -9,7 +9,7 @@
 
 #ifndef __STREAMER_ELEMENT_PROPERTIES_H__
 #define __STREAMER_ELEMENT_PROPERTIES_H__
-
+#include "fsl_common.h"
 /*!
  * @file    streamer_element_properties.h
  * @brief   Header for streamer element properties
@@ -88,11 +88,14 @@ typedef struct
 #define PROP_AUDIOSRC_SET_FRAME_MS        0x209
 
 /* MEMORY SOURCE */
-#define PROP_MEMSRC_MASK           0x300
-#define PROP_MEMSRC_SET_BUFF       0x300
-#define PROP_MEMSRC_SET_CHUNK_SIZE 0x301
-#define PROP_MEMSRC_GET_CHUNK_SIZE 0x302
-#define PROP_MEMSRC_SET_MEM_TYPE   0x303
+#define PROP_MEMSRC_MASK             0x300
+#define PROP_MEMSRC_SET_BUFF         0x300
+#define PROP_MEMSRC_SET_CHUNK_SIZE   0x301
+#define PROP_MEMSRC_GET_CHUNK_SIZE   0x302
+#define PROP_MEMSRC_SET_MEM_TYPE     0x303
+#define PROP_MEMSRC_SET_SAMPLE_RATE  0x304
+#define PROP_MEMSRC_SET_NUM_CHANNELS 0x305
+#define PROP_MEMSRC_SET_BIT_WIDTH    0x306
 
 /* DECODER */
 #define PROP_DECODER_MASK         0x400
@@ -106,6 +109,7 @@ typedef struct
 #define PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME 0x702
 #define PROP_AUDIOSINK_BUFFER_USE_CHUNK_SIZE     0x703
 #define PROP_AUDIOSINK_SET_VOLUME                0x704
+#define PROP_AUDIOSINK_SET_REFDATA_ELEMENT       0x705
 
 /* FILE SINK */
 #define PROP_FILESINK_MASK           0x800
@@ -122,19 +126,31 @@ typedef struct
 #define PROP_NETBUFSRC_SET_CALLBACK 0xa00
 
 /* VIT SINK */
-#define PROP_VITSINK_MASK   0xb00
-#define PROP_VITSINK_FPOINT 0xb00
-
-/* AUDIO_PROC */
-#define PROP_AUDIO_PROC_MASK    0xc00
-#define PROP_AUDIO_PROC_FUNCPTR 0xc00
+#define PROP_VITSINK_PROC_MASK    0xb00
+#define PROP_VITSINK_PROC_FUNCPTR 0xb00
 
 /* ENCODER */
-#define PROP_ENCODER_MASK          0xd00
-#define PROP_ENCODER_CHUNK_SIZE    0xd00
-#define PROP_ENCODER_TYPE          0xd01
-#define PROP_ENCODER_CONFIG        0xd02
-#define PROP_ENCODER_BITSTREAMINFO 0xd03
+#define PROP_ENCODER_MASK          0xc00
+#define PROP_ENCODER_CHUNK_SIZE    0xc00
+#define PROP_ENCODER_TYPE          0xc01
+#define PROP_ENCODER_CONFIG        0xc02
+#define PROP_ENCODER_BITSTREAMINFO 0xc03
+
+/* EAP_PROC */
+#define PROP_EAP_PROC_MASK    0xd00
+#define PROP_EAP_PROC_FUNCPTR 0xd00
+
+/* VOICESEEKER_PROC */
+#define PROP_VOICESEEKER_PROC_MASK                0xe00
+#define PROP_VOICESEEKER_PROC_FUNCPTR             0xe00
+#define PROP_VOICESEEKER_PROC_REFDATA_FUNCPTR     0xe01
+#define PROP_VOICESEEKER_PROC_REFDATA_NUM_BUFFERS 0xe02
+#define PROP_VOICESEEKER_PROC_REFDATA_PUSH        0xe03
+#define PROP_VOICESEEKER_PROC_SET_DEBUGGING       0xe04
+
+/* SRC_PROC */
+#define PROP_SRC_PROC_MASK    0xf00
+#define PROP_SRC_PROC_FUNCPTR 0xf00
 
 /*! Structure for setting memory source buffer*/
 typedef struct
@@ -157,5 +173,26 @@ typedef struct
     uint32_t buffer_size; /*!< @brief Buffer size */
     uint32_t sector_size; /*!< @brief Sector size */
 } QUEUE_SET_BUFFER_T;
+
+/**
+ * @brief External processing funcion prototypes for process reference data (VoiceSeeker)
+ *
+ */
+typedef struct
+{
+    int (*set_num_buff_func)(int); /*!< @brief Set num buffer func pointer */
+    int (*push_func)(void *);      /*!< @brief Push func pointer */
+    int (*set_debugging)(bool);    /*!< @brief Set debugging func pointer */
+} EXT_PROCESS_REFDAT_DESC_T;
+
+/**
+ * @brief Reference audio data structure (due to VoiceSeeker AEC)
+ *
+ */
+typedef struct
+{
+    uint8_t *buffer; /*!< @brief pointers to reference data */
+    uint16_t size;   /*!< @brief size of reference data */
+} AudioRefData_t;
 
 #endif

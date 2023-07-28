@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -63,68 +71,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/rtos/azure-rtos
-    ${SdkRootDirPath}/devices/MIMXRT1015/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1015
-    ${SdkRootDirPath}/devices/MIMXRT1015/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1015/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1015/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(middleware_azure_rtos_tx_MIMXRT1015)
+include(${SdkRootDirPath}/devices/MIMXRT1015/all_lib_device.cmake)
 
-include(driver_lpspi_MIMXRT1015)
-
-include(driver_clock_MIMXRT1015)
-
-include(driver_common_MIMXRT1015)
-
-include(device_MIMXRT1015_CMSIS_MIMXRT1015)
-
-include(utility_debug_console_MIMXRT1015)
-
-include(component_lpuart_adapter_MIMXRT1015)
-
-include(component_serial_manager_MIMXRT1015)
-
-include(component_lists_MIMXRT1015)
-
-include(component_serial_manager_uart_MIMXRT1015)
-
-include(driver_lpuart_MIMXRT1015)
-
-include(device_MIMXRT1015_startup_MIMXRT1015)
-
-include(driver_iomuxc_MIMXRT1015)
-
-include(utility_assert_MIMXRT1015)
-
-include(driver_igpio_MIMXRT1015)
-
-include(driver_xip_device_MIMXRT1015)
-
-include(driver_xip_board_evkmimxrt1015_MIMXRT1015)
-
-include(middleware_azure_rtos_tx_template_MIMXRT1015)
-
-include(CMSIS_Include_core_cm_MIMXRT1015)
-
-include(utilities_misc_utilities_MIMXRT1015)
-
-include(device_MIMXRT1015_system_MIMXRT1015)
-
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ${SdkRootDirPath}/rtos/azure-rtos/build/libthreadx)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -138,4 +92,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

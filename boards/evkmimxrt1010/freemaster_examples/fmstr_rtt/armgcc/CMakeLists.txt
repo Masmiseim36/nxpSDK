@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -56,65 +64,16 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${SdkRootDirPath}/boards/evkmimxrt1010/freemaster_examples/common/fmstr_example/example_data.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkmimxrt1010/freemaster_examples/common/fmstr_example
     ${SdkRootDirPath}/middleware/freemaster/boards/common/rtt
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/middleware/freemaster
-    ${SdkRootDirPath}/devices/MIMXRT1011/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1011/utilities/debug_console_lite
-    ${SdkRootDirPath}/components/rtt
-    ${SdkRootDirPath}/devices/MIMXRT1011/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1011
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1011/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1010/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_npw_cfg_gen32le")
+set_source_files_properties("${ProjDirPath}/../SEGGER_RTT_Conf.h" PROPERTIES COMPONENT_CONFIG_FILE "driver_rtt_template.MIMXRT1011")
 
-# include modules
-include(middleware_fmstr_MIMXRT1011)
-
-include(utility_debug_console_lite_MIMXRT1011)
-
-include(utility_assert_lite_MIMXRT1011)
-
-include(driver_rtt_MIMXRT1011)
-
-include(driver_clock_MIMXRT1011)
-
-include(driver_common_MIMXRT1011)
-
-include(device_MIMXRT1011_CMSIS_MIMXRT1011)
-
-include(component_lpuart_adapter_MIMXRT1011)
-
-include(component_lists_MIMXRT1011)
-
-include(driver_lpuart_MIMXRT1011)
-
-include(device_MIMXRT1011_startup_MIMXRT1011)
-
-include(driver_iomuxc_MIMXRT1011)
-
-include(driver_igpio_MIMXRT1011)
-
-include(driver_xip_device_MIMXRT1011)
-
-include(driver_xip_board_evkmimxrt1010_MIMXRT1011)
-
-include(middleware_fmstr_platform_gen32le_MIMXRT1011)
-
-include(CMSIS_Include_core_cm_MIMXRT1011)
-
-include(utilities_misc_utilities_MIMXRT1011)
-
-include(device_MIMXRT1011_system_MIMXRT1011)
-
+include(${SdkRootDirPath}/devices/MIMXRT1011/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -126,4 +85,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

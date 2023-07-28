@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>sdram_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -233,11 +233,11 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FSL_RTOS_THREADX</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -375,9 +375,9 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -499,7 +499,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -551,7 +551,6 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -704,7 +703,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1115,7 +1114,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1202,7 +1201,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1219,7 +1218,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1242,7 +1241,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1321,7 +1320,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1340,11 +1339,11 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FSL_RTOS_THREADX</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1482,9 +1481,9 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1606,7 +1605,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1658,7 +1657,6 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -1811,7 +1809,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2222,7 +2220,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2309,7 +2307,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2326,7 +2324,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2349,7 +2347,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2428,7 +2426,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2444,11 +2442,11 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FSL_RTOS_THREADX</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2586,9 +2584,9 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2710,7 +2708,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2762,7 +2760,6 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -2915,7 +2912,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3326,7 +3323,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3413,7 +3410,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3430,7 +3427,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3453,7 +3450,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3532,7 +3529,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3551,11 +3548,11 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FSL_RTOS_THREADX</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3693,9 +3690,9 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3817,7 +3814,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3869,7 +3866,6 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -4022,7 +4018,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4884,6 +4880,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -4891,12 +4893,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>

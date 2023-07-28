@@ -1,98 +1,149 @@
 var a00079 =
 [
-    [ "tsc_config_t", "a00079.html#a00524", [
-      [ "enableAutoMeasure", "a00079.html#a7b0a4cf8822101c093825a56db3fd448", null ],
-      [ "measureDelayTime", "a00079.html#aec23bf547c79341a69eb78ca2fe19640", null ],
-      [ "prechargeTime", "a00079.html#a6e0547b1eb74931522ffe3829462ba03", null ],
-      [ "detectionMode", "a00079.html#a3aba4cba39fc56658bdf1ce0f7a6ddaf", null ]
+    [ "SPDIF eDMA Driver", "a00080.html", "a00080" ],
+    [ "spdif_config_t", "a00079.html#a00540", [
+      [ "isTxAutoSync", "a00079.html#aa62aab66a7b03f444074a6abab83294c", null ],
+      [ "isRxAutoSync", "a00079.html#a8e7a4d603d3fdbca6d204c21a9729384", null ],
+      [ "DPLLClkSource", "a00079.html#a51dfc55f76c63adbb2956c9be1802fab", null ],
+      [ "txClkSource", "a00079.html#aae2efeac0c0a15d308758688656f21e7", null ],
+      [ "rxFullSelect", "a00079.html#abad0c032f98e052695e55ba8f8dc51dd", null ],
+      [ "txFullSelect", "a00079.html#a19570d0d87d133c863cea6eb7a374bad", null ],
+      [ "uChannelSrc", "a00079.html#a55644590c92b55f32cccc120df5a91ba", null ],
+      [ "txSource", "a00079.html#add620ef347dc5fc0b5fc4626a6d0816f", null ],
+      [ "validityConfig", "a00079.html#a662ae617d9706faedff59b4e7ebfc563", null ],
+      [ "gain", "a00079.html#af2eeb1f3e4a229d81b00a2e293bd5b8f", null ]
     ] ],
-    [ "FSL_TSC_DRIVER_VERSION", "a00079.html#ga6266bb792d57f73341a5565bad036f09", null ],
-    [ "tsc_detection_mode_t", "a00079.html#ga654ccd148f43949235e09dc2f0b38189", [
-      [ "kTSC_Detection4WireMode", "a00079.html#gga654ccd148f43949235e09dc2f0b38189a6729342cd2b777d043dc508b21828553", null ],
-      [ "kTSC_Detection5WireMode", "a00079.html#gga654ccd148f43949235e09dc2f0b38189ac30abbb1702e84a2197714d37bc90443", null ]
+    [ "spdif_transfer_t", "a00079.html#a00542", [
+      [ "data", "a00079.html#aafa6dcdb00a7953d3368916ec776f3f2", null ],
+      [ "qdata", "a00079.html#a3f670504281a0bf4ee74d831d965b1c2", null ],
+      [ "udata", "a00079.html#a547ec34f70b0c0b803a212301b0e9bbc", null ],
+      [ "dataSize", "a00079.html#ae44eb4e4b3141f9478e4b35a9bae8af3", null ]
     ] ],
-    [ "tsc_corrdinate_value_selection_t", "a00079.html#gaaec5b35ab19a0e647e29531ba1abc06d", [
-      [ "kTSC_XCoordinateValueSelection", "a00079.html#ggaaec5b35ab19a0e647e29531ba1abc06dafb5a7d2f1383372497598fc19deeaabf", null ],
-      [ "kTSC_YCoordinateValueSelection", "a00079.html#ggaaec5b35ab19a0e647e29531ba1abc06da9ac47cb685b7fa594b738ccbe3488587", null ]
+    [ "spdif_handle_t", "a00079.html#a00342", [
+      [ "state", "a00079.html#a530888b8eb6d5b6383ac803ef5687cac", null ],
+      [ "callback", "a00079.html#ae6a348888f71f09a0a2167064b627fef", null ],
+      [ "userData", "a00079.html#a453888e826bebbf6d3cefbc1d5c37aa2", null ],
+      [ "spdifQueue", "a00079.html#acfad92f425b01b23f503cc6f6cbf0199", null ],
+      [ "transferSize", "a00079.html#a7ba10e18fe4300506084981f16ba7376", null ],
+      [ "queueUser", "a00079.html#a8f24af404b79c5b742fc54aa78c4dc06", null ],
+      [ "queueDriver", "a00079.html#ac3925e65ffb3d41a9c637001844f6560", null ],
+      [ "watermark", "a00079.html#a286a39db68bb63e8d64844dc94cb6b7a", null ]
     ] ],
-    [ "_tsc_interrupt_signal_mask", "a00079.html#ga655702c8839e0c94717d485d9a10a67d", [
-      [ "kTSC_IdleSoftwareSignalEnable", "a00079.html#gga655702c8839e0c94717d485d9a10a67da4fb712d94c480d0119d469de34503df9", null ],
-      [ "kTSC_ValidSignalEnable", "a00079.html#gga655702c8839e0c94717d485d9a10a67da79fee3ba7ac2615e17955268b640ad57", null ],
-      [ "kTSC_DetectSignalEnable", "a00079.html#gga655702c8839e0c94717d485d9a10a67da7395931f390785e4f0df7acf807e4eb8", null ],
-      [ "kTSC_MeasureSignalEnable", "a00079.html#gga655702c8839e0c94717d485d9a10a67da7967ee367ee2b5eb5ba112a8ad23e1a2", null ]
+    [ "FSL_SPDIF_DRIVER_VERSION", "a00079.html#ga036bac4f2d40e143c5528a10038767c1", null ],
+    [ "SPDIF_XFER_QUEUE_SIZE", "a00079.html#ga3e78a3155b1291a9fa00d0461d6e490c", null ],
+    [ "spdif_transfer_callback_t", "a00079.html#ga8749a36136a9b55600479d61b55596ec", [
+      [ "kStatus_SPDIF_RxDPLLLocked", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a0489bbc59ac12902e0cf3c134e72363e", null ],
+      [ "kStatus_SPDIF_TxFIFOError", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a278a5b9459f7c6a06b0026d00ecc63cd", null ],
+      [ "kStatus_SPDIF_TxFIFOResync", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a051d7f8261885f910a4f04c4a7a8f410", null ],
+      [ "kStatus_SPDIF_RxCnew", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a259512eb9a030bbc2188b71008058808", null ],
+      [ "kStatus_SPDIF_ValidatyNoGood", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a6da0731f8caeb6cc08bb5f8190d01f30", null ],
+      [ "kStatus_SPDIF_RxIllegalSymbol", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a2da36cd8a86bdfa8d9b4fead3dd543ad", null ],
+      [ "kStatus_SPDIF_RxParityBitError", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80afe0341b5aea2f8946c5a5a102e676483", null ],
+      [ "kStatus_SPDIF_UChannelOverrun", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a02d356ebee96b06bd87d13551d09e73f", null ],
+      [ "kStatus_SPDIF_QChannelOverrun", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a07b3373290d7d037ff3a859132967d53", null ],
+      [ "kStatus_SPDIF_UQChannelSync", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a3a6c65eabeb242b3910327da198c87d3", null ],
+      [ "kStatus_SPDIF_UQChannelFrameError", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80af44eacef3e48bd00a1fd5e08c550f9cb", null ],
+      [ "kStatus_SPDIF_RxFIFOError", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a2360fecc1ffe49c63f8dd5b64905a33a", null ],
+      [ "kStatus_SPDIF_RxFIFOResync", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80ab206b050696acf5758e8b6c0bdf5b6fa", null ],
+      [ "kStatus_SPDIF_LockLoss", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a9390ad9ad5ce85f7224c759604f5a194", null ],
+      [ "kStatus_SPDIF_TxIdle", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a646939956dd08768873e67af0e2690fc", null ],
+      [ "kStatus_SPDIF_RxIdle", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80ac458cedc1f2f208c0e04e3f532dc0595", null ],
+      [ "kStatus_SPDIF_QueueFull", "a00079.html#gga4b4213b1f9d54da7c7e36bde32fc7c80a700d25ed1454e469f32de0ade5a78e87", null ]
     ] ],
-    [ "_tsc_interrupt_mask", "a00079.html#gae3e6f693b301c3ee1789dced536985aa", [
-      [ "kTSC_IdleSoftwareInterruptEnable", "a00079.html#ggae3e6f693b301c3ee1789dced536985aaafefa988bea28a002f6cf24f48da7e92c", null ],
-      [ "kTSC_DetectInterruptEnable", "a00079.html#ggae3e6f693b301c3ee1789dced536985aaae31affb4fc3eac550f1bd68e17c3ecc6", null ],
-      [ "kTSC_MeasureInterruptEnable", "a00079.html#ggae3e6f693b301c3ee1789dced536985aaa414d51fca3d752845bbf8a5c8bc03f8b", null ]
+    [ "spdif_rxfull_select_t", "a00079.html#ga85d08a5eba9eaf262597f4f3dfad19a0", [
+      [ "kSPDIF_RxFull1Sample", "a00079.html#gga85d08a5eba9eaf262597f4f3dfad19a0ad6a45c3b1bb3397ce7dd2e5c9af8c1c9", null ],
+      [ "kSPDIF_RxFull4Samples", "a00079.html#gga85d08a5eba9eaf262597f4f3dfad19a0a84f7309ca36974eefa1a2d970eba7995", null ],
+      [ "kSPDIF_RxFull8Samples", "a00079.html#gga85d08a5eba9eaf262597f4f3dfad19a0a71af34697ac17ca08eb26d7c4d6dd27f", null ],
+      [ "kSPDIF_RxFull16Samples", "a00079.html#gga85d08a5eba9eaf262597f4f3dfad19a0ab585922a28236a3e9b8cffbdd3793cee", null ]
     ] ],
-    [ "_tsc_interrupt_status_flag_mask", "a00079.html#gab7752acd24c075710a208714af0e80ae", [
-      [ "kTSC_IdleSoftwareFlag", "a00079.html#ggab7752acd24c075710a208714af0e80aea643f3550c610129a163842058abc3a37", null ],
-      [ "kTSC_ValidSignalFlag", "a00079.html#ggab7752acd24c075710a208714af0e80aea85788cd279dcfdf8b7b9a0bfa6728afe", null ],
-      [ "kTSC_DetectSignalFlag", "a00079.html#ggab7752acd24c075710a208714af0e80aea9a36e449f6b8827cd02bcb3b06ecc458", null ],
-      [ "kTSC_MeasureSignalFlag", "a00079.html#ggab7752acd24c075710a208714af0e80aea1523302d45304ca3e4f0b0697e236ff9", null ]
+    [ "spdif_txempty_select_t", "a00079.html#gad58b90afceef70798b8be683f3017c71", [
+      [ "kSPDIF_TxEmpty0Sample", "a00079.html#ggad58b90afceef70798b8be683f3017c71a835efeacfa1b7bc07a723c3683407b4e", null ],
+      [ "kSPDIF_TxEmpty4Samples", "a00079.html#ggad58b90afceef70798b8be683f3017c71a38d0ed7a9ff015721f0edcd71d696e18", null ],
+      [ "kSPDIF_TxEmpty8Samples", "a00079.html#ggad58b90afceef70798b8be683f3017c71afbd58fcc26965a9b45865764d775284f", null ],
+      [ "kSPDIF_TxEmpty12Samples", "a00079.html#ggad58b90afceef70798b8be683f3017c71a9c74437e11128b87fbd5bb644c4790e4", null ]
     ] ],
-    [ "_tsc_adc_status_flag_mask", "a00079.html#ga474a396fee814b822da5f794b6265894", [
-      [ "kTSC_ADCCOCOSignalFlag", "a00079.html#gga474a396fee814b822da5f794b6265894aa326721ecff53505481d4bb5cc622dcc", null ],
-      [ "kTSC_ADCConversionValueFlag", "a00079.html#gga474a396fee814b822da5f794b6265894a170c54ed0d4dea37f973f827fba3d4db", null ]
+    [ "spdif_uchannel_source_t", "a00079.html#ga01edc35977dbab89a7201285c61c4a3e", [
+      [ "kSPDIF_NoUChannel", "a00079.html#gga01edc35977dbab89a7201285c61c4a3eaf159efd3316b59e34b7288448c4b8c4f", null ],
+      [ "kSPDIF_UChannelFromRx", "a00079.html#gga01edc35977dbab89a7201285c61c4a3eaec4bf6dbe6a1346b33c59c392ea1fbe6", null ],
+      [ "kSPDIF_UChannelFromTx", "a00079.html#gga01edc35977dbab89a7201285c61c4a3ea65a3b2cbcb558fdc5870f009d9d6bd80", null ]
     ] ],
-    [ "_tsc_status_flag_mask", "a00079.html#gadbb2ca2b7e62e7a71a6ad4e3fe4d3059", [
-      [ "kTSC_IntermediateStateFlag", "a00079.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059aca961be97cfda3f181ec2ecb32e4f6be", null ],
-      [ "kTSC_DetectFiveWireFlag", "a00079.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059a078984e44f4e84aa4178c41a2913cf5e", null ],
-      [ "kTSC_DetectFourWireFlag", "a00079.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059a9b92797df34e8b13c0d64646c8c6d6cb", null ],
-      [ "kTSC_GlitchThresholdFlag", "a00079.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059a7a3af06b4926a9680fe7e5afbf693b86", null ],
-      [ "kTSC_StateMachineFlag", "a00079.html#ggadbb2ca2b7e62e7a71a6ad4e3fe4d3059ada2c97463a5edd7f32d54a94fcaa8996", null ]
+    [ "spdif_gain_select_t", "a00079.html#gab5381bc40ad0b86e9453495598911e2c", [
+      [ "kSPDIF_GAIN_24", "a00079.html#ggab5381bc40ad0b86e9453495598911e2cac438b3169eb2675d11540a839e99f502", null ],
+      [ "kSPDIF_GAIN_16", "a00079.html#ggab5381bc40ad0b86e9453495598911e2caa776465b4de5bf2fa610f1c2366c063f", null ],
+      [ "kSPDIF_GAIN_12", "a00079.html#ggab5381bc40ad0b86e9453495598911e2cad54dc0e7908199d3fe24ef53d608b544", null ],
+      [ "kSPDIF_GAIN_8", "a00079.html#ggab5381bc40ad0b86e9453495598911e2caafee91827c9ea238ad6d6478718e98a0", null ],
+      [ "kSPDIF_GAIN_6", "a00079.html#ggab5381bc40ad0b86e9453495598911e2ca16500e129c2451b60faf4a3f4464df43", null ],
+      [ "kSPDIF_GAIN_4", "a00079.html#ggab5381bc40ad0b86e9453495598911e2ca84750080b7f27da810fe19abe64f776f", null ],
+      [ "kSPDIF_GAIN_3", "a00079.html#ggab5381bc40ad0b86e9453495598911e2ca1008286af785dcb2dde9131765217980", null ]
     ] ],
-    [ "tsc_state_machine_t", "a00079.html#ga639241569cdfa1d3dec8489b1b295d60", [
-      [ "kTSC_IdleState", "a00079.html#gga639241569cdfa1d3dec8489b1b295d60aa8338c396e390d1213c0ada74a58e11d", null ],
-      [ "kTSC_1stPreChargeState", "a00079.html#gga639241569cdfa1d3dec8489b1b295d60a747d661e964edcbe6b1920a4a9ab65e1", null ],
-      [ "kTSC_1stDetectState", "a00079.html#gga639241569cdfa1d3dec8489b1b295d60a74dbd6a1d228a67f0d2a4d47fea110db", null ],
-      [ "kTSC_XMeasureState", "a00079.html#gga639241569cdfa1d3dec8489b1b295d60a06bdb11049b70b1a96c9c38d2cbb4d5e", null ],
-      [ "kTSC_YMeasureState", "a00079.html#gga639241569cdfa1d3dec8489b1b295d60a328b133c01b9129288860a1746c51342", null ],
-      [ "kTSC_2ndPreChargeState", "a00079.html#gga639241569cdfa1d3dec8489b1b295d60aa988480f08c3e6abb90008cde61e13db", null ],
-      [ "kTSC_2ndDetectState", "a00079.html#gga639241569cdfa1d3dec8489b1b295d60afd278a6f3930c424b34b1a70576a89ba", null ]
+    [ "spdif_tx_source_t", "a00079.html#ga2847432f45adbafdb2f9f7e5c25d9b2e", [
+      [ "kSPDIF_txFromReceiver", "a00079.html#gga2847432f45adbafdb2f9f7e5c25d9b2eaffd9df4017e5af840e5c34c050791f02", null ],
+      [ "kSPDIF_txNormal", "a00079.html#gga2847432f45adbafdb2f9f7e5c25d9b2ea1e6073994dc81cb60c229a8ce166222f", null ]
     ] ],
-    [ "tsc_glitch_threshold_t", "a00079.html#gad188c5cc2e2fa164ab7d0249e5b5535f", [
-      [ "kTSC_glitchThresholdALT0", "a00079.html#ggad188c5cc2e2fa164ab7d0249e5b5535fa12ee9bea62a7e0fa02c56f70f22e7635", null ],
-      [ "kTSC_glitchThresholdALT1", "a00079.html#ggad188c5cc2e2fa164ab7d0249e5b5535fac7b68d98d8b18c9d1226b9c7c1979715", null ],
-      [ "kTSC_glitchThresholdALT2", "a00079.html#ggad188c5cc2e2fa164ab7d0249e5b5535fa25cd540fd3a16d44d6c29715aa1b085c", null ],
-      [ "kTSC_glitchThresholdALT3", "a00079.html#ggad188c5cc2e2fa164ab7d0249e5b5535fa56b8f534049d71e78da5bbd1e345e035", null ]
+    [ "spdif_validity_config_t", "a00079.html#gad5615c4913a612ee1dc67e357e905f2c", [
+      [ "kSPDIF_validityFlagAlwaysSet", "a00079.html#ggad5615c4913a612ee1dc67e357e905f2ca9cf3c378520222b1ffe3e584cae0ac67", null ],
+      [ "kSPDIF_validityFlagAlwaysClear", "a00079.html#ggad5615c4913a612ee1dc67e357e905f2ca96145e43a2a36d2c7dcd6ce5242743b1", null ],
+      [ "kSPDIF_RxDPLLLocked", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9ab8774a200c36eccf9d7b439ba21d1ac8", null ],
+      [ "kSPDIF_TxFIFOError", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a74d3b2d4e4ee35eed58f4d30c6d2709b", null ],
+      [ "kSPDIF_TxFIFOResync", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9af40104f71f214bb1c0a6a2c0fdcdaf36", null ],
+      [ "kSPDIF_RxControlChannelChange", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a5917028824aefbf16086b3021e414340", null ],
+      [ "kSPDIF_ValidityFlagNoGood", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a7de7b2231ecb6e20e43d0494fe92e63c", null ],
+      [ "kSPDIF_RxIllegalSymbol", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9aa71c8ef82de54ffac949e31010d031de", null ],
+      [ "kSPDIF_RxParityBitError", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a1838e42bf8376a18762297b6aa3c4472", null ],
+      [ "kSPDIF_UChannelReceiveRegisterFull", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9ad228d31963d41a20e3567ce6f633acc6", null ],
+      [ "kSPDIF_UChannelReceiveRegisterOverrun", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a3b7dc66169552ca7798d686d68de6b7d", null ],
+      [ "kSPDIF_QChannelReceiveRegisterFull", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a80ac61a0edef14ba03035176ab326331", null ],
+      [ "kSPDIF_QChannelReceiveRegisterOverrun", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a64e59711062fadb98877919d7c5887e9", null ],
+      [ "kSPDIF_UQChannelSync", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a6e94d542bd83c5bfc043fdbc44fcd43b", null ],
+      [ "kSPDIF_UQChannelFrameError", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9ac07a719f553a9e41bf3e082a5beaf107", null ],
+      [ "kSPDIF_RxFIFOError", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a1a27bda77a59e1db5a1913bb8971281a", null ],
+      [ "kSPDIF_RxFIFOResync", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9ad2e29bb00f59f56babeebd1f0e73726a", null ],
+      [ "kSPDIF_LockLoss", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a1f134eebfeb0740e56c13c9b45fb8434", null ],
+      [ "kSPDIF_TxFIFOEmpty", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a82af9fd1290d8b3b63420b8d92257819", null ],
+      [ "kSPDIF_RxFIFOFull", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9a9797531448d68e40b3befb91810bd09c", null ],
+      [ "kSPDIF_AllInterrupt", "a00079.html#ggaa491173a6b1628f4ff82067b2e1ceaa9af55570f1f8a886f06d64ed2bfc0650a4", null ],
+      [ "kSPDIF_RxDMAEnable", "a00079.html#gga3babbf89cae9b856a12864a41506efbda19fc49573180ffcc3df5f9a27c797209", null ],
+      [ "kSPDIF_TxDMAEnable", "a00079.html#gga3babbf89cae9b856a12864a41506efbdad508f6bf16fd6349b03fc8f3b38d06e8", null ]
     ] ],
-    [ "tsc_trigger_signal_t", "a00079.html#ga32a9bbd362241a4c81f043138d5a332b", [
-      [ "kTSC_TriggerToChannel0", "a00079.html#gga32a9bbd362241a4c81f043138d5a332ba044700d7ed91f6ac084f22f764b072be", null ],
-      [ "kTSC_TriggerToChannel1", "a00079.html#gga32a9bbd362241a4c81f043138d5a332baca9c985ee553fd68d8bf832ae157e8e3", null ],
-      [ "kTSC_TriggerToChannel2", "a00079.html#gga32a9bbd362241a4c81f043138d5a332baf82ef526f4386c9ac3092d8839bbf16d", null ],
-      [ "kTSC_TriggerToChannel3", "a00079.html#gga32a9bbd362241a4c81f043138d5a332bab0b444b84a625cbc46e9acce58f873be", null ],
-      [ "kTSC_TriggerToChannel4", "a00079.html#gga32a9bbd362241a4c81f043138d5a332ba219bda9e5ba92cfab02bdb9d12ad18b9", null ]
-    ] ],
-    [ "tsc_port_source_t", "a00079.html#ga4a1343fce2e36de727e9750009daec2c", [
-      [ "kTSC_WiperPortSource", "a00079.html#gga4a1343fce2e36de727e9750009daec2ca84f9070ba00dd05e32b44c930cd96397", null ],
-      [ "kTSC_YnlrPortSource", "a00079.html#gga4a1343fce2e36de727e9750009daec2cae72e11f7234158261bfbf3054a9ac04c", null ],
-      [ "kTSC_YpllPortSource", "a00079.html#gga4a1343fce2e36de727e9750009daec2ca66abade21b1b9877765fa7ae9e67e3b0", null ],
-      [ "kTSC_XnurPortSource", "a00079.html#gga4a1343fce2e36de727e9750009daec2ca9098ec18c17eed94f09adcbcf7e858d7", null ],
-      [ "kTSC_XpulPortSource", "a00079.html#gga4a1343fce2e36de727e9750009daec2ca9c2d8b8ed7ab32c31897923281ffa4b5", null ]
-    ] ],
-    [ "tsc_port_mode_t", "a00079.html#ga19f99254c0cfa03239d394841d6ad60e", [
-      [ "kTSC_PortOffMode", "a00079.html#gga19f99254c0cfa03239d394841d6ad60ea3767a7e89a3f1dae76022b95851dc244", null ],
-      [ "kTSC_Port200k_PullUpMode", "a00079.html#gga19f99254c0cfa03239d394841d6ad60ea7f5671b85c86b0a1b2a2675f5733be20", null ],
-      [ "kTSC_PortPullUpMode", "a00079.html#gga19f99254c0cfa03239d394841d6ad60ea2b3ce7b8bf9f190fea54557c2019da91", null ],
-      [ "kTSC_PortPullDownMode", "a00079.html#gga19f99254c0cfa03239d394841d6ad60eabf5232703197bd29d4c1db82cb957afa", null ]
-    ] ],
-    [ "TSC_Init", "a00079.html#gacb3dc8de52498f49e63f0bd5938a62bb", null ],
-    [ "TSC_Deinit", "a00079.html#gad94ec31c78c6ff62527e07db1963148c", null ],
-    [ "TSC_GetDefaultConfig", "a00079.html#ga02026cc5dca98599abf7159eb7666793", null ],
-    [ "TSC_ReturnToIdleStatus", "a00079.html#gaf3f3a9c81859a459dbc159a73a8e3cb1", null ],
-    [ "TSC_StartSenseDetection", "a00079.html#gaa98c9d0b7673855a842b21216c0b9d8a", null ],
-    [ "TSC_StartMeasure", "a00079.html#ga6a4fb96ef78c65fc82c2f43b1ecf52aa", null ],
-    [ "TSC_DropMeasure", "a00079.html#ga1882e5d982c81872e3d83ee89bd50f70", null ],
-    [ "TSC_SoftwareReset", "a00079.html#ga2319254675c93f82a15de02b9dd97271", null ],
-    [ "TSC_GetMeasureValue", "a00079.html#gaf58e0b43903552560b53533bd117b76d", null ],
-    [ "TSC_EnableInterruptSignals", "a00079.html#gade94f3981a3d3a6551e298044178234a", null ],
-    [ "TSC_DisableInterruptSignals", "a00079.html#ga04eee2a60d370c6999118eb404bfb8e9", null ],
-    [ "TSC_EnableInterrupts", "a00079.html#ga8a904d3bd269d266b360bb7c379e5280", null ],
-    [ "TSC_DisableInterrupts", "a00079.html#ga5d88906c4e6be940679fc5a05bf7c107", null ],
-    [ "TSC_GetInterruptStatusFlags", "a00079.html#ga5a6cf0faff2c782db22dfd63fa27cfa1", null ],
-    [ "TSC_ClearInterruptStatusFlags", "a00079.html#gadde562047c2a043235fce4f6aa1d7290", null ],
-    [ "TSC_GetADCStatusFlags", "a00079.html#ga692e396189133651ab1bf843eaca5924", null ],
-    [ "TSC_GetStatusFlags", "a00079.html#gab95070c3d36a9b878a7a0a8fc9870138", null ]
+    [ "SPDIF_Init", "a00079.html#ga6b4e9ed2c903d62af53a8d3887126413", null ],
+    [ "SPDIF_GetDefaultConfig", "a00079.html#ga11b262ea3923fd80f78b959d9718e00b", null ],
+    [ "SPDIF_Deinit", "a00079.html#ga2631baffebf03ec2a587580112dd56f3", null ],
+    [ "SPDIF_GetInstance", "a00079.html#gacbd5fc4df43e1a249493b5324f94e54d", null ],
+    [ "SPDIF_TxFIFOReset", "a00079.html#ga85e3497baec03b34f728541154ccc31d", null ],
+    [ "SPDIF_RxFIFOReset", "a00079.html#gaa74cc12474982eb7c46adaa7d4891626", null ],
+    [ "SPDIF_TxEnable", "a00079.html#ga5b76be7fc7148dec7d4493398103a94d", null ],
+    [ "SPDIF_RxEnable", "a00079.html#gad705a47a3b61bb334125e54fc70ed2ae", null ],
+    [ "SPDIF_GetStatusFlag", "a00079.html#gafe28766cd0629d77c2ec2f5986155ee7", null ],
+    [ "SPDIF_ClearStatusFlags", "a00079.html#ga39bddc0768ce21bbbd6d3eae837b206e", null ],
+    [ "SPDIF_EnableInterrupts", "a00079.html#ga487f880569d931ee08c74a83332862ae", null ],
+    [ "SPDIF_DisableInterrupts", "a00079.html#ga0c0c7200763825eba3f10bbe7d3439b8", null ],
+    [ "SPDIF_EnableDMA", "a00079.html#ga1d4992842b29cef3c71ad5b5fbd664d3", null ],
+    [ "SPDIF_TxGetLeftDataRegisterAddress", "a00079.html#ga72dc7737eb0911c1c887d53cf9e1c8ed", null ],
+    [ "SPDIF_TxGetRightDataRegisterAddress", "a00079.html#gad6fe7d183782a4d078e0cd182d5859a3", null ],
+    [ "SPDIF_RxGetLeftDataRegisterAddress", "a00079.html#gabd6b7be3a3b545c6f6b2d35f72cadef4", null ],
+    [ "SPDIF_RxGetRightDataRegisterAddress", "a00079.html#ga4485709f8d45c96f5dce7dd85ecef07f", null ],
+    [ "SPDIF_TxSetSampleRate", "a00079.html#gad49d52850fb379566953c66bf1f93a54", null ],
+    [ "SPDIF_GetRxSampleRate", "a00079.html#gaf119e024d14a0c288b743dd17bbef687", null ],
+    [ "SPDIF_WriteBlocking", "a00079.html#gab0eb427edd9cc4e5ece878563b9a6a8c", null ],
+    [ "SPDIF_WriteLeftData", "a00079.html#ga2b78216d0f4af76d8b9ff82101fc8adf", null ],
+    [ "SPDIF_WriteRightData", "a00079.html#ga48edd7722d5a59091e6da7756ef25f0a", null ],
+    [ "SPDIF_WriteChannelStatusHigh", "a00079.html#ga3804918ec78e961fb33b12094bf732e8", null ],
+    [ "SPDIF_WriteChannelStatusLow", "a00079.html#ga6fd048c19cff5ef48c133ca0ffbe23c1", null ],
+    [ "SPDIF_ReadBlocking", "a00079.html#ga2fb9e8f8bafa60358626840d0442265e", null ],
+    [ "SPDIF_ReadLeftData", "a00079.html#ga49e6ea71b76ff7e3e97da8ffd8cd83ea", null ],
+    [ "SPDIF_ReadRightData", "a00079.html#ga34ebdb7cd9a243303bc21cd9b16f82c3", null ],
+    [ "SPDIF_ReadChannelStatusHigh", "a00079.html#ga6897be2df12c8df71d4f6bff5c7546c1", null ],
+    [ "SPDIF_ReadChannelStatusLow", "a00079.html#ga23d1a99377b7f4b26c25a79ece8231ad", null ],
+    [ "SPDIF_ReadQChannel", "a00079.html#ga7a5d474af2b6b256df0bf650dd8154c0", null ],
+    [ "SPDIF_ReadUChannel", "a00079.html#gac0f070017fc4e1db6b0ceeef990c3f7e", null ],
+    [ "SPDIF_TransferTxCreateHandle", "a00079.html#ga2e4eb257e2da537eb2d47a31ea47fbb6", null ],
+    [ "SPDIF_TransferRxCreateHandle", "a00079.html#gac44c0edc9e22798fb840f38f1c3749ba", null ],
+    [ "SPDIF_TransferSendNonBlocking", "a00079.html#ga155e14a0591e50af578cb8309171c112", null ],
+    [ "SPDIF_TransferReceiveNonBlocking", "a00079.html#ga04fe7c5e2cf560687b07f5de908da255", null ],
+    [ "SPDIF_TransferGetSendCount", "a00079.html#ga56e6fe5a91de5d1f38896128c4958a94", null ],
+    [ "SPDIF_TransferGetReceiveCount", "a00079.html#gaad53ad9d352550e8fa84a3200ee977c9", null ],
+    [ "SPDIF_TransferAbortSend", "a00079.html#ga004b052fdaa3fd78dd7bafc721b28f0c", null ],
+    [ "SPDIF_TransferAbortReceive", "a00079.html#ga5dd15b214687cf6a120142b0152ac18c", null ],
+    [ "SPDIF_TransferTxHandleIRQ", "a00079.html#ga14adaa4280f963a9e6c0b6d760173182", null ],
+    [ "SPDIF_TransferRxHandleIRQ", "a00079.html#gaa1ab4a1d05d2e708ab9896f0131506b4", null ]
 ];

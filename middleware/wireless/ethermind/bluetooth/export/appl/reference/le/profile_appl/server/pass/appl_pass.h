@@ -81,7 +81,6 @@ API_RESULT gatt_db_pass_gatt_char_handler
                GATT_DB_PARAMS* params
            );
 void appl_pass_set_gap_central_role(void);
-void appl_pass_menu_handler (void);
 void appl_send_alert_status_ntf(void);
 void appl_send_ringer_settings_ntf(void);
 void appl_pass_handle_ind_complete

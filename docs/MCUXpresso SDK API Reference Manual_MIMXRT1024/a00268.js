@@ -1,5 +1,7 @@
 var a00268 =
 [
-    [ "Secure Non-Volatile Storage High-Power", "a00069.html", "a00069" ],
-    [ "Secure Non-Volatile Storage Low-Power", "a00070.html", "a00070" ]
+    [ "LPSPI CMSIS Driver", "a00270.html", null ],
+    [ "LPSPI FreeRTOS Driver", "a00269.html", "a00269" ],
+    [ "LPSPI Peripheral driver", "a00048.html", "a00048" ],
+    [ "LPSPI eDMA Driver", "a00049.html", "a00049" ]
 ];

@@ -38,7 +38,7 @@ static uint8_t audiosrc_src_activate_push(StreamPad *pad, uint8_t active);
 static uint8_t audiosrc_src_activate_pull(StreamPad *pad, uint8_t active);
 static uint8_t audiosrc_src_activate(StreamPad *pad, uint8_t active);
 static int32_t audiosrc_get_property(StreamElement *element_ptr, uint16_t prop, uint64_t *val_ptr);
-static int32_t audiosrc_set_property(StreamElement *element_ptr, uint16_t prop, uint64_t val);
+static int32_t audiosrc_set_property(StreamElement *element_ptr, uint16_t prop, uint32_t val);
 static int32_t audiosrc_set_device_name(ElementHandle element, const char *device_name, const char *output_device_name);
 static int32_t audiosrc_set_device_type(ElementHandle element, uint32_t device_type);
 static int32_t audiosrc_set_push_chunk_size(ElementHandle element, uint32_t chunk_size);
@@ -643,7 +643,8 @@ static int32_t audiosrc_src_process(StreamPad *pad)
                 audiosrc->retries = 0;
             }
 
-            if (pad_push(pad, &buf) != FLOW_OK)
+            ret = pad_push(pad, &buf);
+            if (ret != FLOW_OK)
             {
                 STREAMER_LOG_ERR(DBG_AUDIO_SRC, ERRCODE_GENERAL_ERROR, "[AudioSRC]Flow not ok3\n");
                 goto pause;
@@ -962,7 +963,7 @@ static int32_t audiosrc_get_property(StreamElement *element_ptr, uint16_t prop, 
  * @returns AudioSinkStreamErrorType
  *
  */
-static int32_t audiosrc_set_property(StreamElement *element_ptr, uint16_t prop, uint64_t val)
+static int32_t audiosrc_set_property(StreamElement *element_ptr, uint16_t prop, uint32_t val)
 {
     int32_t ret = AUDIOSRC_SUCCESS;
 

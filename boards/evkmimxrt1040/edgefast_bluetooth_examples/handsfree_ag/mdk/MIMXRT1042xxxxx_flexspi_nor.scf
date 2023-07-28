@@ -31,6 +31,8 @@
   #define __ram_vector_table_size__    0x00000000
 #endif
 
+#define LITTLEFS_REGION_SIZE           0x00200000
+
 #define m_flash_config_start           0x60000000
 #define m_flash_config_size            0x00001000
 
@@ -55,11 +57,12 @@
 #define m_data2_start                  0x20200000
 #define m_data2_size                   0x00040000
 
+/* NOTE: The last LITTLEFS_REGION_SIZE Flash( in range (m_text_start + m_text_size) ~ (m_text_start + m_text_size + LITTLEFS_REGION_SIZE -1)) is reserved for litteFS data */
+
 /*** littleFS configuration Start ***/
-#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (0x60600000)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS  (0x60800000)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    ((EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (m_text_start + m_text_size)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)    /* 4k flash sector size */
+#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    (LITTLEFS_REGION_SIZE / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
 /*** littleFS configuration End ***/
 
 /* Sizes */
@@ -119,7 +122,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (._bt_l2cap_br_fixed_chan*)
   }
 
-  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) { ; load address = execution address
+  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (LITTLEFS_REGION_SIZE) { ; load address = execution address
   }
 
 #if (defined(__ram_vector_table__))
@@ -146,13 +149,11 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     /* Necessary to run flash routines from SRAM */
     fsl_adapter_flexspi_nor_flash.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
-    NV_Flash.o (+RO +RW +ZI)
     mflash_drv.o (+RO +RW +ZI)
   }
   RW_m_data m_data2_start m_data2_size { ; RW data
     .ANY (+RW +ZI)
   }
-
   RW_m_ncache +0 EMPTY 0 {
   }
   RW_m_ncache_unused +0 EMPTY 0 { ; Empty region added for MPU configuration

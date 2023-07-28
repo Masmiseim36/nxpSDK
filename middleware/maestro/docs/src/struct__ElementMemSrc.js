@@ -17,5 +17,8 @@ var struct__ElementMemSrc =
     [ "end_of_stream", "struct__ElementMemSrc.html#a596a4c59eaf25714c20d8b87505f1af2", null ],
     [ "read_position", "struct__ElementMemSrc.html#a4dba174ed42a6a081c6f9131a4ebaeb4", null ],
     [ "size", "struct__ElementMemSrc.html#a601bfe326d552604257edc3502e49639", null ],
-    [ "mem_type", "struct__ElementMemSrc.html#ac5d7a63552bc4187a5299bfa1b770a39", null ]
+    [ "mem_type", "struct__ElementMemSrc.html#ac5d7a63552bc4187a5299bfa1b770a39", null ],
+    [ "sample_rate", "struct__ElementMemSrc.html#a92149dee9b76e4faffbac3ec30b0076c", null ],
+    [ "num_channels", "struct__ElementMemSrc.html#adb231a06177c0abbd27d8e5514c28b1a", null ],
+    [ "bit_width", "struct__ElementMemSrc.html#aa1bf44ce674b144e7d6fbf16cc250273", null ]
 ];

@@ -107,7 +107,7 @@
  * Private key for connection to AWS IoT endpoint.  The corresponding
  * public key should be registered with the AWS IoT endpoint.
  */
-#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS "sss:F0000000"
+#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS "sss:000100F0"
 
 /**
  * @brief The PKCS #11 label for device public key.
@@ -121,14 +121,14 @@
  *
  * Device certificate corresponding to pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS.
  */
-#define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS "sss:F0000001"
+#define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS "sss:010100F0"
 
 /**
  * @brief The PKCS #11 label for the object to be used for code verification.
  *
  * Used by over-the-air update code to verify an incoming signed image.
  */
-#define pkcs11configLABEL_CODE_VERIFICATION_KEY "sss:00223344"
+#define pkcs11configLABEL_CODE_VERIFICATION_KEY "sss:44332200"
 
 /**
  * @brief The PKCS #11 label for Just-In-Time-Provisioning.

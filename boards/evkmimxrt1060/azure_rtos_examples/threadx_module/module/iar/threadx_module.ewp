@@ -233,8 +233,8 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1315,8 +1315,8 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>

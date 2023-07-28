@@ -17,8 +17,6 @@
 #if (defined ATT && defined CPMS)
 
 /* --------------------------------------------- External Global Variables */
-extern UCHAR appl_hvc_flag;
-
 #ifdef APPL_GAP_BROADCASTER_SUPPORT
 extern const APPL_GAP_ADV_PARAM appl_gap_adv_param[APPL_GAP_PROC_TYPES];
 extern BT_DEVICE_ADDR g_bd_addr;
@@ -150,6 +148,12 @@ UCHAR                     calib_date[10U] = {0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 
 UCHAR                     incorrect_calbn_position;
 UCHAR                     appl_broadcast_data_set;
 
+/**
+ * Global to track if Handle Value Confirmation is yet to be received
+ * for a previously sent Handle Value Indication
+ */
+static UCHAR appl_cpm_hvc_flag;
+
 /* --------------------------------------------- Functions */
 
 void appl_cpms_init(void)
@@ -178,9 +182,6 @@ void appl_cpms_init(void)
 
     APPL_TRC(
         "[CPMS]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for CPM Measurement */
@@ -203,13 +204,13 @@ void appl_cpms_init(void)
 #endif /* GATT_DB_DYNAMIC */
 
     /* Register CPMS GATT DB Handler with PL Extension */
-    gatt_db_init_pl(gatt_db_cpms_gatt_char_handler);
+    (BT_IGNORE_RETURN_VALUE)gatt_db_init_pl(gatt_db_cpms_gatt_char_handler);
 
     appl_cpm_count_comp_val = 0U;
     appl_broadcast_data_set = BT_FALSE;
 
 #ifdef BT_DUAL_MODE
-    appl_set_gatt_service_in_sdp_record
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_CPMS_CPM_INST,
         DB_RECORD_CPS
@@ -225,7 +226,6 @@ void appl_cpms_init(void)
     );
 
     incorrect_calbn_position = BT_FALSE;
-
 }
 
 void appl_cpms_bt_init(void)
@@ -238,7 +238,7 @@ void appl_cpms_bt_init(void)
     appl_cpms_server_reinitialize();
 }
 
-void appl_cmps_bt_deinit(void)
+void appl_cpms_bt_deinit(void)
 {
     APPL_TRC("[CPMS]: In appl_cpms_bt_deinit\n");
 
@@ -264,15 +264,23 @@ void appl_cmps_bt_deinit(void)
 
 void appl_cpms_connect(DEVICE_HANDLE  * dq_handle)
 {
-    ATT_VALUE         value;
-    API_RESULT        retval;
-    UINT16            cli_cnfg;
+    ATT_VALUE    value;
+    UINT16       cli_cnfg;
+    static UCHAR first_time = BT_TRUE;
+    API_RESULT   retval;
+
+    /* Initialize */
+    retval = API_SUCCESS;
+
+    if (BT_TRUE == first_time)
+    {
+        /** Register L2CAP */
+        retval = BT_l2cap_register_le_event_cb(appl_cpms_l2cap_callback);
+
+        first_time = BT_FALSE;
+    }
 
     cli_cnfg = 0U;
-
-
-    /** Register L2CAP */
-    retval = BT_l2cap_register_le_event_cb(appl_cpms_l2cap_callback);
 
     appl_cpm_msrmt_db_handle.device_id = (*dq_handle);
 
@@ -343,11 +351,32 @@ void appl_manage_trasnfer (GATT_DB_HANDLE handle, UINT16 config)
                              sizeof (appl_handle)
                          );
                 APPL_TRC (
-                "[CPMS]: CPM Measuremet Timer %p Started, result 0x%04X!\n",
+                "[CPMS]: CPM Measurement Timer %p Started, result 0x%04X!\n",
                 appl_cpm_msrmt_timer_hndl, retval);
             }
             else if (GATT_CHAR_CPMS_CPM_VECTOR_INST == handle.char_id)
             {
+                /* Start Transfer Timer to Send Vector measurement every second */
+                if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_vector_timer_hndl)
+                {
+                    BT_stop_timer (appl_cpm_vector_timer_hndl);
+                    appl_cpm_vector_timer_hndl = BT_TIMER_HANDLE_INIT_VAL;
+                }
+
+                appl_cpm_vector_cnfgd = BT_TRUE;
+
+                retval = BT_start_timer
+                         (
+                             &appl_cpm_vector_timer_hndl,
+                             APPL_CPM_VECTOR_INTERVAL,
+                             appl_cpm_vector_timer_expiry_handler,
+                             &appl_handle,
+                             sizeof (appl_handle)
+                         );
+                APPL_TRC (
+                "[CPMS]: CPM Vector Timer %p Started, result 0x%04X!\n",
+                appl_cpm_vector_timer_hndl, retval);
+
                 /* Send L2CAP connection parameter update request */
                 retval = BT_l2cap_le_connection_param_update_request
                          (
@@ -365,13 +394,26 @@ void appl_manage_trasnfer (GATT_DB_HANDLE handle, UINT16 config)
         }
         else if (GATT_CLI_CNFG_DEFAULT == config)
         {
-            /* Turn Off Transfer Timer if On */
-            if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_msrmt_timer_hndl)
+            if (GATT_CHAR_CPMS_CPM_MSRMT_INST == handle.char_id)
             {
-                BT_stop_timer (appl_cpm_msrmt_timer_hndl);
-                appl_cpm_msrmt_timer_hndl = BT_TIMER_HANDLE_INIT_VAL;
+                /* Turn Off Transfer Timer if On */
+                if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_msrmt_timer_hndl)
+                {
+                    BT_stop_timer (appl_cpm_msrmt_timer_hndl);
+                    appl_cpm_msrmt_timer_hndl = BT_TIMER_HANDLE_INIT_VAL;
+                    appl_cpm_msrmt_cnfgd = BT_FALSE;
+                }
             }
-            appl_cpm_msrmt_cnfgd = BT_FALSE;
+            else if (GATT_CHAR_CPMS_CPM_VECTOR_INST == handle.char_id)
+            {
+                /* Turn Off Transfer Timer if On */
+                if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_vector_timer_hndl)
+                {
+                    BT_stop_timer (appl_cpm_vector_timer_hndl);
+                    appl_cpm_vector_timer_hndl = BT_TIMER_HANDLE_INIT_VAL;
+                    appl_cpm_vector_cnfgd = BT_FALSE;
+                }
+            }
         }
         else
         {
@@ -390,7 +432,7 @@ void appl_cpm_vector_timer_expiry_handler (void * t_data, UINT16 t_datalen)
     if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_vector_timer_hndl)
     {
         APPL_TRC (
-        "[CPMS]: CPM Measurement Timeout Occurred: %p\n",
+        "[CPMS]: CPM Vector Timeout Occurred: %p\n",
             appl_cpm_vector_timer_hndl);
         appl_cpm_vector_timer_hndl = BT_TIMER_HANDLE_INIT_VAL;
     }
@@ -417,14 +459,14 @@ void appl_cpm_vector_timer_expiry_handler (void * t_data, UINT16 t_datalen)
 #endif /* APPL_FSM_SUPPORT */
 }
 
-void appl_timer_expiry_handler (void * t_data, UINT16 t_datalen)
+void appl_timer_expiry_handler (void * data, UINT16 datalen)
 {
     APPL_EVENT_PARAM   fsm_param;
     API_RESULT retval = API_SUCCESS;
 
-    BT_IGNORE_UNUSED_PARAM(t_datalen);
+    BT_IGNORE_UNUSED_PARAM(datalen);
 
-    fsm_param.handle = (*((APPL_HANDLE *)t_data));
+    fsm_param.handle = (*((APPL_HANDLE *)data));
     if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_msrmt_timer_hndl)
     {
         APPL_TRC (
@@ -483,7 +525,7 @@ void appl_cpms_server_reinitialize (void)
     appl_cpm_msrmt_obs_data_len = APPL_CPM_MSRMNT_LENGTH;
     appl_cpm_count = 0U;
     appl_cpm_count_comp_val = 0U;
-    appl_hvc_flag = BT_FALSE;
+    appl_cpm_hvc_flag = BT_FALSE;
 
     /* Restore the cycling power measurement data if masked */
     if (0xFFU != cpm_msrmt_data[0U])
@@ -539,14 +581,26 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
 {
     ATT_HANDLE_VALUE_PAIR hndl_val_param;
     API_RESULT            retval;
-    UINT16 appl_cpm_inst_force_magn_arry;
+    UINT16                appl_cpm_inst_force_magn_arry;
 
+    /* Initialize */
     retval = API_SUCCESS;
 
+    /**
+     * Currently CPM Measurement Notifications will be triggered
+     * 1. When Timer expires for CPM Measurement and CPM Measurement CCCD
+     *    is enabled
+     * 2. When Timer expires for CPM Vector and CPM Measurement CCCD is
+     *    enabled
+     *
+     * TODO:
+     * There needs to be dedicated Timer expiry handler for CPM Measurement to
+     * handle CPM Measurement Notifications dedicatedly.
+     */
     if (BT_FALSE != appl_cpm_msrmt_cnfgd)
     {
         APPL_TRC (
-        "[CPMS]: [0x%02X]:Sending measurement On Handle 0x%04X\n",
+        "[CPMS]: [0x%02X]:Sending CPM Measurement On Handle 0x%04X\n",
         (*handle), appl_cpm_msrmt_hndl);
 
         hndl_val_param.handle = appl_cpm_msrmt_hndl;
@@ -604,11 +658,26 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
                  );
         }
     }
-    else if (BT_FALSE != appl_cpm_vector_cnfgd)
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
+
+    /**
+     * Currently CPM Vector Notifications will be triggered
+     * 1. When Timeout expires for CPM Vector and CPM Vector CCCD is enabled
+     * 2. When Timeout expires for CPM Measurement and CPM Vector CCCD is
+     *    enabled
+     *
+     * TODO:
+     * There needs to be dedicated Timer expiry handler for CPM Vector to
+     * handle CPM Vector Notifications dedicatedly.
+     */
+    if (BT_FALSE != appl_cpm_vector_cnfgd)
     {
         APPL_TRC (
-        "[CPMS]: [0x%02X]:Sending measurement On Handle 0x%04X\n",
-        (*handle),appl_cpm_msrmt_hndl);
+        "[CPMS]: [0x%02X]:Sending CPM Vector measurement On Handle 0x%04X\n",
+        (*handle),appl_cpm_vector_hndl);
 
         /**
          * Send Cycling power vector by excluding Instantaneous Torque
@@ -625,7 +694,7 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
                      &hndl_val_param
                  );
 
-        /* Copy the Instantaneous Force Magnitude Array value to the local varibale */
+        /* Copy the Instantaneous Force Magnitude Array value to the local variable */
         BT_UNPACK_LE_2_BYTE(&appl_cpm_inst_force_magn_arry, &cpm_vector_data[7U]);
 
         if (API_SUCCESS == retval)
@@ -650,12 +719,15 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
             /* Reset the Force Magnitude Array value */
             BT_PACK_LE_2_BYTE(&cpm_vector_data[7U], &appl_cpm_inst_force_magn_arry);
         }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
+        }
     }
     else
     {
         /* MISRA C-2012 Rule 15.7 */
     }
-
 
     if (appl_cpm_count_comp_val == appl_cpm_count)
     {
@@ -673,7 +745,16 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
                 );
                 cps_reverse = BT_TRUE;
             }
+            else
+            {
+                /* MISRA C-2012 Rule 15.7 */
+            }
         }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
+        }
+
         appl_cpm_count_comp_val++;
     }
     else if (2U == appl_cpm_count)
@@ -684,6 +765,11 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
             cpm_msrmt_data[0x05U]++;
             cpm_vector_data[0x02U]++;
         }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
+        }
+
         cpm_msrmt_data[0x04U]++;
         cpm_vector_data[0x01U]++;
 
@@ -693,6 +779,11 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
             cpm_msrmt_data[0x05U] = 0U;
             cpm_vector_data[0x03U] = 0U;
         }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
+        }
+
         cpm_msrmt_data[0x08U]++;
         cpm_vector_data[0x03U]++;
 
@@ -704,11 +795,16 @@ void appl_send_cpms_measurement (APPL_HANDLE    * handle)
     }
 
     appl_cpm_count++;
+
     if (API_SUCCESS != retval)
     {
         APPL_ERR (
         "[CPMS]: **ERR** Failed to send measurement, reason 0x%04X",
         retval);
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
     }
 }
 
@@ -746,11 +842,12 @@ void appl_cpm_cntrl_point_timer_handle (void * t_data, UINT16 t_datalen)
              (
                  &APPL_GET_ATT_INSTANCE(((APPL_CPM_CNTRL_POINT_RSP_PARAM *)t_data)->appl_handle),
                  &hndl_val_param
-              );
+             );
 
     if (API_FAILURE != retval)
     {
-        appl_hvc_flag = BT_TRUE;
+        /* Mark waiting for Handle Value Confirmation as True */
+        appl_cpm_hvc_flag = BT_TRUE;
     }
 }
 
@@ -796,7 +893,7 @@ API_RESULT appl_cpm_control_point_handler
     {
         retval = ATT_CCD_IMPROPERLY_CONFIGURED | APPL_ERR_ID;
     }
-    else if (BT_TRUE != appl_hvc_flag)
+    else if (BT_TRUE != appl_cpm_hvc_flag)
     {
         data[0] = APPL_CPM_RESPONSE_CODE;
         data[1] = value->val[0];
@@ -1206,11 +1303,24 @@ void appl_cpms_l2cap_callback
          UINT16          event_datalen
      )
 {
-    UINT16 length;
-    UINT16 result;
-    UCHAR   * bd_addr;
-    UCHAR     bd_addr_type;
+    API_RESULT retval;
+    UINT16     length;
+    UINT16     result;
+    UCHAR    * bd_addr;
+    UCHAR      bd_addr_type;
+    UINT16     min_interval;
+    UINT16     max_interval;
+    UINT16     slave_latency;
+    UINT16     supervision_timeout;
+    UINT16     connection_handle;
     BT_DEVICE_ADDR t_peer_bd_addr;
+
+    /* Initialize */
+    retval = API_SUCCESS;
+    min_interval = 0U;
+    max_interval = 0U;
+    slave_latency = 0U;
+    supervision_timeout = 0U;
 
     BT_IGNORE_UNUSED_PARAM(event_datalen);
 
@@ -1242,6 +1352,91 @@ void appl_cpms_l2cap_callback
 
         appl_manage_cpm_vector_msrmnt(handle, result);
     }
+    else if (L2CAP_CONNECTION_UPDATE_REQUEST_EVENT == event_type)
+    {
+        /* Default - Set Connection Parameter Rejected as Result */
+        result = L2CAP_CONNECTION_PARAMETERS_REJECTED;
+
+        /* Data Packet Length Validation */
+        if (0U != event_datalen)
+        {
+            /* Extract L2CAP packet Length */
+            BT_UNPACK_LE_2_BYTE(&length, &event_data[0U]);
+
+            /**
+             *  Connection Parameter Update Request shall have
+             *  8 octet of data fields
+             */
+            if (8U == length)
+            {
+                BT_UNPACK_LE_2_BYTE(&min_interval, &event_data[2U]);
+                BT_UNPACK_LE_2_BYTE(&max_interval, &event_data[4U]);
+                BT_UNPACK_LE_2_BYTE(&slave_latency, &event_data[6U]);
+                BT_UNPACK_LE_2_BYTE(&supervision_timeout, &event_data[8U]);
+
+#ifdef APPL_MENU_OPS
+                CONSOLE_OUT("L2CAP Connection Update Request\n");
+#endif /* APPL_MENU_OPS */
+                APPL_TRC("Received : L2CAP_CONNECTION_UPDATE\n");
+                APPL_TRC("\tBD_ADDR             : %02X:%02X:%02X:%02X:%02X:%02X\n",
+                bd_addr[0U], bd_addr[1U], bd_addr[2U], bd_addr[3U], bd_addr[4U], bd_addr[5U]);
+                APPL_TRC("\tBD_ADDR_TYPE        : %02X\n", bd_addr_type);
+                APPL_TRC("\tLength              : 0x%04X\n", length);
+                APPL_TRC("\tMinimum Interval    : 0x%04X\n", min_interval);
+                APPL_TRC("\tMaximum Interval    : 0x%04X\n", max_interval);
+                APPL_TRC("\tSlave Latency       : 0x%04X\n", slave_latency);
+                APPL_TRC("\tSupervision Timeout : 0x%04X\n", supervision_timeout);
+
+                /* Verify received parameters */
+                if ((min_interval < HCI_LE_MIN_CONN_INTRVL_MIN_RANGE) ||
+                    (min_interval > HCI_LE_MIN_CONN_INTRVL_MAX_RANGE) ||
+                    (max_interval < HCI_LE_MAX_CONN_INTRVL_MIN_RANGE) ||
+                    (max_interval > HCI_LE_MAX_CONN_INTRVL_MAX_RANGE) ||
+                    (min_interval > max_interval) ||
+                    (slave_latency > HCI_LE_CONN_LATENCY_MAX_RANGE) ||
+                    (supervision_timeout < HCI_LE_SUPERVISION_TO_MIN_RANGE) ||
+                    (supervision_timeout > HCI_LE_SUPERVISION_TO_MAX_RANGE))
+                {
+                    APPL_ERR("Invalid Parameter\n");
+                }
+                else
+                {
+                    result = L2CAP_CONNECTION_PARAMETERS_ACCEPTED;
+                }
+            }
+            else
+            {
+                APPL_ERR("Invalid Parameter Length: %d\n", length);
+            }
+        }
+
+        /* Send Response */
+        retval = BT_l2cap_le_connection_param_update_response
+                 (
+                     handle,
+                     result
+                 );
+
+        if (L2CAP_CONNECTION_PARAMETERS_ACCEPTED == result)
+        {
+            /* Get LE Connection Handle */
+            retval = BT_hci_get_le_connection_handle(&peer_bd_addr, &connection_handle);
+
+            if (API_SUCCESS == retval)
+            {
+                (BT_IGNORE_RETURN_VALUE)BT_hci_le_connection_update
+                (
+                    connection_handle,
+                    min_interval,
+                    max_interval,
+                    slave_latency,
+                    supervision_timeout,
+                    0x0000U, /* minimum_ce_length, */
+                    0xFFFFU  /* maximum_ce_length */
+                );
+            }
+        }
+    }
 }
 
 void appl_manage_cpm_vector_msrmnt (DEVICE_HANDLE * handle, UINT16 result)
@@ -1271,20 +1466,19 @@ void appl_manage_cpm_vector_msrmnt (DEVICE_HANDLE * handle, UINT16 result)
                      GATT_DB_UPDATE
                  );
 
-        /* Start Transfer Timer to Send measurement every second */
-        if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_msrmt_timer_hndl)
+        /* Start Transfer Timer to Send vector measurement every second */
+        if (BT_TIMER_HANDLE_INIT_VAL != appl_cpm_vector_timer_hndl)
         {
-            BT_stop_timer (appl_cpm_msrmt_timer_hndl);
-            appl_cpm_msrmt_timer_hndl = BT_TIMER_HANDLE_INIT_VAL;
+            BT_stop_timer (appl_cpm_vector_timer_hndl);
+            appl_cpm_vector_timer_hndl = BT_TIMER_HANDLE_INIT_VAL;
         }
-
         appl_cpm_vector_cnfgd = BT_TRUE;
 
         retval = BT_start_timer
                  (
                      &appl_cpm_vector_timer_hndl,
                      APPL_CPM_VECTOR_INTERVAL,
-                     appl_timer_expiry_handler,
+                     appl_cpm_vector_timer_expiry_handler,
                      &appl_handle,
                      sizeof (appl_handle)
                  );
@@ -1323,6 +1517,15 @@ void appl_cpms_handle_ind_complete
 {
     APPL_TRC("\n[CPMS]: IND Completed for Appl Handle 0x%02X with result 0x%04X\n",
     *handle, evt_result);
+
+    /**
+     * Reset waiting for Handle Value Indication irrespective of the result.
+     * This routine can be invoked with Success result if Peer has sent a
+     * Handle Value Confirmation, or if there is a corresponding ATT Procedure
+     * Timeout for Handle Value Indication that was previously sent.
+     * Either ways Application can reset the wait for HVC state here.
+     */
+    appl_cpm_hvc_flag = BT_FALSE;
 
     if (ATT_RESPONSE_TIMED_OUT == evt_result)
     {

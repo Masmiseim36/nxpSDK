@@ -28,11 +28,13 @@
 void hfp_ag_init_pl
      (
          void (* read_cb)(UCHAR *rsp, UINT16 rsplen),
-         void (* call_cb)(UCHAR status)
+         void (* call_cb)(UCHAR status),
+         UCHAR(* inbandring_status_cb)(void)
+
      )
 {
     /* Initialize the modem/simulator */
-    nwsim_init(read_cb, call_cb);
+    nwsim_init(read_cb, call_cb, inbandring_status_cb);
 
     return;
 }

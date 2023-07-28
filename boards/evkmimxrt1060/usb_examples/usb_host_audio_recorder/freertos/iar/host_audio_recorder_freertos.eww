@@ -5,30 +5,16 @@
       <name>all</name>
       <member>
         <project>host_audio_recorder_freertos</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-      <member>
-        <project>host_audio_recorder_freertos</project>
-        <configuration>sdram_release</configuration>
-      </member>
-      <member>
-        <project>host_audio_recorder_freertos</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
         <project>host_audio_recorder_freertos</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_debug</name>
       <member>
         <project>host_audio_recorder_freertos</project>
         <configuration>sdram_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_release</name>
       <member>
         <project>host_audio_recorder_freertos</project>
         <configuration>sdram_release</configuration>
@@ -46,6 +32,20 @@
       <member>
         <project>host_audio_recorder_freertos</project>
         <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_debug</name>
+      <member>
+        <project>host_audio_recorder_freertos</project>
+        <configuration>sdram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_release</name>
+      <member>
+        <project>host_audio_recorder_freertos</project>
+        <configuration>sdram_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

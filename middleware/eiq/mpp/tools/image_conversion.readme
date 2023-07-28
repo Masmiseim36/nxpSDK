@@ -1,0 +1,60 @@
+Overview
+========
+
+The Media Processing Pipeline allows running inference on a still image provided
+as input. This image must comply to a format supported by the library.
+
+On i.MX RT1170 and i.MX RT1050, the 2D image processing block, responsible for
+performing color space conversion, rotation and scaling runs on the PxP hardware
+accelerator. It supports BGRA as an input format.
+
+In order to avoid using CPU cycles when performing 2D operation on still images,
+the rgba2bgra tool can be used, in combination with other tools, to convert the
+still image into a BGRA raw format that can then be process by the PxP hardware
+accelerator.
+
+Software requirements and dependencies
+======================================
+
+The image conversion can be achieved with the following tools:
+- ffmpeg OR imagemagick
+- xxd
+- rgba2bgra.py
+
+The rgba2bgra is a python3 application which allows to re-order the RGBA channels
+of an image into BGRA for processing by the Media Processing Pipeline library.
+
+Please make sure these tools are installed on your platform before converting an image.
+
+To retrieve the latest version of the dependency tools on MS-Windows
+- https://www.python.org/downloads/windows/ for Python 3
+- https://ffmpeg.org/download.html for ffmpeg
+- https://imagemagick.org/script/download.php for imagemagick
+- https://sourceforge.net/projects/xxd-for-windows/ for xxd
+
+To retrieve the latest version of the dependency tools on Ubuntu
+- sudo apt install ffmpeg
+- sudo apt install python3
+- sudo apt install imagemagick
+- sudo apt install xxd
+
+How to use
+==========
+
+The following examples shows how to convert a png image into a C header file
+containing the BGRA contents of the image for consumption by the Media Processing
+Pipeline library.
+
+The following steps have to be followed all the time:
+1- Convert an input image to its RGBA representation
+2- Re-order the channels to get the BGRA representation of the image
+3- Build a C array of the BGRA representation of the image and store it in a C header file
+
+These steps are run in command-line in a shell interpreter.
+
+The following example shows how to perform the processing using a png file called img_filename.png,
+that will, at the same time, scaled down to 320x240.
+
+$ convert img_filename.png -resize 320x240 -background black -gravity center -extent 320x240 -depth 8 img_filename.bgra
+$ python3 ./tools/rgba2bgra.py -i img_filename.rgba -o img_filename.bgra -W 320 -H 240
+$ xxd -i img_filename.bgra > img_filename_bgra.h

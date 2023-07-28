@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2022 NXP
+ * Copyright 2020-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,6 +18,9 @@
 
 #ifdef EAP_PROC
 #include "eap_proc.h"
+#endif
+#ifdef SSRC_PROC
+#include "ssrc_proc.h"
 #endif
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"
@@ -223,7 +226,7 @@ status_t STREAMER_PCM_Create(char *filename, int volume)
 #ifdef EAP_PROC
     if (get_app_data()->num_channels == 2)
     {
-        params.pipeline_type = STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO;
+        params.pipeline_type = STREAM_PIPELINE_PCM_EAP_PROC_AUDIO;
     }
     else
     {
@@ -245,31 +248,31 @@ status_t STREAMER_PCM_Create(char *filename, int volume)
     prop.prop = PROP_FILESRC_SET_LOCATION;
     prop.val  = (uintptr_t)filename;
 
-    streamer_set_property(streamer, prop, true);
+    streamer_set_property(streamer, 0, prop, true);
 
     prop.prop = PROP_FILESRC_SET_SAMPLE_RATE;
     prop.val  = DEMO_SAMPLE_RATE;
 
-    streamer_set_property(streamer, prop, true);
+    streamer_set_property(streamer, 0, prop, true);
 
     prop.prop = PROP_FILESRC_SET_NUM_CHANNELS;
     prop.val  = get_app_data()->num_channels;
 
-    streamer_set_property(streamer, prop, true);
+    streamer_set_property(streamer, 0, prop, true);
 
     prop.prop = PROP_FILESRC_SET_BIT_WIDTH;
     prop.val  = DEMO_BIT_WIDTH;
 
-    streamer_set_property(streamer, prop, true);
+    streamer_set_property(streamer, 0, prop, true);
 
     prop.prop = PROP_FILESRC_SET_CHUNK_SIZE;
     prop.val  = get_app_data()->num_channels * DEMO_BYTE_WIDTH * DEMO_SAMPLE_RATE / 100;
 
-    streamer_set_property(streamer, prop, true);
+    streamer_set_property(streamer, 0, prop, true);
 
     prop.prop = PROP_AUDIOSINK_SET_VOLUME;
     prop.val  = volume;
-    streamer_set_property(streamer, prop, true);
+    streamer_set_property(streamer, 0, prop, true);
 
 #ifdef EAP_PROC
     if (get_app_data()->num_channels == 2)
@@ -304,11 +307,7 @@ status_t STREAMER_file_Create(char *filename, int volume)
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
     params.stack_size    = STREAMER_TASK_STACK_SIZE;
-#ifdef EAP_PROC
-    params.pipeline_type = STREAM_PIPELINE_AUDIO_PROC;
-#else
     params.pipeline_type = STREAM_PIPELINE_FILESYSTEM;
-#endif
     params.task_name     = STREAMER_TASK_NAME;
     params.in_dev_name   = "";
     params.out_dev_name  = "";
@@ -324,10 +323,13 @@ status_t STREAMER_file_Create(char *filename, int volume)
 #ifdef EAP_PROC
     register_post_process(streamer);
 #endif
+#ifdef SSRC_PROC
+    SSRC_register_post_process(streamer);
+#endif
 
     prop.prop = PROP_AUDIOSINK_SET_VOLUME;
     prop.val  = volume;
-    streamer_set_property(streamer, prop, true);
+    streamer_set_property(streamer, 0, prop, true);
 
     return kStatus_Success;
 }
@@ -421,7 +423,7 @@ eap_att_code_t set_volume(int volume)
     ELEMENT_PROPERTY_T prop;
     prop.prop = PROP_AUDIOSINK_SET_VOLUME;
     prop.val  = volume;
-    if (streamer_set_property(streamer, prop, true) == 0)
+    if (streamer_set_property(streamer, 0, prop, true) == 0)
     {
         return kEapAttCodeOk;
     }

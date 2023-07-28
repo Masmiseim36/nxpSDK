@@ -49,7 +49,7 @@ static UCHAR                image_handles_descriptor_data[256U];
 static UINT16               img_width, img_height;
 static UCHAR                *img_frmt;
 
-BIP_IMAGE_HANDLER           bip_img_handle[BIP_IMAGE_HANDLE_SIZE];
+static BIP_IMAGE_HANDLER    bip_img_handle[BIP_IMAGE_HANDLE_SIZE];
 
 static BT_fops_file_handle  bip_tx_fp;
 static UINT32               fsize;
@@ -265,6 +265,7 @@ void main_bip_initiator_operations (void)
     UINT16              actual;
     UCHAR               more;
     UCHAR               img_type;
+    UINT16              image_thumbnail_name_len=0;
 
     int choice, menu_choice, handle, cn_handle, server_ch, val, service_type;
 
@@ -318,6 +319,11 @@ void main_bip_initiator_operations (void)
             LOG_DEBUG ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             LOG_DEBUG ("%d\n", handle);
@@ -398,6 +404,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -475,7 +486,7 @@ void main_bip_initiator_operations (void)
         case 7:
             /* Register Peer BD address */
             printf("Enter Peer BD Address:");
-            appl_get_bd_addr(bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr);
             break;
 
         case 8:
@@ -534,6 +545,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -567,6 +583,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -607,6 +628,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -621,6 +647,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -635,6 +666,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -649,6 +685,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -669,6 +710,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -753,6 +799,7 @@ void main_bip_initiator_operations (void)
             fsize = 0U;
             remaining = 0U;
             sent = 0U;
+            actual = 0U;
 
             /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
             (void)BT_vfops_create_object_name
@@ -814,7 +861,6 @@ void main_bip_initiator_operations (void)
             req_info.body = &body_info;
             req_info.image_descriptor = &image_descriptor_info;
 
-            actual = 0U;
             printf ("Requesting to Push Image...\n");
             retval = BT_bip_initiator_push_image
                      (
@@ -829,10 +875,10 @@ void main_bip_initiator_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
-            printf("read length = %d, actual sent = %d\n", body_info.length, actual);
             /* Adjust the file read pointer to the actual bytes transmitted */
             if (body_info.length != actual)
             {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
                 printf("Adjusting the file read pointer\n");
                 (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bip_tx_fp, sent, SEEK_SET);
             }
@@ -862,6 +908,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -870,6 +921,7 @@ void main_bip_initiator_operations (void)
             BIP_INIT_HEADER_STRUCT (name_info);
             BIP_INIT_HEADER_STRUCT (body_info);
             BIP_INIT_HEADER_STRUCT (image_handle_info);
+            BT_mem_set(bip_img_handle, 0, sizeof(bip_img_handle));
 
             bip_xchg_size = bip_initiator_pri_instances[handle].max_xchg_size;
             appl_bip_xchg_size = bip_xchg_size;
@@ -881,7 +933,7 @@ void main_bip_initiator_operations (void)
             scanf ("%s", bip_img_handle);
 
             image_handle_info.value = bip_img_handle;
-            image_handle_info.length = (UINT16)BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)) + 1U;
+            image_handle_info.length = (UINT16)BT_str_n_len(bip_img_handle, (sizeof(bip_img_handle) - 1)) + 1U;
             appl_bip_xchg_size -= (3U + image_handle_info.length);
 
             fsize = 0U;
@@ -975,10 +1027,10 @@ void main_bip_initiator_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
-            printf("read length = %d, actual sent = %d\n", body_info.length, actual);
             /* Adjust the file read pointer to the actual bytes transmitted */
             if (body_info.length != actual)
             {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
                 printf("Adjusting the file read pointer\n");
                 (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bip_tx_fp, sent, SEEK_SET);
             }
@@ -1011,6 +1063,11 @@ void main_bip_initiator_operations (void)
             printf("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf("%d\n", handle);
@@ -1018,6 +1075,7 @@ void main_bip_initiator_operations (void)
 
             /* Reset */
             BT_mem_set(&req_info, 0x00, sizeof(BIP_REQUEST_STRUCT));
+            BT_mem_set(bip_img_handle, 0, sizeof(bip_img_handle));
 
             fsize = 0U;
             remaining = 0U;
@@ -1027,7 +1085,7 @@ void main_bip_initiator_operations (void)
 
             /* Update the hdrs  for put request */
             image_handle.value = bip_img_handle;
-            image_handle.length = (UINT16)BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)) + 1U;
+            image_handle.length = (UINT16)BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)-1) + 1U;
             appl_bip_xchg_size -= (3U + image_handle.length);
 
             /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
@@ -1108,10 +1166,10 @@ void main_bip_initiator_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
-            printf("read length = %d, actual sent = %d\n", body_info.length, actual);
             /* Adjust the file read pointer to the actual bytes transmitted */
             if (body_info.length != actual)
             {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
                 printf("Adjusting the file read pointer\n");
                 (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bip_tx_fp, sent, SEEK_SET);
             }
@@ -1130,6 +1188,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1204,6 +1267,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1211,11 +1279,12 @@ void main_bip_initiator_operations (void)
 
             /* Reset */
             BT_mem_set (&req_info, 0x00, sizeof (BIP_REQUEST_STRUCT));
+            BT_mem_set(bip_img_handle, 0, sizeof(bip_img_handle));
 
             printf ("Enter the Image Handle: ");
             scanf ("%s", bip_img_handle);
             image_handle_info.value = bip_img_handle;
-            image_handle_info.length =  (UINT16)(BT_str_n_len(bip_img_handle, sizeof(bip_img_handle))+1U);
+            image_handle_info.length =  (UINT16)(BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)-1)+1U);
 
             req_info.image_handle = &image_handle_info;
 
@@ -1233,17 +1302,25 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
 #endif /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             /* Reset */
             BT_mem_set (&req_info, 0x00, sizeof (BIP_REQUEST_STRUCT));
+            BT_mem_set(image_thumbnail_name, 0x00, sizeof(image_thumbnail_name));
+            BT_mem_set(bip_img_handle, 0, sizeof(bip_img_handle));
 
             printf ("Enter The Image Handle For The Thumbnail: ");
             scanf ("%s", bip_img_handle);
             image_handle_info.value = bip_img_handle;
-            image_handle_info.length =  (UINT16)(BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)) + 1U);
+            image_handle_info.length =  (UINT16)(BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)-1) + 1U);
+            bip_img_handle[sizeof(bip_img_handle)-1] = '\0';
 
             req_info.image_handle = &image_handle_info;
 
@@ -1253,8 +1330,13 @@ void main_bip_initiator_operations (void)
                          &bip_initiator_pri_instances[handle].handle,
                          &req_info
                      );
-            BT_str_n_copy((CHAR *)image_thumbnail_name, (CHAR *)bip_img_handle, sizeof(image_thumbnail_name));
-            BT_str_n_cat((CHAR *)image_thumbnail_name, "_thumbnail.jpg", (sizeof(image_thumbnail_name) - BT_str_len(image_thumbnail_name)));
+            /**
+             * 'sizeof(image_thumbnail_name)-1', is to ensure 'BT_str_n_cat' does not result in undefined
+             * behaviour.
+             */
+            BT_str_n_copy((CHAR *)image_thumbnail_name, (CHAR *)bip_img_handle, (sizeof(bip_img_handle)-1));/*Size of bip_img_handle is limited to 8;*/
+            image_thumbnail_name_len = BT_str_n_len(image_thumbnail_name,sizeof(image_thumbnail_name)-1);
+            BT_str_n_cat((CHAR *)image_thumbnail_name, "_thumbnail.jpg", ((sizeof(image_thumbnail_name) - 1) - image_thumbnail_name_len));
 
            /**
             * Open file for dumping Get Image Thumbnail
@@ -1291,6 +1373,11 @@ void main_bip_initiator_operations (void)
 
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1298,11 +1385,15 @@ void main_bip_initiator_operations (void)
 
             /* Reset */
             BT_mem_set (&req_info, 0x00, sizeof (BIP_REQUEST_STRUCT));
+            BT_mem_set(image_file_name, 0x00, sizeof(image_file_name));
+            BT_mem_set(image_descriptor_data, 0x00, sizeof(image_descriptor_data));
+            BT_mem_set(bip_img_handle, 0, sizeof(bip_img_handle));
 
             printf ("Enter the image handle for which image has to be requested: ");
             scanf ("%s", bip_img_handle);
             image_handle_info.value = bip_img_handle;
-            image_handle_info.length = (UINT16)(BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)) + 1U);
+            image_handle_info.length = (UINT16)(BT_str_n_len(bip_img_handle, sizeof(bip_img_handle)-1) + 1U);
+            bip_img_handle[sizeof(bip_img_handle)-1] = '\0';
 
             printf ("Enter Image Descriptor \n");
 
@@ -1357,14 +1448,14 @@ void main_bip_initiator_operations (void)
                          &req_info
                      );
 
-            BT_str_n_copy((CHAR *)image_file_name, (CHAR *)bip_img_handle, sizeof(image_file_name));
+            BT_str_n_copy((CHAR *)image_file_name, (CHAR *)bip_img_handle, sizeof(bip_img_handle));
             if (0x01U == img_type)
             {
-                BT_str_n_cat((CHAR *)image_file_name,".jpg", (sizeof(image_file_name) - BT_str_len(image_file_name)));
+                BT_str_n_cat((CHAR *)image_file_name,".jpg", ((sizeof(image_file_name)-1) - BT_str_n_len(image_file_name,sizeof(image_file_name)-1)));
             }
             else
             {
-                BT_str_n_cat((CHAR *)image_file_name,".gif", (sizeof(image_file_name) - BT_str_len(image_file_name)));
+                BT_str_n_cat((CHAR *)image_file_name,".gif", ((sizeof(image_file_name)-1) -  BT_str_n_len(image_file_name,sizeof(image_file_name)-1)));
             }
 
             /**
@@ -1402,6 +1493,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1452,6 +1548,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1510,6 +1611,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1561,6 +1667,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP initiator instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1657,10 +1768,10 @@ void main_bip_initiator_operations (void)
             sent += actual;
             remaining = fsize - sent;
 
-            printf("read length = %d, actual sent = %d\n", body_info.length, actual);
             /* Adjust the file read pointer to the actual bytes transmitted */
             if (body_info.length != actual)
             {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
                 printf("Adjusting the file read pointer\n");
                 (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bip_tx_fp, sent, SEEK_SET);
             }
@@ -1690,6 +1801,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP initiator instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1723,6 +1839,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -1741,6 +1862,11 @@ void main_bip_initiator_operations (void)
             printf ("Enter BIP Initiator Instance: ");
 #if (BIP_NUM_INITIATOR_INSTANCE > 1)
             scanf ("%d", &handle);
+            if (BIP_NUM_INITIATOR_INSTANCE <= handle)
+            {
+                printf ("Invalid Application Instance\n");
+                break;
+            }
 #else /* (BIP_NUM_INITIATOR_INSTANCE > 1) */
             handle = 0;
             printf ("%d\n", handle);
@@ -2240,6 +2366,14 @@ API_RESULT appl_bip_initiator_callback
             /* Update object size sent & remaining to send */
             sent += actual;
             remaining = fsize - sent;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_info.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_info.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bip_tx_fp, sent, SEEK_SET);
+            }
 
             if (0U == remaining)
             {
@@ -4003,11 +4137,10 @@ API_RESULT appl_bip_initiator_callback
             sent += actual;
             remaining = fsize - sent;
 
-            LOG_DEBUG("read length = %d, actual sent = %d\n", body_info.length, actual);
-
             /* Adjust the file read pointer to the actual bytes transmitted */
             if (body_info.length != actual)
             {
+		LOG_DEBUG("read length = %d, actual sent = %d\n", body_info.length, actual);
                 LOG_DEBUG("appl_bip_initiator_callback: Adjusting the file read pointer\n");
                 (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(bip_tx_fp, sent, SEEK_SET);
             }

@@ -73,7 +73,7 @@ typedef struct _AVRCP_AL_CT_RSP_INFO
 
 /**
  * AVRCP Vendor Dependent Message(Command/Response)
- * information structure 
+ * information structure
  */
 typedef struct _AVRCP_AL_VD_CMD_INFO
 {
@@ -417,7 +417,7 @@ API_RESULT BT_avrcp_al_stop
  *  \param [in] avrcp_handle:
  *         AVRCP Handle
  *
- *  \param [in] info_opcode:
+ *  \param [in] sub_unit:
  *         opcode for UNIT or SUBUNIT
  *
  *  \return  API_RESULT:
@@ -427,7 +427,7 @@ API_RESULT BT_avrcp_al_stop
 API_RESULT BT_avrcp_al_send_info_cmd
            (
                /* IN */ AVRCP_HANDLE * avrcp_handle,
-               /* IN */ UCHAR          info_opcode
+               /* IN */ UCHAR          sub_unit
            );
 
 /**
@@ -439,13 +439,13 @@ API_RESULT BT_avrcp_al_send_info_cmd
  *  \param [in] avrcp_handle:
  *         AVRCP Handle
  *
- *  \param [in] avctp_tl:
+ *  \param [in] avctp_tl_msg_type:
  *         Transaction label is tag to identify command/response.
  *
- *  \param [in] info_opcode:
+ *  \param [in] sub_unit:
  *         opcode for UNIT or SUBUNIT
  *
- *  \param [in] info_type:
+ *  \param [in] sub_unit_type:
  *         Unit Type
  *
  *  \return  API_RESULT:
@@ -455,10 +455,10 @@ API_RESULT BT_avrcp_al_send_info_cmd
 
 API_RESULT BT_avrcp_al_send_info_rsp
            (
-               /* IN */ AVRCP_HANDLE * avrcp_handle,
-               /* IN */ UCHAR          avctp_tl,
-               /* IN */ UCHAR          info_opcode,
-               /* IN */ UCHAR          info_type
+              /* IN */ AVRCP_HANDLE * avrcp_handle,
+               /* IN */ UCHAR          avctp_tl_msg_type,
+               /* IN */ UCHAR          sub_unit,
+               /* IN */ UCHAR          sub_unit_type
            );
 
 /**
@@ -470,7 +470,7 @@ API_RESULT BT_avrcp_al_send_info_rsp
  *  \param [in] avrcp_handle:
  *         AVRCP Handle
  *
- *  \param [in] avctp_tl:
+ *  \param [in] avctp_tl_msg_type:
  *         Transaction label tag to identify response to a command.
  *
  *  \param [in] cmd_rsp_type:
@@ -492,7 +492,7 @@ API_RESULT BT_avrcp_al_send_info_rsp
 API_RESULT BT_avrcp_al_send_passthrough_cmd_rsp
            (
                /* IN */ AVRCP_HANDLE * avrcp_handle,
-               /* IN */ UCHAR          avctp_tl,
+               /* IN */ UCHAR          avctp_tl_msg_type,
                /* IN */ UCHAR          cmd_rsp_type,
                /* IN */ UCHAR          operation_id,
                /* IN */ UCHAR          state,

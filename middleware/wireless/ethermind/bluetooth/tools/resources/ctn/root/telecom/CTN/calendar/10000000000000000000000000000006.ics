@@ -1,0 +1,25 @@
+BEGIN:BCAL
+VERSION:1.0
+HANDLE:10000000000000000000000000000006
+UPDATE;TZID=PST:20140701T163000
+BEGIN:VCALENDAR
+PRODID:PTS
+VERSION:2.0
+BEGIN:VEVENT
+UID:123@bms.com
+ORGANIZER;CN="Joachim":MAILTO:joachim@bms.com
+LOCATION:Chinese Tower
+SUMMARY:Project summary
+DESCRIPTION:Project meeting at the Chinese Tower garden. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. 
+CLASS:PUBLIC
+DTSTART;TZID=CET:20140707T183000
+DTEND;TZID=CET:20140707T220000
+DTSTAMP;TZID=CET:20140707T162900
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=TENTATIVE;CN=Kyle:mailto:kyle@gaudybird.com
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:AUDIO
+END:VALARM
+END:VEVENT
+END:VCALENDAR
+END:BCAL

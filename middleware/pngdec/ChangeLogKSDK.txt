@@ -1,0 +1,14 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section pngdec PNG decoder for MCUXpresso SDK
+  The current version is 1.0.1_rev1.
+
+  - 1.0.1_rev1
+    - Integrated PNG decoder driver. User can choose to use software implemented
+      method or the driver to decode PNG file.
+
+  - 1.0.1_rev0
+    - Initial version of PNG decoder for MCUXpresso SDK.
+
+*/

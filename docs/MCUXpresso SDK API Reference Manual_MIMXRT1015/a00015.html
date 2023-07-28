@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DA7212 Driver</title>
+<title>MCUXpresso SDK API Reference Manual: CS42888 Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,358 +101,273 @@ $(document).ready(function(){initNavTree('a00015.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DA7212 Driver<div class="ingroups"><a class="el" href="a00239.html">CODEC Driver</a></div></div>  </div>
+<div class="title">CS42888 Driver<div class="ingroups"><a class="el" href="a00249.html">CODEC Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The da7212 driver provides a codec control interface. </p>
+<p>The cs42888 driver provides a codec control interface. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00293"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00293">da7212_pll_config_t</a></td></tr>
-<tr class="memdesc:a00293"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 pll configuration  <a href="a00015.html#a00293">More...</a><br/></td></tr>
-<tr class="separator:a00293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00290"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00290">da7212_audio_format_t</a></td></tr>
-<tr class="memdesc:a00290"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 audio format  <a href="a00015.html#a00290">More...</a><br/></td></tr>
-<tr class="separator:a00290"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00291"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00291">da7212_config_t</a></td></tr>
-<tr class="memdesc:a00291"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 configure structure.  <a href="a00015.html#a00291">More...</a><br/></td></tr>
-<tr class="separator:a00291"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00292"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00292">da7212_handle_t</a></td></tr>
-<tr class="memdesc:a00292"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 codec handler  <a href="a00015.html#a00292">More...</a><br/></td></tr>
-<tr class="separator:a00292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00303"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00303">cs42888_audio_format_t</a></td></tr>
+<tr class="memdesc:a00303"><td class="mdescLeft">&#160;</td><td class="mdescRight">cs42888 audio format  <a href="a00015.html#a00303">More...</a><br/></td></tr>
+<tr class="separator:a00303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00304"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00304">cs42888_config_t</a></td></tr>
+<tr class="memdesc:a00304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize structure of CS42888.  <a href="a00015.html#a00304">More...</a><br/></td></tr>
+<tr class="separator:a00304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00305"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a></td></tr>
+<tr class="memdesc:a00305"><td class="mdescLeft">&#160;</td><td class="mdescRight">cs42888 handler  <a href="a00015.html#a00305">More...</a><br/></td></tr>
+<tr class="separator:a00305"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga3d23d22f57247229df5a71faaaa40229"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3d23d22f57247229df5a71faaaa40229"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga3d23d22f57247229df5a71faaaa40229">DA7212_I2C_HANDLER_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00013.html#ga708be0fda3516367fe0461a5f054118c">CODEC_I2C_MASTER_HANDLER_SIZE</a></td></tr>
-<tr class="memdesc:ga3d23d22f57247229df5a71faaaa40229"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 handle size <br/></td></tr>
-<tr class="separator:ga3d23d22f57247229df5a71faaaa40229"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c92b1761ab5869e1d8ccce0acea708e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c92b1761ab5869e1d8ccce0acea708e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga0c92b1761ab5869e1d8ccce0acea708e">DA7212_ADDRESS</a>&#160;&#160;&#160;(0x1A)</td></tr>
-<tr class="memdesc:ga0c92b1761ab5869e1d8ccce0acea708e"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 I2C address. <br/></td></tr>
-<tr class="separator:ga0c92b1761ab5869e1d8ccce0acea708e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b379d89f3fa80c8eb3c16f74c2e6e71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3b379d89f3fa80c8eb3c16f74c2e6e71"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga3b379d89f3fa80c8eb3c16f74c2e6e71">DA7212_HEADPHONE_MAX_VOLUME_VALUE</a>&#160;&#160;&#160;0x3FU</td></tr>
-<tr class="memdesc:ga3b379d89f3fa80c8eb3c16f74c2e6e71"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 volume setting range <br/></td></tr>
-<tr class="separator:ga3b379d89f3fa80c8eb3c16f74c2e6e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga953230c47c19e6eb63913ae2b64e1ae5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga953230c47c19e6eb63913ae2b64e1ae5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga953230c47c19e6eb63913ae2b64e1ae5">CS42888_I2C_HANDLER_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00014.html#ga708be0fda3516367fe0461a5f054118c">CODEC_I2C_MASTER_HANDLER_SIZE</a></td></tr>
+<tr class="memdesc:ga953230c47c19e6eb63913ae2b64e1ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 handle size. <br/></td></tr>
+<tr class="separator:ga953230c47c19e6eb63913ae2b64e1ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8996629a1d0330f394495461ceb4957b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga8996629a1d0330f394495461ceb4957b">CS42888_ID</a>&#160;&#160;&#160;0x01U</td></tr>
+<tr class="memdesc:ga8996629a1d0330f394495461ceb4957b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the register address of CS42888.  <a href="#ga8996629a1d0330f394495461ceb4957b">More...</a><br/></td></tr>
+<tr class="separator:ga8996629a1d0330f394495461ceb4957b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac06d214143119255ed45dd4f3b7ab627"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac06d214143119255ed45dd4f3b7ab627"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gac06d214143119255ed45dd4f3b7ab627">CS42888_AOUT_MAX_VOLUME_VALUE</a>&#160;&#160;&#160;0xFFU</td></tr>
+<tr class="memdesc:gac06d214143119255ed45dd4f3b7ab627"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 volume setting range. <br/></td></tr>
+<tr class="separator:gac06d214143119255ed45dd4f3b7ab627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8dd0b96c875487380daa23f03192594"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa8dd0b96c875487380daa23f03192594"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gaa8dd0b96c875487380daa23f03192594">CS42888_CACHEREGNUM</a>&#160;&#160;&#160;28U</td></tr>
+<tr class="memdesc:gaa8dd0b96c875487380daa23f03192594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cache register number. <br/></td></tr>
+<tr class="separator:gaa8dd0b96c875487380daa23f03192594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3758dc010c2ce784b57cf530610bee26"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga3758dc010c2ce784b57cf530610bee26">CS42888_I2C_ADDR</a>&#160;&#160;&#160;0x48U</td></tr>
+<tr class="memdesc:ga3758dc010c2ce784b57cf530610bee26"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 I2C address.  <a href="#ga3758dc010c2ce784b57cf530610bee26">More...</a><br/></td></tr>
+<tr class="separator:ga3758dc010c2ce784b57cf530610bee26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga129d78d2efcbc77435255429dc0baef4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga129d78d2efcbc77435255429dc0baef4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga129d78d2efcbc77435255429dc0baef4">CS42888_I2C_BITRATE</a>&#160;&#160;&#160;(100000U)</td></tr>
+<tr class="memdesc:ga129d78d2efcbc77435255429dc0baef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 I2C baudrate. <br/></td></tr>
+<tr class="separator:ga129d78d2efcbc77435255429dc0baef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga5fe323798009a9b45302adece010e3e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5fe323798009a9b45302adece010e3e0"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga5fe323798009a9b45302adece010e3e0">cs42888_reset</a> )(bool state)</td></tr>
+<tr class="memdesc:ga5fe323798009a9b45302adece010e3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">cs42888 reset function pointer <br/></td></tr>
+<tr class="separator:ga5fe323798009a9b45302adece010e3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga6fc1179abb7621638b81dd23bce89715"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga6fc1179abb7621638b81dd23bce89715a81719d1c10c1d21585cc0d85ea0cf96e">kDA7212_Input_AUX</a> = 0x0, 
+<tr class="memitem:ga8c91ddffd81be7163def41721270971c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00015.html#gga8c91ddffd81be7163def41721270971ca57b2cc424116839aeec3d1c2e53bfff4">kCS42888_ModeMasterSSM</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga6fc1179abb7621638b81dd23bce89715a6791516363f14d9fa82ab6ffed758a8a">kDA7212_Input_MIC1_Dig</a>, 
+&#160;&#160;<a class="el" href="a00015.html#gga8c91ddffd81be7163def41721270971ca11b7086a5f9cfc75f35718710815780c">kCS42888_ModeMasterDSM</a> = 0x1, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga6fc1179abb7621638b81dd23bce89715a915180fec88d3d30961aa7fc999cf734">kDA7212_Input_MIC1_An</a>, 
+&#160;&#160;<a class="el" href="a00015.html#gga8c91ddffd81be7163def41721270971ca2d0f655396420774935b01b1b01b315a">kCS42888_ModeMasterQSM</a> = 0x2, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga6fc1179abb7621638b81dd23bce89715ab6d325e0294e7181d5ef528e4398cc44">kDA7212_Input_MIC2</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga6fc1179abb7621638b81dd23bce89715"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 input source select.  <a href="a00015.html#ga6fc1179abb7621638b81dd23bce89715">More...</a><br/></td></tr>
-<tr class="separator:ga6fc1179abb7621638b81dd23bce89715"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabfe5b5c29bd85345eeab12ffeccdf8e1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gabfe5b5c29bd85345eeab12ffeccdf8e1">_da7212_play_channel</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1ae5ce9e40caf555725cbc0b29bd07a231">kDA7212_HeadphoneLeft</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1a76d31405add593b507463ae599833fa3">kDA7212_HeadphoneRight</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#ggabfe5b5c29bd85345eeab12ffeccdf8e1ac49a4c8456dd563ebfb512abad314e73">kDA7212_Speaker</a> = 4U
+&#160;&#160;<a class="el" href="a00015.html#gga8c91ddffd81be7163def41721270971caa6dd80e639d0173bafda96b4df37c96a">kCS42888_ModeSlave</a> = 0x3
 <br/>
  }</td></tr>
-<tr class="memdesc:gabfe5b5c29bd85345eeab12ffeccdf8e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 play channel  <a href="a00015.html#gabfe5b5c29bd85345eeab12ffeccdf8e1">More...</a><br/></td></tr>
-<tr class="separator:gabfe5b5c29bd85345eeab12ffeccdf8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga594d4eaddd9cb2171bd90c20fbabec4b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga594d4eaddd9cb2171bd90c20fbabec4ba00374e7ddbc6f19e104e50c644405d4e">kDA7212_Output_HP</a> = 0x0, 
+<tr class="memdesc:ga8c91ddffd81be7163def41721270971c"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 support modes.  <a href="a00015.html#ga8c91ddffd81be7163def41721270971c">More...</a><br/></td></tr>
+<tr class="separator:ga8c91ddffd81be7163def41721270971c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac57c7f67724dbc1ad4db339c1591ac26"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gac57c7f67724dbc1ad4db339c1591ac26">cs42888_module_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00015.html#ggac57c7f67724dbc1ad4db339c1591ac26a0c3edb05c683d99b43b1afffa92c7745">kCS42888_ModuleDACPair1</a> = 0x2, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga594d4eaddd9cb2171bd90c20fbabec4ba794964f1a59abc4e9651893ab8ad2937">kDA7212_Output_SP</a>
+&#160;&#160;<a class="el" href="a00015.html#ggac57c7f67724dbc1ad4db339c1591ac26a12297793c9f7de6c5df5dd506ba81600">kCS42888_ModuleDACPair2</a> = 0x4, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga594d4eaddd9cb2171bd90c20fbabec4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 output device select.  <a href="a00015.html#ga594d4eaddd9cb2171bd90c20fbabec4b">More...</a><br/></td></tr>
-<tr class="separator:ga594d4eaddd9cb2171bd90c20fbabec4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09500728ce3e7466ec63c24f194a7096"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga09500728ce3e7466ec63c24f194a7096">_da7212_module</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09500728ce3e7466ec63c24f194a7096ad9a26702fe14d59f3c7af3896a79ec95">kDA7212_ModuleADC</a>, 
+&#160;&#160;<a class="el" href="a00015.html#ggac57c7f67724dbc1ad4db339c1591ac26a45072abfadea932906a4e536dbb7d5a4">kCS42888_ModuleDACPair3</a> = 0x8, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09500728ce3e7466ec63c24f194a7096a69ee48106ddc65d660e106564b26d726">kDA7212_ModuleDAC</a>, 
+&#160;&#160;<a class="el" href="a00015.html#ggac57c7f67724dbc1ad4db339c1591ac26a3d1833e1a30aa83df7c3174ff3ab63a9">kCS42888_ModuleDACPair4</a> = 0x10, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09500728ce3e7466ec63c24f194a7096a30a9366493854f9accccf1a509e30bc4">kDA7212_ModuleHeadphone</a>, 
+&#160;&#160;<a class="el" href="a00015.html#ggac57c7f67724dbc1ad4db339c1591ac26a9e6ae9226aa29208f3fde450a3a2ae69">kCS42888_ModuleADCPair1</a> = 0x20, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga09500728ce3e7466ec63c24f194a7096a4f11287d5d208e51cd4f7d58a54f58a4">kDA7212_ModuleSpeaker</a>
+&#160;&#160;<a class="el" href="a00015.html#ggac57c7f67724dbc1ad4db339c1591ac26a3863290d03b58c95e2ae8824fe99aac6">kCS42888_ModuleADCPair2</a> = 0x40
 <br/>
  }</td></tr>
-<tr class="memdesc:ga09500728ce3e7466ec63c24f194a7096"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 module.  <a href="a00015.html#ga09500728ce3e7466ec63c24f194a7096">More...</a><br/></td></tr>
-<tr class="separator:ga09500728ce3e7466ec63c24f194a7096"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab328276aed167b3f028b627b84a9c326"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#ggab328276aed167b3f028b627b84a9c326aaa36fc0ab185ac10e7ee8a4617f59e97">kDA7212_DACSourceADC</a> = 0x0U, 
+<tr class="memdesc:gac57c7f67724dbc1ad4db339c1591ac26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modules in CS42888 board.  <a href="a00015.html#gac57c7f67724dbc1ad4db339c1591ac26">More...</a><br/></td></tr>
+<tr class="separator:gac57c7f67724dbc1ad4db339c1591ac26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga420482576c736d6016bc7cb40966ae76"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga420482576c736d6016bc7cb40966ae76">cs42888_bus_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00015.html#gga420482576c736d6016bc7cb40966ae76a7685b48742dd9b6a928673cb716dc496">kCS42888_BusLeftJustified</a> = 0x0, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#ggab328276aed167b3f028b627b84a9c326a32553db21f101a6585653a0f603b4585">kDA7212_DACSourceInputStream</a> = 0x3U
+&#160;&#160;<a class="el" href="a00015.html#gga420482576c736d6016bc7cb40966ae76aeef13df8577ef9bfde4a8390d5b0ccd9">kCS42888_BusI2S</a> = 0x1, 
 <br/>
- }</td></tr>
-<tr class="memdesc:gab328276aed167b3f028b627b84a9c326"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 functionality.  <a href="a00015.html#gab328276aed167b3f028b627b84a9c326">More...</a><br/></td></tr>
-<tr class="separator:gab328276aed167b3f028b627b84a9c326"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37faac44a47580dd5b803a2d2609359c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca8bfef935c6c1b4e9f8ab6a783ba65e92">kDA7212_DACGainMute</a> = 0x7, 
+&#160;&#160;<a class="el" href="a00015.html#gga420482576c736d6016bc7cb40966ae76a4d55c55bf343966060e2a1a756445629">kCS42888_BusRightJustified</a> = 0x2, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca484eb6e188f3ec7b92a3ad1e71ad6cbe">kDA7212_DACGainM72DB</a> = 0x17, 
+&#160;&#160;<a class="el" href="a00015.html#gga420482576c736d6016bc7cb40966ae76a7c862e2ffab7396a543b9a07df682c7d">kCS42888_BusOL1</a> = 0x4, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359caf26ca8601f9c6c2ca77487a68bef08dc">kDA7212_DACGainM60DB</a> = 0x1F, 
+&#160;&#160;<a class="el" href="a00015.html#gga420482576c736d6016bc7cb40966ae76a440e9e0d3ebd0431de4690b05bffcf5f">kCS42888_BusOL2</a> = 0x5, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca2ac8ed6017a7a3b4e49be5758b4494c3">kDA7212_DACGainM54DB</a> = 0x27, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca9b14c521981de0ef10907fd061f15e88">kDA7212_DACGainM48DB</a> = 0x2F, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca7f7cdc2b1fb01133c70f59dcd88e8b29">kDA7212_DACGainM42DB</a> = 0x37, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca962467e3eeee640374d1251ba55e54ab">kDA7212_DACGainM36DB</a> = 0x3F, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca37f8a4f380c06d29170af08ec0bd9455">kDA7212_DACGainM30DB</a> = 0x47, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca35b5d452d7ff01bb50c7036dfdc4a3c4">kDA7212_DACGainM24DB</a> = 0x4F, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca88b0f22e91fa5765961f65649d398cd1">kDA7212_DACGainM18DB</a> = 0x57, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca3fb7c057f7a29e43c3198fe71de8d9ee">kDA7212_DACGainM12DB</a> = 0x5F, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca4b1594dfd4b2839cb3e16244d2d4add9">kDA7212_DACGainM6DB</a> = 0x67, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359caa49f74be4c508f1ebaf771268aa59461">kDA7212_DACGain0DB</a> = 0x6F, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca207d817045357758bbe5cd18f3ff7725">kDA7212_DACGain6DB</a> = 0x77, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#gga37faac44a47580dd5b803a2d2609359ca78e6ab8ae6e4e87b1b15ed80e82acdc2">kDA7212_DACGain12DB</a> = 0x7F
+&#160;&#160;<a class="el" href="a00015.html#gga420482576c736d6016bc7cb40966ae76af1ae036e2e350aabfe39cd29bace6d32">kCS42888_BusTDM</a> = 0x6
 <br/>
  }</td></tr>
-<tr class="memdesc:ga37faac44a47580dd5b803a2d2609359c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 volume.  <a href="a00015.html#ga37faac44a47580dd5b803a2d2609359c">More...</a><br/></td></tr>
-<tr class="separator:ga37faac44a47580dd5b803a2d2609359c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95ce2c0556d9642f3133e53f6097fdd3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga95ce2c0556d9642f3133e53f6097fdd3a18e44e5377bce7294db432a1e82d508b">kDA7212_BusI2S</a> = 0x0, 
+<tr class="memdesc:ga420482576c736d6016bc7cb40966ae76"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 supported audio bus type.  <a href="a00015.html#ga420482576c736d6016bc7cb40966ae76">More...</a><br/></td></tr>
+<tr class="separator:ga420482576c736d6016bc7cb40966ae76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga157d5577a5b2f5986037d0d09c7dc77d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77da40c873d24063247f27786a37ae99f4e5">kCS42888_AOUT1</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga95ce2c0556d9642f3133e53f6097fdd3a5c90ce6d3cbf97f6f36ea37b2715ed3b">kDA7212_BusLeftJustified</a>, 
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77da4e25320a6e1770c4782c0776bd6708e2">kCS42888_AOUT2</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga95ce2c0556d9642f3133e53f6097fdd3a9a78835b4b39c468cf24af8cd1ecd578">kDA7212_BusRightJustified</a>, 
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77da3635f95f2c41320a933acb215a07ea1e">kCS42888_AOUT3</a> = 3U, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga95ce2c0556d9642f3133e53f6097fdd3ac6db42a81b0ab7fc8a773bc88392fb17">kDA7212_BusDSPMode</a>
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77dad9aedebf8ecd41a35099a221194985ae">kCS42888_AOUT4</a> = 4U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga95ce2c0556d9642f3133e53f6097fdd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The audio data transfer protocol choice.  <a href="a00015.html#ga95ce2c0556d9642f3133e53f6097fdd3">More...</a><br/></td></tr>
-<tr class="separator:ga95ce2c0556d9642f3133e53f6097fdd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5fb666a4f56fc1bc022919487515a037"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga5fb666a4f56fc1bc022919487515a037">da7212_sys_clk_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga5fb666a4f56fc1bc022919487515a037a5418f800a758518588cfcf97bc11cbec">kDA7212_SysClkSourceMCLK</a> = 0U, 
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77da5433074d6d61dc9a342dd07880ad8013">kCS42888_AOUT5</a> = 5U, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga5fb666a4f56fc1bc022919487515a037a91322381925bb3cf69b1bfca9c277bfb">kDA7212_SysClkSourcePLL</a> = 1U &lt;&lt; 14
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77da5523459f137c68559e45279689b3c9d1">kCS42888_AOUT6</a> = 6U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga5fb666a4f56fc1bc022919487515a037"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 system clock source  <a href="a00015.html#ga5fb666a4f56fc1bc022919487515a037">More...</a><br/></td></tr>
-<tr class="separator:ga5fb666a4f56fc1bc022919487515a037"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga971f3ba35a3d9116393781ea426f132c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga971f3ba35a3d9116393781ea426f132c">da7212_pll_clk_source_t</a> { <a class="el" href="a00015.html#gga971f3ba35a3d9116393781ea426f132ca9f97bdd4ba7ae0086bcc7b0cfbe370c0">kDA7212_PLLClkSourceMCLK</a> = 0U
- }</td></tr>
-<tr class="memdesc:ga971f3ba35a3d9116393781ea426f132c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 pll clock source.  <a href="a00015.html#ga971f3ba35a3d9116393781ea426f132c">More...</a><br/></td></tr>
-<tr class="separator:ga971f3ba35a3d9116393781ea426f132c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d67062344f0a51e6ac913248b132527"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga1d67062344f0a51e6ac913248b132527">da7212_pll_out_clk_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga1d67062344f0a51e6ac913248b132527a94d10bd8eafa96c0b137354bb6a2670c">kDA7212_PLLOutputClk11289600</a> = 11289600U, 
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77da4c5575ba57cca766bc4f8a1971065b5a">kCS42888_AOUT7</a> = 7U, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga1d67062344f0a51e6ac913248b132527a0a1474e7a85354aa8e99b48ea51fb2a0">kDA7212_PLLOutputClk12288000</a> = 12288000U
+&#160;&#160;<a class="el" href="a00015.html#gga157d5577a5b2f5986037d0d09c7dc77da317c6f4677e7331aeee1270eefd18981">kCS42888_AOUT8</a> = 8U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1d67062344f0a51e6ac913248b132527"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 output clock frequency.  <a href="a00015.html#ga1d67062344f0a51e6ac913248b132527">More...</a><br/></td></tr>
-<tr class="separator:ga1d67062344f0a51e6ac913248b132527"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd73a9c763b4c3835514062492201a8e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gacd73a9c763b4c3835514062492201a8e">da7212_master_bits_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00015.html#ggacd73a9c763b4c3835514062492201a8eacf2700e04e95db0583f92597a106367a">kDA7212_MasterBits32PerFrame</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#ggacd73a9c763b4c3835514062492201a8ea4aaccfde0d4dbfc24913e8437d8c6ffb">kDA7212_MasterBits64PerFrame</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#ggacd73a9c763b4c3835514062492201a8eae839316f7659cd0933930ad43f11ff0a">kDA7212_MasterBits128PerFrame</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00015.html#ggacd73a9c763b4c3835514062492201a8eaa20340ec29a73f7043914e43a6e21777">kDA7212_MasterBits256PerFrame</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:gacd73a9c763b4c3835514062492201a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">master mode bits per frame  <a href="a00015.html#gacd73a9c763b4c3835514062492201a8e">More...</a><br/></td></tr>
-<tr class="separator:gacd73a9c763b4c3835514062492201a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga157d5577a5b2f5986037d0d09c7dc77d"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS428888 play channel.  <a href="a00015.html#ga157d5577a5b2f5986037d0d09c7dc77d">More...</a><br/></td></tr>
+<tr class="separator:ga157d5577a5b2f5986037d0d09c7dc77d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaca2d591c1f37ac9459f5337656c2e903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gaca2d591c1f37ac9459f5337656c2e903">DA7212_Init</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, <a class="el" href="a00015.html#a00291">da7212_config_t</a> *codecConfig)</td></tr>
-<tr class="memdesc:gaca2d591c1f37ac9459f5337656c2e903"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 initialize function.  <a href="#gaca2d591c1f37ac9459f5337656c2e903">More...</a><br/></td></tr>
-<tr class="separator:gaca2d591c1f37ac9459f5337656c2e903"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f91e332b894c7eb33de61f5abf0e3bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga5f91e332b894c7eb33de61f5abf0e3bd">DA7212_ConfigAudioFormat</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, uint32_t masterClock_Hz, uint32_t sampleRate_Hz, uint32_t dataBits)</td></tr>
-<tr class="memdesc:ga5f91e332b894c7eb33de61f5abf0e3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set DA7212 audio format.  <a href="#ga5f91e332b894c7eb33de61f5abf0e3bd">More...</a><br/></td></tr>
-<tr class="separator:ga5f91e332b894c7eb33de61f5abf0e3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga329eba3a6075fcd97e63ccc4013a669e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga329eba3a6075fcd97e63ccc4013a669e">DA7212_SetPLLConfig</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, <a class="el" href="a00015.html#a00293">da7212_pll_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga329eba3a6075fcd97e63ccc4013a669e"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 set PLL configuration This function will enable the GPIO1 FLL clock output function, so user can see the generated fll output clock frequency from WM8904 GPIO1.  <a href="#ga329eba3a6075fcd97e63ccc4013a669e">More...</a><br/></td></tr>
-<tr class="separator:ga329eba3a6075fcd97e63ccc4013a669e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c8f47cd9f8a4490b35d2c731439a267"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga6c8f47cd9f8a4490b35d2c731439a267">DA7212_ChangeHPVolume</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, <a class="el" href="a00015.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a> volume)</td></tr>
-<tr class="memdesc:ga6c8f47cd9f8a4490b35d2c731439a267"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set DA7212 playback volume.  <a href="#ga6c8f47cd9f8a4490b35d2c731439a267">More...</a><br/></td></tr>
-<tr class="separator:ga6c8f47cd9f8a4490b35d2c731439a267"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7cbf1d02cfd35123392c0aae6c528f79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga7cbf1d02cfd35123392c0aae6c528f79">DA7212_Mute</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, bool isMuted)</td></tr>
-<tr class="memdesc:ga7cbf1d02cfd35123392c0aae6c528f79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute or unmute DA7212.  <a href="#ga7cbf1d02cfd35123392c0aae6c528f79">More...</a><br/></td></tr>
-<tr class="separator:ga7cbf1d02cfd35123392c0aae6c528f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52f775b79e8de5f489b995d1f4c7fe31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga52f775b79e8de5f489b995d1f4c7fe31">DA7212_ChangeInput</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, <a class="el" href="a00015.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a> DA7212_Input)</td></tr>
-<tr class="memdesc:ga52f775b79e8de5f489b995d1f4c7fe31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the input data source of DA7212.  <a href="#ga52f775b79e8de5f489b995d1f4c7fe31">More...</a><br/></td></tr>
-<tr class="separator:ga52f775b79e8de5f489b995d1f4c7fe31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6cebcf917e9d9ce4f69828c701c6a6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gab6cebcf917e9d9ce4f69828c701c6a6d">DA7212_ChangeOutput</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, <a class="el" href="a00015.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a> DA7212_Output)</td></tr>
-<tr class="memdesc:gab6cebcf917e9d9ce4f69828c701c6a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the output device of DA7212.  <a href="#gab6cebcf917e9d9ce4f69828c701c6a6d">More...</a><br/></td></tr>
-<tr class="separator:gab6cebcf917e9d9ce4f69828c701c6a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8dd935197f63a10d9daf23ac96904416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga8dd935197f63a10d9daf23ac96904416">DA7212_SetChannelVolume</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, uint32_t channel, uint32_t volume)</td></tr>
-<tr class="memdesc:ga8dd935197f63a10d9daf23ac96904416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set module volume.  <a href="#ga8dd935197f63a10d9daf23ac96904416">More...</a><br/></td></tr>
-<tr class="separator:ga8dd935197f63a10d9daf23ac96904416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71c6871ed8dc5bc01201265e0139ae61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga71c6871ed8dc5bc01201265e0139ae61">DA7212_SetChannelMute</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, uint32_t channel, bool isMute)</td></tr>
-<tr class="memdesc:ga71c6871ed8dc5bc01201265e0139ae61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set module mute.  <a href="#ga71c6871ed8dc5bc01201265e0139ae61">More...</a><br/></td></tr>
-<tr class="separator:ga71c6871ed8dc5bc01201265e0139ae61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b83af3d6dec6892ec345c54af419942"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga5b83af3d6dec6892ec345c54af419942">DA7212_SetProtocol</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, <a class="el" href="a00015.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a> protocol)</td></tr>
-<tr class="memdesc:ga5b83af3d6dec6892ec345c54af419942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set protocol for DA7212.  <a href="#ga5b83af3d6dec6892ec345c54af419942">More...</a><br/></td></tr>
-<tr class="separator:ga5b83af3d6dec6892ec345c54af419942"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga700245cf97e29af9f3aa3402b032094a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga700245cf97e29af9f3aa3402b032094a">DA7212_SetMasterModeBits</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, uint32_t bitWidth)</td></tr>
-<tr class="memdesc:ga700245cf97e29af9f3aa3402b032094a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set master mode bits per frame for DA7212.  <a href="#ga700245cf97e29af9f3aa3402b032094a">More...</a><br/></td></tr>
-<tr class="separator:ga700245cf97e29af9f3aa3402b032094a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabda1a52e4795473357f4561633e07591"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gabda1a52e4795473357f4561633e07591">DA7212_WriteRegister</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, uint8_t u8Register, uint8_t u8RegisterData)</td></tr>
-<tr class="memdesc:gabda1a52e4795473357f4561633e07591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a register for DA7212.  <a href="#gabda1a52e4795473357f4561633e07591">More...</a><br/></td></tr>
-<tr class="separator:gabda1a52e4795473357f4561633e07591"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b445705c324d49effc257f7b3265c92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga5b445705c324d49effc257f7b3265c92">DA7212_ReadRegister</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle, uint8_t u8Register, uint8_t *pu8RegisterData)</td></tr>
-<tr class="memdesc:ga5b445705c324d49effc257f7b3265c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a register value of DA7212.  <a href="#ga5b445705c324d49effc257f7b3265c92">More...</a><br/></td></tr>
-<tr class="separator:ga5b445705c324d49effc257f7b3265c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52aaf202346af12d3932bd467a412f59"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga52aaf202346af12d3932bd467a412f59">DA7212_Deinit</a> (<a class="el" href="a00015.html#a00292">da7212_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:ga52aaf202346af12d3932bd467a412f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit DA7212.  <a href="#ga52aaf202346af12d3932bd467a412f59">More...</a><br/></td></tr>
-<tr class="separator:ga52aaf202346af12d3932bd467a412f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaedecae1ab48066f40067f938b45e246"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gaaedecae1ab48066f40067f938b45e246">CS42888_Init</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, <a class="el" href="a00015.html#a00304">cs42888_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaaedecae1ab48066f40067f938b45e246"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 initialize function.  <a href="#gaaedecae1ab48066f40067f938b45e246">More...</a><br/></td></tr>
+<tr class="separator:gaaedecae1ab48066f40067f938b45e246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f3f2e2ab36b350ac9e7687ac068c924"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga9f3f2e2ab36b350ac9e7687ac068c924">CS42888_Deinit</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga9f3f2e2ab36b350ac9e7687ac068c924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit the CS42888 codec.  <a href="#ga9f3f2e2ab36b350ac9e7687ac068c924">More...</a><br/></td></tr>
+<tr class="separator:ga9f3f2e2ab36b350ac9e7687ac068c924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9909a32fcd8fb65497a0971169f02b6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga9909a32fcd8fb65497a0971169f02b6f">CS42888_SetProtocol</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, <a class="el" href="a00015.html#ga420482576c736d6016bc7cb40966ae76">cs42888_bus_t</a> protocol, uint32_t bitWidth)</td></tr>
+<tr class="memdesc:ga9909a32fcd8fb65497a0971169f02b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the audio transfer protocol.  <a href="#ga9909a32fcd8fb65497a0971169f02b6f">More...</a><br/></td></tr>
+<tr class="separator:ga9909a32fcd8fb65497a0971169f02b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7eec024331e152d41eb21b4de0dcb50b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga7eec024331e152d41eb21b4de0dcb50b">CS42888_SetFuncMode</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, <a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a> mode)</td></tr>
+<tr class="memdesc:ga7eec024331e152d41eb21b4de0dcb50b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set CS42888 to differernt working mode.  <a href="#ga7eec024331e152d41eb21b4de0dcb50b">More...</a><br/></td></tr>
+<tr class="separator:ga7eec024331e152d41eb21b4de0dcb50b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga206dde5ac0fb4ad77ce3b3e68a5f03e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga206dde5ac0fb4ad77ce3b3e68a5f03e0">CS42888_SelectFunctionalMode</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, <a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a> adcMode, <a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a> dacMode)</td></tr>
+<tr class="memdesc:ga206dde5ac0fb4ad77ce3b3e68a5f03e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set CS42888 to differernt functional mode.  <a href="#ga206dde5ac0fb4ad77ce3b3e68a5f03e0">More...</a><br/></td></tr>
+<tr class="separator:ga206dde5ac0fb4ad77ce3b3e68a5f03e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga213cbbee89c91489164c8ab704ff468b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga213cbbee89c91489164c8ab704ff468b">CS42888_SetAOUTVolume</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t channel, uint8_t volume)</td></tr>
+<tr class="memdesc:ga213cbbee89c91489164c8ab704ff468b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the volume of different modules in CS42888.  <a href="#ga213cbbee89c91489164c8ab704ff468b">More...</a><br/></td></tr>
+<tr class="separator:ga213cbbee89c91489164c8ab704ff468b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae86544adbe99c855a60db68b11e40960"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gae86544adbe99c855a60db68b11e40960">CS42888_SetAINVolume</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t channel, uint8_t volume)</td></tr>
+<tr class="memdesc:gae86544adbe99c855a60db68b11e40960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the volume of different modules in CS42888.  <a href="#gae86544adbe99c855a60db68b11e40960">More...</a><br/></td></tr>
+<tr class="separator:gae86544adbe99c855a60db68b11e40960"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e5e55bf98bd6af70483e36d94f5c173"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga2e5e55bf98bd6af70483e36d94f5c173">CS42888_GetAOUTVolume</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t channel)</td></tr>
+<tr class="memdesc:ga2e5e55bf98bd6af70483e36d94f5c173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the volume of different AOUT channel in CS42888.  <a href="#ga2e5e55bf98bd6af70483e36d94f5c173">More...</a><br/></td></tr>
+<tr class="separator:ga2e5e55bf98bd6af70483e36d94f5c173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc22378afb83464ee651b35187aa57c0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gafc22378afb83464ee651b35187aa57c0">CS42888_GetAINVolume</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t channel)</td></tr>
+<tr class="memdesc:gafc22378afb83464ee651b35187aa57c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the volume of different AIN channel in CS42888.  <a href="#gafc22378afb83464ee651b35187aa57c0">More...</a><br/></td></tr>
+<tr class="separator:gafc22378afb83464ee651b35187aa57c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55964f9ec6f7f9dd0f066a2aa50187ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga55964f9ec6f7f9dd0f066a2aa50187ab">CS42888_SetMute</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t channelMask)</td></tr>
+<tr class="memdesc:ga55964f9ec6f7f9dd0f066a2aa50187ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute modules in CS42888.  <a href="#ga55964f9ec6f7f9dd0f066a2aa50187ab">More...</a><br/></td></tr>
+<tr class="separator:ga55964f9ec6f7f9dd0f066a2aa50187ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf995fa288cfd403c1dcdc7286edcdb48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gaf995fa288cfd403c1dcdc7286edcdb48">CS42888_SetChannelMute</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t channel, bool isMute)</td></tr>
+<tr class="memdesc:gaf995fa288cfd403c1dcdc7286edcdb48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mute channel modules in CS42888.  <a href="#gaf995fa288cfd403c1dcdc7286edcdb48">More...</a><br/></td></tr>
+<tr class="separator:gaf995fa288cfd403c1dcdc7286edcdb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2664a02181180546f17d0ec2a35f227b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga2664a02181180546f17d0ec2a35f227b">CS42888_SetModule</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, <a class="el" href="a00015.html#gac57c7f67724dbc1ad4db339c1591ac26">cs42888_module_t</a> module, bool isEnabled)</td></tr>
+<tr class="memdesc:ga2664a02181180546f17d0ec2a35f227b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable expected devices.  <a href="#ga2664a02181180546f17d0ec2a35f227b">More...</a><br/></td></tr>
+<tr class="separator:ga2664a02181180546f17d0ec2a35f227b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cc19dbe338c5dac380a6d4f8747b7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga1cc19dbe338c5dac380a6d4f8747b7e9">CS42888_ConfigDataFormat</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint32_t mclk, uint32_t sample_rate, uint32_t bits)</td></tr>
+<tr class="memdesc:ga1cc19dbe338c5dac380a6d4f8747b7e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the data format of audio data.  <a href="#ga1cc19dbe338c5dac380a6d4f8747b7e9">More...</a><br/></td></tr>
+<tr class="separator:ga1cc19dbe338c5dac380a6d4f8747b7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac05142d661f4cc16706b59f5bb6c03d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gaac05142d661f4cc16706b59f5bb6c03d">CS42888_WriteReg</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t reg, uint8_t val)</td></tr>
+<tr class="memdesc:gaac05142d661f4cc16706b59f5bb6c03d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write register to CS42888 using I2C.  <a href="#gaac05142d661f4cc16706b59f5bb6c03d">More...</a><br/></td></tr>
+<tr class="separator:gaac05142d661f4cc16706b59f5bb6c03d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d6fae89e3f167613b9aeabe65380918"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga7d6fae89e3f167613b9aeabe65380918">CS42888_ReadReg</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t reg, uint8_t *val)</td></tr>
+<tr class="memdesc:ga7d6fae89e3f167613b9aeabe65380918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read register from CS42888 using I2C.  <a href="#ga7d6fae89e3f167613b9aeabe65380918">More...</a><br/></td></tr>
+<tr class="separator:ga7d6fae89e3f167613b9aeabe65380918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9338f9003a76f3d7f71156f49e7ce293"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga9338f9003a76f3d7f71156f49e7ce293">CS42888_ModifyReg</a> (<a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *handle, uint8_t reg, uint8_t mask, uint8_t val)</td></tr>
+<tr class="memdesc:ga9338f9003a76f3d7f71156f49e7ce293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify some bits in the register using I2C.  <a href="#ga9338f9003a76f3d7f71156f49e7ce293">More...</a><br/></td></tr>
+<tr class="separator:ga9338f9003a76f3d7f71156f49e7ce293"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga6b767b2e541d6394c4265ada63c0dec6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga6b767b2e541d6394c4265ada63c0dec6">FSL_DA7212_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
-<tr class="memdesc:ga6b767b2e541d6394c4265ada63c0dec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.2.2.  <a href="#ga6b767b2e541d6394c4265ada63c0dec6">More...</a><br/></td></tr>
-<tr class="separator:ga6b767b2e541d6394c4265ada63c0dec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga469630e0b22b4bc480718055fd9bdff1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga469630e0b22b4bc480718055fd9bdff1">FSL_CS42888_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00224.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
+<tr class="memdesc:ga469630e0b22b4bc480718055fd9bdff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">cs42888 driver version 2.1.3.  <a href="#ga469630e0b22b4bc480718055fd9bdff1">More...</a><br/></td></tr>
+<tr class="separator:ga469630e0b22b4bc480718055fd9bdff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00293" id="a00293"></a>
+<a name="a00303" id="a00303"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct da7212_pll_config_t</td>
+          <td class="memname">struct cs42888_audio_format_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a93d832a7b38ce0e5d35cf237ec2e00aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93d832a7b38ce0e5d35cf237ec2e00aa"></a>
-<a class="el" href="a00015.html#ga971f3ba35a3d9116393781ea426f132c">da7212_pll_clk_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a93d832a7b38ce0e5d35cf237ec2e00aa">source</a></td></tr>
-<tr class="memdesc:a93d832a7b38ce0e5d35cf237ec2e00aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll reference clock source <br/></td></tr>
-<tr class="separator:a93d832a7b38ce0e5d35cf237ec2e00aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a582daa483484e1b8af88e38a7786a011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a582daa483484e1b8af88e38a7786a011"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a582daa483484e1b8af88e38a7786a011">refClock_HZ</a></td></tr>
-<tr class="memdesc:a582daa483484e1b8af88e38a7786a011"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll reference clock frequency <br/></td></tr>
-<tr class="separator:a582daa483484e1b8af88e38a7786a011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa437baa5261123cd810488ac65e201dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa437baa5261123cd810488ac65e201dd"></a>
-<a class="el" href="a00015.html#ga1d67062344f0a51e6ac913248b132527">da7212_pll_out_clk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#aa437baa5261123cd810488ac65e201dd">outputClock_HZ</a></td></tr>
-<tr class="memdesc:aa437baa5261123cd810488ac65e201dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll output clock frequency <br/></td></tr>
-<tr class="separator:aa437baa5261123cd810488ac65e201dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fd01de40f2d61eaded45b58910eb9e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5fd01de40f2d61eaded45b58910eb9e6"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a5fd01de40f2d61eaded45b58910eb9e6">mclk_HZ</a></td></tr>
+<tr class="memdesc:a5fd01de40f2d61eaded45b58910eb9e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">master clock frequency <br/></td></tr>
+<tr class="separator:a5fd01de40f2d61eaded45b58910eb9e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a606f22140a1a18f014cfd854233716fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a606f22140a1a18f014cfd854233716fc"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a606f22140a1a18f014cfd854233716fc">sampleRate</a></td></tr>
+<tr class="memdesc:a606f22140a1a18f014cfd854233716fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">sample rate <br/></td></tr>
+<tr class="separator:a606f22140a1a18f014cfd854233716fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a375f48e508232d89ae87f4af47e166"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a375f48e508232d89ae87f4af47e166"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a5a375f48e508232d89ae87f4af47e166">bitWidth</a></td></tr>
+<tr class="memdesc:a5a375f48e508232d89ae87f4af47e166"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit width <br/></td></tr>
+<tr class="separator:a5a375f48e508232d89ae87f4af47e166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a name="a00290" id="a00290"></a>
+<a name="a00304" id="a00304"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct da7212_audio_format_t</td>
+          <td class="memname">struct cs42888_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae3b11f4616fc011852a6f06e644c00d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3b11f4616fc011852a6f06e644c00d9"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ae3b11f4616fc011852a6f06e644c00d9">mclk_HZ</a></td></tr>
-<tr class="memdesc:ae3b11f4616fc011852a6f06e644c00d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">master clock frequency <br/></td></tr>
-<tr class="separator:ae3b11f4616fc011852a6f06e644c00d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6724afaf87a4ae3535217ae5dff41e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6724afaf87a4ae3535217ae5dff41e9"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ae6724afaf87a4ae3535217ae5dff41e9">sampleRate</a></td></tr>
-<tr class="memdesc:ae6724afaf87a4ae3535217ae5dff41e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">sample rate <br/></td></tr>
-<tr class="separator:ae6724afaf87a4ae3535217ae5dff41e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accbab6c50b115c5bf9baec30c8d98b64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accbab6c50b115c5bf9baec30c8d98b64"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#accbab6c50b115c5bf9baec30c8d98b64">bitWidth</a></td></tr>
-<tr class="memdesc:accbab6c50b115c5bf9baec30c8d98b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit width <br/></td></tr>
-<tr class="separator:accbab6c50b115c5bf9baec30c8d98b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19793f6a920f5ff213b39025f80e7a97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19793f6a920f5ff213b39025f80e7a97"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a19793f6a920f5ff213b39025f80e7a97">isBclkInvert</a></td></tr>
-<tr class="memdesc:a19793f6a920f5ff213b39025f80e7a97"><td class="mdescLeft">&#160;</td><td class="mdescRight">bit clock intervet <br/></td></tr>
-<tr class="separator:a19793f6a920f5ff213b39025f80e7a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00291" id="a00291"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct da7212_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a63d48e3ee5e54914cc76eeff817c33b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a63d48e3ee5e54914cc76eeff817c33b4">isMaster</a></td></tr>
-<tr class="memdesc:a63d48e3ee5e54914cc76eeff817c33b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">If DA7212 is master, true means master, false means slave.  <a href="#a63d48e3ee5e54914cc76eeff817c33b4">More...</a><br/></td></tr>
-<tr class="separator:a63d48e3ee5e54914cc76eeff817c33b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0df2c7119a0c2e16db9c3bc18c399df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00015.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ac0df2c7119a0c2e16db9c3bc18c399df">protocol</a></td></tr>
-<tr class="memdesc:ac0df2c7119a0c2e16db9c3bc18c399df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio bus format, can be I2S, LJ, RJ or DSP mode.  <a href="#ac0df2c7119a0c2e16db9c3bc18c399df">More...</a><br/></td></tr>
-<tr class="separator:ac0df2c7119a0c2e16db9c3bc18c399df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29cfee6ec8bb4c99b6659686074dcc22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00015.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a29cfee6ec8bb4c99b6659686074dcc22">dacSource</a></td></tr>
-<tr class="memdesc:a29cfee6ec8bb4c99b6659686074dcc22"><td class="mdescLeft">&#160;</td><td class="mdescRight">DA7212 data source.  <a href="#a29cfee6ec8bb4c99b6659686074dcc22">More...</a><br/></td></tr>
-<tr class="separator:a29cfee6ec8bb4c99b6659686074dcc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a6dafa5858a985ed3711c3b427a9a0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a6dafa5858a985ed3711c3b427a9a0b"></a>
-<a class="el" href="a00015.html#a00290">da7212_audio_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a6a6dafa5858a985ed3711c3b427a9a0b">format</a></td></tr>
-<tr class="memdesc:a6a6dafa5858a985ed3711c3b427a9a0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">audio format <br/></td></tr>
-<tr class="separator:a6a6dafa5858a985ed3711c3b427a9a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96c83c71328687c66d5f2647256b2897"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96c83c71328687c66d5f2647256b2897"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a96c83c71328687c66d5f2647256b2897">slaveAddress</a></td></tr>
-<tr class="memdesc:a96c83c71328687c66d5f2647256b2897"><td class="mdescLeft">&#160;</td><td class="mdescRight">device address <br/></td></tr>
-<tr class="separator:a96c83c71328687c66d5f2647256b2897"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af81839448e888dfdfd12c37f755dc25d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af81839448e888dfdfd12c37f755dc25d"></a>
-<a class="el" href="a00013.html#a00286">codec_i2c_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#af81839448e888dfdfd12c37f755dc25d">i2cConfig</a></td></tr>
-<tr class="memdesc:af81839448e888dfdfd12c37f755dc25d"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c configuration <br/></td></tr>
-<tr class="separator:af81839448e888dfdfd12c37f755dc25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a545d9de5fb4daa0eeea6e23ddab53e00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a545d9de5fb4daa0eeea6e23ddab53e00"></a>
-<a class="el" href="a00015.html#ga5fb666a4f56fc1bc022919487515a037">da7212_sys_clk_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a545d9de5fb4daa0eeea6e23ddab53e00">sysClkSource</a></td></tr>
-<tr class="memdesc:a545d9de5fb4daa0eeea6e23ddab53e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">system clock source <br/></td></tr>
-<tr class="separator:a545d9de5fb4daa0eeea6e23ddab53e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aece86acd54a2e5dc52e3216ddd7bc262"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aece86acd54a2e5dc52e3216ddd7bc262"></a>
-<a class="el" href="a00015.html#a00293">da7212_pll_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#aece86acd54a2e5dc52e3216ddd7bc262">pll</a></td></tr>
-<tr class="memdesc:aece86acd54a2e5dc52e3216ddd7bc262"><td class="mdescLeft">&#160;</td><td class="mdescRight">pll configuration <br/></td></tr>
-<tr class="separator:aece86acd54a2e5dc52e3216ddd7bc262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe4fb7d060b3749d089f212afee66edd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe4fb7d060b3749d089f212afee66edd"></a>
+<a class="el" href="a00015.html#ga420482576c736d6016bc7cb40966ae76">cs42888_bus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#abe4fb7d060b3749d089f212afee66edd">bus</a></td></tr>
+<tr class="memdesc:abe4fb7d060b3749d089f212afee66edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio transfer protocol. <br/></td></tr>
+<tr class="separator:abe4fb7d060b3749d089f212afee66edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a390b84d16170a8a88a1630f4a4f0de19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a390b84d16170a8a88a1630f4a4f0de19"></a>
+<a class="el" href="a00015.html#a00303">cs42888_audio_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a390b84d16170a8a88a1630f4a4f0de19">format</a></td></tr>
+<tr class="memdesc:a390b84d16170a8a88a1630f4a4f0de19"><td class="mdescLeft">&#160;</td><td class="mdescRight">cs42888 audio format <br/></td></tr>
+<tr class="separator:a390b84d16170a8a88a1630f4a4f0de19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b112c12d31e8259d8d4a36846071cde"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a3b112c12d31e8259d8d4a36846071cde">ADCMode</a></td></tr>
+<tr class="memdesc:a3b112c12d31e8259d8d4a36846071cde"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 ADC function mode.  <a href="#a3b112c12d31e8259d8d4a36846071cde">More...</a><br/></td></tr>
+<tr class="separator:a3b112c12d31e8259d8d4a36846071cde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46fa77d87faddef0d9704c0de69b2423"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a46fa77d87faddef0d9704c0de69b2423">DACMode</a></td></tr>
+<tr class="memdesc:a46fa77d87faddef0d9704c0de69b2423"><td class="mdescLeft">&#160;</td><td class="mdescRight">CS42888 DAC function mode.  <a href="#a46fa77d87faddef0d9704c0de69b2423">More...</a><br/></td></tr>
+<tr class="separator:a46fa77d87faddef0d9704c0de69b2423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95951482c89e8729513dc7521ae44ba0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95951482c89e8729513dc7521ae44ba0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a95951482c89e8729513dc7521ae44ba0">master</a></td></tr>
+<tr class="memdesc:a95951482c89e8729513dc7521ae44ba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">true is master, false is slave <br/></td></tr>
+<tr class="separator:a95951482c89e8729513dc7521ae44ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6beacc97fe94cc05574adc3944660dd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6beacc97fe94cc05574adc3944660dd3"></a>
+<a class="el" href="a00014.html#a00302">codec_i2c_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a6beacc97fe94cc05574adc3944660dd3">i2cConfig</a></td></tr>
+<tr class="memdesc:a6beacc97fe94cc05574adc3944660dd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c bus configuration <br/></td></tr>
+<tr class="separator:a6beacc97fe94cc05574adc3944660dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdef2c13001f11f5d4148af1b0196567"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdef2c13001f11f5d4148af1b0196567"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#abdef2c13001f11f5d4148af1b0196567">slaveAddress</a></td></tr>
+<tr class="memdesc:abdef2c13001f11f5d4148af1b0196567"><td class="mdescLeft">&#160;</td><td class="mdescRight">slave address <br/></td></tr>
+<tr class="separator:abdef2c13001f11f5d4148af1b0196567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c476b216744897cc8a3fc401e0e6dca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c476b216744897cc8a3fc401e0e6dca"></a>
+<a class="el" href="a00015.html#ga5fe323798009a9b45302adece010e3e0">cs42888_reset</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a9c476b216744897cc8a3fc401e0e6dca">reset</a></td></tr>
+<tr class="memdesc:a9c476b216744897cc8a3fc401e0e6dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset function pointer <br/></td></tr>
+<tr class="separator:a9c476b216744897cc8a3fc401e0e6dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a63d48e3ee5e54914cc76eeff817c33b4"></a>
+<a class="anchor" id="a3b112c12d31e8259d8d4a36846071cde"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool da7212_config_t::isMaster</td>
+          <td class="memname"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a> cs42888_config_t::ADCMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac0df2c7119a0c2e16db9c3bc18c399df"></a>
+<a class="anchor" id="a46fa77d87faddef0d9704c0de69b2423"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00015.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a> da7212_config_t::protocol</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a29cfee6ec8bb4c99b6659686074dcc22"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00015.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a> da7212_config_t::dacSource</td>
+          <td class="memname"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a> cs42888_config_t::DACMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -462,36 +377,60 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a name="a00292" id="a00292"></a>
+<a name="a00305" id="a00305"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct da7212_handle_t</td>
+          <td class="memname">struct cs42888_handle_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aeb416840b7dddbcd19845c98aa307703"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb416840b7dddbcd19845c98aa307703"></a>
-<a class="el" href="a00015.html#a00291">da7212_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#aeb416840b7dddbcd19845c98aa307703">config</a></td></tr>
-<tr class="memdesc:aeb416840b7dddbcd19845c98aa307703"><td class="mdescLeft">&#160;</td><td class="mdescRight">da7212 config pointer <br/></td></tr>
-<tr class="separator:aeb416840b7dddbcd19845c98aa307703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f081eba744a5ca041f6eeb00f3faaf5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7f081eba744a5ca041f6eeb00f3faaf5"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a7f081eba744a5ca041f6eeb00f3faaf5">i2cHandle</a> [<a class="el" href="a00015.html#ga3d23d22f57247229df5a71faaaa40229">DA7212_I2C_HANDLER_SIZE</a>]</td></tr>
-<tr class="memdesc:a7f081eba744a5ca041f6eeb00f3faaf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c handle <br/></td></tr>
-<tr class="separator:a7f081eba744a5ca041f6eeb00f3faaf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6a321c3fa8d47e83f09996125b06794"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6a321c3fa8d47e83f09996125b06794"></a>
+<a class="el" href="a00015.html#a00304">cs42888_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ae6a321c3fa8d47e83f09996125b06794">config</a></td></tr>
+<tr class="memdesc:ae6a321c3fa8d47e83f09996125b06794"><td class="mdescLeft">&#160;</td><td class="mdescRight">cs42888 config pointer <br/></td></tr>
+<tr class="separator:ae6a321c3fa8d47e83f09996125b06794"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a561ab054fec522adeab35c07bb6cab34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a561ab054fec522adeab35c07bb6cab34"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a561ab054fec522adeab35c07bb6cab34">i2cHandle</a> [<a class="el" href="a00015.html#ga953230c47c19e6eb63913ae2b64e1ae5">CS42888_I2C_HANDLER_SIZE</a>]</td></tr>
+<tr class="memdesc:a561ab054fec522adeab35c07bb6cab34"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c handle pointer <br/></td></tr>
+<tr class="separator:a561ab054fec522adeab35c07bb6cab34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga6b767b2e541d6394c4265ada63c0dec6"></a>
+<a class="anchor" id="ga469630e0b22b4bc480718055fd9bdff1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_DA7212_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td>
+          <td class="memname">#define FSL_CS42888_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00224.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga8996629a1d0330f394495461ceb4957b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CS42888_ID&#160;&#160;&#160;0x01U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3758dc010c2ce784b57cf530610bee26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CS42888_I2C_ADDR&#160;&#160;&#160;0x48U</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -499,389 +438,150 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga6fc1179abb7621638b81dd23bce89715"></a>
+<a class="anchor" id="ga8c91ddffd81be7163def41721270971c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a></td>
+          <td class="memname">enum <a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715a81719d1c10c1d21585cc0d85ea0cf96e"></a>kDA7212_Input_AUX</em>&nbsp;</td><td class="fielddoc">
-<p>Input from AUX. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8c91ddffd81be7163def41721270971ca57b2cc424116839aeec3d1c2e53bfff4"></a>kCS42888_ModeMasterSSM</em>&nbsp;</td><td class="fielddoc">
+<p>master single speed mode </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715a6791516363f14d9fa82ab6ffed758a8a"></a>kDA7212_Input_MIC1_Dig</em>&nbsp;</td><td class="fielddoc">
-<p>Input from MIC1 Digital. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8c91ddffd81be7163def41721270971ca11b7086a5f9cfc75f35718710815780c"></a>kCS42888_ModeMasterDSM</em>&nbsp;</td><td class="fielddoc">
+<p>master dual speed mode </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715a915180fec88d3d30961aa7fc999cf734"></a>kDA7212_Input_MIC1_An</em>&nbsp;</td><td class="fielddoc">
-<p>Input from Mic1 Analog. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8c91ddffd81be7163def41721270971ca2d0f655396420774935b01b1b01b315a"></a>kCS42888_ModeMasterQSM</em>&nbsp;</td><td class="fielddoc">
+<p>master quad speed mode </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6fc1179abb7621638b81dd23bce89715ab6d325e0294e7181d5ef528e4398cc44"></a>kDA7212_Input_MIC2</em>&nbsp;</td><td class="fielddoc">
-<p>Input from MIC2. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8c91ddffd81be7163def41721270971caa6dd80e639d0173bafda96b4df37c96a"></a>kCS42888_ModeSlave</em>&nbsp;</td><td class="fielddoc">
+<p>master single speed mode </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gabfe5b5c29bd85345eeab12ffeccdf8e1"></a>
+<a class="anchor" id="gac57c7f67724dbc1ad4db339c1591ac26"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#gabfe5b5c29bd85345eeab12ffeccdf8e1">_da7212_play_channel</a></td>
+          <td class="memname">enum <a class="el" href="a00015.html#gac57c7f67724dbc1ad4db339c1591ac26">cs42888_module_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabfe5b5c29bd85345eeab12ffeccdf8e1ae5ce9e40caf555725cbc0b29bd07a231"></a>kDA7212_HeadphoneLeft</em>&nbsp;</td><td class="fielddoc">
-<p>headphone left </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac57c7f67724dbc1ad4db339c1591ac26a0c3edb05c683d99b43b1afffa92c7745"></a>kCS42888_ModuleDACPair1</em>&nbsp;</td><td class="fielddoc">
+<p>DAC pair1 (AOUT1 and AOUT2) module in CS42888. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabfe5b5c29bd85345eeab12ffeccdf8e1a76d31405add593b507463ae599833fa3"></a>kDA7212_HeadphoneRight</em>&nbsp;</td><td class="fielddoc">
-<p>headphone right </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac57c7f67724dbc1ad4db339c1591ac26a12297793c9f7de6c5df5dd506ba81600"></a>kCS42888_ModuleDACPair2</em>&nbsp;</td><td class="fielddoc">
+<p>DAC pair2 (AOUT3 and AOUT4) module in CS42888. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabfe5b5c29bd85345eeab12ffeccdf8e1ac49a4c8456dd563ebfb512abad314e73"></a>kDA7212_Speaker</em>&nbsp;</td><td class="fielddoc">
-<p>speaker channel </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac57c7f67724dbc1ad4db339c1591ac26a45072abfadea932906a4e536dbb7d5a4"></a>kCS42888_ModuleDACPair3</em>&nbsp;</td><td class="fielddoc">
+<p>DAC pair3 (AOUT5 and AOUT6) module in CS42888. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac57c7f67724dbc1ad4db339c1591ac26a3d1833e1a30aa83df7c3174ff3ab63a9"></a>kCS42888_ModuleDACPair4</em>&nbsp;</td><td class="fielddoc">
+<p>DAC pair4 (AOUT7 and AOUT8) module in CS42888. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac57c7f67724dbc1ad4db339c1591ac26a9e6ae9226aa29208f3fde450a3a2ae69"></a>kCS42888_ModuleADCPair1</em>&nbsp;</td><td class="fielddoc">
+<p>ADC pair1 (AIN1 and AIN2) module in CS42888. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac57c7f67724dbc1ad4db339c1591ac26a3863290d03b58c95e2ae8824fe99aac6"></a>kCS42888_ModuleADCPair2</em>&nbsp;</td><td class="fielddoc">
+<p>ADC pair2 (AIN3 and AIN4) module in CS42888. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga594d4eaddd9cb2171bd90c20fbabec4b"></a>
+<a class="anchor" id="ga420482576c736d6016bc7cb40966ae76"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a></td>
+          <td class="memname">enum <a class="el" href="a00015.html#ga420482576c736d6016bc7cb40966ae76">cs42888_bus_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga594d4eaddd9cb2171bd90c20fbabec4ba00374e7ddbc6f19e104e50c644405d4e"></a>kDA7212_Output_HP</em>&nbsp;</td><td class="fielddoc">
-<p>Output to headphone. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga420482576c736d6016bc7cb40966ae76a7685b48742dd9b6a928673cb716dc496"></a>kCS42888_BusLeftJustified</em>&nbsp;</td><td class="fielddoc">
+<p>Left justified format, up to 24 bits. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga594d4eaddd9cb2171bd90c20fbabec4ba794964f1a59abc4e9651893ab8ad2937"></a>kDA7212_Output_SP</em>&nbsp;</td><td class="fielddoc">
-<p>Output to speaker. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga420482576c736d6016bc7cb40966ae76aeef13df8577ef9bfde4a8390d5b0ccd9"></a>kCS42888_BusI2S</em>&nbsp;</td><td class="fielddoc">
+<p>I2S format, up to 24 bits. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga420482576c736d6016bc7cb40966ae76a4d55c55bf343966060e2a1a756445629"></a>kCS42888_BusRightJustified</em>&nbsp;</td><td class="fielddoc">
+<p>Right justified, can support 16bits and 24 bits. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga420482576c736d6016bc7cb40966ae76a7c862e2ffab7396a543b9a07df682c7d"></a>kCS42888_BusOL1</em>&nbsp;</td><td class="fielddoc">
+<p>One-Line #1 mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga420482576c736d6016bc7cb40966ae76a440e9e0d3ebd0431de4690b05bffcf5f"></a>kCS42888_BusOL2</em>&nbsp;</td><td class="fielddoc">
+<p>One-Line #2 mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga420482576c736d6016bc7cb40966ae76af1ae036e2e350aabfe39cd29bace6d32"></a>kCS42888_BusTDM</em>&nbsp;</td><td class="fielddoc">
+<p>TDM mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga09500728ce3e7466ec63c24f194a7096"></a>
+<a class="anchor" id="ga157d5577a5b2f5986037d0d09c7dc77d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga09500728ce3e7466ec63c24f194a7096">_da7212_module</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p><a class="anchor" id="_cs42888_play_channel"></a></p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096ad9a26702fe14d59f3c7af3896a79ec95"></a>kDA7212_ModuleADC</em>&nbsp;</td><td class="fielddoc">
-<p>module ADC </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77da40c873d24063247f27786a37ae99f4e5"></a>kCS42888_AOUT1</em>&nbsp;</td><td class="fielddoc">
+<p>aout1 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096a69ee48106ddc65d660e106564b26d726"></a>kDA7212_ModuleDAC</em>&nbsp;</td><td class="fielddoc">
-<p>module DAC </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77da4e25320a6e1770c4782c0776bd6708e2"></a>kCS42888_AOUT2</em>&nbsp;</td><td class="fielddoc">
+<p>aout2 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096a30a9366493854f9accccf1a509e30bc4"></a>kDA7212_ModuleHeadphone</em>&nbsp;</td><td class="fielddoc">
-<p>module headphone </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77da3635f95f2c41320a933acb215a07ea1e"></a>kCS42888_AOUT3</em>&nbsp;</td><td class="fielddoc">
+<p>aout3 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09500728ce3e7466ec63c24f194a7096a4f11287d5d208e51cd4f7d58a54f58a4"></a>kDA7212_ModuleSpeaker</em>&nbsp;</td><td class="fielddoc">
-<p>module speaker </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77dad9aedebf8ecd41a35099a221194985ae"></a>kCS42888_AOUT4</em>&nbsp;</td><td class="fielddoc">
+<p>aout4 </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gab328276aed167b3f028b627b84a9c326"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#gab328276aed167b3f028b627b84a9c326">da7212_dac_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab328276aed167b3f028b627b84a9c326aaa36fc0ab185ac10e7ee8a4617f59e97"></a>kDA7212_DACSourceADC</em>&nbsp;</td><td class="fielddoc">
-<p>DAC source from ADC. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77da5433074d6d61dc9a342dd07880ad8013"></a>kCS42888_AOUT5</em>&nbsp;</td><td class="fielddoc">
+<p>aout5 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab328276aed167b3f028b627b84a9c326a32553db21f101a6585653a0f603b4585"></a>kDA7212_DACSourceInputStream</em>&nbsp;</td><td class="fielddoc">
-<p>DAC source from. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77da5523459f137c68559e45279689b3c9d1"></a>kCS42888_AOUT6</em>&nbsp;</td><td class="fielddoc">
+<p>aout6 </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga37faac44a47580dd5b803a2d2609359c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca8bfef935c6c1b4e9f8ab6a783ba65e92"></a>kDA7212_DACGainMute</em>&nbsp;</td><td class="fielddoc">
-<p>Mute DAC. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77da4c5575ba57cca766bc4f8a1971065b5a"></a>kCS42888_AOUT7</em>&nbsp;</td><td class="fielddoc">
+<p>aout7 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca484eb6e188f3ec7b92a3ad1e71ad6cbe"></a>kDA7212_DACGainM72DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -72db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359caf26ca8601f9c6c2ca77487a68bef08dc"></a>kDA7212_DACGainM60DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -60db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca2ac8ed6017a7a3b4e49be5758b4494c3"></a>kDA7212_DACGainM54DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -54db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca9b14c521981de0ef10907fd061f15e88"></a>kDA7212_DACGainM48DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -48db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca7f7cdc2b1fb01133c70f59dcd88e8b29"></a>kDA7212_DACGainM42DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -42db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca962467e3eeee640374d1251ba55e54ab"></a>kDA7212_DACGainM36DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -36db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca37f8a4f380c06d29170af08ec0bd9455"></a>kDA7212_DACGainM30DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -30db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca35b5d452d7ff01bb50c7036dfdc4a3c4"></a>kDA7212_DACGainM24DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -24db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca88b0f22e91fa5765961f65649d398cd1"></a>kDA7212_DACGainM18DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -18db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca3fb7c057f7a29e43c3198fe71de8d9ee"></a>kDA7212_DACGainM12DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -12db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca4b1594dfd4b2839cb3e16244d2d4add9"></a>kDA7212_DACGainM6DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume -6bb. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359caa49f74be4c508f1ebaf771268aa59461"></a>kDA7212_DACGain0DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume +0db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca207d817045357758bbe5cd18f3ff7725"></a>kDA7212_DACGain6DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume +6db. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga37faac44a47580dd5b803a2d2609359ca78e6ab8ae6e4e87b1b15ed80e82acdc2"></a>kDA7212_DACGain12DB</em>&nbsp;</td><td class="fielddoc">
-<p>DAC volume +12db. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga95ce2c0556d9642f3133e53f6097fdd3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3a18e44e5377bce7294db432a1e82d508b"></a>kDA7212_BusI2S</em>&nbsp;</td><td class="fielddoc">
-<p>I2S Type. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3a5c90ce6d3cbf97f6f36ea37b2715ed3b"></a>kDA7212_BusLeftJustified</em>&nbsp;</td><td class="fielddoc">
-<p>Left justified. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3a9a78835b4b39c468cf24af8cd1ecd578"></a>kDA7212_BusRightJustified</em>&nbsp;</td><td class="fielddoc">
-<p>Right Justified. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga95ce2c0556d9642f3133e53f6097fdd3ac6db42a81b0ab7fc8a773bc88392fb17"></a>kDA7212_BusDSPMode</em>&nbsp;</td><td class="fielddoc">
-<p>DSP mode. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga5fb666a4f56fc1bc022919487515a037"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga5fb666a4f56fc1bc022919487515a037">da7212_sys_clk_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5fb666a4f56fc1bc022919487515a037a5418f800a758518588cfcf97bc11cbec"></a>kDA7212_SysClkSourceMCLK</em>&nbsp;</td><td class="fielddoc">
-<p>da7212 system clock soure from MCLK </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5fb666a4f56fc1bc022919487515a037a91322381925bb3cf69b1bfca9c277bfb"></a>kDA7212_SysClkSourcePLL</em>&nbsp;</td><td class="fielddoc">
-<p>da7212 system clock soure from pLL </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga971f3ba35a3d9116393781ea426f132c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga971f3ba35a3d9116393781ea426f132c">da7212_pll_clk_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga971f3ba35a3d9116393781ea426f132ca9f97bdd4ba7ae0086bcc7b0cfbe370c0"></a>kDA7212_PLLClkSourceMCLK</em>&nbsp;</td><td class="fielddoc">
-<p>DA7212 PLL clock source from MCLK. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga1d67062344f0a51e6ac913248b132527"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#ga1d67062344f0a51e6ac913248b132527">da7212_pll_out_clk_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1d67062344f0a51e6ac913248b132527a94d10bd8eafa96c0b137354bb6a2670c"></a>kDA7212_PLLOutputClk11289600</em>&nbsp;</td><td class="fielddoc">
-<p>output 112896000U </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1d67062344f0a51e6ac913248b132527a0a1474e7a85354aa8e99b48ea51fb2a0"></a>kDA7212_PLLOutputClk12288000</em>&nbsp;</td><td class="fielddoc">
-<p>output 12288000U </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gacd73a9c763b4c3835514062492201a8e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00015.html#gacd73a9c763b4c3835514062492201a8e">da7212_master_bits_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8eacf2700e04e95db0583f92597a106367a"></a>kDA7212_MasterBits32PerFrame</em>&nbsp;</td><td class="fielddoc">
-<p>master mode bits32 per frame </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8ea4aaccfde0d4dbfc24913e8437d8c6ffb"></a>kDA7212_MasterBits64PerFrame</em>&nbsp;</td><td class="fielddoc">
-<p>master mode bits64 per frame </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8eae839316f7659cd0933930ad43f11ff0a"></a>kDA7212_MasterBits128PerFrame</em>&nbsp;</td><td class="fielddoc">
-<p>master mode bits128 per frame </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacd73a9c763b4c3835514062492201a8eaa20340ec29a73f7043914e43a6e21777"></a>kDA7212_MasterBits256PerFrame</em>&nbsp;</td><td class="fielddoc">
-<p>master mode bits256 per frame </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga157d5577a5b2f5986037d0d09c7dc77da317c6f4677e7331aeee1270eefd18981"></a>kCS42888_AOUT8</em>&nbsp;</td><td class="fielddoc">
+<p>aout8 </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaca2d591c1f37ac9459f5337656c2e903"></a>
+<a class="anchor" id="gaaedecae1ab48066f40067f938b45e246"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_Init </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00291">da7212_config_t</a> *&#160;</td>
-          <td class="paramname"><em>codecConfig</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">codecConfig</td><td>Codec configure structure. This parameter can be NULL, if NULL, set as default settings. The default setting: <div class="fragment"><div class="line">* sgtl_init_t codec_config</div>
-<div class="line">* codec_config.route = kDA7212_RoutePlayback</div>
-<div class="line">* codec_config.bus = <a class="code" href="a00015.html#gga95ce2c0556d9642f3133e53f6097fdd3a18e44e5377bce7294db432a1e82d508b">kDA7212_BusI2S</a></div>
-<div class="line">* codec_config.isMaster = <span class="keyword">false</span></div>
-<div class="line">* </div>
-</div><!-- fragment --> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5f91e332b894c7eb33de61f5abf0e3bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_ConfigAudioFormat </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>masterClock_Hz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sampleRate_Hz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>dataBits</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">masterClock_Hz</td><td>Master clock frequency in Hz. If DA7212 is slave, use the frequency of master, if DA7212 as master, it should be 1228000 while sample rate frequency is 8k/12K/16K/24K/32K/48K/96K, 11289600 whie sample rate is 11.025K/22.05K/44.1K </td></tr>
-    <tr><td class="paramname">sampleRate_Hz</td><td>Sample rate frequency in Hz. </td></tr>
-    <tr><td class="paramname">dataBits</td><td>How many bits in a word of a audio frame, DA7212 only supports 16/20/24/32 bits. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga329eba3a6075fcd97e63ccc4013a669e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetPLLConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00293">da7212_pll_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00304">cs42888_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -891,169 +591,320 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The second parameter is NULL to CS42888 in this version. If users want to change the settings, they have to use cs42888_write_reg() or cs42888_modify_reg() to set the register value of CS42888. Note: If the codec_config is NULL, it would initialize CS42888 using default settings. The default setting: codec_config-&gt;bus = kCS42888_BusI2S codec_config-&gt;ADCmode = kCS42888_ModeSlave codec_config-&gt;DACmode = kCS42888_ModeSlave</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handler pointer. </td></tr>
-    <tr><td class="paramname">config</td><td>PLL configuration pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">config</td><td>CS42888 configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6c8f47cd9f8a4490b35d2c731439a267"></a>
+<a class="anchor" id="ga9f3f2e2ab36b350ac9e7687ac068c924"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DA7212_ChangeHPVolume </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function close all modules in CS42888 to save power.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9909a32fcd8fb65497a0971169f02b6f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_SetProtocol </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#ga37faac44a47580dd5b803a2d2609359c">da7212_volume_t</a>&#160;</td>
-          <td class="paramname"><em>volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">volume</td><td>The volume of playback. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7cbf1d02cfd35123392c0aae6c528f79"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DA7212_Mute </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isMuted</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">isMuted</td><td>True means mute, false means unmute. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga52f775b79e8de5f489b995d1f4c7fe31"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DA7212_ChangeInput </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#ga6fc1179abb7621638b81dd23bce89715">da7212_Input_t</a>&#160;</td>
-          <td class="paramname"><em>DA7212_Input</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">DA7212_Input</td><td>Input data source. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab6cebcf917e9d9ce4f69828c701c6a6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DA7212_ChangeOutput </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#ga594d4eaddd9cb2171bd90c20fbabec4b">da7212_Output_t</a>&#160;</td>
-          <td class="paramname"><em>DA7212_Output</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">DA7212_Output</td><td>Output device of DA7212. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8dd935197f63a10d9daf23ac96904416"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetChannelVolume </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga420482576c736d6016bc7cb40966ae76">cs42888_bus_t</a>&#160;</td>
+          <td class="paramname"><em>protocol</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bitWidth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>CS42888 only supports I2S, left justified, right justified, PCM A, PCM B format.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">protocol</td><td>Audio data transfer protocol. </td></tr>
+    <tr><td class="paramname">bitWidth</td><td>bit width </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7eec024331e152d41eb21b4de0dcb50b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CS42888_SetFuncMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00259.html#_deprecated000021">Deprecated:</a></b></dt><dd>api, Do not use it anymore. It has been superceded by <a class="el" href="a00015.html#ga206dde5ac0fb4ad77ce3b3e68a5f03e0">CS42888_SelectFunctionalMode</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">mode</td><td>differenht working mode of CS42888. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga206dde5ac0fb4ad77ce3b3e68a5f03e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_SelectFunctionalMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a>&#160;</td>
+          <td class="paramname"><em>adcMode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00015.html#ga8c91ddffd81be7163def41721270971c">cs42888_func_mode</a>&#160;</td>
+          <td class="paramname"><em>dacMode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">adcMode</td><td>differenht working mode of CS42888. </td></tr>
+    <tr><td class="paramname">dacMode</td><td>differenht working mode of CS42888. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga213cbbee89c91489164c8ab704ff468b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_SetAOUTVolume </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>volume</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function would set the volume of CS42888 modules. Uses need to appoint the module. The function assume that left channel and right channel has the same volume.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">channel</td><td>AOUT channel, it shall be 1~8. </td></tr>
+    <tr><td class="paramname">volume</td><td>Volume value need to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae86544adbe99c855a60db68b11e40960"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_SetAINVolume </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>volume</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function would set the volume of CS42888 modules. Uses need to appoint the module. The function assume that left channel and right channel has the same volume.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">channel</td><td>AIN channel, it shall be 1~4. </td></tr>
+    <tr><td class="paramname">volume</td><td>Volume value need to be set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2e5e55bf98bd6af70483e36d94f5c173"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CS42888_GetAOUTVolume </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gets the volume of CS42888 modules. Uses need to appoint the module. The function assume that left channel and right channel has the same volume.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">channel</td><td>AOUT channel, it shall be 1~8. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gafc22378afb83464ee651b35187aa57c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CS42888_GetAINVolume </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gets the volume of CS42888 modules. Uses need to appoint the module. The function assume that left channel and right channel has the same volume.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">channel</td><td>AIN channel, it shall be 1~4. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga55964f9ec6f7f9dd0f066a2aa50187ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_SetMute </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>channelMask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1064,29 +915,28 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">channel</td><td>shoule be a value of _da7212_channel. </td></tr>
-    <tr><td class="paramname">volume</td><td>volume range 0 - 0x3F mapped to range -57dB - 6dB. </td></tr>
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">channelMask</td><td>Channel mask for mute. Mute channel 0, it shall be 0x1, while mute channel 0 and 1, it shall be 0x3. Mute all channel, it shall be 0xFF. Each bit represent one channel, 1 means mute, 0 means unmute. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga71c6871ed8dc5bc01201265e0139ae61"></a>
+<a class="anchor" id="gaf995fa288cfd403c1dcdc7286edcdb48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetChannelMute </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_SetChannelMute </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
@@ -1104,30 +954,36 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">channel</td><td>shoule be a value of _da7212_channel. </td></tr>
-    <tr><td class="paramname">isMute</td><td>true is mute, false is unmute. </td></tr>
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">channel</td><td>reference _cs42888_play_channel. </td></tr>
+    <tr><td class="paramname">isMute</td><td>true is mute, falase is unmute. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5b83af3d6dec6892ec345c54af419942"></a>
+<a class="anchor" id="ga2664a02181180546f17d0ec2a35f227b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetProtocol </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_SetModule </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#ga95ce2c0556d9642f3133e53f6097fdd3">da7212_protocol_t</a>&#160;</td>
-          <td class="paramname"><em>protocol</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#gac57c7f67724dbc1ad4db339c1591ac26">cs42888_module_t</a>&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isEnabled</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1138,29 +994,84 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">protocol</td><td>da7212_protocol_t. </td></tr>
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">module</td><td>Module expected to enable. </td></tr>
+    <tr><td class="paramname">isEnabled</td><td>Enable or disable moudles. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga700245cf97e29af9f3aa3402b032094a"></a>
+<a class="anchor" id="ga1cc19dbe338c5dac380a6d4f8747b7e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_SetMasterModeBits </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_ConfigDataFormat </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bitWidth</em>&#160;</td>
+          <td class="paramname"><em>mclk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sample_rate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>bits</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function would configure the registers about the sample rate, bit depths.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure pointer. </td></tr>
+    <tr><td class="paramname">mclk</td><td>Master clock frequency of I2S. </td></tr>
+    <tr><td class="paramname">sample_rate</td><td>Sample rate of audio file running in CS42888. CS42888 now supports 8k, 11.025k, 12k, 16k, 22.05k, 24k, 32k, 44.1k, 48k and 96k sample rate. </td></tr>
+    <tr><td class="paramname">bits</td><td>Bit depth of audio file (CS42888 only supports 16bit, 20bit, 24bit and 32 bit in HW). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaac05142d661f4cc16706b59f5bb6c03d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_WriteReg </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1171,75 +1082,36 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">bitWidth</td><td>audio data bitwidth. </td></tr>
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">reg</td><td>The register address in CS42888. </td></tr>
+    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gabda1a52e4795473357f4561633e07591"></a>
+<a class="anchor" id="ga7d6fae89e3f167613b9aeabe65380918"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_WriteRegister </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_ReadReg </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>u8Register</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>u8RegisterData</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">u8Register</td><td>DA7212 register address to be written. </td></tr>
-    <tr><td class="paramname">u8RegisterData</td><td>Data to be written into regsiter </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5b445705c324d49effc257f7b3265c92"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_ReadRegister </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>u8Register</em>, </td>
+          <td class="paramname"><em>reg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pu8RegisterData</em>&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1250,31 +1122,56 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
-    <tr><td class="paramname">u8Register</td><td>DA7212 register address to be read. </td></tr>
-    <tr><td class="paramname">pu8RegisterData</td><td>Pointer where the read out value to be stored. </td></tr>
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">reg</td><td>The register address in CS42888. </td></tr>
+    <tr><td class="paramname">val</td><td>Value written to. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga52aaf202346af12d3932bd467a412f59"></a>
+<a class="anchor" id="ga9338f9003a76f3d7f71156f49e7ce293"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DA7212_Deinit </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CS42888_ModifyReg </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">da7212_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00305">cs42888_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>reg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>mask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>DA7212 handle pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>CS42888 handle structure. </td></tr>
+    <tr><td class="paramname">reg</td><td>The register address in CS42888. </td></tr>
+    <tr><td class="paramname">mask</td><td>The mask code for the bits want to write. The bit you want to write should be 0. </td></tr>
+    <tr><td class="paramname">val</td><td>Value needs to write into the register. </td></tr>
   </table>
   </dd>
 </dl>

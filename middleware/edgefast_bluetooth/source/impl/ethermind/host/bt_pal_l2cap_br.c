@@ -256,6 +256,7 @@ static uint8_t l2cap_br_get_ident(void)
 	return ident;
 }
 
+#if 0
 /* Send the buffer and release it in case of failure.
  * Any other cleanup in failure to send should be handled by the disconnected
  * handler.
@@ -267,6 +268,7 @@ static inline void l2cap_send(struct bt_conn *conn, uint16_t cid,
 		net_buf_unref(buf);
 	}
 }
+#endif
 
 static void l2cap_br_chan_send_req(struct bt_l2cap_br_chan *chan,
 				   struct net_buf *buf, size_t timeout)
@@ -1323,7 +1325,7 @@ int bt_l2cap_br_server_register(struct bt_l2cap_server *server)
 	}
 
 	sys_slist_append(&br_servers, &server->node);
-	
+
 	if (server->sec_level != SM_DEFAULT_SERVICE_SECURITY_LEVEL) {
 		SM_SERVICE sm_service;
 		uint8_t service_id;

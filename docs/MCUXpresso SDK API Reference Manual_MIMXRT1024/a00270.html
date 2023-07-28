@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: XBARB: Inter-Peripheral Crossbar Switch</title>
+<title>MCUXpresso SDK API Reference Manual: LPSPI CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,132 +99,71 @@ $(document).ready(function(){initNavTree('a00270.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">XBARB: Inter-Peripheral Crossbar Switch</div>  </div>
+<div class="title">LPSPI CMSIS Driver<div class="ingroups"><a class="el" href="a00268.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Inter-Peripheral Crossbar Switch (XBARB) block of MCUXpresso SDK devices.</p>
-<p>The XBARB peripheral driver configures the XBARB (Inter-Peripheral Crossbar Switch) and handles initialization and configuration of the XBARB module.</p>
-<p>XBARB driver has two parts:</p>
-<ul>
-<li>Signal connection interconnects input and output signals.</li>
-</ul>
-<h1><a class="anchor" id="XbarbFunctionalGroups"></a>
+<p>This section describes the programming interface of the LPSPI Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<h1><a class="anchor" id="LPSPIFunGrps"></a>
 Function groups</h1>
-<h2><a class="anchor" id="XBARBInit"></a>
-XBARB Initialization</h2>
-<p>To initialize the XBARB driver, a state structure has to be passed into the initialization function. This block of memory keeps pointers to user's callback functions and parameters to these functions. The XBARB module is initialized by calling the <a class="el" href="a00270.html#gaef36940e839f28936f9415c3cb6d703f" title="Initializes the XBARB module. ">XBARB_Init()</a> function.</p>
-<h2><a class="anchor" id="XBARBCallDiagram"></a>
-Call diagram</h2>
-<ol type="1">
-<li>Call the "XBARB_Init()" function to initialize the XBARB module.</li>
-<li>Optionally, call the "XBARB_SetSignalsConnection()" function to Set connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal. It connects the XBARB input to the selected XBARB output. A configuration structure of the "xbarb_input_signal_t" type and "xbarb_output_signal_t" type is required.</li>
-<li>Finally, the XBARB works properly.</li>
-</ol>
-<h1><a class="anchor" id="XbarbExample"></a>
+<h2><a class="anchor" id="LPSPIGetVersionOps"></a>
+LPSPI CMSIS GetVersion Operation</h2>
+<p>This function group will return the DSPI CMSIS Driver version to user.</p>
+<h2><a class="anchor" id="LPSPIGetCapOps"></a>
+LPSPI CMSIS GetCapabilities Operation</h2>
+<p>This function group will return the capabilities of this driver.</p>
+<h2><a class="anchor" id="LPSPIInitResetOps"></a>
+LPSPI CMSIS Initialize and Uninitialize Operation</h2>
+<p>This function will initialize and uninitialize the instance in master mode or slave mode. And this API must be called before you configure an instance or after you Deinit an instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
+<h2><a class="anchor" id="LPSPITransOps"></a>
+LPSPI Transfer Operation</h2>
+<p>This function group controls the transfer, master send/receive data, and slave send/receive data.</p>
+<h2><a class="anchor" id="LPSPIStatusOps"></a>
+LPSPI Status Operation</h2>
+<p>This function group gets the LPSPI transfer status.</p>
+<h2><a class="anchor" id="LPSPIControlOps"></a>
+LPSPI CMSIS Control Operation</h2>
+<p>This function can select instance as master mode or slave mode, set baudrate for master mode transfer, get current baudrate of master mode transfer,set transfer data bits and set other control command.</p>
+<h1><a class="anchor" id="LPSPITpyUC"></a>
 Typical use case</h1>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-XBARB functional Operation.</h2></td></tr>
-<tr class="memitem:gaef36940e839f28936f9415c3cb6d703f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00270.html#gaef36940e839f28936f9415c3cb6d703f">XBARB_Init</a> (XBARB_Type *base)</td></tr>
-<tr class="memdesc:gaef36940e839f28936f9415c3cb6d703f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the XBARB module.  <a href="#gaef36940e839f28936f9415c3cb6d703f">More...</a><br/></td></tr>
-<tr class="separator:gaef36940e839f28936f9415c3cb6d703f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5775a6073d472b2749cc202116d1809"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00270.html#gad5775a6073d472b2749cc202116d1809">XBARB_Deinit</a> (XBARB_Type *base)</td></tr>
-<tr class="memdesc:gad5775a6073d472b2749cc202116d1809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the XBARB module.  <a href="#gad5775a6073d472b2749cc202116d1809">More...</a><br/></td></tr>
-<tr class="separator:gad5775a6073d472b2749cc202116d1809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64a72733261fc11d061c0d7f0abe0771"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00270.html#ga64a72733261fc11d061c0d7f0abe0771">XBARB_SetSignalsConnection</a> (XBARB_Type *base, xbar_input_signal_t input, xbar_output_signal_t output)</td></tr>
-<tr class="memdesc:ga64a72733261fc11d061c0d7f0abe0771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures a connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal.  <a href="#ga64a72733261fc11d061c0d7f0abe0771">More...</a><br/></td></tr>
-<tr class="separator:ga64a72733261fc11d061c0d7f0abe0771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaef36940e839f28936f9415c3cb6d703f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XBARB_Init </td>
-          <td>(</td>
-          <td class="paramtype">XBARB_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function un-gates the XBARB clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad5775a6073d472b2749cc202116d1809"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XBARB_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">XBARB_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables XBARB clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga64a72733261fc11d061c0d7f0abe0771"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void XBARB_SetSignalsConnection </td>
-          <td>(</td>
-          <td class="paramtype">XBARB_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">xbar_input_signal_t&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">xbar_output_signal_t&#160;</td>
-          <td class="paramname"><em>output</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function configures which XBARB input is connected to the selected XBARB output. If more than one XBARB module is available, only the inputs and outputs from the same module can be connected.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
-    <tr><td class="paramname">input</td><td>XBARB input signal. </td></tr>
-    <tr><td class="paramname">output</td><td>XBARB output signal. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<h2><a class="anchor" id="LPSPIMasterOps"></a>
+Master Operation</h2>
+<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
+<div class="line">uint8_t masterRxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line">uint8_t masterTxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*DSPI master init*/</span></div>
+<div class="line">Driver_SPI0.Initialize(DSPI_MasterSignalEvent_t);</div>
+<div class="line">Driver_SPI0.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">Driver_SPI0.Control(ARM_SPI_MODE_MASTER, TRANSFER_BAUDRATE);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Start master transfer */</span></div>
+<div class="line">Driver_SPI0.Transfer(masterTxData, masterRxData, TRANSFER_SIZE);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Master power off */</span></div>
+<div class="line">Driver_SPI0.PowerControl(ARM_POWER_OFF);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Master uninitialize */</span></div>
+<div class="line">Driver_SPI0.Uninitialize();</div>
+</div><!-- fragment --><h2><a class="anchor" id="LPSPISlaveOps"></a>
+Slave Operation</h2>
+<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
+<div class="line">uint8_t slaveRxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line">uint8_t slaveTxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*DSPI slave init*/</span></div>
+<div class="line">Driver_SPI2.Initialize(DSPI_SlaveSignalEvent_t);</div>
+<div class="line">Driver_SPI2.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">Driver_SPI2.Control(ARM_SPI_MODE_SLAVE, <span class="keyword">false</span>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Start slave transfer */</span></div>
+<div class="line">Driver_SPI2.Transfer(slaveTxData, slaveRxData, TRANSFER_SIZE);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* slave power off */</span></div>
+<div class="line">Driver_SPI2.PowerControl(ARM_POWER_OFF);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* slave uninitialize */</span></div>
+<div class="line">Driver_SPI2.Uninitialize();</div>
+</div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

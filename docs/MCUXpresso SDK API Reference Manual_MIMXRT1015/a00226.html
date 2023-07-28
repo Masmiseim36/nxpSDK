@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPSPI: Low Power Serial Peripheral Interface</title>
+<title>MCUXpresso SDK API Reference Manual: DCP AES non-blocking driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,25 +99,304 @@ $(document).ready(function(){initNavTree('a00226.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LPSPI: Low Power Serial Peripheral Interface</div>  </div>
+<div class="title">DCP AES non-blocking driver<div class="ingroups"><a class="el" href="a00018.html">DCP: Data Co-Processor</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Low Power Serial Peripheral Interface (LPSPI) module of MCUXpresso SDK devices. </p>
+<p>This section describes the programming interface of the DCP AES non-blocking driver. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00228"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html">LPSPI CMSIS Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00227"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html">LPSPI FreeRTOS Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00041"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html">LPSPI Peripheral driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00042"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html">LPSPI eDMA Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gad1817bda1adfdc5d44ec8680d19bae72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#gad1817bda1adfdc5d44ec8680d19bae72">DCP_AES_EncryptEcbNonBlocking</a> (DCP_Type *base, <a class="el" href="a00018.html#a00317">dcp_handle_t</a> *handle, <a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *dcpPacket, const uint8_t *plaintext, uint8_t *ciphertext, size_t size)</td></tr>
+<tr class="memdesc:gad1817bda1adfdc5d44ec8680d19bae72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using the ECB block mode.  <a href="#gad1817bda1adfdc5d44ec8680d19bae72">More...</a><br/></td></tr>
+<tr class="separator:gad1817bda1adfdc5d44ec8680d19bae72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga539f81acf96426e66daab1e4aebdc89a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga539f81acf96426e66daab1e4aebdc89a">DCP_AES_DecryptEcbNonBlocking</a> (DCP_Type *base, <a class="el" href="a00018.html#a00317">dcp_handle_t</a> *handle, <a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *dcpPacket, const uint8_t *ciphertext, uint8_t *plaintext, size_t size)</td></tr>
+<tr class="memdesc:ga539f81acf96426e66daab1e4aebdc89a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using ECB block mode.  <a href="#ga539f81acf96426e66daab1e4aebdc89a">More...</a><br/></td></tr>
+<tr class="separator:ga539f81acf96426e66daab1e4aebdc89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c336091f696e34e93df272e5fef9f1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga4c336091f696e34e93df272e5fef9f1e">DCP_AES_EncryptCbcNonBlocking</a> (DCP_Type *base, <a class="el" href="a00018.html#a00317">dcp_handle_t</a> *handle, <a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *dcpPacket, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t *iv)</td></tr>
+<tr class="memdesc:ga4c336091f696e34e93df272e5fef9f1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts AES using CBC block mode.  <a href="#ga4c336091f696e34e93df272e5fef9f1e">More...</a><br/></td></tr>
+<tr class="separator:ga4c336091f696e34e93df272e5fef9f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga26d7c8050e5a5a5fb3abcc8ced712187"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html#ga26d7c8050e5a5a5fb3abcc8ced712187">DCP_AES_DecryptCbcNonBlocking</a> (DCP_Type *base, <a class="el" href="a00018.html#a00317">dcp_handle_t</a> *handle, <a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *dcpPacket, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t *iv)</td></tr>
+<tr class="memdesc:ga26d7c8050e5a5a5fb3abcc8ced712187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts AES using CBC block mode.  <a href="#ga26d7c8050e5a5a5fb3abcc8ced712187">More...</a><br/></td></tr>
+<tr class="separator:ga26d7c8050e5a5a5fb3abcc8ced712187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gad1817bda1adfdc5d44ec8680d19bae72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_EncryptEcbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00317">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *&#160;</td>
+          <td class="paramname"><em>dcpPacket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts AES ECB encrypt work packet to DCP channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dcpPacket</td><td>Memory for the DCP work packet. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success The work packet has been scheduled at DCP channel. </dd>
+<dd>
+kStatus_DCP_Again The DCP channel is busy processing previous request. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga539f81acf96426e66daab1e4aebdc89a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_DecryptEcbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00317">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *&#160;</td>
+          <td class="paramname"><em>dcpPacket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts AES ECB decrypt dcpPacket to DCP input job ring.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dcpPacket</td><td>Memory for the DCP work packet. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success The work packet has been scheduled at DCP channel. </dd>
+<dd>
+kStatus_DCP_Again The DCP channel is busy processing previous request. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4c336091f696e34e93df272e5fef9f1e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_EncryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00317">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *&#160;</td>
+          <td class="paramname"><em>dcpPacket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>iv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts AES CBC encrypt dcpPacket to DCP input job ring.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dcpPacket</td><td>Memory for the DCP work packet. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plain text to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output cipher text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success The work packet has been scheduled at DCP channel. </dd>
+<dd>
+kStatus_DCP_Again The DCP channel is busy processing previous request. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga26d7c8050e5a5a5fb3abcc8ced712187"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DCP_AES_DecryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">DCP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00317">dcp_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00018.html#a00319">dcp_work_packet_t</a> *&#160;</td>
+          <td class="paramname"><em>dcpPacket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>iv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Puts AES CBC decrypt dcpPacket to DCP input job ring.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>DCP peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dcpPacket</td><td>Memory for the DCP work packet. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input cipher text to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plain text </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 16 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first input block. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>kStatus_Success The work packet has been scheduled at DCP channel. </dd>
+<dd>
+kStatus_DCP_Again The DCP channel is busy processing previous request. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

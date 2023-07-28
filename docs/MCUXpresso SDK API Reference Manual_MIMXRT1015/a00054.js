@@ -1,80 +1,64 @@
 var a00054 =
 [
-    [ "Serial Port SWO", "a00055.html", "a00055" ],
-    [ "Serial Port USB", "a00056.html", "a00056" ],
-    [ "Serial Port Uart", "a00245.html", "a00245" ],
-    [ "serial_manager_config_t", "a00054.html#a00375", [
-      [ "ringBuffer", "a00054.html#a73403169ff2d3c8d8897059435fe7e01", null ],
-      [ "ringBufferSize", "a00054.html#a3cdd8d8501bb64e720345207310de89b", null ],
-      [ "type", "a00054.html#a19422220843683406b8487dd40fc2cee", null ],
-      [ "blockType", "a00054.html#ae1f413cf0928c0efdf89ce584adf8007", null ],
-      [ "portConfig", "a00054.html#ac91431f403f82ce50784274deab7e640", null ]
+    [ "rtwdog_work_mode_t", "a00054.html#a00384", [
+      [ "enableWait", "a00054.html#ab54bf4ab423e60be41368acdb2602439", null ],
+      [ "enableStop", "a00054.html#ae8caa5a6c04d0f3dcafba6ac6adb9905", null ],
+      [ "enableDebug", "a00054.html#ab26c42c1815cfdc9b8b5f759db9be94d", null ]
     ] ],
-    [ "serial_manager_callback_message_t", "a00054.html#a00374", [
-      [ "buffer", "a00054.html#a80694c056b447b821f7e146122040e0f", null ],
-      [ "length", "a00054.html#a5eb02d4cb2745ea57f5f78e764f80893", null ]
+    [ "rtwdog_config_t", "a00054.html#a00383", [
+      [ "enableRtwdog", "a00054.html#a4d385e66b0c28b471ad83fe2e6fc6a1b", null ],
+      [ "clockSource", "a00054.html#aff561a937f074058a0565d2ffded113b", null ],
+      [ "prescaler", "a00054.html#adf6d7a1cdf7d57cc6f2893d3eef8f0e2", null ],
+      [ "workMode", "a00054.html#af6a2f68b62b07a7021f877944a685c44", null ],
+      [ "testMode", "a00054.html#a82219c16b8f8486929b76b2378ea61aa", null ],
+      [ "enableUpdate", "a00054.html#a99c63818532637f61d00993753da6511", null ],
+      [ "enableInterrupt", "a00054.html#af397bc8e047c5572cfe977a1a094b04d", null ],
+      [ "enableWindowMode", "a00054.html#a005c4d1da33cdaa57cc868658969b963", null ],
+      [ "windowValue", "a00054.html#a9869a43ba272014de8f4b2f91ec45e10", null ],
+      [ "timeoutValue", "a00054.html#ab4192d93defc5943013d8376f708325d", null ]
     ] ],
-    [ "SERIAL_MANAGER_NON_BLOCKING_MODE", "a00054.html#gabf238ccb327fd5316f765109d1235ae3", null ],
-    [ "SERIAL_MANAGER_RING_BUFFER_FLOWCONTROL", "a00054.html#ga71fc96165b245c238b1f5c821ce9ebf8", null ],
-    [ "SERIAL_PORT_TYPE_UART", "a00054.html#ga58308509c0f8d97f157a3f9eb5d72ce2", null ],
-    [ "SERIAL_PORT_TYPE_UART_DMA", "a00054.html#ga43b6bea88dad21ddfd0a9eeba15500fe", null ],
-    [ "SERIAL_PORT_TYPE_USBCDC", "a00054.html#gaf2e3166c5915cc3c3669d158da08cd51", null ],
-    [ "SERIAL_PORT_TYPE_SWO", "a00054.html#ga7c73031b5ccec048199e131e3b4eaafc", null ],
-    [ "SERIAL_PORT_TYPE_VIRTUAL", "a00054.html#ga95320da6bae985e8917dae79acad6857", null ],
-    [ "SERIAL_PORT_TYPE_RPMSG", "a00054.html#gaf8fb1fba8f9d1cea85a3203555fdb270", null ],
-    [ "SERIAL_PORT_TYPE_SPI_MASTER", "a00054.html#ga0930f57cce1c63e56b8ce280e7423304", null ],
-    [ "SERIAL_PORT_TYPE_SPI_SLAVE", "a00054.html#ga78917d72251361c814cc6c09177fbbf4", null ],
-    [ "SERIAL_MANAGER_TASK_HANDLE_TX", "a00054.html#gab26fb3c93b19327a8e346d1fd762c720", null ],
-    [ "SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE", "a00054.html#gaefd7b994ea13ed385804afbe3268db7c", null ],
-    [ "SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE", "a00054.html#ga5e349416c81a583a8a98e99683624929", null ],
-    [ "SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY", "a00054.html#gacb98bd8be88e9a526f1e517bc6215a8d", null ],
-    [ "SERIAL_MANAGER_WRITE_HANDLE_SIZE", "a00054.html#gac278be51c3508495c1be1a4cff566f3f", null ],
-    [ "SERIAL_MANAGER_USE_COMMON_TASK", "a00054.html#gaae959bcddd181966d6c8bf4cbf140fea", null ],
-    [ "SERIAL_MANAGER_HANDLE_SIZE", "a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc", null ],
-    [ "SERIAL_MANAGER_HANDLE_DEFINE", "a00054.html#gad145f5877828fd4ec335f09b6790c673", null ],
-    [ "SERIAL_MANAGER_WRITE_HANDLE_DEFINE", "a00054.html#ga33eef6cd25374cbd49b00d2985b8be65", null ],
-    [ "SERIAL_MANAGER_READ_HANDLE_DEFINE", "a00054.html#gae9206a431c26d9c557a0e32ab4d648e8", null ],
-    [ "SERIAL_MANAGER_TASK_PRIORITY", "a00054.html#ga9bffc03255c48dae79cc2702f0980269", null ],
-    [ "SERIAL_MANAGER_TASK_STACK_SIZE", "a00054.html#ga460c59805f2a8ec37e008b5a285e1760", null ],
-    [ "serial_handle_t", "a00054.html#gaba1cc3859c4f829ee0bc6091184d4b08", null ],
-    [ "serial_write_handle_t", "a00054.html#gac8319b6189019680778f230eb319530e", null ],
-    [ "serial_read_handle_t", "a00054.html#ga8bfec9c49e40728806d775fdb4bbf78e", null ],
-    [ "serial_manager_callback_t", "a00054.html#gabe6a6263bb1570ea715938b2420af773", null ],
-    [ "serial_manager_lowpower_critical_callback_t", "a00054.html#ga856d80a20772bd9d9ad950b8ec852635", null ],
-    [ "serial_port_type_t", "a00054.html#ga103db7d7f3fc8234978efadef0fdaf80", [
-      [ "kSerialPort_None", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb", null ],
-      [ "kSerialPort_Uart", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77", null ],
-      [ "kSerialPort_UsbCdc", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2", null ],
-      [ "kSerialPort_Swo", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77", null ],
-      [ "kSerialPort_Virtual", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a1ff49cc235ba1b2cf110d9cad5121aa4", null ],
-      [ "kSerialPort_Rpmsg", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80aa0ec8166f72522a029c7bdb44dbd8cbe", null ],
-      [ "kSerialPort_UartDma", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80acad7e31b320242ceb4088c8a32635c5e", null ],
-      [ "kSerialPort_SpiMaster", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea", null ],
-      [ "kSerialPort_SpiSlave", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a", null ]
+    [ "WDOG_FIRST_WORD_OF_UNLOCK", "a00054.html#ga8825b35bd62726165737f5dc0f5f61e4", null ],
+    [ "WDOG_SECOND_WORD_OF_UNLOCK", "a00054.html#gae2018a4151df654f86822786500cf2d3", null ],
+    [ "WDOG_FIRST_WORD_OF_REFRESH", "a00054.html#ga10f1df824e5965d6413b2e892fd04659", null ],
+    [ "WDOG_SECOND_WORD_OF_REFRESH", "a00054.html#ga2a375c7e4d71e7f52e899bce0a9106ee", null ],
+    [ "FSL_RTWDOG_DRIVER_VERSION", "a00054.html#ga036d8fa82f101485bb1bef62fbe0efec", null ],
+    [ "rtwdog_clock_source_t", "a00054.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b", [
+      [ "kRTWDOG_ClockSource0", "a00054.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba89fe3caec9c47ea18afbea78fa7b75db", null ],
+      [ "kRTWDOG_ClockSource1", "a00054.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba0490435c4f8e6b5f2bfb4d4959ee6ce5", null ],
+      [ "kRTWDOG_ClockSource2", "a00054.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba596c695b96b5287f927f74d78577fe84", null ],
+      [ "kRTWDOG_ClockSource3", "a00054.html#gga106ba79a9a7b0863ca8555c5d8ad9b3bad51ba4630b31474e7d497d1defc3075a", null ]
     ] ],
-    [ "serial_manager_type_t", "a00054.html#ga7799e0e52d9e9fe5bf5198f0a337331d", [
-      [ "kSerialManager_NonBlocking", "a00054.html#gga7799e0e52d9e9fe5bf5198f0a337331dacae754a7dbe5f0d48d345a8b6120227c", null ],
-      [ "kSerialManager_Blocking", "a00054.html#gga7799e0e52d9e9fe5bf5198f0a337331daa7834e61e5fcc82b73698f0465c3f24e", null ]
+    [ "rtwdog_clock_prescaler_t", "a00054.html#ga2a46bb420b0a97fc9d440ee7ef329ffa", [
+      [ "kRTWDOG_ClockPrescalerDivide1", "a00054.html#gga2a46bb420b0a97fc9d440ee7ef329ffaaffcd087724256907ae1e47f896461e78", null ],
+      [ "kRTWDOG_ClockPrescalerDivide256", "a00054.html#gga2a46bb420b0a97fc9d440ee7ef329ffaa1b8252427d181ff4de3e4ea7eb1aac52", null ]
     ] ],
-    [ "serial_manager_status_t", "a00054.html#gae9a330e1f3a81509399832c7b2c2872f", [
-      [ "kStatus_SerialManager_Success", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872fa1e4ed7376c48b94ec9a60f272a629ed4", null ],
-      [ "kStatus_SerialManager_Error", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872fa61e6a331c5f789fe88fcf2bacf8a5553", null ],
-      [ "kStatus_SerialManager_Busy", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872fa67e18fb1e47f4f40dc58988b76a2d876", null ],
-      [ "kStatus_SerialManager_Notify", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872fabdcdea0fcd8b4c01592728a4ba041154", null ],
-      [ "kStatus_SerialManager_Canceled", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872faf01c3a38751393325ab9791d8181ef38", null ],
-      [ "kStatus_SerialManager_HandleConflict", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872fa9f087536c7a9930159682ed03d8d71ea", null ],
-      [ "kStatus_SerialManager_RingBufferOverflow", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872fa41631953d2191b631fbe8443bfa856c8", null ],
-      [ "kStatus_SerialManager_NotConnected", "a00054.html#ggae9a330e1f3a81509399832c7b2c2872fa1e09ebaf03a4d8599170987750b17ce6", null ]
+    [ "rtwdog_test_mode_t", "a00054.html#gae84238ba96d9319d820c3319c5f7e526", [
+      [ "kRTWDOG_TestModeDisabled", "a00054.html#ggae84238ba96d9319d820c3319c5f7e526a62fe6bb45f28e5b1275bfa1aad708124", null ],
+      [ "kRTWDOG_UserModeEnabled", "a00054.html#ggae84238ba96d9319d820c3319c5f7e526ae12fd7134b26ac7e621f2117f3312598", null ],
+      [ "kRTWDOG_LowByteTest", "a00054.html#ggae84238ba96d9319d820c3319c5f7e526ab885cb05aaad282ee54fe47b8ad270cc", null ],
+      [ "kRTWDOG_HighByteTest", "a00054.html#ggae84238ba96d9319d820c3319c5f7e526aaf013b692ea93f0de8a9c47a814ac09d", null ]
     ] ],
-    [ "SerialManager_Init", "a00054.html#gac9ad820108a6713516ff44ef109fadf4", null ],
-    [ "SerialManager_Deinit", "a00054.html#ga467c8a817003eacd48f86aaef1ce8306", null ],
-    [ "SerialManager_OpenWriteHandle", "a00054.html#ga3d26249a8331e6ca17e9c60838b56d20", null ],
-    [ "SerialManager_CloseWriteHandle", "a00054.html#gadb8df1d54da32e6de17680264ca4106a", null ],
-    [ "SerialManager_OpenReadHandle", "a00054.html#ga66915bf8f50a417620ef94951d1df4b8", null ],
-    [ "SerialManager_CloseReadHandle", "a00054.html#ga09c8831eb6ca6e544881dcbf18dcb4a7", null ],
-    [ "SerialManager_WriteBlocking", "a00054.html#ga3fab1d6bffd89459be9f23d40874248e", null ],
-    [ "SerialManager_ReadBlocking", "a00054.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb", null ],
-    [ "SerialManager_EnterLowpower", "a00054.html#ga32cdccd6df5d87f17037f34cf9f1e416", null ],
-    [ "SerialManager_ExitLowpower", "a00054.html#gaef5c404d43871f6d8f761b27dbf183fa", null ],
-    [ "SerialManager_SetLowpowerCriticalCb", "a00054.html#ga71bd55adb7a6a552ce5dac06b5794cea", null ]
+    [ "_rtwdog_interrupt_enable_t", "a00054.html#ga4225d9230a4625186e9b65be501bbc24", [
+      [ "kRTWDOG_InterruptEnable", "a00054.html#gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a", null ]
+    ] ],
+    [ "_rtwdog_status_flags_t", "a00054.html#gab1ef76bc31ec6ca52a50e1aba88a08d8", [
+      [ "kRTWDOG_RunningFlag", "a00054.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38", null ],
+      [ "kRTWDOG_InterruptFlag", "a00054.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3", null ]
+    ] ],
+    [ "RTWDOG_GetDefaultConfig", "a00054.html#ga9b0f93e60a4ad521b60ea546e2b7cde5", null ],
+    [ "RTWDOG_Init", "a00054.html#gaf45b60f55a83c5f3632b4136a3ad2b52", null ],
+    [ "RTWDOG_Deinit", "a00054.html#ga470b1d21c8013531100e7c3c605046a7", null ],
+    [ "RTWDOG_Enable", "a00054.html#gab07abcef0c2d984783ab36df5b08ffa4", null ],
+    [ "RTWDOG_Disable", "a00054.html#ga7526eb9df0830431e942fcbca32ca6cd", null ],
+    [ "RTWDOG_EnableInterrupts", "a00054.html#ga69c0e214f7424205a23a902b688cb00d", null ],
+    [ "RTWDOG_DisableInterrupts", "a00054.html#ga58a299966ea5b0d72eab1e3a95916459", null ],
+    [ "RTWDOG_GetStatusFlags", "a00054.html#gabcee9521ed7f9e2106cbc8844c915910", null ],
+    [ "RTWDOG_EnableWindowMode", "a00054.html#ga6467fc58dc00affb0daf4df8c2edec9d", null ],
+    [ "RTWDOG_CountToMesec", "a00054.html#gafc86c177da23e2aea8980c9722f2d2af", null ],
+    [ "RTWDOG_ClearStatusFlags", "a00054.html#ga49c1f47ae1f5eacc9d33035a96919bd6", null ],
+    [ "RTWDOG_SetTimeoutValue", "a00054.html#ga1ef5c238172a1384ca3add569094505d", null ],
+    [ "RTWDOG_SetWindowValue", "a00054.html#ga8c32aa54a50e5ef0fc68945cb74549ad", null ],
+    [ "RTWDOG_Unlock", "a00054.html#gacac03752d33b0b906a9bc09c7b83d1d1", null ],
+    [ "RTWDOG_Refresh", "a00054.html#ga0d8b4744fc5ad161c8e5fbc47255328e", null ],
+    [ "RTWDOG_GetCounterValue", "a00054.html#ga8c3760e127cbcf22983a65d13c8a4bcd", null ]
 ];

@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -48,63 +56,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1064/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1064/utilities/debug_console_lite
-    ${SdkRootDirPath}/devices/MIMXRT1064/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1064
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1064/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1064/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(utility_debug_console_lite_MIMXRT1064)
-
-include(utility_assert_lite_MIMXRT1064)
-
-include(driver_lpi2c_MIMXRT1064)
-
-include(driver_lpi2c_edma_MIMXRT1064)
-
-include(driver_edma_MIMXRT1064)
-
-include(driver_dmamux_MIMXRT1064)
-
-include(driver_clock_MIMXRT1064)
-
-include(driver_common_MIMXRT1064)
-
-include(device_MIMXRT1064_CMSIS_MIMXRT1064)
-
-include(component_lpuart_adapter_MIMXRT1064)
-
-include(component_lists_MIMXRT1064)
-
-include(driver_lpuart_MIMXRT1064)
-
-include(device_MIMXRT1064_startup_MIMXRT1064)
-
-include(driver_iomuxc_MIMXRT1064)
-
-include(driver_igpio_MIMXRT1064)
-
-include(driver_xip_device_MIMXRT1064)
-
-include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
-
-include(CMSIS_Include_core_cm_MIMXRT1064)
-
-include(utilities_misc_utilities_MIMXRT1064)
-
-include(device_MIMXRT1064_system_MIMXRT1064)
-
+include(${SdkRootDirPath}/devices/MIMXRT1064/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -116,4 +73,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

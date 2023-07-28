@@ -102,6 +102,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     fsl_flexspi.o (+RO +RW +ZI)
     fsl_cache.o (+RO +RW +ZI)
 
+    sample_azure_iot.o (+ZI)
+    azure_iot_embedded_sdk.o (+ZI)
+
     * (RamFunction)
   }
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up

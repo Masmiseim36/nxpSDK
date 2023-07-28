@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>sdram_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -74,7 +74,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,12 +115,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -225,7 +225,7 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -478,7 +478,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -682,7 +682,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1091,7 +1091,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1154,7 +1154,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1178,7 +1178,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1195,12 +1195,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1218,7 +1218,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1297,7 +1297,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1308,7 +1308,7 @@
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1561,7 +1561,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1765,7 +1765,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2174,7 +2174,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2237,7 +2237,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -2261,7 +2261,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2278,12 +2278,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -2301,7 +2301,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2380,7 +2380,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2388,7 +2388,7 @@
           <state>NDEBUG</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -2641,7 +2641,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2845,7 +2845,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3254,7 +3254,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3317,7 +3317,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -3341,7 +3341,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3358,12 +3358,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -3381,7 +3381,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3460,7 +3460,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3471,7 +3471,7 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -3724,7 +3724,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3928,7 +3928,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>

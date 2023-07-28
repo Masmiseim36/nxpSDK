@@ -91,12 +91,12 @@ UINT  _ux_hcd_ehci_transfer_abort(UX_HCD_EHCI *hcd_ehci,UX_TRANSFER *transfer_re
 {
 
 UX_ENDPOINT                     *endpoint;
-UX_EHCI_HSISO_ED                *ied;
+UX_EHCI_HSISO_ED                *ied = NULL;
 UX_EHCI_PERIODIC_LINK_POINTER   lp;
 UX_EHCI_HSISO_TD                *fr_td;
 UX_TRANSFER                     **list_head;
 UX_TRANSFER                     *transfer;
-ULONG                           max_load_count;
+ULONG                           max_load_count = 0;
 ULONG                           frindex;
 ULONG                           fr_start;
 ULONG                           fr_req;

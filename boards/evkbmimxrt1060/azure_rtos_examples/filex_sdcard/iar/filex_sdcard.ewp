@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -74,7 +74,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,12 +115,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,13 +217,13 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_RTOS_THREADX</state>
           <state>SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
@@ -234,10 +234,10 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -360,9 +360,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -376,9 +375,10 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -500,7 +500,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -552,7 +552,6 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -705,7 +704,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1116,7 +1115,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1179,7 +1178,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1203,7 +1202,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1220,12 +1219,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1243,7 +1242,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1322,7 +1321,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1330,7 +1329,7 @@
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_RTOS_THREADX</state>
           <state>SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
@@ -1341,10 +1340,10 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1467,9 +1466,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -1483,9 +1481,10 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1607,7 +1606,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1659,7 +1658,6 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -1812,7 +1810,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2223,7 +2221,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2286,7 +2284,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -2310,7 +2308,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2327,12 +2325,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -2350,7 +2348,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2429,13 +2427,13 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_RTOS_THREADX</state>
           <state>SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
@@ -2446,10 +2444,10 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2572,9 +2570,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -2588,9 +2585,10 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2712,7 +2710,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2764,7 +2762,6 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -2917,7 +2914,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3328,7 +3325,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3391,7 +3388,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -3415,7 +3412,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3432,12 +3429,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -3455,7 +3452,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3534,7 +3531,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3542,7 +3539,7 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_RTOS_THREADX</state>
           <state>SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
@@ -3553,10 +3550,10 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3679,9 +3676,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -3695,9 +3691,10 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3819,7 +3816,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3871,7 +3868,6 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -4024,7 +4020,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4689,6 +4685,24 @@
   <group>
     <name>sdmmc</name>
     <group>
+      <name>host</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+    </group>
+    <group>
       <name>src</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/fsl_sd.c</name>
@@ -4713,24 +4727,6 @@
       <name>sd</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</name>
-      </file>
-    </group>
-    <group>
-      <name>host</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
       </file>
     </group>
     <group>
@@ -4766,6 +4762,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -4773,12 +4775,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -4793,16 +4789,16 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_threadx.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_threadx.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
     </group>
   </group>

@@ -130,7 +130,7 @@ void main_hfp_ag_operations(void);
 
 API_RESULT hfp_ag_appl_callback
            (
-               /* IN */ HFP_AG_EVENTS events,
+               /* IN */ HFP_AG_EVENTS hfp_ag_event,
                /* IN */ API_RESULT result,
                /* IN */ void * data,
                /* IN */ UINT16 data_length

@@ -71,4 +71,46 @@ int NVM_AdapterInit(void)
     }
     return err;
 }
+
+int NVM_AdapterLoad(void)
+{
+    nvm_adapter_table_t *start;
+    uint32_t startAddress = (uint32_t)gNVM_ADAPTER_TABLE_startAddr_c;
+    uint32_t endAddress   = (uint32_t)gNVM_ADAPTER_TABLE_endAddr_c;
+    int err               = 0;
+
+    NVM_AdapterInit();
+
+    start = (nvm_adapter_table_t *)startAddress;
+
+    while ((uint32_t)start < endAddress)
+    {
+        if (NULL != start->load)
+        {
+            err = start->load();
+            if (0 != err)
+            {
+                break;
+            }
+        }
+        start++;
+    }
+
+    start = (nvm_adapter_table_t *)startAddress;
+
+    while ((uint32_t)start < endAddress)
+    {
+        if (NULL != start->commit)
+        {
+            err = start->commit();
+            if (0 != err)
+            {
+                break;
+            }
+        }
+        start++;
+    }
+    return err;
+}
+
 #endif

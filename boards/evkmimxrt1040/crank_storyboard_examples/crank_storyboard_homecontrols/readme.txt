@@ -5,8 +5,8 @@ This sample demonstrates the Storyboard engine using its full plugin list to pro
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================

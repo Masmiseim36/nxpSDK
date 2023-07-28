@@ -38,7 +38,7 @@ const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]
         NULL,
         NULL,
     },
-#ifdef CASCFG_ENABLE_MP3_CODEC
+#ifdef MP3_DEC
     {
         &MP3DecoderGetMemorySize,
         &MP3DecoderInit,

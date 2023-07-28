@@ -18,9 +18,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define LPSPI_MASTER_DMA_BASEADDR     DMA0
 #define LPSPI_MASTER_DMA_MUX_BASEADDR DMAMUX
+
 /* 1 ms per tick. */
 #ifndef LVGL_TICK_MS
 #define LVGL_TICK_MS 1U

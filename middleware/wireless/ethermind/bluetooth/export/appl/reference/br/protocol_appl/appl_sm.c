@@ -14,6 +14,11 @@
 #include "appl_sm.h"
 #include "appl_utils.h"
 
+#ifdef HDP
+/* For hdp_appl_delete_all_data_chnls() */
+#include "appl_hdp.h"
+#endif /* HDP */
+
 #ifdef CLASSIC_SEC_MANAGER
 /* ----------------------------------------- Exported Global Variables */
 
@@ -155,7 +160,9 @@ void main_sm_operations (void)
             {
                 printf("OK\n");
             }
-        #endif  /* BT_SSP */
+            #else
+                printf("Setting Security Mode is not Supported\n");
+            #endif /* BT_SSP */
 
             break;
 
@@ -174,7 +181,9 @@ void main_sm_operations (void)
                 printf("    SM Security Mode = 0x%02X, Enc Mode = 0x%02X\n",
                 sec_mode, enc_mode);
             }
-        #endif  /* BT_SSP */
+        #else
+                printf("Getting Security Mode is not Supported\n");
+        #endif /* BT_SSP */
 
             break;
 
@@ -440,7 +449,7 @@ void main_sm_operations (void)
 
         case 10:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Adding Device to Device DB .. "); fflush (stdout);
             retval = BT_sm_add_device (bd_addr);
@@ -458,7 +467,7 @@ void main_sm_operations (void)
 
         case 11:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Enter Device Trust Level (0/1) = "); fflush (stdout);
             scanf("%u", &choice);
@@ -480,7 +489,7 @@ void main_sm_operations (void)
 
         case 12:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Enter Device PIN Code Length (Max %d Chars) = ",
             BT_PIN_CODE_SIZE); fflush(stdout);
@@ -538,7 +547,7 @@ void main_sm_operations (void)
 
         case 13:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Getting Device PIN Code ... "); fflush (stdout);
             retval = BT_sm_get_device_pin_code (bd_addr, pin, &pin_length);
@@ -563,7 +572,7 @@ void main_sm_operations (void)
 
         case 14:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Enter Device Link Key (16 Hex Values) = ");
             fflush(stdout);
@@ -590,7 +599,7 @@ void main_sm_operations (void)
 
         case 15:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Getting Device Link Key .. "); fflush (stdout);
             retval = BT_sm_get_device_link_key (bd_addr, link_key);
@@ -614,7 +623,7 @@ void main_sm_operations (void)
 
         case 16:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Deleting Device Link Key .. "); fflush (stdout);
             retval = BT_sm_delete_device_link_key (bd_addr);
@@ -632,7 +641,7 @@ void main_sm_operations (void)
 
         case 17:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Getiing Device Attributes .. "); fflush (stdout);
             retval = BT_sm_get_device_attributes (bd_addr, &flag);
@@ -706,7 +715,7 @@ void main_sm_operations (void)
             if ((0U == choice) || (2U == choice))
             {
                 printf("Enter Device BD_ADDR: "); fflush (stdout);
-                appl_get_bd_addr (bd_addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
                 bd_addr_ptr = bd_addr;
             }
@@ -770,6 +779,13 @@ void main_sm_operations (void)
                 else
                 {
                     printf("OK\n");
+                    #ifdef HDP
+                        printf("Deleted device(s) from the SM db\n");
+                        if (SM_TRUSTED_LIST != flag)
+                        {
+                            hdp_appl_delete_all_data_chnls(bd_addr_ptr);
+                        }
+                    #endif /* HDP */
                 }
             }
             else
@@ -782,7 +798,7 @@ void main_sm_operations (void)
                 {
                     for (i = 0U; i < count; i++)
                     {
-                        if (0 != BT_mem_cmp(bd_addr_ptr, appl_sm_dev_list[i].bd_addr, BT_BD_ADDR_SIZE))
+                        if (0U != BT_mem_cmp(bd_addr_ptr, appl_sm_dev_list[i].bd_addr, BT_BD_ADDR_SIZE))
                         {
                             retval = BT_sm_delete_device (appl_sm_dev_list[i].bd_addr, flag);
                             if (API_SUCCESS != retval)
@@ -792,7 +808,13 @@ void main_sm_operations (void)
                              }
                             else
                             {
+                            #ifdef HDP
                                 printf("Deleted all devices from the SM db except the active bonded device\n");
+                                if (SM_TRUSTED_LIST != flag)
+                                {
+                                    hdp_appl_delete_all_data_chnls(appl_sm_dev_list[i].bd_addr);
+                                }
+                            #endif /* HDP */
                             }
                         }
                         else
@@ -807,8 +829,8 @@ void main_sm_operations (void)
                     printf("There are no bonded devices listed in the SM database");
                  }
             }
-            break;
 
+            break;
 
         case 19:
             printf("Which Device List:\n");
@@ -1235,7 +1257,7 @@ void main_sm_operations (void)
 
         case 50:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Starting Change Connection Link Key ... ");
             fflush (stdout);
@@ -1255,7 +1277,7 @@ void main_sm_operations (void)
 
         case 51:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("Starting Authentication Request ... ");
             fflush (stdout);
@@ -1275,7 +1297,7 @@ void main_sm_operations (void)
 
         case 52:
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
             printf("[0] Turn Link-level Encryption OFF\n");
             printf("[1] Turn Link-level Encryption ON\n");
@@ -1415,7 +1437,7 @@ void main_sm_operations (void)
             SM_OOB_INFO oob_info;
 
             printf("Enter Device BD_ADDR: "); fflush (stdout);
-            appl_get_bd_addr (oob_info.bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (oob_info.bd_addr);
 
             printf("Enter Device SSP Hash 'C' (16 Hex Values) = ");
             fflush(stdout);

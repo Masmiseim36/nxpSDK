@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SGTL5000 Adapter</title>
+<title>MCUXpresso SDK API Reference Manual: XBARB: Inter-Peripheral Crossbar Switch</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,102 +98,112 @@ $(document).ready(function(){initNavTree('a00279.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SGTL5000 Adapter<div class="ingroups"><a class="el" href="a00013.html">CODEC Common Driver</a></div></div>  </div>
+<div class="title">XBARB: Inter-Peripheral Crossbar Switch</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The sgtl5000 adapter provides a codec unify control interface. </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the Inter-Peripheral Crossbar Switch (XBARB) block of MCUXpresso SDK devices.</p>
+<p>The XBARB peripheral driver configures the XBARB (Inter-Peripheral Crossbar Switch) and handles initialization and configuration of the XBARB module.</p>
+<p>XBARB driver has two parts:</p>
+<ul>
+<li>Signal connection interconnects input and output signals.</li>
+</ul>
+<h1><a class="anchor" id="XbarbFunctionalGroups"></a>
+Function groups</h1>
+<h2><a class="anchor" id="XBARBInit"></a>
+XBARB Initialization</h2>
+<p>To initialize the XBARB driver, a state structure has to be passed into the initialization function. This block of memory keeps pointers to user's callback functions and parameters to these functions. The XBARB module is initialized by calling the <a class="el" href="a00279.html#gaef36940e839f28936f9415c3cb6d703f" title="Initializes the XBARB module. ">XBARB_Init()</a> function.</p>
+<h2><a class="anchor" id="XBARBCallDiagram"></a>
+Call diagram</h2>
+<ol type="1">
+<li>Call the "XBARB_Init()" function to initialize the XBARB module.</li>
+<li>Optionally, call the "XBARB_SetSignalsConnection()" function to Set connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal. It connects the XBARB input to the selected XBARB output. A configuration structure of the "xbarb_input_signal_t" type and "xbarb_output_signal_t" type is required.</li>
+<li>Finally, the XBARB works properly.</li>
+</ol>
+<h1><a class="anchor" id="XbarbExample"></a>
+Typical use case</h1>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaefd47ccecdcba605714e0e79c9fa0672"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaefd47ccecdcba605714e0e79c9fa0672"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gaefd47ccecdcba605714e0e79c9fa0672">HAL_CODEC_SGTL_HANDLER_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00067.html#ga5a006451f9e990a4d3255ed7265ff1ad">SGTL_I2C_HANDLER_SIZE</a> + 4)</td></tr>
-<tr class="memdesc:gaefd47ccecdcba605714e0e79c9fa0672"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec handler size <br/></td></tr>
-<tr class="separator:gaefd47ccecdcba605714e0e79c9fa0672"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga0c3b07c7a578a053eee1776295da8773"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga0c3b07c7a578a053eee1776295da8773">HAL_CODEC_SGTL5000_Init</a> (void *handle, void *config)</td></tr>
-<tr class="memdesc:ga0c3b07c7a578a053eee1776295da8773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec initilization.  <a href="#ga0c3b07c7a578a053eee1776295da8773">More...</a><br/></td></tr>
-<tr class="separator:ga0c3b07c7a578a053eee1776295da8773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae36c1b272f8fdb5c88203c6638ab7640"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gae36c1b272f8fdb5c88203c6638ab7640">HAL_CODEC_SGTL5000_Deinit</a> (void *handle)</td></tr>
-<tr class="memdesc:gae36c1b272f8fdb5c88203c6638ab7640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec de-initilization.  <a href="#gae36c1b272f8fdb5c88203c6638ab7640">More...</a><br/></td></tr>
-<tr class="separator:gae36c1b272f8fdb5c88203c6638ab7640"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab30061c469c3ea78d06355c038c7866a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gab30061c469c3ea78d06355c038c7866a">HAL_CODEC_SGTL5000_SetFormat</a> (void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)</td></tr>
-<tr class="memdesc:gab30061c469c3ea78d06355c038c7866a"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio data format.  <a href="#gab30061c469c3ea78d06355c038c7866a">More...</a><br/></td></tr>
-<tr class="separator:gab30061c469c3ea78d06355c038c7866a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7dd479df449a5c9f233df0f783bb9bed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga7dd479df449a5c9f233df0f783bb9bed">HAL_CODEC_SGTL5000_SetVolume</a> (void *handle, uint32_t playChannel, uint32_t volume)</td></tr>
-<tr class="memdesc:ga7dd479df449a5c9f233df0f783bb9bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module volume.  <a href="#ga7dd479df449a5c9f233df0f783bb9bed">More...</a><br/></td></tr>
-<tr class="separator:ga7dd479df449a5c9f233df0f783bb9bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94fddb9bc88c02c76f0768c8d0f25340"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga94fddb9bc88c02c76f0768c8d0f25340">HAL_CODEC_SGTL5000_SetMute</a> (void *handle, uint32_t playChannel, bool isMute)</td></tr>
-<tr class="memdesc:ga94fddb9bc88c02c76f0768c8d0f25340"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module mute.  <a href="#ga94fddb9bc88c02c76f0768c8d0f25340">More...</a><br/></td></tr>
-<tr class="separator:ga94fddb9bc88c02c76f0768c8d0f25340"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80d3d20d4214d55418fb023a6e0f8846"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga80d3d20d4214d55418fb023a6e0f8846">HAL_CODEC_SGTL5000_SetPower</a> (void *handle, uint32_t module, bool powerOn)</td></tr>
-<tr class="memdesc:ga80d3d20d4214d55418fb023a6e0f8846"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module power.  <a href="#ga80d3d20d4214d55418fb023a6e0f8846">More...</a><br/></td></tr>
-<tr class="separator:ga80d3d20d4214d55418fb023a6e0f8846"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3a1876b021a535c7384091d2000a2ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gaf3a1876b021a535c7384091d2000a2ea">HAL_CODEC_SGTL5000_SetRecord</a> (void *handle, uint32_t recordSource)</td></tr>
-<tr class="memdesc:gaf3a1876b021a535c7384091d2000a2ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record source.  <a href="#gaf3a1876b021a535c7384091d2000a2ea">More...</a><br/></td></tr>
-<tr class="separator:gaf3a1876b021a535c7384091d2000a2ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga51babe778d10ae87df94bb1bf8123820"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga51babe778d10ae87df94bb1bf8123820">HAL_CODEC_SGTL5000_SetRecordChannel</a> (void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)</td></tr>
-<tr class="memdesc:ga51babe778d10ae87df94bb1bf8123820"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record channel.  <a href="#ga51babe778d10ae87df94bb1bf8123820">More...</a><br/></td></tr>
-<tr class="separator:ga51babe778d10ae87df94bb1bf8123820"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47b094fe0a4349bdf26e35e33266c450"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga47b094fe0a4349bdf26e35e33266c450">HAL_CODEC_SGTL5000_SetPlay</a> (void *handle, uint32_t playSource)</td></tr>
-<tr class="memdesc:ga47b094fe0a4349bdf26e35e33266c450"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set play source.  <a href="#ga47b094fe0a4349bdf26e35e33266c450">More...</a><br/></td></tr>
-<tr class="separator:ga47b094fe0a4349bdf26e35e33266c450"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10e8b5337084204a14b92d105a9a6918"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga10e8b5337084204a14b92d105a9a6918">HAL_CODEC_SGTL5000_ModuleControl</a> (void *handle, uint32_t cmd, uint32_t data)</td></tr>
-<tr class="memdesc:ga10e8b5337084204a14b92d105a9a6918"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec module control.  <a href="#ga10e8b5337084204a14b92d105a9a6918">More...</a><br/></td></tr>
-<tr class="separator:ga10e8b5337084204a14b92d105a9a6918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe47075da9b829e30e618a86ac2cc9c6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gafe47075da9b829e30e618a86ac2cc9c6">HAL_CODEC_Init</a> (void *handle, void *config)</td></tr>
-<tr class="memdesc:gafe47075da9b829e30e618a86ac2cc9c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec initilization.  <a href="#gafe47075da9b829e30e618a86ac2cc9c6">More...</a><br/></td></tr>
-<tr class="separator:gafe47075da9b829e30e618a86ac2cc9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6728d97d2c909d8bff9fee477b0cd9e9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga6728d97d2c909d8bff9fee477b0cd9e9">HAL_CODEC_Deinit</a> (void *handle)</td></tr>
-<tr class="memdesc:ga6728d97d2c909d8bff9fee477b0cd9e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec de-initilization.  <a href="#ga6728d97d2c909d8bff9fee477b0cd9e9">More...</a><br/></td></tr>
-<tr class="separator:ga6728d97d2c909d8bff9fee477b0cd9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf073d16e55b2da18b4b801acd03454b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gaaf073d16e55b2da18b4b801acd03454b">HAL_CODEC_SetFormat</a> (void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)</td></tr>
-<tr class="memdesc:gaaf073d16e55b2da18b4b801acd03454b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio data format.  <a href="#gaaf073d16e55b2da18b4b801acd03454b">More...</a><br/></td></tr>
-<tr class="separator:gaaf073d16e55b2da18b4b801acd03454b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17769c66cf7b5c0f01041e7f36f4c89c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga17769c66cf7b5c0f01041e7f36f4c89c">HAL_CODEC_SetVolume</a> (void *handle, uint32_t playChannel, uint32_t volume)</td></tr>
-<tr class="memdesc:ga17769c66cf7b5c0f01041e7f36f4c89c"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module volume.  <a href="#ga17769c66cf7b5c0f01041e7f36f4c89c">More...</a><br/></td></tr>
-<tr class="separator:ga17769c66cf7b5c0f01041e7f36f4c89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6e3171b042e6150ac410abced6123feb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga6e3171b042e6150ac410abced6123feb">HAL_CODEC_SetMute</a> (void *handle, uint32_t playChannel, bool isMute)</td></tr>
-<tr class="memdesc:ga6e3171b042e6150ac410abced6123feb"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module mute.  <a href="#ga6e3171b042e6150ac410abced6123feb">More...</a><br/></td></tr>
-<tr class="separator:ga6e3171b042e6150ac410abced6123feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad630677f451ca311d9f149d34da70637"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gad630677f451ca311d9f149d34da70637">HAL_CODEC_SetPower</a> (void *handle, uint32_t module, bool powerOn)</td></tr>
-<tr class="memdesc:gad630677f451ca311d9f149d34da70637"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module power.  <a href="#gad630677f451ca311d9f149d34da70637">More...</a><br/></td></tr>
-<tr class="separator:gad630677f451ca311d9f149d34da70637"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78612feccab62150fb8ee1ef9eb4b6ed"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga78612feccab62150fb8ee1ef9eb4b6ed">HAL_CODEC_SetRecord</a> (void *handle, uint32_t recordSource)</td></tr>
-<tr class="memdesc:ga78612feccab62150fb8ee1ef9eb4b6ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record source.  <a href="#ga78612feccab62150fb8ee1ef9eb4b6ed">More...</a><br/></td></tr>
-<tr class="separator:ga78612feccab62150fb8ee1ef9eb4b6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad96c5638cbc67a85bfdb44aa1eee435b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gad96c5638cbc67a85bfdb44aa1eee435b">HAL_CODEC_SetRecordChannel</a> (void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)</td></tr>
-<tr class="memdesc:gad96c5638cbc67a85bfdb44aa1eee435b"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record channel.  <a href="#gad96c5638cbc67a85bfdb44aa1eee435b">More...</a><br/></td></tr>
-<tr class="separator:gad96c5638cbc67a85bfdb44aa1eee435b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10228c6005d118872915a0412c466a7d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga10228c6005d118872915a0412c466a7d">HAL_CODEC_SetPlay</a> (void *handle, uint32_t playSource)</td></tr>
-<tr class="memdesc:ga10228c6005d118872915a0412c466a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set play source.  <a href="#ga10228c6005d118872915a0412c466a7d">More...</a><br/></td></tr>
-<tr class="separator:ga10228c6005d118872915a0412c466a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2e790a1ed09bc9a6b910d94180e5bd4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gab2e790a1ed09bc9a6b910d94180e5bd4">HAL_CODEC_ModuleControl</a> (void *handle, uint32_t cmd, uint32_t data)</td></tr>
-<tr class="memdesc:gab2e790a1ed09bc9a6b910d94180e5bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec module control.  <a href="#gab2e790a1ed09bc9a6b910d94180e5bd4">More...</a><br/></td></tr>
-<tr class="separator:gab2e790a1ed09bc9a6b910d94180e5bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+XBARB functional Operation.</h2></td></tr>
+<tr class="memitem:gaef36940e839f28936f9415c3cb6d703f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gaef36940e839f28936f9415c3cb6d703f">XBARB_Init</a> (XBARB_Type *base)</td></tr>
+<tr class="memdesc:gaef36940e839f28936f9415c3cb6d703f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the XBARB module.  <a href="#gaef36940e839f28936f9415c3cb6d703f">More...</a><br/></td></tr>
+<tr class="separator:gaef36940e839f28936f9415c3cb6d703f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5775a6073d472b2749cc202116d1809"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#gad5775a6073d472b2749cc202116d1809">XBARB_Deinit</a> (XBARB_Type *base)</td></tr>
+<tr class="memdesc:gad5775a6073d472b2749cc202116d1809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the XBARB module.  <a href="#gad5775a6073d472b2749cc202116d1809">More...</a><br/></td></tr>
+<tr class="separator:gad5775a6073d472b2749cc202116d1809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64a72733261fc11d061c0d7f0abe0771"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html#ga64a72733261fc11d061c0d7f0abe0771">XBARB_SetSignalsConnection</a> (XBARB_Type *base, xbar_input_signal_t input, xbar_output_signal_t output)</td></tr>
+<tr class="memdesc:ga64a72733261fc11d061c0d7f0abe0771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures a connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal.  <a href="#ga64a72733261fc11d061c0d7f0abe0771">More...</a><br/></td></tr>
+<tr class="separator:ga64a72733261fc11d061c0d7f0abe0771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0c3b07c7a578a053eee1776295da8773"></a>
+<a class="anchor" id="gaef36940e839f28936f9415c3cb6d703f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_Init </td>
+          <td class="memname">void XBARB_Init </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function un-gates the XBARB clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad5775a6073d472b2749cc202116d1809"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XBARB_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables XBARB clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga64a72733261fc11d061c0d7f0abe0771"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XBARB_SetSignalsConnection </td>
+          <td>(</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">xbar_input_signal_t&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">xbar_output_signal_t&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -202,818 +212,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function configures which XBARB input is connected to the selected XBARB output. If more than one XBARB module is available, only the inputs and outputs from the same module can be connected.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">config</td><td>codec configuration. </td></tr>
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+    <tr><td class="paramname">input</td><td>XBARB input signal. </td></tr>
+    <tr><td class="paramname">output</td><td>XBARB output signal. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else initial failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gae36c1b272f8fdb5c88203c6638ab7640"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else de-initial failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab30061c469c3ea78d06355c038c7866a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_SetFormat </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mclk</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sampleRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bitWidth</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">mclk</td><td>master clock frequency in HZ. </td></tr>
-    <tr><td class="paramname">sampleRate</td><td>sample rate in HZ. </td></tr>
-    <tr><td class="paramname">bitWidth</td><td>bit width. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7dd479df449a5c9f233df0f783bb9bed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_SetVolume </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>playChannel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">playChannel</td><td>audio codec play channel, can be a value or combine value of _codec_play_channel. </td></tr>
-    <tr><td class="paramname">volume</td><td>volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga94fddb9bc88c02c76f0768c8d0f25340"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_SetMute </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>playChannel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isMute</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">playChannel</td><td>audio codec play channel, can be a value or combine value of _codec_play_channel. </td></tr>
-    <tr><td class="paramname">isMute</td><td>true is mute, false is unmute. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga80d3d20d4214d55418fb023a6e0f8846"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_SetPower </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>powerOn</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">module</td><td>audio codec module. </td></tr>
-    <tr><td class="paramname">powerOn</td><td>true is power on, false is power down. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf3a1876b021a535c7384091d2000a2ea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_SetRecord </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>recordSource</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">recordSource</td><td>audio codec record source, can be a value or combine value of _codec_record_source.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga51babe778d10ae87df94bb1bf8123820"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_SetRecordChannel </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>leftRecordChannel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>rightRecordChannel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">leftRecordChannel</td><td>audio codec record channel, reference _codec_record_channel, can be a value or combine value of member in _codec_record_channel. </td></tr>
-    <tr><td class="paramname">rightRecordChannel</td><td>audio codec record channel, reference _codec_record_channel, can be a value combine of member in _codec_record_channel.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga47b094fe0a4349bdf26e35e33266c450"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_SetPlay </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>playSource</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">playSource</td><td>audio codec play source, can be a value or combine value of _codec_play_source.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga10e8b5337084204a14b92d105a9a6918"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SGTL5000_ModuleControl </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>cmd</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used for codec module control, support switch digital interface cmd, can be expand to support codec module specific feature</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">cmd</td><td>module control cmd, reference _codec_module_ctrl_cmd. </td></tr>
-    <tr><td class="paramname">data</td><td>value to write, when cmd is kCODEC_ModuleRecordSourceChannel, the data should be a value combine of channel and source, please reference macro CODEC_MODULE_RECORD_SOURCE_CHANNEL(source, LP, LN, RP, RN), reference codec specific driver for detail configurations. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gafe47075da9b829e30e618a86ac2cc9c6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_Init </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">config</td><td>codec configuration. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else initial failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6728d97d2c909d8bff9fee477b0cd9e9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else de-initial failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaaf073d16e55b2da18b4b801acd03454b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SetFormat </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mclk</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sampleRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bitWidth</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">mclk</td><td>master clock frequency in HZ. </td></tr>
-    <tr><td class="paramname">sampleRate</td><td>sample rate in HZ. </td></tr>
-    <tr><td class="paramname">bitWidth</td><td>bit width. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga17769c66cf7b5c0f01041e7f36f4c89c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SetVolume </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>playChannel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>volume</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">playChannel</td><td>audio codec play channel, can be a value or combine value of _codec_play_channel. </td></tr>
-    <tr><td class="paramname">volume</td><td>volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6e3171b042e6150ac410abced6123feb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SetMute </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>playChannel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isMute</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">playChannel</td><td>audio codec play channel, can be a value or combine value of _codec_play_channel. </td></tr>
-    <tr><td class="paramname">isMute</td><td>true is mute, false is unmute. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad630677f451ca311d9f149d34da70637"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SetPower </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>module</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>powerOn</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">module</td><td>audio codec module. </td></tr>
-    <tr><td class="paramname">powerOn</td><td>true is power on, false is power down. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga78612feccab62150fb8ee1ef9eb4b6ed"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SetRecord </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>recordSource</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">recordSource</td><td>audio codec record source, can be a value or combine value of _codec_record_source.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad96c5638cbc67a85bfdb44aa1eee435b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SetRecordChannel </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>leftRecordChannel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>rightRecordChannel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">leftRecordChannel</td><td>audio codec record channel, reference _codec_record_channel, can be a value or combine value of member in _codec_record_channel. </td></tr>
-    <tr><td class="paramname">rightRecordChannel</td><td>audio codec record channel, reference _codec_record_channel, can be a value combine of member in _codec_record_channel.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga10228c6005d118872915a0412c466a7d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_SetPlay </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>playSource</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">playSource</td><td>audio codec play source, can be a value or combine value of _codec_play_source.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab2e790a1ed09bc9a6b910d94180e5bd4"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00249.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_ModuleControl </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>cmd</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function is used for codec module control, support switch digital interface cmd, can be expand to support codec module specific feature</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>codec handle. </td></tr>
-    <tr><td class="paramname">cmd</td><td>module control cmd, reference _codec_module_ctrl_cmd. </td></tr>
-    <tr><td class="paramname">data</td><td>value to write, when cmd is kCODEC_ModuleRecordSourceChannel, the data should be a value combine of channel and source, please reference macro CODEC_MODULE_RECORD_SOURCE_CHANNEL(source, LP, LN, RP, RN), reference codec specific driver for detail configurations. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success is success, else configure failed. </dd></dl>
 
 </div>
 </div>

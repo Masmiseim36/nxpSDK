@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2020 SixOctets Systems
  * Copyright (c) 2019 Aaron Tsui <aaron.tsui@outlook.com>
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -111,9 +111,10 @@ void bt_hts_indicate(void)
         ind_params.data = (uint8_t *)&temp_measurement;
         ind_params.len = sizeof(temp_measurement);
 
-        if (bt_gatt_indicate(NULL, &ind_params) == 0)
+        indicating = 1U;
+        if (0 != bt_gatt_indicate(NULL, &ind_params))
         {
-            indicating = 1U;
+            indicating = 0U;
         }
 
         temperature++;

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SPDIF: Sony/Philips Digital Interface</title>
+<title>MCUXpresso SDK API Reference Manual: Shell</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,543 +99,468 @@ $(document).ready(function(){initNavTree('a00074.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">SPDIF: Sony/Philips Digital Interface</div>  </div>
+<div class="title">Shell</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Sony/Philips Digital Interface (SPDIF) module of MCUXpresso SDK devices.</p>
-<p>SPDIF driver includes functional APIs and transactional APIs.</p>
-<p>Functional APIs target low-level APIs. Functional APIs can be used for SPDIF initialization/configuration/operation for optimization/customization purpose. Using the functional API requires the knowledge of the SPDIF peripheral and how to organize functional APIs to meet the application requirements. All functional API use the peripheral base address as the first parameter. SPDIF functional operation groups provide the functional API set.</p>
-<p>Transactional APIs target high-level APIs. Transactional APIs can be used to enable the peripheral and in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are a critical requirement, see the transactional API implementation and write a custom code. All transactional APIs use the spdif_handle_t as the first parameter. Initialize the handle by calling the <a class="el" href="a00074.html#ga2e4eb257e2da537eb2d47a31ea47fbb6" title="Initializes the SPDIF Tx handle. ">SPDIF_TransferTxCreateHandle()</a> or <a class="el" href="a00074.html#gac44c0edc9e22798fb840f38f1c3749ba" title="Initializes the SPDIF Rx handle. ">SPDIF_TransferRxCreateHandle()</a> API.</p>
-<p>Transactional APIs support asynchronous transfer. This means that the functions <a class="el" href="a00074.html#ga155e14a0591e50af578cb8309171c112" title="Performs an interrupt non-blocking send transfer on SPDIF. ">SPDIF_TransferSendNonBlocking()</a> and <a class="el" href="a00074.html#ga04fe7c5e2cf560687b07f5de908da255" title="Performs an interrupt non-blocking receive transfer on SPDIF. ">SPDIF_TransferReceiveNonBlocking()</a> set up the interrupt for data transfer. When the transfer completes, the upper layer is notified through a callback function with the kStatus_SPDIF_TxIdle and kStatus_SPDIF_RxIdle status.</p>
-<h1><a class="anchor" id="SPDIFCase"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="SPDIFCaseInterrupt"></a>
-SPDIF Send/receive using an interrupt method</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/spdif </p>
-<h2><a class="anchor" id="SPDIFCaseDma"></a>
-SPDIF Send/receive using a DMA method</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/spdif </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00075"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00075.html">SPDIF eDMA Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<p>This section describes the programming interface of the Shell middleware.</p>
+<p>Shell controls MCUs by commands via the specified communication peripheral based on the debug console driver.</p>
+<h1><a class="anchor" id="ShellFunGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="ShellInit"></a>
+Initialization</h2>
+<p>To initialize the Shell middleware, call the <span style="color:red"><a class="el" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a></span> function with these parameters. This function automatically enables the middleware.</p>
+<div class="fragment"><div class="line"><a class="code" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> <a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(<a class="code" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <span class="keywordtype">char</span> *prompt);</div>
+</div><!-- fragment --><p>Then, after the initialization was successful, call a command to control MCUs.</p>
+<p>This example shows how to call the <a class="el" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a> given the user configuration structure.</p>
+<div class="fragment"><div class="line"><a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="ShellAdvFeature"></a>
+Advanced Feature</h2>
+<ul>
+<li>Support to get a character from standard input devices. <div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_GetChar(shell_context_handle_t *shellContextHandle, uint8_t *ch);</div>
+</div><!-- fragment --></li>
+</ul>
+<div style="width:800px;"> <table class="doxtable">
+<tr>
+<th>Commands  </th><th>Description  </th></tr>
+<tr>
+<td>help  </td><td>List all the registered commands.   </td></tr>
+<tr>
+<td>exit  </td><td>Exit program.   </td></tr>
+</table>
+</div><h2><a class="anchor" id="SHELLOper"></a>
+Shell Operation</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
+<div class="line"><a class="code" href="a00074.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a>((s_shellHandle);</div>
+</div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00516"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00516">spdif_config_t</a></td></tr>
-<tr class="memdesc:a00516"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF user configuration structure.  <a href="a00074.html#a00516">More...</a><br/></td></tr>
-<tr class="separator:a00516"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00518"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00518">spdif_transfer_t</a></td></tr>
-<tr class="memdesc:a00518"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer structure.  <a href="a00074.html#a00518">More...</a><br/></td></tr>
-<tr class="separator:a00518"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00329"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00329">spdif_handle_t</a></td></tr>
-<tr class="memdesc:a00329"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF handle structure.  <a href="a00074.html#a00329">More...</a><br/></td></tr>
-<tr class="separator:a00329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00528"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00528">shell_command_t</a></td></tr>
+<tr class="memdesc:a00528"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="a00074.html#a00528">More...</a><br/></td></tr>
+<tr class="separator:a00528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga3e78a3155b1291a9fa00d0461d6e490c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>&#160;&#160;&#160;(4U)</td></tr>
-<tr class="memdesc:ga3e78a3155b1291a9fa00d0461d6e490c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer queue size, user can refine it according to use case.  <a href="#ga3e78a3155b1291a9fa00d0461d6e490c">More...</a><br/></td></tr>
-<tr class="separator:ga3e78a3155b1291a9fa00d0461d6e490c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">SHELL_NON_BLOCKING_MODE</a>&#160;&#160;&#160;<a class="el" href="a00070.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td></tr>
+<tr class="memdesc:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether use non-blocking mode.  <a href="#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">More...</a><br/></td></tr>
+<tr class="separator:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga30882f4b5fc99cbc21459cc960ef9ffe">SHELL_AUTO_COMPLETE</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set on/off auto-complete feature.  <a href="#ga30882f4b5fc99cbc21459cc960ef9ffe">More...</a><br/></td></tr>
+<tr class="separator:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf98219b0fb886040896b83966903a135"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a>&#160;&#160;&#160;(64U)</td></tr>
+<tr class="memdesc:gaf98219b0fb886040896b83966903a135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set console buffer size.  <a href="#gaf98219b0fb886040896b83966903a135">More...</a><br/></td></tr>
+<tr class="separator:gaf98219b0fb886040896b83966903a135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga0800d9fb741c785d0601f0c3d7125f40">SHELL_MAX_ARGS</a>&#160;&#160;&#160;(8U)</td></tr>
+<tr class="memdesc:ga0800d9fb741c785d0601f0c3d7125f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum arguments in command.  <a href="#ga0800d9fb741c785d0601f0c3d7125f40">More...</a><br/></td></tr>
+<tr class="separator:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4362aa35752c9abf77387a237faaaea5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="memdesc:ga4362aa35752c9abf77387a237faaaea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum count of history commands.  <a href="#ga4362aa35752c9abf77387a237faaaea5">More...</a><br/></td></tr>
+<tr class="separator:ga4362aa35752c9abf77387a237faaaea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c32b818330b7a6b62a5b819703e5e8f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga8c32b818330b7a6b62a5b819703e5e8f">SHELL_IGNORE_PARAMETER_COUNT</a>&#160;&#160;&#160;(0xFF)</td></tr>
+<tr class="memdesc:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to bypass arguments check. <br/></td></tr>
+<tr class="separator:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a></td></tr>
+<tr class="memdesc:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle size of the shell module.  <a href="#gaa4c15d7595f7cf7ee5f837a02cbdf574">More...</a><br/></td></tr>
+<tr class="separator:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga100ef8e4a639c03682d84fb981ba235b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga100ef8e4a639c03682d84fb981ba235b">SHELL_USE_COMMON_TASK</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga100ef8e4a639c03682d84fb981ba235b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to determine whether use common task.  <a href="#ga100ef8e4a639c03682d84fb981ba235b">More...</a><br/></td></tr>
+<tr class="separator:ga100ef8e4a639c03682d84fb981ba235b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5b98f71ea7bd89ef344cac14aa79a1e3">SHELL_TASK_PRIORITY</a>&#160;&#160;&#160;(2U)</td></tr>
+<tr class="memdesc:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task priority.  <a href="#ga5b98f71ea7bd89ef344cac14aa79a1e3">More...</a><br/></td></tr>
+<tr class="separator:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga416667c8e6b960d2c1ec518b41a06d62">SHELL_TASK_STACK_SIZE</a>&#160;&#160;&#160;(1000U)</td></tr>
+<tr class="memdesc:ga416667c8e6b960d2c1ec518b41a06d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task stack size.  <a href="#ga416667c8e6b960d2c1ec518b41a06d62">More...</a><br/></td></tr>
+<tr class="separator:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
+<tr class="memdesc:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell handle.  <a href="#gafdb2c68b2d83d459fc196ab0f58d7ab3">More...</a><br/></td></tr>
+<tr class="separator:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(command, descriptor, callback, paramCount)</td></tr>
+<tr class="memdesc:gacd1f7ee25cd791efee6a45e753ec9824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell command structure.  <a href="#gacd1f7ee25cd791efee6a45e753ec9824">More...</a><br/></td></tr>
+<tr class="separator:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(command)&#160;&#160;&#160;&amp;g_shellCommand##command</td></tr>
+<tr class="memdesc:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the shell command pointer.  <a href="#ga16dd6cfbd9db7dafdaa802eda58564b5">More...</a><br/></td></tr>
+<tr class="separator:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga8749a36136a9b55600479d61b55596ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8749a36136a9b55600479d61b55596ec"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> )(SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
-<tr class="memdesc:ga8749a36136a9b55600479d61b55596ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer callback prototype. <br/></td></tr>
-<tr class="separator:ga8749a36136a9b55600479d61b55596ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga818c3ca274bd83d1dc870a5618eb21f2"></a>
+typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a></td></tr>
+<tr class="memdesc:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle of the shell module. <br/></td></tr>
+<tr class="separator:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> )(<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td></tr>
+<tr class="memdesc:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command function prototype.  <a href="#ga7ace1ddfb1e83ac1516ac44be90cf822">More...</a><br/></td></tr>
+<tr class="separator:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga56a0f36da7f9eaaf54bd05cc2bf49173"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a0489bbc59ac12902e0cf3c134e72363e">kStatus_SPDIF_RxDPLLLocked</a> = MAKE_STATUS(kStatusGroup_SPDIF, 0), 
+<tr class="memitem:ga16424f17c6492c580e65adf9a4e1ac61"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e">kStatus_SHELL_Success</a> = kStatus_Success, 
 <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a278a5b9459f7c6a06b0026d00ecc63cd">kStatus_SPDIF_TxFIFOError</a> = MAKE_STATUS(kStatusGroup_SPDIF, 1), 
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9">kStatus_SHELL_Error</a> = MAKE_STATUS(kStatusGroup_SHELL, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a051d7f8261885f910a4f04c4a7a8f410">kStatus_SPDIF_TxFIFOResync</a> = MAKE_STATUS(kStatusGroup_SPDIF, 2), 
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b">kStatus_SHELL_OpenWriteHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 2), 
 <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a259512eb9a030bbc2188b71008058808">kStatus_SPDIF_RxCnew</a> = MAKE_STATUS(kStatusGroup_SPDIF, 3), 
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8">kStatus_SHELL_OpenReadHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 3), 
 <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a6da0731f8caeb6cc08bb5f8190d01f30">kStatus_SPDIF_ValidatyNoGood</a> = MAKE_STATUS(kStatusGroup_SPDIF, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a2da36cd8a86bdfa8d9b4fead3dd543ad">kStatus_SPDIF_RxIllegalSymbol</a> = MAKE_STATUS(kStatusGroup_SPDIF, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173afe0341b5aea2f8946c5a5a102e676483">kStatus_SPDIF_RxParityBitError</a> = MAKE_STATUS(kStatusGroup_SPDIF, 6), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a02d356ebee96b06bd87d13551d09e73f">kStatus_SPDIF_UChannelOverrun</a> = MAKE_STATUS(kStatusGroup_SPDIF, 7), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a07b3373290d7d037ff3a859132967d53">kStatus_SPDIF_QChannelOverrun</a> = MAKE_STATUS(kStatusGroup_SPDIF, 8), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a3a6c65eabeb242b3910327da198c87d3">kStatus_SPDIF_UQChannelSync</a> = MAKE_STATUS(kStatusGroup_SPDIF, 9), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173af44eacef3e48bd00a1fd5e08c550f9cb">kStatus_SPDIF_UQChannelFrameError</a> = MAKE_STATUS(kStatusGroup_SPDIF, 10), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a2360fecc1ffe49c63f8dd5b64905a33a">kStatus_SPDIF_RxFIFOError</a> = MAKE_STATUS(kStatusGroup_SPDIF, 11), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173ab206b050696acf5758e8b6c0bdf5b6fa">kStatus_SPDIF_RxFIFOResync</a> = MAKE_STATUS(kStatusGroup_SPDIF, 12), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a9390ad9ad5ce85f7224c759604f5a194">kStatus_SPDIF_LockLoss</a> = MAKE_STATUS(kStatusGroup_SPDIF, 13), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a646939956dd08768873e67af0e2690fc">kStatus_SPDIF_TxIdle</a> = MAKE_STATUS(kStatusGroup_SPDIF, 14), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173ac458cedc1f2f208c0e04e3f532dc0595">kStatus_SPDIF_RxIdle</a> = MAKE_STATUS(kStatusGroup_SPDIF, 15), 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a700d25ed1454e469f32de0ade5a78e87">kStatus_SPDIF_QueueFull</a> = MAKE_STATUS(kStatusGroup_SPDIF, 16)
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61ad139f389943f49d948bbff024d6c5a26">kStatus_SHELL_RetUsage</a> = MAKE_STATUS(kStatusGroup_SHELL, 4)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga56a0f36da7f9eaaf54bd05cc2bf49173"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF return status.  <a href="a00074.html#ga56a0f36da7f9eaaf54bd05cc2bf49173">More...</a><br/></td></tr>
-<tr class="separator:ga56a0f36da7f9eaaf54bd05cc2bf49173"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85d08a5eba9eaf262597f4f3dfad19a0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga85d08a5eba9eaf262597f4f3dfad19a0">spdif_rxfull_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga85d08a5eba9eaf262597f4f3dfad19a0ad6a45c3b1bb3397ce7dd2e5c9af8c1c9">kSPDIF_RxFull1Sample</a> = 0x0u, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga85d08a5eba9eaf262597f4f3dfad19a0a84f7309ca36974eefa1a2d970eba7995">kSPDIF_RxFull4Samples</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga85d08a5eba9eaf262597f4f3dfad19a0a71af34697ac17ca08eb26d7c4d6dd27f">kSPDIF_RxFull8Samples</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga85d08a5eba9eaf262597f4f3dfad19a0ab585922a28236a3e9b8cffbdd3793cee">kSPDIF_RxFull16Samples</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga85d08a5eba9eaf262597f4f3dfad19a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF Rx FIFO full falg select, it decides when assert the rx full flag.  <a href="a00074.html#ga85d08a5eba9eaf262597f4f3dfad19a0">More...</a><br/></td></tr>
-<tr class="separator:ga85d08a5eba9eaf262597f4f3dfad19a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad58b90afceef70798b8be683f3017c71"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad58b90afceef70798b8be683f3017c71">spdif_txempty_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#ggad58b90afceef70798b8be683f3017c71a835efeacfa1b7bc07a723c3683407b4e">kSPDIF_TxEmpty0Sample</a> = 0x0u, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggad58b90afceef70798b8be683f3017c71a38d0ed7a9ff015721f0edcd71d696e18">kSPDIF_TxEmpty4Samples</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggad58b90afceef70798b8be683f3017c71afbd58fcc26965a9b45865764d775284f">kSPDIF_TxEmpty8Samples</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggad58b90afceef70798b8be683f3017c71a9c74437e11128b87fbd5bb644c4790e4">kSPDIF_TxEmpty12Samples</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gad58b90afceef70798b8be683f3017c71"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx FIFO EMPTY falg select, it decides when assert the tx empty flag.  <a href="a00074.html#gad58b90afceef70798b8be683f3017c71">More...</a><br/></td></tr>
-<tr class="separator:gad58b90afceef70798b8be683f3017c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga01edc35977dbab89a7201285c61c4a3e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga01edc35977dbab89a7201285c61c4a3e">spdif_uchannel_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga01edc35977dbab89a7201285c61c4a3eaf159efd3316b59e34b7288448c4b8c4f">kSPDIF_NoUChannel</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga01edc35977dbab89a7201285c61c4a3eaec4bf6dbe6a1346b33c59c392ea1fbe6">kSPDIF_UChannelFromRx</a> = 0x1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga01edc35977dbab89a7201285c61c4a3ea65a3b2cbcb558fdc5870f009d9d6bd80">kSPDIF_UChannelFromTx</a> = 0x3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga01edc35977dbab89a7201285c61c4a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF U channel source.  <a href="a00074.html#ga01edc35977dbab89a7201285c61c4a3e">More...</a><br/></td></tr>
-<tr class="separator:ga01edc35977dbab89a7201285c61c4a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5381bc40ad0b86e9453495598911e2c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#ggab5381bc40ad0b86e9453495598911e2cac438b3169eb2675d11540a839e99f502">kSPDIF_GAIN_24</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggab5381bc40ad0b86e9453495598911e2caa776465b4de5bf2fa610f1c2366c063f">kSPDIF_GAIN_16</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggab5381bc40ad0b86e9453495598911e2cad54dc0e7908199d3fe24ef53d608b544">kSPDIF_GAIN_12</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggab5381bc40ad0b86e9453495598911e2caafee91827c9ea238ad6d6478718e98a0">kSPDIF_GAIN_8</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggab5381bc40ad0b86e9453495598911e2ca16500e129c2451b60faf4a3f4464df43">kSPDIF_GAIN_6</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggab5381bc40ad0b86e9453495598911e2ca84750080b7f27da810fe19abe64f776f">kSPDIF_GAIN_4</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggab5381bc40ad0b86e9453495598911e2ca1008286af785dcb2dde9131765217980">kSPDIF_GAIN_3</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gab5381bc40ad0b86e9453495598911e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF clock gain.  <a href="a00074.html#gab5381bc40ad0b86e9453495598911e2c">More...</a><br/></td></tr>
-<tr class="separator:gab5381bc40ad0b86e9453495598911e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2847432f45adbafdb2f9f7e5c25d9b2e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">spdif_tx_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga2847432f45adbafdb2f9f7e5c25d9b2eaffd9df4017e5af840e5c34c050791f02">kSPDIF_txFromReceiver</a> = 0x1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga2847432f45adbafdb2f9f7e5c25d9b2ea1e6073994dc81cb60c229a8ce166222f">kSPDIF_txNormal</a> = 0x5U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga2847432f45adbafdb2f9f7e5c25d9b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source.  <a href="a00074.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">More...</a><br/></td></tr>
-<tr class="separator:ga2847432f45adbafdb2f9f7e5c25d9b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5615c4913a612ee1dc67e357e905f2c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad5615c4913a612ee1dc67e357e905f2c">spdif_validity_config_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#ggad5615c4913a612ee1dc67e357e905f2ca9cf3c378520222b1ffe3e584cae0ac67">kSPDIF_validityFlagAlwaysSet</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggad5615c4913a612ee1dc67e357e905f2ca96145e43a2a36d2c7dcd6ce5242743b1">kSPDIF_validityFlagAlwaysClear</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gad5615c4913a612ee1dc67e357e905f2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source.  <a href="a00074.html#gad5615c4913a612ee1dc67e357e905f2c">More...</a><br/></td></tr>
-<tr class="separator:gad5615c4913a612ee1dc67e357e905f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa156d1cebb38c8a65846c4d9c006012a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aab8774a200c36eccf9d7b439ba21d1ac8">kSPDIF_RxDPLLLocked</a> = SPDIF_SIE_LOCK_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa74d3b2d4e4ee35eed58f4d30c6d2709b">kSPDIF_TxFIFOError</a> = SPDIF_SIE_TXUNOV_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aaf40104f71f214bb1c0a6a2c0fdcdaf36">kSPDIF_TxFIFOResync</a> = SPDIF_SIE_TXRESYN_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa5917028824aefbf16086b3021e414340">kSPDIF_RxControlChannelChange</a> = SPDIF_SIE_CNEW_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa7de7b2231ecb6e20e43d0494fe92e63c">kSPDIF_ValidityFlagNoGood</a> = SPDIF_SIE_VALNOGOOD_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aaa71c8ef82de54ffac949e31010d031de">kSPDIF_RxIllegalSymbol</a> = SPDIF_SIE_SYMERR_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa1838e42bf8376a18762297b6aa3c4472">kSPDIF_RxParityBitError</a> = SPDIF_SIE_BITERR_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aad228d31963d41a20e3567ce6f633acc6">kSPDIF_UChannelReceiveRegisterFull</a> = SPDIF_SIE_URXFUL_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa3b7dc66169552ca7798d686d68de6b7d">kSPDIF_UChannelReceiveRegisterOverrun</a> = SPDIF_SIE_URXOV_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa80ac61a0edef14ba03035176ab326331">kSPDIF_QChannelReceiveRegisterFull</a> = SPDIF_SIE_QRXFUL_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa64e59711062fadb98877919d7c5887e9">kSPDIF_QChannelReceiveRegisterOverrun</a> = SPDIF_SIE_QRXOV_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa6e94d542bd83c5bfc043fdbc44fcd43b">kSPDIF_UQChannelSync</a> = SPDIF_SIE_UQSYNC_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aac07a719f553a9e41bf3e082a5beaf107">kSPDIF_UQChannelFrameError</a> = SPDIF_SIE_UQERR_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa1a27bda77a59e1db5a1913bb8971281a">kSPDIF_RxFIFOError</a> = SPDIF_SIE_RXFIFOUNOV_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aad2e29bb00f59f56babeebd1f0e73726a">kSPDIF_RxFIFOResync</a> = SPDIF_SIE_RXFIFORESYN_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa1f134eebfeb0740e56c13c9b45fb8434">kSPDIF_LockLoss</a> = SPDIF_SIE_LOCKLOSS_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa82af9fd1290d8b3b63420b8d92257819">kSPDIF_TxFIFOEmpty</a> = SPDIF_SIE_TXEM_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aa9797531448d68e40b3befb91810bd09c">kSPDIF_RxFIFOFull</a> = SPDIF_SIE_RXFIFOFUL_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaa156d1cebb38c8a65846c4d9c006012aaf55570f1f8a886f06d64ed2bfc0650a4">kSPDIF_AllInterrupt</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa156d1cebb38c8a65846c4d9c006012a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SPDIF interrupt enable flag.  <a href="a00074.html#gaa156d1cebb38c8a65846c4d9c006012a">More...</a><br/></td></tr>
-<tr class="separator:gaa156d1cebb38c8a65846c4d9c006012a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8654c714018c6241d9ebd01f3fb5a26"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaf8654c714018c6241d9ebd01f3fb5a26a19fc49573180ffcc3df5f9a27c797209">kSPDIF_RxDMAEnable</a> = SPDIF_SCR_DMA_RX_EN_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#ggaf8654c714018c6241d9ebd01f3fb5a26ad508f6bf16fd6349b03fc8f3b38d06e8">kSPDIF_TxDMAEnable</a> = SPDIF_SCR_DMA_TX_EN_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf8654c714018c6241d9ebd01f3fb5a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DMA request sources.  <a href="a00074.html#gaf8654c714018c6241d9ebd01f3fb5a26">More...</a><br/></td></tr>
-<tr class="separator:gaf8654c714018c6241d9ebd01f3fb5a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga16424f17c6492c580e65adf9a4e1ac61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shell status.  <a href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">More...</a><br/></td></tr>
+<tr class="separator:ga16424f17c6492c580e65adf9a4e1ac61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga036bac4f2d40e143c5528a10038767c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga036bac4f2d40e143c5528a10038767c1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga036bac4f2d40e143c5528a10038767c1">FSL_SPDIF_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
-<tr class="memdesc:ga036bac4f2d40e143c5528a10038767c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.6. <br/></td></tr>
-<tr class="separator:ga036bac4f2d40e143c5528a10038767c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga6b4e9ed2c903d62af53a8d3887126413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga6b4e9ed2c903d62af53a8d3887126413">SPDIF_Init</a> (SPDIF_Type *base, const <a class="el" href="a00074.html#a00516">spdif_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga6b4e9ed2c903d62af53a8d3887126413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SPDIF peripheral.  <a href="#ga6b4e9ed2c903d62af53a8d3887126413">More...</a><br/></td></tr>
-<tr class="separator:ga6b4e9ed2c903d62af53a8d3887126413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11b262ea3923fd80f78b959d9718e00b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga11b262ea3923fd80f78b959d9718e00b">SPDIF_GetDefaultConfig</a> (<a class="el" href="a00074.html#a00516">spdif_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga11b262ea3923fd80f78b959d9718e00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SPDIF configuration structure to default values.  <a href="#ga11b262ea3923fd80f78b959d9718e00b">More...</a><br/></td></tr>
-<tr class="separator:ga11b262ea3923fd80f78b959d9718e00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2631baffebf03ec2a587580112dd56f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga2631baffebf03ec2a587580112dd56f3">SPDIF_Deinit</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga2631baffebf03ec2a587580112dd56f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the SPDIF peripheral.  <a href="#ga2631baffebf03ec2a587580112dd56f3">More...</a><br/></td></tr>
-<tr class="separator:ga2631baffebf03ec2a587580112dd56f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacbd5fc4df43e1a249493b5324f94e54d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gacbd5fc4df43e1a249493b5324f94e54d">SPDIF_GetInstance</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:gacbd5fc4df43e1a249493b5324f94e54d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the instance number for SPDIF.  <a href="#gacbd5fc4df43e1a249493b5324f94e54d">More...</a><br/></td></tr>
-<tr class="separator:gacbd5fc4df43e1a249493b5324f94e54d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85e3497baec03b34f728541154ccc31d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga85e3497baec03b34f728541154ccc31d">SPDIF_TxFIFOReset</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga85e3497baec03b34f728541154ccc31d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the SPDIF Tx.  <a href="#ga85e3497baec03b34f728541154ccc31d">More...</a><br/></td></tr>
-<tr class="separator:ga85e3497baec03b34f728541154ccc31d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa74cc12474982eb7c46adaa7d4891626"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaa74cc12474982eb7c46adaa7d4891626">SPDIF_RxFIFOReset</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:gaa74cc12474982eb7c46adaa7d4891626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the SPDIF Rx.  <a href="#gaa74cc12474982eb7c46adaa7d4891626">More...</a><br/></td></tr>
-<tr class="separator:gaa74cc12474982eb7c46adaa7d4891626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b76be7fc7148dec7d4493398103a94d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5b76be7fc7148dec7d4493398103a94d">SPDIF_TxEnable</a> (SPDIF_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga5b76be7fc7148dec7d4493398103a94d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the SPDIF Tx.  <a href="#ga5b76be7fc7148dec7d4493398103a94d">More...</a><br/></td></tr>
-<tr class="separator:ga5b76be7fc7148dec7d4493398103a94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad705a47a3b61bb334125e54fc70ed2ae"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad705a47a3b61bb334125e54fc70ed2ae">SPDIF_RxEnable</a> (SPDIF_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gad705a47a3b61bb334125e54fc70ed2ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the SPDIF Rx.  <a href="#gad705a47a3b61bb334125e54fc70ed2ae">More...</a><br/></td></tr>
-<tr class="separator:gad705a47a3b61bb334125e54fc70ed2ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:gafe28766cd0629d77c2ec2f5986155ee7"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gafe28766cd0629d77c2ec2f5986155ee7">SPDIF_GetStatusFlag</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:gafe28766cd0629d77c2ec2f5986155ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SPDIF status flag state.  <a href="#gafe28766cd0629d77c2ec2f5986155ee7">More...</a><br/></td></tr>
-<tr class="separator:gafe28766cd0629d77c2ec2f5986155ee7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39bddc0768ce21bbbd6d3eae837b206e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga39bddc0768ce21bbbd6d3eae837b206e">SPDIF_ClearStatusFlags</a> (SPDIF_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga39bddc0768ce21bbbd6d3eae837b206e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the SPDIF status flag state.  <a href="#ga39bddc0768ce21bbbd6d3eae837b206e">More...</a><br/></td></tr>
-<tr class="separator:ga39bddc0768ce21bbbd6d3eae837b206e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupts</h2></td></tr>
-<tr class="memitem:ga487f880569d931ee08c74a83332862ae"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga487f880569d931ee08c74a83332862ae">SPDIF_EnableInterrupts</a> (SPDIF_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga487f880569d931ee08c74a83332862ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the SPDIF Tx interrupt requests.  <a href="#ga487f880569d931ee08c74a83332862ae">More...</a><br/></td></tr>
-<tr class="separator:ga487f880569d931ee08c74a83332862ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c0c7200763825eba3f10bbe7d3439b8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga0c0c7200763825eba3f10bbe7d3439b8">SPDIF_DisableInterrupts</a> (SPDIF_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga0c0c7200763825eba3f10bbe7d3439b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the SPDIF Tx interrupt requests.  <a href="#ga0c0c7200763825eba3f10bbe7d3439b8">More...</a><br/></td></tr>
-<tr class="separator:ga0c0c7200763825eba3f10bbe7d3439b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMA Control</h2></td></tr>
-<tr class="memitem:ga1d4992842b29cef3c71ad5b5fbd664d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga1d4992842b29cef3c71ad5b5fbd664d3">SPDIF_EnableDMA</a> (SPDIF_Type *base, uint32_t mask, bool enable)</td></tr>
-<tr class="memdesc:ga1d4992842b29cef3c71ad5b5fbd664d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the SPDIF DMA requests.  <a href="#ga1d4992842b29cef3c71ad5b5fbd664d3">More...</a><br/></td></tr>
-<tr class="separator:ga1d4992842b29cef3c71ad5b5fbd664d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72dc7737eb0911c1c887d53cf9e1c8ed"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga72dc7737eb0911c1c887d53cf9e1c8ed">SPDIF_TxGetLeftDataRegisterAddress</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga72dc7737eb0911c1c887d53cf9e1c8ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SPDIF Tx left data register address.  <a href="#ga72dc7737eb0911c1c887d53cf9e1c8ed">More...</a><br/></td></tr>
-<tr class="separator:ga72dc7737eb0911c1c887d53cf9e1c8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad6fe7d183782a4d078e0cd182d5859a3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad6fe7d183782a4d078e0cd182d5859a3">SPDIF_TxGetRightDataRegisterAddress</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:gad6fe7d183782a4d078e0cd182d5859a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SPDIF Tx right data register address.  <a href="#gad6fe7d183782a4d078e0cd182d5859a3">More...</a><br/></td></tr>
-<tr class="separator:gad6fe7d183782a4d078e0cd182d5859a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd6b7be3a3b545c6f6b2d35f72cadef4"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gabd6b7be3a3b545c6f6b2d35f72cadef4">SPDIF_RxGetLeftDataRegisterAddress</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:gabd6b7be3a3b545c6f6b2d35f72cadef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SPDIF Rx left data register address.  <a href="#gabd6b7be3a3b545c6f6b2d35f72cadef4">More...</a><br/></td></tr>
-<tr class="separator:gabd6b7be3a3b545c6f6b2d35f72cadef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4485709f8d45c96f5dce7dd85ecef07f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga4485709f8d45c96f5dce7dd85ecef07f">SPDIF_RxGetRightDataRegisterAddress</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga4485709f8d45c96f5dce7dd85ecef07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SPDIF Rx right data register address.  <a href="#ga4485709f8d45c96f5dce7dd85ecef07f">More...</a><br/></td></tr>
-<tr class="separator:ga4485709f8d45c96f5dce7dd85ecef07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Bus Operations</h2></td></tr>
-<tr class="memitem:gad49d52850fb379566953c66bf1f93a54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad49d52850fb379566953c66bf1f93a54">SPDIF_TxSetSampleRate</a> (SPDIF_Type *base, uint32_t sampleRate_Hz, uint32_t sourceClockFreq_Hz)</td></tr>
-<tr class="memdesc:gad49d52850fb379566953c66bf1f93a54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SPDIF Tx sample rate.  <a href="#gad49d52850fb379566953c66bf1f93a54">More...</a><br/></td></tr>
-<tr class="separator:gad49d52850fb379566953c66bf1f93a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf119e024d14a0c288b743dd17bbef687"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaf119e024d14a0c288b743dd17bbef687">SPDIF_GetRxSampleRate</a> (SPDIF_Type *base, uint32_t clockSourceFreq_Hz)</td></tr>
-<tr class="memdesc:gaf119e024d14a0c288b743dd17bbef687"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SPDIF Rx audio format.  <a href="#gaf119e024d14a0c288b743dd17bbef687">More...</a><br/></td></tr>
-<tr class="separator:gaf119e024d14a0c288b743dd17bbef687"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab0eb427edd9cc4e5ece878563b9a6a8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gab0eb427edd9cc4e5ece878563b9a6a8c">SPDIF_WriteBlocking</a> (SPDIF_Type *base, uint8_t *buffer, uint32_t size)</td></tr>
-<tr class="memdesc:gab0eb427edd9cc4e5ece878563b9a6a8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using a blocking method.  <a href="#gab0eb427edd9cc4e5ece878563b9a6a8c">More...</a><br/></td></tr>
-<tr class="separator:gab0eb427edd9cc4e5ece878563b9a6a8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b78216d0f4af76d8b9ff82101fc8adf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga2b78216d0f4af76d8b9ff82101fc8adf">SPDIF_WriteLeftData</a> (SPDIF_Type *base, uint32_t data)</td></tr>
-<tr class="memdesc:ga2b78216d0f4af76d8b9ff82101fc8adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data into SPDIF FIFO.  <a href="#ga2b78216d0f4af76d8b9ff82101fc8adf">More...</a><br/></td></tr>
-<tr class="separator:ga2b78216d0f4af76d8b9ff82101fc8adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48edd7722d5a59091e6da7756ef25f0a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga48edd7722d5a59091e6da7756ef25f0a">SPDIF_WriteRightData</a> (SPDIF_Type *base, uint32_t data)</td></tr>
-<tr class="memdesc:ga48edd7722d5a59091e6da7756ef25f0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data into SPDIF FIFO.  <a href="#ga48edd7722d5a59091e6da7756ef25f0a">More...</a><br/></td></tr>
-<tr class="separator:ga48edd7722d5a59091e6da7756ef25f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3804918ec78e961fb33b12094bf732e8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga3804918ec78e961fb33b12094bf732e8">SPDIF_WriteChannelStatusHigh</a> (SPDIF_Type *base, uint32_t data)</td></tr>
-<tr class="memdesc:ga3804918ec78e961fb33b12094bf732e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data into SPDIF FIFO.  <a href="#ga3804918ec78e961fb33b12094bf732e8">More...</a><br/></td></tr>
-<tr class="separator:ga3804918ec78e961fb33b12094bf732e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fd048c19cff5ef48c133ca0ffbe23c1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga6fd048c19cff5ef48c133ca0ffbe23c1">SPDIF_WriteChannelStatusLow</a> (SPDIF_Type *base, uint32_t data)</td></tr>
-<tr class="memdesc:ga6fd048c19cff5ef48c133ca0ffbe23c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data into SPDIF FIFO.  <a href="#ga6fd048c19cff5ef48c133ca0ffbe23c1">More...</a><br/></td></tr>
-<tr class="separator:ga6fd048c19cff5ef48c133ca0ffbe23c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2fb9e8f8bafa60358626840d0442265e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga2fb9e8f8bafa60358626840d0442265e">SPDIF_ReadBlocking</a> (SPDIF_Type *base, uint8_t *buffer, uint32_t size)</td></tr>
-<tr class="memdesc:ga2fb9e8f8bafa60358626840d0442265e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using a blocking method.  <a href="#ga2fb9e8f8bafa60358626840d0442265e">More...</a><br/></td></tr>
-<tr class="separator:ga2fb9e8f8bafa60358626840d0442265e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga49e6ea71b76ff7e3e97da8ffd8cd83ea"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga49e6ea71b76ff7e3e97da8ffd8cd83ea">SPDIF_ReadLeftData</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga49e6ea71b76ff7e3e97da8ffd8cd83ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the SPDIF FIFO.  <a href="#ga49e6ea71b76ff7e3e97da8ffd8cd83ea">More...</a><br/></td></tr>
-<tr class="separator:ga49e6ea71b76ff7e3e97da8ffd8cd83ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34ebdb7cd9a243303bc21cd9b16f82c3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga34ebdb7cd9a243303bc21cd9b16f82c3">SPDIF_ReadRightData</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga34ebdb7cd9a243303bc21cd9b16f82c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the SPDIF FIFO.  <a href="#ga34ebdb7cd9a243303bc21cd9b16f82c3">More...</a><br/></td></tr>
-<tr class="separator:ga34ebdb7cd9a243303bc21cd9b16f82c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6897be2df12c8df71d4f6bff5c7546c1"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga6897be2df12c8df71d4f6bff5c7546c1">SPDIF_ReadChannelStatusHigh</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga6897be2df12c8df71d4f6bff5c7546c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the SPDIF FIFO.  <a href="#ga6897be2df12c8df71d4f6bff5c7546c1">More...</a><br/></td></tr>
-<tr class="separator:ga6897be2df12c8df71d4f6bff5c7546c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23d1a99377b7f4b26c25a79ece8231ad"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga23d1a99377b7f4b26c25a79ece8231ad">SPDIF_ReadChannelStatusLow</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga23d1a99377b7f4b26c25a79ece8231ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the SPDIF FIFO.  <a href="#ga23d1a99377b7f4b26c25a79ece8231ad">More...</a><br/></td></tr>
-<tr class="separator:ga23d1a99377b7f4b26c25a79ece8231ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a5d474af2b6b256df0bf650dd8154c0"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga7a5d474af2b6b256df0bf650dd8154c0">SPDIF_ReadQChannel</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:ga7a5d474af2b6b256df0bf650dd8154c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the SPDIF FIFO.  <a href="#ga7a5d474af2b6b256df0bf650dd8154c0">More...</a><br/></td></tr>
-<tr class="separator:ga7a5d474af2b6b256df0bf650dd8154c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0f070017fc4e1db6b0ceeef990c3f7e"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gac0f070017fc4e1db6b0ceeef990c3f7e">SPDIF_ReadUChannel</a> (SPDIF_Type *base)</td></tr>
-<tr class="memdesc:gac0f070017fc4e1db6b0ceeef990c3f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data from the SPDIF FIFO.  <a href="#gac0f070017fc4e1db6b0ceeef990c3f7e">More...</a><br/></td></tr>
-<tr class="separator:gac0f070017fc4e1db6b0ceeef990c3f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Transactional</h2></td></tr>
-<tr class="memitem:ga2e4eb257e2da537eb2d47a31ea47fbb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga2e4eb257e2da537eb2d47a31ea47fbb6">SPDIF_TransferTxCreateHandle</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00074.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> callback, void *userData)</td></tr>
-<tr class="memdesc:ga2e4eb257e2da537eb2d47a31ea47fbb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SPDIF Tx handle.  <a href="#ga2e4eb257e2da537eb2d47a31ea47fbb6">More...</a><br/></td></tr>
-<tr class="separator:ga2e4eb257e2da537eb2d47a31ea47fbb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac44c0edc9e22798fb840f38f1c3749ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gac44c0edc9e22798fb840f38f1c3749ba">SPDIF_TransferRxCreateHandle</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00074.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> callback, void *userData)</td></tr>
-<tr class="memdesc:gac44c0edc9e22798fb840f38f1c3749ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SPDIF Rx handle.  <a href="#gac44c0edc9e22798fb840f38f1c3749ba">More...</a><br/></td></tr>
-<tr class="separator:gac44c0edc9e22798fb840f38f1c3749ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga155e14a0591e50af578cb8309171c112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga155e14a0591e50af578cb8309171c112">SPDIF_TransferSendNonBlocking</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00074.html#a00518">spdif_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga155e14a0591e50af578cb8309171c112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an interrupt non-blocking send transfer on SPDIF.  <a href="#ga155e14a0591e50af578cb8309171c112">More...</a><br/></td></tr>
-<tr class="separator:ga155e14a0591e50af578cb8309171c112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04fe7c5e2cf560687b07f5de908da255"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga04fe7c5e2cf560687b07f5de908da255">SPDIF_TransferReceiveNonBlocking</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00074.html#a00518">spdif_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga04fe7c5e2cf560687b07f5de908da255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an interrupt non-blocking receive transfer on SPDIF.  <a href="#ga04fe7c5e2cf560687b07f5de908da255">More...</a><br/></td></tr>
-<tr class="separator:ga04fe7c5e2cf560687b07f5de908da255"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56e6fe5a91de5d1f38896128c4958a94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga56e6fe5a91de5d1f38896128c4958a94">SPDIF_TransferGetSendCount</a> (SPDIF_Type *base, spdif_handle_t *handle, size_t *count)</td></tr>
-<tr class="memdesc:ga56e6fe5a91de5d1f38896128c4958a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a set byte count.  <a href="#ga56e6fe5a91de5d1f38896128c4958a94">More...</a><br/></td></tr>
-<tr class="separator:ga56e6fe5a91de5d1f38896128c4958a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad53ad9d352550e8fa84a3200ee977c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaad53ad9d352550e8fa84a3200ee977c9">SPDIF_TransferGetReceiveCount</a> (SPDIF_Type *base, spdif_handle_t *handle, size_t *count)</td></tr>
-<tr class="memdesc:gaad53ad9d352550e8fa84a3200ee977c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a received byte count.  <a href="#gaad53ad9d352550e8fa84a3200ee977c9">More...</a><br/></td></tr>
-<tr class="separator:gaad53ad9d352550e8fa84a3200ee977c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga004b052fdaa3fd78dd7bafc721b28f0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga004b052fdaa3fd78dd7bafc721b28f0c">SPDIF_TransferAbortSend</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
-<tr class="memdesc:ga004b052fdaa3fd78dd7bafc721b28f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the current send.  <a href="#ga004b052fdaa3fd78dd7bafc721b28f0c">More...</a><br/></td></tr>
-<tr class="separator:ga004b052fdaa3fd78dd7bafc721b28f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dd15b214687cf6a120142b0152ac18c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5dd15b214687cf6a120142b0152ac18c">SPDIF_TransferAbortReceive</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
-<tr class="memdesc:ga5dd15b214687cf6a120142b0152ac18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the current IRQ receive.  <a href="#ga5dd15b214687cf6a120142b0152ac18c">More...</a><br/></td></tr>
-<tr class="separator:ga5dd15b214687cf6a120142b0152ac18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14adaa4280f963a9e6c0b6d760173182"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga14adaa4280f963a9e6c0b6d760173182">SPDIF_TransferTxHandleIRQ</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
-<tr class="memdesc:ga14adaa4280f963a9e6c0b6d760173182"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx interrupt handler.  <a href="#ga14adaa4280f963a9e6c0b6d760173182">More...</a><br/></td></tr>
-<tr class="separator:ga14adaa4280f963a9e6c0b6d760173182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1ab4a1d05d2e708ab9896f0131506b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaa1ab4a1d05d2e708ab9896f0131506b4">SPDIF_TransferRxHandleIRQ</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
-<tr class="memdesc:gaa1ab4a1d05d2e708ab9896f0131506b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx interrupt handler.  <a href="#gaa1ab4a1d05d2e708ab9896f0131506b4">More...</a><br/></td></tr>
-<tr class="separator:gaa1ab4a1d05d2e708ab9896f0131506b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Shell functional operation</h2></td></tr>
+<tr class="memitem:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, char *prompt)</td></tr>
+<tr class="memdesc:ga7961e946400cd244c315cfbbd36ae5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the shell module.  <a href="#ga7961e946400cd244c315cfbbd36ae5d1">More...</a><br/></td></tr>
+<tr class="separator:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00074.html#a00528">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memdesc:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the shell command.  <a href="#gab5f85f3ba2cc7dd58bc85076c19c5177">More...</a><br/></td></tr>
+<tr class="separator:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53355638d856258b0bcb76e308803dab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga53355638d856258b0bcb76e308803dab">SHELL_UnregisterCommand</a> (<a class="el" href="a00074.html#a00528">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memdesc:ga53355638d856258b0bcb76e308803dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the shell command.  <a href="#ga53355638d856258b0bcb76e308803dab">More...</a><br/></td></tr>
+<tr class="separator:ga53355638d856258b0bcb76e308803dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga9f182608b5a6107757be5bb8a90ad74c">SHELL_Write</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:ga9f182608b5a6107757be5bb8a90ad74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream.  <a href="#ga9f182608b5a6107757be5bb8a90ad74c">More...</a><br/></td></tr>
+<tr class="separator:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaade5449d8cbfc3cd026667b40c35d29f">SHELL_Printf</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
+<tr class="memdesc:gaade5449d8cbfc3cd026667b40c35d29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream.  <a href="#gaade5449d8cbfc3cd026667b40c35d29f">More...</a><br/></td></tr>
+<tr class="separator:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6466b141fd4f94e78636e4a15c302dda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga6466b141fd4f94e78636e4a15c302dda">SHELL_WriteSynchronization</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:ga6466b141fd4f94e78636e4a15c302dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream with OS synchronization.  <a href="#ga6466b141fd4f94e78636e4a15c302dda">More...</a><br/></td></tr>
+<tr class="separator:ga6466b141fd4f94e78636e4a15c302dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56c78f6217a822015a9369bf3e52e92a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga56c78f6217a822015a9369bf3e52e92a">SHELL_PrintfSynchronization</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
+<tr class="memdesc:ga56c78f6217a822015a9369bf3e52e92a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream with OS synchronization.  <a href="#ga56c78f6217a822015a9369bf3e52e92a">More...</a><br/></td></tr>
+<tr class="separator:ga56c78f6217a822015a9369bf3e52e92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca4540dc42f8892cb276691644a247e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaca4540dc42f8892cb276691644a247e2">SHELL_ChangePrompt</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, char *prompt)</td></tr>
+<tr class="memdesc:gaca4540dc42f8892cb276691644a247e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change shell prompt.  <a href="#gaca4540dc42f8892cb276691644a247e2">More...</a><br/></td></tr>
+<tr class="separator:gaca4540dc42f8892cb276691644a247e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2a840776dee8490d482a0692fbf2d7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad2a840776dee8490d482a0692fbf2d7e">SHELL_PrintPrompt</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
+<tr class="memdesc:gad2a840776dee8490d482a0692fbf2d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print shell prompt.  <a href="#gad2a840776dee8490d482a0692fbf2d7e">More...</a><br/></td></tr>
+<tr class="separator:gad2a840776dee8490d482a0692fbf2d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
+<tr class="memdesc:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task function for Shell.  <a href="#ga44e3087a3cdea9b62f159e2585dfcd8d">More...</a><br/></td></tr>
+<tr class="separator:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eeb17b16773359c132f1d40478938ec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga4eeb17b16773359c132f1d40478938ec">SHELL_checkRunningInIsr</a> (void)</td></tr>
+<tr class="memdesc:ga4eeb17b16773359c132f1d40478938ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if code is running in ISR.  <a href="#ga4eeb17b16773359c132f1d40478938ec">More...</a><br/></td></tr>
+<tr class="separator:ga4eeb17b16773359c132f1d40478938ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00516" id="a00516"></a>
+<a name="a00528" id="a00528"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct spdif_config_t</td>
+          <td class="memname">struct shell_command_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aa62aab66a7b03f444074a6abab83294c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa62aab66a7b03f444074a6abab83294c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#aa62aab66a7b03f444074a6abab83294c">isTxAutoSync</a></td></tr>
-<tr class="memdesc:aa62aab66a7b03f444074a6abab83294c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If auto sync mechanism open. <br/></td></tr>
-<tr class="separator:aa62aab66a7b03f444074a6abab83294c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e7a4d603d3fdbca6d204c21a9729384"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e7a4d603d3fdbca6d204c21a9729384"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a8e7a4d603d3fdbca6d204c21a9729384">isRxAutoSync</a></td></tr>
-<tr class="memdesc:a8e7a4d603d3fdbca6d204c21a9729384"><td class="mdescLeft">&#160;</td><td class="mdescRight">If auto sync mechanism open. <br/></td></tr>
-<tr class="separator:a8e7a4d603d3fdbca6d204c21a9729384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51dfc55f76c63adbb2956c9be1802fab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51dfc55f76c63adbb2956c9be1802fab"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a51dfc55f76c63adbb2956c9be1802fab">DPLLClkSource</a></td></tr>
-<tr class="memdesc:a51dfc55f76c63adbb2956c9be1802fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF DPLL clock source, range from 0~15, meaning is chip-specific. <br/></td></tr>
-<tr class="separator:a51dfc55f76c63adbb2956c9be1802fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae2efeac0c0a15d308758688656f21e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae2efeac0c0a15d308758688656f21e7"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#aae2efeac0c0a15d308758688656f21e7">txClkSource</a></td></tr>
-<tr class="memdesc:aae2efeac0c0a15d308758688656f21e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx clock source, range from 0~7, meaning is chip-specific. <br/></td></tr>
-<tr class="separator:aae2efeac0c0a15d308758688656f21e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abad0c032f98e052695e55ba8f8dc51dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abad0c032f98e052695e55ba8f8dc51dd"></a>
-<a class="el" href="a00074.html#ga85d08a5eba9eaf262597f4f3dfad19a0">spdif_rxfull_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#abad0c032f98e052695e55ba8f8dc51dd">rxFullSelect</a></td></tr>
-<tr class="memdesc:abad0c032f98e052695e55ba8f8dc51dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF rx buffer full select. <br/></td></tr>
-<tr class="separator:abad0c032f98e052695e55ba8f8dc51dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19570d0d87d133c863cea6eb7a374bad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19570d0d87d133c863cea6eb7a374bad"></a>
-<a class="el" href="a00074.html#gad58b90afceef70798b8be683f3017c71">spdif_txempty_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a19570d0d87d133c863cea6eb7a374bad">txFullSelect</a></td></tr>
-<tr class="memdesc:a19570d0d87d133c863cea6eb7a374bad"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx buffer empty select. <br/></td></tr>
-<tr class="separator:a19570d0d87d133c863cea6eb7a374bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55644590c92b55f32cccc120df5a91ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55644590c92b55f32cccc120df5a91ba"></a>
-<a class="el" href="a00074.html#ga01edc35977dbab89a7201285c61c4a3e">spdif_uchannel_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a55644590c92b55f32cccc120df5a91ba">uChannelSrc</a></td></tr>
-<tr class="memdesc:a55644590c92b55f32cccc120df5a91ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">U channel source. <br/></td></tr>
-<tr class="separator:a55644590c92b55f32cccc120df5a91ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add620ef347dc5fc0b5fc4626a6d0816f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add620ef347dc5fc0b5fc4626a6d0816f"></a>
-<a class="el" href="a00074.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">spdif_tx_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#add620ef347dc5fc0b5fc4626a6d0816f">txSource</a></td></tr>
-<tr class="memdesc:add620ef347dc5fc0b5fc4626a6d0816f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source. <br/></td></tr>
-<tr class="separator:add620ef347dc5fc0b5fc4626a6d0816f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a662ae617d9706faedff59b4e7ebfc563"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a662ae617d9706faedff59b4e7ebfc563"></a>
-<a class="el" href="a00074.html#gad5615c4913a612ee1dc67e357e905f2c">spdif_validity_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a662ae617d9706faedff59b4e7ebfc563">validityConfig</a></td></tr>
-<tr class="memdesc:a662ae617d9706faedff59b4e7ebfc563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validity flag config. <br/></td></tr>
-<tr class="separator:a662ae617d9706faedff59b4e7ebfc563"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2eeb1f3e4a229d81b00a2e293bd5b8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#af2eeb1f3e4a229d81b00a2e293bd5b8f">gain</a></td></tr>
-<tr class="memdesc:af2eeb1f3e4a229d81b00a2e293bd5b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx receive clock measure gain parameter.  <a href="#af2eeb1f3e4a229d81b00a2e293bd5b8f">More...</a><br/></td></tr>
-<tr class="separator:af2eeb1f3e4a229d81b00a2e293bd5b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a9bcf2ff85f63adcaa4c03f4ef85e8df9">pcCommand</a></td></tr>
+<tr class="memdesc:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command that is executed.  <a href="#a9bcf2ff85f63adcaa4c03f4ef85e8df9">More...</a><br/></td></tr>
+<tr class="separator:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#af6bfe76160c7aeeb3c32cc2fe117541b">pcHelpString</a></td></tr>
+<tr class="memdesc:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="mdescLeft">&#160;</td><td class="mdescRight">String that describes how to use the command.  <a href="#af6bfe76160c7aeeb3c32cc2fe117541b">More...</a><br/></td></tr>
+<tr class="separator:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00074.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#aa5d55bf1f33b397949eb926c9ee48e6d">pFuncCallBack</a></td></tr>
+<tr class="memdesc:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the callback function that returns the output generated by the command.  <a href="#aa5d55bf1f33b397949eb926c9ee48e6d">More...</a><br/></td></tr>
+<tr class="separator:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a72da17de3b4a0af7b4072d726449c6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a4a72da17de3b4a0af7b4072d726449c6">cExpectedNumberOfParameters</a></td></tr>
+<tr class="memdesc:a4a72da17de3b4a0af7b4072d726449c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commands expect a fixed number of parameters, which may be zero.  <a href="#a4a72da17de3b4a0af7b4072d726449c6">More...</a><br/></td></tr>
+<tr class="separator:a4a72da17de3b4a0af7b4072d726449c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8178558fd61934e49498c79f2e47792e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8178558fd61934e49498c79f2e47792e"></a>
+list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a8178558fd61934e49498c79f2e47792e">link</a></td></tr>
+<tr class="memdesc:a8178558fd61934e49498c79f2e47792e"><td class="mdescLeft">&#160;</td><td class="mdescRight">link of the element <br/></td></tr>
+<tr class="separator:a8178558fd61934e49498c79f2e47792e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="af2eeb1f3e4a229d81b00a2e293bd5b8f"></a>
+<a class="anchor" id="a9bcf2ff85f63adcaa4c03f4ef85e8df9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00074.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a> spdif_config_t::gain</td>
+          <td class="memname">const char* shell_command_t::pcCommand</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For example "help". It must be all lower case. </p>
+
+</div>
+</div>
+<a class="anchor" id="af6bfe76160c7aeeb3c32cc2fe117541b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* shell_command_t::pcHelpString</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>It should start with the command itself, and end with "\r\n". For example "help: Returns a list of all the commands\r\n". </p>
+
+</div>
+</div>
+<a class="anchor" id="aa5d55bf1f33b397949eb926c9ee48e6d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a00074.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> shell_command_t::pFuncCallBack</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-
-</div>
-</div>
-<a name="a00518" id="a00518"></a>
+<a class="anchor" id="a4a72da17de3b4a0af7b4072d726449c6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct spdif_transfer_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aafa6dcdb00a7953d3368916ec776f3f2"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#aafa6dcdb00a7953d3368916ec776f3f2">data</a></td></tr>
-<tr class="memdesc:aafa6dcdb00a7953d3368916ec776f3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data start address to transfer.  <a href="#aafa6dcdb00a7953d3368916ec776f3f2">More...</a><br/></td></tr>
-<tr class="separator:aafa6dcdb00a7953d3368916ec776f3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f670504281a0bf4ee74d831d965b1c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f670504281a0bf4ee74d831d965b1c2"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a3f670504281a0bf4ee74d831d965b1c2">qdata</a></td></tr>
-<tr class="memdesc:a3f670504281a0bf4ee74d831d965b1c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer for Q channel. <br/></td></tr>
-<tr class="separator:a3f670504281a0bf4ee74d831d965b1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a547ec34f70b0c0b803a212301b0e9bbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a547ec34f70b0c0b803a212301b0e9bbc"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a547ec34f70b0c0b803a212301b0e9bbc">udata</a></td></tr>
-<tr class="memdesc:a547ec34f70b0c0b803a212301b0e9bbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer for C channel. <br/></td></tr>
-<tr class="separator:a547ec34f70b0c0b803a212301b0e9bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae44eb4e4b3141f9478e4b35a9bae8af3"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ae44eb4e4b3141f9478e4b35a9bae8af3">dataSize</a></td></tr>
-<tr class="memdesc:ae44eb4e4b3141f9478e4b35a9bae8af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size.  <a href="#ae44eb4e4b3141f9478e4b35a9bae8af3">More...</a><br/></td></tr>
-<tr class="separator:ae44eb4e4b3141f9478e4b35a9bae8af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aafa6dcdb00a7953d3368916ec776f3f2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* spdif_transfer_t::data</td>
+          <td class="memname">uint8_t shell_command_t::cExpectedNumberOfParameters</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae44eb4e4b3141f9478e4b35a9bae8af3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t spdif_transfer_t::dataSize</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00329" id="a00329"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct _spdif_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a530888b8eb6d5b6383ac803ef5687cac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a530888b8eb6d5b6383ac803ef5687cac"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a530888b8eb6d5b6383ac803ef5687cac">state</a></td></tr>
-<tr class="memdesc:a530888b8eb6d5b6383ac803ef5687cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer status. <br/></td></tr>
-<tr class="separator:a530888b8eb6d5b6383ac803ef5687cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6a348888f71f09a0a2167064b627fef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6a348888f71f09a0a2167064b627fef"></a>
-<a class="el" href="a00074.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ae6a348888f71f09a0a2167064b627fef">callback</a></td></tr>
-<tr class="memdesc:ae6a348888f71f09a0a2167064b627fef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event. <br/></td></tr>
-<tr class="separator:ae6a348888f71f09a0a2167064b627fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a453888e826bebbf6d3cefbc1d5c37aa2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a453888e826bebbf6d3cefbc1d5c37aa2"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a453888e826bebbf6d3cefbc1d5c37aa2">userData</a></td></tr>
-<tr class="memdesc:a453888e826bebbf6d3cefbc1d5c37aa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback function. <br/></td></tr>
-<tr class="separator:a453888e826bebbf6d3cefbc1d5c37aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfad92f425b01b23f503cc6f6cbf0199"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfad92f425b01b23f503cc6f6cbf0199"></a>
-<a class="el" href="a00074.html#a00518">spdif_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#acfad92f425b01b23f503cc6f6cbf0199">spdifQueue</a> [<a class="el" href="a00074.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
-<tr class="memdesc:acfad92f425b01b23f503cc6f6cbf0199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer queue storing queued transfer. <br/></td></tr>
-<tr class="separator:acfad92f425b01b23f503cc6f6cbf0199"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ba10e18fe4300506084981f16ba7376"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ba10e18fe4300506084981f16ba7376"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a7ba10e18fe4300506084981f16ba7376">transferSize</a> [<a class="el" href="a00074.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
-<tr class="memdesc:a7ba10e18fe4300506084981f16ba7376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bytes need to transfer. <br/></td></tr>
-<tr class="separator:a7ba10e18fe4300506084981f16ba7376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f24af404b79c5b742fc54aa78c4dc06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f24af404b79c5b742fc54aa78c4dc06"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a8f24af404b79c5b742fc54aa78c4dc06">queueUser</a></td></tr>
-<tr class="memdesc:a8f24af404b79c5b742fc54aa78c4dc06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer. <br/></td></tr>
-<tr class="separator:a8f24af404b79c5b742fc54aa78c4dc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3925e65ffb3d41a9c637001844f6560"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3925e65ffb3d41a9c637001844f6560"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ac3925e65ffb3d41a9c637001844f6560">queueDriver</a></td></tr>
-<tr class="memdesc:ac3925e65ffb3d41a9c637001844f6560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for driver to get the transfer data and size. <br/></td></tr>
-<tr class="separator:ac3925e65ffb3d41a9c637001844f6560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a286a39db68bb63e8d64844dc94cb6b7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a286a39db68bb63e8d64844dc94cb6b7a"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a286a39db68bb63e8d64844dc94cb6b7a">watermark</a></td></tr>
-<tr class="memdesc:a286a39db68bb63e8d64844dc94cb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watermark value. <br/></td></tr>
-<tr class="separator:a286a39db68bb63e8d64844dc94cb6b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga3e78a3155b1291a9fa00d0461d6e490c"></a>
+<a class="anchor" id="ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SPDIF_XFER_QUEUE_SIZE&#160;&#160;&#160;(4U)</td>
+          <td class="memname">#define SHELL_NON_BLOCKING_MODE&#160;&#160;&#160;<a class="el" href="a00070.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga30882f4b5fc99cbc21459cc960ef9ffe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_AUTO_COMPLETE&#160;&#160;&#160;(1U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf98219b0fb886040896b83966903a135"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_BUFFER_SIZE&#160;&#160;&#160;(64U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga0800d9fb741c785d0601f0c3d7125f40"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_MAX_ARGS&#160;&#160;&#160;(8U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4362aa35752c9abf77387a237faaaea5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HISTORY_COUNT&#160;&#160;&#160;(3U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaa4c15d7595f7cf7ee5f837a02cbdf574"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HANDLE_SIZE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(160U + <a class="code" href="a00074.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a> * <a class="code" href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + <a class="code" href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + SERIAL_MANAGER_READ_HANDLE_SIZE + <a class="code" href="a00070.html#gac278be51c3508495c1be1a4cff566f3f">\</a></div>
+<div class="line"><a class="code" href="a00070.html#gac278be51c3508495c1be1a4cff566f3f">     SERIAL_MANAGER_WRITE_HANDLE_SIZE</a>)</div>
+<div class="ttc" id="a00074_html_ga4362aa35752c9abf77387a237faaaea5"><div class="ttname"><a href="a00074.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a></div><div class="ttdeci">#define SHELL_HISTORY_COUNT</div><div class="ttdoc">Macro to set maximum count of history commands. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:43</div></div>
+<div class="ttc" id="a00074_html_gaf98219b0fb886040896b83966903a135"><div class="ttname"><a href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a></div><div class="ttdeci">#define SHELL_BUFFER_SIZE</div><div class="ttdoc">Macro to set console buffer size. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:35</div></div>
+<div class="ttc" id="a00070_html_gac278be51c3508495c1be1a4cff566f3f"><div class="ttname"><a href="a00070.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a></div><div class="ttdeci">#define SERIAL_MANAGER_WRITE_HANDLE_SIZE</div><div class="ttdoc">Set serial manager write handle size. </div><div class="ttdef"><b>Definition:</b> fsl_component_serial_manager.h:124</div></div>
+</div><!-- fragment --><p>It is the sum of the SHELL_HISTORY_COUNT * SHELL_BUFFER_SIZE + SHELL_BUFFER_SIZE + SERIAL_MANAGER_READ_HANDLE_SIZE + SERIAL_MANAGER_WRITE_HANDLE_SIZE </p>
+
+</div>
+</div>
+<a class="anchor" id="ga100ef8e4a639c03682d84fb981ba235b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_USE_COMMON_TASK&#160;&#160;&#160;(0U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5b98f71ea7bd89ef344cac14aa79a1e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_TASK_PRIORITY&#160;&#160;&#160;(2U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga416667c8e6b960d2c1ec518b41a06d62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_TASK_STACK_SIZE&#160;&#160;&#160;(1000U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gafdb2c68b2d83d459fc196ab0f58d7ab3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HANDLE_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This macro is used to define a 4 byte aligned shell handle. Then use "(shell_handle_t)name" to get the shell handle.</p>
+<p>The macro should be global and could be optional. You could also define shell handle by yourself.</p>
+<p>This is an example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(shellHandle);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name string of the shell handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacd1f7ee25cd791efee6a45e753ec9824"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_COMMAND_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">command, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">descriptor, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">callback, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">paramCount&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">\</div>
+<div class="line">    shell_command_t g_shellCommand##command = {                         \</div>
+<div class="line">        (#command), (descriptor), (callback), (paramCount), {0},        \</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p>This macro is used to define the shell command structure <a class="el" href="a00074.html#a00528" title="User command data configuration structure. ">shell_command_t</a>. And then uses the macro SHELL_COMMAND to get the command structure pointer. The macro should not be used in any function.</p>
+<p>This is a example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00074.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
+<div class="line">* <a class="code" href="a00074.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00074.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
+    <tr><td class="paramname">descriptor</td><td>The description of the command is used for showing the command usage when "help" is typing. </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback of the command is used to handle the command line when the input command is matched. </td></tr>
+    <tr><td class="paramname">paramCount</td><td>The max parameter count of the current command. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga16dd6cfbd9db7dafdaa802eda58564b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_COMMAND</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">command</td><td>)</td>
+          <td>&#160;&#160;&#160;&amp;g_shellCommand##command</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This macro is used to get the shell command pointer. The macro should not be used before the macro SHELL_COMMAND_DEFINE is used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga7ace1ddfb1e83ac1516ac44be90cf822"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>(* cmd_function_t)(<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -643,328 +568,57 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga56a0f36da7f9eaaf54bd05cc2bf49173"></a>
+<a class="anchor" id="ga16424f17c6492c580e65adf9a4e1ac61"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a0489bbc59ac12902e0cf3c134e72363e"></a>kStatus_SPDIF_RxDPLLLocked</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx PLL locked. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e"></a>kStatus_SHELL_Success</em>&nbsp;</td><td class="fielddoc">
+<p>Success. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a278a5b9459f7c6a06b0026d00ecc63cd"></a>kStatus_SPDIF_TxFIFOError</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Tx FIFO error. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9"></a>kStatus_SHELL_Error</em>&nbsp;</td><td class="fielddoc">
+<p>Failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a051d7f8261885f910a4f04c4a7a8f410"></a>kStatus_SPDIF_TxFIFOResync</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Tx left and right FIFO resync. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b"></a>kStatus_SHELL_OpenWriteHandleFailed</em>&nbsp;</td><td class="fielddoc">
+<p>Open write handle failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a259512eb9a030bbc2188b71008058808"></a>kStatus_SPDIF_RxCnew</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx status channel value updated. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8"></a>kStatus_SHELL_OpenReadHandleFailed</em>&nbsp;</td><td class="fielddoc">
+<p>Open read handle failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a6da0731f8caeb6cc08bb5f8190d01f30"></a>kStatus_SPDIF_ValidatyNoGood</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF validaty flag not good. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a2da36cd8a86bdfa8d9b4fead3dd543ad"></a>kStatus_SPDIF_RxIllegalSymbol</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx receive illegal symbol. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173afe0341b5aea2f8946c5a5a102e676483"></a>kStatus_SPDIF_RxParityBitError</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx parity bit error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a02d356ebee96b06bd87d13551d09e73f"></a>kStatus_SPDIF_UChannelOverrun</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF receive U channel overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a07b3373290d7d037ff3a859132967d53"></a>kStatus_SPDIF_QChannelOverrun</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF receive Q channel overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a3a6c65eabeb242b3910327da198c87d3"></a>kStatus_SPDIF_UQChannelSync</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF U/Q channel sync found. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173af44eacef3e48bd00a1fd5e08c550f9cb"></a>kStatus_SPDIF_UQChannelFrameError</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF U/Q channel frame error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a2360fecc1ffe49c63f8dd5b64905a33a"></a>kStatus_SPDIF_RxFIFOError</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx FIFO error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173ab206b050696acf5758e8b6c0bdf5b6fa"></a>kStatus_SPDIF_RxFIFOResync</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx left and right FIFO resync. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a9390ad9ad5ce85f7224c759604f5a194"></a>kStatus_SPDIF_LockLoss</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx PLL clock lock loss. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a646939956dd08768873e67af0e2690fc"></a>kStatus_SPDIF_TxIdle</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Tx is idle. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173ac458cedc1f2f208c0e04e3f532dc0595"></a>kStatus_SPDIF_RxIdle</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx is idle. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga56a0f36da7f9eaaf54bd05cc2bf49173a700d25ed1454e469f32de0ade5a78e87"></a>kStatus_SPDIF_QueueFull</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF queue full. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga85d08a5eba9eaf262597f4f3dfad19a0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#ga85d08a5eba9eaf262597f4f3dfad19a0">spdif_rxfull_select_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0ad6a45c3b1bb3397ce7dd2e5c9af8c1c9"></a>kSPDIF_RxFull1Sample</em>&nbsp;</td><td class="fielddoc">
-<p>Rx full at least 1 sample in left and right FIFO. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0a84f7309ca36974eefa1a2d970eba7995"></a>kSPDIF_RxFull4Samples</em>&nbsp;</td><td class="fielddoc">
-<p>Rx full at least 4 sample in left and right FIFO. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0a71af34697ac17ca08eb26d7c4d6dd27f"></a>kSPDIF_RxFull8Samples</em>&nbsp;</td><td class="fielddoc">
-<p>Rx full at least 8 sample in left and right FIFO. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0ab585922a28236a3e9b8cffbdd3793cee"></a>kSPDIF_RxFull16Samples</em>&nbsp;</td><td class="fielddoc">
-<p>Rx full at least 16 sample in left and right FIFO. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad58b90afceef70798b8be683f3017c71"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#gad58b90afceef70798b8be683f3017c71">spdif_txempty_select_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71a835efeacfa1b7bc07a723c3683407b4e"></a>kSPDIF_TxEmpty0Sample</em>&nbsp;</td><td class="fielddoc">
-<p>Tx empty at most 0 sample in left and right FIFO. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71a38d0ed7a9ff015721f0edcd71d696e18"></a>kSPDIF_TxEmpty4Samples</em>&nbsp;</td><td class="fielddoc">
-<p>Tx empty at most 4 sample in left and right FIFO. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71afbd58fcc26965a9b45865764d775284f"></a>kSPDIF_TxEmpty8Samples</em>&nbsp;</td><td class="fielddoc">
-<p>Tx empty at most 8 sample in left and right FIFO. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71a9c74437e11128b87fbd5bb644c4790e4"></a>kSPDIF_TxEmpty12Samples</em>&nbsp;</td><td class="fielddoc">
-<p>Tx empty at most 12 sample in left and right FIFO. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga01edc35977dbab89a7201285c61c4a3e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#ga01edc35977dbab89a7201285c61c4a3e">spdif_uchannel_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga01edc35977dbab89a7201285c61c4a3eaf159efd3316b59e34b7288448c4b8c4f"></a>kSPDIF_NoUChannel</em>&nbsp;</td><td class="fielddoc">
-<p>No embedded U channel. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga01edc35977dbab89a7201285c61c4a3eaec4bf6dbe6a1346b33c59c392ea1fbe6"></a>kSPDIF_UChannelFromRx</em>&nbsp;</td><td class="fielddoc">
-<p>U channel from receiver, it is CD mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga01edc35977dbab89a7201285c61c4a3ea65a3b2cbcb558fdc5870f009d9d6bd80"></a>kSPDIF_UChannelFromTx</em>&nbsp;</td><td class="fielddoc">
-<p>U channel from on chip tx. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gab5381bc40ad0b86e9453495598911e2c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2cac438b3169eb2675d11540a839e99f502"></a>kSPDIF_GAIN_24</em>&nbsp;</td><td class="fielddoc">
-<p>Gain select is 24. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2caa776465b4de5bf2fa610f1c2366c063f"></a>kSPDIF_GAIN_16</em>&nbsp;</td><td class="fielddoc">
-<p>Gain select is 16. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2cad54dc0e7908199d3fe24ef53d608b544"></a>kSPDIF_GAIN_12</em>&nbsp;</td><td class="fielddoc">
-<p>Gain select is 12. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2caafee91827c9ea238ad6d6478718e98a0"></a>kSPDIF_GAIN_8</em>&nbsp;</td><td class="fielddoc">
-<p>Gain select is 8. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2ca16500e129c2451b60faf4a3f4464df43"></a>kSPDIF_GAIN_6</em>&nbsp;</td><td class="fielddoc">
-<p>Gain select is 6. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2ca84750080b7f27da810fe19abe64f776f"></a>kSPDIF_GAIN_4</em>&nbsp;</td><td class="fielddoc">
-<p>Gain select is 4. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2ca1008286af785dcb2dde9131765217980"></a>kSPDIF_GAIN_3</em>&nbsp;</td><td class="fielddoc">
-<p>Gain select is 3. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga2847432f45adbafdb2f9f7e5c25d9b2e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">spdif_tx_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2847432f45adbafdb2f9f7e5c25d9b2eaffd9df4017e5af840e5c34c050791f02"></a>kSPDIF_txFromReceiver</em>&nbsp;</td><td class="fielddoc">
-<p>Tx data directly through SPDIF receiver. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2847432f45adbafdb2f9f7e5c25d9b2ea1e6073994dc81cb60c229a8ce166222f"></a>kSPDIF_txNormal</em>&nbsp;</td><td class="fielddoc">
-<p>Normal operation, data from processor. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad5615c4913a612ee1dc67e357e905f2c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#gad5615c4913a612ee1dc67e357e905f2c">spdif_validity_config_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad5615c4913a612ee1dc67e357e905f2ca9cf3c378520222b1ffe3e584cae0ac67"></a>kSPDIF_validityFlagAlwaysSet</em>&nbsp;</td><td class="fielddoc">
-<p>Outgoing validity flags always set. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad5615c4913a612ee1dc67e357e905f2ca96145e43a2a36d2c7dcd6ce5242743b1"></a>kSPDIF_validityFlagAlwaysClear</em>&nbsp;</td><td class="fielddoc">
-<p>Outgoing validity flags always clear. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaa156d1cebb38c8a65846c4d9c006012a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aab8774a200c36eccf9d7b439ba21d1ac8"></a>kSPDIF_RxDPLLLocked</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF DPLL locked. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa74d3b2d4e4ee35eed58f4d30c6d2709b"></a>kSPDIF_TxFIFOError</em>&nbsp;</td><td class="fielddoc">
-<p>Tx FIFO underrun or overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aaf40104f71f214bb1c0a6a2c0fdcdaf36"></a>kSPDIF_TxFIFOResync</em>&nbsp;</td><td class="fielddoc">
-<p>Tx FIFO left and right channel resync. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa5917028824aefbf16086b3021e414340"></a>kSPDIF_RxControlChannelChange</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx control channel value changed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa7de7b2231ecb6e20e43d0494fe92e63c"></a>kSPDIF_ValidityFlagNoGood</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF validity flag no good. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aaa71c8ef82de54ffac949e31010d031de"></a>kSPDIF_RxIllegalSymbol</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF receiver found illegal symbol. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa1838e42bf8376a18762297b6aa3c4472"></a>kSPDIF_RxParityBitError</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF receiver found parity bit error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aad228d31963d41a20e3567ce6f633acc6"></a>kSPDIF_UChannelReceiveRegisterFull</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF U channel revceive register full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa3b7dc66169552ca7798d686d68de6b7d"></a>kSPDIF_UChannelReceiveRegisterOverrun</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF U channel receive register overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa80ac61a0edef14ba03035176ab326331"></a>kSPDIF_QChannelReceiveRegisterFull</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Q channel receive reigster full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa64e59711062fadb98877919d7c5887e9"></a>kSPDIF_QChannelReceiveRegisterOverrun</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Q channel receive register overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa6e94d542bd83c5bfc043fdbc44fcd43b"></a>kSPDIF_UQChannelSync</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF U/Q channel sync found. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aac07a719f553a9e41bf3e082a5beaf107"></a>kSPDIF_UQChannelFrameError</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF U/Q channel frame error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa1a27bda77a59e1db5a1913bb8971281a"></a>kSPDIF_RxFIFOError</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx FIFO underrun/overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aad2e29bb00f59f56babeebd1f0e73726a"></a>kSPDIF_RxFIFOResync</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx left and right FIFO resync. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa1f134eebfeb0740e56c13c9b45fb8434"></a>kSPDIF_LockLoss</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF receiver loss of lock. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa82af9fd1290d8b3b63420b8d92257819"></a>kSPDIF_TxFIFOEmpty</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Tx FIFO empty. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aa9797531448d68e40b3befb91810bd09c"></a>kSPDIF_RxFIFOFull</em>&nbsp;</td><td class="fielddoc">
-<p>SPDIF Rx FIFO full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa156d1cebb38c8a65846c4d9c006012aaf55570f1f8a886f06d64ed2bfc0650a4"></a>kSPDIF_AllInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>all interrupt </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaf8654c714018c6241d9ebd01f3fb5a26"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf8654c714018c6241d9ebd01f3fb5a26a19fc49573180ffcc3df5f9a27c797209"></a>kSPDIF_RxDMAEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Rx FIFO full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf8654c714018c6241d9ebd01f3fb5a26ad508f6bf16fd6349b03fc8f3b38d06e8"></a>kSPDIF_TxDMAEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Tx FIFO empty. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61ad139f389943f49d948bbff024d6c5a26"></a>kStatus_SHELL_RetUsage</em>&nbsp;</td><td class="fielddoc">
+<p>RetUsage for print cmd usage. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga6b4e9ed2c903d62af53a8d3887126413"></a>
+<a class="anchor" id="ga7961e946400cd244c315cfbbd36ae5d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SPDIF_Init </td>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_Init </td>
           <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00074.html#a00516">spdif_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
+          <td class="paramname"><em>serialHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>prompt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -973,165 +627,45 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Ungates the SPDIF clock, resets the module, and configures SPDIF with a configuration structure. The configuration structure can be custom filled or set with default values by <a class="el" href="a00074.html#ga11b262ea3923fd80f78b959d9718e00b" title="Sets the SPDIF configuration structure to default values. ">SPDIF_GetDefaultConfig()</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application to use the SPDIF driver. Otherwise, accessing the SPDIF module can cause a hard fault because the clock is not enabled.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function must be called before calling all other Shell functions. Call operation the Shell commands with user-defined settings. The example below shows how to set up the Shell and how to call the SHELL_Init function by passing in these parameters. This is an example. </p>
+<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(s_shellHandle);</div>
+<div class="line">*   <a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>((<a class="code" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>)s_shellHandle, (<a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">config</td><td>SPDIF configuration structure. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574" title="The handle size of the shell module. ">SHELL_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3" title="Defines the shell handle. ">SHELL_HANDLE_DEFINE(shellHandle)</a>; or uint32_t shellHandle[((SHELL_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
+    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
+    <tr><td class="paramname">prompt</td><td>The string prompt pointer of Shell. Only the global variable can be passed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>The shell initialization succeed. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred when the shell is initialized. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_OpenWriteHandleFailed</td><td>Open the write handle failed. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_OpenReadHandleFailed</td><td>Open the read handle failed. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga11b262ea3923fd80f78b959d9718e00b"></a>
+<a class="anchor" id="gab5f85f3ba2cc7dd58bc85076c19c5177"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SPDIF_GetDefaultConfig </td>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_RegisterCommand </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00074.html#a00516">spdif_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API initializes the configuration structure for use in SPDIF_Init. The initialized structure can remain unchanged in SPDIF_Init, or it can be modified before calling SPDIF_Init. This is an example. </p>
-<div class="fragment"><div class="line"><a class="code" href="a00074.html#a00516">spdif_config_t</a> config;</div>
-<div class="line"><a class="code" href="a00074.html#ga11b262ea3923fd80f78b959d9718e00b">SPDIF_GetDefaultConfig</a>(&amp;config);</div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>pointer to master configuration structure </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2631baffebf03ec2a587580112dd56f3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This API gates the SPDIF clock. The SPDIF module can't operate unless SPDIF_Init is called to enable the clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacbd5fc4df43e1a249493b5324f94e54d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SPDIF_GetInstance </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga85e3497baec03b34f728541154ccc31d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_TxFIFOReset </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function makes Tx FIFO in reset mode.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa74cc12474982eb7c46adaa7d4891626"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_RxFIFOReset </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the software reset and FIFO reset of SPDIF Rx. After reset, clear the reset bit.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5b76be7fc7148dec7d4493398103a94d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TxEnable </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00074.html#a00528">shell_command_t</a> *&#160;</td>
+          <td class="paramname"><em>shellCommand</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1140,507 +674,77 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function is used to register the shell command by using the command configuration shell_command_config_t. This is a example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00074.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
+<div class="line">* <a class="code" href="a00074.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00074.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">enable</td><td>True means enable SPDIF Tx, false means disable. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully register the command. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gad705a47a3b61bb334125e54fc70ed2ae"></a>
+<a class="anchor" id="ga53355638d856258b0bcb76e308803dab"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SPDIF_RxEnable </td>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_UnregisterCommand </td>
           <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#a00528">shell_command_t</a> *&#160;</td>
+          <td class="paramname"><em>shellCommand</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to unregister the shell command.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully unregister the command. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9f182608b5a6107757be5bb8a90ad74c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">enable</td><td>True means enable SPDIF Rx, false means disable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafe28766cd0629d77c2ec2f5986155ee7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_GetStatusFlag </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>SPDIF status flag value. Use the _spdif_interrupt_enable_t to get the status value needed. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga39bddc0768ce21bbbd6d3eae837b206e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>State mask. It can be a combination of the _spdif_interrupt_enable_t member. Notice these members cannot be included, as these flags cannot be cleared by writing 1 to these bits: <ul>
-<li>kSPDIF_UChannelReceiveRegisterFull </li>
-<li>kSPDIF_QChannelReceiveRegisterFull </li>
-<li>kSPDIF_TxFIFOEmpty </li>
-<li>kSPDIF_RxFIFOFull </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga487f880569d931ee08c74a83332862ae"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>interrupt source The parameter can be a combination of the following sources if defined. <ul>
-<li>kSPDIF_WordStartInterruptEnable </li>
-<li>kSPDIF_SyncErrorInterruptEnable </li>
-<li>kSPDIF_FIFOWarningInterruptEnable </li>
-<li>kSPDIF_FIFORequestInterruptEnable </li>
-<li>kSPDIF_FIFOErrorInterruptEnable </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0c0c7200763825eba3f10bbe7d3439b8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>interrupt source The parameter can be a combination of the following sources if defined. <ul>
-<li>kSPDIF_WordStartInterruptEnable </li>
-<li>kSPDIF_SyncErrorInterruptEnable </li>
-<li>kSPDIF_FIFOWarningInterruptEnable </li>
-<li>kSPDIF_FIFORequestInterruptEnable </li>
-<li>kSPDIF_FIFOErrorInterruptEnable </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1d4992842b29cef3c71ad5b5fbd664d3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_EnableDMA </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>SPDIF DMA enable mask, The parameter can be a combination of the following sources if defined <ul>
-<li>kSPDIF_RxDMAEnable </li>
-<li>kSPDIF_TxDMAEnable </li>
-</ul>
-</td></tr>
-    <tr><td class="paramname">enable</td><td>True means enable DMA, false means disable DMA. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga72dc7737eb0911c1c887d53cf9e1c8ed"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_TxGetLeftDataRegisterAddress </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This API is used to provide a transfer address for the SPDIF DMA transfer configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>data register address. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad6fe7d183782a4d078e0cd182d5859a3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_TxGetRightDataRegisterAddress </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This API is used to provide a transfer address for the SPDIF DMA transfer configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>data register address. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gabd6b7be3a3b545c6f6b2d35f72cadef4"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_RxGetLeftDataRegisterAddress </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This API is used to provide a transfer address for the SPDIF DMA transfer configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>data register address. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4485709f8d45c96f5dce7dd85ecef07f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_RxGetRightDataRegisterAddress </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This API is used to provide a transfer address for the SPDIF DMA transfer configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>data register address. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad49d52850fb379566953c66bf1f93a54"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TxSetSampleRate </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sampleRate_Hz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sourceClockFreq_Hz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The audio format can be changed at run-time. This function configures the sample rate.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">sampleRate_Hz</td><td>SPDIF sample rate frequency in Hz. </td></tr>
-    <tr><td class="paramname">sourceClockFreq_Hz</td><td>SPDIF tx clock source frequency in Hz. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf119e024d14a0c288b743dd17bbef687"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SPDIF_GetRxSampleRate </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>clockSourceFreq_Hz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The audio format can be changed at run-time. This function configures the sample rate and audio data format to be transferred.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">clockSourceFreq_Hz</td><td>SPDIF system clock frequency in hz. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab0eb427edd9cc4e5ece878563b9a6a8c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_WriteBlocking </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1649,36 +753,46 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function blocks by polling until data is ready to be sent.</dd></dl>
+<p>This function is used to send data to the shell output stream.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Pointer to the data to be written. </td></tr>
-    <tr><td class="paramname">size</td><td>Bytes to be written. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2b78216d0f4af76d8b9ff82101fc8adf"></a>
+<a class="anchor" id="gaade5449d8cbfc3cd026667b40c35d29f"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SPDIF_WriteLeftData </td>
+          <td class="memname">int SHELL_Printf </td>
           <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>formatString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1686,166 +800,40 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Call this function to write a formatted output to the shell output stream.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">data</td><td>Data needs to be written. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga48edd7722d5a59091e6da7756ef25f0a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_WriteRightData </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">data</td><td>Data needs to be written. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3804918ec78e961fb33b12094bf732e8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_WriteChannelStatusHigh </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">data</td><td>Data needs to be written. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6fd048c19cff5ef48c133ca0ffbe23c1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SPDIF_WriteChannelStatusLow </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">data</td><td>Data needs to be written. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2fb9e8f8bafa60358626840d0442265e"></a>
+<a class="anchor" id="ga6466b141fd4f94e78636e4a15c302dda"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SPDIF_ReadBlocking </td>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_WriteSynchronization </td>
           <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1854,370 +842,46 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function blocks by polling until data is ready to be sent.</dd></dl>
+<p>This function is used to send data to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Pointer to the data to be read. </td></tr>
-    <tr><td class="paramname">size</td><td>Bytes to be read. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga49e6ea71b76ff7e3e97da8ffd8cd83ea"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_ReadLeftData </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data in SPDIF FIFO. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga34ebdb7cd9a243303bc21cd9b16f82c3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_ReadRightData </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data in SPDIF FIFO. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6897be2df12c8df71d4f6bff5c7546c1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_ReadChannelStatusHigh </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data in SPDIF FIFO. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga23d1a99377b7f4b26c25a79ece8231ad"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_ReadChannelStatusLow </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data in SPDIF FIFO. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7a5d474af2b6b256df0bf650dd8154c0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_ReadQChannel </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data in SPDIF FIFO. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac0f070017fc4e1db6b0ceeef990c3f7e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t SPDIF_ReadUChannel </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data in SPDIF FIFO. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2e4eb257e2da537eb2d47a31ea47fbb6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TransferTxCreateHandle </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the Tx handle for the SPDIF Tx transactional APIs. Call this function once to get the handle initialized.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">handle</td><td>SPDIF handle pointer. </td></tr>
-    <tr><td class="paramname">callback</td><td>Pointer to the user callback function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User parameter passed to the callback function </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac44c0edc9e22798fb840f38f1c3749ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TransferRxCreateHandle </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the Rx handle for the SPDIF Rx transactional APIs. Call this function once to get the handle initialized.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>SPDIF handle pointer. </td></tr>
-    <tr><td class="paramname">callback</td><td>Pointer to the user callback function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga155e14a0591e50af578cb8309171c112"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferSendNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#a00518">spdif_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API returns immediately after the transfer initiates. Call the SPDIF_TxGetTransferStatusIRQ to poll the transfer status and check whether the transfer is finished. If the return status is not kStatus_SPDIF_Busy, the transfer is finished.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">xfer</td><td>Pointer to the <a class="el" href="a00074.html#a00518" title="SPDIF transfer structure. ">spdif_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Successfully started the data receive. </td></tr>
-    <tr><td class="paramname">kStatus_SPDIF_TxBusy</td><td>Previous receive still not finished. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input parameter is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga04fe7c5e2cf560687b07f5de908da255"></a>
+<a class="anchor" id="ga56c78f6217a822015a9369bf3e52e92a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferReceiveNonBlocking </td>
+          <td class="memname">int SHELL_PrintfSynchronization </td>
           <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>formatString</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#a00518">spdif_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2226,248 +890,125 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API returns immediately after the transfer initiates. Call the SPDIF_RxGetTransferStatusIRQ to poll the transfer status and check whether the transfer is finished. If the return status is not kStatus_SPDIF_Busy, the transfer is finished.</dd></dl>
+<p>Call this function to write a formatted output to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">xfer</td><td>Pointer to the <a class="el" href="a00074.html#a00518" title="SPDIF transfer structure. ">spdif_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaca4540dc42f8892cb276691644a247e2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SHELL_ChangePrompt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>prompt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call this function to change shell prompt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">prompt</td><td>The string which will be used for command prompt </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad2a840776dee8490d482a0692fbf2d7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SHELL_PrintPrompt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call this function to print shell prompt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga44e3087a3cdea9b62f159e2585dfcd8d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SHELL_Task </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The task function for Shell; The function should be polled by upper layer. This function does not return until Shell command exit was called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4eeb17b16773359c132f1d40478938ec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool SHELL_checkRunningInIsr </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function is used to check if code running in ISR.</p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Successfully started the data receive. </td></tr>
-    <tr><td class="paramname">kStatus_SPDIF_RxBusy</td><td>Previous receive still not finished. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input parameter is invalid. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga56e6fe5a91de5d1f38896128c4958a94"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferGetSendCount </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">count</td><td>Bytes count sent. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is not a non-blocking transaction currently in progress. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaad53ad9d352550e8fa84a3200ee977c9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferGetReceiveCount </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">count</td><td>Bytes count received. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is not a non-blocking transaction currently in progress. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga004b052fdaa3fd78dd7bafc721b28f0c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TransferAbortSend </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API can be called any time when an interrupt non-blocking transfer initiates to abort the transfer early.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5dd15b214687cf6a120142b0152ac18c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TransferAbortReceive </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API can be called when an interrupt non-blocking transfer initiates to abort the transfer early.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga14adaa4280f963a9e6c0b6d760173182"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TransferTxHandleIRQ </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa1ab4a1d05d2e708ab9896f0131506b4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SPDIF_TransferRxHandleIRQ </td>
-          <td>(</td>
-          <td class="paramtype">SPDIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure. </td></tr>
+    <tr><td class="paramname">TRUE</td><td>if code runing in ISR. </td></tr>
   </table>
   </dd>
 </dl>

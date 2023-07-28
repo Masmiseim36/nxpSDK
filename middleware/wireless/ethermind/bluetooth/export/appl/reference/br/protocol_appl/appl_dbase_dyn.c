@@ -284,7 +284,7 @@ void db_add_hfu_database_record(UINT8 server_ch, UINT8 *service_name, UINT16 ser
     API_RESULT retval;
     UINT16 service_uuids[] = { 0x111E, 0x1203 };
     UINT16 browse_group_uuids[] = { 0x1002 };
-    UINT16 supported_features = 0x00DE;
+    UINT16 supported_features = 0x0000;
 
     DB_PROTOCOL_ELEM elems[2U];
 
@@ -1082,9 +1082,12 @@ void db_add_pce_database_record
 
 void db_add_pse_database_record
      (
+         UINT8 server_ch,
+         UINT16 l2cap_psm,
          UINT8 * service_name,
          UINT16 service_name_length,
-         UINT8 value_supported_repo
+         UINT8 value_supported_repo,
+         UINT32 value_supported_features
      )
 {
     UINT32 record_handle;
@@ -1093,6 +1096,9 @@ void db_add_pse_database_record
     UINT16 browse_group_uuids[] = { 0x1002 };
 
     DB_PROTOCOL_ELEM elems[3U];
+
+    UCHAR supp_features_buf[4];
+    UCHAR l2cap_psm_buf[2U];
 
     /* Create Record */
     retval = BT_dbase_create_record(DB_RECORD_PBAP_PSE, 0U, &record_handle);
@@ -1108,7 +1114,7 @@ void db_add_pse_database_record
         elems[1U].num_sub_params = 0x0000;
 
         /* Todo: dynamic server channel. user bit array to find which is free */
-        elems[1U].params[0] = bt_dbase_get_server_channel();
+        elems[1U].params[0] = server_ch;
 
         elems[2U].protocol_uuid = 0x0008U; /* OBEX */
         elems[2U].num_params = 0x0000;
@@ -1164,6 +1170,22 @@ void db_add_pse_database_record
             0x0314,
             1,
             &value_supported_repo
+        );
+        BT_PACK_BE_4_BYTE_VAL(&supp_features_buf[0], value_supported_features);
+        BT_dbase_add_attribute_type_uint
+        (
+            record_handle,
+            0x0317,
+            sizeof(supp_features_buf),
+            supp_features_buf
+        );
+        BT_PACK_BE_2_BYTE_VAL(&l2cap_psm_buf[0], l2cap_psm);
+        BT_dbase_add_attribute_type_uint
+        (
+            record_handle,
+            0x0200,
+            sizeof(l2cap_psm_buf),
+            l2cap_psm_buf
         );
 
         /* Activate the record */
@@ -1515,6 +1537,7 @@ void db_add_record(void)
     UINT8 CustomUUID_5[16U] = { 0x1C, 0x1E, 0xDF, 0xA7, 0x06, 0x57, 0x45, 0x1F, 0xBA, 0xE0, 0x18, 0x7B, 0xFB, 0xB9, 0x69, 0xB6 };
 
     UINT8 server_channel;
+    UINT16 l2cap_psm;
 
     /* SAP Record */
     db_add_sap_database_record();
@@ -1590,11 +1613,23 @@ void db_add_record(void)
 
     /* PBAP_PCE Record */
     db_add_pce_database_record((UINT8 *)"Phonebook Access PCE", 21);
+
     /* PBAP_PSE Record */
     {
-        UINT8 pse_value_supported_repo = 0x03U;
+        UINT8 pse_value_supported_repo = 0x0FU;
+        UINT32 pse_value_supported_features = 0x000003FFU;
 
-        db_add_pse_database_record((UINT8 *)"Phonebook Access PSE", 21, pse_value_supported_repo);
+        server_channel = bt_dbase_get_server_channel();
+        l2cap_psm = 0x8803;
+        db_add_pse_database_record
+        (
+            server_channel,
+            l2cap_psm,
+            (UINT8 *)"Phonebook Acccess PSE",
+            22,
+            pse_value_supported_repo,
+            pse_value_supported_features
+        );
     }
     /* DID Record */
     {
@@ -1622,12 +1657,12 @@ void db_add_record(void)
     /* MAP_MCE Record */
     {
         UINT32 mce_supported_features = 0x0077FFFF;
-        UINT16 mce_obex_psm = 0x8603;
 
+        l2cap_psm = 0x8603;
         db_add_mce_database_record
         (
             (UINT8 *)"MAP Notification Service", 25,
-            mce_obex_psm,
+            l2cap_psm,
             mce_supported_features
         );
     }

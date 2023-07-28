@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -37,108 +45,31 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../app.h"
 "${ProjDirPath}/../app.c"
 "${ProjDirPath}/../host_mouse.c"
 "${ProjDirPath}/../host_mouse.h"
 "${ProjDirPath}/../usb_host_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkbimxrt1050
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/middleware/usb
-    ${SdkRootDirPath}/components/timer
-    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/devices/MIMXRT1052
-    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1052/xip
-    ${SdkRootDirPath}/boards/evkbimxrt1050/xip
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/osa
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../usb_host_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_host_ehci_config_header")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(middleware_usb_host_ehci_MIMXRT1052)
-
-include(middleware_usb_phy_MIMXRT1052)
-
-include(component_pit_adapter_MIMXRT1052)
-
-include(driver_cache_armv7_m7_MIMXRT1052)
-
-include(driver_gpc_1_MIMXRT1052)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT1052)
-
-include(middleware_freertos-kernel_MIMXRT1052)
-
-include(middleware_usb_host_hid_MIMXRT1052)
-
-include(driver_pit_MIMXRT1052)
-
-include(driver_clock_MIMXRT1052)
-
-include(driver_common_MIMXRT1052)
-
-include(device_MIMXRT1052_CMSIS_MIMXRT1052)
-
-include(device_MIMXRT1052_startup_MIMXRT1052)
-
-include(driver_lpuart_MIMXRT1052)
-
-include(driver_iomuxc_MIMXRT1052)
-
-include(utility_assert_MIMXRT1052)
-
-include(driver_igpio_MIMXRT1052)
-
-include(driver_xip_device_MIMXRT1052)
-
-include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
-
-include(utility_debug_console_MIMXRT1052)
-
-include(component_lpuart_adapter_MIMXRT1052)
-
-include(component_serial_manager_MIMXRT1052)
-
-include(component_lists_MIMXRT1052)
-
-include(component_serial_manager_uart_MIMXRT1052)
-
-include(middleware_usb_host_stack_MIMXRT1052)
-
-include(component_osa_MIMXRT1052)
-
-include(middleware_usb_common_header_MIMXRT1052)
-
-include(CMSIS_Include_core_cm_MIMXRT1052)
-
-include(middleware_usb_host_common_header_MIMXRT1052)
-
-include(middleware_freertos-kernel_extension_MIMXRT1052)
-
-include(utilities_misc_utilities_MIMXRT1052)
-
-include(device_MIMXRT1052_system_MIMXRT1052)
-
+include(${SdkRootDirPath}/devices/MIMXRT1052/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -150,4 +81,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

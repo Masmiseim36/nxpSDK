@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SDIO Card Driver</title>
+<title>MCUXpresso SDK API Reference Manual: RTWDOG: 32-bit Watchdog Timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,310 +100,245 @@ $(document).ready(function(){initNavTree('a00064.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">SDIO Card Driver<div class="ingroups"><a class="el" href="a00288.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
+<div class="title">RTWDOG: 32-bit Watchdog Timer</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The SDIO card driver provide card initialization/IO direct and extend command interface.</p>
-<h1><a class="anchor" id="SDIOCardOperation"></a>
-SDIO CARD Operation</h1>
-<h2>error log support</h2>
-<p>Not supported yet. </p>
-<h2>User configuable</h2>
-<h2>Board dependency</h2>
-<h2>Mutual exclusive access support for RTOS</h2>
-<p>SDIO driver has added mutual exclusive access support for init/deinit/write/read/erase function. Please note that the card init function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line"><a class="code" href="a00064.html#ga3b7ba8e7b9bfafde767535a7089da44d">SDIO_Deinit</a>(card);<span class="comment">/* This function will destroy the created mutex */</span></div>
-<div class="line"><a class="code" href="a00064.html#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">SDIO_Init</a>(card);</div>
-</div><!-- fragment --> <h2>Typical use case</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/sdmmc_examples/ </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the RTWDOG module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="RTWDOGTypUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/rtwdog </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00328"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00328">sdio_card_t</a></td></tr>
-<tr class="memdesc:a00328"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO card state.  <a href="a00064.html#a00328">More...</a><br/></td></tr>
-<tr class="separator:a00328"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gab1e1aa37ee346a5118f31e7899e921d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab1e1aa37ee346a5118f31e7899e921d1">FSL_SDIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 1U)) /*2.4.1*/</td></tr>
-<tr class="memdesc:gab1e1aa37ee346a5118f31e7899e921d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware version.  <a href="#gab1e1aa37ee346a5118f31e7899e921d1">More...</a><br/></td></tr>
-<tr class="separator:gab1e1aa37ee346a5118f31e7899e921d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga433c62975c819240b160a627eaa25092"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga433c62975c819240b160a627eaa25092"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>&#160;&#160;&#160;(7U)</td></tr>
-<tr class="memdesc:ga433c62975c819240b160a627eaa25092"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio device support maximum IO number <br/></td></tr>
-<tr class="separator:ga433c62975c819240b160a627eaa25092"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga24b4be566dc13edf4efc5915fb431288"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga24b4be566dc13edf4efc5915fb431288"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a> )(sdio_card_t *card, uint32_t func)</td></tr>
-<tr class="memdesc:ga24b4be566dc13edf4efc5915fb431288"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio io handler <br/></td></tr>
-<tr class="separator:ga24b4be566dc13edf4efc5915fb431288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00488"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00488">rtwdog_work_mode_t</a></td></tr>
+<tr class="memdesc:a00488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines RTWDOG work mode.  <a href="a00064.html#a00488">More...</a><br/></td></tr>
+<tr class="separator:a00488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00487"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a00487">rtwdog_config_t</a></td></tr>
+<tr class="memdesc:a00487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG configuration structure.  <a href="a00064.html#a00487">More...</a><br/></td></tr>
+<tr class="separator:a00487"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga9dfb4270982e609bc964f5547b0a040a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00064.html#gga9dfb4270982e609bc964f5547b0a040aa7c72ffd0968a86552164ec85a5c3fd36">kSDIO_IORead</a> = 0U, 
+<tr class="memitem:ga106ba79a9a7b0863ca8555c5d8ad9b3b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b">rtwdog_clock_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba89fe3caec9c47ea18afbea78fa7b75db">kRTWDOG_ClockSource0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00064.html#gga9dfb4270982e609bc964f5547b0a040aae1bcefbd4840a8519fe085167531a356">kSDIO_IOWrite</a> = 1U
+&#160;&#160;<a class="el" href="a00064.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba0490435c4f8e6b5f2bfb4d4959ee6ce5">kRTWDOG_ClockSource1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba596c695b96b5287f927f74d78577fe84">kRTWDOG_ClockSource2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga106ba79a9a7b0863ca8555c5d8ad9b3bad51ba4630b31474e7d497d1defc3075a">kRTWDOG_ClockSource3</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga9dfb4270982e609bc964f5547b0a040a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio io read/write direction  <a href="a00064.html#ga9dfb4270982e609bc964f5547b0a040a">More...</a><br/></td></tr>
-<tr class="separator:ga9dfb4270982e609bc964f5547b0a040a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga106ba79a9a7b0863ca8555c5d8ad9b3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG clock source.  <a href="a00064.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b">More...</a><br/></td></tr>
+<tr class="separator:ga106ba79a9a7b0863ca8555c5d8ad9b3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a46bb420b0a97fc9d440ee7ef329ffa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga2a46bb420b0a97fc9d440ee7ef329ffa">rtwdog_clock_prescaler_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga2a46bb420b0a97fc9d440ee7ef329ffaaffcd087724256907ae1e47f896461e78">kRTWDOG_ClockPrescalerDivide1</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga2a46bb420b0a97fc9d440ee7ef329ffaa1b8252427d181ff4de3e4ea7eb1aac52">kRTWDOG_ClockPrescalerDivide256</a> = 0x1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga2a46bb420b0a97fc9d440ee7ef329ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes the selection of the clock prescaler.  <a href="a00064.html#ga2a46bb420b0a97fc9d440ee7ef329ffa">More...</a><br/></td></tr>
+<tr class="separator:ga2a46bb420b0a97fc9d440ee7ef329ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae84238ba96d9319d820c3319c5f7e526"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gae84238ba96d9319d820c3319c5f7e526">rtwdog_test_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#ggae84238ba96d9319d820c3319c5f7e526a62fe6bb45f28e5b1275bfa1aad708124">kRTWDOG_TestModeDisabled</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggae84238ba96d9319d820c3319c5f7e526ae12fd7134b26ac7e621f2117f3312598">kRTWDOG_UserModeEnabled</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggae84238ba96d9319d820c3319c5f7e526ab885cb05aaad282ee54fe47b8ad270cc">kRTWDOG_LowByteTest</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggae84238ba96d9319d820c3319c5f7e526aaf013b692ea93f0de8a9c47a814ac09d">kRTWDOG_HighByteTest</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae84238ba96d9319d820c3319c5f7e526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes RTWDOG test mode.  <a href="a00064.html#gae84238ba96d9319d820c3319c5f7e526">More...</a><br/></td></tr>
+<tr class="separator:gae84238ba96d9319d820c3319c5f7e526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4225d9230a4625186e9b65be501bbc24"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga4225d9230a4625186e9b65be501bbc24">_rtwdog_interrupt_enable_t</a> { <a class="el" href="a00064.html#gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a">kRTWDOG_InterruptEnable</a> = RTWDOG_CS_INT_MASK
+ }</td></tr>
+<tr class="memdesc:ga4225d9230a4625186e9b65be501bbc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTWDOG interrupt configuration structure.  <a href="a00064.html#ga4225d9230a4625186e9b65be501bbc24">More...</a><br/></td></tr>
+<tr class="separator:ga4225d9230a4625186e9b65be501bbc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1ef76bc31ec6ca52a50e1aba88a08d8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab1ef76bc31ec6ca52a50e1aba88a08d8">_rtwdog_status_flags_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38">kRTWDOG_RunningFlag</a> = RTWDOG_CS_EN_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3">kRTWDOG_InterruptFlag</a> = RTWDOG_CS_FLG_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab1ef76bc31ec6ca52a50e1aba88a08d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTWDOG status flags.  <a href="a00064.html#gab1ef76bc31ec6ca52a50e1aba88a08d8">More...</a><br/></td></tr>
+<tr class="separator:gab1ef76bc31ec6ca52a50e1aba88a08d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">SDIO_Init</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO card init function.  <a href="#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">More...</a><br/></td></tr>
-<tr class="separator:ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b7ba8e7b9bfafde767535a7089da44d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga3b7ba8e7b9bfafde767535a7089da44d">SDIO_Deinit</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:ga3b7ba8e7b9bfafde767535a7089da44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO card deinit, include card and host deinit.  <a href="#ga3b7ba8e7b9bfafde767535a7089da44d">More...</a><br/></td></tr>
-<tr class="separator:ga3b7ba8e7b9bfafde767535a7089da44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee0b26685255c5a69ded10b2371008c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaee0b26685255c5a69ded10b2371008c0">SDIO_CardInit</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:gaee0b26685255c5a69ded10b2371008c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card.  <a href="#gaee0b26685255c5a69ded10b2371008c0">More...</a><br/></td></tr>
-<tr class="separator:gaee0b26685255c5a69ded10b2371008c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13f67b379d7429002674ccf7d730465e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga13f67b379d7429002674ccf7d730465e">SDIO_CardDeinit</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:ga13f67b379d7429002674ccf7d730465e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga13f67b379d7429002674ccf7d730465e">More...</a><br/></td></tr>
-<tr class="separator:ga13f67b379d7429002674ccf7d730465e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab812996961a7bf10ba20fe15ad6b058e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab812996961a7bf10ba20fe15ad6b058e">SDIO_HostInit</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:gab812996961a7bf10ba20fe15ad6b058e"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize the host.  <a href="#gab812996961a7bf10ba20fe15ad6b058e">More...</a><br/></td></tr>
-<tr class="separator:gab812996961a7bf10ba20fe15ad6b058e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga189f1410a950b2f5f1ee703239cebed3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga189f1410a950b2f5f1ee703239cebed3">SDIO_HostDeinit</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:ga189f1410a950b2f5f1ee703239cebed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the host.  <a href="#ga189f1410a950b2f5f1ee703239cebed3">More...</a><br/></td></tr>
-<tr class="separator:ga189f1410a950b2f5f1ee703239cebed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac505825daac65f982b589ef10e8f64e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gac505825daac65f982b589ef10e8f64e0">SDIO_HostDoReset</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:gac505825daac65f982b589ef10e8f64e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the host.  <a href="#gac505825daac65f982b589ef10e8f64e0">More...</a><br/></td></tr>
-<tr class="separator:gac505825daac65f982b589ef10e8f64e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b2c66357f64588e8ab6ba45fc1bb29b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga7b2c66357f64588e8ab6ba45fc1bb29b">SDIO_SetCardPower</a> (sdio_card_t *card, bool enable)</td></tr>
-<tr class="memdesc:ga7b2c66357f64588e8ab6ba45fc1bb29b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set card power.  <a href="#ga7b2c66357f64588e8ab6ba45fc1bb29b">More...</a><br/></td></tr>
-<tr class="separator:ga7b2c66357f64588e8ab6ba45fc1bb29b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8cb6ac091eeba10ef001d7ec50ef9adf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga8cb6ac091eeba10ef001d7ec50ef9adf">SDIO_CardInActive</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:ga8cb6ac091eeba10ef001d7ec50ef9adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card to inactive state  <a href="#ga8cb6ac091eeba10ef001d7ec50ef9adf">More...</a><br/></td></tr>
-<tr class="separator:ga8cb6ac091eeba10ef001d7ec50ef9adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafca21fb443a7642ab6b99d4477fd41b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gafca21fb443a7642ab6b99d4477fd41b0">SDIO_GetCardCapability</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func)</td></tr>
-<tr class="memdesc:gafca21fb443a7642ab6b99d4477fd41b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get SDIO card capability  <a href="#gafca21fb443a7642ab6b99d4477fd41b0">More...</a><br/></td></tr>
-<tr class="separator:gafca21fb443a7642ab6b99d4477fd41b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga86024856b5fdb11ca5eb076c4d4ad370"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga86024856b5fdb11ca5eb076c4d4ad370">SDIO_SetBlockSize</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t blockSize)</td></tr>
-<tr class="memdesc:ga86024856b5fdb11ca5eb076c4d4ad370"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card block size  <a href="#ga86024856b5fdb11ca5eb076c4d4ad370">More...</a><br/></td></tr>
-<tr class="separator:ga86024856b5fdb11ca5eb076c4d4ad370"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47ee885791070dc880f4b5e6027844f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga47ee885791070dc880f4b5e6027844f9">SDIO_CardReset</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:ga47ee885791070dc880f4b5e6027844f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card reset  <a href="#ga47ee885791070dc880f4b5e6027844f9">More...</a><br/></td></tr>
-<tr class="separator:ga47ee885791070dc880f4b5e6027844f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5e6c4d0098f11caa7fc84236fba1bc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gac5e6c4d0098f11caa7fc84236fba1bc5">SDIO_SetDataBusWidth</a> (sdio_card_t *card, <a class="el" href="a00052.html#ga0aaaac7d76fefa8e084c2ecf6880da95">sdio_bus_width_t</a> busWidth)</td></tr>
-<tr class="memdesc:gac5e6c4d0098f11caa7fc84236fba1bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card data bus width  <a href="#gac5e6c4d0098f11caa7fc84236fba1bc5">More...</a><br/></td></tr>
-<tr class="separator:gac5e6c4d0098f11caa7fc84236fba1bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78df99aeaeb2c0a9208cba6f243022a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga78df99aeaeb2c0a9208cba6f243022a3">SDIO_SwitchToHighSpeed</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:ga78df99aeaeb2c0a9208cba6f243022a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">switch the card to high speed  <a href="#ga78df99aeaeb2c0a9208cba6f243022a3">More...</a><br/></td></tr>
-<tr class="separator:ga78df99aeaeb2c0a9208cba6f243022a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf75b7891af56a6d6368e75f2e92b6223"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaf75b7891af56a6d6368e75f2e92b6223">SDIO_ReadCIS</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, const uint32_t *tupleList, uint32_t tupleNum)</td></tr>
-<tr class="memdesc:gaf75b7891af56a6d6368e75f2e92b6223"><td class="mdescLeft">&#160;</td><td class="mdescRight">read SDIO card CIS for each function  <a href="#gaf75b7891af56a6d6368e75f2e92b6223">More...</a><br/></td></tr>
-<tr class="separator:gaf75b7891af56a6d6368e75f2e92b6223"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a02395a67e477b281e13c2b43b35857"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga1a02395a67e477b281e13c2b43b35857">SDIO_PollingCardInsert</a> (sdio_card_t *card, uint32_t status)</td></tr>
-<tr class="memdesc:ga1a02395a67e477b281e13c2b43b35857"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio wait card detect function.  <a href="#ga1a02395a67e477b281e13c2b43b35857">More...</a><br/></td></tr>
-<tr class="separator:ga1a02395a67e477b281e13c2b43b35857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad02df0717fc54a10a2bb170cb5ab92b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gad02df0717fc54a10a2bb170cb5ab92b9">SDIO_IsCardPresent</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:gad02df0717fc54a10a2bb170cb5ab92b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio card present check function.  <a href="#gad02df0717fc54a10a2bb170cb5ab92b9">More...</a><br/></td></tr>
-<tr class="separator:gad02df0717fc54a10a2bb170cb5ab92b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Unlock sequence</h2></td></tr>
+<tr class="memitem:ga8825b35bd62726165737f5dc0f5f61e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8825b35bd62726165737f5dc0f5f61e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga8825b35bd62726165737f5dc0f5f61e4">WDOG_FIRST_WORD_OF_UNLOCK</a>&#160;&#160;&#160;(RTWDOG_UPDATE_KEY &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:ga8825b35bd62726165737f5dc0f5f61e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">First word of unlock sequence. <br/></td></tr>
+<tr class="separator:ga8825b35bd62726165737f5dc0f5f61e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae2018a4151df654f86822786500cf2d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae2018a4151df654f86822786500cf2d3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gae2018a4151df654f86822786500cf2d3">WDOG_SECOND_WORD_OF_UNLOCK</a>&#160;&#160;&#160;((RTWDOG_UPDATE_KEY &gt;&gt; 16U) &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:gae2018a4151df654f86822786500cf2d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second word of unlock sequence. <br/></td></tr>
+<tr class="separator:gae2018a4151df654f86822786500cf2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-IO operations</h2></td></tr>
-<tr class="memitem:ga4cd4d79ffce74b8374b486e3f389a560"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga4cd4d79ffce74b8374b486e3f389a560">SDIO_IO_Write_Direct</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *data, bool raw)</td></tr>
-<tr class="memdesc:ga4cd4d79ffce74b8374b486e3f389a560"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO direct write transfer function.  <a href="#ga4cd4d79ffce74b8374b486e3f389a560">More...</a><br/></td></tr>
-<tr class="separator:ga4cd4d79ffce74b8374b486e3f389a560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacbe48b74676d809d9bcf948c89915c79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gacbe48b74676d809d9bcf948c89915c79">SDIO_IO_Read_Direct</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *data)</td></tr>
-<tr class="memdesc:gacbe48b74676d809d9bcf948c89915c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO direct read transfer function.  <a href="#gacbe48b74676d809d9bcf948c89915c79">More...</a><br/></td></tr>
-<tr class="separator:gacbe48b74676d809d9bcf948c89915c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22478b5061fd90f914acc45574fdc7ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga22478b5061fd90f914acc45574fdc7ad">SDIO_IO_RW_Direct</a> (sdio_card_t *card, <a class="el" href="a00064.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a> direction, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t dataIn, uint8_t *dataOut)</td></tr>
-<tr class="memdesc:ga22478b5061fd90f914acc45574fdc7ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO direct read/write transfer function.  <a href="#ga22478b5061fd90f914acc45574fdc7ad">More...</a><br/></td></tr>
-<tr class="separator:ga22478b5061fd90f914acc45574fdc7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga419cc9819458bd605262ba149fa607dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga419cc9819458bd605262ba149fa607dc">SDIO_IO_Write_Extended</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *buffer, uint32_t count, uint32_t flags)</td></tr>
-<tr class="memdesc:ga419cc9819458bd605262ba149fa607dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO extended write transfer function.  <a href="#ga419cc9819458bd605262ba149fa607dc">More...</a><br/></td></tr>
-<tr class="separator:ga419cc9819458bd605262ba149fa607dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga663f22e0a9f35b5b6f6c8cfe062b9a19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga663f22e0a9f35b5b6f6c8cfe062b9a19">SDIO_IO_Read_Extended</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *buffer, uint32_t count, uint32_t flags)</td></tr>
-<tr class="memdesc:ga663f22e0a9f35b5b6f6c8cfe062b9a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO extended read transfer function.  <a href="#ga663f22e0a9f35b5b6f6c8cfe062b9a19">More...</a><br/></td></tr>
-<tr class="separator:ga663f22e0a9f35b5b6f6c8cfe062b9a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d90b3f3516e04d1d89f73c3b939eadb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga1d90b3f3516e04d1d89f73c3b939eadb">SDIO_EnableIOInterrupt</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, bool enable)</td></tr>
-<tr class="memdesc:ga1d90b3f3516e04d1d89f73c3b939eadb"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable IO interrupt  <a href="#ga1d90b3f3516e04d1d89f73c3b939eadb">More...</a><br/></td></tr>
-<tr class="separator:ga1d90b3f3516e04d1d89f73c3b939eadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85f16ed455700421111456391a889d1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga85f16ed455700421111456391a889d1f">SDIO_EnableIO</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, bool enable)</td></tr>
-<tr class="memdesc:ga85f16ed455700421111456391a889d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable IO and wait IO ready  <a href="#ga85f16ed455700421111456391a889d1f">More...</a><br/></td></tr>
-<tr class="separator:ga85f16ed455700421111456391a889d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga499c1fe5773784b7ba199c076d365476"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga499c1fe5773784b7ba199c076d365476">SDIO_SelectIO</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func)</td></tr>
-<tr class="memdesc:ga499c1fe5773784b7ba199c076d365476"><td class="mdescLeft">&#160;</td><td class="mdescRight">select IO  <a href="#ga499c1fe5773784b7ba199c076d365476">More...</a><br/></td></tr>
-<tr class="separator:ga499c1fe5773784b7ba199c076d365476"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd873183a1d4972c52e8e110af3503ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gacd873183a1d4972c52e8e110af3503ef">SDIO_AbortIO</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func)</td></tr>
-<tr class="memdesc:gacd873183a1d4972c52e8e110af3503ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort IO transfer.  <a href="#gacd873183a1d4972c52e8e110af3503ef">More...</a><br/></td></tr>
-<tr class="separator:gacd873183a1d4972c52e8e110af3503ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d7eb887cb13f6a837bb7b7ff42fdddc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga1d7eb887cb13f6a837bb7b7ff42fdddc">SDIO_SetDriverStrength</a> (sdio_card_t *card, <a class="el" href="a00052.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength)</td></tr>
-<tr class="memdesc:ga1d7eb887cb13f6a837bb7b7ff42fdddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set driver strength.  <a href="#ga1d7eb887cb13f6a837bb7b7ff42fdddc">More...</a><br/></td></tr>
-<tr class="separator:ga1d7eb887cb13f6a837bb7b7ff42fdddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf30a83e0424613e2c44c4a61b2ffae32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaf30a83e0424613e2c44c4a61b2ffae32">SDIO_EnableAsyncInterrupt</a> (sdio_card_t *card, bool enable)</td></tr>
-<tr class="memdesc:gaf30a83e0424613e2c44c4a61b2ffae32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Async interrupt.  <a href="#gaf30a83e0424613e2c44c4a61b2ffae32">More...</a><br/></td></tr>
-<tr class="separator:gaf30a83e0424613e2c44c4a61b2ffae32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e69a2c71e3fefb8e77f53dd43843ee1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga4e69a2c71e3fefb8e77f53dd43843ee1">SDIO_GetPendingInterrupt</a> (sdio_card_t *card, uint8_t *pendingInt)</td></tr>
-<tr class="memdesc:ga4e69a2c71e3fefb8e77f53dd43843ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pending interrupt.  <a href="#ga4e69a2c71e3fefb8e77f53dd43843ee1">More...</a><br/></td></tr>
-<tr class="separator:ga4e69a2c71e3fefb8e77f53dd43843ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c0e3742026865e079ff4d15903b7b55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga5c0e3742026865e079ff4d15903b7b55">SDIO_IO_Transfer</a> (sdio_card_t *card, <a class="el" href="a00052.html#ga77154625e2d23b77a5242e28de41d250">sdio_command_t</a> cmd, uint32_t argument, uint32_t blockSize, uint8_t *txData, uint8_t *rxData, uint16_t dataSize, uint32_t *response)</td></tr>
-<tr class="memdesc:ga5c0e3742026865e079ff4d15903b7b55"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio card io transfer function.  <a href="#ga5c0e3742026865e079ff4d15903b7b55">More...</a><br/></td></tr>
-<tr class="separator:ga5c0e3742026865e079ff4d15903b7b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4c9b0351ead20e77eb148bc4cee7d42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gac4c9b0351ead20e77eb148bc4cee7d42">SDIO_SetIOIRQHandler</a> (sdio_card_t *card, <a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, <a class="el" href="a00064.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a> handler)</td></tr>
-<tr class="memdesc:gac4c9b0351ead20e77eb148bc4cee7d42"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio set io IRQ handler.  <a href="#gac4c9b0351ead20e77eb148bc4cee7d42">More...</a><br/></td></tr>
-<tr class="separator:gac4c9b0351ead20e77eb148bc4cee7d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0749d472baa307fc39a74d493b3b49e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gad0749d472baa307fc39a74d493b3b49e">SDIO_HandlePendingIOInterrupt</a> (sdio_card_t *card)</td></tr>
-<tr class="memdesc:gad0749d472baa307fc39a74d493b3b49e"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio card io pending interrupt handle function.  <a href="#gad0749d472baa307fc39a74d493b3b49e">More...</a><br/></td></tr>
-<tr class="separator:gad0749d472baa307fc39a74d493b3b49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Refresh sequence</h2></td></tr>
+<tr class="memitem:ga10f1df824e5965d6413b2e892fd04659"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga10f1df824e5965d6413b2e892fd04659"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga10f1df824e5965d6413b2e892fd04659">WDOG_FIRST_WORD_OF_REFRESH</a>&#160;&#160;&#160;(RTWDOG_REFRESH_KEY &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:ga10f1df824e5965d6413b2e892fd04659"><td class="mdescLeft">&#160;</td><td class="mdescRight">First word of refresh sequence. <br/></td></tr>
+<tr class="separator:ga10f1df824e5965d6413b2e892fd04659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a375c7e4d71e7f52e899bce0a9106ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a375c7e4d71e7f52e899bce0a9106ee"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga2a375c7e4d71e7f52e899bce0a9106ee">WDOG_SECOND_WORD_OF_REFRESH</a>&#160;&#160;&#160;((RTWDOG_REFRESH_KEY &gt;&gt; 16U) &amp; 0xFFFFU)</td></tr>
+<tr class="memdesc:ga2a375c7e4d71e7f52e899bce0a9106ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second word of refresh sequence. <br/></td></tr>
+<tr class="separator:ga2a375c7e4d71e7f52e899bce0a9106ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga036d8fa82f101485bb1bef62fbe0efec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga036d8fa82f101485bb1bef62fbe0efec">FSL_RTWDOG_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
+<tr class="memdesc:ga036d8fa82f101485bb1bef62fbe0efec"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTWDOG driver version 2.1.2.  <a href="#ga036d8fa82f101485bb1bef62fbe0efec">More...</a><br/></td></tr>
+<tr class="separator:ga036d8fa82f101485bb1bef62fbe0efec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+RTWDOG Initialization and De-initialization</h2></td></tr>
+<tr class="memitem:ga9b0f93e60a4ad521b60ea546e2b7cde5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga9b0f93e60a4ad521b60ea546e2b7cde5">RTWDOG_GetDefaultConfig</a> (<a class="el" href="a00064.html#a00487">rtwdog_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga9b0f93e60a4ad521b60ea546e2b7cde5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the RTWDOG configuration structure.  <a href="#ga9b0f93e60a4ad521b60ea546e2b7cde5">More...</a><br/></td></tr>
+<tr class="separator:ga9b0f93e60a4ad521b60ea546e2b7cde5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf45b60f55a83c5f3632b4136a3ad2b52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gaf45b60f55a83c5f3632b4136a3ad2b52">RTWDOG_Init</a> (RTWDOG_Type *base, const <a class="el" href="a00064.html#a00487">rtwdog_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaf45b60f55a83c5f3632b4136a3ad2b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the RTWDOG module.  <a href="#gaf45b60f55a83c5f3632b4136a3ad2b52">More...</a><br/></td></tr>
+<tr class="separator:gaf45b60f55a83c5f3632b4136a3ad2b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga470b1d21c8013531100e7c3c605046a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga470b1d21c8013531100e7c3c605046a7">RTWDOG_Deinit</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga470b1d21c8013531100e7c3c605046a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the RTWDOG module.  <a href="#ga470b1d21c8013531100e7c3c605046a7">More...</a><br/></td></tr>
+<tr class="separator:ga470b1d21c8013531100e7c3c605046a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+RTWDOG functional Operation</h2></td></tr>
+<tr class="memitem:gab07abcef0c2d984783ab36df5b08ffa4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gab07abcef0c2d984783ab36df5b08ffa4">RTWDOG_Enable</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:gab07abcef0c2d984783ab36df5b08ffa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the RTWDOG module.  <a href="#gab07abcef0c2d984783ab36df5b08ffa4">More...</a><br/></td></tr>
+<tr class="separator:gab07abcef0c2d984783ab36df5b08ffa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7526eb9df0830431e942fcbca32ca6cd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga7526eb9df0830431e942fcbca32ca6cd">RTWDOG_Disable</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga7526eb9df0830431e942fcbca32ca6cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the RTWDOG module.  <a href="#ga7526eb9df0830431e942fcbca32ca6cd">More...</a><br/></td></tr>
+<tr class="separator:ga7526eb9df0830431e942fcbca32ca6cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69c0e214f7424205a23a902b688cb00d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga69c0e214f7424205a23a902b688cb00d">RTWDOG_EnableInterrupts</a> (RTWDOG_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga69c0e214f7424205a23a902b688cb00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the RTWDOG interrupt.  <a href="#ga69c0e214f7424205a23a902b688cb00d">More...</a><br/></td></tr>
+<tr class="separator:ga69c0e214f7424205a23a902b688cb00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58a299966ea5b0d72eab1e3a95916459"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga58a299966ea5b0d72eab1e3a95916459">RTWDOG_DisableInterrupts</a> (RTWDOG_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga58a299966ea5b0d72eab1e3a95916459"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the RTWDOG interrupt.  <a href="#ga58a299966ea5b0d72eab1e3a95916459">More...</a><br/></td></tr>
+<tr class="separator:ga58a299966ea5b0d72eab1e3a95916459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcee9521ed7f9e2106cbc8844c915910"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gabcee9521ed7f9e2106cbc8844c915910">RTWDOG_GetStatusFlags</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:gabcee9521ed7f9e2106cbc8844c915910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the RTWDOG all status flags.  <a href="#gabcee9521ed7f9e2106cbc8844c915910">More...</a><br/></td></tr>
+<tr class="separator:gabcee9521ed7f9e2106cbc8844c915910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6467fc58dc00affb0daf4df8c2edec9d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga6467fc58dc00affb0daf4df8c2edec9d">RTWDOG_EnableWindowMode</a> (RTWDOG_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga6467fc58dc00affb0daf4df8c2edec9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the window mode.  <a href="#ga6467fc58dc00affb0daf4df8c2edec9d">More...</a><br/></td></tr>
+<tr class="separator:ga6467fc58dc00affb0daf4df8c2edec9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc86c177da23e2aea8980c9722f2d2af"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gafc86c177da23e2aea8980c9722f2d2af">RTWDOG_CountToMesec</a> (RTWDOG_Type *base, uint32_t count, uint32_t clockFreqInHz)</td></tr>
+<tr class="memdesc:gafc86c177da23e2aea8980c9722f2d2af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts raw count value to millisecond.  <a href="#gafc86c177da23e2aea8980c9722f2d2af">More...</a><br/></td></tr>
+<tr class="separator:gafc86c177da23e2aea8980c9722f2d2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49c1f47ae1f5eacc9d33035a96919bd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga49c1f47ae1f5eacc9d33035a96919bd6">RTWDOG_ClearStatusFlags</a> (RTWDOG_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga49c1f47ae1f5eacc9d33035a96919bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the RTWDOG flag.  <a href="#ga49c1f47ae1f5eacc9d33035a96919bd6">More...</a><br/></td></tr>
+<tr class="separator:ga49c1f47ae1f5eacc9d33035a96919bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ef5c238172a1384ca3add569094505d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga1ef5c238172a1384ca3add569094505d">RTWDOG_SetTimeoutValue</a> (RTWDOG_Type *base, uint16_t timeoutCount)</td></tr>
+<tr class="memdesc:ga1ef5c238172a1384ca3add569094505d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the RTWDOG timeout value.  <a href="#ga1ef5c238172a1384ca3add569094505d">More...</a><br/></td></tr>
+<tr class="separator:ga1ef5c238172a1384ca3add569094505d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c32aa54a50e5ef0fc68945cb74549ad"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga8c32aa54a50e5ef0fc68945cb74549ad">RTWDOG_SetWindowValue</a> (RTWDOG_Type *base, uint16_t windowValue)</td></tr>
+<tr class="memdesc:ga8c32aa54a50e5ef0fc68945cb74549ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the RTWDOG window value.  <a href="#ga8c32aa54a50e5ef0fc68945cb74549ad">More...</a><br/></td></tr>
+<tr class="separator:ga8c32aa54a50e5ef0fc68945cb74549ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacac03752d33b0b906a9bc09c7b83d1d1"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gacac03752d33b0b906a9bc09c7b83d1d1">RTWDOG_Unlock</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:gacac03752d33b0b906a9bc09c7b83d1d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlocks the RTWDOG register written.  <a href="#gacac03752d33b0b906a9bc09c7b83d1d1">More...</a><br/></td></tr>
+<tr class="separator:gacac03752d33b0b906a9bc09c7b83d1d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d8b4744fc5ad161c8e5fbc47255328e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga0d8b4744fc5ad161c8e5fbc47255328e">RTWDOG_Refresh</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga0d8b4744fc5ad161c8e5fbc47255328e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refreshes the RTWDOG timer.  <a href="#ga0d8b4744fc5ad161c8e5fbc47255328e">More...</a><br/></td></tr>
+<tr class="separator:ga0d8b4744fc5ad161c8e5fbc47255328e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c3760e127cbcf22983a65d13c8a4bcd"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga8c3760e127cbcf22983a65d13c8a4bcd">RTWDOG_GetCounterValue</a> (RTWDOG_Type *base)</td></tr>
+<tr class="memdesc:ga8c3760e127cbcf22983a65d13c8a4bcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the RTWDOG counter value.  <a href="#ga8c3760e127cbcf22983a65d13c8a4bcd">More...</a><br/></td></tr>
+<tr class="separator:ga8c3760e127cbcf22983a65d13c8a4bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00328" id="a00328"></a>
+<a name="a00488" id="a00488"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _sdio_card</td>
+          <td class="memname">struct rtwdog_work_mode_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>sdio card descriptor</p>
-<p>Define the card structure including the necessary fields to identify and describe the card. </p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aff91723723609dbd00d027e7e6cee4e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff91723723609dbd00d027e7e6cee4e8"></a>
-<a class="el" href="a00066.html#a00492">sdmmchost_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aff91723723609dbd00d027e7e6cee4e8">host</a></td></tr>
-<tr class="memdesc:aff91723723609dbd00d027e7e6cee4e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host information. <br/></td></tr>
-<tr class="separator:aff91723723609dbd00d027e7e6cee4e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85fb84502cfbe41a1264c1dfbe4ae37f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85fb84502cfbe41a1264c1dfbe4ae37f"></a>
-<a class="el" href="a00052.html#a00489">sdio_usr_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a85fb84502cfbe41a1264c1dfbe4ae37f">usrParam</a></td></tr>
-<tr class="memdesc:a85fb84502cfbe41a1264c1dfbe4ae37f"><td class="mdescLeft">&#160;</td><td class="mdescRight">user parameter <br/></td></tr>
-<tr class="separator:a85fb84502cfbe41a1264c1dfbe4ae37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3a92263c58ded5911a0c0bce688352f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa3a92263c58ded5911a0c0bce688352f">noInternalAlign</a></td></tr>
-<tr class="memdesc:aa3a92263c58ded5911a0c0bce688352f"><td class="mdescLeft">&#160;</td><td class="mdescRight">use this flag to disable sdmmc align.  <a href="#aa3a92263c58ded5911a0c0bce688352f">More...</a><br/></td></tr>
-<tr class="separator:aa3a92263c58ded5911a0c0bce688352f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af117938433e273d737ddcbb023ca2d79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af117938433e273d737ddcbb023ca2d79"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#af117938433e273d737ddcbb023ca2d79">internalBuffer</a> [<a class="el" href="a00052.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]</td></tr>
-<tr class="memdesc:af117938433e273d737ddcbb023ca2d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal buffer <br/></td></tr>
-<tr class="separator:af117938433e273d737ddcbb023ca2d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fed1ffae7a9b0c2874c8c34ab41e4ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fed1ffae7a9b0c2874c8c34ab41e4ce"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4fed1ffae7a9b0c2874c8c34ab41e4ce">isHostReady</a></td></tr>
-<tr class="memdesc:a4fed1ffae7a9b0c2874c8c34ab41e4ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">use this flag to indicate if need host re-init or not <br/></td></tr>
-<tr class="separator:a4fed1ffae7a9b0c2874c8c34ab41e4ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab41bb166ddf4ee9ddf6c1ef03296a877"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab41bb166ddf4ee9ddf6c1ef03296a877"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab41bb166ddf4ee9ddf6c1ef03296a877">memPresentFlag</a></td></tr>
-<tr class="memdesc:ab41bb166ddf4ee9ddf6c1ef03296a877"><td class="mdescLeft">&#160;</td><td class="mdescRight">indicate if memory present <br/></td></tr>
-<tr class="separator:ab41bb166ddf4ee9ddf6c1ef03296a877"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4efa0a0f8086a31d1cd6d7337ed5ea24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4efa0a0f8086a31d1cd6d7337ed5ea24"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4efa0a0f8086a31d1cd6d7337ed5ea24">busClock_Hz</a></td></tr>
-<tr class="memdesc:a4efa0a0f8086a31d1cd6d7337ed5ea24"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD bus clock frequency united in Hz. <br/></td></tr>
-<tr class="separator:a4efa0a0f8086a31d1cd6d7337ed5ea24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8120eb0af2d45fb67f968af63fa99505"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8120eb0af2d45fb67f968af63fa99505"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a8120eb0af2d45fb67f968af63fa99505">relativeAddress</a></td></tr>
-<tr class="memdesc:a8120eb0af2d45fb67f968af63fa99505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative address of the card. <br/></td></tr>
-<tr class="separator:a8120eb0af2d45fb67f968af63fa99505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac23564e5abb6823da4d5d42e7d22e5df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac23564e5abb6823da4d5d42e7d22e5df"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ac23564e5abb6823da4d5d42e7d22e5df">sdVersion</a></td></tr>
-<tr class="memdesc:ac23564e5abb6823da4d5d42e7d22e5df"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD version. <br/></td></tr>
-<tr class="separator:ac23564e5abb6823da4d5d42e7d22e5df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a839c4f9ded7733adde635b9f31a4ef50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a839c4f9ded7733adde635b9f31a4ef50"></a>
-<a class="el" href="a00052.html#ga508c3d50863e57dce5fa1b7758972e1b">sd_timing_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a839c4f9ded7733adde635b9f31a4ef50">currentTiming</a></td></tr>
-<tr class="memdesc:a839c4f9ded7733adde635b9f31a4ef50"><td class="mdescLeft">&#160;</td><td class="mdescRight">current timing mode <br/></td></tr>
-<tr class="separator:a839c4f9ded7733adde635b9f31a4ef50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a877165b60f8f29595fcbc973cfb3bbbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a877165b60f8f29595fcbc973cfb3bbbe"></a>
-<a class="el" href="a00052.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a877165b60f8f29595fcbc973cfb3bbbe">driverStrength</a></td></tr>
-<tr class="memdesc:a877165b60f8f29595fcbc973cfb3bbbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">driver strength <br/></td></tr>
-<tr class="separator:a877165b60f8f29595fcbc973cfb3bbbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b59e4128776be4cbe36ff579230611d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b59e4128776be4cbe36ff579230611d"></a>
-<a class="el" href="a00052.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a1b59e4128776be4cbe36ff579230611d">maxCurrent</a></td></tr>
-<tr class="memdesc:a1b59e4128776be4cbe36ff579230611d"><td class="mdescLeft">&#160;</td><td class="mdescRight">card current limit <br/></td></tr>
-<tr class="separator:a1b59e4128776be4cbe36ff579230611d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aecd4677ec222958c8daad36033933d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7aecd4677ec222958c8daad36033933d"></a>
-<a class="el" href="a00052.html#ga27fd895fac89bbc0288543ca0b1e371c">sdmmc_operation_voltage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a7aecd4677ec222958c8daad36033933d">operationVoltage</a></td></tr>
-<tr class="memdesc:a7aecd4677ec222958c8daad36033933d"><td class="mdescLeft">&#160;</td><td class="mdescRight">card operation voltage <br/></td></tr>
-<tr class="separator:a7aecd4677ec222958c8daad36033933d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac882417e33e2c8995e718f7f076cd570"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac882417e33e2c8995e718f7f076cd570"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ac882417e33e2c8995e718f7f076cd570">sdioVersion</a></td></tr>
-<tr class="memdesc:ac882417e33e2c8995e718f7f076cd570"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO version. <br/></td></tr>
-<tr class="separator:ac882417e33e2c8995e718f7f076cd570"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5f4f00e76462d549a30bad447fa22e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5f4f00e76462d549a30bad447fa22e1"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ae5f4f00e76462d549a30bad447fa22e1">cccrVersioin</a></td></tr>
-<tr class="memdesc:ae5f4f00e76462d549a30bad447fa22e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">CCCR version. <br/></td></tr>
-<tr class="separator:ae5f4f00e76462d549a30bad447fa22e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28d663dc9d286efea1ea40f27963ddab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28d663dc9d286efea1ea40f27963ddab"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a28d663dc9d286efea1ea40f27963ddab">ioTotalNumber</a></td></tr>
-<tr class="memdesc:a28d663dc9d286efea1ea40f27963ddab"><td class="mdescLeft">&#160;</td><td class="mdescRight">total number of IO function <br/></td></tr>
-<tr class="separator:a28d663dc9d286efea1ea40f27963ddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a014bf722d879d642eadbaf98a3f79ce4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a014bf722d879d642eadbaf98a3f79ce4"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a014bf722d879d642eadbaf98a3f79ce4">cccrflags</a></td></tr>
-<tr class="memdesc:a014bf722d879d642eadbaf98a3f79ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags in _sd_card_flag. <br/></td></tr>
-<tr class="separator:a014bf722d879d642eadbaf98a3f79ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b92c90fc8d938d03859842c084a13fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b92c90fc8d938d03859842c084a13fc"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4b92c90fc8d938d03859842c084a13fc">io0blockSize</a></td></tr>
-<tr class="memdesc:a4b92c90fc8d938d03859842c084a13fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">record the io0 block size <br/></td></tr>
-<tr class="separator:a4b92c90fc8d938d03859842c084a13fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a493c409455409991a2af4ae08e31b386"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a493c409455409991a2af4ae08e31b386"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a493c409455409991a2af4ae08e31b386">ocr</a></td></tr>
-<tr class="memdesc:a493c409455409991a2af4ae08e31b386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw OCR content, only 24bit avalible for SDIO card. <br/></td></tr>
-<tr class="separator:a493c409455409991a2af4ae08e31b386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a024ce205b03a42375447c1ff8b420fcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a024ce205b03a42375447c1ff8b420fcc"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a024ce205b03a42375447c1ff8b420fcc">commonCISPointer</a></td></tr>
-<tr class="memdesc:a024ce205b03a42375447c1ff8b420fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">point to common CIS <br/></td></tr>
-<tr class="separator:a024ce205b03a42375447c1ff8b420fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8212a1cbbc785d1524e50eff84619275"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8212a1cbbc785d1524e50eff84619275"></a>
-<a class="el" href="a00052.html#a00486">sdio_common_cis_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a8212a1cbbc785d1524e50eff84619275">commonCIS</a></td></tr>
-<tr class="memdesc:a8212a1cbbc785d1524e50eff84619275"><td class="mdescLeft">&#160;</td><td class="mdescRight">CIS table. <br/></td></tr>
-<tr class="separator:a8212a1cbbc785d1524e50eff84619275"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace621e0a3fe5c94aeacd6e3aa0447523"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace621e0a3fe5c94aeacd6e3aa0447523"></a>
-<a class="el" href="a00052.html#a00487">sdio_fbr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ace621e0a3fe5c94aeacd6e3aa0447523">ioFBR</a> [<a class="el" href="a00064.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>]</td></tr>
-<tr class="memdesc:ace621e0a3fe5c94aeacd6e3aa0447523"><td class="mdescLeft">&#160;</td><td class="mdescRight">FBR table. <br/></td></tr>
-<tr class="separator:ace621e0a3fe5c94aeacd6e3aa0447523"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae80511f00c2dcd48052cbb24a1244c9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae80511f00c2dcd48052cbb24a1244c9a"></a>
-<a class="el" href="a00052.html#a00488">sdio_func_cis_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ae80511f00c2dcd48052cbb24a1244c9a">funcCIS</a> [<a class="el" href="a00064.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>]</td></tr>
-<tr class="memdesc:ae80511f00c2dcd48052cbb24a1244c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">function CIS table <br/></td></tr>
-<tr class="separator:ae80511f00c2dcd48052cbb24a1244c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8a72b23fec3ec0d480f2ebe4558cd5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8a72b23fec3ec0d480f2ebe4558cd5d"></a>
-<a class="el" href="a00064.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aa8a72b23fec3ec0d480f2ebe4558cd5d">ioIRQHandler</a> [<a class="el" href="a00064.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>]</td></tr>
-<tr class="memdesc:aa8a72b23fec3ec0d480f2ebe4558cd5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">io IRQ handler <br/></td></tr>
-<tr class="separator:aa8a72b23fec3ec0d480f2ebe4558cd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19acaf5999a53978041fbedcc2d974ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19acaf5999a53978041fbedcc2d974ba"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a19acaf5999a53978041fbedcc2d974ba">ioIntIndex</a></td></tr>
-<tr class="memdesc:a19acaf5999a53978041fbedcc2d974ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to record current enabled io interrupt index <br/></td></tr>
-<tr class="separator:a19acaf5999a53978041fbedcc2d974ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3b2c92cf994137596ef25e273281e43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3b2c92cf994137596ef25e273281e43"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ac3b2c92cf994137596ef25e273281e43">ioIntNums</a></td></tr>
-<tr class="memdesc:ac3b2c92cf994137596ef25e273281e43"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to record total enabled io interrupt numbers <br/></td></tr>
-<tr class="separator:ac3b2c92cf994137596ef25e273281e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70e254e10b9328a91b6c41e8648de05b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70e254e10b9328a91b6c41e8648de05b"></a>
-<a class="el" href="a00065.html#a00491">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a70e254e10b9328a91b6c41e8648de05b">lock</a></td></tr>
-<tr class="memdesc:a70e254e10b9328a91b6c41e8648de05b"><td class="mdescLeft">&#160;</td><td class="mdescRight">card access lock <br/></td></tr>
-<tr class="separator:a70e254e10b9328a91b6c41e8648de05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab54bf4ab423e60be41368acdb2602439"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab54bf4ab423e60be41368acdb2602439"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab54bf4ab423e60be41368acdb2602439">enableWait</a></td></tr>
+<tr class="memdesc:ab54bf4ab423e60be41368acdb2602439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG in wait mode. <br/></td></tr>
+<tr class="separator:ab54bf4ab423e60be41368acdb2602439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8caa5a6c04d0f3dcafba6ac6adb9905"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8caa5a6c04d0f3dcafba6ac6adb9905"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ae8caa5a6c04d0f3dcafba6ac6adb9905">enableStop</a></td></tr>
+<tr class="memdesc:ae8caa5a6c04d0f3dcafba6ac6adb9905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG in stop mode. <br/></td></tr>
+<tr class="separator:ae8caa5a6c04d0f3dcafba6ac6adb9905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab26c42c1815cfdc9b8b5f759db9be94d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab26c42c1815cfdc9b8b5f759db9be94d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab26c42c1815cfdc9b8b5f759db9be94d">enableDebug</a></td></tr>
+<tr class="memdesc:ab26c42c1815cfdc9b8b5f759db9be94d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG in debug mode. <br/></td></tr>
+<tr class="separator:ab26c42c1815cfdc9b8b5f759db9be94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aa3a92263c58ded5911a0c0bce688352f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool sdio_card_t::noInternalAlign</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If disable, sdmmc will not make sure the data buffer address is word align, otherwise all the transfer are align to low level driver </p>
 
 </div>
 </div>
+<a name="a00487" id="a00487"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct rtwdog_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a4d385e66b0c28b471ad83fe2e6fc6a1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4d385e66b0c28b471ad83fe2e6fc6a1b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a4d385e66b0c28b471ad83fe2e6fc6a1b">enableRtwdog</a></td></tr>
+<tr class="memdesc:a4d385e66b0c28b471ad83fe2e6fc6a1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG. <br/></td></tr>
+<tr class="separator:a4d385e66b0c28b471ad83fe2e6fc6a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff561a937f074058a0565d2ffded113b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff561a937f074058a0565d2ffded113b"></a>
+<a class="el" href="a00064.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b">rtwdog_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#aff561a937f074058a0565d2ffded113b">clockSource</a></td></tr>
+<tr class="memdesc:aff561a937f074058a0565d2ffded113b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source select. <br/></td></tr>
+<tr class="separator:aff561a937f074058a0565d2ffded113b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf6d7a1cdf7d57cc6f2893d3eef8f0e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf6d7a1cdf7d57cc6f2893d3eef8f0e2"></a>
+<a class="el" href="a00064.html#ga2a46bb420b0a97fc9d440ee7ef329ffa">rtwdog_clock_prescaler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#adf6d7a1cdf7d57cc6f2893d3eef8f0e2">prescaler</a></td></tr>
+<tr class="memdesc:adf6d7a1cdf7d57cc6f2893d3eef8f0e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock prescaler value. <br/></td></tr>
+<tr class="separator:adf6d7a1cdf7d57cc6f2893d3eef8f0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6a2f68b62b07a7021f877944a685c44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6a2f68b62b07a7021f877944a685c44"></a>
+<a class="el" href="a00064.html#a00488">rtwdog_work_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#af6a2f68b62b07a7021f877944a685c44">workMode</a></td></tr>
+<tr class="memdesc:af6a2f68b62b07a7021f877944a685c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures RTWDOG work mode in debug stop and wait mode. <br/></td></tr>
+<tr class="separator:af6a2f68b62b07a7021f877944a685c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82219c16b8f8486929b76b2378ea61aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82219c16b8f8486929b76b2378ea61aa"></a>
+<a class="el" href="a00064.html#gae84238ba96d9319d820c3319c5f7e526">rtwdog_test_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a82219c16b8f8486929b76b2378ea61aa">testMode</a></td></tr>
+<tr class="memdesc:a82219c16b8f8486929b76b2378ea61aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures RTWDOG test mode. <br/></td></tr>
+<tr class="separator:a82219c16b8f8486929b76b2378ea61aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99c63818532637f61d00993753da6511"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99c63818532637f61d00993753da6511"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a99c63818532637f61d00993753da6511">enableUpdate</a></td></tr>
+<tr class="memdesc:a99c63818532637f61d00993753da6511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update write-once register enable. <br/></td></tr>
+<tr class="separator:a99c63818532637f61d00993753da6511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af397bc8e047c5572cfe977a1a094b04d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af397bc8e047c5572cfe977a1a094b04d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#af397bc8e047c5572cfe977a1a094b04d">enableInterrupt</a></td></tr>
+<tr class="memdesc:af397bc8e047c5572cfe977a1a094b04d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG interrupt. <br/></td></tr>
+<tr class="separator:af397bc8e047c5572cfe977a1a094b04d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a005c4d1da33cdaa57cc868658969b963"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a005c4d1da33cdaa57cc868658969b963"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a005c4d1da33cdaa57cc868658969b963">enableWindowMode</a></td></tr>
+<tr class="memdesc:a005c4d1da33cdaa57cc868658969b963"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables RTWDOG window mode. <br/></td></tr>
+<tr class="separator:a005c4d1da33cdaa57cc868658969b963"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9869a43ba272014de8f4b2f91ec45e10"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9869a43ba272014de8f4b2f91ec45e10"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a9869a43ba272014de8f4b2f91ec45e10">windowValue</a></td></tr>
+<tr class="memdesc:a9869a43ba272014de8f4b2f91ec45e10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Window value. <br/></td></tr>
+<tr class="separator:a9869a43ba272014de8f4b2f91ec45e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4192d93defc5943013d8376f708325d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4192d93defc5943013d8376f708325d"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ab4192d93defc5943013d8376f708325d">timeoutValue</a></td></tr>
+<tr class="memdesc:ab4192d93defc5943013d8376f708325d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value. <br/></td></tr>
+<tr class="separator:ab4192d93defc5943013d8376f708325d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab1e1aa37ee346a5118f31e7899e921d1"></a>
+<a class="anchor" id="ga036d8fa82f101485bb1bef62fbe0efec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SDIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 1U)) /*2.4.1*/</td>
+          <td class="memname">#define FSL_RTWDOG_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -411,238 +346,424 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga9dfb4270982e609bc964f5547b0a040a"></a>
+<a class="anchor" id="ga106ba79a9a7b0863ca8555c5d8ad9b3b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00064.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a></td>
+          <td class="memname">enum <a class="el" href="a00064.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b">rtwdog_clock_source_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9dfb4270982e609bc964f5547b0a040aa7c72ffd0968a86552164ec85a5c3fd36"></a>kSDIO_IORead</em>&nbsp;</td><td class="fielddoc">
-<p>io read </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga106ba79a9a7b0863ca8555c5d8ad9b3ba89fe3caec9c47ea18afbea78fa7b75db"></a>kRTWDOG_ClockSource0</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9dfb4270982e609bc964f5547b0a040aae1bcefbd4840a8519fe085167531a356"></a>kSDIO_IOWrite</em>&nbsp;</td><td class="fielddoc">
-<p>io write </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga106ba79a9a7b0863ca8555c5d8ad9b3ba0490435c4f8e6b5f2bfb4d4959ee6ce5"></a>kRTWDOG_ClockSource1</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga106ba79a9a7b0863ca8555c5d8ad9b3ba596c695b96b5287f927f74d78577fe84"></a>kRTWDOG_ClockSource2</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga106ba79a9a7b0863ca8555c5d8ad9b3bad51ba4630b31474e7d497d1defc3075a"></a>kRTWDOG_ClockSource3</em>&nbsp;</td><td class="fielddoc">
+<p>Clock source 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga2a46bb420b0a97fc9d440ee7ef329ffa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga2a46bb420b0a97fc9d440ee7ef329ffa">rtwdog_clock_prescaler_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2a46bb420b0a97fc9d440ee7ef329ffaaffcd087724256907ae1e47f896461e78"></a>kRTWDOG_ClockPrescalerDivide1</em>&nbsp;</td><td class="fielddoc">
+<p>Divided by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2a46bb420b0a97fc9d440ee7ef329ffaa1b8252427d181ff4de3e4ea7eb1aac52"></a>kRTWDOG_ClockPrescalerDivide256</em>&nbsp;</td><td class="fielddoc">
+<p>Divided by 256. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae84238ba96d9319d820c3319c5f7e526"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#gae84238ba96d9319d820c3319c5f7e526">rtwdog_test_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae84238ba96d9319d820c3319c5f7e526a62fe6bb45f28e5b1275bfa1aad708124"></a>kRTWDOG_TestModeDisabled</em>&nbsp;</td><td class="fielddoc">
+<p>Test Mode disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae84238ba96d9319d820c3319c5f7e526ae12fd7134b26ac7e621f2117f3312598"></a>kRTWDOG_UserModeEnabled</em>&nbsp;</td><td class="fielddoc">
+<p>User Mode enabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae84238ba96d9319d820c3319c5f7e526ab885cb05aaad282ee54fe47b8ad270cc"></a>kRTWDOG_LowByteTest</em>&nbsp;</td><td class="fielddoc">
+<p>Test Mode enabled, only low byte is used. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae84238ba96d9319d820c3319c5f7e526aaf013b692ea93f0de8a9c47a814ac09d"></a>kRTWDOG_HighByteTest</em>&nbsp;</td><td class="fielddoc">
+<p>Test Mode enabled, only high byte is used. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga4225d9230a4625186e9b65be501bbc24"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga4225d9230a4625186e9b65be501bbc24">_rtwdog_interrupt_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the settings for all of the RTWDOG interrupt configurations. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a"></a>kRTWDOG_InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt is generated before forcing a reset. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab1ef76bc31ec6ca52a50e1aba88a08d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#gab1ef76bc31ec6ca52a50e1aba88a08d8">_rtwdog_status_flags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the RTWDOG status flags for use in the RTWDOG functions. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38"></a>kRTWDOG_RunningFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Running flag, set when RTWDOG is enabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3"></a>kRTWDOG_InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt flag, set when interrupt occurs. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"></a>
+<a class="anchor" id="ga9b0f93e60a4ad521b60ea546e2b7cde5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_Init </td>
+          <td class="memname">void RTWDOG_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00064.html#a00487">rtwdog_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#ga3b7ba8e7b9bfafde767535a7089da44d">SDIO_Deinit</a>(card);</div>
-<div class="line">* <a class="code" href="a00064.html#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">SDIO_Init</a>(card);</div>
+<p>This function initializes the RTWDOG configuration structure to default values. The default values are: </p>
+<div class="fragment"><div class="line">*   rtwdogConfig-&gt;enableRtwdog = <span class="keyword">true</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;clockSource = <a class="code" href="a00064.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba0490435c4f8e6b5f2bfb4d4959ee6ce5">kRTWDOG_ClockSource1</a>;</div>
+<div class="line">*   rtwdogConfig-&gt;prescaler = <a class="code" href="a00064.html#gga2a46bb420b0a97fc9d440ee7ef329ffaaffcd087724256907ae1e47f896461e78">kRTWDOG_ClockPrescalerDivide1</a>;</div>
+<div class="line">*   rtwdogConfig-&gt;workMode.enableWait = <span class="keyword">true</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;workMode.enableStop = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;workMode.enableDebug = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;testMode = <a class="code" href="a00064.html#ggae84238ba96d9319d820c3319c5f7e526a62fe6bb45f28e5b1275bfa1aad708124">kRTWDOG_TestModeDisabled</a>;</div>
+<div class="line">*   rtwdogConfig-&gt;enableUpdate = <span class="keyword">true</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;enableInterrupt = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;enableWindowMode = <span class="keyword">false</span>;</div>
+<div class="line">*   rtwdogConfig-&gt;windowValue = 0U;</div>
+<div class="line">*   rtwdogConfig-&gt;timeoutValue = 0xFFFFU;</div>
 <div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the RTWDOG configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_GoIdleFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_HandShakeOperationConditionFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidCard</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidVoltage</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SendRelativeAddressFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SelectCardFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_SwitchHighSpeedFail</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_ReadCISFail</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00064.html#a00487" title="Describes RTWDOG configuration structure. ">rtwdog_config_t</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3b7ba8e7b9bfafde767535a7089da44d"></a>
+<a class="anchor" id="gaf45b60f55a83c5f3632b4136a3ad2b52"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SDIO_Deinit </td>
+          <td class="memname">void RTWDOG_Init </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Please note it is a thread safe function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaee0b26685255c5a69ded10b2371008c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_CardInit </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="a00064.html#a00487">rtwdog_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the card only, make sure the host is ready when call this function, otherwise it will return kStatus_SDMMC_HostNotReady.</p>
-<p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#ga13f67b379d7429002674ccf7d730465e">SDIO_CardDeinit</a>(card);</div>
-<div class="line">* <a class="code" href="a00064.html#gaee0b26685255c5a69ded10b2371008c0">SDIO_CardInit</a>(card);</div>
+<p>This function initializes the RTWDOG. To reconfigure the RTWDOG without forcing a reset first, enableUpdate must be set to true in the configuration.</p>
+<p>Example: </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00064.html#a00487">rtwdog_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00064.html#ga9b0f93e60a4ad521b60ea546e2b7cde5">RTWDOG_GetDefaultConfig</a>(&amp;config);</div>
+<div class="line">*   config.<a class="code" href="a00064.html#ab4192d93defc5943013d8376f708325d">timeoutValue</a> = 0x7ffU;</div>
+<div class="line">*   config.<a class="code" href="a00064.html#a99c63818532637f61d00993753da6511">enableUpdate</a> = <span class="keyword">true</span>;</div>
+<div class="line">*   <a class="code" href="a00064.html#gaf45b60f55a83c5f3632b4136a3ad2b52">RTWDOG_Init</a>(wdog_base,&amp;config);</div>
 <div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_HostNotReady</td><td>host is not ready. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_GoIdleFailed</td><td>Go idle failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_NotSupportYet</td><td>Card not support. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SendOperationConditionFailed</td><td>Send operation condition failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_AllSendCidFailed</td><td>Send CID failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SendRelativeAddressFailed</td><td>Send relative address failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SendCsdFailed</td><td>Send CSD failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SelectCardFailed</td><td>Send SELECT_CARD command failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SendScrFailed</td><td>Send SCR failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SetBusWidthFailed</td><td>Set bus width failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SwitchHighSpeedFailed</td><td>Switch high speed failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SetCardBlockSizeFailed</td><td>Set card block size failed. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>The configuration of the RTWDOG. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga13f67b379d7429002674ccf7d730465e"></a>
+<a class="anchor" id="ga470b1d21c8013531100e7c3c605046a7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SDIO_CardDeinit </td>
+          <td class="memname">void RTWDOG_Deinit </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function deinitializes the specific card.</p>
-<p>Please note it is a thread safe function.</p>
+<p>This function shuts down the RTWDOG. Ensure that the WDOG_CS.UPDATE is 1, which means that the register update is enabled.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gab812996961a7bf10ba20fe15ad6b058e"></a>
+<a class="anchor" id="gab07abcef0c2d984783ab36df5b08ffa4"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_HostInit </td>
+          <td class="memname">static void RTWDOG_Enable </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function deinitializes the specific host.</p>
+<p>This function writes a value into the WDOG_CS register to enable the RTWDOG. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga189f1410a950b2f5f1ee703239cebed3"></a>
+<a class="anchor" id="ga7526eb9df0830431e942fcbca32ca6cd"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SDIO_HostDeinit </td>
+          <td class="memname">static void RTWDOG_Disable </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function deinitializes the host.</p>
+<p>This function writes a value into the WDOG_CS register to disable the RTWDOG. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gac505825daac65f982b589ef10e8f64e0"></a>
+<a class="anchor" id="ga69c0e214f7424205a23a902b688cb00d"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SDIO_HostDoReset </td>
+          <td class="memname">static void RTWDOG_EnableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes a value into the WDOG_CS register to enable the RTWDOG interrupt. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. The parameter can be a combination of the following source if defined: <ul>
+<li>kRTWDOG_InterruptEnable </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga58a299966ea5b0d72eab1e3a95916459"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void RTWDOG_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes a value into the WDOG_CS register to disable the RTWDOG interrupt. The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disabled. The parameter can be a combination of the following source if defined: <ul>
+<li>kRTWDOG_InterruptEnable </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gabcee9521ed7f9e2106cbc8844c915910"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t RTWDOG_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function reset the specific host.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function gets all status flags.</p>
+<p>Example to get the running flag: </p>
+<div class="fragment"><div class="line">*   uint32_t status;</div>
+<div class="line">*   status = <a class="code" href="a00064.html#gabcee9521ed7f9e2106cbc8844c915910">RTWDOG_GetStatusFlags</a>(wdog_base) &amp; <a class="code" href="a00064.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38">kRTWDOG_RunningFlag</a>;</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>State of the status flag: asserted (true) or not-asserted (false). </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00064.html#gab1ef76bc31ec6ca52a50e1aba88a08d8" title="RTWDOG status flags. ">_rtwdog_status_flags_t</a><ul>
+<li>true: related status flag has been set.</li>
+<li>false: related status flag is not set. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7b2c66357f64588e8ab6ba45fc1bb29b"></a>
+<a class="anchor" id="ga6467fc58dc00affb0daf4df8c2edec9d"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SDIO_SetCardPower </td>
+          <td class="memname">static void RTWDOG_EnableWindowMode </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -656,558 +777,34 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>The power off operation depend on host or the user define power on function. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-    <tr><td class="paramname">enable</td><td>true is power on, false is power off. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enables(true) or disables(false) the feature. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8cb6ac091eeba10ef001d7ec50ef9adf"></a>
+<a class="anchor" id="gafc86c177da23e2aea8980c9722f2d2af"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_CardInActive </td>
+          <td class="memname">static uint32_t RTWDOG_CountToMesec </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafca21fb443a7642ab6b99d4477fd41b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_GetCardCapability </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga86024856b5fdb11ca5eb076c4d4ad370"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SetBlockSize </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>io number </td></tr>
-    <tr><td class="paramname">blockSize</td><td>block size </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_SetCardBlockSizeFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidArgument</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga47ee885791070dc880f4b5e6027844f9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_CardReset </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac5e6c4d0098f11caa7fc84236fba1bc5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SetDataBusWidth </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#ga0aaaac7d76fefa8e084c2ecf6880da95">sdio_bus_width_t</a>&#160;</td>
-          <td class="paramname"><em>busWidth</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">busWidth</td><td>bus width </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga78df99aeaeb2c0a9208cba6f243022a3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SwitchToHighSpeed </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_SwitchHighSpeedFail</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf75b7891af56a6d6368e75f2e92b6223"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_ReadCIS </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint32_t *&#160;</td>
-          <td class="paramname"><em>tupleList</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>tupleNum</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>io number </td></tr>
-    <tr><td class="paramname">tupleList</td><td>code list </td></tr>
-    <tr><td class="paramname">tupleNum</td><td>code number </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_ReadCISFail</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1a02395a67e477b281e13c2b43b35857"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_PollingCardInsert </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>status</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Detect card through GPIO, CD, DATA3. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-    <tr><td class="paramname">status</td><td>detect status, kSD_Inserted or kSD_Removed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad02df0717fc54a10a2bb170cb5ab92b9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool SDIO_IsCardPresent </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4cd4d79ffce74b8374b486e3f389a560"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Write_Direct </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>raw</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Please note it is a thread safe function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO numner </td></tr>
-    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
-    <tr><td class="paramname">data</td><td>the data pinter to write </td></tr>
-    <tr><td class="paramname">raw</td><td>flag, indicate read after write or write only </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacbe48b74676d809d9bcf948c89915c79"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Read_Direct </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Please note it is a thread safe function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
-    <tr><td class="paramname">data</td><td>pointer to read </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga22478b5061fd90f914acc45574fdc7ad"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_RW_Direct </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a>&#160;</td>
-          <td class="paramname"><em>direction</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>dataIn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>dataOut</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Please note it is a thread safe function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">direction</td><td>io access direction, please reference sdio_io_direction_t. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
-    <tr><td class="paramname">dataIn</td><td>data to write </td></tr>
-    <tr><td class="paramname">dataOut</td><td>data pointer for readback data, support both for read and write, when application want readback the data after write command, dataOut should not be NULL. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga419cc9819458bd605262ba149fa607dc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Write_Extended </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1219,7 +816,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>flags</em>&#160;</td>
+          <td class="paramname"><em>clockFreqInHz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1227,69 +824,39 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Please note it is a thread safe function.</p>
+<p>Note that if the clock frequency is too high the timeout period can be less than 1 ms. In this case this api will return 0 value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
-    <tr><td class="paramname">buffer</td><td>data buffer to write </td></tr>
-    <tr><td class="paramname">count</td><td>data count </td></tr>
-    <tr><td class="paramname">flags</td><td>write flags </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidArgument</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">count</td><td>Raw count value. </td></tr>
+    <tr><td class="paramname">clockFreqInHz</td><td>The frequency of the clock source RTWDOG uses. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga663f22e0a9f35b5b6f6c8cfe062b9a19"></a>
+<a class="anchor" id="ga49c1f47ae1f5eacc9d33035a96919bd6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Read_Extended </td>
+          <td class="memname">void RTWDOG_ClearStatusFlags </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>flags</em>&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1298,374 +865,41 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Please note it is a thread safe function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function clears the RTWDOG status flag.</p>
+<p>Example to clear an interrupt flag: </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00064.html#ga49c1f47ae1f5eacc9d33035a96919bd6">RTWDOG_ClearStatusFlags</a>(wdog_base,<a class="code" href="a00064.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3">kRTWDOG_InterruptFlag</a>);</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
-    <tr><td class="paramname">buffer</td><td>data buffer to read </td></tr>
-    <tr><td class="paramname">count</td><td>data count </td></tr>
-    <tr><td class="paramname">flags</td><td>write flags </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidArgument</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The status flags to clear. The parameter can be any combination of the following values: <ul>
+<li>kRTWDOG_InterruptFlag </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1d90b3f3516e04d1d89f73c3b939eadb"></a>
+<a class="anchor" id="ga1ef5c238172a1384ca3add569094505d"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_EnableIOInterrupt </td>
+          <td class="memname">static void RTWDOG_SetTimeoutValue </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-    <tr><td class="paramname">enable</td><td>enable/disable flag </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga85f16ed455700421111456391a889d1f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_EnableIO </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-    <tr><td class="paramname">enable</td><td>enable/disable flag </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga499c1fe5773784b7ba199c076d365476"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SelectIO </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacd873183a1d4972c52e8e110af3503ef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_AbortIO </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>IO number </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1d7eb887cb13f6a837bb7b7ff42fdddc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SetDriverStrength </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td>
-          <td class="paramname"><em>driverStrength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">driverStrength</td><td>target driver strength. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf30a83e0424613e2c44c4a61b2ffae32"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_EnableAsyncInterrupt </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">enable</td><td>true is enable, false is disable. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4e69a2c71e3fefb8e77f53dd43843ee1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_GetPendingInterrupt </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pendingInt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">pendingInt</td><td>pointer store pending interrupt </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5c0e3742026865e079ff4d15903b7b55"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Transfer </td>
-          <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#ga77154625e2d23b77a5242e28de41d250">sdio_command_t</a>&#160;</td>
-          <td class="paramname"><em>cmd</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>argument</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>txData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>rxData</em>, </td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>dataSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>response</em>&#160;</td>
+          <td class="paramname"><em>timeoutCount</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1673,46 +907,41 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function can be used for trnansfer direct/extend command. Please pay attention to the non-align data buffer address transfer, if data buffer address can not meet host controller internal DMA requirement, sdio driver will try to use internal align buffer if data size is not bigger than internal buffer size, Align address transfer always can get a better performance, so if application want sdio driver make sure buffer address align,</p>
-<p>Please note it is a thread safe function.</p>
+<p>This function writes a timeout value into the WDOG_TOVAL register. The WDOG_TOVAL register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-    <tr><td class="paramname">cmd</td><td>command to transfer </td></tr>
-    <tr><td class="paramname">argument</td><td>argument to transfer </td></tr>
-    <tr><td class="paramname">blockSize</td><td>used for block mode. </td></tr>
-    <tr><td class="paramname">txData</td><td>tx buffer pointer or NULL </td></tr>
-    <tr><td class="paramname">rxData</td><td>rx buffer pointer or NULL </td></tr>
-    <tr><td class="paramname">dataSize</td><td>transfer data size </td></tr>
-    <tr><td class="paramname">response</td><td>reponse pointer, if application want read response back, please set it to a NON-NULL pointer. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
+    <tr><td class="paramname">timeoutCount</td><td>RTWDOG timeout value, count of RTWDOG clock ticks. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gac4c9b0351ead20e77eb148bc4cee7d42"></a>
+<a class="anchor" id="ga8c32aa54a50e5ef0fc68945cb74549ad"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SDIO_SetIOIRQHandler </td>
+          <td class="memname">static void RTWDOG_SetWindowValue </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
-          <td class="paramname"><em>func</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a>&#160;</td>
-          <td class="paramname"><em>handler</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>windowValue</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1720,55 +949,107 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+<p>This function writes a window value into the WDOG_WIN register. The WDOG_WIN register is a write-once register. Ensure that the WCT window is still open and this register has not been written in this WCT while the function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
-    <tr><td class="paramname">func</td><td>function io number. </td></tr>
-    <tr><td class="paramname">handler</td><td>io IRQ handler. </td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+    <tr><td class="paramname">windowValue</td><td>RTWDOG window value. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gad0749d472baa307fc39a74d493b3b49e"></a>
+<a class="anchor" id="gacac03752d33b0b906a9bc09c7b83d1d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_HandlePendingIOInterrupt </td>
+          <td class="memname">__STATIC_FORCEINLINE void RTWDOG_Unlock </td>
           <td>(</td>
-          <td class="paramtype">sdio_card_t *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function is used to handle the pending io interrupt. To reigster a IO IRQ handler, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#ga1d90b3f3516e04d1d89f73c3b939eadb">SDIO_EnableIOInterrupt</a>(card, 0, <span class="keyword">true</span>);</div>
-<div class="line">* <a class="code" href="a00064.html#gac4c9b0351ead20e77eb148bc4cee7d42">SDIO_SetIOIRQHandler</a>(card, 0, func0_handler);</div>
-<div class="line">* </div>
-</div><!-- fragment --><p> call it in interrupt callback </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#gad0749d472baa307fc39a74d493b3b49e">SDIO_HandlePendingIOInterrupt</a>(card);</div>
-<div class="line">* </div>
-</div><!-- fragment --><p> To releae a IO IRQ handler, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00064.html#ga1d90b3f3516e04d1d89f73c3b939eadb">SDIO_EnableIOInterrupt</a>(card, 0, <span class="keyword">false</span>);</div>
-<div class="line">* <a class="code" href="a00064.html#gac4c9b0351ead20e77eb148bc4cee7d42">SDIO_SetIOIRQHandler</a>(card, 0, NULL);</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+<p>This function unlocks the RTWDOG register written.</p>
+<p>Before starting the unlock sequence and following the configuration, disable the global interrupts. Otherwise, an interrupt could effectively invalidate the unlock sequence and the WCT may expire. After the configuration finishes, re-enable the global interrupts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>card descriptor.</td></tr>
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+
+</div>
+</div>
+<a class="anchor" id="ga0d8b4744fc5ad161c8e5fbc47255328e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void RTWDOG_Refresh </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function feeds the RTWDOG. This function should be called before the Watchdog timer is in timeout. Otherwise, a reset is asserted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8c3760e127cbcf22983a65d13c8a4bcd"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t RTWDOG_GetCounterValue </td>
+          <td>(</td>
+          <td class="paramtype">RTWDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function gets the RTWDOG counter value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>RTWDOG peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current RTWDOG counter value. </dd></dl>
 
 </div>
 </div>

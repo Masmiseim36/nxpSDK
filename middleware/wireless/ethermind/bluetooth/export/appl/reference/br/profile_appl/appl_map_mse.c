@@ -88,10 +88,15 @@ static UCHAR   appl_mst_time[]        = "20151012T130510+0100";
 static MAP_IM_OWNER_STATUS appl_map_im_conversations[MAX_APPL_IM_CONVERSATIONS];
 static UCHAR               appl_map_im_converse_index;
 
+static UCHAR    appl_map_mse_event_type[40U];
+static UCHAR    appl_map_mse_event_handle[40U];
+static UCHAR    appl_map_mse_event_msg_type[40U];
+static UCHAR    appl_map_mse_event_ver;
+
 #endif /* MAP_1_3 */
 
 #ifdef MAP_SUPPORT_NOTIFICATION
-UCHAR ntf_status = 0xFFU;
+static UCHAR ntf_status = 0xFFU;
 #endif /* MAP_SUPPORT_NOTIFICATION */
 
 static const UCHAR map_mse_menu[] =
@@ -119,6 +124,11 @@ static const UCHAR map_mse_menu[] =
 \n \
 \t30. Set the application values \n \
 \t31. Get the application values \n \
+\n\
+\t40. Build MAP Event Report File\n \
+\t41. Add New Participant to the Conversation \n \
+\t42. Set Default Conversation List \n \
+\t43. Update Conversation Id fields \n \
 \n \
 Your Choice: ";
 
@@ -209,9 +219,9 @@ void main_map_mse_operations (void)
                 break;
 
             case 5:
-                LOG_DEBUG ("Initializing MAP MSE...\n");
+                printf ("Initializing MAP MSE...\n");
                 retval = BT_map_mse_init ();
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
 
                 /* Reset the MAP handle */
                 for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
@@ -233,10 +243,17 @@ void main_map_mse_operations (void)
 
                 map_mse_print_appl_instances();
 
+                /* Set the Default Conversation List */
+                retval = BT_map_set_default_converstation_list_pl
+                         (
+                             (UCHAR *)MAP_ROOT_FOLDER_BASE,
+                             (UCHAR *)CONVLIST_DATA_FILE
+                         );
+
 #ifdef HAVE_OBJECT_PARSER
-                LOG_DEBUG ("Initializing MAP Parser...\n");
+                printf ("Initializing MAP Parser...\n");
                 retval = object_parser_init (&map_context, map_bmsg_parser_cb);
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
 
                 map_msg_object.envelope_level = 0U;
                 map_msg_object.envelope.content.message = NULL;
@@ -244,19 +261,25 @@ void main_map_mse_operations (void)
                 break;
 
             case 6:
-                LOG_DEBUG ("Shutting down MAP MSE...\n");
+                printf ("Shutting down MAP MSE...\n");
                 retval = BT_map_mse_shutdown ();
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
                 break;
 
             case 7:
                 map_mse_print_appl_instances();
 
-                LOG_DEBUG ("Enter Service Type (1-MAS, 2-MNS): ");
+                printf ("Enter Service Type (1-MAS, 2-MNS): ");
                 scanf ("%d", &val);
 
-                LOG_DEBUG ("Select Application Instance: ");
+                printf ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 phandle = ((1U == val)?
                     &mas_instance[handle].instance.handle:
@@ -264,18 +287,18 @@ void main_map_mse_operations (void)
 
                 if (MAP_ENTITY_INVALID != *phandle)
                 {
-                    LOG_DEBUG ("Application Instance not free!\n");
+                    printf ("Application Instance not free!\n");
                     break;
                 }
 
-                LOG_DEBUG ("Starting MAP MSE Instance...\n");
+                printf ("Starting MAP MSE Instance...\n");
                 retval = BT_map_mse_start
                          (
                              (MAP_SERVICE_TYPE)val,
                              appl_map_mse_callback,
                              phandle
                          );
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
 
                 if (API_SUCCESS != retval)
                 {
@@ -297,7 +320,7 @@ void main_map_mse_operations (void)
                              );
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to set path to ROOT folder - 0x%04X\n",
+                        printf ("Failed to set path to ROOT folder - 0x%04X\n",
                         retval);
                     }
                     else
@@ -312,11 +335,17 @@ void main_map_mse_operations (void)
             case 8:
                 map_mse_print_appl_instances();
 
-                LOG_DEBUG ("Enter Service Type (1-MAS, 2-MNS): ");
+                printf ("Enter Service Type (1-MAS, 2-MNS): ");
                 scanf ("%d", &val);
 
-                LOG_DEBUG ("Select Application Instance: ");
+                printf ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 if (1U == val)
                 {
@@ -331,13 +360,13 @@ void main_map_mse_operations (void)
 
                 if (MAP_ENTITY_INVALID == *phandle)
                 {
-                    LOG_DEBUG ("Application Instance not valid!\n");
+                    printf ("Application Instance not valid!\n");
                     break;
                 }
 
-                LOG_DEBUG ("Stopping MAP MSE Service %d...\n", val);
+                printf ("Stopping MAP MSE Service %d...\n", val);
                 retval = BT_map_mse_stop ((MAP_SERVICE_TYPE)val, phandle);
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
 
                 if (API_SUCCESS == retval)
                 {
@@ -378,12 +407,12 @@ void main_map_mse_operations (void)
                  * the SDP_SET_HANDLE() Macro.
                  */
 
-                LOG_DEBUG ("Select MSE Entity Instance: ");
+                printf ("Select MSE Entity Instance: ");
                 scanf ("%d", &choice);
                 map_app_instance = (UCHAR)choice;
 
-                LOG_DEBUG ("Enter peer device address: ");
-                appl_get_bd_addr (bd_addr);
+                printf ("Enter peer device address: ");
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
                 mns_instance[map_app_instance].map_sdp_record.map_len_attrib_data
                                                       = MAP_SDP_RECORD_DATA_SIZE;
@@ -402,14 +431,14 @@ void main_map_mse_operations (void)
 
                 if (API_SUCCESS != retval)
                 {
-                    LOG_DEBUG("SDP Connect FAILED !! Error Code = 0x%04X\n", retval);
+                    printf("SDP Connect FAILED !! Error Code = 0x%04X\n", retval);
                 }
 
-                LOG_DEBUG("Please Wait for SDP Operation to Complete\n");
+                printf("Please Wait for SDP Operation to Complete\n");
                 break;
 
             case 15:
-                LOG_DEBUG("Enter number of wait stages: ");
+                printf("Enter number of wait stages: ");
                 scanf("%d", &choice);
                 wait_count = (UCHAR)choice;
                 break;
@@ -417,80 +446,110 @@ void main_map_mse_operations (void)
             case 17:
                 map_mse_print_appl_instances();
 
-                LOG_DEBUG ("Select Application Instance: ");
+                printf ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Closing on MAP MSE Instance %d\n", handle);
+                if (MAP_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Closing on MAP MSE Instance %d\n", handle);
                 retval = BT_map_mse_transport_close
                     (&mas_instance[handle].instance.handle);
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
                 break;
 
 #ifdef MAP_SUPPORT_NOTIFICATION
             case 20:
                 map_mse_print_appl_instances();
 
-                LOG_DEBUG ("Select Application Instance: ");
+                printf ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Enter peer device address: ");
-                appl_get_bd_addr (bd_addr);
+                if (MAP_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Enter peer device address: ");
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
                 BT_mem_set(&connect_info, 0, sizeof(MAP_CONNECT_STRUCT));
 
                 connect_info.bd_addr = bd_addr;
 
 #ifdef OBEX_OVER_L2CAP
-                LOG_DEBUG ("Enter peer L2CAP PSM (in Hex): ");
+                printf ("Enter peer L2CAP PSM (in Hex): ");
                 scanf ("%x", &val);
                 connect_info.psm = (UINT16)val;
 #endif /* OBEX_OVER_L2CAP */
 
-                LOG_DEBUG ("Enter peer server channel: ");
+                printf ("Enter peer server channel: ");
                 scanf ("%x", &sc);
                 connect_info.server_channel = (UCHAR)sc;
 
-                LOG_DEBUG ("Enter Data Exchange Size: ");
+                printf ("Enter Data Exchange Size: ");
                 scanf ("%d", &val);
                 size = (UINT16) val;
                 connect_info.max_recv_size = size;
 
-                LOG_DEBUG ("Connecting...\n");
+                printf ("Connecting...\n");
                 retval = BT_map_mse_ns_connect
                          (
                              &mns_instance[handle].handle,
                              &connect_info
                          );
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
                 break;
 
             case 21:
                 map_mse_print_appl_instances();
 
-                LOG_DEBUG ("Select Application Instance: ");
+                printf ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Disconnecting on MAP MSE Instance %d\n", handle);
+                if (MAP_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Disconnecting on MAP MSE Instance %d\n", handle);
                 retval = BT_map_mse_ns_disconnect (&mns_instance[handle].handle);
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
                 break;
 
             case 22:
                 map_mse_print_appl_instances();
 
-                LOG_DEBUG ("Select Application Instance: ");
+                printf ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Closing on MAP MSE Instance %d\n", handle);
+                if (MAP_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Closing on MAP MSE Instance %d\n", handle);
                 retval = BT_map_mse_ns_transport_close (&mns_instance[handle].handle);
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
                 break;
 
             case 25:
                 map_mse_print_appl_instances();
 
-                LOG_DEBUG ("Select Application Instance: ");
+                printf ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (MAP_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
                 MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
                 BT_mem_set(&set_info, 0, sizeof(MAP_REQUEST_STRUCT));
@@ -498,7 +557,7 @@ void main_map_mse_operations (void)
                 set_info.appl_params = &appl_param;
                 set_info.body = &body_req;
 
-                LOG_DEBUG ("Enter The MAS Instance ID: ");
+                printf ("Enter The MAS Instance ID: ");
                 scanf ("%d", &val);
 
                 appl_param.mas_instance_id = (UCHAR) val;
@@ -509,7 +568,7 @@ void main_map_mse_operations (void)
                     MAP_FLAG_MASINSTANCEID
                 );
 
-                LOG_DEBUG ("Enter the Event Report file name: ");
+                printf ("Enter the Event Report file name: ");
                 scanf ("%s", name);
 
                 fsize_event = 0U;
@@ -537,7 +596,7 @@ void main_map_mse_operations (void)
                 retval = BT_fops_file_open (file_object, (UCHAR *)"rb", &fd);
                 if ((API_SUCCESS != retval) || (NULL == fd))
                 {
-                    LOG_DEBUG ("File not found!\n");
+                    printf ("File not found!\n");
                     break;
                 }
 
@@ -571,17 +630,25 @@ void main_map_mse_operations (void)
                     (BT_IGNORE_RETURN_VALUE) BT_fops_file_read (body_req.value, body_req.length, fd, (UINT16 *)&actual);
                 }
 
-                LOG_DEBUG ("Sending Event on MAP MSE Instance %d\n", handle);
+                printf ("Sending Event on MAP MSE Instance %d\n", handle);
                 retval = BT_map_mse_ns_send_event
                          (
                              &mns_instance[handle].handle,
                              &set_info,
                              more
                          );
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                printf ("Retval - 0x%04X\n", retval);
 
                 sent_len +=  actual;
                 remaining = fsize_event - sent_len;
+
+                /* Adjust the file read pointer to the actual bytes transmitted */
+                if (body_req.length != actual)
+                {
+                    printf("read length = %d, actual sent = %d\n", body_req.length, actual);
+                    printf("Adjusting the file read pointer\n");
+                    (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fd, sent_len, SEEK_SET);
+                }
 
                 /* If operation has failed or completed, perform cleanup */
                 if ((API_SUCCESS != retval) || (0U == remaining))
@@ -603,76 +670,185 @@ void main_map_mse_operations (void)
 
             case 30:
 #ifdef MAP_1_3
-                LOG_DEBUG ("Select options below:\n");
-                LOG_DEBUG ("    1. Set Conversation Listing Counter. \n");
-                LOG_DEBUG ("    2. Set Database Identifier. \n");
-                LOG_DEBUG ("    3. Set Folder Version Counter. \n");
+                printf ("Select options below:\n");
+                printf ("    1. Set Conversation Listing Counter. \n");
+                printf ("    2. Set Database Identifier. \n");
+                printf ("    3. Set Folder Version Counter. \n");
                 scanf ("%d", &choice);
 
                 if (1 == choice)
                 {
-                    LOG_DEBUG ("Enter Conversation Listing Counter(LSB): ");
+                    printf ("Enter Conversation Listing Counter(LSB): ");
                     scanf ("%d", &val);
 
                     appl_conv_listing_version_counter[APPL_MAP_CONV_LISTING_VER_CNTR_LEN -1U] = (UCHAR )val;
                 }
                 else if (2 == choice)
                 {
-                    LOG_DEBUG ("Enter Database Identifier(LSB): ");
+                    printf ("Enter Database Identifier(LSB): ");
                     scanf ("%d", &val);
 
                     appl_database_identifier[APPL_MAP_DATABASE_IDENTIFIER_LEN-1U] = (UCHAR )val;
                 }
                 else if (3 == choice)
                 {
-                    LOG_DEBUG ("Enter Folder Version Counter(LSB): ");
+                    printf ("Enter Folder Version Counter(LSB): ");
                     scanf ("%d", &val);
 
                     appl_folder_version_counter[APPL_MAP_FOLDER_VER_CNTR_LEN-1U] = (UCHAR )val;
                 }
                 else
                 {
-                    LOG_DEBUG ("Invalid Choice\n");
+                    printf ("Invalid Choice\n");
                 }
 #else
-                LOG_DEBUG ("Please Enable MAP_1_3 Feature Flag \n");
+                printf ("Please Enable MAP_1_3 Feature Flag \n");
 #endif /* MAP_1_3 */
                 break;
 
             case 31:
 #ifdef MAP_1_3
             {
-                LOG_DEBUG ("Conversation Listing Counter\n");
-                LOG_DEBUG ("    - 0x");
+                printf ("Conversation Listing Counter\n");
+                printf ("    - 0x");
                 for (i = 0U; i < APPL_MAP_CONV_LISTING_VER_CNTR_LEN; i++)
                 {
-                    LOG_DEBUG ("%02x", appl_conv_listing_version_counter[i]);
+                    printf ("%02x", appl_conv_listing_version_counter[i]);
                 }
-                LOG_DEBUG ("\n");
+                printf ("\n");
 
-                LOG_DEBUG ("Database Identifier\n");
-                LOG_DEBUG ("    - 0x");
+                printf ("Database Identifier\n");
+                printf ("    - 0x");
                 for (i = 0U; i < APPL_MAP_DATABASE_IDENTIFIER_LEN; i++)
                 {
-                    LOG_DEBUG ("%02x", appl_database_identifier[i]);
+                    printf ("%02x", appl_database_identifier[i]);
                 }
-                LOG_DEBUG ("\n");
+                printf ("\n");
 
-                LOG_DEBUG ("Folder Version Counter\n");
-                LOG_DEBUG ("    - 0x");
+                printf ("Folder Version Counter\n");
+                printf ("    - 0x");
                 for (i = 0U; i < APPL_MAP_FOLDER_VER_CNTR_LEN; i++)
                 {
-                    LOG_DEBUG ("%02x", appl_folder_version_counter[i]);
+                    printf ("%02x", appl_folder_version_counter[i]);
                 }
-                LOG_DEBUG ("\n");
+                printf ("\n");
             }
 #else
-                LOG_DEBUG ("Please Enable MAP_1_3 Feature Flag \n");
+                printf ("Please Enable MAP_1_3 Feature Flag \n");
 #endif /* MAP_1_3 */
                 break;
 
+            case 40:
+
+                printf("Enter event type: ");
+                scanf("%s", appl_map_mse_event_type);
+
+                printf("Select Event Report Version: \n");
+                printf("    1 -> For event version 1.0\n");
+                printf("    2 -> For event version 1.1\n");
+                printf("    3 -> For event version 1.2\n");
+                scanf("%d", &choice);
+
+                if (1 == choice)
+                {
+                    appl_map_mse_event_ver = 0x10U;
+                }
+                else if (2 == choice)
+                {
+                    appl_map_mse_event_ver = 0x11U;
+                }
+                else if (3 == choice)
+                {
+                    appl_map_mse_event_ver = 0x12U;
+                }
+                else
+                {
+                    printf("Invalid Choice\n");
+                    break;
+                }
+
+                printf("Enter event handle : ");
+                scanf("%s", appl_map_mse_event_handle);
+
+                printf("Enter msg_type: ");
+                scanf("%s", appl_map_mse_event_msg_type);
+
+                printf("BT_map_build_event_report_file_pl...\n");
+                retval = BT_map_build_event_report_file_pl
+                         (
+                             (UCHAR *)MAP_ROOT_FOLDER_BASE,
+                             (UCHAR *)APPL_MAPS_EVENT_REPORT_FILE_NAME,
+                             NULL,
+                             appl_map_mse_event_type,
+                             appl_map_mse_event_ver,
+                             appl_map_mse_event_handle,
+                             appl_map_mse_event_msg_type
+                         );
+                if (API_SUCCESS == retval)
+                {
+                    printf("Succesfully Created the Event File: %s\n", APPL_MAPS_EVENT_REPORT_FILE_NAME);
+                }
+                break;
+
+            case 41:
+            {
+                UCHAR appl_conversation_id[MAPC_MAX_FILE_OBJ_NAME_LEN];
+
+                printf("Enter Conversation Id: ");
+                scanf("%s", appl_conversation_id);
+
+                printf("BT_map_add_participant_to_conversation_pl...\n");
+                retval = BT_map_add_participant_to_conversation_pl
+                         (
+                             (UCHAR *)MAP_ROOT_FOLDER_BASE,
+                             (UCHAR *)CONVLIST_DATA_FILE,
+                             appl_conversation_id
+                         );
+                if (API_SUCCESS == retval)
+                {
+                    printf("Succesfully Added New participant\n");
+                }
+            }
+                break;
+
+            case 42:
+            {
+                printf("BT_map_set_default_converstation_list...\n");
+                retval = BT_map_set_default_converstation_list_pl
+                         (
+                             (UCHAR *)MAP_ROOT_FOLDER_BASE,
+                             (UCHAR *)CONVLIST_DATA_FILE
+                         );
+                if (API_SUCCESS == retval)
+                {
+                    printf("Success\n");
+                }
+            }
+                break;
+
+            case 43:
+            {
+                UCHAR appl_conversation_id[MAPC_MAX_FILE_OBJ_NAME_LEN];
+
+                printf("Enter Conversation Id: ");
+                scanf("%s", appl_conversation_id);
+
+                printf("BT_map_set_default_converstation_list...\n");
+                retval = BT_map_update_conversation_participant_fields_pl
+                         (
+                             (UCHAR *)MAP_ROOT_FOLDER_BASE,
+                             (UCHAR *)CONVLIST_DATA_FILE,
+                             appl_conversation_id
+                         );
+                if (API_SUCCESS == retval)
+                {
+                    printf("Success\n");
+                }
+            }
+                break;
+
             default:
-                LOG_DEBUG ("Invalid Option\n");
+                printf ("Invalid Option\n");
                 break;
         }
 
@@ -724,7 +900,7 @@ API_RESULT appl_map_mse_callback
 #endif /* MAP_1_4_2 */
 
     UINT16 num_items, i, j, temp;
-    INT8  child_folder_depth, curr_folder_depth;
+    INT8  map_child_folder_depth, map_curr_folder_depth;
 
     UINT16 length;
     UCHAR * data;
@@ -738,7 +914,7 @@ API_RESULT appl_map_mse_callback
     ntf_status = 0xFFU;
 #endif /* ((defined MAP_SUPPORT_NOTIFICATION) && (defined APPL_MAP_AUTO_NTF_ACTION)) */
 
-    LOG_DEBUG ("\n\nMAP MSE Event: 0x%02X Result: 0x%04X\n\n",
+    printf ("\n\nMAP MSE Event: 0x%02X Result: 0x%04X\n\n",
     event_type, event_result);
 
     /* Init */
@@ -772,7 +948,7 @@ API_RESULT appl_map_mse_callback
 
     if (MAP_SERVER_NUM_INSTANCES == i)
     {
-        LOG_DEBUG ("Unknown handle\n");
+        printf ("Unknown handle\n");
         /* return API_SUCCESS; */
     }
     else
@@ -780,8 +956,8 @@ API_RESULT appl_map_mse_callback
         switch(event_type)
         {
         case MAP_MSE_CONNECT_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_CONNECT_IND - %04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_CONNECT_IND - %04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             /* Check for valid event result and parameters */
             if((MAP_SUCCESS_RSP != event_result) ||
@@ -792,15 +968,15 @@ API_RESULT appl_map_mse_callback
                 break;
             }
 
-            LOG_DEBUG("Peer Address " BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER "\n",
+            printf("Peer Address " BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER "\n",
             BT_DEVICE_ADDR_ONLY_PRINT_STR (map_headers->map_connect_info->bd_addr));
 
-            LOG_DEBUG ("MAX Exchange Size: %d\n",
+            printf ("MAX Exchange Size: %d\n",
             map_headers->map_connect_info->max_recv_size);
 #ifdef MAP_1_3
             if (0U != map_headers->map_connect_info->map_supported_features)
             {
-                LOG_DEBUG ("\nPeer MapSupportedFeatures :0x%08X\n\n",
+                printf ("\nPeer MapSupportedFeatures :0x%08X\n\n",
                     map_headers->map_connect_info->map_supported_features);
             }
 #endif /* MAP_1_3 */
@@ -819,7 +995,7 @@ API_RESULT appl_map_mse_callback
             /* Get the Handle parameters */
             BT_mem_copy
             (
-                mas_instance[i].instance.bd_addr,
+                mas_instance[handle].instance.bd_addr,
                 map_headers->map_connect_info->bd_addr,
                 BT_BD_ADDR_SIZE
             );
@@ -831,7 +1007,7 @@ API_RESULT appl_map_mse_callback
                     map_headers->map_connect_info->bd_addr,
                     BT_BD_ADDR_SIZE))
                 {
-                    mas_instance[i].mns_id = (UCHAR)j;
+                    mas_instance[handle].mns_id = (UCHAR)j;
                     break;
                 }
             }
@@ -839,48 +1015,48 @@ API_RESULT appl_map_mse_callback
             map_mse_print_appl_instances();
 
             /* Set path to root folder */
-            if (0U != mas_instance[i].root_depth)
+            if (0U != mas_instance[handle].root_depth)
             {
-                while (0U != mas_instance[i].root_depth)
+                while (0U != mas_instance[handle].root_depth)
                 {
-                    retval = BT_vfops_set_path_backward(mas_instance[i].path);
+                    retval = BT_vfops_set_path_backward(mas_instance[handle].path);
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to set path backward\n");
+                        printf ("Failed to set path backward\n");
                     }
-                    mas_instance[i].root_depth --;
+                    mas_instance[handle].root_depth --;
                 }
 
-                LOG_DEBUG ("Folder set to ROOT\n");
+                printf ("Folder set to ROOT\n");
             }
             break;
 
         case MAP_MSE_DISCONNECT_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_DISCONNECT_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_DISCONNECT_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
             break;
 
         case MAP_MSE_TRANSPORT_CLOSE_CNF:
-            LOG_DEBUG ("Recvd MAP_MSE_TRANSPORT_CLOSE_CNF - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_TRANSPORT_CLOSE_CNF - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
-            BT_mem_set(&mas_instance[i].instance.bd_addr, 0x00U, BT_BD_ADDR_SIZE);
+            BT_mem_set(&mas_instance[handle].instance.bd_addr, 0x00U, BT_BD_ADDR_SIZE);
 
             map_mse_print_appl_instances();
             break;
 
         case MAP_MSE_TRANSPORT_CLOSE_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_TRANSPORT_CLOSE_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_TRANSPORT_CLOSE_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
-            BT_mem_set(&mas_instance[i].instance.bd_addr, 0x00, BT_BD_ADDR_SIZE);
+            BT_mem_set(&mas_instance[handle].instance.bd_addr, 0x00, BT_BD_ADDR_SIZE);
 
             map_mse_print_appl_instances();
             break;
 
         case MAP_MSE_UPDATE_INBOX_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_UPDATE_INBOX_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_UPDATE_INBOX_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             send_response = 1U;
 
@@ -897,39 +1073,39 @@ API_RESULT appl_map_mse_callback
             /* Create the listing file */
             retval = BT_map_create_xml_messages_listing_pl
                      (
-                         mas_instance[i].path,
+                         mas_instance[handle].path,
                          file_object,
                          NULL,
                          &num_items
                      );
             if (API_SUCCESS != retval)
             {
-                LOG_DEBUG ("Failed to Create Message Listing file\n");
+                printf ("Failed to Create Message Listing file\n");
                 tx_response = MAP_SERVER_ERROR;
                 break;
             }
 
             retval = BT_map_update_inbox_pl
                      (
-                         mas_instance[i].path,
+                         mas_instance[handle].path,
                          (num_items + 1U)
                      );
             if (API_SUCCESS != retval)
             {
-                LOG_DEBUG ("Failed to Update Inbox\n");
+                printf ("Failed to Update Inbox\n");
                 tx_response = MAP_SERVER_ERROR;
                 break;
             }
             break;
 
         case MAP_MSE_SET_FOLDER_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_SET_FOLDER_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_SET_FOLDER_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             switch(map_headers->map_req_info->setpath_flag)
             {
             case 0x01U:
-                LOG_DEBUG("Invalid Set Path Flag settings received\n");
+                printf("Invalid Set Path Flag settings received\n");
 
                 /* Set Response to PBAP_BAD_REQ_RSP; Req remains same */
                 tx_response = MAP_BAD_REQ_RSP;
@@ -939,52 +1115,52 @@ API_RESULT appl_map_mse_callback
                 if ((NULL == map_headers->map_req_info->name) ||
                     (0U == map_headers->map_req_info->name->length))
                 {
-                    LOG_DEBUG ("Set Path with flag to ROOT FOLDER\n");
+                    printf ("Set Path with flag to ROOT FOLDER\n");
 
                     /* Set path to root folder */
-                    if (0U == mas_instance[i].root_depth)
+                    if (0U == mas_instance[handle].root_depth)
                     {
-                        LOG_DEBUG ("Already in ROOT folder\n");
+                        printf ("Already in ROOT folder\n");
                     }
                     else
                     {
-                        while (0U != mas_instance[i].root_depth)
+                        while (0U != mas_instance[handle].root_depth)
                         {
-                            retval = BT_vfops_set_path_backward(mas_instance[i].path);
+                            retval = BT_vfops_set_path_backward(mas_instance[handle].path);
                             if (API_SUCCESS != retval)
                             {
-                                LOG_DEBUG ("Failed to set path backward\n");
+                                printf ("Failed to set path backward\n");
                             }
-                            mas_instance[i].root_depth --;
+                            mas_instance[handle].root_depth --;
                         }
 
-                        LOG_DEBUG ("Folder set to ROOT\n");
+                        printf ("Folder set to ROOT\n");
                     }
                 }
                 else if((NULL != map_headers->map_req_info->name) &&
                         (map_headers->map_req_info->name->length > 0U) &&
                         (NULL != map_headers->map_req_info->name->value))
                 {
-                    LOG_DEBUG ("Set Path with flag to CHILD FOLDER: %s\n",
+                    printf ("Set Path with flag to CHILD FOLDER: %s\n",
                     map_headers->map_req_info->name->value);
 
                     retval = BT_vfops_set_path_forward
                              (
-                                 mas_instance[i].path,
+                                 mas_instance[handle].path,
                                  map_headers->map_req_info->name->value
                              );
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to set path to folder %s - 0x%04X\n",
+                        printf ("Failed to set path to folder %s - 0x%04X\n",
                         map_headers->map_req_info->name->value, retval);
 
                         tx_response = MAP_NOT_FOUND_RSP;
                     }
                     else
                     {
-                        mas_instance[i].root_depth++;
+                        mas_instance[handle].root_depth++;
 
-                        LOG_DEBUG ("Current PATH: %s\n",
+                        printf ("Current PATH: %s\n",
                         map_headers->map_req_info->name->value);
                     }
 
@@ -996,38 +1172,38 @@ API_RESULT appl_map_mse_callback
                 break;
 
             case 0x03U:
-                LOG_DEBUG ("Set Path with flag to PARENT FOLDER");
+                printf ("Set Path with flag to PARENT FOLDER");
                 if((NULL != map_headers->map_req_info->name) &&
                    (map_headers->map_req_info->name->length > 0U) &&
                    (NULL != map_headers->map_req_info->name->value))
                 {
-                    LOG_DEBUG (": %s",
+                    printf (": %s",
                     map_headers->map_req_info->name->value);
                 }
 
                 /* Check if already in ROOT */
-                if (0U == mas_instance[i].root_depth)
+                if (0U == mas_instance[handle].root_depth)
                 {
-                    LOG_DEBUG ("\nAlready in ROOT\n");
+                    printf ("\nAlready in ROOT\n");
                     tx_response = MAP_BAD_REQ_RSP;
                     break;
                 }
 
                 /* Get root depth before moving backward */
-                curr_folder_depth = mas_instance[i].root_depth;
+                map_curr_folder_depth = mas_instance[handle].root_depth;
 
                 /* Set path backward */
-                retval = BT_vfops_set_path_backward(mas_instance[i].path);
+                retval = BT_vfops_set_path_backward(mas_instance[handle].path);
                 if (API_SUCCESS != retval)
                 {
-                    LOG_DEBUG ("\nFailed to set path backward - 0x%04X\n", retval);
+                    printf ("\nFailed to set path backward - 0x%04X\n", retval);
                     tx_response = MAP_NOT_FOUND_RSP;
                 }
                 else
                 {
-                    mas_instance[i].root_depth--;
-                    LOG_DEBUG ("\nCurrent PATH: %s\n",
-                    mas_instance[i].path);
+                    mas_instance[handle].root_depth--;
+                    printf ("\nCurrent PATH: %s\n",
+                    mas_instance[handle].path);
                 }
 
                 /* Get the child folder depth to be set w.r.t root folder */
@@ -1035,69 +1211,69 @@ API_RESULT appl_map_mse_callback
                     (0U == map_headers->map_req_info->name->length) ||
                     ('\0' == map_headers->map_req_info->name->value[0U]))
                 {
-                    child_folder_depth = 0U;
+                    map_child_folder_depth = 0U;
                 }
                 else if ((0 == BT_str_cmp("telecom", map_headers->map_req_info->name->value)))
                 {
-                    child_folder_depth = 1U;
+                    map_child_folder_depth = 1U;
                 }
                 else if ((0 == BT_str_cmp("msg", map_headers->map_req_info->name->value)))
                 {
-                    child_folder_depth = 2U;
+                    map_child_folder_depth = 2U;
                 }
                 else if ((0 == BT_str_cmp("deleted", map_headers->map_req_info->name->value))||
                          (0 == BT_str_cmp("inbox", map_headers->map_req_info->name->value))  ||
                          (0 == BT_str_cmp("outbox", map_headers->map_req_info->name->value))||
                          (0 == BT_str_cmp("sent", map_headers->map_req_info->name->value)))
                 {
-                    child_folder_depth = 3U;
+                    map_child_folder_depth = 3U;
                 }
                 else
                 {
                     /* Should not reach here */
-                    LOG_DEBUG ("\nChild folder is not found\n");
-                    child_folder_depth = 4U;
+                    printf ("\nChild folder is not found\n");
+                    map_child_folder_depth = 4U;
                 }
 
                 /* Set the Child folder */
-                if ((MAX_MAP_REPOSITORY_DEPTH == child_folder_depth) &&
-                    (MAX_MAP_REPOSITORY_DEPTH == curr_folder_depth))
+                if ((MAX_MAP_REPOSITORY_DEPTH == map_child_folder_depth) &&
+                    (MAX_MAP_REPOSITORY_DEPTH == map_curr_folder_depth))
                 {
                     /* Set path forward */
                     retval = BT_vfops_set_path_forward
                              (
-                                 mas_instance[i].path,
+                                 mas_instance[handle].path,
                                  map_headers->map_req_info->name->value
                              );
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to set path to folder %s - 0x%04X\n",
+                        printf ("Failed to set path to folder %s - 0x%04X\n",
                         map_headers->map_req_info->name->value, retval);
                         tx_response = MAP_NOT_FOUND_RSP;
                     }
                     else
                     {
-                        mas_instance[i].root_depth++;
-                        LOG_DEBUG ("\nSetting the child: %s\n",
+                        mas_instance[handle].root_depth++;
+                        printf ("\nSetting the child: %s\n",
                         map_headers->map_req_info->name->value);
 
-                        LOG_DEBUG ("\nCurrent PATH: %s\n",
-                        mas_instance[i].path);
+                        printf ("\nCurrent PATH: %s\n",
+                        mas_instance[handle].path);
                     }
                 }
                 else
                 {
-                    if (0x00U != child_folder_depth)
+                    if (0x00U != map_child_folder_depth)
                     {
                         /* If parent folder is having invalid child */
-                        LOG_DEBUG ("\nInvalide Child Folder\n");
+                        printf ("\nInvalide Child Folder\n");
                         tx_response = MAP_SERVER_ERROR;
                     }
                 }
-                LOG_DEBUG ("\n");
+                printf ("\n");
 
             default:
-                LOG_DEBUG("Invalid Flag: %d\n", map_headers->map_req_info->setpath_flag);
+                printf("Invalid Flag: %d\n", map_headers->map_req_info->setpath_flag);
                 break;
             }
 
@@ -1105,8 +1281,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_GET_FOLDER_LISTING_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_GET_FOLDER_LISTING_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_GET_FOLDER_LISTING_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
@@ -1150,13 +1326,13 @@ API_RESULT appl_map_mse_callback
                 /* Create the listing file */
                 retval = BT_map_create_xml_folder_listing_pl
                          (
-                             mas_instance[i].path,
+                             mas_instance[handle].path,
                              file_object,
                              &num_items
                          );
                 if (API_SUCCESS != retval)
                 {
-                    LOG_DEBUG ("Failed to Create folder Listing file\n");
+                    printf ("Failed to Create folder Listing file\n");
                     tx_response = MAP_SERVER_ERROR;
                     break;
                 }
@@ -1170,7 +1346,7 @@ API_RESULT appl_map_mse_callback
                          );
                 if (API_SUCCESS != retval)
                 {
-                    LOG_DEBUG ("Failed to Open File to Create folder Listing\n");
+                    printf ("Failed to Open File to Create folder Listing\n");
                     tx_response = MAP_SERVER_ERROR;
                     break;
                 }
@@ -1212,7 +1388,7 @@ API_RESULT appl_map_mse_callback
                         MAP_FLAG_MAXLISTCOUNT
                     )))
                 {
-                    LOG_DEBUG ("Max List Count: %d\n", appl_param_rcv->max_list_count);
+                    printf ("Max List Count: %d\n", appl_param_rcv->max_list_count);
 
                     if (0U == appl_param_rcv->max_list_count)
                     {
@@ -1227,7 +1403,7 @@ API_RESULT appl_map_mse_callback
                         MAP_FLAG_STARTOFFSET
                     )))
                 {
-                    LOG_DEBUG ("List Start Offset: %d\n", appl_param_rcv->start_offset);
+                    printf ("List Start Offset: %d\n", appl_param_rcv->start_offset);
                 }
             }
 
@@ -1275,8 +1451,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_GET_MESSAGES_LISTING_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_GET_MESSAGES_LISTING_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_GET_MESSAGES_LISTING_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
@@ -1321,28 +1497,28 @@ API_RESULT appl_map_mse_callback
 
                     if (0U == map_headers->map_req_info->name->length)
                     {
-                        LOG_DEBUG ("From Current Folder\n");
+                        printf ("From Current Folder\n");
                     }
                     else
                     {
                         /* Backup current path */
-                        BT_str_copy (curr_folder, mas_instance[i].path);
+                        BT_str_copy (curr_folder, mas_instance[handle].path);
 
                         retval = BT_vfops_set_path_forward
                                  (
-                                     mas_instance[i].path,
+                                     mas_instance[handle].path,
                                      map_headers->map_req_info->name->value
                                  );
                         if (API_SUCCESS != retval)
                         {
-                            LOG_DEBUG ("Failed to set path to folder %s - 0x%04X\n",
+                            printf ("Failed to set path to folder %s - 0x%04X\n",
                             map_headers->map_req_info->name->value, retval);
 
                             tx_response = MAP_NOT_FOUND_RSP;
                             break;
                         }
 
-                        LOG_DEBUG ("From Child folder %s\n",
+                        printf ("From Child folder %s\n",
                         map_headers->map_req_info->name->value);
                     }
 
@@ -1350,7 +1526,7 @@ API_RESULT appl_map_mse_callback
 
                     if (NULL != appl_param_rcv)
                     {
-                        LOG_DEBUG("Application Parameters: 0x%08x, 0x%08x\n",
+                        printf("Application Parameters: 0x%08x, 0x%08x\n",
                         appl_param_rcv->appl_param_flag[0U], appl_param_rcv->appl_param_flag[1U]);
 
                         if ((0U == appl_param_rcv->appl_param_flag[0U]) &&
@@ -1371,14 +1547,14 @@ API_RESULT appl_map_mse_callback
                     /* Create the listing file */
                     retval = BT_map_create_xml_messages_listing_pl
                              (
-                                 mas_instance[i].path,
+                                 mas_instance[handle].path,
                                  file_object,
                                  appl_param_rcv,
                                  &num_items
                              );
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to Create Message Listing file\n");
+                        printf ("Failed to Create Message Listing file\n");
                         tx_response = MAP_SERVER_ERROR;
                         break;
                     }
@@ -1392,7 +1568,7 @@ API_RESULT appl_map_mse_callback
                              );
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to Open File to Create folder Listing\n");
+                        printf ("Failed to Open File to Create folder Listing\n");
                         tx_response = MAP_SERVER_ERROR;
                         break;
                     }
@@ -1407,10 +1583,10 @@ API_RESULT appl_map_mse_callback
                         /* Set back the path to current */
                         if ('\0' != curr_folder[0U])
                         {
-                            retval = BT_vfops_set_path_backward(mas_instance[i].path);
+                            retval = BT_vfops_set_path_backward(mas_instance[handle].path);
                             if (API_SUCCESS != retval)
                             {
-                                LOG_DEBUG ("Failed to set path backward - 0x%04X\n",
+                                printf ("Failed to set path backward - 0x%04X\n",
                                 retval);
                             }
                         }
@@ -1420,10 +1596,10 @@ API_RESULT appl_map_mse_callback
                         /* Set back the path to current */
                         if ('\0' != curr_folder[0U])
                         {
-                            retval = BT_vfops_set_path_backward(mas_instance[i].path);
+                            retval = BT_vfops_set_path_backward(mas_instance[handle].path);
                             if (API_SUCCESS != retval)
                             {
-                                LOG_DEBUG ("Failed to set path backward - 0x%04X\n",
+                                printf ("Failed to set path backward - 0x%04X\n",
                                 retval);
                             }
                         }
@@ -1549,8 +1725,8 @@ API_RESULT appl_map_mse_callback
 
 #ifdef MAP_1_2
         case MAP_MSE_GET_MASINSTINFO_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_GET_MASINSTINFO_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_GET_MASINSTINFO_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             send_response = 1U;
 
@@ -1561,7 +1737,7 @@ API_RESULT appl_map_mse_callback
 
             if (NULL == appl_param_rcv)
             {
-                LOG_DEBUG ("Application Parameter received NULL\n");
+                printf ("Application Parameter received NULL\n");
                 tx_response = MAP_BAD_REQ_RSP;
                 break;
             }
@@ -1573,12 +1749,12 @@ API_RESULT appl_map_mse_callback
                          MAP_FLAG_MASINSTANCEID
                      )))
                 {
-                    LOG_DEBUG ("MASInstanceID Parameter Not found\n");
+                    printf ("MASInstanceID Parameter Not found\n");
                     tx_response = MAP_BAD_REQ_RSP;
                     break;
                 }
 
-                LOG_DEBUG ("MAS Instance ID received: 0x%02X\n",
+                printf ("MAS Instance ID received: 0x%02X\n",
                 appl_param_rcv->mas_instance_id);
 
                 /**
@@ -1596,8 +1772,8 @@ API_RESULT appl_map_mse_callback
 
 #ifdef MAP_1_3
         case MAP_MSE_GET_CONVERSATION_LIST_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_GET_CONVERSATION_LIST_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_GET_CONVERSATION_LIST_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
             send_response = 1U;
@@ -1615,7 +1791,7 @@ API_RESULT appl_map_mse_callback
             {
                 if (appl_param_rcv == NULL)
                 {
-                    LOG_DEBUG ("Application Parameter received NULL\n");
+                    printf ("Application Parameter received NULL\n");
                     tx_response = MAP_BAD_REQ_RSP;
                     break;
                 }
@@ -1627,7 +1803,7 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_MAXLISTCOUNT
                             )))
                     {
-                        LOG_DEBUG ("MaxListCount: 0x%04x\n", appl_param_rcv->max_list_count);
+                        printf ("MaxListCount: 0x%04x\n", appl_param_rcv->max_list_count);
                     }
 
                     if(0U != (MAP_GET_APPL_PARAM_FLAG
@@ -1636,7 +1812,7 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_STARTOFFSET
                             )))
                     {
-                        LOG_DEBUG ("StartOffset: 0x%04x\n", appl_param_rcv->start_offset);
+                        printf ("StartOffset: 0x%04x\n", appl_param_rcv->start_offset);
                     }
 
                     if(0U != (MAP_GET_APPL_PARAM_FLAG
@@ -1645,7 +1821,7 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_FILTERPERIODBEGIN
                             )))
                     {
-                        LOG_DEBUG ("PeriodBegin: %s\n", appl_param_rcv->filter_period_begin.value);
+                        printf ("PeriodBegin: %s\n", appl_param_rcv->filter_period_begin.value);
                     }
 
                     if(0U != (MAP_GET_APPL_PARAM_FLAG
@@ -1654,7 +1830,7 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_FILTERPERIODEND
                             )))
                     {
-                        LOG_DEBUG ("PeriodEnd: %s\n", appl_param_rcv->filter_period_end.value);
+                        printf ("PeriodEnd: %s\n", appl_param_rcv->filter_period_end.value);
                     }
 
                     if(0U != (MAP_GET_APPL_PARAM_FLAG
@@ -1663,14 +1839,14 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_FILTERREADSTATUS
                             )))
                     {
-                        LOG_DEBUG ("Status: ");
+                        printf ("Status: ");
                         if (0x01U == appl_param_rcv->filter_read_status)
                         {
-                            LOG_DEBUG ("Unread\n");
+                            printf ("Unread\n");
                         }
                         else if (0x02U == appl_param_rcv->filter_read_status)
                         {
-                            LOG_DEBUG ("Read\n");
+                            printf ("Read\n");
                         }
                         else
                         {
@@ -1684,7 +1860,7 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_FILTERRECIPIENT
                             )))
                     {
-                        LOG_DEBUG ("Recipient: %s\n", appl_param_rcv->filter_recipient.value);
+                        printf ("Recipient: %s\n", appl_param_rcv->filter_recipient.value);
                     }
 
                     if(0U != (MAP_GET_APPL_PARAM_FLAG_EXT
@@ -1694,13 +1870,13 @@ API_RESULT appl_map_mse_callback
                                 1U
                             )))
                     {
-                        LOG_DEBUG ("ConversationID: \n");
+                        printf ("ConversationID: \n");
                         for (i = 0U; i < appl_param_rcv->conversation_id.length; i++)
                         {
-                            LOG_DEBUG ("%02X", appl_param_rcv->conversation_id.value[i]);
+                            printf ("%02X", appl_param_rcv->conversation_id.value[i]);
                         }
 
-                        LOG_DEBUG ("\n");
+                        printf ("\n");
                     }
 
                     if(0U != (MAP_GET_APPL_PARAM_FLAG_EXT
@@ -1710,67 +1886,67 @@ API_RESULT appl_map_mse_callback
                                 1U
                             )))
                     {
-                        LOG_DEBUG ("ConvParameterMask: 0x%08x\n", appl_param_rcv->conv_parameter_mask);
+                        printf ("ConvParameterMask: 0x%08x\n", appl_param_rcv->conv_parameter_mask);
 
                         if (0U != (MAP_CONV_PARAM_MASK_CONV_NAME & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Conversation name\n");
+                            printf ("  - Conversation name\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_CONV_L_ACTVTY & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Conversation last_activity\n");
+                            printf ("  - Conversation last_activity\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_CONV_RD_STS & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Conversation read_status\n");
+                            printf ("  - Conversation read_status\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_CONV_VER_CNTR & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Conversation version_counter\n");
+                            printf ("  - Conversation version_counter\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_CONV_SUMMARY & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Conversattin Summary\n");
+                            printf ("  - Conversattin Summary\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PARTICIPANTS & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participants\n");
+                            printf ("  - Participants\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_UCI & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant UCI\n");
+                            printf ("  - Participant UCI\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_DPLY_NAME & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant display_name\n");
+                            printf ("  - Participant display_name\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_CHT_STATE & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant chat_state\n");
+                            printf ("  - Participant chat_state\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_L_ACTVTY & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant last_activity\n");
+                            printf ("  - Participant last_activity\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_X_BT_UID & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant x_bt_uid\n");
+                            printf ("  - Participant x_bt_uid\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_NAME & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant name\n");
+                            printf ("  - Participant name\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_PRNCE_ALTY & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant presence_availability\n");
+                            printf ("  - Participant presence_availability\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_PRNCE_TEXT & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant presence_text\n");
+                            printf ("  - Participant presence_text\n");
                         }
                         if (0U != (MAP_CONV_PARAM_MASK_PTPNT_PRNCE_PRTY & appl_param_rcv->conv_parameter_mask))
                         {
-                            LOG_DEBUG ("  - Participant priority\n");
+                            printf ("  - Participant priority\n");
                         }
                     }
                 }
@@ -1834,7 +2010,7 @@ API_RESULT appl_map_mse_callback
                 (void)BT_vfops_create_object_name
                 (
                     (UCHAR *)MAP_ROOT_FOLDER_BASE,
-                    (UCHAR *)CONVLIST_DATA_FILE,
+                    (UCHAR *)APPL_MAPS_CONV_LISTING_FILE_NAME,
                     file_object
                 );
 
@@ -1847,7 +2023,7 @@ API_RESULT appl_map_mse_callback
                          );
                 if ((API_SUCCESS != retval) || (NULL == fd))
                 {
-                    LOG_DEBUG ("Failed to Open Message File\n");
+                    printf ("Failed to Open Message File\n");
                     tx_response = MAP_NOT_FOUND_RSP;
                     break;
                 }
@@ -1901,8 +2077,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_SET_OWNER_STATUS_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_SET_OWNER_STATUS_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_SET_OWNER_STATUS_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             send_response = 1U;
 
@@ -1913,36 +2089,70 @@ API_RESULT appl_map_mse_callback
 
             if (NULL == appl_param_rcv)
             {
-                LOG_DEBUG ("Not not received appl. hdr\n");
+                printf ("Not received appl. hdr\n");
                 tx_response = MAP_BAD_REQ_RSP;
                 break;
             }
             else
             {
-                appl_map_im_converse_index = 0x00U;
-#if 0
-                /* TODO: Search for the conversation id */
-                for (i = 0; i < MAX_APPL_IM_CONVERSATIONS; i++)
+                if(0U != (MAP_GET_APPL_PARAM_FLAG_EXT
+                        (
+                            appl_param_rcv->appl_param_flag,
+                            MAP_FLAG_CONVERSATION_ID,
+                            1U
+                        )))
                 {
-                    if (0x00 == BT_mem_cmp
-                                (
-                                    appl_map_im_conversations[appl_map_im_converse_index].conversation_id,
-                                    appl_param_rcv->conversation_id.value,
-                                    appl_param_rcv->conversation_id.length
-                                ))
+                    printf ("ConversationID: \n");
+                    for (i = 0U; i < appl_param_rcv->conversation_id.length; i++)
                     {
-                        appl_map_im_converse_index = i;
+                        printf ("%c", appl_param_rcv->conversation_id.value[i]);
+                    }
+                    printf ("\n");
+                    appl_param_rcv->conversation_id.value[i] = '\0';
+                    retval = BT_map_check_conversation_id_pl
+                             (
+                                 (UCHAR *)MAP_ROOT_FOLDER_BASE,
+                                 (UCHAR *)CONVLIST_DATA_FILE,
+                                 appl_param_rcv->conversation_id.value
+                             );
+                    if (API_SUCCESS != retval)
+                    {
+                        printf ("ConversationID: is not Valid\n");
+                        tx_response = MAP_BAD_REQ_RSP;
                         break;
                     }
+                    else
+                    {
+                        for (i = 0U; i < MAX_APPL_IM_CONVERSATIONS; i++)
+                        {
+                            if (0x00 == BT_mem_cmp
+                                        (
+                                            appl_map_im_conversations[appl_map_im_converse_index].conversation_id,
+                                            appl_param_rcv->conversation_id.value,
+                                            appl_param_rcv->conversation_id.length
+                                        ))
+                            {
+                                appl_map_im_converse_index = (UCHAR)i;
+                                break;
+                            }
+                        }
+                    }
+                    if (MAX_APPL_IM_CONVERSATIONS == i)
+                    {
+                        BT_mem_set
+                        (
+                            &appl_map_im_conversations[appl_map_im_converse_index],
+                            0x00,
+                            sizeof (MAP_IM_OWNER_STATUS)
+                        );
+                        BT_mem_copy
+                        (
+                            appl_map_im_conversations[appl_map_im_converse_index].conversation_id,
+                            appl_param_rcv->conversation_id.value,
+                            appl_param_rcv->conversation_id.length
+                        );
+                    }
                 }
-
-                if (i == MAX_APPL_IM_CONVERSATIONS)
-                {
-                    LOG_DEBUG ("Invalid Conversation ID\n");
-                    tx_response = MAP_NOT_FOUND_RSP;
-                    break;
-                }
-#endif
 
                 if(0U != (MAP_GET_APPL_PARAM_FLAG
                          (
@@ -1950,38 +2160,38 @@ API_RESULT appl_map_mse_callback
                              MAP_FLAG_PRESENCE_AVAILABILITY
                          )))
                 {
-                    LOG_DEBUG ("Presence Avail: ");
+                    printf ("Presence Avail: ");
                     if (MAP_IM_PRESENCE_OFFLINE == appl_param_rcv->presence_availability)
                     {
-                        LOG_DEBUG ("Offline\n");
+                        printf ("Offline\n");
                     }
                     else if (MAP_IM_PRESENCE_ONLINE == appl_param_rcv->presence_availability)
                     {
-                        LOG_DEBUG ("Online\n");
+                        printf ("Online\n");
                     }
                     else if (MAP_IM_PRESENCE_AWAY == appl_param_rcv->presence_availability)
                     {
-                        LOG_DEBUG ("Away\n");
+                        printf ("Away\n");
                     }
                     else if (MAP_IM_PRESENCE_DO_NOT_DISTURB == appl_param_rcv->presence_availability)
                     {
-                        LOG_DEBUG ("Do not distrub\n");
+                        printf ("Do not distrub\n");
                     }
                     else if (MAP_IM_PRESENCE_BUSY == appl_param_rcv->presence_availability)
                     {
-                        LOG_DEBUG ("Busy\n");
+                        printf ("Busy\n");
                     }
                     else if (MAP_IM_PRESENCE_IN_MEETING == appl_param_rcv->presence_availability)
                     {
-                        LOG_DEBUG ("In a meeting\n");
+                        printf ("In a meeting\n");
                     }
                     else if (MAP_IM_PRESENCE_UNKNOWN == appl_param_rcv->presence_availability)
                     {
-                        LOG_DEBUG ("Unknown\n");
+                        printf ("Unknown\n");
                     }
                     else
                     {
-                        LOG_DEBUG ("???\n");
+                        printf ("???\n");
                     }
 
                     appl_map_im_conversations[appl_map_im_converse_index].presence_availability
@@ -1994,12 +2204,12 @@ API_RESULT appl_map_mse_callback
                             MAP_FLAG_PRESENCE_TEXT
                          )))
                 {
-                    LOG_DEBUG ("Presence Text: ");
+                    printf ("Presence Text: ");
                     for (i = 0U; i < appl_param_rcv->presence_text.length; i++)
                     {
-                        LOG_DEBUG ("%c", appl_param_rcv->presence_text.value[i]);
+                        printf ("%c", appl_param_rcv->presence_text.value[i]);
                     }
-                    LOG_DEBUG ("\n");
+                    printf ("\n");
 
                     BT_mem_copy
                     (
@@ -2018,12 +2228,12 @@ API_RESULT appl_map_mse_callback
                             MAP_FLAG_LAST_ACTIVITY
                          )))
                 {
-                    LOG_DEBUG ("Last Activity: ");
+                    printf ("Last Activity: ");
                     for (i = 0U; i < appl_param_rcv->last_activity.length; i++)
                     {
-                        LOG_DEBUG ("%c", appl_param_rcv->last_activity.value[i]);
+                        printf ("%c", appl_param_rcv->last_activity.value[i]);
                     }
-                    LOG_DEBUG ("\n");
+                    printf ("\n");
 
                     BT_mem_copy
                     (
@@ -2043,39 +2253,67 @@ API_RESULT appl_map_mse_callback
                             1U
                          )))
                 {
-                    LOG_DEBUG ("Chat State: ");
+                    printf ("Chat State: ");
                     if(MAP_IM_CHAT_STATE_INACTIVE == appl_param_rcv->chat_state)
                     {
-                        LOG_DEBUG ("Inactive\n");
+                        printf ("Inactive\n");
                     }
                     else if(MAP_IM_CHAT_STATE_ACTIVE == appl_param_rcv->chat_state)
                     {
-                        LOG_DEBUG ("Active\n");
+                        printf ("Active\n");
                     }
                     else if(MAP_IM_CHAT_STATE_COMPOSING == appl_param_rcv->chat_state)
                     {
-                        LOG_DEBUG ("Composing\n");
+                        printf ("Composing\n");
                     }
                     else if(MAP_IM_CHAT_STATE_PAUSED_COMPOSING == appl_param_rcv->chat_state)
                     {
-                        LOG_DEBUG ("Paused composing\n");
+                        printf ("Paused composing\n");
                     }
                     else if(MAP_IM_CHAT_STATE_GONE == appl_param_rcv->chat_state)
                     {
-                        LOG_DEBUG ("Gone\n");
+                        printf ("Gone\n");
                     }
                     else if(MAP_IM_CHAT_STATE_UNKNOWN == appl_param_rcv->chat_state)
                     {
-                        LOG_DEBUG ("Unknown\n");
+                        printf ("Unknown\n");
                     }
                     else
                     {
-                        LOG_DEBUG ("???\n");
+                        printf ("???\n");
                     }
 
                     appl_map_im_conversations[appl_map_im_converse_index].chat_state = appl_param_rcv->chat_state;
                 }
+            }
 
+            if((MAX_APPL_IM_CONVERSATIONS - 1U) > appl_map_im_converse_index)
+            {
+                appl_map_im_converse_index += 1U;
+            }
+            else
+            {
+                appl_map_im_converse_index = 0U;
+            }
+            break;
+
+        case MAP_MSE_GET_OWNER_STATUS_IND:
+            printf ("Recvd MAP_MSE_GET_OWNER_STATUS_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
+
+            send_response = 1U;
+
+            tx_response = MAP_SUCCESS_RSP;
+
+            appl_param_rcv = map_headers->map_req_info->appl_params;
+            if (NULL == appl_param_rcv)
+            {
+                printf ("Not received appl. hdr\n");
+                tx_response = MAP_BAD_REQ_RSP;
+                break;
+            }
+            else
+            {
                 if(0U != (MAP_GET_APPL_PARAM_FLAG_EXT
                         (
                             appl_param_rcv->appl_param_flag,
@@ -2083,31 +2321,35 @@ API_RESULT appl_map_mse_callback
                             1U
                         )))
                 {
-                    LOG_DEBUG ("ConversationID: \n");
-                    for (i = 0U; i < appl_param_rcv->conversation_id.length; i++)
+                    for (i = 0U; i < MAX_APPL_IM_CONVERSATIONS; i++)
                     {
-                        LOG_DEBUG ("%c", appl_param_rcv->conversation_id.value[i]);
+                        if (0x00U != BT_str_len(appl_map_im_conversations[i].conversation_id))
+                        {
+                            if (0x00 == BT_mem_cmp
+                                        (
+                                            appl_map_im_conversations[i].conversation_id,
+                                            appl_param_rcv->conversation_id.value,
+                                            BT_str_len(appl_map_im_conversations[i].conversation_id)
+                                        ))
+                            {
+                                appl_map_im_converse_index = (UCHAR)i;
+                                printf("Conversation Id set is at index %d\n",appl_map_im_converse_index);
+                                break;
+                            }
+                        }
                     }
-                    LOG_DEBUG ("\n");
+
+                    if (i == MAX_APPL_IM_CONVERSATIONS)
+                    {
+                        printf ("Invalid Conversation ID\n");
+                        tx_response = MAP_NOT_FOUND_RSP;
+                        break;
+                    }
                 }
             }
-            break;
-
-        case MAP_MSE_GET_OWNER_STATUS_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_GET_OWNER_STATUS_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
-
-            send_response = 1U;
-
-            tx_response = MAP_SUCCESS_RSP;
-
             MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
-
-            response_info.appl_params = &appl_param;
             map_resp_header.map_resp_info = &response_info;
-
-            appl_map_im_converse_index = 0x00U;
-            /* TODO: Search for requeste conversation id */
+            response_info.appl_params = &appl_param;
 
             /* presence availability */
             MAP_SET_APPL_PARAM_FLAG
@@ -2125,7 +2367,7 @@ API_RESULT appl_map_mse_callback
                 appl_param.presence_text.value = BT_alloc_mem(temp);
                 if (NULL == appl_param.presence_text.value)
                 {
-                    LOG_DEBUG ("Memory allocation failed for Presence Text.\n");
+                    printf ("Memory allocation failed for Presence Text.\n");
                     break;
                 }
 
@@ -2153,11 +2395,11 @@ API_RESULT appl_map_mse_callback
                 appl_param.last_activity.value = BT_alloc_mem(temp);
                 if (NULL == appl_param.last_activity.value)
                 {
-                    LOG_DEBUG ("Memory allocation failed for Last Activity\n");
+                    printf ("Memory allocation failed for Last Activity\n");
                     break;
                 }
 
-                /* lastactivity */
+                /* last activity */
                 MAP_SET_APPL_PARAM_FLAG
                 (
                     appl_param.appl_param_flag,
@@ -2186,8 +2428,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_SET_NOTIFICATION_FILTER_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_SET_NOTIFICATION_FILTER_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_SET_NOTIFICATION_FILTER_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             send_response = 1U;
             map_resp_header.map_resp_info = &response_info;
@@ -2204,80 +2446,80 @@ API_RESULT appl_map_mse_callback
                              1U
                          ))))
             {
-                LOG_DEBUG ("NotificationFilterMask Appl. Header Not found\n");
+                printf ("NotificationFilterMask Appl. Header Not found\n");
                 tx_response = MAP_BAD_REQ_RSP;
                 break;
             }
             else
             {
-                LOG_DEBUG ("NotificationFilterMask :0x%08x\n", appl_param_rcv->ntf_filter_mask);
+                printf ("NotificationFilterMask :0x%08x\n", appl_param_rcv->ntf_filter_mask);
                 if (0U != (MAP_NTF_FLTR_MASK_NEW_MSG & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - NewMessage\n");
+                    printf ("  - NewMessage\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_MSG_DELETED & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - MessageDeleted\n");
+                    printf ("  - MessageDeleted\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_MSG_SHIFT & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - MessageShift\n");
+                    printf ("  - MessageShift\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_SENDING_SUCCESS & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - SendingSuccess\n");
+                    printf ("  - SendingSuccess\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_SENDING_FAILURE & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - SendingFailure\n");
+                    printf ("  - SendingFailure\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_DELIVERY_SUCCESS & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - DeliverySuccess\n");
+                    printf ("  - DeliverySuccess\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_DELIVERY_FAILURE & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - DeliveryFailure\n");
+                    printf ("  - DeliveryFailure\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_MEMORY_FULL & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - MemoryFull\n");
+                    printf ("  - MemoryFull\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_MEMORY_AVAILABLE & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - MemoryAvailable\n");
+                    printf ("  - MemoryAvailable\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_READ_STS_CHNGD & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - ReadStatusChanged\n");
+                    printf ("  - ReadStatusChanged\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_CONV_CHNGD & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - ConversationChanged\n");
+                    printf ("  - ConversationChanged\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_PTPNT_PRNCE_CHNGD & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - ParticipantPresenceChanged\n");
+                    printf ("  - ParticipantPresenceChanged\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_PTPNT_CHT_ST_CHNGD & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - ParticipantChatStateChanged\n");
+                    printf ("  - ParticipantChatStateChanged\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_MSG_EXTD_DATA_CHNGD & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - MessageExtendedDataChanged\n");
+                    printf ("  - MessageExtendedDataChanged\n");
                 }
                 if (0U != (MAP_NTF_FLTR_MASK_MSG_REMOVED & appl_param_rcv->ntf_filter_mask))
                 {
-                    LOG_DEBUG ("  - MessageRemoved\n");
+                    printf ("  - MessageRemoved\n");
                 }
             }
             break;
 #endif /* MAP_1_3 */
 
         case MAP_MSE_GET_MESSAGE_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_GET_MESSAGE_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_GET_MESSAGE_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             MAP_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
@@ -2313,13 +2555,13 @@ API_RESULT appl_map_mse_callback
                     (NULL == map_headers->map_req_info->name->value) ||
                     (0U == map_headers->map_req_info->name->length))
                 {
-                    LOG_DEBUG ("Invalid Message Handle\n");
+                    printf ("Invalid Message Handle\n");
                     tx_response = MAP_BAD_REQ_RSP;
 
                     break;
                 }
 
-                LOG_DEBUG ("Message Handle: %s\n",
+                printf ("Message Handle: %s\n",
                 map_headers->map_req_info->name->value);
 
                 tx_response = MAP_SUCCESS_RSP;
@@ -2328,12 +2570,12 @@ API_RESULT appl_map_mse_callback
                 retval = BT_map_get_message_file_pl
                          (
                              map_headers->map_req_info->name->value,
-                             mas_instance[i].path,
+                             mas_instance[handle].path,
                              file_object
                          );
                 if (API_SUCCESS != retval)
                 {
-                    LOG_DEBUG ("Message file not found\n");
+                    printf ("Message file not found\n");
                     tx_response = MAP_NOT_FOUND_RSP;
                     break;
                 }
@@ -2347,7 +2589,7 @@ API_RESULT appl_map_mse_callback
                          );
                 if ((API_SUCCESS != retval) || (NULL == fd))
                 {
-                    LOG_DEBUG ("Failed to Open Message File\n");
+                    printf ("Failed to Open Message File\n");
                     tx_response = MAP_NOT_FOUND_RSP;
                     break;
                 }
@@ -2358,7 +2600,7 @@ API_RESULT appl_map_mse_callback
 
                 if (NULL == appl_param_rcv)
                 {
-                    LOG_DEBUG ("Application Parameter received NULL\n");
+                    printf ("Application Parameter received NULL\n");
                     tx_response = MAP_BAD_REQ_RSP;
                     break;
                 }
@@ -2370,12 +2612,12 @@ API_RESULT appl_map_mse_callback
                              MAP_FLAG_ATTACHMENT
                          )))
                     {
-                        LOG_DEBUG ("Attachment Parameter Not found\n");
+                        printf ("Attachment Parameter Not found\n");
                         tx_response = MAP_BAD_REQ_RSP;
                         break;
                     }
 
-                    LOG_DEBUG ("Attachment Value received: 0x%02X\n",
+                    printf ("Attachment Value received: 0x%02X\n",
                     appl_param_rcv->attachment);
 
                     if (0U == (MAP_GET_APPL_PARAM_FLAG
@@ -2384,12 +2626,12 @@ API_RESULT appl_map_mse_callback
                              MAP_FLAG_CHARSET
                          )))
                     {
-                        LOG_DEBUG ("Charset Parameter Not found\n");
+                        printf ("Charset Parameter Not found\n");
                         tx_response = MAP_BAD_REQ_RSP;
                         break;
                     }
 
-                    LOG_DEBUG ("Charset Value received: 0x%02X\n",
+                    printf ("Charset Value received: 0x%02X\n",
                     appl_param_rcv->charset);
                 }
             }
@@ -2404,7 +2646,7 @@ API_RESULT appl_map_mse_callback
                          MAP_FLAG_FRACTIONREQUEST
                      )))
             {
-                LOG_DEBUG ("Fraction Request Value: 0x%02X\n",
+                printf ("Fraction Request Value: 0x%02X\n",
                 appl_param_rcv->fraction_request);
             }
 
@@ -2490,14 +2732,14 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_SET_MESSAGE_STATUS_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_SET_MESSAGE_STATUS_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_SET_MESSAGE_STATUS_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             if((NULL == map_headers->map_req_info->name) ||
                (NULL == map_headers->map_req_info->name->value) ||
                (0U == map_headers->map_req_info->name->length))
             {
-                LOG_DEBUG ("Message Handle Not Found\n");
+                printf ("Message Handle Not Found\n");
                 tx_response = MAP_BAD_REQ_RSP;
 
                 response_info.body = NULL;
@@ -2505,7 +2747,7 @@ API_RESULT appl_map_mse_callback
             }
             else
             {
-                LOG_DEBUG ("Message Handle: %s\n",
+                printf ("Message Handle: %s\n",
                 map_headers->map_req_info->name->value);
 
                 /* Get the Application parameter */
@@ -2531,15 +2773,15 @@ API_RESULT appl_map_mse_callback
                                 1U
                              )))
                     {
-                        LOG_DEBUG ("Extended Data: \n");
-                        LOG_DEBUG ("%s\n", appl_param_rcv->extended_data.value);
+                        printf ("Extended Data: \n");
+                        printf ("%s\n", appl_param_rcv->extended_data.value);
 
                         tx_response = MAP_SUCCESS_RSP;
                     }
                     else
 #endif /* MAP_1_3 */
                     {
-                        LOG_DEBUG ("Mandatory Appl Params not found\n");
+                        printf ("Mandatory Appl Params not found\n");
                         tx_response = MAP_NOT_ACCEPTABLE_RSP;
                     }
                 }
@@ -2547,10 +2789,10 @@ API_RESULT appl_map_mse_callback
                 {
                     UINT16 msg_status;
 
-                    LOG_DEBUG ("Application Parameter Values: \n");
-                    LOG_DEBUG ("Status Indicator - 0x%02X\n",
+                    printf ("Application Parameter Values: \n");
+                    printf ("Status Indicator - 0x%02X\n",
                     appl_param_rcv->status_indicator);
-                    LOG_DEBUG ("Status Value - 0x%02X\n",
+                    printf ("Status Value - 0x%02X\n",
                     appl_param_rcv->status_value);
 
                     msg_status = appl_param_rcv->status_indicator;
@@ -2559,7 +2801,7 @@ API_RESULT appl_map_mse_callback
 
                     (BT_IGNORE_RETURN_VALUE) BT_map_set_message_status_pl
                     (
-                        mas_instance[i].path,
+                        mas_instance[handle].path,
                         (CHAR *)map_headers->map_req_info->name->value,
                         msg_status
                     );
@@ -2577,8 +2819,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_PUSH_MESSAGE_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_PUSH_MESSAGE_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_PUSH_MESSAGE_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             send_response = 1U;
 
@@ -2626,20 +2868,20 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_TRANSPARENT
                              )))
                     {
-                        LOG_DEBUG ("Transparent Param Val: \n");
+                        printf ("Transparent Param Val: \n");
                         if (MAP_TRANSPARENT_OFF == appl_param_rcv->transparent)
                         {
-                            LOG_DEBUG ("    - OFF");
+                            printf ("    - OFF");
                         }
                         else if (MAP_TRANSPARENT_ON == appl_param_rcv->transparent)
                         {
-                            LOG_DEBUG ("    - ON");
+                            printf ("    - ON");
                         }
                         else
                         {
-                            LOG_DEBUG ("    - ???");
+                            printf ("    - ???");
                         }
-                        LOG_DEBUG ("\n");
+                        printf ("\n");
                     }
 
                     /* Check for retry appl. param */
@@ -2649,20 +2891,20 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_RETRY
                              )))
                     {
-                        LOG_DEBUG ("Retry Param Val: \n");
+                        printf ("Retry Param Val: \n");
                         if (MAP_RETRY_OFF == appl_param_rcv->retry)
                         {
-                            LOG_DEBUG ("    - OFF");
+                            printf ("    - OFF");
                         }
                         else if (MAP_RETRY_ON == appl_param_rcv->retry)
                         {
-                            LOG_DEBUG ("    - ON");
+                            printf ("    - ON");
                         }
                         else
                         {
-                            LOG_DEBUG ("    - ???");
+                            printf ("    - ???");
                         }
-                        LOG_DEBUG ("\n");
+                        printf ("\n");
                     }
 
                     /* Check for charset appl. param */
@@ -2672,20 +2914,20 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_CHARSET
                              )))
                     {
-                        LOG_DEBUG ("Charset Param Val: \n");
+                        printf ("Charset Param Val: \n");
                         if (MAP_CHARSET_NATIVE == appl_param_rcv->charset)
                         {
-                            LOG_DEBUG ("    - NATIVE");
+                            printf ("    - NATIVE");
                         }
                         else if (MAP_CHARSET_UTF8 == appl_param_rcv->charset)
                         {
-                            LOG_DEBUG ("    - UTF8");
+                            printf ("    - UTF8");
                         }
                         else
                         {
-                            LOG_DEBUG ("    - ???");
+                            printf ("    - ???");
                         }
-                        LOG_DEBUG ("\n");
+                        printf ("\n");
                     }
 
 #ifdef MAP_1_3
@@ -2697,13 +2939,13 @@ API_RESULT appl_map_mse_callback
                                 1U
                              )))
                     {
-                        LOG_DEBUG ("Coversation ID Param Val:\n");
-                        LOG_DEBUG ("    - 0x");
+                        printf ("Coversation ID Param Val:\n");
+                        printf ("    - 0x");
                         for (i = 0U; i < appl_param_rcv->conversation_id.length; i++)
                         {
-                            LOG_DEBUG ("%c", appl_param_rcv->conversation_id.value[i]);
+                            printf ("%c", appl_param_rcv->conversation_id.value[i]);
                         }
-                        LOG_DEBUG ("\n");
+                        printf ("\n");
 
 #ifdef MAP_1_4_2
                         /* Form the Converstion Message Object file with conversation_id */
@@ -2729,13 +2971,13 @@ API_RESULT appl_map_mse_callback
                                 1U
                              )))
                     {
-                        LOG_DEBUG ("Message Handle Param Val:\n");
-                        LOG_DEBUG ("    - 0x");
+                        printf ("Message Handle Param Val:\n");
+                        printf ("    - 0x");
                         for (i = 0U; i < appl_param_rcv->msg_handle.length; i++)
                         {
-                            LOG_DEBUG ("%c", appl_param_rcv->msg_handle.value[i]);
+                            printf ("%c", appl_param_rcv->msg_handle.value[i]);
                         }
-                        LOG_DEBUG ("\n");
+                        printf ("\n");
                     }
 
                     /* Check for Attachment appl. param */
@@ -2745,20 +2987,20 @@ API_RESULT appl_map_mse_callback
                                 MAP_FLAG_ATTACHMENT
                              )))
                     {
-                        LOG_DEBUG ("Attachment Param Val: \n");
+                        printf ("Attachment Param Val: \n");
                         if (MAP_ATTACHMENT_OFF == appl_param_rcv->attachment)
                         {
-                            LOG_DEBUG ("    - OFF");
+                            printf ("    - OFF");
                         }
                         else if (MAP_ATTACHMENT_ON == appl_param_rcv->attachment)
                         {
-                            LOG_DEBUG ("    - ON");
+                            printf ("    - ON");
                         }
                         else
                         {
-                            LOG_DEBUG ("    - ???");
+                            printf ("    - ???");
                         }
-                        LOG_DEBUG ("\n");
+                        printf ("\n");
                     }
 
                     /* Check for ModifyText appl. param */
@@ -2769,20 +3011,20 @@ API_RESULT appl_map_mse_callback
                                 1U
                              )))
                     {
-                        LOG_DEBUG ("ModifyText Param Val: \n");
+                        printf ("ModifyText Param Val: \n");
                         if (MAP_FRWD_MODIFY_TEXT_REPLACE == appl_param_rcv->modify_text)
                         {
-                            LOG_DEBUG ("    - REPLACE");
+                            printf ("    - REPLACE");
                         }
                         else if (MAP_FRWD_MODIFY_TEXT_PREPEND == appl_param_rcv->modify_text)
                         {
-                            LOG_DEBUG ("    - PREPEND");
+                            printf ("    - PREPEND");
                         }
                         else
                         {
-                            LOG_DEBUG ("    - ???");
+                            printf ("    - ???");
                         }
-                        LOG_DEBUG ("\n\n");
+                        printf ("\n\n");
                     }
 #endif /* MAP_1_4 */
 
@@ -2795,34 +3037,34 @@ API_RESULT appl_map_mse_callback
 #endif /* MAP_1_4_2 */
                     {
                         /* Backup current path */
-                        BT_str_copy (curr_folder, mas_instance[i].path);
-                        LOG_DEBUG ("To Current Folder\n");
+                        BT_str_copy (curr_folder, mas_instance[handle].path);
+                        printf ("To Current Folder\n");
                     }
 
                     /* TODO: Not required if Conv List ID present */
                     if (0U != map_headers->map_req_info->name->length)
                     {
-                        LOG_DEBUG ("To Child folder %s\n",
+                        printf ("To Child folder %s\n",
                         map_headers->map_req_info->name->value);
 
                         /* Backup current path */
-                        BT_str_copy (curr_folder, mas_instance[i].path);
+                        BT_str_copy(curr_folder, mas_instance[handle].path);
 
                         /* Set path to child */
-                        retval = BT_vfops_set_path_forward(mas_instance[i].path, map_headers->map_req_info->name->value);
+                        retval = BT_vfops_set_path_forward(mas_instance[handle].path, map_headers->map_req_info->name->value);
                     }
 
                     /* If the folder being pushed is outbox, simulate delivery by pushing to sent */
-                    if (NULL != BT_str_str (mas_instance[i].path, "outbox"))
+                    if (NULL != BT_str_str (mas_instance[handle].path, "outbox"))
                     {
                         /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                        (void) BT_vfops_set_path_backward(mas_instance[i].path);
-                        retval = BT_vfops_set_path_forward(mas_instance[i].path, (UCHAR *)"sent");
+                        (void) BT_vfops_set_path_backward(mas_instance[handle].path);
+                        retval = BT_vfops_set_path_forward(mas_instance[handle].path, (UCHAR *)"sent");
                     }
 
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG("Failed to set to folder\n");
+                        printf("Failed to set to folder\n");
                         tx_response = MAP_SERVER_ERROR;
                         break;
                     }
@@ -2838,24 +3080,24 @@ API_RESULT appl_map_mse_callback
                     /* Create the listing file */
                     retval = BT_map_create_xml_messages_listing_pl
                              (
-                                 mas_instance[i].path,
+                                 mas_instance[handle].path,
                                  file_object,
                                  NULL,
                                  &num_items
                              );
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to Create Message Listing file\n");
+                        printf ("Failed to Create Message Listing file\n");
                         tx_response = MAP_SERVER_ERROR;
                         break;
                     }
 
                     /* Create message file */
-                    (BT_IGNORE_RETURN_VALUE) BT_map_push_message_pl (mas_instance[i].path, (num_items + 1U), message_file);
+                    (BT_IGNORE_RETURN_VALUE) BT_map_push_message_pl (mas_instance[handle].path, (num_items + 1U), message_file);
 
                     (void)BT_vfops_create_object_name
                     (
-                        mas_instance[i].path,
+                        mas_instance[handle].path,
                         message_file,
                         file_object
                     );
@@ -2869,13 +3111,13 @@ API_RESULT appl_map_mse_callback
                              );
                     if (API_SUCCESS != retval)
                     {
-                        LOG_DEBUG ("Failed to Open File to Push Message\n");
+                        printf ("Failed to Open File to Push Message\n");
                         tx_response = MAP_SERVER_ERROR;
                         break;
                     }
 
                     /* Restore current path */
-                    BT_str_copy (mas_instance[i].path, curr_folder);
+                    BT_str_copy (mas_instance[handle].path, curr_folder);
 
                     response_info.body = NULL;
                     response_info.appl_params = &appl_param;
@@ -2890,25 +3132,25 @@ API_RESULT appl_map_mse_callback
             (BT_IGNORE_RETURN_VALUE) BT_fops_file_write (data, length, fd, &num_items);
 
 #if 0
-                LOG_DEBUG ("\n\n================= BODY PACKET =================\n");
+                printf ("\n\n================= BODY PACKET =================\n");
 
                 /* Dump the Body stream */
                 for (i = 0; i < length; i++)
                 {
-                    LOG_DEBUG ("%02X ", data[i]);
+                    printf ("%02X ", data[i]);
                 }
 
-                LOG_DEBUG ("\n================= BODY PACKET =================\n\n");
+                printf ("\n================= BODY PACKET =================\n\n");
 #else
-                LOG_DEBUG ("\n\n========== MCE Message Received ==========\n\n");
+                printf ("\n\n========== MCE Message Received ==========\n\n");
 
                 /* Print the stream */
                 for (i = 0U; i < length; i++)
                 {
-                    LOG_DEBUG ("%c", data[i]);
+                    printf ("%c", data[i]);
                 }
 
-                LOG_DEBUG ("\n\n================================================\n\n");
+                printf ("\n\n================================================\n\n");
 
 #ifdef HAVE_OBJECT_PARSER
                 /* Open file to dump raw message */
@@ -2925,7 +3167,7 @@ API_RESULT appl_map_mse_callback
                              );
                     if ((API_SUCCESS != retval) || (NULL == map_raw_fp))
                     {
-                        LOG_DEBUG ("Failed to open Message file\n");
+                        printf ("Failed to open Message file\n");
                     }
                 }
 
@@ -2948,7 +3190,7 @@ API_RESULT appl_map_mse_callback
                              );
                     if ((API_SUCCESS != retval) || (NULL == map_raw_fp))
                     {
-                        LOG_DEBUG ("Failed to open Message file to parse\n");
+                        printf ("Failed to open Message file to parse\n");
                     }
 
                     map_parser_diff_len = 0U;
@@ -2986,25 +3228,25 @@ API_RESULT appl_map_mse_callback
                     BT_fops_file_close (map_raw_fp);
                     map_raw_fp = NULL;
 
-                    LOG_DEBUG ("\n=================== Received Message Object ==================\n\n");
-                    LOG_DEBUG ("VERSION: %s\n", map_msg_object.property.version);
-                    LOG_DEBUG ("STATUS: %s\n",
+                    printf ("\n=================== Received Message Object ==================\n\n");
+                    printf ("VERSION: %s\n", map_msg_object.property.version);
+                    printf ("STATUS: %s\n",
                         (READ == map_msg_object.property.status)? "READ": "UNREAD");
-                    LOG_DEBUG ("TYPE: %x\n", map_msg_object.property.type);
-                    LOG_DEBUG ("FOLDER: %s\n", map_msg_object.property.folder);
+                    printf ("TYPE: %x\n", map_msg_object.property.type);
+                    printf ("FOLDER: %s\n", map_msg_object.property.folder);
 
-                    LOG_DEBUG ("ENCODING: %x\n", map_msg_object.envelope.content.property.encoding);
-                    LOG_DEBUG ("CHARSET: %x\n", map_msg_object.envelope.content.property.charset);
-                    LOG_DEBUG ("LANGUAGE: %s\n", map_msg_object.envelope.content.property.language);
-                    LOG_DEBUG ("CONTENT LENGTH: %d\n", map_msg_object.envelope.content.property.content_length);
+                    printf ("ENCODING: %x\n", map_msg_object.envelope.content.property.encoding);
+                    printf ("CHARSET: %x\n", map_msg_object.envelope.content.property.charset);
+                    printf ("LANGUAGE: %s\n", map_msg_object.envelope.content.property.language);
+                    printf ("CONTENT LENGTH: %d\n", map_msg_object.envelope.content.property.content_length);
 
-                    LOG_DEBUG ("ORIGINATOR: %s\n",
+                    printf ("ORIGINATOR: %s\n",
                     ('\0' == map_msg_object.originator.property->param[0U].param_value[0U])? "UNKNOWN":
                     map_msg_object.originator.property->param[0U].param_value);
 
                     for (i = 0U; i < map_msg_object.num_envelopes; i++)
                     {
-                        LOG_DEBUG ("RECEPIENT %d: %s\n", i,
+                        printf ("RECEPIENT %d: %s\n", i,
                         ('\0' == map_msg_object.envelope.recepient[i].property[0U].param[0U].param_value[0U])? "UNKNOWN":
                         map_msg_object.envelope.recepient[i].
                         property[0U].param[0U].param_value);
@@ -3012,18 +3254,18 @@ API_RESULT appl_map_mse_callback
 
                     if (NULL != map_msg_object.envelope.content.message)
                     {
-                        LOG_DEBUG ("MESSAGE:\n%s\n\n", map_msg_object.envelope.content.message);
+                        printf ("MESSAGE:\n%s\n\n", map_msg_object.envelope.content.message);
                         BT_free_mem(map_msg_object.envelope.content.message);
                         map_msg_object.envelope.content.message = NULL;
 
                     }
-                    LOG_DEBUG ("\n=================== Received Message Object ==================\n");
+                    printf ("\n=================== Received Message Object ==================\n");
 
                     map_msg_object.num_envelopes = 0U;
 
-                    LOG_DEBUG ("Reinitializing MAP Parser...\n");
+                    printf ("Reinitializing MAP Parser...\n");
                     retval = object_parser_init (&map_context, map_bmsg_parser_cb);
-                    LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                    printf ("Retval - 0x%04X\n", retval);
                 }
 #endif /* HAVE_OBJECT_PARSER */
 #endif /* 0 */
@@ -3036,6 +3278,7 @@ API_RESULT appl_map_mse_callback
 
                 push_started = 0U;
                 response_info.name = &name;
+                wait_count = 0U;
 
                 /* Put the message handle */
                 message_file[17U] = '\0';
@@ -3045,8 +3288,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_SET_NTF_REGISTRATION_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_SET_NTF_REGISTRATION_IND - 0x%04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_SET_NTF_REGISTRATION_IND - 0x%04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             send_response = 1U;
 
@@ -3070,15 +3313,17 @@ API_RESULT appl_map_mse_callback
                     {
                         if (0x01U == ntf_status)
                         {
-                            LOG_DEBUG ("Notification Enabled\n");
+                            printf ("Notification Enabled\n");
+                            mas_instance[handle].ntf_reg_status = 0x01U;
                         }
                         else if (0x00U == ntf_status)
                         {
-                            LOG_DEBUG ("Notification Disabled\n");
+                            printf ("Notification Disabled\n");
+                            mas_instance[handle].ntf_reg_status = 0x00U;
                         }
                         else
                         {
-                            LOG_DEBUG ("Unsupported Notification Status\n");
+                            printf ("Unsupported Notification Status\n");
                             tx_response = MAP_BAD_REQ_RSP;
                         }
                     }
@@ -3091,15 +3336,15 @@ API_RESULT appl_map_mse_callback
 
 #ifdef MAP_SUPPORT_NOTIFICATION
         case MAP_MSE_NS_CONNECT_CNF:
-            LOG_DEBUG ("Recvd MAP_MSE_MNS_CONNECT_CNF - %04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_MNS_CONNECT_CNF - %04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             if (NULL != map_headers->map_connect_info)
             {
-                LOG_DEBUG("Peer " BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER "\n",
+                printf("Peer " BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER "\n",
                 BT_DEVICE_ADDR_ONLY_PRINT_STR (map_headers->map_connect_info->bd_addr));
 
-                LOG_DEBUG ("MAX Exchange Size: %d\n",
+                printf ("MAX Exchange Size: %d\n",
                 map_headers->map_connect_info->max_recv_size);
                 map_ns_xchg_size = map_headers->map_connect_info->max_recv_size;
             }
@@ -3142,13 +3387,13 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_NS_DISCONNECT_CNF:
-            LOG_DEBUG ("Recvd MAP_MSE_MNS_DISCONNECT_CNF - %04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_MNS_DISCONNECT_CNF - %04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
             break;
 
         case MAP_MSE_NS_TRANSPORT_CLOSE_CNF:
-            LOG_DEBUG ("Recvd MAP_MSE_MNS_TRANSPORT_CLOSE_CNF: - %04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_MNS_TRANSPORT_CLOSE_CNF: - %04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
             {
@@ -3171,8 +3416,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_NS_TRANSPORT_CLOSE_IND:
-            LOG_DEBUG ("Recvd MAP_MSE_MNS_TRANSPORT_CLOSE_IND: - %04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_MNS_TRANSPORT_CLOSE_IND: - %04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
             {
@@ -3195,8 +3440,8 @@ API_RESULT appl_map_mse_callback
             break;
 
         case MAP_MSE_NS_SEND_EVENT_CNF:
-            LOG_DEBUG ("Recvd MAP_MSE_MNS_SEND_EVENT_CNF - %04X\n", event_result);
-            LOG_DEBUG ("MSE Instance Handle - 0x%02X\n", handle);
+            printf ("Recvd MAP_MSE_MNS_SEND_EVENT_CNF - %04X\n", event_result);
+            printf ("MSE Instance Handle - 0x%02X\n", handle);
 
             if ((MAP_SUCCESS_RSP == event_result) ||
                 (MAP_CONTINUE_RSP != event_result))
@@ -3238,7 +3483,7 @@ API_RESULT appl_map_mse_callback
 #endif /* MAP_SUPPORT_NOTIFICATION */
 
         default:
-            LOG_DEBUG("Invalid Event Type: 0x%02X\n", event_type);
+            printf("Invalid Event Type: 0x%02X\n", event_type);
             break;
         }
 
@@ -3262,7 +3507,7 @@ API_RESULT appl_map_mse_callback
                      );
             if (API_SUCCESS != retval)
             {
-                LOG_DEBUG ("Failed to send MSE Response - 0x%05X\n", retval);
+                printf ("Failed to send MSE Response - 0x%05X\n", retval);
             }
 
             if ((NULL != body.value)
@@ -3293,11 +3538,19 @@ API_RESULT appl_map_mse_callback
                      );
             if (API_SUCCESS != retval)
             {
-                LOG_DEBUG ("Failed to send MSE Request - 0x%05X\n", retval);
+                printf ("Failed to send MSE Request - 0x%05X\n", retval);
             }
 
             sent_len += actual;
             remaining = fsize_event - sent_len;
+
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fd, sent_len, SEEK_SET);
+            }
 
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
@@ -3327,48 +3580,91 @@ API_RESULT appl_map_mse_callback
 #if ((defined MAP_SUPPORT_NOTIFICATION) && (defined APPL_MAP_AUTO_NTF_ACTION))
         if (0x01U == ntf_status)
         {
-            map_app_instance = 0U;
+            UCHAR ntf_connect_flag;
+
+            /* Default */
+            ntf_connect_flag = 1U;
 
             for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
             {
-                if (mas_instance[i].instance.handle == handle)
+                if ((0 == BT_mem_cmp(mns_instance[i].bd_addr, mas_instance[i].instance.bd_addr, BT_BD_ADDR_SIZE)) &&
+                    (mas_instance[i].ntf_reg_status == 1U))
                 {
-                    BT_COPY_BD_ADDR(mns_instance[map_app_instance].bd_addr, mas_instance[i].instance.bd_addr);
-                    break;
+                    printf("==== Already, NTF connection Exist with Peer, Skipping Establishing MNS Connection Again ===\n");
+                    ntf_connect_flag = 0x00U;
                 }
             }
 
-            mns_instance[map_app_instance].map_sdp_record.map_len_attrib_data
-                                                  = MAP_SDP_RECORD_DATA_SIZE;
+            if (1U == ntf_connect_flag)
+            {
+                /* TODO */
+                map_app_instance = 0U;
 
-            SDP_SET_HANDLE
-            (
-                mns_instance[map_app_instance].map_sdp_record.map_sdp_handle,
-                mns_instance[map_app_instance].bd_addr,
-                appl_map_mse_mns_sdp_callback
-            );
+                printf("Connecting MSE NS...\n");
+                for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
+                {
+                    if (mas_instance[i].instance.handle == handle)
+                    {
+                        BT_COPY_BD_ADDR(mns_instance[map_app_instance].bd_addr, mas_instance[i].instance.bd_addr);
+                        break;
+                    }
+                }
 
-            retval = BT_sdp_open(
-                &mns_instance[map_app_instance].map_sdp_record.map_sdp_handle
+                mns_instance[map_app_instance].map_sdp_record.map_len_attrib_data
+                                                      = MAP_SDP_RECORD_DATA_SIZE;
+
+                SDP_SET_HANDLE
+                (
+                    mns_instance[map_app_instance].map_sdp_record.map_sdp_handle,
+                    mns_instance[map_app_instance].bd_addr,
+                    appl_map_mse_mns_sdp_callback
                 );
 
-            if (API_SUCCESS != retval)
-            {
-                LOG_DEBUG("SDP Connect FAILED !! Error Code = 0x%04X\n", retval);
-            }
-            else
-            {
-                LOG_DEBUG("Please Wait for SDP Operation to Complete\n");
+                retval = BT_sdp_open
+                         (
+                             &mns_instance[map_app_instance].map_sdp_record.map_sdp_handle
+                         );
+                if (API_SUCCESS != retval)
+                {
+                    printf("SDP Connect FAILED !! Error Code = 0x%04X\n", retval);
+                }
+                else
+                {
+                    printf("Please Wait for SDP Operation to Complete\n");
+                }
             }
         }
         else if (0x00U == ntf_status)
         {
-            LOG_DEBUG ("Disconnecting...\n");
-            retval = BT_map_mse_ns_disconnect
-                     (
-                         &mns_instance[map_app_instance].handle
-                     );
-            LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                UCHAR mns_id;
+                UCHAR ntf_disconnect_flag;
+
+                /* Default */
+                mns_id = 0U;
+                ntf_disconnect_flag = 1U;
+
+                for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
+                {
+                    mns_id = mas_instance[i].mns_id;
+
+                    if ((0 == BT_mem_cmp(mns_instance[mns_id].bd_addr, mas_instance[i].instance.bd_addr, BT_BD_ADDR_SIZE)) &&
+                        (mas_instance[i].ntf_reg_status == 1U))
+                    {
+                        printf("==== Notify Status Still enabled with the peer, Do not Initiate MSE NS Disconnect ======\n");
+                        ntf_disconnect_flag = 0x00U;
+                        mns_id = mas_instance[i].mns_id;
+                    }
+                }
+
+                if (0U != ntf_disconnect_flag)
+                {
+                    printf("Disconnecting MSE NS...\n");
+                    retval = BT_map_mse_ns_disconnect
+                             (
+                                 &mns_instance[mns_id].handle
+                             );
+                    printf("Retval - 0x%04X\n", retval);
+                }
         }
         else
         {
@@ -3433,12 +3729,12 @@ void appl_map_mse_mns_sdp_callback
     case SDP_Open:
         if(API_SUCCESS != status)
         {
-            LOG_DEBUG("SDP OPEN FAILED!\n");
+            printf("SDP OPEN FAILED!\n");
             break;
         }
-        LOG_DEBUG("SDP OPEN\n\n");
+        printf("SDP OPEN\n\n");
 
-        LOG_DEBUG("Initiating SDP Service Attribute Request ....\n");
+        printf("Initiating SDP Service Attribute Request ....\n");
         retval = BT_sdp_servicesearchattributerequest
                  (
                      &mns_instance[map_app_instance].map_sdp_record.map_sdp_handle,
@@ -3454,21 +3750,21 @@ void appl_map_mse_mns_sdp_callback
 
         if(API_SUCCESS != retval)
         {
-            LOG_DEBUG("SDP SEARCH Failed for MAP..Closing SDP\n");
+            printf("SDP SEARCH Failed for MAP..Closing SDP\n");
             (BT_IGNORE_RETURN_VALUE) BT_sdp_close(&mns_instance[map_app_instance].map_sdp_record.map_sdp_handle);
         }
         break;
 
     case SDP_Close:
-        LOG_DEBUG("SDP CLOSE\n\n");
+        printf("SDP CLOSE\n\n");
         break;
 
     case SDP_ErrorResponse:
-        LOG_DEBUG("SDP ERROR RESPONSE\n\n");
+        printf("SDP ERROR RESPONSE\n\n");
         break;
 
     case SDP_ServiceSearchAttributeResponse:
-        LOG_DEBUG("\n");
+        printf("\n");
 
         {
             UCHAR no_server_channels;
@@ -3512,11 +3808,11 @@ void appl_map_mse_mns_sdp_callback
                 retval = BT_sdp_get_psm (sdp_query_result, &psm);
                 if(API_SUCCESS != retval)
                 {
-                    LOG_DEBUG("SDP FAILED to find PSM in Protocol Descriptor List\n");
+                    printf("SDP FAILED to find PSM in Protocol Descriptor List\n");
                 }
                 else
                 {
-                    LOG_DEBUG("PSM: 0x%04X\n", psm);
+                    printf("PSM: 0x%04X\n", psm);
                 }
 
                 /*
@@ -3538,12 +3834,12 @@ void appl_map_mse_mns_sdp_callback
 
                     if(API_SUCCESS != retval)
                     {
-                        LOG_DEBUG("SDP FAILED to find GOEP L2CAP PSM\n");
+                        printf("SDP FAILED to find GOEP L2CAP PSM\n");
                     }
                     else
                     {
                         BT_UNPACK_LE_2_BYTE(&attr_val_2B, attr_val);
-                        LOG_DEBUG("GOEP L2CAP PSM: 0x%04X\n", attr_val_2B);
+                        printf("GOEP L2CAP PSM: 0x%04X\n", attr_val_2B);
 
                         /* Update the PSM */
                         psm = attr_val_2B;
@@ -3562,11 +3858,11 @@ void appl_map_mse_mns_sdp_callback
 
                     if(API_SUCCESS != retval)
                     {
-                        LOG_DEBUG("SDP FAILED to find MAP Server Channel\n");
+                        printf("SDP FAILED to find MAP Server Channel\n");
                     }
                     else
                     {
-                        LOG_DEBUG("Server Channel: 0x%02X\n", map_server_channel);
+                        printf("Server Channel: 0x%02X\n", map_server_channel);
 
                         /*
                          * Store the Server Channel globally.
@@ -3578,7 +3874,7 @@ void appl_map_mse_mns_sdp_callback
                 /* MAP PSM or Server channel found */
                 if (API_SUCCESS == retval)
                 {
-                    LOG_DEBUG ("MAP Service Found, Getting Attributes... \n");
+                    printf ("MAP Service Found, Getting Attributes... \n");
 
 #ifdef MAP_1_2
                     attr_val_4B = 0U;
@@ -3593,12 +3889,12 @@ void appl_map_mse_mns_sdp_callback
                              );
                     if(API_SUCCESS != retval)
                     {
-                        LOG_DEBUG("SDP FAILED to find MAP Supported Features\n");
+                        printf("SDP FAILED to find MAP Supported Features\n");
                     }
                     else
                     {
                         BT_UNPACK_LE_4_BYTE(&attr_val_4B, attr_val);
-                        LOG_DEBUG("MAP Supported Features: 0x%08X\n", attr_val_4B);
+                        printf("MAP Supported Features: 0x%08X\n", attr_val_4B);
                     }
 #endif /* MAP_1_2 */
 
@@ -3612,19 +3908,19 @@ void appl_map_mse_mns_sdp_callback
 #endif /* OBEX_OVER_L2CAP */
                         connect_info.max_recv_size = 512U;
 
-                        LOG_DEBUG ("Connecting...\n");
+                        printf ("Connecting...\n");
                         retval = BT_map_mse_ns_connect
                                  (
                                      &mns_instance[map_app_instance].handle,
                                      &connect_info
                                  );
-                        LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                        printf ("Retval - 0x%04X\n", retval);
                     }
 #endif /* ((defined MAP_SUPPORT_NOTIFICATION) && (defined APPL_MAP_AUTO_NTF_ACTION)) */
                 }
                 else
                 {
-                    LOG_DEBUG ("Failed to find MAP Service.\n");
+                    printf ("Failed to find MAP Service.\n");
                 }
 
                 no_server_channels++;
@@ -3636,7 +3932,7 @@ void appl_map_mse_mns_sdp_callback
         break;
 
     default: /* Events not needed to be Handled */
-        LOG_DEBUG("Unhandled SDP Event (0x%02X)\n", command);
+        printf("Unhandled SDP Event (0x%02X)\n", command);
         break;
     }/* switch */
 
@@ -3648,35 +3944,36 @@ void map_mse_print_appl_instances(void)
 {
     UINT8 i;
 
-    LOG_DEBUG ("\n\n===========================================================\n");
-    LOG_DEBUG ("Instance\t MAS Handle\t BD Addr\t MNS Id");
-    LOG_DEBUG ("\n-----------------------------------------------------------\n\n");
+    printf ("\n\n===========================================================\n");
+    printf ("Instance\t MAS Handle\t BD Addr\t MNS Id");
+    printf ("\n-----------------------------------------------------------\n\n");
 
     for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
     {
-        LOG_DEBUG ("%d\t\t ", i);
-        LOG_DEBUG ("%02x\t ", mas_instance[i].instance.handle);
-        LOG_DEBUG (BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER "\t ",
+        printf ("%d\t\t ", i);
+        printf ("%02x\t ", mas_instance[i].instance.handle);
+        printf (BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER "\t ",
         BT_DEVICE_ADDR_ONLY_PRINT_STR (mas_instance[i].instance.bd_addr));
-        LOG_DEBUG ("%02x\n", mas_instance[i].mns_id);
+        printf ("%02x\n", mas_instance[i].mns_id);
     }
 
-    LOG_DEBUG ("\n-----------------------------------------------------------\n\n");
+    printf ("\n-----------------------------------------------------------\n\n");
 
 
-    LOG_DEBUG ("\n\n===========================================================\n");
-    LOG_DEBUG ("Instance\t MNS Handle\t BD Addr");
-    LOG_DEBUG ("\n-----------------------------------------------------------\n\n");
+    printf ("\n\n===========================================================\n");
+    printf ("Instance\t MNS Handle\t BD Addr");
+    printf ("\n-----------------------------------------------------------\n\n");
 
     for (i = 0U; i < MAP_SERVER_NUM_INSTANCES; i++)
     {
-        LOG_DEBUG ("%d\t\t ", i);
-        LOG_DEBUG ("%02x\t ", mns_instance[i].handle);
-        LOG_DEBUG (BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER,
+        printf ("%d\t\t ", i);
+        printf ("%02x\t ", mns_instance[i].handle);
+        printf (BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER,
         BT_DEVICE_ADDR_ONLY_PRINT_STR (mns_instance[i].bd_addr));
+        printf("\n");
     }
 
-    LOG_DEBUG ("\n-----------------------------------------------------------\n\n");
+    printf ("\n-----------------------------------------------------------\n\n");
 }
 
 
@@ -3726,21 +4023,21 @@ void map_bmsg_parser_cb
     switch (cb_param.keyword_type)
     {
     case OBJECT_TOKEN_GRP_NAME:
-        fLOG_DEBUG (map_parsed_fp, "GROUP NAME ---> ");
+        fprintf (map_parsed_fp, "GROUP NAME ---> ");
         break;
 
     case OBJECT_TOKEN_PROP_NAME:
-        fLOG_DEBUG (map_parsed_fp, "Property NAME ---> ");
+        fprintf (map_parsed_fp, "Property NAME ---> ");
 
         param_id = cb_param.keyword_id;
         break;
 
     case OBJECT_TOKEN_PROP_VAL:
-        fLOG_DEBUG (map_parsed_fp, "Property VALUE ---> ");
+        fprintf (map_parsed_fp, "Property VALUE ---> ");
 
         if (0U != (cb_param.parser_result & OBJECT_RESULT_PARTIAL_PARSED))
         {
-            fLOG_DEBUG (map_parsed_fp, "<Partial value> ");
+            fprintf (map_parsed_fp, "<Partial value> ");
         }
 
         /* Try to identify the property param name token */
@@ -3840,26 +4137,26 @@ void map_bmsg_parser_cb
             break;
 
         default:
-            LOG_DEBUG("Invalid Param ID: %d\n", param_id);
+            printf("Invalid Param ID: %d\n", param_id);
             break;
         }
 
         break;
 
     case OBJECT_TOKEN_PROP_PARAM_NAME:
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM NAME ---> ");
+        fprintf (map_parsed_fp, "Property PARAM NAME ---> ");
         break;
 
     case OBJECT_TOKEN_PROP_PARAM_VAL:
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM VALUE ---> ");
+        fprintf (map_parsed_fp, "Property PARAM VALUE ---> ");
         break;
 
     case OBJECT_TOKEN_ERROR:
-        fLOG_DEBUG (map_parsed_fp, "***ERROR*** ---> ");
+        fprintf (map_parsed_fp, "***ERROR*** ---> ");
         break;
 
     default:
-        LOG_DEBUG("Invalid Keyword Type: %d\n", cb_param.keyword_type);
+        printf("Invalid Keyword Type: %d\n", cb_param.keyword_type);
         break;
     }
 
@@ -3929,17 +4226,17 @@ void map_bmsg_parser_cb
         }
     }
 
-    fLOG_DEBUG (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
+    fprintf (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
 
     for (i = 0U; i < cb_param.value_len; i++)
     {
-        fLOG_DEBUG (map_parsed_fp, "%c", cb_param.value [i]);
+        fprintf (map_parsed_fp, "%c", cb_param.value [i]);
     }
-    fLOG_DEBUG (map_parsed_fp, "\n");
+    fprintf (map_parsed_fp, "\n");
 
     if (0U != (cb_param.parser_result & 0x01U))
     {
-        fLOG_DEBUG (map_parsed_fp, "Folded Line Detected\n");
+        fprintf (map_parsed_fp, "Folded Line Detected\n");
     }
 }
 
@@ -3961,21 +4258,21 @@ void map_vcard_parser_cb
     switch (cb_param.keyword_type)
     {
     case OBJECT_TOKEN_GRP_NAME:
-        fLOG_DEBUG (map_parsed_fp, "GROUP NAME ---> ");
+        fprintf (map_parsed_fp, "GROUP NAME ---> ");
         break;
 
     case OBJECT_TOKEN_PROP_NAME:
-        fLOG_DEBUG (map_parsed_fp, "Property NAME ---> ");
+        fprintf (map_parsed_fp, "Property NAME ---> ");
 
         vcard_param_id = cb_param.keyword_id;
         break;
 
     case OBJECT_TOKEN_PROP_VAL:
-        fLOG_DEBUG (map_parsed_fp, "Property VALUE ---> ");
+        fprintf (map_parsed_fp, "Property VALUE ---> ");
 
         if (0U != (cb_param.parser_result & OBJECT_RESULT_PARTIAL_PARSED))
         {
-            fLOG_DEBUG (map_parsed_fp, "<Partial value> ");
+            fprintf (map_parsed_fp, "<Partial value> ");
         }
 
         /* Try to identify the property param name token */
@@ -4037,42 +4334,43 @@ void map_vcard_parser_cb
             break;
 
         default:
-            LOG_DEBUG("Invalid Param ID: %d\n", vcard_param_id);
+            printf("Invalid Param ID: %d\n", vcard_param_id);
             break;
         }
 
         break;
 
     case OBJECT_TOKEN_PROP_PARAM_NAME:
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM NAME ---> ");
+        fprintf (map_parsed_fp, "Property PARAM NAME ---> ");
         break;
 
     case OBJECT_TOKEN_PROP_PARAM_VAL:
-        fLOG_DEBUG (map_parsed_fp, "Property PARAM VALUE ---> ");
+        fprintf (map_parsed_fp, "Property PARAM VALUE ---> ");
         break;
 
     case OBJECT_TOKEN_ERROR:
-        fLOG_DEBUG (map_parsed_fp, "***ERROR*** ---> ");
+        fprintf (map_parsed_fp, "***ERROR*** ---> ");
         break;
 
     default:
-        LOG_DEBUG("Invalid Keyword Type: %d\n", cb_param.keyword_type);
+        printf("Invalid Keyword Type: %d\n", cb_param.keyword_type);
         break;
     }
 
-    fLOG_DEBUG (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
+    fprintf (map_parsed_fp, "[KEY : 0x%04x] ", cb_param.keyword_id);
 
     for (i = 0U; i < cb_param.value_len; i++)
     {
-        fLOG_DEBUG (map_parsed_fp, "%c", cb_param.value [i]);
+        fprintf (map_parsed_fp, "%c", cb_param.value [i]);
     }
-    fLOG_DEBUG (map_parsed_fp, "\n");
+    fprintf (map_parsed_fp, "\n");
 
     if (0U != (cb_param.parser_result & 0x01U))
     {
-        fLOG_DEBUG (map_parsed_fp, "Folded Line Detected\n");
+        fprintf (map_parsed_fp, "Folded Line Detected\n");
     }
 }
 #endif /* HAVE_OBJECT_PARSER */
 
 #endif /* MAP_MSE */
+

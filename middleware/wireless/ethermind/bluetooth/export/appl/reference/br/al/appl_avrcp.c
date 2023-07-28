@@ -120,7 +120,7 @@ void main_avrcp_operations (void)
 
             /* Register Peer BD address */
              LOG_DEBUG("Enter Peer BD Address:");
-             appl_get_bd_addr(appl_avrcp_bd_addr);
+             (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_avrcp_bd_addr);
 
             /* BT_mem_copy(appl_avrcp_bd_addr, bd_addr, BT_BD_ADDR_SIZE);  */
             break;
@@ -506,9 +506,6 @@ API_RESULT appl_avrcp_ntf_cb
            )
 {
     UCHAR index;
-#ifdef AVRCP_CT
-    AVRCP_AL_GET_FOLDER_ITEMS_PARAM get_folder_items_param;
-#endif /* AVRCP_CT */
 
       LOG_DEBUG("\n");
 

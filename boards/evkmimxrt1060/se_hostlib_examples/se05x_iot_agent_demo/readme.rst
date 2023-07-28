@@ -32,7 +32,7 @@ Building the Demo
 =======================================================================
 Before you start building the demo you must configure the EdgeLock 2GO URL for your account:
 - From the EdgeLock 2GO account copy the account specific URL (in Admin Settings section)
-- Open file se_hostlib/nxp_iot_agent/inx/nxp_iot_agent_config.h
+- Open file middleware/se_hostlib/nxp_iot_agent/inc/nxp_iot_agent_config.h
 - Fill the definition EDGELOCK2GO_HOSTNAME with the account specific URL.
 
 To build for your platform follow your board specific readme file.

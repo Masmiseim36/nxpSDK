@@ -37,27 +37,21 @@ static const UCHAR pasp_client_menu[] =
 "\n\
     0.  Exit\n\
     1.  Refresh\n\
-\n\
        === Phone Alert Status Service ===\n\
    10.  Discover Phone Alert Status Service\n\
-\n\
         -- Alert Status --\n\
    11.  Configure Alert Status CCC\n\
    12.  Stop Alert Status CCC\n\
    13.  Read Alert Status Characteristic\n\
-\n\
         -- Ringer Setting --\n\
    14.  Configure Ringer Setting CCC\n\
    15.  Stop Ringer Setting CCC\n\
    16.  Read Ringer Setting Characteristic\n\
-\n\
         -- Ringer Control Point --\n\
    17.  Set Silent Mode Command\n\
    18.  Cancel Silent Mode Command\n\
    19.  Mute Once Command\n\
-\n\
-   Your Option?\n\
-";
+   Your Option?\n";
 
 /* ------------------------------- Functions */
 
@@ -266,7 +260,7 @@ void pasp_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

@@ -331,7 +331,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1062/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1062xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -908,6 +908,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -944,21 +959,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1292,7 +1292,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1062/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1326,7 +1326,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1869,6 +1869,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1905,21 +1920,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2253,7 +2253,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1062/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2287,7 +2287,7 @@
             <ScatterFile>MIMXRT1062xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2830,6 +2830,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2866,21 +2881,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3214,7 +3214,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1062/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3248,7 +3248,7 @@
             <ScatterFile>MIMXRT1062xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3791,6 +3791,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -3827,21 +3842,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4175,7 +4175,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1062/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4209,7 +4209,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4752,6 +4752,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -4788,21 +4803,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5136,7 +5136,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1062/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5170,7 +5170,7 @@
             <ScatterFile>MIMXRT1062xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --entry=Reset_Handler --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5713,6 +5713,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -5749,21 +5764,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>

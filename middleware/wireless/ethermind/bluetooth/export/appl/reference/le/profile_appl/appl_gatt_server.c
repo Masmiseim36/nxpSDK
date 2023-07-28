@@ -38,18 +38,27 @@
 /* --------------------------------------------- External Global Variables */
 extern UCHAR g_appl_bond_del_flag;
 
+#ifdef APPL_HAVE_PROFILE_ATT_CB_SUPPORT
+static APPL_EVENT_HANDLER_CB appl_event_hndlr_cb = NULL;
+#endif /* APPL_HAVE_PROFILE_ATT_CB_SUPPORT */
+
 /* --------------------------------------------- Exported Global Variables */
 
 /* --------------------------------------------- Static Global Variables */
+/* Application MTU configuration. Initializing the default MTU here */
+static UINT16 appl_gatt_mtu = APPL_ATT_MTU;
+
 static const UCHAR *gatt_server_menu = (UCHAR *) \
+
 "--------------------------------------------\n\
              GATT SERVER MENU\n\
 --------------------------------------------\n\
   0 - Exit \n\
   1 - Refresh \n\
-  2 - Enable/Disable Authorization\n\
+  2 - Grant/Deny Authorization\n\
   3 - Send Service Changed HVI\n\
   4 - Update Battery Level\n\
+  5 - Send Multiple HVN sample\n\
  10 - Service Menu Operations\n\
 100 - Enable/Disable Application Event Trace\n\
 Your Option ? ";
@@ -61,22 +70,34 @@ static ATT_HANDLE appl_signed_write_server_handle;
 #endif /* SMP_DATA_SIGNING */
 
 #ifdef ATT_QUEUED_WRITE_SUPPORT
+#define APPL_MAX_WRITELONG_SIZE        /* 128U */ 256U
+typedef struct _APPL_WRITELONG_ELEMENT
+{
+    /* Value that is prepared */
+    UCHAR value[APPL_MAX_WRITELONG_SIZE];
+
+    /* Current length */
+    UINT16 length;
+
+    /* Attribute handle for the value */
+    ATT_ATTR_HANDLE handle;
+
+    /* Offset */
+    UINT16 offset;
+
+} APPL_WRITELONG_ELEMENT;
+
 API_RESULT appl_att_prepare_write_cancel (ATT_HANDLE   *handle);
 API_RESULT appl_att_prepare_write_execute (ATT_HANDLE   *handle);
 API_RESULT appl_att_prepare_write_queue_init (void);
 
-static ATT_HANDLE_VALUE_OFFSET_PARAM appl_att_write_queue[APPL_ATT_WRITE_QUEUE_SIZE];
-static UCHAR appl_att_write_queue_buffer[APPL_ATT_MAX_WRITE_BUFFER_SIZE];
-static UCHAR appl_att_write_buffer_ptr;
-static UCHAR appl_att_write_queue_index;
+static APPL_WRITELONG_ELEMENT appl_att_write_queue[APPL_ATT_WRITE_QUEUE_SIZE];
 static APPL_ATT_EXECUTE_WRITE_HANDLER appl_execute_write_handler[2U] =
                   {
                       appl_att_prepare_write_cancel,
                       appl_att_prepare_write_execute
                   };
 #endif /* ATT_QUEUED_WRITE_SUPPORT */
-UCHAR appl_att_buffer[APPL_SERVER_BUFFER_SIZE];
-UCHAR appl_hvc_flag;
 
 #ifdef APPL_VALIDATE_ATT_PDU_LEN
 static APPL_VALID_ATT_PDU_LEN appl_valid_att_pdu_len
@@ -130,7 +151,27 @@ static APPL_VALID_ATT_PDU_LEN appl_valid_att_pdu_len
 static UCHAR appl_gatt_server_evt_trc = BT_TRUE;
 #endif /* APPL_GATT_SERVER_HAVE_EVT_TRC_SELECTION */
 
+#define APPL_ATT_MAX_MULT_HVN_COUNT     4
+
 /* --------------------------------------------- Functions */
+#ifdef APPL_HAVE_PROFILE_ATT_CB_SUPPORT
+API_RESULT appl_register_cb(APPL_EVENT_HANDLER_CB appl_pams_cb)
+{
+    API_RESULT retval;
+
+    retval = API_FAILURE;
+
+    if (NULL != appl_pams_cb)
+    {
+        appl_event_hndlr_cb = appl_pams_cb;
+
+        retval = API_SUCCESS;
+    }
+
+    return retval;
+}
+#endif /* APPL_HAVE_PROFILE_ATT_CB_SUPPORT */
+
 #ifdef APPL_GATT_SERVER_HAVE_EVT_TRC_SELECTION
 void appl_set_gatt_server_evt_trc(UCHAR flag)
 {
@@ -175,57 +216,82 @@ API_RESULT appl_att_prepare_write_queue_init (void)
         index++;
     } while (index < APPL_ATT_WRITE_QUEUE_SIZE);
 
-    appl_att_write_buffer_ptr = 0U;
-    appl_att_write_queue_index = 0U;
-
     return API_SUCCESS;
+}
+
+APPL_WRITELONG_ELEMENT* appl_alloc_writelong_element(ATT_ATTR_HANDLE handle, UINT16 *id)
+{
+    APPL_WRITELONG_ELEMENT *elt;
+    UINT16 index, free_index;
+
+    free_index = APPL_ATT_WRITE_QUEUE_SIZE;
+    elt = NULL;
+    *id = APPL_ATT_WRITE_QUEUE_SIZE;
+
+    for (index = 0; index < APPL_ATT_WRITE_QUEUE_SIZE; index++)
+    {
+        if (handle == appl_att_write_queue[index].handle)
+        {
+            elt = &appl_att_write_queue[index];
+            *id = index;
+            break;
+        }
+        else if ((APPL_ATT_WRITE_QUEUE_SIZE == free_index) &&
+                 (0x0000 == appl_att_write_queue[index].handle))
+        {
+            free_index = index;
+        }
+    }
+
+    if (APPL_ATT_WRITE_QUEUE_SIZE == index)
+    {
+        if (APPL_ATT_WRITE_QUEUE_SIZE != free_index)
+        {
+            elt = &appl_att_write_queue[free_index];
+            *id = free_index;
+        }
+    }
+
+    return elt;
 }
 
 API_RESULT appl_att_prepare_write_enqueue (ATT_HANDLE_VALUE_OFFSET_PARAM * param)
 {
+    APPL_WRITELONG_ELEMENT *elt;
     API_RESULT retval;
+    UINT16 index;
 
     retval = API_FAILURE;
 
-    APPL_TRC (
-    "[APPL]: Queue index: 0x%02X Offset: 0x%04X Length: 0x%04X, Value "
-    "Buffer Index 0x%02X\n",appl_att_write_queue_index,
-    appl_att_write_queue[appl_att_write_queue_index].offset,
-    appl_att_write_queue[appl_att_write_queue_index].handle_value.value.len,
-    appl_att_write_buffer_ptr);
+    /* Search or allocate a WriteQueue element for the handle */
+    elt = appl_alloc_writelong_element(param->handle_value.handle, &index);
 
-    if ((APPL_ATT_MAX_WRITE_BUFFER_SIZE > (appl_att_write_buffer_ptr + param->handle_value.value.len)) &&
-       (APPL_ATT_WRITE_QUEUE_SIZE != appl_att_write_queue_index))
+    if (NULL == elt)
     {
-        APPL_TRC (
-        "[APPL]: Allocating Element 0x%02X, Buffer Index 0x%02X\n",
-        appl_att_write_queue_index, appl_att_write_buffer_ptr);
+        return retval;
+    }
 
-        appl_att_write_queue[appl_att_write_queue_index] = (*param);
-        appl_att_write_queue[appl_att_write_queue_index].handle_value.value.val\
-            = &appl_att_write_queue_buffer[appl_att_write_buffer_ptr];
+    APPL_TRC(
+    "[APPL]: Queue index: 0x%02X Offset: 0x%04X\n", index, elt->length);
+
+    /* Store the provided Offset value */
+    elt->offset = param->offset;
+
+    if (APPL_MAX_WRITELONG_SIZE > (elt->length + param->handle_value.value.len))
+    {
+        APPL_TRC(
+        "[APPL]: Copy to Element\n");
+
+        elt->handle = param->handle_value.handle;
 
         BT_mem_copy
         (
-            appl_att_write_queue[appl_att_write_queue_index].\
-            handle_value.value.val,
+            &(elt->value[elt->length]),
             param->handle_value.value.val,
             param->handle_value.value.len
         );
 
-        APPL_TRC (
-        "[APPL]: Queued element Offset: 0x%04X, Length: 0x%04X\n",
-        appl_att_write_queue[appl_att_write_queue_index].offset,
-        appl_att_write_queue[appl_att_write_queue_index].handle_value.value.len);
-
-        appl_att_write_queue_index++;
-        appl_att_write_buffer_ptr += (UCHAR)param->handle_value.value.len;
-
-        APPL_TRC (
-        "[APPL]: Queue index: 0x%02X , Value Buffer Index 0x%02X\n",
-        appl_att_write_queue_index,
-        appl_att_write_buffer_ptr);
-
+        elt->length += param->handle_value.value.len;
         retval = API_SUCCESS;
     }
     else
@@ -257,6 +323,10 @@ API_RESULT appl_att_prepare_write_execute (ATT_HANDLE   * handle)
     UINT32                            index;
     API_RESULT                        retval;
     ATT_ERROR_RSP_PARAM               err_param;
+    ATT_HANDLE_VALUE_PAIR             pair;
+    UCHAR                             response;
+
+    response = BT_TRUE;
 
     /* MISRA C - 2012 Rule 2.2 */
     /* retval = API_FAILURE; */
@@ -265,74 +335,90 @@ API_RESULT appl_att_prepare_write_execute (ATT_HANDLE   * handle)
     /* MISRA C - 2012 Rule 2.2 */
     /* err_param.error_code = ATT_ATTRIBUTE_NOT_FOUND; */
 
+    retval = API_FAILURE;
     index = 0U;
-
-    APPL_TRC (
-    "[APPL]: Number of elements to be executed = 0x%02X\n",
-    appl_att_write_queue_index);
 
     do
     {
-        APPL_TRC (
-        "[APPL]: Executing Element 0x%02lX Handle 0x%04X, Value Length 0x%04X\n",
-        index,appl_att_write_queue[index].handle_value.handle,
-        appl_att_write_queue[index].handle_value.value.len);
-
-        retval = BT_gatt_db_access_handle
-                 (
-                      &appl_att_write_queue[index].handle_value,
-                      handle,
-                      appl_att_write_queue[index].offset,
-                      (GATT_DB_EXECUTE | GATT_DB_PEER_INITIATED)
-                 );
-
-        if (API_SUCCESS != retval)
+        if (0U != appl_att_write_queue[index].length)
         {
             APPL_TRC (
-            "[APPL]: Failed to Execute write on handle 0x%04X, reason 0x%04X\n",
-            appl_att_write_queue[index].handle_value.handle, retval);
-            break;
+            "[APPL]: Executing Element 0x%02X Handle 0x%04X, Value Length 0x%04X\n",
+            index, appl_att_write_queue[index].handle, appl_att_write_queue[index].length);
+
+            pair.handle = appl_att_write_queue[index].handle;
+            pair.value.val = appl_att_write_queue[index].value;
+            pair.value.len = appl_att_write_queue[index].length;
+
+            retval = BT_gatt_db_access_handle
+                     (
+                          &pair,
+                          handle,
+                          appl_att_write_queue[index].offset,
+                          (GATT_DB_EXECUTE | GATT_DB_PEER_INITIATED)
+                     );
+
+            if (API_SUCCESS != retval)
+            {
+                if (GATT_DB_DONOT_RESPOND == retval)
+                {
+                    response = BT_FALSE;
+                }
+                else
+                {
+                    APPL_TRC(
+                    "[APPL]: Failed to Execute write on handle 0x%04X, reason 0x%04X\n",
+                    appl_att_write_queue[index].handle, retval);
+
+                    break;
+                }
+            }
         }
 
         index++;
-    }while (index < appl_att_write_queue_index);
 
-    /* TBD: What happens if Write on or more but not all attributes fails? */
-    if (0U != index && API_SUCCESS == retval)
+    } while (index < APPL_ATT_WRITE_QUEUE_SIZE);
+
+    if (BT_TRUE == response)
     {
-        retval = BT_att_send_execute_write_rsp
-                 (
-                      handle
-                 );
-        APPL_TRC (
-        "[APPL]: Execute Write Response sent with result 0x%04X\n",retval);
-    }
-    else
-    {
-        err_param.handle = appl_att_write_queue[index].handle_value.handle;
-        if (GATT_DB_INVALID_OFFSET == retval)
+        /* TBD: What happens if Write on or more but not all attributes fails? */
+        if (API_SUCCESS == retval)
         {
-            err_param.error_code = ATT_INVALID_OFFSET;
-        }
-        else if (GATT_DB_INSUFFICIENT_BUFFER_LEN == retval)
-        {
-            err_param.error_code = ATT_INVALID_ATTRIBUTE_LEN;
-        }
-        else if (GATT_DB_INVALID_OPERATION == retval)
-        {
-            err_param.error_code = ATT_WRITE_NOT_PERMITTED;
+            retval = BT_att_send_execute_write_rsp
+                     (
+                          handle
+                     );
+            APPL_TRC (
+            "[APPL]: Execute Write Response sent with result 0x%04X\n",retval);
         }
         else
         {
-            err_param.error_code = (UCHAR)(0x00FFU & retval);
+            err_param.handle = appl_att_write_queue[index].handle;
+            if (GATT_DB_INVALID_OFFSET == retval)
+            {
+                err_param.error_code = ATT_INVALID_OFFSET;
+            }
+            else if (GATT_DB_INSUFFICIENT_BUFFER_LEN == retval)
+            {
+                err_param.error_code = ATT_INVALID_ATTRIBUTE_LEN;
+            }
+            else if (GATT_DB_INVALID_OPERATION == retval)
+            {
+                err_param.error_code = ATT_WRITE_NOT_PERMITTED;
+            }
+            else
+            {
+                err_param.error_code = (UCHAR)(0x00FFU & retval);
+            }
+
+            retval = BT_att_send_error_rsp
+                        (
+                            handle,
+                            &err_param
+                        );
+            APPL_TRC (
+            "[APPL]: Sent Error Response with result 0x%04X\n",retval);
         }
-        retval = BT_att_send_error_rsp
-                 (
-                     handle,
-                     &err_param
-                 );
-        APPL_TRC (
-        "[APPL]: Sent Error Response with result 0x%04X\n",retval);
     }
 
     (BT_IGNORE_RETURN_VALUE) appl_att_prepare_write_queue_init ();
@@ -429,7 +515,7 @@ API_RESULT appl_handle_find_by_type_val_request
     {
         list.range = group_list;
         APPL_TRC(
-        "[APPL]: Number of occurences of UUID 0x%04X = 0x%04X\n",
+        "[APPL]: Number of occurrences of UUID 0x%04X = 0x%04X\n",
         *uuid->val,list.count);
 
         retval = BT_att_send_find_by_type_val_rsp
@@ -924,14 +1010,14 @@ API_RESULT appl_handle_read_multiple_request
          if (API_SUCCESS == retval)
          {
              APPL_TRC (
-             "[APPL]: Successfully Sent Read Multiple Response, 0%04X of 0x%04X"
-             "values transferred!",rsp_param.actual_count,rsp_param.count);
+             "[APPL]: Successfully Sent Read Multiple Response, 0%04X of "
+             "0x%04X values transferred!\n",rsp_param.actual_count,rsp_param.count);
          }
          else
          {
              APPL_ERR (
              "[APPL]:[*** ERR ***]: Failed to send read Multiple Response, "
-             "Reason 0x%04X",retval);
+             "Reason 0x%04X\n",retval);
          }
     }
     else
@@ -990,6 +1076,132 @@ API_RESULT appl_handle_read_multiple_request
     return retval;
 }
 
+#ifdef ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT
+API_RESULT appl_handle_read_multiple_var_len_request
+           (
+                /* IN */ ATT_HANDLE          * handle,
+                /* IN */ ATT_HANDLE_LIST     * list
+           )
+{
+    ATT_ERROR_RSP_PARAM            err_param;
+    ATT_READ_MULTIPLE_VARIABLE_LENGTH_RSP_PARAM    rsp_param;
+    ATT_HANDLE_VALUE_PAIR          pair;
+    ATT_VALUE                      value[APPL_MAX_MULTIPLE_READ_COUNT];
+    UINT32                         index;
+    API_RESULT                     retval;
+
+    index = 0;
+
+    BT_mem_set(&pair, 0x0, sizeof(pair));
+
+    do
+    {
+        pair.handle = list->handle_list[index];
+        retval = BT_gatt_db_access_handle
+                 (
+                     &pair,
+                     handle,
+                     0,
+                     (GATT_DB_READ | GATT_DB_PEER_INITIATED)
+                 );
+
+        if (API_SUCCESS == retval)
+        {
+            value[index].val = pair.value.val;
+            value[index].len = pair.value.len;
+            index++;
+        }
+        else
+        {
+            break;
+        }
+    } while (index < list->list_count);
+
+
+    if (API_SUCCESS == retval)
+    {
+        rsp_param.count = (UINT16)index;
+        rsp_param.value = value;
+
+         retval = BT_att_send_read_multiple_variable_length_rsp
+                  (
+                      handle,
+                      &rsp_param
+                  );
+
+         if (API_SUCCESS == retval)
+         {
+             APPL_TRC (
+             "[APPL]: Successfully Sent Read Multiple Variable Length Response, 0%04X of 0x%04X"
+             "values transferred!", rsp_param.actual_count, rsp_param.count);
+         }
+         else
+         {
+             APPL_ERR (
+             "[APPL]:[*** ERR ***]: Failed to send read Multiple Variable Length Response, "
+             "Reason 0x%04X", retval);
+         }
+    }
+    else
+    {
+        err_param.op_code = ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ;
+        err_param.handle = list->handle_list[index];
+
+        /* Initializing to this Value */
+        /* MISRA C - 2012 Rule 2.2 */
+        /* err_param.error_code = ATT_UNLIKELY_ERROR; */
+
+        if (GATT_DB_INVALID_OPERATION == retval)
+        {
+            err_param.error_code = ATT_READ_NOT_PERMITTED;
+        }
+        else if (GATT_DB_INVALID_ATTR_HANDLE == retval)
+        {
+            err_param.error_code = ATT_INVALID_HANDLE;
+        }
+        else if (GATT_DB_INVALID_TRANSPORT_ACCESS == retval)
+        {
+            err_param.error_code = APPL_ATT_TRANSPORT_ACCESS_APPL_ERR;
+        }
+        else if (GATT_DB_INSUFFICIENT_SECURITY == retval)
+        {
+            err_param.error_code = ATT_INSUFFICIENT_AUTHENTICATION;
+        }
+        else if (GATT_DB_INSUFFICIENT_ENC_KEY_SIZE == retval)
+        {
+            err_param.error_code = ATT_INSUFFICIENT_ENC_KEY_SIZE;
+
+            /* Application Updates to Handle Encryption Key Size Error */
+            (BT_IGNORE_RETURN_VALUE)appl_handle_security_error
+            (
+                handle,
+                retval
+            );
+        }
+        else
+        {
+            err_param.error_code = (UCHAR)(0x00FF & retval);
+        }
+
+        if ((GATT_DB_DELAYED_RESPONSE  != retval) &&
+            (GATT_DB_DONOT_RESPOND     != retval) &&
+            (GATT_DB_ALREADY_RESPONDED != retval))
+        {
+            /* Send Error Response */
+            retval = BT_att_send_error_rsp
+            (
+                handle,
+                &err_param
+            );
+
+            APPL_TRC(
+            "[APPL]: Sent Error Response with result 0x%04X\n",retval);
+        }
+    }
+
+    return retval;
+}
+#endif /* ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT */
 
 API_RESULT appl_handle_read_request
            (
@@ -1166,9 +1378,9 @@ API_RESULT appl_handle_write_request
     API_RESULT                     retval;
 
     APPL_TRC (
-    "[APPL] Write Request from %s for handle 0x%04X of Length %d\n",
+    "[APPL] Write Request from %s for handle 0x%04X of Length %d, Offset %d\n",
     ((GATT_DB_PEER_INITIATED == (flags & GATT_DB_PEER_INITIATED)) ? "Peer" :
-    "Local"), attr_handle, value->len);
+    "Local"), attr_handle, value->len, offset);
 
     appl_dump_bytes (value->val, value->len);
 
@@ -1185,7 +1397,7 @@ API_RESULT appl_handle_write_request
               (
                   &pair,
                   handle,
-                  offset, /* Offset is zero */
+                  offset,
                   (flags)
               );
 
@@ -1344,6 +1556,9 @@ API_RESULT appl_att_cb
     UINT16                    mtu;
     API_RESULT                retval;
     UCHAR                     send_err;
+#ifdef ATT_ON_BR_EDR_SUPPORT
+    DEVICE_LINK_TYPE          link_type;
+#endif /* ATT_ON_BR_EDR_SUPPORT */
 
 #ifdef APPL_GATT_SERVER_HAVE_EVT_TRC_SELECTION
     if (BT_TRUE == appl_gatt_server_evt_trc)
@@ -1382,10 +1597,42 @@ API_RESULT appl_att_cb
     }
 #endif /* APPL_VALIDATE_ATT_PDU_LEN */
 
-    if (NULL == event_data)
+    /**
+     * Check if NULL data is received for event other than connection
+     * or disconnection.
+     */
+    if ((NULL == event_data) &&
+        ((ATT_CONNECTION_IND != att_event) &&
+         (ATT_DISCONNECTION_IND != att_event)))
     {
         APPL_ERR("Received NULL event data\n");
         retval = API_FAILURE; /* return API_FAILURE; */
+
+        /* Check for Event Result */
+        if (ATT_RESPONSE_TIMED_OUT == event_result)
+        {
+            /**
+             * For the server side, If Response timeout is received
+             * for any of the server initiated procedures which is waiting
+             * for the corresponding response from remote side, then
+             * handle the same and feed it back to any upper layer applications
+             * which needs to take any special action.
+             */
+            switch (att_event)
+            {
+            case ATT_HANDLE_VALUE_CNF:
+                appl_parse_confirmation_data (handle, event_result);
+                break;
+
+            default:
+                /* MISRA C-2012 Rule 16.4 */
+                break;
+            }
+        }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
+        }
     }
     else
     {
@@ -1418,11 +1665,31 @@ API_RESULT appl_att_cb
 
             if (API_SUCCESS == event_result)
             {
-                APPL_TRC(
-                "Received ATT_CONNECTION_IND for ATT Handle: \n"
-                "   -> Device_ID       : 0x%02X\n"
-                "   -> ATT_Instance_ID : 0x%02X\n\n",
-                handle->device_id, handle->att_id);
+                if (sizeof(BT_DEVICE_ADDR) == event_datalen)
+                {
+                    APPL_TRC(
+                    "Received ATT_CONNECTION_IND on LE for ATT Handle: \n"
+                    "   -> Device_ID       : 0x%02X\n"
+                    "   -> ATT_Instance_ID : 0x%02X\n\n",
+                    handle->device_id, handle->att_id);
+                }
+                else if (0U == event_datalen)
+                {
+                    APPL_TRC(
+                    "Received ATT_CONNECTION_IND on BR/EDR for ATT Handle: \n"
+                    "   -> Device_ID       : 0x%02X\n"
+                    "   -> ATT_Instance_ID : 0x%02X\n\n",
+                    handle->device_id, handle->att_id);
+                }
+                else
+                {
+                    /**
+                     * TODO:
+                     * Handle EATT related Server Application connections here.
+                     * Currently the Application GATT Client layer, does not
+                     * pass the EATT Connection Indication to Server.
+                     */
+                }
 
                 retval = appl_add_device(handle,&fsm_param.handle);
 
@@ -1436,11 +1703,11 @@ API_RESULT appl_att_cb
                         (void *)(&fsm_param)
                     );
 
-                    /* Post Transport Operating Inciation */
+                    /* Post Transport Operating Indication */
                     /**
                      *  Please note that in case of BLE Transport Connect and Transport
                      *  Operating mean the same. But this may not be true in case of
-                     *  BR/EDR or someother transport for which this application could
+                     *  BR/EDR or some-other transport for which this application could
                      *  be used.
                      */
                     appl_fsm_post_event
@@ -1501,35 +1768,73 @@ API_RESULT appl_att_cb
             }
             else if (API_SUCCESS == retval)
             {
-                BT_UNPACK_LE_2_BYTE(&mtu, event_data);
-                APPL_TRC (
-                "Received Exchange MTU Request with MTU Size "
-                "= 0x%04X!\n", mtu);
+#ifdef ATT_ON_ECBFC_SUPPORT
+                ATT_ECBFC_INFO t_info;
 
-                xcnhg_rsp_param.mtu = APPL_ATT_MTU;
-
-                retval = BT_att_send_mtu_xcnhg_rsp
-                         (
-                             handle,
-                             &xcnhg_rsp_param
-                         );
-
-                APPL_TRC (
-                "Sent Response with retval 0x%04X\n", retval);
+                retval = BT_att_ecbfc_get_info(handle, &t_info);
 
                 if (API_SUCCESS == retval)
                 {
-                    UINT16 t_mtu;
-
-                    retval = BT_att_access_mtu
-                             (
-                                 handle,
-                                 &t_mtu
-                             );
-
-                    if (API_SUCCESS == retval)
+                    err_param.error_code = ATT_REQUEST_NOT_SUPPORTED;
+                    err_param.handle = 0x0000;
+                    err_param.op_code = ATT_XCHNG_MTU_REQ;
+                    retval = BT_att_send_error_rsp (handle,&err_param);
+                    APPL_ERR (
+                    "Request Not Supported over EATT Channel!"
+                    "Error Response sent with result %04X!\n",
+                    retval);
+                }
+                else
+#endif /* ATT_ON_ECBFC_SUPPORT */
+                {
+#ifdef ATT_ON_BR_EDR_SUPPORT
+                    /* Fetch the Link Type and Send Error response if BREDR ATT */
+                    retval = device_queue_get_link_type(&link_type, &handle->device_id);
+                    if ((API_SUCCESS == retval) && (DQ_BR_LINK == link_type))
                     {
-                        appl_service_mtu_updt_handler(handle, t_mtu);
+                        err_param.error_code = ATT_REQUEST_NOT_SUPPORTED;
+                        err_param.handle = 0x0000;
+                        err_param.op_code = ATT_XCHNG_MTU_REQ;
+                        retval = BT_att_send_error_rsp (handle,&err_param);
+                        APPL_ERR (
+                        "Request Not Supported over EATT Channel!"
+                        "Error Response sent with result %04X!\n",
+                        retval);
+                    }
+                    else
+#endif /* ATT_ON_BR_EDR_SUPPORT */
+                    {
+                        BT_UNPACK_LE_2_BYTE(&mtu, event_data);
+                        APPL_TRC(
+                        "Received Exchange MTU Request with MTU Size "
+                        "= 0x%04X!\n", mtu);
+
+                        xcnhg_rsp_param.mtu = appl_gatt_mtu;
+
+                        retval = BT_att_send_mtu_xcnhg_rsp
+                                 (
+                                     handle,
+                                     &xcnhg_rsp_param
+                                 );
+
+                        APPL_TRC(
+                        "Sent Response with retval 0x%04X\n", retval);
+
+                        if (API_SUCCESS == retval)
+                        {
+                            UINT16 t_mtu;
+
+                            retval = BT_att_access_mtu
+                                     (
+                                         handle,
+                                         &t_mtu
+                                     );
+
+                            if (API_SUCCESS == retval)
+                            {
+                                appl_service_mtu_updt_handler(handle, t_mtu);
+                            }
+                        }
                     }
                 }
             }
@@ -1866,13 +2171,7 @@ API_RESULT appl_att_cb
                 );
 
                 value.len = event_datalen - 2U;
-                value.val = appl_att_buffer;
-                BT_mem_copy
-                (
-                    value.val,
-                    &event_data[2U],
-                    value.len
-                );
+                value.val = &event_data[2U];
 
                 (BT_IGNORE_RETURN_VALUE) appl_handle_write_request
                 (
@@ -1895,13 +2194,7 @@ API_RESULT appl_att_cb
                 );
 
                 value.len = event_datalen - 2U;
-                value.val = appl_att_buffer;
-                BT_mem_copy
-                (
-                    value.val,
-                    &event_data[2U],
-                    value.len
-                );
+                value.val = &event_data[2U];
 
                 (BT_IGNORE_RETURN_VALUE) appl_handle_write_request
                 (
@@ -1921,7 +2214,6 @@ API_RESULT appl_att_cb
             break;
 #ifdef ATT_QUEUED_WRITE_SUPPORT
         case ATT_PREPARE_WRITE_REQ:
-        {
             BT_UNPACK_LE_2_BYTE
             (
                 &attr_handle,
@@ -1935,13 +2227,7 @@ API_RESULT appl_att_cb
             );
 
             value.len = event_datalen - 4U;
-            value.val = appl_att_buffer;
-            BT_mem_copy
-            (
-                value.val,
-                &event_data[4U],
-                value.len
-            );
+            value.val = &event_data[4U];
 
             (BT_IGNORE_RETURN_VALUE) appl_handle_write_request
             (
@@ -1949,22 +2235,26 @@ API_RESULT appl_att_cb
                 attr_handle,
                 offset,
                 &value,
-                ( GATT_DB_PEER_INITIATED | GATT_DB_PREPARE)
+                (GATT_DB_PEER_INITIATED | GATT_DB_PREPARE)
             );
-        }
-        break;
-        case ATT_EXECUTE_WRITE_REQ:
-            if (NULL != event_data)
-            {
-                APPL_TRC  (
-                "[APPL]: ATT Execute Write Param 0x%02X\n",event_data[0U]);
+            break;
 
-                if (0x02U > event_data[0U])
-                {
-                    (BT_IGNORE_RETURN_VALUE) appl_execute_write_handler[event_data[0U]](handle);
-                }
+        case ATT_EXECUTE_WRITE_REQ:
+            /* NULL Check for event_data already present in the top */
+            APPL_TRC(
+            "[APPL]: ATT Execute Write Param 0x%02X\n", event_data[0U]);
+            if (0x02U > event_data[0U])
+            {
+                (BT_IGNORE_RETURN_VALUE)appl_execute_write_handler[event_data[0U]](handle);
+            }
+            else
+            {
+                /* TBD: Verify appropriate code for this */
+                err_param.error_code = ATT_INVALID_PDU;
+                send_err = BT_TRUE;
             }
             break;
+
 #else /* ATT_QUEUED_WRITE_SUPPORT */
         case ATT_PREPARE_WRITE_REQ: /* Fall through */
         case ATT_EXECUTE_WRITE_REQ: /* Fall through */
@@ -1973,13 +2263,19 @@ API_RESULT appl_att_cb
 #endif /* ATT_QUEUED_WRITE_SUPPORT */
 
         case ATT_HANDLE_VALUE_CNF:
-            appl_hvc_flag = BT_FALSE;
             appl_parse_confirmation_data (handle, event_result);
             break;
 
         case ATT_HANDLE_VALUE_NTF_TX_COMPLETE:
             appl_parse_ntf_tx_complete (handle, event_data, event_datalen);
             break;
+
+#ifdef ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+        case ATT_HANDLE_VALUE_MULTIPLE_NTF_TX_COMPLETE:
+            CONSOLE_OUT("Received HVMN Tx Complete (Locally generated)\n");
+            appl_dump_bytes(event_data, event_datalen);
+            break;
+#endif /* ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT */
 
         case ATT_SIGNED_WRITE_CMD:
             appl_dump_bytes(event_data, event_datalen);
@@ -2001,6 +2297,30 @@ API_RESULT appl_att_cb
 #endif /* SMP_DATA_SIGNING */
 
             break;
+
+#ifdef ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT
+        case ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ:
+        {
+            APPL_TRC (
+            "Received Read Multiple Variable Length Request with result 0x%04X\n",
+            event_result);
+            list.list_count = 0U;
+            do
+            {
+                BT_UNPACK_LE_2_BYTE
+                (
+                    &attr_handle_list[list.list_count],
+                    (event_data + (list.list_count * 2U))
+                );
+                list.list_count++;
+            }while (event_datalen > (list.list_count * 2U));
+
+            list.handle_list = attr_handle_list;
+
+            (BT_IGNORE_RETURN_VALUE)appl_handle_read_multiple_var_len_request (handle,&list);
+        }
+        break;
+#endif /* ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT */
 
         case ATT_UNKNOWN_PDU_IND:
             /**
@@ -2029,7 +2349,7 @@ API_RESULT appl_att_cb
                  * the error that is needed to be sent is ATT_REQUEST_NOT_SUPPORTED
                  * and not ATT_INVALID_PDU.
                  */
-                err_param.error_code = ATT_INVALID_PDU;
+                err_param.error_code = ATT_REQUEST_NOT_SUPPORTED;
                 err_param.op_code = event_data[0U];
                 err_param.handle = ATT_INVALID_ATTR_HANDLE_VAL;
 
@@ -2044,7 +2364,7 @@ API_RESULT appl_att_cb
              * So, here we need to set:
              * send_err = BT_TRUE;
              */
-             send_err = BT_FALSE;
+            send_err = BT_TRUE;
 
              APPL_TRC(
              "[ATT]:[0x%02X]:[0x%02X]: Received Unhandled event 0x%02X with result 0x%04X\n",
@@ -2052,6 +2372,20 @@ API_RESULT appl_att_cb
 
             break;
         }
+
+#ifdef APPL_HAVE_PROFILE_ATT_CB_SUPPORT
+        if (NULL != appl_event_hndlr_cb)
+        {
+            (BT_IGNORE_RETURN_VALUE)appl_event_hndlr_cb
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
+        }
+#endif /* APPL_HAVE_PROFILE_ATT_CB_SUPPORT */
         }
 
         if (BT_FALSE != send_err)
@@ -2083,9 +2417,6 @@ void appl_gatt_signing_verification_complete
     ATT_ATTR_HANDLE attr_handle;
     ATT_VALUE value;
 
-    BT_IGNORE_UNUSED_PARAM(data);
-    BT_IGNORE_UNUSED_PARAM(datalen);
-
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     BT_mem_set(&value, 0, sizeof(ATT_VALUE));
 
@@ -2109,23 +2440,24 @@ void appl_gatt_signing_verification_complete
          *    thus Attribute Value len(N) = Total Len - (1 + 2 + 4 + 8)
          */
         value.len = (s_datalen - (1U + 2U + sizeof(UINT32) + SMP_MAC_SIZE));
-        value.val = appl_att_buffer;
+        value.val = &s_data[3U];
 
-        BT_mem_copy
-        (
-            value.val,
-            (&s_data[3U]),
-            value.len
-        );
-
-        (BT_IGNORE_RETURN_VALUE) appl_handle_write_request
-        (
-            &appl_signed_write_server_handle,
-            attr_handle,
-            0U,
-            &value,
-            (GATT_DB_PEER_INITIATED | GATT_DB_WRITE_WITHOUT_RSP)
-        );
+        /* Verify Signing Counter/Signature. Discard if invalid */
+        if (0 != BT_mem_cmp(data, &s_data[s_datalen - datalen], datalen))
+        {
+            APPL_TRC("\n*** Signature Mismatch of Verified Data. Discarding... ***\n\n");
+        }
+        else
+        {
+            (BT_IGNORE_RETURN_VALUE)appl_handle_write_request
+            (
+                &appl_signed_write_server_handle,
+                attr_handle,
+                0U,
+                &value,
+                (GATT_DB_PEER_INITIATED | GATT_DB_SIGNED_WRITE)
+            );
+        }
     }
     else
     {
@@ -2183,6 +2515,94 @@ API_RESULT appl_validate_att_pdu_req_len
 }
 #endif /* APPL_VALIDATE_ATT_PDU_LEN */
 
+#ifdef ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+API_RESULT appl_gatt_send_multi_handle_val_ntf_request(DEVICE_HANDLE dq_handle)
+{
+    ATT_HNDL_VAL_MULTIPLE_NTF_PARAM param;
+    ATT_HANDLE_VALUE_PAIR           handle_value_list[APPL_ATT_MAX_MULT_HVN_COUNT];
+    int     choice;
+    UINT32  index;
+    API_RESULT retval;
+    APPL_HANDLE appl_handle;
+    ATT_HANDLE  t_att_handle;
+
+    BT_mem_set(handle_value_list, 0x0, sizeof(handle_value_list));
+    appl_handle = 0U;
+
+    /* Fetch the Application Handle */
+    retval = appl_get_handle_from_device_handle(dq_handle, &appl_handle);
+
+    CONSOLE_OUT ("Enter ATT Handle Device ID: [in HEX]");
+    scanf ("%x", &choice);
+    t_att_handle.device_id = (DEVICE_HANDLE)choice;
+    CONSOLE_OUT ("Enter ATT Handle ATT Instance ID: [in HEX]");
+    scanf ("%x", &choice);
+    t_att_handle.att_id = (ATT_CON_ID)choice;
+
+    APPL_TRC("Enter Number of ATT Handles (maximum %d): \n", APPL_ATT_MAX_MULT_HVN_COUNT);
+    scanf("%d", &choice);
+
+    if (choice > APPL_ATT_MAX_MULT_HVN_COUNT)
+    {
+        APPL_TRC(
+        "Number of ATT Handles (%d) > APPL_ATT_CLIENT_MAX_MULT_HVN_COUNT (%d). Returning error.\n",
+        choice, APPL_ATT_MAX_MULT_HVN_COUNT);
+
+        return API_FAILURE;
+    }
+
+    param.handle_value_list = handle_value_list;
+    param.count = (UINT16)choice;
+
+    APPL_TRC("Enter ATT Handles\n");
+
+    for (index = 0U; index < param.count; index++)
+    {
+        APPL_TRC("ATT Handle [%d] (in HEX): \n", index);
+        scanf("%x", &choice);
+
+        handle_value_list[index].handle = (ATT_ATTR_HANDLE)choice;
+
+        retval = BT_gatt_db_access_handle
+                 (
+                     &handle_value_list[index],
+                     &APPL_GET_ATT_INSTANCE(appl_handle),
+                     0U,
+                     (GATT_DB_READ | GATT_DB_LOCALLY_INITIATED)
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC("Failed to read ATT value for Handle [0x%04X]: \n", handle_value_list[index].handle);
+
+            break;
+        }
+    }
+
+    retval = BT_att_send_hndl_val_multiple_ntf(&t_att_handle, &param);
+
+    return retval;
+}
+#endif /* ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT */
+
+API_RESULT appl_gatt_set_mtu(UINT16 mtu)
+{
+    /*
+     * Set this as the Max MTU that the App has registered till now and
+     * use this in ATT Exchange MTU Response.
+     */
+    if (appl_gatt_mtu < mtu)
+    {
+        appl_gatt_mtu = mtu;
+    }
+    else
+    {
+        /* Retain the highest MTU Configured so far */
+    }
+
+    return API_SUCCESS;
+}
+
 #ifdef APPL_LIMIT_LOGS
 #ifdef APPL_TRC
 #undef APPL_TRC
@@ -2205,7 +2625,7 @@ void main_gatt_server_operations(void)
     {
         CONSOLE_OUT ("%s \n", gatt_server_menu);
         CONSOLE_OUT ("Enter you choice : ");
-        CONSOLE_IN ("%d", &choice);
+        scanf ("%d", &choice);
         menu_choice = choice;
 
         switch(choice)
@@ -2217,9 +2637,9 @@ void main_gatt_server_operations(void)
             break;
 
         case 2:
-            CONSOLE_OUT ("Selection Option to Enable Disable User Level Authorization: \n");
-            CONSOLE_OUT ("Enter 1. Enable, 0. Disable:\n");
-            CONSOLE_IN ("%x", &choice);
+            CONSOLE_OUT ("Selection Option to Grant or Deny User Level Authorization: \n");
+            CONSOLE_OUT ("Enter 1. Grant, 0. Deny:\n");
+            scanf ("%x", &choice);
 
             (choice == 1U) ?                                           \
             APPL_SET_AUTHORIZATION(DEVICE_HANDLE_INIT_VAL, BT_TRUE) : \
@@ -2230,28 +2650,91 @@ void main_gatt_server_operations(void)
             {
                 BT_DEVICE_ADDR  device_addr;
                 GATT_DB_HANDLE  db_handle;
+                ATT_UUID        tmp_uuid;
+                UCHAR           frmt;
+                UCHAR           link_type;
 
-                CONSOLE_OUT("\n Enter GATT Service Instance:\n");
-                CONSOLE_IN("%u", &read_val);
-                db_handle.service_id = (UCHAR) read_val;
+                /* Populate GATT Service UUID */
+                tmp_uuid.uuid_16 = GATT_GATT_SERVICE;
+                frmt             = ATT_16_BIT_UUID_FORMAT;
 
-                CONSOLE_OUT("\n Enter GATT Service Changed Characteristic Instance:\n");
-                CONSOLE_IN("%u", &read_val);
-                db_handle.char_id = (UCHAR) read_val;
+                /**
+                 * NOTE:
+                 * The below code reference, always fetches the 1st instance
+                 * instance of GATT_SERVICE_CHANGED_CHARACTERISTIC characteristic
+                 * associated with the 1st instance of GATT_GATT_SERVICE that
+                 * occur in the current active/registered GATT DB.
+                 */
+                /* Check for Service ID and Characteristic ID of GATT in current DB */
+                retval = BT_gatt_db_get_sid_from_uuid
+                         (
+                             &tmp_uuid,
+                             frmt,
+                             0xFF,
+                             BT_TRUE,
+                             &db_handle.service_id
+                         );
+
+                if (API_SUCCESS == retval)
+                {
+                    /* Populate GATT Service Changed Characteristic UUID */
+                    tmp_uuid.uuid_16 = GATT_SERVICE_CHANGED_CHARACTERISTIC;
+                    frmt             = ATT_16_BIT_UUID_FORMAT;
+
+                    retval = BT_gatt_db_get_cid_from_uuid
+                             (
+                                 &tmp_uuid,
+                                 frmt,
+                                 0xFF,
+                                 db_handle.service_id,
+                                 &db_handle.char_id
+                             );
+
+                    if (API_SUCCESS == retval)
+                    {
+                        CONSOLE_OUT(
+                        "Found GATT Service Changed Char with SID:0x%04X, CID:0x%02X\n",
+                        db_handle.service_id, db_handle.char_id);
+                    }
+                    else
+                    {
+                        CONSOLE_OUT(
+                        "No Instance of GATT Service Changed Char found in Current GATT DB!\n");
+
+                        break;
+                    }
+                }
+                else
+                {
+                    CONSOLE_OUT(
+                    "No Instance of GATT Service found in Current GATT DB!\n");
+
+                    break;
+                }
 
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(device_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(device_addr.addr);
 
                 CONSOLE_OUT("\n0 - Public\n1 - Random\n");
                 CONSOLE_OUT("Enter BD_ADDR type : ");
-                CONSOLE_IN("%u", &read_val);
+                scanf("%u", &read_val);
                 device_addr.type = (UCHAR) read_val;
 
+                CONSOLE_OUT("\n1 - BREDR Link \n2 - LE Link\n3 - Any Link");
+                CONSOLE_OUT("Enter Link type : ");
+                scanf("%u", &read_val);
+                link_type = (UCHAR) read_val;
+                /* TODO: Any specific validation for Link Type to be done here if needed. */
+
+                /* Validate Link Type and Assign Accordingly */
+                link_type = (DQ_BR_LINK == link_type) ? DQ_BR_LINK : (DQ_LE_LINK == link_type) ? DQ_LE_LINK : DQ_LINK_ANY;
+
                 /* Fetch the Device Handle */
-                retval = device_queue_search_le_remote_addr
+                retval = device_queue_search_remote_addr
                          (
                              &db_handle.device_id,
-                             &device_addr
+                             &device_addr,
+                             link_type
                          );
 
                 if (API_SUCCESS == retval)
@@ -2260,11 +2743,11 @@ void main_gatt_server_operations(void)
 
                     if (API_SUCCESS == retval)
                     {
-                        CONSOLE_OUT("Send Service changed Indication: \n");
+                        CONSOLE_OUT("\nService Changed Indication sent successfully!\n");
                     }
                     else
                     {
-                        CONSOLE_OUT("Send Service changed Indication Failed 0x%04X \n", retval);
+                        CONSOLE_OUT("\nSend Service changed Indication Failed 0x%04X \n", retval);
                     }
                 }
             }
@@ -2275,32 +2758,112 @@ void main_gatt_server_operations(void)
                 BT_DEVICE_ADDR  device_addr;
                 GATT_DB_HANDLE  db_handle;
                 UCHAR           batt_level;
+                ATT_UUID        tmp_uuid;
+                UCHAR           frmt;
+                UCHAR           link_type;
 
-                CONSOLE_OUT("\n Enter Battery Service Instance:\n");
-                CONSOLE_IN("%u", &read_val);
-                db_handle.service_id = (UCHAR) read_val;
+                /* Populate Battery Service UUID */
+                tmp_uuid.uuid_16 = GATT_BATTERY_SERVICE;
+                frmt             = ATT_16_BIT_UUID_FORMAT;
 
-                CONSOLE_OUT("\n Enter Battery Level Characteristic Instance:\n");
-                CONSOLE_IN("%u", &read_val);
-                db_handle.char_id = (UCHAR) read_val;
+                /**
+                 * NOTE:
+                 * The below code reference, always fetches the 1st instance
+                 * instance of GATT_BATTERY_LEVEL_CHARACTERISTIC characteristic
+                 * associated with the 1st instance of GATT_BATTERY_SERVICE that
+                 * occur in the current active/registered GATT DB.
+                 */
+                /* Check for Service ID of Battery Service in current DB as Primary Service */
+                retval = BT_gatt_db_get_sid_from_uuid
+                         (
+                             &tmp_uuid,
+                             frmt,
+                             0xFF,
+                             BT_TRUE, /* Primary Service */
+                             &db_handle.service_id
+                         );
+
+                if (API_SUCCESS != retval)
+                {
+                    retval = BT_gatt_db_get_sid_from_uuid
+                             (
+                                 &tmp_uuid,
+                                 frmt,
+                                 0xFF, /* TO CHECK if this needs to be UINT16? */
+                                 BT_FALSE, /* Secondary Service */
+                                 &db_handle.service_id
+                             );
+                }
+                else
+                {
+                    /* Empty */
+                }
+
+                if (API_SUCCESS == retval)
+                {
+                    /* Populate Battery Level Characteristic UUID */
+                    tmp_uuid.uuid_16 = GATT_BATTERY_LEVEL_CHARACTERISTIC;
+                    frmt             = ATT_16_BIT_UUID_FORMAT;
+
+                    retval = BT_gatt_db_get_cid_from_uuid
+                             (
+                                 &tmp_uuid,
+                                 frmt,
+                                 0xFF, /* TO CHECK if this needs to be UINT16? */
+                                 db_handle.service_id,
+                                 &db_handle.char_id
+                             );
+
+                    if (API_SUCCESS == retval)
+                    {
+                        CONSOLE_OUT(
+                        "Found Battery Level Char with SID:0x%04X, CID:0x%02X\n",
+                        db_handle.service_id, db_handle.char_id);
+                    }
+                    else
+                    {
+                        CONSOLE_OUT(
+                        "No Instance of Battery Level found in Current GATT DB!\n");
+
+                        break;
+                    }
+                }
+                else
+                {
+                    CONSOLE_OUT(
+                    "No Instance of Battery Service found in Current GATT DB!\n");
+
+                    break;
+                }
 
                 CONSOLE_OUT("Enter BD_ADDR : ");
-                appl_get_bd_addr(device_addr.addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(device_addr.addr);
 
                 CONSOLE_OUT("\n0 - Public\n1 - Random\n");
                 CONSOLE_OUT("Enter BD_ADDR type : ");
-                CONSOLE_IN("%u", &read_val);
+                scanf("%u", &read_val);
                 device_addr.type = (UCHAR) read_val;
 
-                CONSOLE_OUT("\n Enter Desired Battery Level:\n");
-                CONSOLE_IN("%u", &read_val);
+                CONSOLE_OUT("\n1 - BREDR Link \n2 - LE Link\n3 - Any Link");
+                CONSOLE_OUT("Enter Link type : ");
+                scanf("%u", &read_val);
+                link_type = (UCHAR) read_val;
+                /* TODO: Any specific validation for Link Type to be done here if needed. */
+
+                CONSOLE_OUT("\n Enter Desired Battery Level[range 0-100%%, in HEX]:\n");
+                scanf("%u", &read_val);
                 batt_level = (UCHAR) read_val;
+                /* TODO: Any specific validation for Battery Level to be done here if needed. */
+
+                /* Validate Link Type and Assign Accordingly */
+                link_type = (DQ_BR_LINK == link_type) ? DQ_BR_LINK : (DQ_LE_LINK == link_type) ? DQ_LE_LINK : DQ_LINK_ANY;
 
                 /* Fetch the Device Handle */
-                retval = device_queue_search_le_remote_addr
+                retval = device_queue_search_remote_addr
                          (
                              &db_handle.device_id,
-                             &device_addr
+                             &device_addr,
+                             link_type
                          );
 
                 if (API_SUCCESS == retval)
@@ -2312,6 +2875,51 @@ void main_gatt_server_operations(void)
                     CONSOLE_OUT("Update Battery Level Failed 0x%04X \n", retval);
                 }
             }
+            break;
+
+        case 5:
+#ifdef ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+            {
+                BT_DEVICE_ADDR device_addr;
+                DEVICE_HANDLE  dq_handle;
+                UCHAR          link_type;
+
+                CONSOLE_OUT("Enter BD_ADDR : ");
+                appl_get_bd_addr(device_addr.addr);
+
+                CONSOLE_OUT("\n0 - Public\n1 - Random\n");
+                CONSOLE_OUT("Enter BD_ADDR type : ");
+                scanf("%u", &read_val);
+                device_addr.type = (UCHAR)read_val;
+
+                CONSOLE_OUT("\n1 - BREDR Link \n2 - LE Link\n3 - Any Link");
+                CONSOLE_OUT("Enter Link type : ");
+                scanf("%u", &read_val);
+                link_type = (UCHAR) read_val;
+
+                /* Fetch the Device Handle */
+                /* Validate Link Type and Assign Accordingly */
+                link_type = (DQ_BR_LINK == link_type) ? DQ_BR_LINK : (DQ_LE_LINK == link_type) ? DQ_LE_LINK : DQ_LINK_ANY;
+
+                /* Fetch the Device Handle */
+                retval = device_queue_search_remote_addr
+                         (
+                             &dq_handle,
+                             &device_addr,
+                             link_type
+                         );
+
+                if (API_SUCCESS == retval)
+                {
+                    appl_gatt_send_multi_handle_val_ntf_request(dq_handle);
+                }
+            }
+#else
+            {
+                CONSOLE_OUT(
+                "ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT is not defined\n");
+            }
+#endif /* ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT */
             break;
 
         case 10:
@@ -2331,7 +2939,7 @@ void main_gatt_server_operations(void)
                 CONSOLE_OUT("1 - Enable Evt Prints\n");
                 CONSOLE_OUT("0 - Disable Evt Prints\n");
                 CONSOLE_OUT("Enter the desired value:\n");
-                CONSOLE_IN("%u", &read_val);
+                scanf("%u", &read_val);
                 flag = (UCHAR) read_val;
 
                 appl_set_gatt_server_evt_trc(flag);
@@ -2356,4 +2964,3 @@ void main_gatt_server_operations(void)
     return;
 }
 #endif /* ATT */
-

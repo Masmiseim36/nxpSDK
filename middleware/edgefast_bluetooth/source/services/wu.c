@@ -110,6 +110,80 @@ static void bt_gatt_wu_write_func(struct bt_conn *conn, uint8_t err,
 {
 }
 
+static int bt_gatt_wu_read_response_for_notify(void *param, uint8_t* buffer, ssize_t length)
+{
+    bt_gatt_wu_peer_state_t * state = (bt_gatt_wu_peer_state_t *)param;
+    int ret = -1;
+    uint16_t mtu = bt_gatt_get_mtu(state->conn);
+    uint16_t len = 0;
+    int sent = 0;
+
+    while (length > 0U)
+    {
+        len = length > (mtu-3)? mtu-3 : length;
+        length = length - len;
+        ret = bt_gatt_notify(state->conn, &wirelessUart.attrs[3], &buffer[sent], len);
+        if (ret >= 0)
+        {
+            sent += (int)len;
+        }
+        else
+        {
+            break;
+        }
+    }
+    return sent;
+}
+
+static int bt_gatt_wu_read_response_for_write(void *param, uint8_t* buffer, ssize_t length)
+{
+    bt_gatt_wu_peer_state_t * state = (bt_gatt_wu_peer_state_t *)param;
+    int ret = -1;
+    uint16_t mtu = bt_gatt_get_mtu(state->conn);
+    uint16_t len = 0;
+    int sent = 0;
+
+    while (length > 0U)
+    {
+        len = length > (mtu-3)? mtu-3 : length;
+        length = length - len;
+        if (state->discoverPermission & BT_GATT_CHRC_WRITE_WITHOUT_RESP)
+        {
+            ret = bt_gatt_write_without_response(state->conn, state->discoverWriteHandle, &buffer[sent], len, 0);
+            if (ret >= 0)
+            {
+                sent += (int)len;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else if (state->discoverPermission & BT_GATT_CHRC_WRITE)
+        {
+            state->writeParams.data = (const void *)&buffer[sent];
+            state->writeParams.length = len;
+            state->writeParams.handle = state->discoverWriteHandle;
+            state->writeParams.offset = 0;
+            state->writeParams.func = bt_gatt_wu_write_func;
+            ret = bt_gatt_write(state->conn, &state->writeParams);
+            if (ret >= 0)
+            {
+                sent += (int)len;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+    return sent;
+}
+
 static void bt_gatt_wu_notify_internal(uint32_t i)
 {
     int ret;
@@ -117,76 +191,19 @@ static void bt_gatt_wu_notify_internal(uint32_t i)
     if (s_WuState.readStreamCccCfg)
     {
         OSA_MutexLock(s_WuState.mutex, osaWaitForever_c);
-        if ((0 == s_WuState.peer[i].wait4SendingDataLength))
-        {
-            s_WuState.config.read(s_WuState.peer[i].conn, &s_WuState.peer[i].wait4SendingDataBuffer, (ssize_t*)&s_WuState.peer[i].wait4SendingDataLength);
-        }
-        if ((s_WuState.peer[i].wait4SendingDataLength))
-        {
-            ret = bt_gatt_notify(NULL, &wirelessUart.attrs[1], &s_WuState.peer[i].wait4SendingDataBuffer[0], s_WuState.peer[i].wait4SendingDataLength);
-            if (ret)
-            {
-#if PRINTF_ADVANCED_ENABLE
-                PRINTF("bt_gatt_notify error %d\r\n", ret);
-#else
-                char* singnedString = "-";
-                if (ret >= 0)
-                {
-                    singnedString = NULL;
-                }
-                PRINTF("bt_gatt_notify error %s%d\r\n", singnedString, ret);
-#endif
-            }
-            s_WuState.peer[i].wait4SendingDataLength = 0;
-        }
+        ret = s_WuState.config.read(s_WuState.peer[i].conn, bt_gatt_wu_read_response_for_notify, &s_WuState.peer[i]);
         OSA_MutexUnlock(s_WuState.mutex);
     }
     else if (s_WuState.peer[i].discoverWriteHandle)
     {
     	OSA_MutexLock(s_WuState.mutex, osaWaitForever_c);
-		if ((0 == s_WuState.peer[i].wait4SendingDataLength))
-		{
-			s_WuState.config.read(s_WuState.peer[i].conn, &s_WuState.peer[i].wait4SendingDataBuffer, (ssize_t*)&s_WuState.peer[i].wait4SendingDataLength);
-		}
-		if ((s_WuState.peer[i].wait4SendingDataLength))
-		{
-			ret = 0;
-	    	if (s_WuState.peer[i].discoverPermission & BT_GATT_CHRC_WRITE_WITHOUT_RESP)
-	    	{
-	    		ret = bt_gatt_write_without_response(s_WuState.peer[i].conn, s_WuState.peer[i].discoverWriteHandle, &s_WuState.peer[i].wait4SendingDataBuffer[0], s_WuState.peer[i].wait4SendingDataLength, 0);
-	    	}
-	    	else if (s_WuState.peer[i].discoverPermission & BT_GATT_CHRC_WRITE)
-	    	{
-                s_WuState.peer[i].writeParams.data = (const void *)s_WuState.peer[i].wait4SendingDataBuffer;
-                s_WuState.peer[i].writeParams.length = s_WuState.peer[i].wait4SendingDataLength;
-                s_WuState.peer[i].writeParams.handle = s_WuState.peer[i].discoverWriteHandle;
-                s_WuState.peer[i].writeParams.offset = 0;
-                s_WuState.peer[i].writeParams.func = bt_gatt_wu_write_func;
-                ret = bt_gatt_write(s_WuState.peer[i].conn, &s_WuState.peer[i].writeParams);
-	    	}
-	    	else
-	    	{
-	    	}
-			if (ret)
-			{
-#if PRINTF_ADVANCED_ENABLE
-				PRINTF("bt_gatt_notify error %d\r\n", ret);
-#else
-				char* singnedString = "-";
-				if (ret >= 0)
-				{
-					singnedString = NULL;
-				}
-				PRINTF("bt_gatt_notify error %s%d\r\n", singnedString, ret);
-#endif
-			}
-			s_WuState.peer[i].wait4SendingDataLength = 0;
-		}
+        ret = s_WuState.config.read(s_WuState.peer[i].conn, bt_gatt_wu_read_response_for_write, &s_WuState.peer[i]);
 		OSA_MutexUnlock(s_WuState.mutex);
     }
     else
     {
     }
+    (void)ret;
 }
 
 void bt_gatt_wu_notify(struct bt_conn *conn)
@@ -329,9 +346,45 @@ void bt_gatt_wu_disconnected(struct bt_conn *conn)
     }
 }
 
+struct bt_gatt_wu_read
+{
+    bt_gatt_wu_peer_state_t * state;
+    const struct bt_gatt_attr *attr;
+    void *buf;
+    uint16_t len;
+    uint16_t offset;
+};
+
+static int bt_gatt_wu_read_response_for_read(void *param, uint8_t* buffer, ssize_t length)
+{
+    struct bt_gatt_wu_read * read = (struct bt_gatt_wu_read *)param;
+    int ret = -1;
+    uint16_t mtu = bt_gatt_get_mtu(read->state->conn);
+    uint16_t len = 0;
+    int sent = 0;
+
+    while (length > 0)
+    {
+        len = length > (mtu-3)? mtu-3 : length;
+        length = length - len;
+
+        ret = bt_gatt_attr_read(read->state->conn, read->attr, read->buf, read->len, read->offset, &buffer[sent], len);
+        if (ret >= 0)
+        {
+            sent += len;
+        }
+        else
+        {
+            break;
+        }
+    }
+    return sent;
+}
+
 static ssize_t bt_gatt_wu_read_stream(struct bt_conn *conn, const struct bt_gatt_attr *attr,
          void *buf, uint16_t len, uint16_t offset)
 {
+    struct bt_gatt_wu_read read;
     ssize_t length = 0;
     uint32_t i;
 
@@ -349,17 +402,15 @@ static ssize_t bt_gatt_wu_read_stream(struct bt_conn *conn, const struct bt_gatt
     {
         return 0;
     }
+
+    read.attr = attr;
+    read.buf = buf;
+    read.len = len;
+    read.offset = offset;
+    read.state = &s_WuState.peer[i];
+
     OSA_MutexLock(s_WuState.mutex, osaWaitForever_c);
-    if ((0 == s_WuState.peer[i].wait4SendingDataLength))
-    {
-        s_WuState.config.read(s_WuState.peer[i].conn, &s_WuState.peer[i].wait4SendingDataBuffer, (ssize_t*)&s_WuState.peer[i].wait4SendingDataLength);
-    }
-    if (s_WuState.peer[i].wait4SendingDataLength)
-    {
-        length = bt_gatt_attr_read(conn, attr, buf, len, offset, &s_WuState.peer[i].wait4SendingDataBuffer[0],
-                s_WuState.peer[i].wait4SendingDataLength);
-        s_WuState.peer[i].wait4SendingDataLength = 0;
-    }
+    length = s_WuState.config.read(s_WuState.peer[i].conn, bt_gatt_wu_read_response_for_read, &read);
     OSA_MutexUnlock(s_WuState.mutex);
 
     return length;

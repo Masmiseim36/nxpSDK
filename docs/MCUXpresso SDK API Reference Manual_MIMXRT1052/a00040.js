@@ -1,43 +1,48 @@
 var a00040 =
 [
-    [ "gpio_pin_config_t", "a00040.html#a00424", [
-      [ "direction", "a00040.html#a5eae83ead0519707b896cfa9082c4e82", null ],
-      [ "outputLogic", "a00040.html#a9d37ffd9a2943f10a91095759bd52da5", null ],
-      [ "interruptMode", "a00040.html#a2aaf4ec1e85d3fcea653b422c673441e", null ]
+    [ "flexram_allocate_ram_t", "a00040.html#a00435", [
+      [ "ocramBankNum", "a00040.html#a17779c83dfb613e244bccc31c32ae863", null ],
+      [ "dtcmBankNum", "a00040.html#a6769304f2706b8fd224eab022e0df796", null ],
+      [ "itcmBankNum", "a00040.html#af762fe7d566b49854d78d4c8552f2731", null ]
     ] ],
-    [ "FSL_GPIO_DRIVER_VERSION", "a00040.html#ga5aa5229cbd041b11bcf8417ba12896b2", null ],
-    [ "gpio_pin_direction_t", "a00040.html#gada41ca0a2ce239fe125ee96833e715c0", [
-      [ "kGPIO_DigitalInput", "a00040.html#ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4", null ],
-      [ "kGPIO_DigitalOutput", "a00040.html#ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9", null ]
+    [ "FSL_SOC_FLEXRAM_ALLOCATE_DRIVER_VERSION", "a00040.html#ga4561984f15fcef3a097ba33d71acf5e9", null ],
+    [ "FSL_FLEXRAM_DRIVER_VERSION", "a00040.html#gae7b4a4bc48727db1cdc7851d2eb33d25", null ],
+    [ "FLEXRAM_ECC_ERROR_DETAILED_INFO", "a00040.html#ga753afc4abc676bea1fd173785f3e4df1", [
+      [ "kFLEXRAM_BankNotUsed", "a00040.html#gga06fc87d81c62e9abb8790b6e5713c55ba736602dad3ebd082683d56c05f7c2a04", null ],
+      [ "kFLEXRAM_BankOCRAM", "a00040.html#gga06fc87d81c62e9abb8790b6e5713c55badacf03668fc22b4a3bda6ffdd3dec990", null ],
+      [ "kFLEXRAM_BankDTCM", "a00040.html#gga06fc87d81c62e9abb8790b6e5713c55ba593cecebdd0de3c1960d870d1bb39ab5", null ],
+      [ "kFLEXRAM_BankITCM", "a00040.html#gga06fc87d81c62e9abb8790b6e5713c55ba4b174c659081a77a423ec7319b42f4a7", null ]
     ] ],
-    [ "gpio_interrupt_mode_t", "a00040.html#ga1b9ad57f43a7be04e31c2e43e92aca39", [
-      [ "kGPIO_NoIntmode", "a00040.html#gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d", null ],
-      [ "kGPIO_IntLowLevel", "a00040.html#gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da", null ],
-      [ "kGPIO_IntHighLevel", "a00040.html#gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3", null ],
-      [ "kGPIO_IntRisingEdge", "a00040.html#gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4", null ],
-      [ "kGPIO_IntFallingEdge", "a00040.html#gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887", null ],
-      [ "kGPIO_IntRisingOrFallingEdge", "a00040.html#gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50", null ]
+    [ "flexram_bank_allocate_src_t", "a00040.html#ga882cacc7b5dfc870baf31f9b21ec5998", [
+      [ "kFLEXRAM_BankAllocateThroughHardwareFuse", "a00040.html#gga882cacc7b5dfc870baf31f9b21ec5998a522d75460a5a7ae2bc73ac8f59642273", null ],
+      [ "kFLEXRAM_BankAllocateThroughBankCfg", "a00040.html#gga882cacc7b5dfc870baf31f9b21ec5998aca1fd86799787be468d48b8e78773c1a", null ],
+      [ "kFLEXRAM_Read", "a00040.html#gga394b3903fbf00ba2b6243f60689a5a5faf3fc6642323a8ada0f6777d7f4a6376e", null ],
+      [ "kFLEXRAM_Write", "a00040.html#gga394b3903fbf00ba2b6243f60689a5a5fa385ea6c35cc58d010f554655fd135a2a", null ],
+      [ "kFLEXRAM_OCRAMAccessError", "a00040.html#ggac205be2172292384dd687b5471a87eddaba5c335068cfa8f481899ecef329e079", null ],
+      [ "kFLEXRAM_DTCMAccessError", "a00040.html#ggac205be2172292384dd687b5471a87eddaf37a97aa3a38990b880d359dae93a8fa", null ],
+      [ "kFLEXRAM_ITCMAccessError", "a00040.html#ggac205be2172292384dd687b5471a87edda676a0b6358eb31b6623c4499556af51d", null ],
+      [ "kFLEXRAM_InterruptStatusAll", "a00040.html#ggac205be2172292384dd687b5471a87eddaa952a181d9000982402d3001c9a3814b", null ]
     ] ],
-    [ "GPIO_PinInit", "a00040.html#ga8d3aa26ad7e88ef1427e51242a70c259", null ],
-    [ "GPIO_PinWrite", "a00040.html#ga41c1b70e3ee7825359e0891812c88e85", null ],
-    [ "GPIO_WritePinOutput", "a00040.html#ga5677a2c3b14f5e9f034edbbd5b429c1d", null ],
-    [ "GPIO_PortSet", "a00040.html#ga2de9f41517bfde0920a5dea5db6e56d6", null ],
-    [ "GPIO_SetPinsOutput", "a00040.html#ga2f8a8be69355039abd8b1ddf2a236f4c", null ],
-    [ "GPIO_PortClear", "a00040.html#gaff8a89d83ce5fdaea9db88317eece33c", null ],
-    [ "GPIO_ClearPinsOutput", "a00040.html#ga3ac4a7dccb5285b2926f152c3ff12af9", null ],
-    [ "GPIO_PortToggle", "a00040.html#gaedff8c598cb084323f2aa6c324c2c0cb", null ],
-    [ "GPIO_PinRead", "a00040.html#gac999c0dd229595fe2b651e796da560be", null ],
-    [ "GPIO_ReadPinInput", "a00040.html#gaf8d77b6a1daf18087dbc6c0814b2ed97", null ],
-    [ "GPIO_PinReadPadStatus", "a00040.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa", null ],
-    [ "GPIO_ReadPadStatus", "a00040.html#ga064aa69c0dbb70a4a7344124df9943b1", null ],
-    [ "GPIO_PinSetInterruptConfig", "a00040.html#gac704735fb3cf3a56676f2fb90e67b10f", null ],
-    [ "GPIO_SetPinInterruptConfig", "a00040.html#ga364fe6d19b98557e44282f95ccc5e63d", null ],
-    [ "GPIO_PortEnableInterrupts", "a00040.html#ga2a62aa9cd2aeacf2a81dc4d644f9b0b1", null ],
-    [ "GPIO_EnableInterrupts", "a00040.html#ga7c45f4ed2a5ec769e0e4cd2e32f62ad5", null ],
-    [ "GPIO_PortDisableInterrupts", "a00040.html#gaf9613d5714d047051b09f86592d9cdc4", null ],
-    [ "GPIO_DisableInterrupts", "a00040.html#gaa1deaff6764df2649453fa5502ee0fcc", null ],
-    [ "GPIO_PortGetInterruptFlags", "a00040.html#gaee4bc796792470cf80e8f0aa6d8c0d32", null ],
-    [ "GPIO_GetPinsInterruptFlags", "a00040.html#ga6efe712710a08ee6e9f89a47a507339f", null ],
-    [ "GPIO_PortClearInterruptFlags", "a00040.html#gabc9cd5e2b520359406cf4b45c5761011", null ],
-    [ "GPIO_ClearPinsInterruptFlags", "a00040.html#ga0b1ad50f4212dfb839fd059503f03bed", null ]
+    [ "flexram_tcm_access_mode_t", "a00040.html#gaa473aadf12ac43c4288d5a8f951721a7", [
+      [ "kFLEXRAM_TCMAccessFastMode", "a00040.html#ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323", null ],
+      [ "kFLEXRAM_TCMAccessWaitMode", "a00040.html#ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011", null ],
+      [ "kFLEXRAM_TCMSize32KB", "a00040.html#gga157d5577a5b2f5986037d0d09c7dc77da74b5c142ac9edb5583e8889b9af4a6c0", null ],
+      [ "kFLEXRAM_TCMSize64KB", "a00040.html#gga157d5577a5b2f5986037d0d09c7dc77da47c4472f61015f0328f058f0a5202da1", null ],
+      [ "kFLEXRAM_TCMSize128KB", "a00040.html#gga157d5577a5b2f5986037d0d09c7dc77dab431382e96926968904f185135c85783", null ],
+      [ "kFLEXRAM_TCMSize256KB", "a00040.html#gga157d5577a5b2f5986037d0d09c7dc77da4955cd2b2ae58ff9e1f4035f6fc07912", null ],
+      [ "kFLEXRAM_TCMSize512KB", "a00040.html#gga157d5577a5b2f5986037d0d09c7dc77dac58032229d029c46cc94ac7b4d143c3e", null ]
+    ] ],
+    [ "FLEXRAM_AllocateRam", "a00040.html#ga02e69a5b687dbed00f380845e5425252", null ],
+    [ "FLEXRAM_SetAllocateRamSrc", "a00040.html#ga22757fc87c34fc72ac1dce1803149884", null ],
+    [ "FLEXRAM_Init", "a00040.html#gad8bd4333a61ae64e6ad396bf1c4e4f8a", null ],
+    [ "FLEXRAM_Deinit", "a00040.html#ga60031f87389fb038eb0236d06780e328", null ],
+    [ "FLEXRAM_GetInterruptStatus", "a00040.html#gabafedc98f7b19727c15b519fbb5622cc", null ],
+    [ "FLEXRAM_ClearInterruptStatus", "a00040.html#ga94fad29c4ce4f80e99127a86b964880a", null ],
+    [ "FLEXRAM_EnableInterruptStatus", "a00040.html#ga9846b45b429edc61e13d7643040f758c", null ],
+    [ "FLEXRAM_DisableInterruptStatus", "a00040.html#ga2af91e45db0c0ed8b36ccc536b75e68d", null ],
+    [ "FLEXRAM_EnableInterruptSignal", "a00040.html#ga047368992e49cf1771c6e22a451d681e", null ],
+    [ "FLEXRAM_DisableInterruptSignal", "a00040.html#ga557f1b09ff66836a1b884818a5d7ea33", null ],
+    [ "FLEXRAM_SetTCMReadAccessMode", "a00040.html#ga955668a7e7f3642c356afec976af4760", null ],
+    [ "FLEXRAM_SetTCMWriteAccessMode", "a00040.html#ga315d028e5ef0e55ae3ba711b5d45978d", null ],
+    [ "FLEXRAM_EnableForceRamClockOn", "a00040.html#gad2de915fd7534b8355f320aef9b8571b", null ]
 ];

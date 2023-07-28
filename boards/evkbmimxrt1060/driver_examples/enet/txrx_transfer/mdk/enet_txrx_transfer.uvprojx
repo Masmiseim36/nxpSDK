@@ -10,7 +10,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6A, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1062xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -471,26 +471,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
@@ -509,6 +489,26 @@
               <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -571,16 +571,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -589,6 +579,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -736,7 +736,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -1055,9 +1055,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6A, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1091,7 +1091,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1197,26 +1197,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
@@ -1235,6 +1215,26 @@
               <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1297,16 +1297,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -1315,6 +1305,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1462,7 +1462,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -1781,9 +1781,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6A, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1817,7 +1817,7 @@
             <ScatterFile>MIMXRT1062xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1923,26 +1923,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
@@ -1961,6 +1941,26 @@
               <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2023,16 +2023,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -2041,6 +2031,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2188,7 +2188,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2507,9 +2507,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6A, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2543,7 +2543,7 @@
             <ScatterFile>MIMXRT1062xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2649,26 +2649,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
@@ -2687,6 +2667,26 @@
               <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2749,16 +2749,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -2767,6 +2757,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2914,7 +2914,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -3233,9 +3233,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6A, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3269,7 +3269,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3375,26 +3375,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
@@ -3413,6 +3393,26 @@
               <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3475,16 +3475,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -3493,6 +3483,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3640,7 +3640,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -3959,9 +3959,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6A, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, CPU_MIMXRT1062DVL6B, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1062/drivers;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../devices/MIMXRT1062;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1062/xip;../../../../xip;../../../../../../components/phy;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3995,7 +3995,7 @@
             <ScatterFile>MIMXRT1062xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4101,26 +4101,6 @@
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
@@ -4139,6 +4119,26 @@
               <FileName>fsl_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4201,16 +4201,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/rt10xx/fsl_silicon_id_soc.c</FilePath>
@@ -4219,6 +4209,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>

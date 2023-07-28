@@ -1,12 +1,20 @@
 Overview
 ========
 
-This example shows how to use the library to create one object detection using a file as source
+This example shows how to use the library to create one object detection using a file as source.
 
-The machine learning frameworks used are TensorFlow Lite Micro or GLOW
+The machine learning framework used is TensorFlow Lite Micro.
 The object detection model used is quantized Nanodet M model that detects multiple objects in an input image.
 The model has 80 classes.
 
+Toolchains supported
+====================
+- MCUXpresso, version 11.8.0
+- GCC Arm Embedded, version 12.2.Rel1
+
+Hardware requirements
+=====================
+Refer to board.readme for hardware setup requirements.
 
 Use-case Description
 =====================
@@ -14,28 +22,28 @@ Use-case Description
 1-a) High-level description
      ----------------------
 
-                                                                   +------------------------------------------+
-                                                                   |                                          |
-                                                                   |                                          |
-                                                                  \ /                                         |
-                  +-------------+      +-------------+      +-------------+      +-------------+              |
-                  |    static   |      |             |      |             |      |             |              |
-Pipeline 0        |     image   | -->  |  2D convert | -->  |   labeled   | -->  |    Display  |              |
-                  |             |  |   |             |      |  rectangle  |      |             |              |
-                  +-------------+  |   +-------------+      +-------------+      +-------------+              |
-                                   |                                                                          |
-                                   |     +-------------+      +--------------+      +-------------+           |
-                                   |     |             |      |              |      |             |           |
-Pipeline 1                         +---> |  2D convert | -->  | ML Inference | -->  |  NULL sink  |           |
-                                         |             |      |              |      |             |           |
-                                         +-------------+      +--------------+      +-------------+           |
-                                                                       |                                      |
-                                                                       |                                      |
-    +-----------------+                                                |                                      |
-	|  Main app:      |                                                |                                      |
-	| ML output       |   <----- ML Inference output callback ---------+                                      |
-    | post processing |                                                                                       |
-	|                 |   ------ Adding detected labeled rectangles ------------------------------------------+
+                                                                   +---------------------------------------------------------+
+                                                                   |                                                         |
+                                                                   |                                                         |
+                                                                  \ /                                                        |
+                  +-------------+      +-------------+      +-------------+      +-------------+       +-------------+       |
+                  |    static   |      |             |      |             |      |             |       |             |       |
+Pipeline 0        |     image   | -->  |  2D convert | -->  |   labeled   | -->  | 2D convert  |  -->  |    Display  |       |
+                  |             |  |   |(color+scale)|      |  rectangle  |      | (rotation)  |       |             |       |
+                  +-------------+  |   +-------------+      +-------------+      +-------------+       +-------------+       |
+                                   |                                                                                         |
+                                   |     +-------------+      +--------------+      +-------------+                          |
+                                   |     |             |      |              |      |             |                          |
+Pipeline 1                         +---> |  2D convert | -->  | ML Inference | -->  |  NULL sink  |                          |
+                                         |             |      |              |      |             |                          |
+                                         +-------------+      +--------------+      +-------------+                          |
+                                                                       |                                                     |
+                                                                       |                                                     |
+    +-----------------+                                                |                                                     |
+	|  Main app:      |                                                |                                                     |
+	| ML output       |   <----- ML Inference output callback ---------+                                                     |
+    | post processing |                                                                                                      |
+	|                 |   ------ Adding detected labeled rectangles ---------------------------------------------------------+
 	+-----------------+
 
 
@@ -63,6 +71,8 @@ Application creates two pipelines:
   - color space conversion from ARGB to RGB888
   - cropping to maintain image aspect ratio
   - scaling to 128x128 as mandated by the object detection model
+  - rotation depending on the display orientation compared to landscape mode (NB: Rotation should be performed 
+  after the labeled-rectangle to get labels in the right orientation).
 
 * The labeled rectangle element draws a crop window from which the static image is sent to
   the ML inference element. The labeled rectangle element also displays the labels and boxes of the detected objects.
@@ -83,33 +93,29 @@ The expected outputs of the example are:
 
 Logs for static_image_nanodet_m_view example using TensorFlow Lite Micro model should look like this:
 
-[MPP_VERSION_1.0.0]
-Inference Engine: TensorFlow-Lite Micro 
+Inference Engine: TensorFlow-Lite Micro
 Element stats --------------------------
-nanodet : exec_time 615 ms
-nanodet : box 1 label person score 80(%)
+nanodet : exec_time 716 ms
+nanodet : box 0 label person score 82(%)
 Element stats --------------------------
-nanodet : exec_time 615 ms
-nanodet : box 1 label person score 80(%)
+nanodet : exec_time 718 ms
+nanodet : box 0 label person score 82(%)
 Element stats --------------------------
-nanodet : exec_time 615 ms
-nanodet : box 1 label person score 80(%)
+nanodet : exec_time 716 ms
+nanodet : box 0 label person score 82(%)
 Element stats --------------------------
-nanodet : exec_time 617 ms
-nanodet : box 1 label person score 80(%)
+nanodet : exec_time 717 ms
+nanodet : box 0 label person score 82(%)
 
 Important notes
 ===============
 
-This project embeds TensorFlow Lite Micro framework by default.
-TensorFLow Lite Micro framework is an optional component of MPP.
-It has some dependencies on the operations that must be built to support a specific TensorFlow Lite model.
-This dependency must be resolved by the definition of a function called:
+TensorFLow Lite Micro is an optional engine for the ML Inference component of MPP.
+This project embeds NXP's custom TensorFlow Lite Micro code by default.
+TensorFLow Lite allows short-listing the "Operations" used by a specific model in order to reduce the binary image footprint.
+This is done by implementing the function:
 
-tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter)
+tflite::MicroOpResolver &MODEL_GetOpsResolver()
 
-This example uses TensorFlow Lite Micro, but it may use another inference engine:
-- Glow or DeepViewRT inference by setting the flag TFLITE_CUSTOM_OPS_DUMMY_RESOLVER.
-- TensorFlow Lite Micro by removing the flag TFLITE_CUSTOM_OPS_DUMMY_RESOLVER.
-  Then the user may either set the flag TFLITE_ALL_OPS_RESOLVER,
-  or implement its own function MODEL_GetOpsResolver for smaller memory footprint.
+This example implements its own function MODEL_GetOpsResolver dedicated to Nanodet.
+User may provide its own implementation of MODEL_GetOpsResolver when using a different model.

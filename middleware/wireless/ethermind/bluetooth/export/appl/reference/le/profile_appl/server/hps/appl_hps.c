@@ -153,9 +153,6 @@ void appl_hps_init(void)
 
     APPL_TRC(
     "[HPS]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for HTTP URI */
@@ -193,35 +190,39 @@ void appl_hps_init(void)
 #endif /* GATT_DB_DYNAMIC */
 
     /* Register HPS GATT DB Handler with PL Extension */
-    gatt_db_init_pl(gatt_db_hps_gatt_char_handler);
+    (BT_IGNORE_RETURN_VALUE)gatt_db_init_pl(gatt_db_hps_gatt_char_handler);
 
 #ifdef BT_DUAL_MODE
     /* Update GAP Service Range in the SDP Records */
-    appl_set_gatt_service_in_sdp_record
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_HPS_GAP_INST,
         DB_RECORD_GAP
     );
+
     /* Update GATT Service Range in the SDP Records */
-    appl_set_gatt_service_in_sdp_record
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_HPS_GATT_INST,
         DB_RECORD_GATT
     );
-            /* Update BAS Service Range in the SDP Records */
-    appl_set_gatt_service_in_sdp_record
+
+    /* Update BAS Service Range in the SDP Records */
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_HPS_BATTERY_INST,
         DB_RECORD_BAS
     );
+
     /* Update BAS Service Range in the SDP Records */
-    appl_set_gatt_service_in_sdp_record
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_HPS_DEV_INFO_INST,
         DB_RECORD_DIS
     );
+
     /* Update HPS Service Range in SDP Records */
-    appl_set_gatt_service_in_sdp_record
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_HPS_HTTP_PROXY_INST,
         DB_RECORD_HPS
@@ -806,15 +807,6 @@ void appl_hps_server_reinitialize (void)
     appl_hps_request_params_init();
     gatt_db_hps_config_state_reset();
 
-#if ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL))
-    if (BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE())
-    {
-        /* Configure and Enable Scanning */
-        appl_service_configure_scan (APPL_GAP_PROC_NORMAL, 0x00U, 0x00U, 0x00U);
-        appl_service_enable_scan(0x01U);
-    }
-#endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
-
 #if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
     if (BT_TRUE == APPL_IS_GAP_PERIPHERAL_ROLE())
     {
@@ -823,6 +815,15 @@ void appl_hps_server_reinitialize (void)
         appl_service_enable_adv(0x01U);
     }
 #endif /* ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL)) */
+
+#if ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL))
+    if (BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE())
+    {
+        /* Configure and Enable Scanning */
+        appl_service_configure_scan(APPL_GAP_PROC_NORMAL, 0x00U, 0x00U, 0x00U);
+        appl_service_enable_scan(0x01U);
+    }
+#endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
 }
 
 void appl_hsc_cnfg_handler(UINT16 config)
@@ -1256,6 +1257,9 @@ void appl_hps_cp_timer_expiry_handler (void *data_param, UINT16 datalen)
     /* Set the Status Code Received Flag to True */
     appl_hps_status_code_recvd = BT_TRUE;
 
+    /* Reset Transport Connection State */
+    appl_hps_transport_conn_state = BT_FALSE;
+
     appl_hps_send_http_status_code(&appl_handle, rsp_status);
 }
 
@@ -1292,16 +1296,20 @@ API_RESULT appl_hps_handle_cp_req
         {
             /* Have TCP connection with HTTP server */
             retval = appl_hps_init_socket_to_http_server(appl_hps_ip_address);
-        }
 
-        if (API_SUCCESS == retval)
-        {
-            retval = appl_hps_construct_http_req
-                     (
-                         http_req,
-                         type_of_http_req,
-                         type_of_http_req_len
-                     );
+            /**
+              * After the successful TCP connection only construct the
+              * HTTP request and write data on the opened transport
+              */
+            if (API_SUCCESS == retval)
+            {
+                retval = appl_hps_construct_http_req
+                         (
+                             http_req,
+                             type_of_http_req,
+                             type_of_http_req_len
+                         );
+            }
         }
     }
 
@@ -1537,13 +1545,16 @@ API_RESULT appl_hps_init_socket_to_http_server(UCHAR * ipaddr)
 
     if (API_SUCCESS != retval)
     {
-        APPL_ERR("[HPS]: **ERR** Transport Establishment failed\n");
+        APPL_ERR("[HPS]: **ERR** Transport Establishment failed with 0x%04X\n",
+        retval);
+
         retval = API_FAILURE;
     }
     else
     {
         APPL_TRC("[HPS]: Transport Established Successfully!\n");
 
+        /* Reset Transport Connection State */
         appl_hps_transport_conn_state = BT_TRUE;
     }
     return retval;
@@ -1691,7 +1702,13 @@ API_RESULT appl_hps_construct_http_req
         case APPL_HTTPS_DELETE_REQ:
             alloc_len += http_request_params->http_entity_body_len;
             break;
-
+        /* Fall Through */
+        case APPL_HTTP_GET_REQ:
+        case APPL_HTTPS_GET_REQ:
+        case APPL_HTTP_HEAD_REQ:
+        case APPL_HTTPS_HEAD_REQ:
+            /* Empty Handling */
+            break;
         default:
             CONSOLE_OUT("Invalid Operation\n");
             break;
@@ -1775,7 +1792,13 @@ API_RESULT appl_hps_construct_http_req
                 );
                 offset += http_request_params->http_entity_body_len;
                 break;
-
+            /* Fall Through */
+            case APPL_HTTP_GET_REQ:
+            case APPL_HTTPS_GET_REQ:
+            case APPL_HTTP_HEAD_REQ:
+            case APPL_HTTPS_HEAD_REQ:
+                /* Empty Handling */
+                break;
             default:
                 CONSOLE_OUT("Invalid Operation\n");
                 break;
@@ -1859,6 +1882,7 @@ API_RESULT appl_hps_cb
         hps_transport_close_pl();
     }
 
+    /* Reset Transport Connection State */
     appl_hps_transport_conn_state = BT_FALSE;
 
     /* Validate the incoming data length */
@@ -1897,7 +1921,7 @@ API_RESULT appl_hps_cb
              */
             APPL_ERR(
             "\n[HPS]: **ERR** Failures 0x%04X during HTTP Status parsing!\nWait "
-            "for status to be sent after Timeout of %d seconds!\n",
+            "for status to be sent after Timeout of %d seconds!\n", retval,
             APPL_HPS_CP_PROC_TIMEOUT_VAL);
 
             /* return retval; */
@@ -1930,7 +1954,7 @@ API_RESULT appl_hps_cb
                 APPL_ERR(
                 "\n[HPS]: **ERR** Failures 0x%04X during HTTP Header parsing!\n"
                 "Wait for status to be sent after Timeout of %d seconds!\n",
-                APPL_HPS_CP_PROC_TIMEOUT_VAL);
+                 retval, APPL_HPS_CP_PROC_TIMEOUT_VAL);
 
                 /* return retval; */
             }
@@ -1967,7 +1991,7 @@ API_RESULT appl_hps_cb
                     APPL_ERR(
                     "\n[HPS]: **ERR** Failures 0x%04X during HTTP Entity Body parsing!\n"
                     "Wait for status to be sent after Timeout of %d seconds!\n",
-                    APPL_HPS_CP_PROC_TIMEOUT_VAL);
+                    retval , APPL_HPS_CP_PROC_TIMEOUT_VAL);
 
                     /* return retval; */
                 }

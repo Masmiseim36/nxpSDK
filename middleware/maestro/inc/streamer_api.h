@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP.
+ * Copyright 2018-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -65,7 +65,7 @@
  */
 #define CLEAR_BIT(Flag, Bit) ((Flag) &= ~GET_BIT(Bit))
 /**
- * @brief Build element ID based on number of sources, sinks and element ID
+ * @brief Build element ID based on number of sources, sinks and type element ID
  *
  */
 #define BUILD_ELEMENT(n_src, n_sink, id) (_SRC(n_src) | _SINK(n_sink) | id)
@@ -102,7 +102,7 @@
 /**
  * @brief The maximum number of Pipelines that may be created within a single streamer task.
  */
-#define MAX_PIPELINES (1)
+#define MAX_PIPELINES (2)
 /**
  * @brief  The maximum number of Elements that may be created within a single streamer task.
  */
@@ -228,10 +228,12 @@ typedef enum
     STREAM_PIPELINE_OPUS_MEM2MEM,
     STREAM_PIPELINE_MIC2FILE,
     STREAM_PIPELINE_VIT,
-    STREAM_PIPELINE_AUDIO_PROC,
     STREAM_PIPELINE_PCM_AUDIO,
+    STREAM_PIPELINE_PCM_AUDIO_MEM,
     STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO,
+    STREAM_PIPELINE_PCM_EAP_PROC_AUDIO,
     STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE,
+    STREAM_PIPELINE_VIT_FILESINK,
     STREAM_PIPELINE_MAX
 } StreamPipelineType;
 
@@ -251,7 +253,9 @@ typedef enum
     ELEMENT_DECODER_INDEX,
     ELEMENT_ENCODER_INDEX,
     ELEMENT_VIT_INDEX,
-    ELEMENT_AUDIO_PROC_INDEX,
+    ELEMENT_EAP_PROC_INDEX,
+    ELEMENT_VOICESEEKER_PROC_INDEX,
+    ELEMENT_SRC_PROC_INDEX,
     ELEMENT_LAST_INDEX
 } ElementIndex;
 
@@ -263,31 +267,31 @@ typedef enum
 typedef enum
 {
     /* Source elements (with one or more source pads and no sink pads) */
-    TYPE_ELEMENT_FILE_SRC = BUILD_ELEMENT(1, 0, ELEMENT_FILE_SRC_INDEX),
+    TYPE_ELEMENT_FILE_SRC = BUILD_ELEMENT(1, 0, 0),
     /*!< @brief File source element */
-    TYPE_ELEMENT_MEM_SRC = BUILD_ELEMENT(1, 0, ELEMENT_MEM_SRC_INDEX),
+    TYPE_ELEMENT_MEM_SRC = BUILD_ELEMENT(1, 0, 1),
     /*!< @brief Memory source element */
-    TYPE_ELEMENT_NETBUF_SRC = BUILD_ELEMENT(1, 0, ELEMENT_NETBUF_SRC_INDEX),
+    TYPE_ELEMENT_NETBUF_SRC = BUILD_ELEMENT(1, 0, 2),
     /*!< @brief Network buffer source element. Requires CCI usage. */
-    TYPE_ELEMENT_AUDIO_SRC = BUILD_ELEMENT(1, 0, ELEMENT_AUDIO_SRC_INDEX),
+    TYPE_ELEMENT_AUDIO_SRC = BUILD_ELEMENT(1, 0, 3),
     /*!< @brief Audio source element */
     /* Sink elements (with no source pads and one sink pad) */
-    TYPE_ELEMENT_FILE_SINK = BUILD_ELEMENT(0, 1, ELEMENT_FILE_SINK_INDEX),
+    TYPE_ELEMENT_FILE_SINK = BUILD_ELEMENT(0, 1, 4),
     /*!< @brief File sink element */
-    TYPE_ELEMENT_MEM_SINK = BUILD_ELEMENT(0, 1, ELEMENT_MEM_SINK_INDEX),
+    TYPE_ELEMENT_MEM_SINK = BUILD_ELEMENT(0, 1, 5),
     /*!< @brief Memory sink element */
-    TYPE_ELEMENT_AUDIO_SINK = BUILD_ELEMENT(0, 1, ELEMENT_AUDIO_SINK_INDEX),
+    TYPE_ELEMENT_AUDIO_SINK = BUILD_ELEMENT(0, 1, 6),
     /*!< @brief Audio sink element */
     /* Decoder element (with one source pad and one sink pad) */
-    TYPE_ELEMENT_DECODER = BUILD_ELEMENT(1, 1, ELEMENT_DECODER_INDEX),
+    TYPE_ELEMENT_DECODER = BUILD_ELEMENT(1, 1, 7),
     /*!< @brief Decoder element */
-    TYPE_ELEMENT_ENCODER = BUILD_ELEMENT(1, 1, ELEMENT_ENCODER_INDEX),
+    TYPE_ELEMENT_ENCODER = BUILD_ELEMENT(1, 1, 8),
 
-    TYPE_ELEMENT_VIT_SINK = BUILD_ELEMENT(0, 1, ELEMENT_VIT_INDEX),
+    TYPE_ELEMENT_VIT_SINK = BUILD_ELEMENT(0, 1, 9),
 
-    TYPE_ELEMENT_AUDIO_PROC = BUILD_ELEMENT(1, 1, ELEMENT_AUDIO_PROC_INDEX),
+    TYPE_ELEMENT_AUDIO_PROC = BUILD_ELEMENT(1, 1, 10),
 
-    TYPE_ELEMENT_LAST = ELEMENT_LAST_INDEX
+    TYPE_ELEMENT_LAST = 11
 } StreamElementType;
 
 /*!
@@ -628,7 +632,7 @@ typedef struct
 {
     PipelineHandle pipes[MAX_PIPELINES];
     /*!< @brief Array of pointers to pipeline objects */
-    ElementHandle elems[MAX_ELEMENTS];
+    ElementHandle elems[MAX_PIPELINES][MAX_ELEMENTS];
     /*!< @brief Array of pointers to element objects */
     int8_t exit_thread;
     /*!< @brief Flag used to signify thread should be terminated. */
@@ -636,8 +640,8 @@ typedef struct
     /*!< @brief Pointer to Message Queue for sending message out */
     osa_msgq_handle_t streamer_mq;
     /*!< @brief Pointer to message queue for receive message */
-    bool is_active;                   /*!< @brief is tasking running or terminated */
-    StreamPipelineType pipeline_type; /*!< @brief streamer pipeline type */
+    bool is_active;                                  /*!< @brief is tasking running or terminated */
+    StreamPipelineType pipeline_type[MAX_PIPELINES]; /*!< @brief streamer pipeline type */
 } STREAMER_T;
 
 /*
@@ -756,22 +760,24 @@ int32_t streamer_seek_pipeline(STREAMER_T *streamer, int32_t pipeline_id, int32_
  * @brief Set element property
  *
  * @param streamer streamer object
+ * @param pipeline_id pipeline index
  * @param prop element property
  * @param block blocking / non-blocking mode
  * @return int32_t error code
  */
-int32_t streamer_set_property(STREAMER_T *streamer, ELEMENT_PROPERTY_T prop, bool block);
+int32_t streamer_set_property(STREAMER_T *streamer, int8_t pipeline_id, ELEMENT_PROPERTY_T prop, bool block);
 
 /**
  * @brief Get element property
  *
  * @param streamer streamer object
+ * @param pipeline_id pipeline index
  * @param prop element property
  * @param val_ptr property value
  * @param block blocking / non-blocking mode
  * @return int32_t error code
  */
-int32_t streamer_get_property(STREAMER_T *streamer, uint16_t prop, uint32_t *val_ptr, bool block);
+int32_t streamer_get_property(STREAMER_T *streamer, int8_t pipeline_id, uint16_t prop, uint32_t *val_ptr, bool block);
 
 /**
  * @brief Set file source

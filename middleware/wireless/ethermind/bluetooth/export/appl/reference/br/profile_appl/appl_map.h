@@ -109,6 +109,9 @@ typedef struct _MAP_MAS_INSTANCE
     /* Root depth of the instance */
     INT8 root_depth;
 
+    /* MNS Notify Status */
+    UCHAR       ntf_reg_status;
+
     /* MNS Instance ID reference */
     UCHAR mns_id;
 

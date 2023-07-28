@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -236,13 +236,13 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>UX_OTG_SUPPORT</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
           <state>NX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FSL_RTOS_THREADX</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -366,6 +366,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
@@ -378,7 +379,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
@@ -413,8 +413,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -536,7 +536,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -588,7 +588,6 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -741,7 +740,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1154,7 +1153,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1241,7 +1240,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1258,7 +1257,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1281,7 +1280,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1360,7 +1359,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1379,13 +1378,13 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>UX_OTG_SUPPORT</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
           <state>NX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>FSL_RTOS_THREADX</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1509,6 +1508,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
@@ -1521,7 +1521,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
@@ -1556,8 +1555,8 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/generic/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1679,7 +1678,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1731,7 +1730,6 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -1884,7 +1882,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2339,14 +2337,158 @@
     </group>
     <group>
       <name>usbx</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/LICENSE.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/LICENSED-HARDWARE.txt</name>
-      </file>
       <group>
         <name>common</name>
+        <group>
+          <name>usbx_host_controllers</name>
+          <group>
+            <name>inc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</name>
+            </file>
+          </group>
+          <group>
+            <name>src</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_create.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_destroy.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynch_td_process.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_controller_disable.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_done_queue_process.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_door_bell_wait.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_clean.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_obtain.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_endpoint_reset.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_entry.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_get.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_set.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_td_obtain.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_tds_process.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_td_obtain.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_tds_process.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_initialize.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_create.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_destroy.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_handler.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_create.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_destroy.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_least_traffic_list_get.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_next_td_clean.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_descriptor_link.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_tree_create.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_poll_rate_entry_get.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_disable.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_reset.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_resume.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_status_get.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_suspend.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_down_port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_on_port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_root_hubs.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_read.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_write.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_regular_td_obtain.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_bulk_transfer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_control_transfer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_interrupt_transfer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_isochronous_transfer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer_add.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_abort.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_request_process.c</name>
+            </file>
+          </group>
+        </group>
         <group>
           <name>core</name>
           <group>
@@ -2489,18 +2631,6 @@
           </group>
         </group>
         <group>
-          <name>usbx_host_controllers</name>
-          <group>
-            <name>inc</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
           <name>usbx_network</name>
           <group>
             <name>inc</name>
@@ -2519,6 +2649,12 @@
           </group>
         </group>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/LICENSE.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/LICENSED-HARDWARE.txt</name>
+      </file>
       <group>
         <name>ports</name>
         <group>
@@ -2810,6 +2946,15 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_server.h</name>
+          </file>
+        </group>
+        <group>
+          <name>websocket</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.h</name>
           </file>
         </group>
       </group>
@@ -3204,16 +3349,16 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_threadx.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_threadx.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
@@ -3234,6 +3379,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -3241,12 +3392,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>

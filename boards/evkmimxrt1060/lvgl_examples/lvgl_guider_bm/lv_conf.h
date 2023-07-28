@@ -1,6 +1,6 @@
 /**
  * @file lv_conf.h
- * Configuration file for v8.3.2
+ * Configuration file for v8.3.5
  */
 
 #ifndef LV_CONF_H
@@ -19,7 +19,7 @@
  * - 16: RGB565
  * - 32: ARGB8888
  */
-#define LV_COLOR_DEPTH     16
+#define LV_COLOR_DEPTH     16 /* Can be 8 or 1. */
 
 /* Swap the 2 bytes of RGB565 color.
  * Useful if the display has a 8 bit interface (e.g. SPI)*/

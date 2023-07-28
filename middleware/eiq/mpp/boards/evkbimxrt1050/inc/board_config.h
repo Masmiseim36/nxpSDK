@@ -39,11 +39,13 @@
  * This section provides a template for the application parameters.
  * These application parameters can be configured to other supported values
 */
-/* camera params */
+/* camera params (default values) */
 #define APP_CAMERA_NAME "CsiMt9m114"
 #define APP_CAMERA_WIDTH  480
 #define APP_CAMERA_HEIGHT 272
 #define APP_CAMERA_FORMAT MPP_PIXEL_RGB565
+/* camera params (other supported values) */
+#define APP_CAMERA_FORMAT1 MPP_PIXEL_UYVY1P422
 
 /* display params */
 #define APP_DISPLAY_NAME "LcdifRk043fn"
@@ -52,6 +54,11 @@
 #define APP_DISPLAY_FORMAT MPP_PIXEL_RGB565
 
 /* other params */
-#define APP_CAMERA_DISPLAY_ROTATE ROTATE_0
+/* no rotation is needed to display in landscape because display Rk043 is already landscape */
+#define APP_DISPLAY_LANDSCAPE_ROTATE ROTATE_0
+
+/* detection boxes params */
+/* maximum number of boxes stored in RAM by APP (1box ~= 16B) */
+#define APP_MAX_BOXES 10000
 
 #endif /* _BOARD_CONFIG_H */

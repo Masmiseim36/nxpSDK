@@ -126,9 +126,6 @@ void appl_pxr_init (void)
 
     APPL_TRC(
     "[PXR]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
     /* Populate the GATT DB HANDLE for Link Loss */
@@ -658,7 +655,8 @@ void appl_pxr_handle_mtu_update_complete
          UINT16      mtu
      )
 {
-    CONSOLE_OUT("\n[PXR]: Updated MTU is %d for Appl Handle 0x%02X", mtu, *handle);
+    APPL_TRC("\n[PXR]: Updated MTU is %d for Appl Handle 0x%02X\n",
+    mtu, *handle);
 }
 
 #endif /* (defined ATT && defined PXR) */

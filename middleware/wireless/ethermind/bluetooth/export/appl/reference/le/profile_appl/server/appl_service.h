@@ -20,6 +20,10 @@
 #include "gatt_db.h"
 #include "gatt_db_pl.h"
 
+#if ((defined BASIC) && (defined GATT_DB))
+#include "appl_basic.h"
+#endif
+
 #if ((defined BPS) && (defined GATT_DB))
 #include "appl_bps.h"
 #endif
@@ -58,6 +62,10 @@
 
 #if ((defined PASS) && (defined GATT_DB))
 #include "appl_pass.h"
+#endif
+
+#if ((defined PTS) && (defined GATT_DB))
+#include "appl_pts.h"
 #endif
 
 #if ((defined PXR) && (defined GATT_DB))
@@ -110,7 +118,7 @@
  * and after subsequent disconnections depending on the current GAP Role
  * selected.
  */
-/* #define APPL_SERVICE_CONFIG_GAP_STARTUP */
+#define APPL_SERVICE_CONFIG_GAP_STARTUP
 
 /* --------------------------------------------- Structures/Data Types */
 /** Advertising Data type */
@@ -270,5 +278,11 @@ void appl_service_mtu_updt_handler(ATT_HANDLE * handle, UINT16 mtu);
 void appl_service_set_gap_proc_state(UCHAR flag);
 UCHAR appl_service_get_gap_proc_state(void);
 
+API_RESULT appl_service_chk_attr_hndl_auth
+           (
+               UCHAR             att_event,
+               ATT_HANDLE      * handle,
+               ATT_ATTR_HANDLE   attr_handle
+           );
 #endif /* _H_APPL_SERVICE_ */
 

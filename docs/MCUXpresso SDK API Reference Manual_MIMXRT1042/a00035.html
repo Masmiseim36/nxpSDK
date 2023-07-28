@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -115,12 +115,12 @@ $(document).ready(function(){initNavTree('a00035.html','');});
 <h2>FLEXIO LCD send/receive using a DMA method</h2>
 <div class="fragment"><div class="line">flexio_MCULCD_edma_handle_t handle;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> completeFlag = <span class="keyword">false</span>;</div>
-<div class="line"><a class="code" href="a00021.html#a00370">edma_handle_t</a> rxEdmaHandle;</div>
-<div class="line"><a class="code" href="a00021.html#a00370">edma_handle_t</a> txEdmaHandle;</div>
+<div class="line"><a class="code" href="a00021.html#a00376">edma_handle_t</a> rxEdmaHandle;</div>
+<div class="line"><a class="code" href="a00021.html#a00376">edma_handle_t</a> txEdmaHandle;</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> flexioLcdCallback(<a class="code" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *base, flexio_MCULCD_edma_handle_t *handle, <a class="code" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordtype">void</span> flexioLcdCallback(<a class="code" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *base, flexio_MCULCD_edma_handle_t *handle, <a class="code" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00034.html#gga16685eea158879e41b101ca3634de462a2dff5d93dfb65bc74ebfc97dd185517f">kStatus_FLEXIO_MCULCD_Idle</a> == status)</div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code" href="a00034.html#ggaf715e26dfffd1f8de1c18449e2770cffa2dff5d93dfb65bc74ebfc97dd185517f">kStatus_FLEXIO_MCULCD_Idle</a> == status)</div>
 <div class="line">    {</div>
 <div class="line">        completeFlag = <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
@@ -179,39 +179,39 @@ $(document).ready(function(){initNavTree('a00035.html','');});
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00311"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00311">flexio_mculcd_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00311"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO MCULCD eDMA transfer handle, users should not touch the content of the handle.  <a href="a00035.html#a00311">More...</a><br/></td></tr>
-<tr class="separator:a00311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00313"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00313">flexio_mculcd_edma_handle_t</a></td></tr>
+<tr class="memdesc:a00313"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO MCULCD eDMA transfer handle, users should not touch the content of the handle.  <a href="a00035.html#a00313">More...</a><br/></td></tr>
+<tr class="separator:a00313"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gab31d982ac91400f71ea59496340671e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gab31d982ac91400f71ea59496340671e4">FSL_FLEXIO_MCULCD_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="memitem:gab31d982ac91400f71ea59496340671e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gab31d982ac91400f71ea59496340671e4">FSL_FLEXIO_MCULCD_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
 <tr class="memdesc:gab31d982ac91400f71ea59496340671e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO MCULCD EDMA driver version.  <a href="#gab31d982ac91400f71ea59496340671e4">More...</a><br/></td></tr>
 <tr class="separator:gab31d982ac91400f71ea59496340671e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gae50013e184e31a590a8d33392247da5b"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gae50013e184e31a590a8d33392247da5b">flexio_mculcd_edma_transfer_callback_t</a> )(<a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gae50013e184e31a590a8d33392247da5b"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gae50013e184e31a590a8d33392247da5b">flexio_mculcd_edma_transfer_callback_t</a> )(<a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gae50013e184e31a590a8d33392247da5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO MCULCD master callback for transfer complete.  <a href="#gae50013e184e31a590a8d33392247da5b">More...</a><br/></td></tr>
 <tr class="separator:gae50013e184e31a590a8d33392247da5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 eDMA Transactional</h2></td></tr>
-<tr class="memitem:ga85591b49350acb3819419ce3b493cc0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga85591b49350acb3819419ce3b493cc0c">FLEXIO_MCULCD_TransferCreateHandleEDMA</a> (<a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00035.html#gae50013e184e31a590a8d33392247da5b">flexio_mculcd_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00370">edma_handle_t</a> *txDmaHandle, <a class="el" href="a00021.html#a00370">edma_handle_t</a> *rxDmaHandle)</td></tr>
+<tr class="memitem:ga85591b49350acb3819419ce3b493cc0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga85591b49350acb3819419ce3b493cc0c">FLEXIO_MCULCD_TransferCreateHandleEDMA</a> (<a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00035.html#gae50013e184e31a590a8d33392247da5b">flexio_mculcd_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00376">edma_handle_t</a> *txDmaHandle, <a class="el" href="a00021.html#a00376">edma_handle_t</a> *rxDmaHandle)</td></tr>
 <tr class="memdesc:ga85591b49350acb3819419ce3b493cc0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FLEXO MCULCD master eDMA handle.  <a href="#ga85591b49350acb3819419ce3b493cc0c">More...</a><br/></td></tr>
 <tr class="separator:ga85591b49350acb3819419ce3b493cc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f8c95db53247d512507e9d1db5b0aae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga3f8c95db53247d512507e9d1db5b0aae">FLEXIO_MCULCD_TransferEDMA</a> (<a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00034.html#a00413">flexio_mculcd_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga3f8c95db53247d512507e9d1db5b0aae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga3f8c95db53247d512507e9d1db5b0aae">FLEXIO_MCULCD_TransferEDMA</a> (<a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00034.html#a00419">flexio_mculcd_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga3f8c95db53247d512507e9d1db5b0aae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking FlexIO MCULCD transfer using eDMA.  <a href="#ga3f8c95db53247d512507e9d1db5b0aae">More...</a><br/></td></tr>
 <tr class="separator:ga3f8c95db53247d512507e9d1db5b0aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16e612c4513044cb01e19ec08e3719f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga16e612c4513044cb01e19ec08e3719f2">FLEXIO_MCULCD_TransferAbortEDMA</a> (<a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle)</td></tr>
+<tr class="memitem:ga16e612c4513044cb01e19ec08e3719f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga16e612c4513044cb01e19ec08e3719f2">FLEXIO_MCULCD_TransferAbortEDMA</a> (<a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle)</td></tr>
 <tr class="memdesc:ga16e612c4513044cb01e19ec08e3719f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a FlexIO MCULCD transfer using eDMA.  <a href="#ga16e612c4513044cb01e19ec08e3719f2">More...</a><br/></td></tr>
 <tr class="separator:ga16e612c4513044cb01e19ec08e3719f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae15eecb7de3ccc06c1ab4a87644d8bbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gae15eecb7de3ccc06c1ab4a87644d8bbd">FLEXIO_MCULCD_TransferGetCountEDMA</a> (<a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gae15eecb7de3ccc06c1ab4a87644d8bbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gae15eecb7de3ccc06c1ab4a87644d8bbd">FLEXIO_MCULCD_TransferGetCountEDMA</a> (<a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:gae15eecb7de3ccc06c1ab4a87644d8bbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remaining bytes for FlexIO MCULCD eDMA transfer.  <a href="#gae15eecb7de3ccc06c1ab4a87644d8bbd">More...</a><br/></td></tr>
 <tr class="separator:gae15eecb7de3ccc06c1ab4a87644d8bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00311" id="a00311"></a>
+<a name="a00313" id="a00313"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -223,8 +223,8 @@ eDMA Transactional</h2></td></tr>
 <div class="textblock"><p>typedef for flexio_mculcd_edma_handle_t in advance.</p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a6d139101616d571cc3d157b2138439c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6d139101616d571cc3d157b2138439c9">base</a></td></tr>
-<tr class="memdesc:a6d139101616d571cc3d157b2138439c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the <a class="el" href="a00034.html#a00414" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a>.  <a href="#a6d139101616d571cc3d157b2138439c9">More...</a><br/></td></tr>
+<tr class="memitem:a6d139101616d571cc3d157b2138439c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6d139101616d571cc3d157b2138439c9">base</a></td></tr>
+<tr class="memdesc:a6d139101616d571cc3d157b2138439c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the <a class="el" href="a00034.html#a00420" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a>.  <a href="#a6d139101616d571cc3d157b2138439c9">More...</a><br/></td></tr>
 <tr class="separator:a6d139101616d571cc3d157b2138439c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d5ed6bed94dd3bcc5d53b2b56b95642"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a4d5ed6bed94dd3bcc5d53b2b56b95642">txShifterNum</a></td></tr>
 <tr class="memdesc:a4d5ed6bed94dd3bcc5d53b2b56b95642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of shifters used for TX.  <a href="#a4d5ed6bed94dd3bcc5d53b2b56b95642">More...</a><br/></td></tr>
@@ -254,11 +254,11 @@ eDMA Transactional</h2></td></tr>
 <tr class="memdesc:a6be2a9baa9aed3cc7c9fedf93297d2d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO MCULCD driver internal state.  <a href="#a6be2a9baa9aed3cc7c9fedf93297d2d2">More...</a><br/></td></tr>
 <tr class="separator:a6be2a9baa9aed3cc7c9fedf93297d2d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fb5da6185f4778f9b76e1bb975f6277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fb5da6185f4778f9b76e1bb975f6277"></a>
-<a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a9fb5da6185f4778f9b76e1bb975f6277">txDmaHandle</a></td></tr>
+<a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a9fb5da6185f4778f9b76e1bb975f6277">txDmaHandle</a></td></tr>
 <tr class="memdesc:a9fb5da6185f4778f9b76e1bb975f6277"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handle for MCULCD TX. <br/></td></tr>
 <tr class="separator:a9fb5da6185f4778f9b76e1bb975f6277"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c4a9b88d04d7f4a1c2f4780ea080cd1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c4a9b88d04d7f4a1c2f4780ea080cd1"></a>
-<a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6c4a9b88d04d7f4a1c2f4780ea080cd1">rxDmaHandle</a></td></tr>
+<a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6c4a9b88d04d7f4a1c2f4780ea080cd1">rxDmaHandle</a></td></tr>
 <tr class="memdesc:a6c4a9b88d04d7f4a1c2f4780ea080cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handle for MCULCD RX. <br/></td></tr>
 <tr class="separator:a6c4a9b88d04d7f4a1c2f4780ea080cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb45e0f119d593a049be8a5f55d202b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb45e0f119d593a049be8a5f55d202b7"></a>
@@ -276,7 +276,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a>* flexio_mculcd_edma_handle_t::base</td>
+          <td class="memname"><a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a>* flexio_mculcd_edma_handle_t::base</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -401,7 +401,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_MCULCD_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
+          <td class="memname">#define FSL_FLEXIO_MCULCD_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -414,7 +414,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* flexio_mculcd_edma_transfer_callback_t)(<a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* flexio_mculcd_edma_transfer_callback_t)(<a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *base, flexio_mculcd_edma_handle_t *handle, <a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -428,9 +428,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_MCULCD_TransferCreateHandleEDMA </td>
+          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_MCULCD_TransferCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -454,13 +454,13 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txDmaHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00370">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00376">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -473,7 +473,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <p>This function initializes the FLEXO MCULCD master eDMA handle which can be used for other FLEXO MCULCD transactional APIs. For a specified FLEXO MCULCD instance, call this API once to get the initialized handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00034.html#a00414" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00034.html#a00420" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_mculcd_edma_handle_t structure to store the transfer state. </td></tr>
     <tr><td class="paramname">callback</td><td>MCULCD transfer complete callback, NULL means no callback. </td></tr>
     <tr><td class="paramname">userData</td><td>callback function parameter. </td></tr>
@@ -496,9 +496,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_MCULCD_TransferEDMA </td>
+          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_MCULCD_TransferEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -510,7 +510,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00413">flexio_mculcd_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00419">flexio_mculcd_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -527,7 +527,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </ol>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00034.html#a00414" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00034.html#a00420" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>pointer to flexio_mculcd_edma_handle_t structure to store the transfer state. </td></tr>
     <tr><td class="paramname">xfer</td><td>Pointer to FlexIO MCULCD transfer structure. </td></tr>
   </table>
@@ -551,7 +551,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void FLEXIO_MCULCD_TransferAbortEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -569,7 +569,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00034.html#a00414" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00034.html#a00420" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>FlexIO MCULCD eDMA handle pointer. </td></tr>
   </table>
   </dd>
@@ -582,9 +582,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_MCULCD_TransferGetCountEDMA </td>
+          <td class="memname"><a class="el" href="a00266.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_MCULCD_TransferGetCountEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00034.html#a00414">FLEXIO_MCULCD_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00034.html#a00420">FLEXIO_MCULCD_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -608,7 +608,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00034.html#a00414" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00034.html#a00420" title="Define FlexIO MCULCD access structure typedef. ">FLEXIO_MCULCD_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>FlexIO MCULCD eDMA handle pointer. </td></tr>
     <tr><td class="paramname">count</td><td>Number of count transferred so far by the eDMA transaction. </td></tr>
   </table>

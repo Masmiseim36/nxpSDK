@@ -38,10 +38,9 @@
  *
  */
 
+#if (defined IPSPR)
 #include "lwip/opt.h"
-
 #include "ping.h"
-
 #include "lwip/mem.h"
 #include "lwip/raw.h"
 #include "lwip/icmp.h"
@@ -281,3 +280,4 @@ void ipspr_ping(const ip_addr_t* ping_addr)
     sys_msleep(PING_DELAY);
   }
 }
+#endif /* (defined IPSPR) */

@@ -34,7 +34,7 @@ UCHAR peer_addr[BT_BD_ADDR_SIZE];
 
 #if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
 /** Advertisement Data */
-const APPL_GAP_ADV_DATA appl_gap_adv_data =
+APPL_GAP_ADV_DATA appl_gap_adv_data =
 {
     {
         /**

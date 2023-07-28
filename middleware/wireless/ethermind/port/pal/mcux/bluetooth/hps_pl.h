@@ -20,21 +20,21 @@
 
 /* -------------------------------------------- Global Definitions */
 #ifndef HPS_PL_NO_DEBUG
-#define HPS_PL_ERR(...)             BT_debug_error(BT_MODULE_ID_HPS_PL, __VA_ARGS__)
+#define HPS_PL_ERR(...)         BT_debug_error(BT_MODULE_ID_GEN_PL, __VA_ARGS__)
 #else  /* HPS_PL_NO_DEBUG */
-#define HPS_PL_ERR                  BT_debug_null
+#define HPS_PL_ERR              BT_debug_null
 #endif /* HPS_PL_NO_DEBUG */
 
 #ifdef HPS_PL_DEBUG
-    #define HPS_PL_TRC(...)         BT_debug_trace(BT_MODULE_ID_HPS_PL, __VA_ARGS__)
-    #define HPS_PL_INF(...)         BT_debug_info (BT_MODULE_ID_HPS_PL, __VA_ARGS__)
+#define HPS_PL_TRC(...)         BT_debug_trace(BT_MODULE_ID_GEN_PL, __VA_ARGS__)
+#define HPS_PL_INF(...)         BT_debug_info (BT_MODULE_ID_GEN_PL, __VA_ARGS__)
 #else /* HPS_PL_DEBUG */
-    #define HPS_PL_TRC              BT_debug_null
-    #define HPS_PL_INF              BT_debug_null
+#define HPS_PL_TRC              BT_debug_null
+#define HPS_PL_INF              BT_debug_null
 #endif /* HPS_PL_DEBUG */
 
 /** HPS related error codes */
-#define HPS_PL_ERR_ID                              0xFFFFU
+#define HPS_PL_ERR_ID                              0xF000U
 #define HPS_PL_MUTEX_INIT_FAILED                   \
         (0x0001U | HPS_PL_ERR_ID)
 #define HPS_PL_COND_INIT_FAILED                    \

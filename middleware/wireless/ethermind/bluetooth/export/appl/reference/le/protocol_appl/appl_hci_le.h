@@ -1,6 +1,6 @@
 
 /**
- *  \file appl_hci.h
+ *  \file appl_hci_le.h
  *
  *  Header File for HCI Command Line Application
  */
@@ -46,8 +46,18 @@ API_RESULT appl_hci_le_event_indication_callback
                UCHAR  event_datalen
            );
 
+#ifdef NXP_CODE
+typedef struct
+{
+	char tx_power_max;
+	char tx_power_min;
+}tx_power;
 
 /* HCI API Handlers */
+void get_le_max_tx_power(UCHAR *event_data);
+void set_le_tx_power(UCHAR *event_data, UCHAR event_datalen);
+#endif /* NXP_CODE */
+
 void appl_hci_read_transmit_power_level(void);
 
 void appl_le_send_data(void);
@@ -55,6 +65,9 @@ void appl_le_send_data(void);
 char * appl_hci_le_get_command_name (UINT16 opcode);
 void main_hci_le_operations (void);
 
+#ifdef NXP_CODE
+void appl_print_fw_rom_version(void);
+#endif /* NXP_CODE */
 #ifdef BT_4_0
 /* Send HCI_LE_SET_EVENT_MASK */
 void appl_hci_le_set_event_mask(void);
@@ -157,11 +170,14 @@ void appl_hci_le_remote_conn_param_req_negtive_reply(void);
 
 void appl_hci_read_authenticated_payload_timeout(void);
 
+/* Write Authenticated Payload Timeout */
+#ifdef HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT_SUPPORT
 void appl_hci_write_authenticated_payload_timeout(void);
-
-void appl_send_data( void );
+#endif /* HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT_SUPPORT */
 
 #ifdef BT_4_2
+
+void main_hci_4_2_le_operations(void);
 
 void appl_hci_le_set_data_length(void);
 
@@ -194,6 +210,7 @@ void appl_hci_le_read_maximum_data_length(void);
 #endif /* BT_4_2 */
 
 #ifdef BT_5_0
+void main_hci_5_0_le_operations(void);
 void appl_hci_le_read_phy(void);
 void appl_hci_le_set_default_phy(void);
 void appl_hci_le_set_phy(void);
@@ -222,10 +239,12 @@ void appl_hci_le_set_periodic_advertising_enable(void);
 void appl_hci_le_periodic_advertising_create_sync_cancel(void);
 void appl_hci_le_periodic_adv_terminate_sync(void);
 void appl_hci_le_extended_create_connection(void);
+void appl_hci_le_connect(BT_DEVICE_ADDR * bd_addr, UCHAR mode);
 void appl_hci_le_set_privacy_mode(void);
 #endif /* BT_5_0 */
 
 #ifdef BT_5_1
+void main_hci_5_1_le_operations(void);
 void appl_hci_le_receiver_test_v3(void);
 void appl_hci_le_transmitter_test_v3(void);
 void appl_hci_le_set_connectionless_cte_transmit_parameters(void);
@@ -244,6 +263,47 @@ void appl_hci_le_set_default_periodic_advertising_sync_transfer_parameters(void)
 void appl_hci_le_generate_dhkey_v2(void);
 void appl_hci_le_modify_sleep_clock_accuracy(void);
 #endif /* BT_5_1 */
+
+#ifdef BT_5_2
+void main_hci_5_2_le_operations(void);
+void appl_hci_le_read_iso_tx_sync(void);
+void appl_hci_le_set_cig_parameters(void);
+void appl_hci_le_set_cig_parameters_test(void);
+void appl_hci_le_create_cis(void);
+void appl_hci_le_remove_cig(void);
+void appl_hci_le_accept_cis_request(void);
+void appl_hci_le_reject_cis_request(void);
+void appl_hci_le_create_big(void);
+void appl_hci_le_create_big_test(void);
+void appl_hci_le_terminate_big(void);
+void appl_hci_le_big_create_sync(void);
+void appl_hci_le_big_terminate_sync(void);
+void appl_hci_le_request_peer_sca(void);
+void appl_hci_le_setup_iso_data_path(void);
+void appl_hci_le_remove_iso_data_path(void);
+void appl_hci_le_iso_transmit_test(void);
+void appl_hci_le_iso_receive_test(void);
+void appl_hci_le_iso_read_test_counters(void);
+void appl_hci_le_iso_test_end(void);
+void appl_hci_le_set_host_feature(void);
+void appl_hci_le_read_iso_link_quality(void);
+void appl_hci_le_iso_write(void);
+void appl_hci_register_iso_data_handle(void);
+void appl_hci_read_local_supported_controller_delay(void);
+void appl_hci_read_local_supported_codecs_ga(void);
+void appl_hci_read_local_supported_codec_capabilities(void);
+void appl_hci_le_enhanced_read_transmit_power_level(void);
+void appl_hci_le_read_remote_transmit_power_level(void);
+void appl_hci_le_set_path_loss_reporting_parameters(void);
+void appl_hci_le_set_path_loss_reporting_enable(void);
+void appl_hci_le_set_transmit_power_reporting_enable(void);
+void appl_hci_le_vs_change_local_tx_power(void);
+void appl_hci_le_iso_write(void);
+void appl_hci_register_iso_data_handle(void);
+void appl_hci_read_local_supported_controller_delay(void);
+void appl_hci_read_local_supported_codecs_ga(void);
+void appl_hci_read_local_supported_codec_capabilities(void);
+#endif /* BT_5_2 */
 
 #endif /* _H_APPL_HCI_LE_ */
 

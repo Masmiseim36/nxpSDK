@@ -418,7 +418,7 @@ void bt_conn_recv(struct bt_conn *conn, struct net_buf *buf, uint8_t flags)
 
 static struct bt_conn_tx *conn_tx_alloc(void)
 {
-	struct bt_conn_tx *ctx;
+	struct bt_conn_tx *ctx = NULL;
 	osa_status_t ret;
 #if 0
 	/* The TX context always get freed in the system workqueue,
@@ -942,6 +942,8 @@ void bt_conn_set_state(struct bt_conn *conn, bt_conn_state_t state)
 {
 	bt_conn_state_t old_state;
 	osa_status_t ret;
+
+	(void)state2str(state);
 
 	BT_DBG("%s -> %s", state2str(conn->state), state2str(state));
 

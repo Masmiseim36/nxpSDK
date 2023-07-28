@@ -38,7 +38,7 @@ var maestro__logging_8h =
     [ "add_module_name", "maestro__logging_8h.html#ace86d4331a5d49f737501c71cafa191e", null ],
     [ "remove_module_name", "maestro__logging_8h.html#a8c6e71dfa3b15833d4dcc18d40f2c70a", null ],
     [ "add_error_name", "maestro__logging_8h.html#a2c76f9ba686ab8f83175ba24dd253140", null ],
-    [ "error_name", "maestro__logging_8h.html#ac59a238606752eee6b79faa85cf6c130", null ],
+    [ "error_name", "maestro__logging_8h.html#abf50bea290dca8b65b9f01a9cefbdc47", null ],
     [ "init_logging", "maestro__logging_8h.html#a4ad59250062d281206227fa18685e489", null ],
     [ "deinit_logging", "maestro__logging_8h.html#a18cf06c449ae37327b3644f681690a87", null ],
     [ "get_debug_state", "maestro__logging_8h.html#a03a5a7adb8cd75a6a81ac5e664904b3c", null ]

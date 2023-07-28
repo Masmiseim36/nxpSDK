@@ -1,4 +1,3 @@
-
 /**
  *  \file BT_assigned_numbers.h
  *

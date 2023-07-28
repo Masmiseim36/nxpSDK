@@ -19,10 +19,10 @@
 
 #ifdef PAN
 /* ----------------------------------------- Exported Global Variables */
-
+/* #define APPL_PAN_GENERATE_INPUTS */
 
 /* ----------------------------------------- Exported Global Variables */
-#if 0
+#ifdef APPL_PAN_GENERATE_INPUTS
 /* DHCP Discover : (Ethernet Type : 0x0800) https ://www.cloudshark.org/captures/0009d5398f37 */
 static UCHAR appl_dhcp_discover[] = {
     0x45, 0x00, 0x02, 0x5c, 0x00, 0x05, 0x00, 0x00, 0xff, 0x11, 0xb9, 0x8c, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
@@ -286,6 +286,58 @@ static UCHAR appl_http_response[] = {
     0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
 };
 
+/* HTTP IPv6 Request: (Ethernet Type : 0x86DD) */
+static UCHAR appl_http_ipv6_request[] = {
+    0x60, 0x00, 0x00, 0x00, 0x00, 0xBA, 0x06, 0x01, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x12, 0x34, 0xED, 0xDE, 0x11, 0x07, 0x11, 0x5D, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x0A, 0x00, 0x27, 0xFF, 0xFE, 0xFE, 0x8F, 0x95,
+    0xe1, 0x4e, 0x00, 0x50, 0x8e, 0x50, 0x19, 0x02, 0xc7, 0x52, 0x9d, 0x89, 0x80, 0x18, 0x00, 0x2e, 0x47, 0x29, 0x00, 0x00, 0x01, 0x01, 0x08, 0x0a, 0x00, 0x21, 0xd2, 0x5f, 0x31, 0xc7, 0xba, 0x48,
+    0x47, 0x45, 0x54, 0x20, 0x2f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x2f, 0x6c, 0x61,
+    0x79, 0x6f, 0x75, 0x74, 0x2f, 0x6c, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x6e, 0x67, 0x20, 0x48, 0x54,
+    0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x0d, 0x0a, 0x55, 0x73, 0x65, 0x72, 0x2d, 0x41, 0x67, 0x65,
+    0x6e, 0x74, 0x3a, 0x20, 0x57, 0x67, 0x65, 0x74, 0x2f, 0x31, 0x2e, 0x31, 0x32, 0x20, 0x28, 0x6c,
+    0x69, 0x6e, 0x75, 0x78, 0x2d, 0x67, 0x6e, 0x75, 0x29, 0x0d, 0x0a, 0x41, 0x63, 0x63, 0x65, 0x70,
+    0x74, 0x3a, 0x20, 0x2a, 0x2f, 0x2a, 0x0d, 0x0a, 0x48, 0x6f, 0x73, 0x74, 0x3a, 0x20, 0x70, 0x61,
+    0x63, 0x6b, 0x65, 0x74, 0x6c, 0x69, 0x66, 0x65, 0x2e, 0x6e, 0x65, 0x74, 0x0d, 0x0a, 0x43, 0x6f,
+    0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x3a, 0x20, 0x4b, 0x65, 0x65, 0x70, 0x2d, 0x41,
+    0x6c, 0x69, 0x76, 0x65, 0x0d, 0x0a, 0x0d, 0x0a
+};
+
+/* HTTP IPv6 Response: (Ethernet Type : 0x86DD) */
+static UCHAR appl_http_ipv6_response[] = {
+    0x60, 0x00, 0x00, 0x00, 0x01, 0xC7, 0x06, 0x01, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x0A, 0x00, 0x27, 0xFF, 0xFE, 0xFE, 0x8F, 0x95, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x12, 0x34, 0xED, 0xDE, 0x11, 0x07, 0x11, 0x5D, 0x00, 0x50, 0xE1, 0x4E, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x01, 0x0C, 0x50, 0x18, 0x05, 0xB4, 0x5F, 0x2E, 0x00, 0x00, 0x48, 0x54, 0x54, 0x50,
+    0x2F, 0x31, 0x2E, 0x31, 0x20, 0x32, 0x30, 0x30, 0x20, 0x4F, 0x4B, 0x0D, 0x0A, 0x44, 0x61, 0x74,
+    0x65, 0x3A, 0x20, 0x4D, 0x6F, 0x6E, 0x2C, 0x20, 0x31, 0x37, 0x20, 0x46, 0x65, 0x62, 0x20, 0x32,
+    0x30, 0x31, 0x38, 0x20, 0x32, 0x33, 0x20, 0x3A, 0x20, 0x33, 0x30, 0x20, 0x3A, 0x20, 0x30, 0x30,
+    0x20, 0x47, 0x4D, 0x54, 0x0D, 0x0A, 0x43, 0x6F, 0x6E, 0x74, 0x65, 0x6E, 0x74, 0x20, 0x2D, 0x20,
+    0x54, 0x79, 0x70, 0x65, 0x20, 0x3A, 0x20, 0x74, 0x65, 0x78, 0x74, 0x20, 0x2F, 0x20, 0x68, 0x74,
+    0x6D, 0x6C, 0x3B, 0x20, 0x63, 0x68, 0x61, 0x72, 0x73, 0x65, 0x74, 0x20, 0x3D, 0x20, 0x55, 0x54,
+    0x46, 0x20, 0x2D, 0x20, 0x38, 0x0D, 0x0A, 0x43, 0x6F, 0x6E, 0x74, 0x65, 0x6E, 0x74, 0x20, 0x2D,
+    0x20, 0x45, 0x6E, 0x63, 0x6F, 0x64, 0x69, 0x6E, 0x67, 0x3A, 0x20, 0x55, 0x54, 0x46, 0x20, 0x2D,
+    0x20, 0x38, 0x0D, 0x0A, 0x43, 0x6F, 0x6E, 0x74, 0x65, 0x6E, 0x74, 0x20, 0x2D, 0x20, 0x4C, 0x65,
+    0x6E, 0x67, 0x74, 0x68, 0x20, 0x3A, 0x20, 0x31, 0x33, 0x32, 0x0D, 0x0A, 0x4C, 0x61, 0x73, 0x74,
+    0x20, 0x2D, 0x20, 0x4D, 0x6F, 0x64, 0x69, 0x66, 0x69, 0x65, 0x64, 0x20, 0x3A, 0x20, 0x53, 0x61,
+    0x74, 0x2C, 0x20, 0x31, 0x37, 0x20, 0x46, 0x65, 0x62, 0x20, 0x32, 0x30, 0x31, 0x38, 0x20, 0x32,
+    0x33, 0x20, 0x3A, 0x20, 0x30, 0x30, 0x20, 0x3A, 0x20, 0x30, 0x30, 0x20, 0x47, 0x4D, 0x54, 0x0D,
+    0x0A, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x20, 0x3A, 0x20, 0x50, 0x54, 0x53, 0x0D, 0x0A, 0x45,
+    0x54, 0x61, 0x67, 0x20, 0x3A, 0x20, 0x22, 0x33, 0x66, 0x38, 0x30, 0x66, 0x2D, 0x31, 0x62, 0x36,
+    0x2D, 0x33, 0x65, 0x31, 0x63, 0x62, 0x30, 0x33, 0x62, 0x22, 0x0D, 0x0A, 0x41, 0x63, 0x63, 0x65,
+    0x70, 0x74, 0x20, 0x2D, 0x20, 0x52, 0x61, 0x6E, 0x67, 0x65, 0x73, 0x20, 0x3A, 0x20, 0x62, 0x79,
+    0x74, 0x65, 0x73, 0x0D, 0x0A, 0x43, 0x6F, 0x6E, 0x6E, 0x65, 0x63, 0x74, 0x69, 0x6F, 0x6E, 0x20,
+    0x3A, 0x20, 0x63, 0x6C, 0x6F, 0x73, 0x65, 0x0D, 0x0A, 0x0D, 0x0A, 0x3C, 0x68, 0x74, 0x6D, 0x6C,
+    0x3E, 0x0D, 0x0A, 0x3C, 0x68, 0x65, 0x61, 0x64, 0x3E, 0x0D, 0x0A, 0x20, 0x20, 0x3C, 0x74, 0x69,
+    0x74, 0x6C, 0x65, 0x3E, 0x41, 0x20, 0x50, 0x41, 0x4E, 0x20, 0x54, 0x65, 0x73, 0x74, 0x20, 0x50,
+    0x61, 0x67, 0x65, 0x3C, 0x2F, 0x74, 0x69, 0x74, 0x6C, 0x65, 0x3E, 0x0D, 0x0A, 0x3C, 0x2F, 0x68,
+    0x65, 0x61, 0x64, 0x3E, 0x0D, 0x0A, 0x3C, 0x62, 0x6F, 0x64, 0x79, 0x3E, 0x0D, 0x0A, 0x20, 0x20,
+    0x54, 0x68, 0x69, 0x73, 0x20, 0x69, 0x73, 0x20, 0x61, 0x20, 0x74, 0x65, 0x73, 0x74, 0x20, 0x70,
+    0x61, 0x67, 0x65, 0x20, 0x66, 0x6F, 0x72, 0x20, 0x74, 0x65, 0x73, 0x74, 0x69, 0x6E, 0x67, 0x20,
+    0x48, 0x54, 0x54, 0x50, 0x20, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2E, 0x0D, 0x0A, 0x3C,
+    0x2F, 0x62, 0x6F, 0x64, 0x79, 0x3E, 0x0D, 0x0A, 0x3C, 0x2F, 0x68, 0x74, 0x6D, 0x6C, 0x3E
+};
+
 /* IPv4 Ping Request: (Ethernet Type : 0x0800) https://www.cloudshark.org/captures/1a48275478d5 */
 static UCHAR appl_ping_request[] = {
     0x45, 0x00, 0x00, 0x64, 0x00, 0x0f, 0x00, 0x00, 0xff, 0x01, 0xa7, 0x87, 0x0a, 0x00, 0x00, 0x01, 0x0a, 0x00, 0x00, 0x02,
@@ -307,7 +359,23 @@ static UCHAR appl_ping_reply[] = {
     0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd,
     0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd, 0xab, 0xcd
 };
-#endif /* 0 */
+
+/* IPv6 Ping Request: (Ethernet Type : 0x86DD) */
+static UCHAR appl_ping_ipv6_request[] = {
+    0x60, 0x00, 0x00, 0x00, 0x00, 0x3C, 0x3A, 0x01, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x12, 0x34, 0xED, 0xDE, 0x11, 0x07, 0x11, 0x5D, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x0A, 0x00, 0x27, 0xFF, 0xFE, 0xFE, 0x8F, 0x95, 0x80, 0x00, 0x0F, 0x85, 0x00, 0x01, 0x00, 0x09,
+    0x50, 0x74, 0x73, 0x50, 0x74, 0x73, 0x50, 0x74, 0x73, 0x50, 0x74, 0x73
+};
+
+/* IPv6 Ping Reply: (Ethernet Type : 0x86DD) */
+static UCHAR appl_ping_ipv6_reply[] = {
+    0x60, 0x00, 0x00, 0x00, 0x00, 0x3C, 0x3A, 0x01, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x0A, 0x00, 0x27, 0xFF, 0xFE, 0xFE, 0x8F, 0x95, 0xFE, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x12, 0x34, 0xED, 0xDE, 0x11, 0x07, 0x11, 0x5D, 0x81, 0x00, 0x0F, 0x85, 0x00, 0x01, 0x00, 0x09,
+    0x50, 0x74, 0x73, 0x50, 0x74, 0x73, 0x50, 0x74, 0x73, 0x50, 0x74, 0x73
+};
+#endif /* APPL_PAN_GENERATE_INPUTS */
 
 /* ----------------------------------------- Static Global Variables */
 static const char pan_options[] = "\n\
@@ -353,10 +421,10 @@ static HCI_CONNECTION_LIST appl_pan_acl_list [BT_MAX_REMOTE_DEVICES];
 static UINT16 appl_pan_setup_ind_reply = PAN_SETUP_SUCCESSFUL;
 
 /* Local BD_ADDR */
-UCHAR appl_pan_local_bd_addr [BT_BD_ADDR_SIZE];
+static UCHAR appl_pan_local_bd_addr [BT_BD_ADDR_SIZE];
 
 /* PAN Services activated. */
-UCHAR appl_pan_services = PAN_SERVICE_NONE;
+static UCHAR appl_pan_services = PAN_SERVICE_NONE;
 
 
 /* Static Echo Request Packet */
@@ -367,6 +435,9 @@ DECL_STATIC DECL_CONST UCHAR appl_echo_req[] =
     0x65U, 0x66U, 0x67U, 0x68U, 0x69U, 0x6AU, 0x6BU, 0x6CU, 0x6DU, 0x6EU, 0x6FU, 0x70U, 0x71U, 0x72U, 0x73U, 0x74U,
     0x75U, 0x76U, 0x77U, 0x78U, 0x79U, 0x7AU, 0x7BU, 0x7CU, 0x7DU, 0x7EU, 0x7FU, 0x80U
 };
+
+/* Broadcast address */
+DECL_STATIC DECL_CONST UCHAR pan_broadband_addr[BT_BD_ADDR_SIZE]={0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
 
 static void pan_pan_read(UCHAR *edata, UINT16 edatalen);
 static UCHAR pan_bd_addr[BT_BD_ADDR_SIZE];
@@ -384,7 +455,7 @@ void main_pan_operations (void)
     static UCHAR first_time = 0x0U;
     UINT16 hci_handle;
 
-#if 0
+#ifdef APPL_PAN_GENERATE_INPUTS
     FILE *fp;
 
     fp = fopen("dhcp_discover.dat", "wb");
@@ -432,11 +503,23 @@ void main_pan_operations (void)
     fp = fopen("http_response.dat", "wb");
     fwrite(appl_http_response, sizeof(appl_http_response), 1, fp);
     fclose(fp);
+    fp = fopen("http_request_ipv6.dat", "wb");
+    fwrite(appl_http_ipv6_request, sizeof(appl_http_ipv6_request), 1, fp);
+    fclose(fp);
+    fp = fopen("http_response_ipv6.dat", "wb");
+    fwrite(appl_http_ipv6_response, sizeof(appl_http_ipv6_response), 1, fp);
+    fclose(fp);
     fp = fopen("ping_request.dat", "wb");
     fwrite(appl_ping_request, sizeof(appl_ping_request), 1, fp);
     fclose(fp);
     fp = fopen("ping_reply.dat", "wb");
     fwrite(appl_ping_reply, sizeof(appl_ping_reply), 1, fp);
+    fclose(fp);
+    fp = fopen("ping_request_ipv6.dat", "wb");
+    fwrite(appl_ping_ipv6_request, sizeof(appl_ping_ipv6_request), 1, fp);
+    fclose(fp);
+    fp = fopen("ping_reply_ipv6.dat", "wb");
+    fwrite(appl_ping_ipv6_reply, sizeof(appl_ping_ipv6_reply), 1, fp);
     fclose(fp);
 
     fp = fopen("eth_payload_60_0x5a0.dat", "wb");
@@ -470,7 +553,7 @@ void main_pan_operations (void)
         fwrite(&indx, 1, 1, fp);
     }
     fclose(fp);
-#endif /* 0 */
+#endif /* APPL_PAN_GENERATE_INPUTS */
 
     if (0x0U == first_time)
     {
@@ -549,7 +632,7 @@ void main_pan_operations (void)
             LOG_DEBUG("Enter PAN peer BD Address: ");
 
             /* Read the BD_ADDR of Remote Device */
-            appl_get_bd_addr(pan_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(pan_bd_addr);
 
             retval = BT_hci_create_connection
                      (
@@ -656,6 +739,7 @@ void main_pan_operations (void)
             LOG_DEBUG ("Enable/Disable DHCP (1/0): ");
             scanf("%d", &choice);
             appl_have_dhcp = (UCHAR)choice;
+            printf("Enable/Disable DHCP: %d\n", appl_have_dhcp);
             break;
 
         default:
@@ -678,14 +762,16 @@ void appl_pan_registration ( void )
 {
     int choice;
     API_RESULT retval;
-    PAN_CALLBACKS pan_cb;
+    PAN_CALLBACKS appl_pan_cb;
     BT_DEVICE_ADDR bd_addr;
+    UCHAR  str[5] = "";
+    UINT16 length,j = 0;
 
-    pan_cb.pan_event_ind = appl_pan_event_ind;
-    pan_cb.pan_read_ind = appl_pan_read_ind;
+    appl_pan_cb.pan_event_ind = appl_pan_event_ind;
+    appl_pan_cb.pan_read_ind = appl_pan_read_ind;
 
     LOG_DEBUG("Registering to PAN ... "); fflush (stdout);
-    retval = BT_pan_register (&pan_cb);
+    retval = BT_pan_register (&appl_pan_cb);
     if (API_SUCCESS != retval)
     {
         LOG_DEBUG("FAILED !! Reason = 0x%04x.\n", retval);
@@ -697,21 +783,34 @@ void appl_pan_registration ( void )
         /* Get Local Service */
         LOG_DEBUG("Options for Local Service: [1] PANU [2] NAP [3] GN\n");
         LOG_DEBUG("Your Choice = "); fflush(stdout);
-        scanf("%d", &choice);
+        scanf ("%s", str);
+        length = (UINT16)BT_str_len (str);
+        if ((1U < length ) || !((str[j] >= '1') && (str[j] <= '3')))
+        {
+            printf ("Invalid option\n");
+            return;
+        }
+        else
+        {
+            choice = appl_str_to_num(str,length);
+
+            if ((1 > choice) || (3 < choice ))
+            {
+                printf ("Invalid option\n");
+                return;
+            }
+        }
+
         switch (choice)
         {
-        case 1:
-            pan_local_service = PAN_SERVICE_PANU;
-            break;
         case 2:
             pan_local_service = PAN_SERVICE_NAP;
             break;
         case 3:
             pan_local_service = PAN_SERVICE_GN;
             break;
-        default:
-            /* Error Case */
-            pan_local_service = (UCHAR) choice;
+        default: /* 1 */
+            pan_local_service = PAN_SERVICE_PANU;
             break;
         }
 
@@ -741,7 +840,7 @@ void appl_pan_set_policy ( void )
 
     /* Choose Handle */
     appl_pan_get_handle (&indx);
-    if (indx < 0)
+    if ((indx < 0) || (indx >= PAN_MAX_ENTITIES))
     {
         LOG_DEBUG("Invalid PAN Handle\n");
         /* return; */
@@ -976,7 +1075,7 @@ void appl_pan_connect ( void )
 
     /* Choose Handle */
     appl_pan_get_handle (&indx);
-    if (indx < 0)
+    if ((indx < 0) || (indx >= PAN_MAX_ENTITIES))
     {
         LOG_DEBUG("Invalid PAN Handle\n");
         /* return; */
@@ -1031,10 +1130,11 @@ void appl_pan_setup ( void )
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     indx = 0;
+    choice = 0;
 
     /* Choose Handle */
     appl_pan_get_handle (&indx);
-    if (indx < 0)
+    if ((indx < 0) || (indx >= PAN_MAX_ENTITIES))
     {
         LOG_DEBUG("Invalid PAN Handle\n");
         /* return; */
@@ -1044,28 +1144,31 @@ void appl_pan_setup ( void )
         /* Get Remote Service */
         LOG_DEBUG("Options for Remote Service: [1] PANU [2] NAP [3] GN\n");
         LOG_DEBUG("Your Choice = "); fflush(stdout);
-        scanf("%d", &choice);
-        switch (choice)
+        
+        retval = appl_validate_params(&choice,1U,1U,3U);
+        if (API_SUCCESS == retval)
         {
-        case 1:
-            remote_service = PAN_SERVICE_PANU;
-            break;
-        case 2:
-            remote_service = PAN_SERVICE_NAP;
-            break;
-        case 3:
-            remote_service = PAN_SERVICE_GN;
-            break;
-        default:
-            /* Error Case */
-            remote_service = (UCHAR)choice;
-            break;
+            switch (choice)
+            {
+                case 1:
+                    remote_service = PAN_SERVICE_PANU;
+                    break;
+                case 2:
+                    remote_service = PAN_SERVICE_NAP;
+                    break;
+                case 3:
+                    remote_service = PAN_SERVICE_GN;
+                    break;
+                default:
+                   /* Error Case */
+                    remote_service = (UCHAR)choice;
+                    break;
+             }
+             /* Initiate PAN Setup */
+	     LOG_DEBUG("Starting PAN Setup ... "); fflush(stdout);
+             retval = BT_pan_setup
+             (appl_pan_handle[indx].bd_addr, pan_local_service, remote_service);
         }
-
-        /* Initiate PAN Setup */
-        LOG_DEBUG("Starting PAN Setup ... "); fflush(stdout);
-        retval = BT_pan_setup
-        (appl_pan_handle[indx].bd_addr, pan_local_service, remote_service);
 
         if (API_SUCCESS != retval)
         {
@@ -1100,7 +1203,7 @@ void appl_pan_filter ( void )
 
     /* Choose Handle */
     appl_pan_get_handle (&indx);
-    if (indx < 0)
+    if ((indx < 0) || (indx >= PAN_MAX_ENTITIES))
     {
         LOG_DEBUG("Invalid PAN Handle\n");
         /* return; */
@@ -1162,10 +1265,10 @@ void appl_pan_filter ( void )
                     for (i = 0U; i < num_range; i++)
                     {
                         LOG_DEBUG("\tFilter %d: Start = ", i); fflush(stdout);
-                        appl_get_bd_addr(mc_addr_filter[i].start);
+                        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(mc_addr_filter[i].start);
 
                         LOG_DEBUG("\tFilter %d: End   = ", i); fflush(stdout);
-                        appl_get_bd_addr(mc_addr_filter[i].end);
+                        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(mc_addr_filter[i].end);
                     }
                 }
 
@@ -1218,7 +1321,7 @@ void appl_pan_disconnect ( void )
 
     /* Choose Handle */
     appl_pan_get_handle (&indx);
-    if (indx < 0)
+    if ((indx < 0) || (indx >= PAN_MAX_ENTITIES))
     {
         LOG_DEBUG("Invalid PAN Handle\n");
         /* return; */
@@ -1279,11 +1382,11 @@ void appl_pan_write_data ( void )
         {
             /* Get Ethernet Destination Address */
             LOG_DEBUG("Enter Ethernet Dst Address = "); fflush(stdout);
-            appl_get_bd_addr (eth_header);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (eth_header);
 
             /* Get Ethernet Source Address */
             LOG_DEBUG("Enter Ethernet Src Address = "); fflush(stdout);
-            appl_get_bd_addr (&eth_header[6U]);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (&eth_header[6U]);
         }
         else if (1U == read_val)
         {
@@ -1293,13 +1396,13 @@ void appl_pan_write_data ( void )
 
             /* Get Ethernet Source Address */
             LOG_DEBUG("Enter Ethernet Src Address = "); fflush(stdout);
-            appl_get_bd_addr (&eth_header[BT_BD_ADDR_SIZE]);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (&eth_header[BT_BD_ADDR_SIZE]);
         }
         else if (2U == read_val)
         {
             /* Get Ethernet Destination Address */
             LOG_DEBUG("Enter Ethernet Dst Address = "); fflush(stdout);
-            appl_get_bd_addr (eth_header);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (eth_header);
 
             /* Set Ethernet Source Address */
             pan_convert_address (eth_bd, appl_pan_local_bd_addr);
@@ -1479,11 +1582,29 @@ void appl_pan_write_data_from_file(void)
         {
             /* Get Ethernet Destination Address */
             LOG_DEBUG("Enter Ethernet Dst Address = "); fflush(stdout);
-            appl_get_bd_addr(eth_header);
-
-            /* Get Ethernet Source Address */
-            LOG_DEBUG("Enter Ethernet Src Address = "); fflush(stdout);
-            appl_get_bd_addr(&eth_header[6U]);
+            retval = appl_get_bd_addr(eth_header);
+            if ((API_SUCCESS == retval) &&
+                ((BT_COMPARE_ADDR(eth_header,appl_pan_acl_list[indx].bd_addr) == BT_TRUE) ||
+                 (BT_COMPARE_ADDR(eth_header,pan_broadband_addr) == BT_TRUE)))
+            {
+                /* Get Ethernet Source Address */
+		LOG_DEBUG("Enter Ethernet Src Address = "); fflush(stdout);
+                retval = appl_get_bd_addr(&eth_header[6U]);
+                (BT_IGNORE_RETURN_VALUE) BT_hci_get_local_bd_addr(appl_pan_local_bd_addr);
+                if (API_SUCCESS == retval)
+                {
+                    if (BT_COMPARE_ADDR(&eth_header[6U],appl_pan_local_bd_addr) == BT_FALSE)
+                    {
+                        printf("Invalid Ethernet Src Address");
+                        retval = API_FAILURE;
+                    }
+                }
+            }
+            else
+            {
+                printf("Invalid Ethernet Dst Address");
+                retval = API_FAILURE;
+            }
         }
         else if (1U == read_val)
         {
@@ -1493,13 +1614,13 @@ void appl_pan_write_data_from_file(void)
 
             /* Get Ethernet Source Address */
             LOG_DEBUG("Enter Ethernet Src Address = "); fflush(stdout);
-            appl_get_bd_addr(&eth_header[BT_BD_ADDR_SIZE]);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(&eth_header[BT_BD_ADDR_SIZE]);
         }
         else if (2U == read_val)
         {
             /* Get Ethernet Destination Address */
             LOG_DEBUG("Enter Ethernet Dst Address = "); fflush(stdout);
-            appl_get_bd_addr(eth_header);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(eth_header);
 
             /* Set Ethernet Source Address */
             pan_convert_address(eth_bd, appl_pan_local_bd_addr);
@@ -1549,20 +1670,24 @@ void appl_pan_write_data_from_file(void)
 
                 for (i = 0U; i < extn_count; i++)
                 {
-                    LOG_DEBUG("Enter Extn %d type (Hex): ", i);
+                    LOG_DEBUG("Enter Extn %d type (Hex): 0x", i);
                     scanf("%x", &read_val);
                     extn[i].type = (UCHAR)read_val;
 
-                    LOG_DEBUG("Enter Extn %d length: ", i);
-                    scanf("%d", &read_val);
-                    extn[i].length = (UCHAR)read_val;
+                    LOG_DEBUG("Enter Extn %d length (1 to 255) = ", i);
+                    retval = appl_validate_params(&read_val,3U,1U,255U);
+                    if (API_SUCCESS != retval)
+                    {
+                        break;
+                    }
 
+                    extn[i].length = (UCHAR)read_val;
                     extn[i].value = BT_alloc_mem(extn[i].length);
 
                     if (0x00U == extn[i].type)
                     {
+                        BT_mem_set(extn[i].value, 0xFFU, extn[i].length);
                         extn[i].value[0U] = 0x55U;
-                        BT_mem_set((extn[i].value + 1U), 0xFFU, (extn[i].length - 1U));
                     }
                     else if (0x55U == extn[i].type)
                     {
@@ -1588,116 +1713,118 @@ void appl_pan_write_data_from_file(void)
             {
                 extn_count = 0U;
             }
-
+            if (API_SUCCESS == retval)
+            {
             LOG_DEBUG("Enter Payload File Name: ");
             scanf("%s", filename);
 
-            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-            (void)BT_vfops_create_object_name
-            (
-                (UCHAR *)PAN_ROOT_FOLDER_BASE,
-                (UCHAR *)filename,
-                (UCHAR *)fileobject
-            );
+                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                (void)BT_vfops_create_object_name
+                (
+                        (UCHAR *)PAN_ROOT_FOLDER_BASE,
+                        (UCHAR *)filename,
+                        (UCHAR *)fileobject
+                );
 
             LOG_DEBUG("Getting Payload from file..."); fflush(stdout);
 
-            /* Set send data flag as true, by default */
-            flag_send_data = BT_TRUE;
+                /* Set send data flag as true, by default */
+                flag_send_data = BT_TRUE;
 
-            retval = BT_fops_file_open ((UCHAR *)fileobject, (UCHAR *)"rb", &fd);
-            if ((API_SUCCESS != retval) || (NULL == fd))
-            {
-                LOG_DEBUG("Failed to open file\n");
-
-                if ((PAN_ETH_PROTO_TYPE_802_1Q == protocol) &&
-                    (0U != protocol_802_1q))
+                retval = BT_fops_file_open ((UCHAR *)fileobject, (UCHAR *)"rb", &fd);
+                if ((API_SUCCESS != retval) || (NULL == fd))
                 {
-                    eth_payload_len = 4U;
-                    eth_payload = (UCHAR *)BT_alloc_mem(eth_payload_len);
+            	    LOG_DEBUG("Failed to open file\n");
 
-                    eth_payload[0U] = 0x0U;
-                    eth_payload[1U] = 0x0U;
-                    eth_payload[2U] = (UCHAR)(protocol_802_1q >> 8U);
-                    eth_payload[3U] = (UCHAR)protocol_802_1q;
-                }
-                else
-                {
-                    eth_payload_len = 0U;
-                    eth_payload = NULL;
-                }
-            }
-            else
-            {
-                /* Get payload size */
-                (BT_IGNORE_RETURN_VALUE) BT_fops_file_size (fd, (UINT32 *)&read_val);
-                eth_payload_len = (UINT16)read_val;
-
-                if (PAN_ETH_PROTO_TYPE_802_1Q == protocol)
-                {
-                    eth_payload_len += 4U;
-                }
-
-                eth_payload = (UCHAR *)BT_alloc_mem(eth_payload_len);
-                if (NULL == eth_payload)
-                {
-                    LOG_DEBUG("*** FAILED to Allocate Memory for Ethernet Payload\n");
-
-                    /* Set send data flag as false */
-                    flag_send_data = BT_FALSE;
-                }
-                else
-                {
-                    offset = 0U;
-                    if (PAN_ETH_PROTO_TYPE_802_1Q == protocol)
+                    if ((PAN_ETH_PROTO_TYPE_802_1Q == protocol) &&
+                            (0U != protocol_802_1q))
                     {
-                        offset = 4U;
+                        eth_payload_len = 4U;
+                        eth_payload = (UCHAR *)BT_alloc_mem(eth_payload_len);
+
                         eth_payload[0U] = 0x0U;
                         eth_payload[1U] = 0x0U;
                         eth_payload[2U] = (UCHAR)(protocol_802_1q >> 8U);
                         eth_payload[3U] = (UCHAR)protocol_802_1q;
                     }
-
-                    (BT_IGNORE_RETURN_VALUE) BT_fops_file_read(&eth_payload[offset], (eth_payload_len - offset), fd, (UINT16 *)&actual);
-                }
-
-                /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-                (void)BT_fops_file_close(fd);
-            }
-
-            /* Write to PAN/BNEP */
-            if (BT_FALSE != flag_send_data)
-            {
-                LOG_DEBUG("Writing Data to PAN ... "); fflush(stdout);
-                retval = BT_pan_write_panu
-                         (
-                             appl_pan_handle[indx].bd_addr,
-                             eth_header,
-                             extn,
-                             extn_count,
-                             eth_payload,
-                             eth_payload_len
-                         );
-
-                if (retval != API_SUCCESS)
-                {
-                    LOG_DEBUG("FAILED !! Reason = 0x%04X\n", retval);
+                    else
+                    {
+                        eth_payload_len = 0U;
+                        eth_payload = NULL;
+                    }
                 }
                 else
                 {
-                    LOG_DEBUG("SUCCEEDED !!\n");
+                    /* Get payload size */
+                    (BT_IGNORE_RETURN_VALUE) BT_fops_file_size (fd, (UINT32 *)&read_val);
+                    eth_payload_len = (UINT16)read_val;
+
+                    if (PAN_ETH_PROTO_TYPE_802_1Q == protocol)
+                    {
+                        eth_payload_len += 4U;
+                    }
+
+                    eth_payload = (UCHAR *)BT_alloc_mem(eth_payload_len);
+                    if (NULL == eth_payload)
+                    {
+                    LOG_DEBUG("*** FAILED to Allocate Memory for Ethernet Payload\n");
+
+                        /* Set send data flag as false */
+                        flag_send_data = BT_FALSE;
+                    }
+                    else
+                    {
+                        offset = 0U;
+                        if (PAN_ETH_PROTO_TYPE_802_1Q == protocol)
+                        {
+                            offset = 4U;
+                            eth_payload[0U] = 0x0U;
+                            eth_payload[1U] = 0x0U;
+                            eth_payload[2U] = (UCHAR)(protocol_802_1q >> 8U);
+                            eth_payload[3U] = (UCHAR)protocol_802_1q;
+                        }
+
+                        (BT_IGNORE_RETURN_VALUE) BT_fops_file_read(&eth_payload[offset], (eth_payload_len - offset), fd, (UINT16 *)&actual);
+                    }
+
+                    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+                    (void)BT_fops_file_close(fd);
                 }
-            }
 
-            /* Free Allocated Memory */
-            for (i = 0U; i < extn_count; i++)
-            {
-                BT_free_mem(extn[i].value);
-            }
+                /* Write to PAN/BNEP */
+                if (BT_FALSE != flag_send_data)
+                {
+		    		LOG_DEBUG("Writing Data to PAN ... "); fflush(stdout);
+                    retval = BT_pan_write_panu
+                            (
+                                 appl_pan_handle[indx].bd_addr,
+                                 eth_header,
+                                 extn,
+                                 extn_count,
+                                 eth_payload,
+                                 eth_payload_len
+                            );
 
-            if (NULL != eth_payload)
-            {
-                BT_free_mem(eth_payload);
+                    if (retval != API_SUCCESS)
+                    {
+						LOG_DEBUG("FAILED !! Reason = 0x%04X\n", retval);
+                    }
+                    else
+                    {
+                        LOG_DEBUG("SUCCEEDED !!\n");
+                    }
+                }
+
+                /* Free Allocated Memory */
+                for (i = 0U; i < extn_count; i++)
+                {
+                    BT_free_mem(extn[i].value);
+                }
+
+                if (NULL != eth_payload)
+                {
+                    BT_free_mem(eth_payload);
+                }
             }
         }
     }
@@ -2183,16 +2310,26 @@ API_RESULT appl_pan_search_bd_addr (UCHAR * bd_addr, int * indx)
 /* To Display & Choose a PAN Connection Handle */
 void appl_pan_get_handle ( int * indx )
 {
+    UCHAR  str[5] = "";
+    UINT16 length,j = 0;
+
     /* Display Available PAN Handles */
     appl_pan_display_handles();
 
     BT_LOOP_FOREVER()
     {
         LOG_DEBUG("Choose PAN Handle Index = "); fflush(stdout);
-        scanf("%d", indx);
-        if (((*indx) >= 0) && ((*indx) < PAN_MAX_ENTITIES))
+        scanf ("%s", str);
+        length = (UINT16)BT_str_len (str);
+        if ((1U < length ) || !((str[j] >= '0') && (str[j] <= '2')))
         {
-            break;
+            *indx = INVALID_VALUE;
+             break;
+        }
+        else
+        {
+            *indx = appl_str_to_num(str,length);
+             break;
         }
     }
 

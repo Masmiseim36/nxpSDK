@@ -67,7 +67,7 @@ struct _ElementAudioSrc
     int32_t (*change_state)(struct _StreamElement *, PipelineState); /*!< @brief Change state function pointer */
     int32_t (*set_property)(struct _StreamElement *,
                             uint16_t prop,
-                            uint64_t val); /*!< @brief Set property function pointer */
+                            uint32_t val); /*!< @brief Set property function pointer */
     int32_t (*get_property)(struct _StreamElement *,
                             uint16_t prop,
                             uint64_t *val_ptr);      /*!< @brief Get property function pointer */

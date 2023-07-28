@@ -4,7 +4,7 @@
 
 #include "se05x_apis.h"
 #include "ax_reset.h"
-#include "se_reset_config.h"
+#include "se_board_config.h"
 #include <stdio.h>
 
 #ifndef NORDIC_MCU
@@ -26,6 +26,7 @@
 
 void se05x_ic_reset()
 {
+    axReset_HostConfigure();
     axReset_ResetPluseDUT();
     smComT1oI2C_ComReset(NULL);
     sm_usleep(3000);

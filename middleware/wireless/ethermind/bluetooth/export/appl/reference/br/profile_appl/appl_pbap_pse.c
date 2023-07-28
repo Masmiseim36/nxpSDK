@@ -59,23 +59,23 @@ static UCHAR  pass_word[] = "0000";
 #ifdef PBAP_1_2
 
 /* Sample values */
-UCHAR sample_primay_folder_version[PBAP_FLDR_VER_CNTR_SIZE] =
-      {
+static UCHAR sample_primay_folder_version[PBAP_FLDR_VER_CNTR_SIZE] =
+       {
           0x05U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,
           0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x01U
-      };
+       };
 
-UCHAR sample_secondary_folder_version[PBAP_FLDR_VER_CNTR_SIZE] =
-      {
+static UCHAR sample_secondary_folder_version[PBAP_FLDR_VER_CNTR_SIZE] =
+       {
           0x06U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,
           0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x02U
-      };
+       };
 
-UCHAR sample_database_identifier[PBAP_DATABASE_IDENTIFIER_SIZE] =
-      {
+static UCHAR sample_database_identifier[PBAP_DATABASE_IDENTIFIER_SIZE] =
+       {
           0x07U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,
           0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x03U
-      };
+       };
 
 #endif /* PBAP_1_2 */
 
@@ -931,7 +931,7 @@ API_RESULT appl_pbap_pse_handle_get_vcard_listing_req
     BT_mem_set(pb_listing_path, 0, sizeof(pb_listing_path));
 
     /* Set pb listing path to root folder */
-    BT_str_n_copy (pb_listing_path, PBAP_ROOT_FOLDER_BASE, sizeof(pb_listing_path));
+    BT_str_n_copy (pb_listing_path, PBAP_ROOT_FOLDER_BASE, BT_str_len(PBAP_ROOT_FOLDER_BASE));
 
     if ((NULL == pbap_headers) ||
         (NULL == pbap_headers->pbap_req_info))
@@ -1158,7 +1158,8 @@ API_RESULT appl_pbap_pse_handle_get_vcard_listing_req
 
                 retval = object_parser_parse(&vcard_context);
 
-                if (API_SUCCESS != retval)
+                if ((API_SUCCESS != retval) &&
+                    (OBJECT_RESULT_PARTIAL_PARSED != retval))
                 {
                     LOG_DEBUG("VCARD Parsing Failed. Result: 0x%04X\n", retval);
                 }
@@ -1617,6 +1618,7 @@ API_RESULT appl_pbap_pse_handle_get_vcard_req
     appl_params = pbap_headers->pbap_req_info->appl_params;
     vcard_prop_filter_mask = 0U;
     rsp_appl_param_hdr_len = 0U;
+    BT_mem_set(&vcard_abs_name[0U], 0, sizeof(vcard_abs_name));
 
     if (0x00U == sent)
     {

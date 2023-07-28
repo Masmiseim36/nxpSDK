@@ -19,20 +19,17 @@
 #include "BT_avdtp_api.h"
 #include "BT_a2dp_api.h"
 #include "BT_config.h"
-#include "BT_jpl_api.h"
 #include "BT_fops.h"
 
-#ifndef BT_DRIVER_MODE
+#define INCLUDE_JPL
+#define INCLUDE_SBC
+#ifdef INCLUDE_JPL
+#include "BT_jpl_api.h"
+#endif /* INCLUDE_JPL */
 
-/* #define A2DP_USE_SBC */
-
-#ifdef A2DP_USE_SBC
+#ifdef INCLUDE_SBC
 #include "sbc_api.h"
-#ifdef USE_WAVE_AUDIO
-#include "wa_recorder.h"
-#endif /* USE_WAVE_AUDIO */
-#endif /* A2DP_USE_SBC */
-#endif  /* !BT_DRIVER_MODE */
+#endif /* INCLUDE_SBC */
 
 
 /* ----------------------------------------- Global Definitions */
@@ -79,7 +76,7 @@
  *  Maximum Value: AVDTP_MAX_REMOTE_DEVICES
  */
 
-#define APPL_A2DP_MAX_REMOTE_DEVICES     2U
+#define APPL_A2DP_MAX_REMOTE_DEVICES     3U
 
 /* A2DP Application Streaming Status Flags */
 #define APPL_A2DP_STREAM_FALSE           0x00U
@@ -189,7 +186,7 @@ API_RESULT appl_a2dp_get_acl_connection (UCHAR * indx);
 INT32 appl_a2dp_read_sbc_configuration
       (
           CHAR *     filename,
-          UCHAR *    codec_ie_conf
+          UCHAR *    codec_ie
       );
 
 #ifdef A2DP_MPEG_1_2

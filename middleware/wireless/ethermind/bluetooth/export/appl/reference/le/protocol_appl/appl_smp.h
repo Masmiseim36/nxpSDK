@@ -53,7 +53,7 @@ API_RESULT appl_smp_cb
                 SMP_BD_HANDLE * bd_handle,
                 UCHAR         event,
                 API_RESULT    status,
-                void        * event_data,
+                void        * eventdata,
                 UINT16        data_len
            );
 
@@ -78,6 +78,12 @@ void appl_smp_lesc_oob_data_complete(SMP_LESC_OOB_DATA_PL * appl_lesc_oob);
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
 void appl_smp_lesc_txp_key_gen_complete(SMP_LESC_LK_LTK_GEN_PL * appl_txp_key);
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+void appl_smp_lesc_xtxp_ltk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp);
+void appl_smp_lesc_xtxp_lk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp);
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+
 #endif /* SMP_LESC */
 
 #endif /* _H_APPL_SMP_ */

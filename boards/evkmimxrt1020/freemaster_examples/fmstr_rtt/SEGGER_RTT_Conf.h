@@ -75,6 +75,11 @@ Revision: $Rev: 21386 $
 **********************************************************************
 */
 
+// Put RTT control block variable to noncacheable memory section
+#ifdef DATA_SECTION_IS_CACHEABLE
+  #define SEGGER_RTT_SECTION "DataQuickAccess"
+#endif
+
 //
 // Take in and set to correct values for Cortex-A systems with CPU cache
 //

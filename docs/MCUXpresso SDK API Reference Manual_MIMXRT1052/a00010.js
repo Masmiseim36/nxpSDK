@@ -1,57 +1,39 @@
 var a00010 =
 [
-    [ "bee_region_config_t", "a00010.html#a00335", [
-      [ "region0Mode", "a00010.html#a4c646db1bc484507834d9b3e1893d88f", null ],
-      [ "region1Mode", "a00010.html#a404970f686bf8d0051c3c4b674c89d18", null ],
-      [ "region0AddrOffset", "a00010.html#ae6d9458087da8892daa23c8cd810dfe6", null ],
-      [ "region1AddrOffset", "a00010.html#a33aa0b5462403603977645e12a353ee1", null ],
-      [ "region0SecLevel", "a00010.html#a789839d15dbbb216dc41e43b3658b018", null ],
-      [ "region1SecLevel", "a00010.html#a8932b393ed5dd337fcb22052fb72b438", null ],
-      [ "region1Bot", "a00010.html#a8647d20becdfa24f122e8020f23e017f", null ],
-      [ "region1Top", "a00010.html#a289efc6a47c55826935dcf1be4c173da", null ],
-      [ "accessPermission", "a00010.html#a90f2655f389ce954e9ad40908d74ec2d", null ],
-      [ "endianSwapEn", "a00010.html#a5be2912f0bf7b54f74beea3d47abd948", null ]
+    [ "aoi_event_config_t", "a00010.html#a00349", [
+      [ "PT0AC", "a00010.html#aea14fc46a854e63c9a6318c42835de05", null ],
+      [ "PT0BC", "a00010.html#ac226aa1e1e3154dd87372d81a11fed42", null ],
+      [ "PT0CC", "a00010.html#a1b4d001eaf4862c0ef0acc826f9728bb", null ],
+      [ "PT0DC", "a00010.html#a67a2ba8ce6ff1c264f57c1a414e488f0", null ],
+      [ "PT1AC", "a00010.html#a69c2e717021698311e3154890c3b0f32", null ],
+      [ "PT1BC", "a00010.html#affc8ee95d4e62908e2ccc8c428555112", null ],
+      [ "PT1CC", "a00010.html#ab3cc5e94435bb02efbd37dd469901739", null ],
+      [ "PT1DC", "a00010.html#a304bc85601ba469cbdb7f72615515467", null ],
+      [ "PT2AC", "a00010.html#a5289f96ee94e31baa9df99e5d5b184a4", null ],
+      [ "PT2BC", "a00010.html#a04c5025b51dd202132f47b9966e992f7", null ],
+      [ "PT2CC", "a00010.html#a702228a71c6642795d53e3b78b9ecb54", null ],
+      [ "PT2DC", "a00010.html#a601043d203ed47740bc9c13f57e9ee81", null ],
+      [ "PT3AC", "a00010.html#a7b7d4ef26a639c25d28a3770438c46f3", null ],
+      [ "PT3BC", "a00010.html#a44074e81c446954c4d875cac3a7ce605", null ],
+      [ "PT3CC", "a00010.html#abdb9f372b1820f5b09fa5748dd004104", null ],
+      [ "PT3DC", "a00010.html#a00e1069b81be7ee6e9621bf7d4f294ea", null ]
     ] ],
-    [ "FSL_BEE_DRIVER_VERSION", "a00010.html#ga2e7cd17d2050f7390d7a48066ad2634e", null ],
-    [ "bee_aes_mode_t", "a00010.html#gacb1b1692945f9edb6b1fd055dbaf45e0", [
-      [ "kBEE_AesEcbMode", "a00010.html#ggacb1b1692945f9edb6b1fd055dbaf45e0ae52b46a003475a448e988945a23b65a9", null ],
-      [ "kBEE_AesCtrMode", "a00010.html#ggacb1b1692945f9edb6b1fd055dbaf45e0a2343e45e7a54c317b02b36f84b1b8c01", null ]
+    [ "AOI", "a00010.html#ga4d5017cedccd069f2b3e78d9066f8d36", null ],
+    [ "FSL_AOI_DRIVER_VERSION", "a00010.html#ga7bec3331027807227ac745f0b69cd20c", null ],
+    [ "aoi_input_config_t", "a00010.html#ga6b298657f6573de82fe6afc9600647e5", [
+      [ "kAOI_LogicZero", "a00010.html#gga6b298657f6573de82fe6afc9600647e5a2ebf6b53ef56f02183871be2186a8178", null ],
+      [ "kAOI_InputSignal", "a00010.html#gga6b298657f6573de82fe6afc9600647e5a01b027c922cff2bd4568898a6c7c267b", null ],
+      [ "kAOI_InvInputSignal", "a00010.html#gga6b298657f6573de82fe6afc9600647e5a4bf6c7370e1579b17e57502e123d2709", null ],
+      [ "kAOI_LogicOne", "a00010.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8", null ]
     ] ],
-    [ "bee_region_t", "a00010.html#ga63e3de927c1695c23c7f488343af3068", [
-      [ "kBEE_Region0", "a00010.html#gga63e3de927c1695c23c7f488343af3068ae94acd2a2ae18f5fff22674a73331747", null ],
-      [ "kBEE_Region1", "a00010.html#gga63e3de927c1695c23c7f488343af3068a267f83f6596867c02f61330a9fe4303b", null ]
+    [ "aoi_event_t", "a00010.html#gaeabaa3ab117a5d00875e9dea6ac3bc00", [
+      [ "kAOI_Event0", "a00010.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a608d3d1b120130a8c457d1b4ae110f8a", null ],
+      [ "kAOI_Event1", "a00010.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a0956de460ec7d73296c08cf0fc2c6e03", null ],
+      [ "kAOI_Event2", "a00010.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a0289ecc6237100a1863a9b6cdb70c501", null ],
+      [ "kAOI_Event3", "a00010.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a9dd38a4189d89d398624cd6573950565", null ]
     ] ],
-    [ "bee_ac_prot_enable", "a00010.html#gaaf1fac76691bb396f1ff57b3768e5518", [
-      [ "kBEE_AccessProtDisabled", "a00010.html#ggaaf1fac76691bb396f1ff57b3768e5518a414bc55656378147df63f914f19f8f9a", null ],
-      [ "kBEE_AccessProtEnabled", "a00010.html#ggaaf1fac76691bb396f1ff57b3768e5518a0018c2487ed37c32f1adcf4d22f5520a", null ]
-    ] ],
-    [ "bee_endian_swap_enable", "a00010.html#gaa61cabb9ae8ebc63fd6c8d5c913103c7", [
-      [ "kBEE_EndianSwapDisabled", "a00010.html#ggaa61cabb9ae8ebc63fd6c8d5c913103c7a9f1b957a5659415d684c9d8a26130c9a", null ],
-      [ "kBEE_EndianSwapEnabled", "a00010.html#ggaa61cabb9ae8ebc63fd6c8d5c913103c7aae7a7427057b6f11a4aec827faeeaa95", null ]
-    ] ],
-    [ "bee_security_level", "a00010.html#ga10a322940c530ebdfcbd3ed4e2dfc30a", [
-      [ "kBEE_SecurityLevel0", "a00010.html#gga10a322940c530ebdfcbd3ed4e2dfc30aa1ff0f0d48b15ce491a9fe7828fa55277", null ],
-      [ "kBEE_SecurityLevel1", "a00010.html#gga10a322940c530ebdfcbd3ed4e2dfc30aa0105c172f2c88c17a64e6d2613a8c363", null ],
-      [ "kBEE_SecurityLevel2", "a00010.html#gga10a322940c530ebdfcbd3ed4e2dfc30aad384339d7ba535855dd016c669142663", null ],
-      [ "kBEE_SecurityLevel3", "a00010.html#gga10a322940c530ebdfcbd3ed4e2dfc30aaa3bf99fa6c53e50aee203417eb797334", null ]
-    ] ],
-    [ "bee_status_flags_t", "a00010.html#ga65aa5cc6bcf0846ef860590b2a208e82", [
-      [ "kBEE_DisableAbortFlag", "a00010.html#gga65aa5cc6bcf0846ef860590b2a208e82a8a4ab1c7e89e71fbb3f2ea03da60e56e", null ],
-      [ "kBEE_Reg0ReadSecViolation", "a00010.html#gga65aa5cc6bcf0846ef860590b2a208e82a1b886204e75690116eed7deca4646845", null ],
-      [ "kBEE_ReadIllegalAccess", "a00010.html#gga65aa5cc6bcf0846ef860590b2a208e82a524ac8b7f3fbd8a1dc068f8c995bcbf1", null ],
-      [ "kBEE_Reg1ReadSecViolation", "a00010.html#gga65aa5cc6bcf0846ef860590b2a208e82a996c753929bc10c0668b41ec1087d402", null ],
-      [ "kBEE_Reg0AccessViolation", "a00010.html#gga65aa5cc6bcf0846ef860590b2a208e82abcc7d1d64f326052b3a20e9a857fb5d2", null ],
-      [ "kBEE_Reg1AccessViolation", "a00010.html#gga65aa5cc6bcf0846ef860590b2a208e82a4a6c82013e492f079dbfc0b4f25d713c", null ],
-      [ "kBEE_IdleFlag", "a00010.html#gga65aa5cc6bcf0846ef860590b2a208e82a850124e92d5e1d37be862c4f2363c9c8", null ]
-    ] ],
-    [ "BEE_Init", "a00010.html#ga3d52a4156aba0653ab32d8916ced6803", null ],
-    [ "BEE_Deinit", "a00010.html#ga6a7d90cf1243d7cc3df27ce14769fc20", null ],
-    [ "BEE_Enable", "a00010.html#gaf62faab6a2f1750c1140caf6aa93e8eb", null ],
-    [ "BEE_Disable", "a00010.html#ga6283ed8e0a7504b9bccfc79e204522e7", null ],
-    [ "BEE_GetDefaultConfig", "a00010.html#gaeca7aeaa01f87978efc7c216cd7bb5e5", null ],
-    [ "BEE_SetConfig", "a00010.html#ga9744f40ce0f27c8b6dcabce8fda252b5", null ],
-    [ "BEE_SetRegionKey", "a00010.html#gab46f30a09b9b92665ff197ab7cdb78cd", null ],
-    [ "BEE_SetRegionNonce", "a00010.html#gaa638564cda2e20d4891534c9542eaa39", null ],
-    [ "BEE_GetStatusFlags", "a00010.html#ga68a9f0f1fd8f8db579c283db82e6c5f8", null ],
-    [ "BEE_ClearStatusFlags", "a00010.html#ga19f4a79958527498bfb0d95c649e84bf", null ]
+    [ "AOI_Init", "a00010.html#ga5345854874ea6ff6f515f68fbe614814", null ],
+    [ "AOI_Deinit", "a00010.html#ga1d3d000d6add6e502bac7cfb3128a216", null ],
+    [ "AOI_GetEventLogicConfig", "a00010.html#ga199bb7b7633308b6527e137152fd5734", null ],
+    [ "AOI_SetEventLogicConfig", "a00010.html#ga11ad71a29ff2e4a56c5ad11760a9d17d", null ]
 ];

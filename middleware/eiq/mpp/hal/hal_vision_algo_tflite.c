@@ -111,9 +111,7 @@ static int get_model_input_channels(tflite_model_param_t *param)
     }
 }
 
-static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Init(vision_algo_dev_t *dev,
-                                                           valgo_dev_callback_t callback,
-                                                           model_param_t *param)
+static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Init(vision_algo_dev_t *dev, model_param_t *param)
 {
     hal_valgo_status_t ret = kStatus_HAL_ValgoSuccess;
     tflite_model_param_t *tflite_model_param;
@@ -127,7 +125,6 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Init(vision_algo_dev_t *dev,
 
     // init the device
     memset(&dev->cap, 0, sizeof(dev->cap));
-    dev->cap.callback = callback;
     dev->priv_data = MPP_MALLOC(sizeof(tflite_model_param_t));
     tflite_model_param = (tflite_model_param_t *)dev->priv_data;
     if(dev->priv_data == NULL){

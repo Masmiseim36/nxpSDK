@@ -23,7 +23,7 @@
 #include "network.h"
 
 #ifndef EXAMPLE_MAC_ADDR
-    #include "fsl_silicon_id.h"
+#include "fsl_silicon_id.h"
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,9 +38,9 @@
 #define EXAMPLE_NET_MASK 0U
 #define EXAMPLE_GW_ADDR  0U
 #else
-#define EXAMPLE_IP_ADDR  LWIP_MAKEU32(192, 168, 1, 20)    /* IP address configuration. */
-#define EXAMPLE_NET_MASK LWIP_MAKEU32(255, 255, 255, 0)   /* Netmask configuration. */
-#define EXAMPLE_GW_ADDR  LWIP_MAKEU32(192, 168, 1, 1)     /* Gateway address configuration. */
+#define EXAMPLE_IP_ADDR  LWIP_MAKEU32(192, 168, 1, 20)  /* IP address configuration. */
+#define EXAMPLE_NET_MASK LWIP_MAKEU32(255, 255, 255, 0) /* Netmask configuration. */
+#define EXAMPLE_GW_ADDR  LWIP_MAKEU32(192, 168, 1, 1)   /* Gateway address configuration. */
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -116,15 +116,24 @@ void Network_Init(uint32_t csrClock_Hz)
         .phyAddr     = EXAMPLE_PHY_ADDRESS,
         .phyOps      = &phy_ops,
         .srcClockHz  = csrClock_Hz,
-         /* Set defined MAC address. */
 #ifdef EXAMPLE_MAC_ADDR
-        .macAddress  = EXAMPLE_MAC_ADDR,
+        /* Set defined MAC address. */
+        .macAddress = EXAMPLE_MAC_ADDR,
 #endif
     };
 
-     /* Generate and set MAC address. */
+    /* Generate and set MAC address. */
 #ifndef EXAMPLE_MAC_ADDR
-    SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+    if (SILICONID_ConvertToMacAddr(&enet_config.macAddress) != kStatus_Success)
+    {
+        /* Fallback MAC addres */
+        enet_config.macAddress[0] = 0;
+        enet_config.macAddress[1] = 0;
+        enet_config.macAddress[2] = 0xfa;
+        enet_config.macAddress[3] = 0xfa;
+        enet_config.macAddress[4] = 0xdd;
+        enet_config.macAddress[5] = 0xdd;
+    }
 #endif
 
     /* Prepare static IP address */

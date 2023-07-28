@@ -1,6 +1,5 @@
 /*
- * Copyright 2022 NXP
- * All rights reserved.
+ * Copyright 2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -44,7 +43,7 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-#define BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x080000U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
+#define BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x0C0000U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
 #define BOARD_INITPINS_IOMUXC_GPR_GPR27_GPIO_MUX2_GPIO_SEL_MASK 0x90000000U /*!< GPIO2 and GPIO7 share same IO MUX function, GPIO_MUX2 selects one GPIO function: affected bits mask */
 
 /* GPIO_AD_B0_13 (coord J11), UART1_RXD/J11[2] */
@@ -188,6 +187,20 @@ void BOARD_InitBootPins(void);
 /* Routed pin properties */
 #define BOARD_INITPINS_SD0_VSELECT_PERIPHERAL                             USDHC1   /*!< Peripheral name */
 #define BOARD_INITPINS_SD0_VSELECT_SIGNAL                          usdhc_vselect   /*!< Signal name */
+
+/* GPIO_AD_B1_02 (coord K11), J16[7]/SPDIF_OUT/SDIO0_SD1_SEL/U63[9]/U64[9]/U65[9] */
+/* Routed pin properties */
+#define BOARD_INITPINS_SPDIF_OUT_PERIPHERAL                                GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINS_SPDIF_OUT_SIGNAL                                  gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_SPDIF_OUT_CHANNEL                                     18U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_SPDIF_OUT_GPIO                                      GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_SPDIF_OUT_GPIO_PIN                                    18U   /*!< GPIO pin number */
+#define BOARD_INITPINS_SPDIF_OUT_GPIO_PIN_MASK                       (1U << 18U)   /*!< GPIO pin mask */
+#define BOARD_INITPINS_SPDIF_OUT_PORT                                      GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINS_SPDIF_OUT_PIN                                         18U   /*!< PORT pin number */
+#define BOARD_INITPINS_SPDIF_OUT_PIN_MASK                            (1U << 18U)   /*!< PORT pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

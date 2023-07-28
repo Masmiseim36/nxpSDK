@@ -567,7 +567,9 @@ static int32_t audiosink_set_property(StreamElement *element_ptr, uint16_t prop,
             if (_ret != AUDIO_SINK_SUCCESS)
                 ret = STREAM_ERR_GENERAL;
             break;
-
+        case PROP_AUDIOSINK_SET_REFDATA_ELEMENT:
+            audio_sink_ptr->refData_element = (ElementHandle)val;
+            break;
         default:
             ret = AUDIO_SINK_ERROR_NO_RESOURCE;
             break;
@@ -612,6 +614,7 @@ int32_t audiosink_init_element(StreamElement *element)
     audio_sink_ptr->device_name        = AUDIO_SINK_DEVICE_DEFAULT;
     audio_sink_ptr->device_info        = NULL;
     audio_sink_ptr->device_started     = false;
+    audio_sink_ptr->refData_element    = (ElementHandle)NULL;
 
     /* initialize only sink pads handlers, no src pads for audio sink */
     for (i = 0; i < NUM_SINKS(TYPE_ELEMENT_AUDIO_SINK); i++)

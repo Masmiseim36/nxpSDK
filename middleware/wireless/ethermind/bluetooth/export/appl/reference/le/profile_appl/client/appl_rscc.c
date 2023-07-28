@@ -61,8 +61,7 @@ static const UCHAR rscc_client_menu[] =
    23 - Invalid Opcode \n\
    --- Device Information Service ---\n\
    24 - DIC Options \n\
-Your Option?\n\
-";
+Your Option?\n";
 
 /* ------------------------------- Functions */
 
@@ -140,8 +139,8 @@ void rscc_profile_operations (void)
     UCHAR        cfg_val[GATT_CLI_CFG_VAL_LEN];
     UCHAR        value_arr[5U];
     int          data;
-    UINT16       index;
     ATT_UUID     uuid;
+    UINT32       set_cumulative_val;
 
     BT_LOOP_FOREVER()
     {
@@ -179,6 +178,7 @@ void rscc_profile_operations (void)
                 uuid,
                 ATT_16_BIT_UUID_FORMAT
             );
+            break;
 
         case 12:
             cli_cfg = GATT_CLI_CNFG_NOTIFICATION;
@@ -270,13 +270,12 @@ void rscc_profile_operations (void)
 
         case 19:
             value_arr[0U] = SET_CUMMULATIVE_VALUE_OPCODE;
-            LOG_DEBUG("Enter the Cumulative Value to be set[Hex]:\n");
+            CONSOLE_OUT("Enter the Cumulative Value to be set[Hex]:\n");
+            CONSOLE_IN("%x", &data);
 
-            for (index = 1U; index < SC_CP_SET_CUMMULATIVE_VALUE_REQ_LEN; index++)
-            {
-                CONSOLE_IN("%x", &data);
-                value_arr[index] = (UCHAR)data;
-            }
+            set_cumulative_val = (UINT32)data;
+
+            BT_PACK_LE_4_BYTE(&value_arr[1U], &set_cumulative_val);
 
             gatt_char_wr
             (
@@ -303,7 +302,7 @@ void rscc_profile_operations (void)
 
         case 21:
             value_arr[0U] = UPDATE_SENSOR_LOCATION_OPCODE;
-            LOG_DEBUG("Enter the Sensor Location to be set[Hex]:\n");
+            CONSOLE_OUT("Enter the Sensor Location to be set[Hex]:\n");
             CONSOLE_IN("%x", &data);
             value_arr[1U] = (UCHAR) data;
 
@@ -350,7 +349,7 @@ void rscc_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

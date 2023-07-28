@@ -29,5 +29,6 @@ var pipeline_8h =
     [ "get_element_pipeline", "pipeline_8h.html#a47a2e16d9adabe3ed6077053fbb636aa", null ],
     [ "send_msg_pipeline", "pipeline_8h.html#a16b56ae0fe3f0377c844454b98daf651", null ],
     [ "set_repeat_pipeline", "pipeline_8h.html#ab41219a9f7dbb6d6e61bef438e516938", null ],
+    [ "get_repeat_pipeline", "pipeline_8h.html#ac2f90283cb59cc448f62179df92e5916", null ],
     [ "clear_pipeline_trackinfo", "pipeline_8h.html#af371874c6036707e54fa6383a7e2f61b", null ]
 ];

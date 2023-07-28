@@ -17,7 +17,7 @@
 #include "BT_hci_api.h"
 #include "BT_sdp_api.h"
 #include "BT_ftp_api.h"
-#include "appl_utils.h"
+
 #include "BT_fops.h"
 
 /* ----------------------------------------- External Global Variables */

@@ -24,7 +24,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>debug\</OutputDirectory>
-          <OutputName>libtxm.lib</OutputName>
+          <OutputName>txm_lib.out</OutputName>
           <CreateExecutable>0</CreateExecutable>
           <CreateLib>1</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -348,7 +348,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1062DVL6A, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/common_modules/inc;../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
@@ -1038,7 +1038,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>release\</OutputDirectory>
-          <OutputName>libtxm.lib</OutputName>
+          <OutputName>txm_lib.out</OutputName>
           <CreateExecutable>0</CreateExecutable>
           <CreateLib>1</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -1362,7 +1362,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1062DVL6A, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1062DVL6A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/common_modules/inc;../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>

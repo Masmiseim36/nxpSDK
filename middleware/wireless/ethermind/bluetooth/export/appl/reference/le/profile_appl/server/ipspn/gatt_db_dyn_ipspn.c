@@ -26,7 +26,7 @@ UINT16 GATT_SER_IPSPN_IPSP_INST;
 
 /* Characteristic Instances */
 UINT16 GATT_CHAR_IPSPN_BATTERY_LVL_INST;
-UINT16 GATT_DB_MAX_ATTRIBUTES;
+
 /* --------------------------------------------- Static Global Variables */
 
 /* --------------------------------------------- Functions */

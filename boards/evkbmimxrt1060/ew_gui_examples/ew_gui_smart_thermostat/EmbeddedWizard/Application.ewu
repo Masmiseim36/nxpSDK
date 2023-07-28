@@ -1,0 +1,19 @@
+$version 10.00
+
+// This is the root component of the entire GUI application.
+$rect <40,40,240,80>
+$output false
+class Application : Core::Root
+{
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <30,60,230,100>
+  object Thermostat::Thermostat Thermostat;
+}
+
+// Application class of the example
+note group Note4
+{
+  attr Bounds = <20,0,660,100>;
+}

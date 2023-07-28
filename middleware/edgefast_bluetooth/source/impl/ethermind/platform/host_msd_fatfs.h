@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016, 2018, 2020 - 2021 NXP
+ * Copyright 2016, 2018, 2020 - 2021, 2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,6 +16,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+#ifndef CONFIG_BT_HOST_USB_ENABLE
+#define CONFIG_BT_HOST_USB_ENABLE 0
+#endif /* CONFIG_BT_HOST_USB_ENABLE */
 
 /*******************************************************************************
  * API

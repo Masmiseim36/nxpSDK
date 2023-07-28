@@ -8,9 +8,7 @@
 #ifndef SBL_CONFIG_H__
 #define SBL_CONFIG_H__
 
-/* MCU-SBL RT1060 Configuration */
-
-#define SOC_IMXRTYYYY_SERIES
+/* MCUBoot Flash Config */
 
 #define CONFIG_MCUBOOT_MAX_IMG_SECTORS 800
 
@@ -35,7 +33,7 @@
 /* Board specific register for flash remap functionality */
 #define FLASH_REMAP_OFFSET_REG 0x400AC080 /* RT1060 flash remap offset register */
 
-/* Crypto */
+/* Crypto Config */
 
 #define COMPONENT_MCUBOOT_SECURE
 #define CONFIG_BOOT_SIGNATURE

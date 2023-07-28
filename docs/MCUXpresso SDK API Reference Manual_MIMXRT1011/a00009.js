@@ -1,39 +1,25 @@
 var a00009 =
 [
-    [ "aoi_event_config_t", "a00009.html#a00269", [
-      [ "PT0AC", "a00009.html#aea14fc46a854e63c9a6318c42835de05", null ],
-      [ "PT0BC", "a00009.html#ac226aa1e1e3154dd87372d81a11fed42", null ],
-      [ "PT0CC", "a00009.html#a1b4d001eaf4862c0ef0acc826f9728bb", null ],
-      [ "PT0DC", "a00009.html#a67a2ba8ce6ff1c264f57c1a414e488f0", null ],
-      [ "PT1AC", "a00009.html#a69c2e717021698311e3154890c3b0f32", null ],
-      [ "PT1BC", "a00009.html#affc8ee95d4e62908e2ccc8c428555112", null ],
-      [ "PT1CC", "a00009.html#ab3cc5e94435bb02efbd37dd469901739", null ],
-      [ "PT1DC", "a00009.html#a304bc85601ba469cbdb7f72615515467", null ],
-      [ "PT2AC", "a00009.html#a5289f96ee94e31baa9df99e5d5b184a4", null ],
-      [ "PT2BC", "a00009.html#a04c5025b51dd202132f47b9966e992f7", null ],
-      [ "PT2CC", "a00009.html#a702228a71c6642795d53e3b78b9ecb54", null ],
-      [ "PT2DC", "a00009.html#a601043d203ed47740bc9c13f57e9ee81", null ],
-      [ "PT3AC", "a00009.html#a7b7d4ef26a639c25d28a3770438c46f3", null ],
-      [ "PT3BC", "a00009.html#a44074e81c446954c4d875cac3a7ce605", null ],
-      [ "PT3CC", "a00009.html#abdb9f372b1820f5b09fa5748dd004104", null ],
-      [ "PT3DC", "a00009.html#a00e1069b81be7ee6e9621bf7d4f294ea", null ]
-    ] ],
-    [ "AOI", "a00009.html#ga4d5017cedccd069f2b3e78d9066f8d36", null ],
-    [ "FSL_AOI_DRIVER_VERSION", "a00009.html#ga7bec3331027807227ac745f0b69cd20c", null ],
-    [ "aoi_input_config_t", "a00009.html#ga6b298657f6573de82fe6afc9600647e5", [
-      [ "kAOI_LogicZero", "a00009.html#gga6b298657f6573de82fe6afc9600647e5a2ebf6b53ef56f02183871be2186a8178", null ],
-      [ "kAOI_InputSignal", "a00009.html#gga6b298657f6573de82fe6afc9600647e5a01b027c922cff2bd4568898a6c7c267b", null ],
-      [ "kAOI_InvInputSignal", "a00009.html#gga6b298657f6573de82fe6afc9600647e5a4bf6c7370e1579b17e57502e123d2709", null ],
-      [ "kAOI_LogicOne", "a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8", null ]
-    ] ],
-    [ "aoi_event_t", "a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00", [
-      [ "kAOI_Event0", "a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a608d3d1b120130a8c457d1b4ae110f8a", null ],
-      [ "kAOI_Event1", "a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a0956de460ec7d73296c08cf0fc2c6e03", null ],
-      [ "kAOI_Event2", "a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a0289ecc6237100a1863a9b6cdb70c501", null ],
-      [ "kAOI_Event3", "a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a9dd38a4189d89d398624cd6573950565", null ]
-    ] ],
-    [ "AOI_Init", "a00009.html#ga5345854874ea6ff6f515f68fbe614814", null ],
-    [ "AOI_Deinit", "a00009.html#ga1d3d000d6add6e502bac7cfb3128a216", null ],
-    [ "AOI_GetEventLogicConfig", "a00009.html#ga199bb7b7633308b6527e137152fd5734", null ],
-    [ "AOI_SetEventLogicConfig", "a00009.html#ga11ad71a29ff2e4a56c5ad11760a9d17d", null ]
+    [ "adc_etc_config_t", "a00009.html#a00278", null ],
+    [ "adc_etc_trigger_chain_config_t", "a00009.html#a00279", null ],
+    [ "adc_etc_trigger_config_t", "a00009.html#a00280", null ],
+    [ "FSL_ADC_ETC_DRIVER_VERSION", "a00009.html#gabb13030471759f06c35f462ed2674023", null ],
+    [ "ADC_ETC_DMA_CTRL_TRGn_REQ_MASK", "a00009.html#gafcf58ac176e14d5434d45f3999f46a5c", null ],
+    [ "_adc_etc_status_flag_mask", "a00009.html#gaecc628cacd5a30243e25b0fd21cddeaa", null ],
+    [ "adc_etc_external_trigger_source_t", "a00009.html#ga46af1d713f9fda57d1a8976df9954a53", null ],
+    [ "adc_etc_interrupt_enable_t", "a00009.html#ga23ca13fe73d35024cd8aca272722b9ff", null ],
+    [ "ADC_ETC_Init", "a00009.html#gac035c4e4918763d2a3c161bfc967c672", null ],
+    [ "ADC_ETC_Deinit", "a00009.html#gafd8e32731410e71c6f25bac9a30bdb73", null ],
+    [ "ADC_ETC_GetDefaultConfig", "a00009.html#gadbcb45c28030d9a31d33f7686fa36dc5", null ],
+    [ "ADC_ETC_SetTriggerConfig", "a00009.html#ga97ee7c65c9e858f6654b54cd76f65652", null ],
+    [ "ADC_ETC_SetTriggerChainConfig", "a00009.html#ga3a1d60607b5579c7de1e725ae23d3f4c", null ],
+    [ "ADC_ETC_GetInterruptStatusFlags", "a00009.html#gad5152374108498e580fc013b6179b34b", null ],
+    [ "ADC_ETC_ClearInterruptStatusFlags", "a00009.html#ga02bd53497e04d4899f3f19228de1b162", null ],
+    [ "ADC_ETC_EnableDMA", "a00009.html#gacbb2c7711568814bf30835708f5a1c70", null ],
+    [ "ADC_ETC_DisableDMA", "a00009.html#ga43645b56e42577c7093d8edd7824a2a1", null ],
+    [ "ADC_ETC_GetDMAStatusFlags", "a00009.html#gacb8ccf56f70bb9c4782a8a2bf75eb9b7", null ],
+    [ "ADC_ETC_ClearDMAStatusFlags", "a00009.html#gab717e13cea2ad6603e2c2cd54cf2732b", null ],
+    [ "ADC_ETC_DoSoftwareReset", "a00009.html#ga79d524313efdc75a2725555b356a1990", null ],
+    [ "ADC_ETC_DoSoftwareTrigger", "a00009.html#ga6a719ef622ebe84c0130591611ff18d6", null ],
+    [ "ADC_ETC_GetADCConversionValue", "a00009.html#ga73f01f54a321d280e18be0fcbf4075a0", null ]
 ];

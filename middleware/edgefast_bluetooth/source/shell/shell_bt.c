@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 //#include <strings.h>
-#include <sys/printk.h>
+
 #include <sys/byteorder.h>
 #include <sys/util.h>
 #include <porting.h>
@@ -34,6 +34,7 @@
 #include <bluetooth/sdp.h>
 #endif
 #include <bluetooth/hci.h>
+#include <bluetooth/iso.h>
 
 #include "fsl_shell.h"
 
@@ -83,7 +84,7 @@ enum {
 static ATOMIC_DEFINE(adv_opt, SHELL_ADV_OPT_NUM);
 #if (defined(CONFIG_BT_EXT_ADV) && (CONFIG_BT_EXT_ADV > 0))
 #if (defined(CONFIG_BT_BROADCASTER) && (CONFIG_BT_BROADCASTER > 0))
-static uint8_t selected_adv;
+uint8_t selected_adv;
 struct bt_le_ext_adv *adv_sets[CONFIG_BT_EXT_ADV_MAX_ADV_SET];
 static ATOMIC_DEFINE(adv_set_opt, SHELL_ADV_OPT_NUM)[CONFIG_BT_EXT_ADV_MAX_ADV_SET];
 #endif /* CONFIG_BT_BROADCASTER */
@@ -572,7 +573,7 @@ static struct bt_le_ext_adv_cb adv_callbacks = {
 
 
 #if (defined(CONFIG_BT_PER_ADV_SYNC) && (CONFIG_BT_PER_ADV_SYNC > 0))
-static struct bt_le_per_adv_sync *per_adv_syncs[CONFIG_BT_PER_ADV_SYNC_MAX];
+struct bt_le_per_adv_sync *per_adv_syncs[CONFIG_BT_PER_ADV_SYNC_MAX];
 
 static void per_adv_sync_sync_cb(struct bt_le_per_adv_sync *sync,
 				 struct bt_le_per_adv_sync_synced_info *info)
@@ -1069,7 +1070,7 @@ static shell_status_t cmd_scan_filter_set_name(shell_handle_t shell, int32_t arg
 	const char *name_arg = argv[1];
 
 	if (strlen(name_arg) >= sizeof(scan_filter.name)) {
-		shell_error(ctx_shell, "Name is too long (max %zu): %s\n",
+		shell_error(ctx_shell, "Name is too long (max %u): %s\n",
 			    sizeof(scan_filter.name), name_arg);
 		return kStatus_SHELL_Error;
 	}
@@ -1236,9 +1237,11 @@ static ssize_t ad_init(struct bt_data *data_array, const size_t data_array_size,
 
 		audio_ad_len = audio_ad_data_add(&data_array[ad_len], data_array_size - ad_len,
 						 discoverable, connectable);
+#if 0 /* pointless comparison of unsigned integer with zero. */
 		if (audio_ad_len < 0) {
 			return audio_ad_len;
 		}
+#endif
 
 		ad_len += audio_ad_len;
 	}
@@ -1565,14 +1568,16 @@ static shell_status_t cmd_adv_data(shell_handle_t shell, int32_t argc, char *arg
 	data = ad;
 	data_len = &ad_len;
 
-	ad_mode_parse(sh, argc - 1, &argv[1], &discoverable);
+	ad_mode_parse(shell, argc - 1, &argv[1], &discoverable);
 
 	atomic_set_bit_to(adv_set_opt[selected_adv], SHELL_ADV_OPT_DISCOVERABLE, discoverable);
 
 	ad_len = ad_init(ad, ARRAY_SIZE(ad), adv_set_opt[selected_adv]);
+#if 0 /* pointless comparison of unsigned integer with zero. */        
 	if (ad_len < 0) {
 		return kStatus_SHELL_Error;
 	}
+#endif
 
 	for (size_t argn = 1; argn < argc; argn++) {
 		const char *arg = argv[argn];
@@ -2021,7 +2026,7 @@ static shell_status_t cmd_past_subscribe(shell_handle_t shell, int32_t argc,
 
 	if (i == ARRAY_SIZE(per_adv_syncs)) {
 		shell_error(shell, "Cannot create more per adv syncs");
-		return (shell_status_t)-ENOEXEC;
+		return (shell_status_t)kStatus_SHELL_Error;
 	}
 
 	/* Default values */
@@ -2229,8 +2234,9 @@ static shell_status_t cmd_auto_conn(shell_handle_t shell, int32_t argc, char *ar
 		shell_help(shell);
 		return kStatus_SHELL_PrintCmdHelp;
 	}
-
+#if 0
 	return kStatus_SHELL_Success;
+#endif
 }
 #endif /* !defined(CONFIG_BT_FILTER_ACCEPT_LIST) */
 
@@ -3668,6 +3674,9 @@ void bt_CommandInit(shell_handle_t shell)
     }
     bt_ShellGattInit(shell);
     bt_ShellL2capInit(shell);
+#if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
+    bt_ShellIsoInit(shell);
+#endif
 #if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0))
     bt_ShellBrEdrInit(shell);
 
@@ -3729,4 +3738,17 @@ long shell_strtol(const char *str, int base, int *err)
 	}
 
 	return val;
+}
+
+bool shell_strtobool(const char *str, int base, int *err)
+{
+	if (!strcmp(str, "on") || !strcmp(str, "enable") || !strcmp(str, "true")) {
+		return true;
+	}
+
+	if (!strcmp(str, "off") || !strcmp(str, "disable") || !strcmp(str, "false")) {
+		return false;
+	}
+
+	return shell_strtoul(str, base, err);
 }

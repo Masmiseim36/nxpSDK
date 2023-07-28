@@ -86,7 +86,11 @@ static void init_work(struct k_work *work);
     (defined(CONFIG_BT_DEVICE_APPEARANCE_DYNAMIC) && (CONFIG_BT_DEVICE_APPEARANCE_DYNAMIC > 0))
 struct _bt_dev bt_dev = {
 #if (defined(CONFIG_BT_PRIVACY) && (CONFIG_BT_PRIVACY > 0))
+#if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0))
 	.rpa_timeout   = CONFIG_BT_RPA_TIMEOUT,
+#else
+    .rpa_timeout   = 0u,
+#endif
 #endif
 #if (defined(CONFIG_BT_DEVICE_APPEARANCE_DYNAMIC) && (CONFIG_BT_DEVICE_APPEARANCE_DYNAMIC > 0))
 	.appearance = CONFIG_BT_DEVICE_APPEARANCE,
@@ -209,6 +213,7 @@ static void handle_event(uint8_t event, struct net_buf *buf, const struct event_
 	/* Other possible errors are handled by handle_event_common function */
 }
 
+#if (defined(CONFIG_BT_HCI_VS_EVT) && (CONFIG_BT_HCI_VS_EVT > 0))
 static void handle_vs_event(uint8_t event, struct net_buf *buf,
 			    const struct event_handler *handlers, size_t num_handlers)
 {
@@ -221,6 +226,7 @@ static void handle_vs_event(uint8_t event, struct net_buf *buf,
 
 	/* Other possible errors are handled by handle_event_common function */
 }
+#endif /* CONFIG_BT_HCI_VS_EVT */
 
 #if (defined(CONFIG_BT_HCI_ACL_FLOW_CONTROL) && ((CONFIG_BT_HCI_ACL_FLOW_CONTROL) > 0U))
 void bt_hci_host_num_completed_packets(struct net_buf *buf)
@@ -2843,7 +2849,7 @@ static void hci_tx_thread(void *param)
             }
         }
 #if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
-        else if (BT_DEV_SEND_ISO & flags)
+        if (BT_DEV_SEND_ISO & flags)
         {
             struct bt_conn *conn;
             do
@@ -2856,7 +2862,7 @@ static void hci_tx_thread(void *param)
             } while (KOSA_StatusSuccess == ret);
         }
 #endif /* CONFIG_BT_ISO */
-        else if (BT_DEV_CONN_CHANGED & flags)
+        if (BT_DEV_CONN_CHANGED & flags)
         {
             struct bt_conn *conn;
             do
@@ -2867,9 +2873,6 @@ static void hci_tx_thread(void *param)
                     bt_conn_process_tx(conn);
                 }
             } while (KOSA_StatusSuccess == ret);
-        }
-        else
-        {
         }
 
 		/* Make sure we don't hog the CPU if there's all the time

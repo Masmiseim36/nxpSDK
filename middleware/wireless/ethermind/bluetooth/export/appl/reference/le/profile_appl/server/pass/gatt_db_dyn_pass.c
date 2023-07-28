@@ -29,7 +29,7 @@ UINT16 GATT_CHAR_PASS_BATTERY_LVL_INST;
 UINT16 GATT_CHAR_PASS_ALRT_STATUS_INST;
 UINT16 GATT_CHAR_PASS_RING_SET_INST;
 UINT16 GATT_CHAR_PASS_RING_CTRL_PNT_INST;
-UINT16 GATT_DB_MAX_ATTRIBUTES;
+
 /* --------------------------------------------- Static Global Variables */
 
 /* --------------------------------------------- Functions */

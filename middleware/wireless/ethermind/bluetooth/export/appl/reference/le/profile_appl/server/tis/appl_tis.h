@@ -123,7 +123,6 @@ API_RESULT appl_ndcs_get_current_time
                 ATT_VALUE         * value
            );
 void appl_tis_set_gap_central_role(void);
-void appl_tis_menu_handler(void);
 
 API_RESULT gatt_db_tis_gatt_char_handler
            (

@@ -10,8 +10,8 @@
  */
 
 /* ------------------------------- Header File Inclusion */
-#include "appl_gls.h"
-#include "appl_gls_mops.h"
+#include "appl_service.h"
+#include "appl_service_mops.h"
 
 #if (defined ATT && defined GLS)
 #ifdef APPL_MENU_OPS
@@ -49,7 +49,11 @@ static const char gls_options[] = " \n\
     9. Update User Facing Time \n\
    10. Delete All Records \n\
    11. Generate 4 Record \n\
+   12. Generate 9 Records \n\
 \n\
+   20. Support Multi Bond and Target Address AD Type in ADV\n\
+   21. Support Multi Bond and No Target Address AD Type in ADV\n\
+   22. Support Single Bond and No Target Address AD Type in ADV\n\
     Your Option ?\n";
 
 /* --------------------------------------------- Functions */
@@ -286,6 +290,23 @@ void appl_gls_menu_handler(void)
         case 11:
             appl_stored_record_count = 4U;
             appl_activate_gls_records();
+            break;
+        case 12:
+            appl_stored_record_count = 9U;
+            appl_activate_gls_records();
+            break;
+
+        case 20:
+            appl_gls_update_multi_bond_flag(BT_TRUE);
+            appl_gls_update_target_addr_flag(BT_TRUE);
+            break;
+        case 21:
+            appl_gls_update_multi_bond_flag(BT_TRUE);
+            appl_gls_update_target_addr_flag(BT_FALSE);
+            break;
+        case 22:
+            appl_gls_update_multi_bond_flag(BT_FALSE);
+            appl_gls_update_target_addr_flag(BT_FALSE);
             break;
 
         default:

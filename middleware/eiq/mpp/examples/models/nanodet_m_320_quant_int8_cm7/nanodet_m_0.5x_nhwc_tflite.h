@@ -1,6 +1,6 @@
 /*
  * Copyright 2020-2021 RangiLyu
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * Apache 2.0 License
@@ -23,7 +23,10 @@
 
 #define MODEL_NAME "nanodet_m_0_5x_nhwc_nopermute_tflite"
 #define MODEL_INPUT_MEAN -14.0f
-#define MODEL_INPUT_STD (255.0f * 0.01865844801068306f)
+// STD value should be multiplied by 127 to get input image between -1 and 1 before normalization
+#define MODEL_INPUT_STD  (127.0f * 0.01865844801068306f)
+#define MODEL_WIDTH  320
+#define MODEL_HEIGHT 320
 
 static const uint8_t nanodet_m_0_5x_nhwc_nopermute_tflite[] __ALIGNED(16) = {
   0x20, 0x00, 0x00, 0x00, 0x54, 0x46, 0x4c, 0x33, 0x00, 0x00, 0x00, 0x00,

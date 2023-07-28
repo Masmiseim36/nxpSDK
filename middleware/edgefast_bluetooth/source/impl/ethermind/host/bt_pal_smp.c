@@ -555,6 +555,7 @@ static uint8_t smp_err_get(enum bt_security_err auth_err)
 	}
 }
 
+#if 0
 static struct net_buf *smp_create_pdu(struct bt_smp *smp, uint8_t op, size_t len)
 {
 	struct bt_smp_hdr *hdr;
@@ -585,7 +586,9 @@ static struct net_buf *smp_create_pdu(struct bt_smp *smp, uint8_t op, size_t len
 
 	return buf;
 }
+#endif
 
+#if ((defined(CONFIG_BT_SIGNING) && ((CONFIG_BT_SIGNING) > 0U)) || (defined(CONFIG_BT_SMP_SELFTEST) && ((CONFIG_BT_SMP_SELFTEST) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 /* Cypher based Message Authentication Code (CMAC) with AES 128 bit
  *
  * Input    : key    ( 128-bit key )
@@ -598,6 +601,7 @@ static int bt_smp_aes_cmac(const uint8_t *key, const uint8_t *in, size_t len,
 {
     return bt_aes_128_cmac_be(key, in, len, out);
 }
+#endif
 
 static int smp_d1(const uint8_t *key, uint16_t d, uint16_t r, uint8_t res[16])
 {
@@ -618,6 +622,7 @@ static int smp_d1(const uint8_t *key, uint16_t d, uint16_t r, uint8_t res[16])
 	return 0;
 }
 
+#if (defined(CONFIG_BT_SMP_SELFTEST) && ((CONFIG_BT_SMP_SELFTEST) > 0U))
 static int smp_f4(const uint8_t *u, const uint8_t *v, const uint8_t *x,
 		  uint8_t z, uint8_t res[16])
 {
@@ -655,7 +660,7 @@ static int smp_f4(const uint8_t *u, const uint8_t *v, const uint8_t *x,
 
 	return err;
 }
-#if (defined(CONFIG_BT_SMP_SELFTEST) && ((CONFIG_BT_SMP_SELFTEST) > 0U))
+
 static int smp_f5(const uint8_t *w, const uint8_t *n1, const uint8_t *n2,
 		  const bt_addr_le_t *a1, const bt_addr_le_t *a2, uint8_t *mackey,
 		  uint8_t *ltk)
@@ -2115,6 +2120,7 @@ static void smp_id_add(struct k_work *work)
 	bt_id_add(conn->le.keys);
 }
 
+#if 0
 static void smp_send(struct bt_smp *smp, struct net_buf *buf,
 		     bt_conn_tx_cb_t cb, void *user_data)
 {
@@ -2158,7 +2164,7 @@ static int smp_error(struct bt_smp *smp, uint8_t reason)
 
 	return 0;
 }
-#if 0
+
 static uint8_t smp_send_pairing_random(struct bt_smp *smp)
 {
 	struct bt_smp_pairing_random *req;
@@ -2179,6 +2185,7 @@ static uint8_t smp_send_pairing_random(struct bt_smp *smp)
 #endif
 
 #if !(defined(CONFIG_BT_SMP_SC_PAIR_ONLY) && (CONFIG_BT_SMP_SC_PAIR_ONLY > 0))
+#if 0
 static void xor_128(const uint8_t p[16], const uint8_t q[16], uint8_t r[16])
 {
 	size_t len = 16;
@@ -2232,7 +2239,10 @@ static int smp_c1(const uint8_t k[16], const uint8_t r[16],
 
 	return bt_encrypt_le(k, enc_data, enc_data);
 }
+#endif
+
 #endif /* !CONFIG_BT_SMP_SC_PAIR_ONLY */
+
 #if 0
 static uint8_t smp_send_pairing_confirm(struct bt_smp *smp)
 {
@@ -2543,6 +2553,7 @@ static uint8_t legacy_get_pair_method(struct bt_smp *smp, uint8_t remote_io)
 }
 #endif /* CONFIG_BT_PERIPHERAL */
 
+#if (defined(CONFIG_BT_PERIPHERAL) && ((CONFIG_BT_PERIPHERAL) > 0U))
 static uint8_t legacy_request_tk(struct bt_smp *smp)
 {
 	struct bt_conn *conn = smp->chan.chan.conn;
@@ -2613,7 +2624,8 @@ static uint8_t legacy_request_tk(struct bt_smp *smp)
 
 	return 0;
 }
-
+#endif /* CONFIG_BT_PERIPHERAL */
+#if 0
 static uint8_t legacy_send_pairing_confirm(struct bt_smp *smp)
 {
 	struct bt_conn *conn = smp->chan.chan.conn;
@@ -2639,6 +2651,7 @@ static uint8_t legacy_send_pairing_confirm(struct bt_smp *smp)
 
 	return 0;
 }
+#endif
 
 #if (defined(CONFIG_BT_PERIPHERAL) && ((CONFIG_BT_PERIPHERAL) > 0U))
 static uint8_t legacy_pairing_req(struct bt_smp *smp)
@@ -2668,6 +2681,7 @@ static uint8_t legacy_pairing_req(struct bt_smp *smp)
 	return send_pairing_rsp(smp);
 }
 #endif /* CONFIG_BT_PERIPHERAL */
+
 #if 0
 static uint8_t legacy_pairing_random(struct bt_smp *smp)
 {
@@ -2745,7 +2759,7 @@ static uint8_t legacy_pairing_random(struct bt_smp *smp)
 
 	return 0;
 }
-#endif
+
 static uint8_t legacy_pairing_confirm(struct bt_smp *smp)
 {
 	BT_DBG("");
@@ -2791,7 +2805,7 @@ static void legacy_user_tk_entry(struct bt_smp *smp)
 		atomic_set_bit(smp->allowed_cmds, BT_SMP_CMD_PAIRING_RANDOM);
 	}
 }
-#if 0
+
 static void legacy_passkey_entry(struct bt_smp *smp, unsigned int passkey)
 {
 	passkey = sys_cpu_to_le32(passkey);
@@ -2979,6 +2993,7 @@ static uint8_t get_auth(struct bt_smp *smp, uint8_t auth)
 }
 #endif /* CONFIG_BT_PERIPHERAL */
 
+#if (defined(CONFIG_BT_PERIPHERAL) && ((CONFIG_BT_PERIPHERAL) > 0U))
 static uint8_t remote_sec_level_reachable(struct bt_smp *smp)
 {
 	bt_security_t sec = smp->chan.chan.conn->required_sec_level;
@@ -3014,6 +3029,7 @@ static uint8_t remote_sec_level_reachable(struct bt_smp *smp)
 		return BT_SMP_ERR_UNSPECIFIED;
 	}
 }
+#endif /* CONFIG_BT_PERIPHERAL */
 
 static bool sec_level_reachable(struct bt_smp *smp)
 {
@@ -4387,11 +4403,6 @@ static uint8_t smp_security_request(struct bt_smp *smp, SMP_AUTH_INFO *auth)
 
 	return 0;
 }
-#else
-static uint8_t smp_security_request(struct bt_smp *smp, struct net_buf *buf)
-{
-	return BT_SMP_ERR_CMD_NOTSUPP;
-}
 #endif /* CONFIG_BT_CENTRAL */
 
 #if 0
@@ -4700,6 +4711,7 @@ static uint8_t smp_dhkey_check(struct bt_smp *smp, struct net_buf *buf)
 }
 #endif
 
+#if 0
 static uint8_t smp_keypress_notif(struct bt_smp *smp, struct net_buf *buf)
 {
 	ARG_UNUSED(smp);
@@ -4712,7 +4724,6 @@ static uint8_t smp_keypress_notif(struct bt_smp *smp, struct net_buf *buf)
 	return 0;
 }
 
-#if 0
 static const struct {
 	uint8_t  (*func)(struct bt_smp *smp, struct net_buf *buf);
 	uint8_t  expect_len;
@@ -6807,6 +6818,8 @@ static void hci_acl_smp_handler(struct net_buf *buf)
 
     const struct bt_conn_auth_cb *smp_auth_cb;
 
+    osa_status_t status;
+
     hdr = (struct bt_smp_hdr_sumilation *)buf->data;
 
     event_data = (hdr->hdr.len > sizeof(hdr->pdu)) ? (UCHAR *)&buf->data[sizeof(*hdr)] : NULL;
@@ -6973,9 +6986,10 @@ static void hci_acl_smp_handler(struct net_buf *buf)
         }
 
         smp->status = hdr->pdu.status;
-		k_work_schedule(&smp->auth_complete, BT_MSEC(1));
+        k_work_cancel_delayable(&smp->auth_complete);
+        k_work_submit(&smp->auth_complete.work);
 		/* Take the semaphore until security level updated, don't need wait too long. */
-		osa_status_t status = OSA_SemaphoreWait(conn->sem_security_level_updated, 1);
+		status = OSA_SemaphoreWait(conn->sem_security_level_updated, 1);
 		if(KOSA_StatusSuccess != status)
 		{
 			BT_ERR("conn: %p, security level semaphore wait fail %d", conn, status);
@@ -6995,7 +7009,7 @@ static void hci_acl_smp_handler(struct net_buf *buf)
 		}
 		smp_pairing_complete(smp, smp->status);
 		break;
-	
+
 	case SMP_AUTHENTICATION_RESPONSE:
 		auth = (SMP_AUTH_INFO *)event_data;
 		if ((oobd_present > 0U))

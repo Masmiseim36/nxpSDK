@@ -160,8 +160,10 @@ DECL_STATIC UCHAR appl_hpc_curr_uri[APPL_HPC_MAX_URI_SIZE];
 DECL_STATIC UCHAR appl_hpc_curr_cp_opcode;
 
 /*Global variable for  */
+#ifdef APPL_HPC_SUPPORT_DYNAMIC_INPUT_URI
 DECL_STATIC UCHAR appl_hpc_header_buf[APPL_HPC_MAX_RD_DATA_BUF_LEN];
 DECL_STATIC UCHAR appl_hpc_body_buf[APPL_HPC_MAX_RD_DATA_BUF_LEN];
+#endif
 
 DECL_STATIC UCHAR appl_hpc_delete_body_code;
 
@@ -191,10 +193,21 @@ DECL_STATIC UCHAR hpc_client_menu[] =
    18 - Read HTTP Headers\n\
    19 - Read HTTP Entity Body\n\
    20 - Read HTTPS Security\n\
-Your Option?\n\
-";
+Your Option?\n";
 
 /* ------------------------------- Functions */
+API_RESULT appl_hpc_read_op(ATT_ATTR_HANDLE handle);
+API_RESULT appl_hpc_write_op
+           (
+               ATT_ATTR_HANDLE handle,
+               UCHAR           * data,
+               UINT16          data_len
+           );
+API_RESULT appl_hpc_write_uri(UCHAR hps_cp_method);
+API_RESULT appl_hpc_write_header(void);
+API_RESULT appl_hpc_write_body(void);
+API_RESULT appl_hpc_write_cp(void);
+
 void hpc_notify_gatt_chardata
      (
          GATT_CHARACTERISTIC_PARAM * characteristic,
@@ -285,7 +298,7 @@ void hpc_parse_notification_data(UINT16 handle, UCHAR * data, UINT16 datalen)
             /**
              * NOTE: Update the Status and DataStatus Print decoding.
              */
-            LOG_DEBUG("\n[HPC]: HTTP(s) Status Received\n");
+            CONSOLE_OUT("\n[HPC]: HTTP(s) Status Received\n");
             switch(http_status)
             {
                 case APPL_HPC_HTTP_RSP_STATUS_CODE_OK:
@@ -341,8 +354,8 @@ void hpc_parse_notification_data(UINT16 handle, UCHAR * data, UINT16 datalen)
                     break;
             }
 
-            LOG_DEBUG("[HPC]: HTTP-status: %4d [%s]\n", http_status, tmp_print_val);
-            LOG_DEBUG("[HPC]: DATA-status: %4d\n", data_status);
+            CONSOLE_OUT("[HPC]: HTTP-status: %4d [%s]\n", http_status, tmp_print_val);
+            CONSOLE_OUT("[HPC]: DATA-status: %4d\n", data_status);
         }
     }
 }
@@ -395,68 +408,68 @@ void appl_hpc_read_dyn_header(void)
     {
         /* HTTP GET Procedure */
         case 0x01U:
-            LOG_DEBUG("Enter HTTP Header For GET procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTP Header For GET procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTP HEAD Procedure */
         case 0x02U:
-            LOG_DEBUG("Enter HTTP Header For HEAD procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTP Header For HEAD procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTP POST Procedure */
         case 0x03U:
-            LOG_DEBUG("Enter HTTP Header For POST procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTP Header For POST procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTP PUT Procedure */
         case 0x04U:
-            LOG_DEBUG("Enter HTTP Header For PUT procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTP Header For PUT procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTP DELETE Procedure */
         case 0x05U:
             /* check if its an Empty body or one with some content */
-            LOG_DEBUG("Enter HTTP Header For DELETE procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTP Header For DELETE procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTPS GET Procedure */
         case 0x06U:
-            LOG_DEBUG("Enter HTTPS Header For GET procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTPS Header For GET procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTPS HEAD Procedure */
         case 0x07U:
-            LOG_DEBUG("Enter HTTPS Header For HEAD procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTPS Header For HEAD procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTPS POST Procedure */
         case 0x08U:
-            LOG_DEBUG("Enter HTTPS Header For POST procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTPS Header For POST procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTPS PUT Procedure */
         case 0x09U:
-            LOG_DEBUG("Enter HTTPS Header For PUT procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTPS Header For PUT procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         /* HTTPS DELETE Procedure */
         case 0x0AU:
             /* check if its an Empty body or one with some content */
-            LOG_DEBUG("Enter HTTPS Header For DELETE procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTPS Header For DELETE procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_header_buf);
             break;
         default:
-            LOG_DEBUG("[HPC]: Invalid Control Point!\n");
+            CONSOLE_OUT("[HPC]: Invalid Control Point!\n");
             break;
     }
 
@@ -477,13 +490,13 @@ void appl_hpc_read_dyn_body(void)
     {
         /* HTTP POST Procedure */
         case 0x03U:
-            LOG_DEBUG("Enter HTTP Body for POST Procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTP Body for POST Procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_body_buf);
             break;
         /* HTTP PUT Procedure */
         case 0x04U:
-            LOG_DEBUG("Enter HTTP Body for PUT Procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTP Body for PUT Procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_body_buf);
             break;
@@ -492,24 +505,24 @@ void appl_hpc_read_dyn_body(void)
             /* check if its an Empty body or one with some content */
             if (1U == appl_hpc_delete_body_code)
             {
-                LOG_DEBUG("Enter HTTP Body for DELETE Procedure[Max size 512bytes]:\n");
+                CONSOLE_OUT("Enter HTTP Body for DELETE Procedure[Max size 512bytes]:\n");
                 /* Refer to NOTE-1*/
                 CONSOLE_IN("%s",appl_hpc_body_buf);
             }
             else
             {
-                LOG_DEBUG("[HPC]: Writing HTTP DELETE Empty Entity Body[Max size 512bytes]\n");
+                CONSOLE_OUT("[HPC]: Writing HTTP DELETE Empty Entity Body[Max size 512bytes]\n");
             }
             break;
         /* HTTPS POST Procedure */
         case 0x08U:
-            LOG_DEBUG("Enter HTTPS Body for POST Procedure:[Max size 512bytes]\n");
+            CONSOLE_OUT("Enter HTTPS Body for POST Procedure:[Max size 512bytes]\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_body_buf);
             break;
         /* HTTPS PUT Procedure */
         case 0x09U:
-            LOG_DEBUG("Enter HTTPS Body for PUT Procedure[Max size 512bytes]:\n");
+            CONSOLE_OUT("Enter HTTPS Body for PUT Procedure[Max size 512bytes]:\n");
             /* Refer to NOTE-1*/
             CONSOLE_IN("%s",appl_hpc_body_buf);
             break;
@@ -518,17 +531,17 @@ void appl_hpc_read_dyn_body(void)
             /* check if its an Empty body or one with some content */
             if (1U == appl_hpc_delete_body_code)
             {
-                LOG_DEBUG("Enter HTTPS Body for DELETE Procedure[Max size 512bytes]:\n");
+                CONSOLE_OUT("Enter HTTPS Body for DELETE Procedure[Max size 512bytes]:\n");
                 /* Refer to NOTE-1*/
                 CONSOLE_IN("%s",appl_hpc_body_buf);
             }
             else
             {
-                LOG_DEBUG("[HPC]: Writing HTTPS DELETE Empty Entity Body\n");
+                CONSOLE_OUT("[HPC]: Writing HTTPS DELETE Empty Entity Body\n");
             }
             break;
         default:
-            LOG_DEBUG("[HPC]: Writing Default Empty Entity Body\n");
+            CONSOLE_OUT("[HPC]: Writing Default Empty Entity Body\n");
             break;
     }
 
@@ -550,7 +563,7 @@ API_RESULT appl_hpc_write_dyn_uri(UCHAR hps_cp_method)
     retval = API_SUCCESS;
 
     BT_mem_set(appl_hpc_curr_uri, 0x00, APPL_HPC_MAX_URI_SIZE);
-    LOG_DEBUG("Enter URI[Max Len: %dBytes]\n", APPL_HPC_MAX_URI_SIZE);
+    CONSOLE_OUT("Enter URI[Max Len: %dBytes]\n", APPL_HPC_MAX_URI_SIZE);
     /**
      * NOTE-1:
      * Currently using scanf to input the complete string of URI.
@@ -644,7 +657,7 @@ API_RESULT appl_hpc_write_dyn_uri(UCHAR hps_cp_method)
             break;
 
         default:
-            LOG_DEBUG("[HPC]: Invalid Option!");
+            CONSOLE_OUT("[HPC]: Invalid Option!");
             retval = API_FAILURE;
             break;
     }
@@ -661,7 +674,7 @@ API_RESULT appl_hpc_write_dyn_uri(UCHAR hps_cp_method)
         (UINT16)BT_str_len((char *)appl_hpc_curr_uri)
     );
 
-    LOG_DEBUG("[HPC]: Send URI: %s\n", (char *)appl_hpc_curr_uri);
+    CONSOLE_OUT("[HPC]: Send URI: %s\n", (char *)appl_hpc_curr_uri);
 
     wr_data    = (UCHAR *)appl_hpc_curr_uri;
     wr_datalen = (UINT16)BT_str_len((char *)appl_hpc_curr_uri);
@@ -672,7 +685,7 @@ API_RESULT appl_hpc_write_dyn_uri(UCHAR hps_cp_method)
                  wr_data,
                  wr_datalen
              );
-    LOG_DEBUG("\n[HPC]: Write Op returned 0x%04X\n", retval);
+    CONSOLE_OUT("\n[HPC]: Write Op returned 0x%04X\n", retval);
 
     if (API_SUCCESS == retval )
     {
@@ -718,7 +731,7 @@ API_RESULT appl_hpc_write_dyn_header(void)
                  wr_data,
                  wr_datalen
              );
-    LOG_DEBUG("\n[HPC]: Write Op returned 0x%04X\n", retval);
+    CONSOLE_OUT("\n[HPC]: Write Op returned 0x%04X\n", retval);
 
     if (API_SUCCESS == retval)
     {
@@ -758,7 +771,7 @@ API_RESULT appl_hpc_write_dyn_body(void)
                  wr_data,
                  wr_datalen
              );
-    LOG_DEBUG("\n[HPC]: Write Op returned 0x%04X\n", retval);
+    CONSOLE_OUT("\n[HPC]: Write Op returned 0x%04X\n", retval);
 
     if (API_SUCCESS == retval)
     {
@@ -886,7 +899,7 @@ API_RESULT appl_hpc_write_uri(UCHAR hps_cp_method)
             break;
 
         default:
-            LOG_DEBUG("[HPC]: Invalid Option!");
+            CONSOLE_OUT("[HPC]: Invalid Option!");
             retval = API_FAILURE;
             break;
     }
@@ -903,7 +916,7 @@ API_RESULT appl_hpc_write_uri(UCHAR hps_cp_method)
         (UINT16)BT_str_len((char *)appl_hpc_curr_uri)
     );
 
-    LOG_DEBUG("[HPC]: Send URI: %s\n", (char *)appl_hpc_curr_uri);
+    CONSOLE_OUT("[HPC]: Send URI: %s\n", (char *)appl_hpc_curr_uri);
 
     wr_data    = (UCHAR *)appl_hpc_curr_uri;
     wr_datalen = (UINT16)BT_str_len((char *)appl_hpc_curr_uri);
@@ -914,7 +927,7 @@ API_RESULT appl_hpc_write_uri(UCHAR hps_cp_method)
                  wr_data,
                  wr_datalen
              );
-    LOG_DEBUG("\n[HPC]: Write Op returned 0x%04X\n", retval);
+    CONSOLE_OUT("\n[HPC]: Write Op returned 0x%04X\n", retval);
 
     if (API_SUCCESS == retval )
     {
@@ -942,28 +955,28 @@ API_RESULT appl_hpc_write_header(void)
     {
         /* HTTP GET Procedure */
         case 0x01U:
-            LOG_DEBUG("[HPC]: Writing HTTP Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTP Headers: %s\n",
             APPL_HPC_SAMPLE_HTTP_GET_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_GET_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_GET_HEADER_STR);
             break;
         /* HTTP HEAD Procedure */
         case 0x02U:
-            LOG_DEBUG("[HPC]: Writing HTTP Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTP Headers: %s\n",
             APPL_HPC_SAMPLE_HTTP_HEAD_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_HEAD_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_HEAD_HEADER_STR);
             break;
         /* HTTP POST Procedure */
         case 0x03U:
-            LOG_DEBUG("[HPC]: Writing HTTP Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTP Headers: %s\n",
             APPL_HPC_SAMPLE_HTTP_POST_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_POST_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_POST_HEADER_STR);
             break;
         /* HTTP PUT Procedure */
         case 0x04U:
-            LOG_DEBUG("[HPC]: Writing HTTP Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTP Headers: %s\n",
             APPL_HPC_SAMPLE_HTTP_PUT_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_PUT_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_PUT_HEADER_STR);
@@ -973,14 +986,14 @@ API_RESULT appl_hpc_write_header(void)
             /* check if its an Empty body or one with some content */
             if (1U == appl_hpc_delete_body_code)
             {
-                LOG_DEBUG("[HPC]: Writing HTTP Headers: %s\n",
+                CONSOLE_OUT("[HPC]: Writing HTTP Headers: %s\n",
                 APPL_HPC_SAMPLE_HTTP_DELETE_HEADER_STR);
                 wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_DELETE_HEADER_STR;
                 wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_DELETE_HEADER_STR);
             }
             else
             {
-                LOG_DEBUG("[HPC]: Writing HTTP Headers: %s\n",
+                CONSOLE_OUT("[HPC]: Writing HTTP Headers: %s\n",
                 APPL_HPC_SAMPLE_HTTP_DELETE_EMPTY_BODY_HEADER_STR);
                 wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_DELETE_EMPTY_BODY_HEADER_STR;
                 wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_DELETE_EMPTY_BODY_HEADER_STR);
@@ -988,28 +1001,28 @@ API_RESULT appl_hpc_write_header(void)
             break;
         /* HTTPS GET Procedure */
         case 0x06U:
-            LOG_DEBUG("[HPC]: Writing HTTPS Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTPS Headers: %s\n",
             APPL_HPC_SAMPLE_HTTPS_GET_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_GET_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_GET_HEADER_STR);
             break;
         /* HTTPS HEAD Procedure */
         case 0x07U:
-            LOG_DEBUG("[HPC]: Writing HTTPS Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTPS Headers: %s\n",
             APPL_HPC_SAMPLE_HTTPS_HEAD_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_HEAD_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_HEAD_HEADER_STR);
             break;
         /* HTTPS POST Procedure */
         case 0x08U:
-            LOG_DEBUG("[HPC]: Writing HTTPS Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTPS Headers: %s\n",
             APPL_HPC_SAMPLE_HTTPS_POST_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_POST_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_POST_HEADER_STR);
             break;
         /* HTTPS PUT Procedure */
         case 0x09U:
-            LOG_DEBUG("[HPC]: Writing HTTPS Headers: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTPS Headers: %s\n",
             APPL_HPC_SAMPLE_HTTPS_PUT_HEADER_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_PUT_HEADER_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_PUT_HEADER_STR);
@@ -1019,21 +1032,21 @@ API_RESULT appl_hpc_write_header(void)
             /* check if its an Empty body or one with some content */
             if (1U == appl_hpc_delete_body_code)
             {
-                LOG_DEBUG("[HPC]: Writing HTTPS Headers: %s\n",
+                CONSOLE_OUT("[HPC]: Writing HTTPS Headers: %s\n",
                 APPL_HPC_SAMPLE_HTTPS_DELETE_HEADER_STR);
                 wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_DELETE_HEADER_STR;
                 wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_DELETE_HEADER_STR);
             }
             else
             {
-                LOG_DEBUG("[HPC]: Writing HTTPS Headers: %s\n",
+                CONSOLE_OUT("[HPC]: Writing HTTPS Headers: %s\n",
                 APPL_HPC_SAMPLE_HTTPS_DELETE_EMPTY_BODY_HEADER_STR);
                 wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_DELETE_EMPTY_BODY_HEADER_STR;
                 wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_DELETE_EMPTY_BODY_HEADER_STR);
             }
             break;
         default:
-            LOG_DEBUG("[HPC]: Invalid Control Point!\n");
+            CONSOLE_OUT("[HPC]: Invalid Control Point!\n");
             retval     = API_FAILURE;
             wr_data    = NULL;
             wr_datalen = 0U;
@@ -1051,7 +1064,7 @@ API_RESULT appl_hpc_write_header(void)
                  wr_data,
                  wr_datalen
              );
-    LOG_DEBUG("\n[HPC]: Write Op returned 0x%04X\n", retval);
+    CONSOLE_OUT("\n[HPC]: Write Op returned 0x%04X\n", retval);
 
     if (API_SUCCESS == retval)
     {
@@ -1079,14 +1092,14 @@ API_RESULT appl_hpc_write_body(void)
     {
         /* HTTP POST Procedure */
         case 0x03U:
-            LOG_DEBUG("[HPC]: Writing HTTP POST Entity: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTP POST Entity: %s\n",
             APPL_HPC_SAMPLE_HTTP_POST_ENTITY_BODY_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_POST_ENTITY_BODY_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_POST_ENTITY_BODY_STR);
             break;
         /* HTTP PUT Procedure */
         case 0x04U:
-            LOG_DEBUG("[HPC]: Writing HTTP PUT Entity: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTP PUT Entity: %s\n",
             APPL_HPC_SAMPLE_HTTP_PUT_ENTITY_BODY_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTP_PUT_ENTITY_BODY_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_PUT_ENTITY_BODY_STR);
@@ -1096,28 +1109,28 @@ API_RESULT appl_hpc_write_body(void)
             /* check if its an Empty body or one with some content */
             if (1U == appl_hpc_delete_body_code)
             {
-                LOG_DEBUG("[HPC]: Writing HTTP DELETE Entity: %s\n",
+                CONSOLE_OUT("[HPC]: Writing HTTP DELETE Entity: %s\n",
                 APPL_HPC_SAMPLE_HTTP_DELETE_ENTITY_BODY_STR);
                 wr_data = (UCHAR *)APPL_HPC_SAMPLE_HTTP_DELETE_ENTITY_BODY_STR;
                 wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTP_DELETE_ENTITY_BODY_STR);
             }
             else
             {
-                LOG_DEBUG("[HPC]: Writing HTTP DELETE Empty Entity Body\n");
+                CONSOLE_OUT("[HPC]: Writing HTTP DELETE Empty Entity Body\n");
                 wr_data    = NULL;
                 wr_datalen = 0U;
             }
             break;
         /* HTTPS POST Procedure */
         case 0x08U:
-            LOG_DEBUG("[HPC]: Writing HTTPS POST Entity: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTPS POST Entity: %s\n",
             APPL_HPC_SAMPLE_HTTPS_POST_ENTITY_BODY_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_POST_ENTITY_BODY_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_POST_ENTITY_BODY_STR);
             break;
         /* HTTPS PUT Procedure */
         case 0x09U:
-            LOG_DEBUG("[HPC]: Writing HTTPS PUT Entity: %s\n",
+            CONSOLE_OUT("[HPC]: Writing HTTPS PUT Entity: %s\n",
             APPL_HPC_SAMPLE_HTTPS_PUT_ENTITY_BODY_STR);
             wr_data    = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_PUT_ENTITY_BODY_STR;
             wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_PUT_ENTITY_BODY_STR);
@@ -1127,20 +1140,20 @@ API_RESULT appl_hpc_write_body(void)
             /* check if its an Empty body or one with some content */
             if (1U == appl_hpc_delete_body_code)
             {
-                LOG_DEBUG("[HPC]: Writing HTTPS DELETE Entity: %s\n",
+                CONSOLE_OUT("[HPC]: Writing HTTPS DELETE Entity: %s\n",
                 APPL_HPC_SAMPLE_HTTPS_DELETE_ENTITY_BODY_STR);
                 wr_data = (UCHAR *)APPL_HPC_SAMPLE_HTTPS_DELETE_ENTITY_BODY_STR;
                 wr_datalen = (UINT16)BT_str_len(APPL_HPC_SAMPLE_HTTPS_DELETE_ENTITY_BODY_STR);
             }
             else
             {
-                LOG_DEBUG("[HPC]: Writing HTTPS DELETE Empty Entity Body\n");
+                CONSOLE_OUT("[HPC]: Writing HTTPS DELETE Empty Entity Body\n");
                 wr_data    = NULL;
                 wr_datalen = 0U;
             }
             break;
         default:
-            LOG_DEBUG("[HPC]: Writing Default Empty Entity Body\n");
+            CONSOLE_OUT("[HPC]: Writing Default Empty Entity Body\n");
             wr_data    = NULL;
             wr_datalen = 0U;
             break;
@@ -1152,7 +1165,7 @@ API_RESULT appl_hpc_write_body(void)
                  wr_data,
                  wr_datalen
              );
-    LOG_DEBUG("\n[HPC]: Write Op returned 0x%04X\n", retval);
+    CONSOLE_OUT("\n[HPC]: Write Op returned 0x%04X\n", retval);
 
     if (API_SUCCESS == retval)
     {
@@ -1174,7 +1187,7 @@ API_RESULT appl_hpc_write_cp(void)
 
     retval = API_SUCCESS;
 
-    LOG_DEBUG("\n[HPC]: Issuing Control Point Wt for Opcode %d\n",
+    CONSOLE_OUT("\n[HPC]: Issuing Control Point Wt for Opcode %d\n",
     appl_hpc_curr_cp_opcode);
 
     gatt_char_wr
@@ -1234,15 +1247,15 @@ void hpc_parse_read_data(UCHAR * data, UINT16 datalen)
              */
             if (hps_http_entity_body_hdl == appl_hpc_cur_rd_hdl)
             {
-                LOG_DEBUG("\n[HPC]: HTTP(S) Entity Body read from Remote :\n");
+                CONSOLE_OUT("\n[HPC]: HTTP(S) Entity Body read from Remote :\n");
             }
             else
             {
-                LOG_DEBUG("\n[HPC]: HTTP(S) Header read from Remote :\n");
+                CONSOLE_OUT("\n[HPC]: HTTP(S) Header read from Remote :\n");
             }
 
-            LOG_DEBUG("****************************************************************\n");
-            LOG_DEBUG("%s\n", appl_hpc_rd_buf);
+            CONSOLE_OUT("****************************************************************\n");
+            CONSOLE_OUT("%s\n", appl_hpc_rd_buf);
 
             marker = 0U;
             appl_hpc_cur_rd_hdl = ATT_INVALID_ATTR_HANDLE_VAL;
@@ -1266,7 +1279,7 @@ void hpc_notify_write_rsp(void)
 void hpc_notify_execute_write_rsp(void)
 {
 #ifdef APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR
-    LOG_DEBUG("[HPC]: HPC Execute Write RSP received\n");
+    CONSOLE_OUT("[HPC]: HPC Execute Write RSP received\n");
 
     switch(appl_hpc_cp_wt_state)
     {
@@ -1297,7 +1310,7 @@ void hpc_notify_execute_write_rsp(void)
             break;
 
         default:
-            LOG_DEBUG("Invalid State\n");
+            CONSOLE_OUT("Invalid State\n");
             break;
     }
 #else /* APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR */
@@ -1371,17 +1384,17 @@ void hpc_profile_operations (void)
             break;
 
         case 13:
-            LOG_DEBUG("Enter the desired HTTP Procedure to be performed:\n");
-            LOG_DEBUG(" 0x01 - HTTP  GET Request\n");
-            LOG_DEBUG(" 0x02 - HTTP  HEAD Request\n");
-            LOG_DEBUG(" 0x03 - HTTP  POST Request\n");
-            LOG_DEBUG(" 0x04 - HTTP  PUT Request\n");
-            LOG_DEBUG(" 0x05 - HTTP  DELETE Request\n");
-            LOG_DEBUG(" 0x06 - HTTPS GET Request\n");
-            LOG_DEBUG(" 0x07 - HTTPs HEAD Request\n");
-            LOG_DEBUG(" 0x08 - HTTPS POST Request\n");
-            LOG_DEBUG(" 0x09 - HTTPs PUT Request\n");
-            LOG_DEBUG(" 0x0A - HTTPs DELETE Request\n");
+            CONSOLE_OUT("Enter the desired HTTP Procedure to be performed:\n");
+            CONSOLE_OUT(" 0x01 - HTTP  GET Request\n");
+            CONSOLE_OUT(" 0x02 - HTTP  HEAD Request\n");
+            CONSOLE_OUT(" 0x03 - HTTP  POST Request\n");
+            CONSOLE_OUT(" 0x04 - HTTP  PUT Request\n");
+            CONSOLE_OUT(" 0x05 - HTTP  DELETE Request\n");
+            CONSOLE_OUT(" 0x06 - HTTPS GET Request\n");
+            CONSOLE_OUT(" 0x07 - HTTPs HEAD Request\n");
+            CONSOLE_OUT(" 0x08 - HTTPS POST Request\n");
+            CONSOLE_OUT(" 0x09 - HTTPs PUT Request\n");
+            CONSOLE_OUT(" 0x0A - HTTPs DELETE Request\n");
             CONSOLE_IN("%x", &choice);
 
             retval = API_SUCCESS;
@@ -1399,9 +1412,9 @@ void hpc_profile_operations (void)
             if ((0x05U == appl_hpc_curr_cp_opcode) ||
                 (0x0AU == appl_hpc_curr_cp_opcode))
             {
-                LOG_DEBUG("Enter the desired Entity Body for Delete:\n");
-                LOG_DEBUG(" 0x00 - Use Empty Body\n");
-                LOG_DEBUG(" 0x01 - Use Sample Body\n");
+                CONSOLE_OUT("Enter the desired Entity Body for Delete:\n");
+                CONSOLE_OUT(" 0x00 - Use Empty Body\n");
+                CONSOLE_OUT(" 0x01 - Use Sample Body\n");
 
                 CONSOLE_IN("%x", &choice);
 
@@ -1437,7 +1450,7 @@ void hpc_profile_operations (void)
             appl_hpc_write_dyn_header();
 #endif/* APPL_HPC_SUPPORT_DYNAMIC_INPUT_URI */
 #else /* APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR */
-            LOG_DEBUG("[HPC]: Auto Chaining of HTTP Header, Body and Control Point is enabled!\n");
+            CONSOLE_OUT("[HPC]: Auto Chaining of HTTP Header, Body and Control Point is enabled!\n");
 #endif /* APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR */
             break;
 
@@ -1451,7 +1464,7 @@ void hpc_profile_operations (void)
             appl_hpc_write_dyn_body();
 #endif/* APPL_HPC_SUPPORT_DYNAMIC_INPUT_URI */
 #else /* APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR */
-            LOG_DEBUG("[HPC]: Auto Chaining of HTTP Header, Body and Control Point is enabled!\n");
+            CONSOLE_OUT("[HPC]: Auto Chaining of HTTP Header, Body and Control Point is enabled!\n");
 #endif /* APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR */
             break;
 
@@ -1460,12 +1473,12 @@ void hpc_profile_operations (void)
             /* Initiate Control Point Send */
             appl_hpc_write_cp();
 #else /* APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR */
-            LOG_DEBUG("[HPC]: Auto Chaining of HTTP Header, Body and Control Point is enabled!\n");
+            CONSOLE_OUT("[HPC]: Auto Chaining of HTTP Header, Body and Control Point is enabled!\n");
 #endif /* APPL_HPC_HAVE_AUTO_CHAIN_HEADER_BODY_CP_WR */
             break;
 
         case 17:
-            LOG_DEBUG("[HPC]: Sending HTTP REQ CANCEL Control Point\n");
+            CONSOLE_OUT("[HPC]: Sending HTTP REQ CANCEL Control Point\n");
             /* Setting Opcode to REQ CANCEL */
             appl_hpc_curr_cp_opcode = 0x0BU;
 
@@ -1486,25 +1499,25 @@ void hpc_profile_operations (void)
             break;
 
         case 18:
-            LOG_DEBUG("[HPC]: Reading HTTP Headers\n");
+            CONSOLE_OUT("[HPC]: Reading HTTP Headers\n");
             retval = appl_hpc_read_op(hps_http_headers_hdl);
-            LOG_DEBUG("\n[HPC]: Read Op returned 0x%04X\n", retval);
+            CONSOLE_OUT("\n[HPC]: Read Op returned 0x%04X\n", retval);
             break;
 
         case 19:
-            LOG_DEBUG("[HPC]: Reading HTTP Entity Body\n");
+            CONSOLE_OUT("[HPC]: Reading HTTP Entity Body\n");
             retval = appl_hpc_read_op(hps_http_entity_body_hdl);
-            LOG_DEBUG("\n[HPC]: Read Op returned 0x%04X\n", retval);
+            CONSOLE_OUT("\n[HPC]: Read Op returned 0x%04X\n", retval);
             break;
 
         case 20:
-            LOG_DEBUG("[HPC]: Reading HTTPS Security\n");
+            CONSOLE_OUT("[HPC]: Reading HTTPS Security\n");
             retval = appl_hpc_read_op(hps_https_security_hdl);
-            LOG_DEBUG("\n[HPC]: Read Op returned 0x%04X\n", retval);
+            CONSOLE_OUT("\n[HPC]: Read Op returned 0x%04X\n", retval);
             break;
 
         default:
-            LOG_DEBUG("[HPC]: Invalid choice!!\n");
+            CONSOLE_OUT("[HPC]: Invalid choice!!\n");
             break;
         }
 

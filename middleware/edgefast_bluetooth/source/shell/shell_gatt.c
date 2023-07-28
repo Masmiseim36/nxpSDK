@@ -750,7 +750,7 @@ static shell_status_t cmd_show_db(shell_handle_t shell, int32_t argc, char *argv
 	total_len += stats.ccc_count * sizeof(struct _bt_gatt_ccc);
 
 	shell_print(shell, "=================================================");
-	shell_print(shell, "Total: %u services %u attributes (%zu bytes)",
+	shell_print(shell, "Total: %u services %u attributes (%u bytes)",
 		    stats.svc_count, stats.attr_count, total_len);
 
 	return kStatus_SHELL_Success;
@@ -959,70 +959,31 @@ static void notify_cb(struct bt_conn *conn, void *user_data)
 
 static shell_status_t cmd_notify(shell_handle_t shell, int32_t argc, char *argv[])
 {
-	const size_t max_cnt = CONFIG_BT_L2CAP_TX_BUF_COUNT;
-	struct bt_gatt_notify_params params[CONFIG_BT_L2CAP_TX_BUF_COUNT];
-	const size_t min_cnt = 1U;
-	unsigned long data;
-	unsigned long cnt;
-	uint16_t cnt_u16;
-	int err = 0;
-
-	if (!default_conn) {
-		shell_error(shell, "Not connected.");
-
-		return kStatus_SHELL_Error;
-	}
+	struct bt_gatt_notify_params params;
+	uint8_t data = 0;
 
 	if (!echo_enabled) {
 		shell_error(shell, "No clients have enabled notifications for the vnd1_echo CCC.");
 		return kStatus_SHELL_Error;
 	}
 
-	cnt = shell_strtoul(argv[1], 10, &err);
-	if (err != 0) {
-		shell_error(shell, "Invalid count parameter: %s", argv[1]);
-
-		return kStatus_SHELL_Error;
+	if (argc > 1) {
+		data = strtoul(argv[1], NULL, 16);
 	}
 
-	if (!IN_RANGE(cnt, min_cnt, max_cnt)) {
-		shell_error(shell, "Invalid count value %lu (range %zu to %zu)",
-			    cnt, min_cnt, max_cnt);
+	memset(&params, 0, sizeof(params));
 
-		return kStatus_SHELL_Error;
-	}
+	params.uuid = &vnd1_echo_uuid.uuid;
+	params.attr = vnd1_attrs;
+	params.data = &data;
+	params.len = sizeof(data);
+	params.func = notify_cb;
+	params.user_data = (void *)shell;
+	SET_CHAN_OPT_ANY(params);
 
-	cnt_u16 = (uint16_t)cnt;
+	bt_gatt_notify_cb(NULL, &params);
 
-	if (argc > 2) {
-		data = shell_strtoul(argv[2], 16, &err);
-		if (err != 0) {
-			shell_error(shell, "Invalid data parameter: %s", argv[1]);
-
-			return kStatus_SHELL_Error;
-		}
-	}
-
-	(void)memset(params, 0, sizeof(params));
-
-	for (uint16_t i = 0U; i < cnt_u16; i++) {
-		params[i].uuid = 0;
-		params[i].attr = vnd1_attrs;
-		params[i].data = &data;
-		params[i].len = sizeof(data);
-		params[i].func = notify_cb;
-		params[i].user_data = (void *)shell;
-		SET_CHAN_OPT_ANY(params[i]);
-	}
-
-	err = bt_gatt_notify_multiple(default_conn, cnt_u16, params);
-	if (err != 0) {
-		shell_error(shell, "bt_gatt_notify_multiple failed: %d", err);
-	} else {
-		shell_print(shell, "Send %u notifications", cnt_u16);
-	}
-
-	return (shell_status_t)err;
+	return kStatus_SHELL_Success;
 }
 
 #if (defined(CONFIG_BT_GATT_NOTIFY_MULTIPLE) && (CONFIG_BT_GATT_NOTIFY_MULTIPLE > 0))
@@ -1190,7 +1151,7 @@ static uint8_t get_cb(const struct bt_gatt_attr *attr, uint16_t handle,
 
 	ret = attr->read(NULL, attr, (void *)buf, sizeof(buf), 0);
 	if (ret < 0) {
-		shell_print(shell, "Failed to read: %zd", ret);
+		shell_print(shell, "Failed to read: %d", ret);
 		return BT_GATT_ITER_STOP;
 	}
 
@@ -1243,7 +1204,7 @@ static uint8_t set_cb(const struct bt_gatt_attr *attr, uint16_t handle,
 	ret = attr->write(NULL, attr, (void *)buf, i, 0, 0);
 	if (ret < 0) {
 		data->err = ret;
-		shell_error(data->shell, "Failed to write: %zd", ret);
+		shell_error(data->shell, "Failed to write: %d", ret);
 		return BT_GATT_ITER_STOP;
 	}
 

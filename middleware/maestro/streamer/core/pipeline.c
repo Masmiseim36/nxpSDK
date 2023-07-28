@@ -644,8 +644,7 @@ int32_t send_msg_pipeline(Pipeline *pipeline, StreamMessage *msg)
         case MSG_EOS:
             if (pipeline->repeat)
             {
-                set_state_pipeline((PipelineHandle)pipeline, STATE_NULL);
-                set_state_pipeline((PipelineHandle)pipeline, STATE_PLAYING);
+                seek_pipeline((PipelineHandle)pipeline, 0);
             }
             else
             {
@@ -963,6 +962,20 @@ int32_t set_repeat_pipeline(PipelineHandle handle, bool repeat)
 
     STREAMER_FUNC_EXIT(DBG_CORE);
     return STREAM_OK;
+}
+
+bool get_repeat_pipeline(PipelineHandle handle)
+{
+    Pipeline *pipeline = (Pipeline *)handle;
+
+    STREAMER_FUNC_ENTER(DBG_CORE);
+
+    /* If any of the arguments are invalid */
+    if (pipeline == NULL)
+        return STREAM_ERR_INVALID_ARGS;
+
+    STREAMER_FUNC_EXIT(DBG_CORE);
+    return pipeline->repeat;
 }
 
 void clear_pipeline_trackinfo(PipelineHandle handle)

@@ -105,10 +105,12 @@ keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data
 
 place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
+place in DATA_region                        { zi object sample_azure_iot.o };
 place in DATA_region                        { block HEAP };
 place in DATA_region                        { last section FREE_MEM};
 place in CSTACK_region                      { block CSTACK };
 place in NCACHE_region                      { block NCACHE_VAR };
 place in NCACHE_region                      { block ZI };
+place in NCACHE_region                      { rw object azure_iot_embedded_sdk.o };
 
 keep { block HEAP, block CSTACK };

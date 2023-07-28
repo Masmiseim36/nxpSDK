@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,15 +12,13 @@
 
 #include "mpp_config.h"
 
-#if (TFLITE_ALL_OPS_RESOLVER == 0)
-
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
 #include "tensorflow/lite/micro/kernels/softmax.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 
-tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter)
+tflite::MicroOpResolver &MODEL_GetOpsResolver()
 {
-    static tflite::MicroMutableOpResolver<13> s_microOpResolver(errorReporter);
+    static tflite::MicroMutableOpResolver<13> s_microOpResolver;
 
     s_microOpResolver.AddConv2D();
     s_microOpResolver.AddDepthwiseConv2D();
@@ -38,5 +36,3 @@ tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReport
 
     return s_microOpResolver;
 }
-
-#endif // TFLITE_ALL_OPS_RESOLVER

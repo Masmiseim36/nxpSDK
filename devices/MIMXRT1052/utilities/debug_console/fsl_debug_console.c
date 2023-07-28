@@ -30,7 +30,7 @@
  *  of this software
 
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2020, 2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -41,12 +41,6 @@
 #include <stdio.h>
 #endif
 
-#ifdef SDK_OS_FREE_RTOS
-#include "FreeRTOS.h"
-#include "semphr.h"
-#include "task.h"
-#endif
-
 #include "fsl_debug_console_conf.h"
 #include "fsl_str.h"
 
@@ -54,6 +48,12 @@
 #include "fsl_component_serial_manager.h"
 
 #include "fsl_debug_console.h"
+
+#ifdef SDK_OS_FREE_RTOS
+#include "FreeRTOS.h"
+#include "semphr.h"
+#include "task.h"
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -272,7 +272,7 @@ serial_handle_t g_serialHandle; /*!< serial manager handle */
  * @param[in] len length of the character
  *
  */
-#if SDK_DEBUGCONSOLE
+#if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
 static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char dbgVal, int len);
 #endif
 
@@ -728,7 +728,7 @@ int DbgConsole_ReadCharacter(uint8_t *ch)
     return ret;
 }
 
-#if SDK_DEBUGCONSOLE
+#if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
 static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char dbgVal, int len)
 {
     int i = 0;
@@ -856,6 +856,14 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
     {
 #if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
         serialConfig.portConfig = &serialPortVirtualConfig;
+#else
+        status = kStatus_SerialManager_Error;
+#endif
+    }
+    else if (kSerialPort_BleWu == device)
+    {
+#if (defined(SERIAL_PORT_TYPE_BLE_WU) && (SERIAL_PORT_TYPE_BLE_WU > 0U))
+        serialConfig.portConfig = NULL;
 #else
         status = kStatus_SerialManager_Error;
 #endif

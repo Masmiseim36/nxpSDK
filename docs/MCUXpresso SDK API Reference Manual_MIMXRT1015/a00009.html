@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: AOI: Crossbar AND/OR/INVERT Driver</title>
+<title>MCUXpresso SDK API Reference Manual: ADC_ETC: ADC External Trigger Control</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,312 +103,176 @@ $(document).ready(function(){initNavTree('a00009.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">AOI: Crossbar AND/OR/INVERT Driver</div>  </div>
+<div class="title">ADC_ETC: ADC External Trigger Control</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Crossbar AND/OR/INVERT (AOI) block of MCUXpresso SDK devices.</p>
-<p>The AOI module supports a configurable number of event outputs, where each event output represents a user-programmed combinational boolean function based on four event inputs. The key features of this module include:</p>
-<ul>
-<li>Four dedicated inputs for each event output</li>
-<li>User-programmable combinational boolean function evaluation for each event output</li>
-<li>Memory-mapped device connected to a slave peripheral (IPS) bus</li>
-<li>Configurable number of event outputs</li>
-</ul>
-<h1><a class="anchor" id="AOIFuncGroups"></a>
-Function groups</h1>
-<h2><a class="anchor" id="AOIInit"></a>
-AOI Initialization</h2>
-<p>To initialize the AOI driver, call the <a class="el" href="a00009.html#ga5345854874ea6ff6f515f68fbe614814" title="Initializes an AOI instance for operation. ">AOI_Init()</a> function and pass a baseaddr pointer.</p>
-<p>See the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/aoi.</p>
-<h2><a class="anchor" id="AOIOperation"></a>
-AOI Get Set Operation</h2>
-<p>The AOI module provides a universal boolean function generator using a four-term sum of products expression with each product term containing true or complement values of the four selected event inputs (A, B, C, D). The AOI is a highly programmable module for creating combinational boolean outputs for use as hardware triggers. Each selected input term in each product term can be configured to produce a logical 0 or 1 or pass the true or complement of the selected event input. To configure the selected AOI module event, call the API of the <a class="el" href="a00009.html#ga11ad71a29ff2e4a56c5ad11760a9d17d" title="Configures an AOI event. ">AOI_SetEventLogicConfig()</a> function. To get the current event state configure, call the API of <a class="el" href="a00009.html#ga199bb7b7633308b6527e137152fd5734" title="Gets the Boolean evaluation associated. ">AOI_GetEventLogicConfig()</a> function. The AOI module does not support any special modes of operation. See the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/aoi.</p>
-<h1><a class="anchor" id="AOIUsercase"></a>
+<p>The MCUXpresso SDK provides a peripheral driver for the ADC_ETC module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="ADC_ETCTpyUC"></a>
 Typical use case</h1>
-<p>The AOI module is designed to be integrated in conjuction with one or more inter-peripheral crossbar switch (XBAR) modules. A crossbar switch is typically used to select the 4*n AOI inputs from among available peripheral outputs and GPIO signals. The n EVENTn outputs from the AOI module are typically used as additional inputs to a second crossbar switch, adding to it the ability to connect to its outputs an arbitrary 4-input boolean function of its other inputs.</p>
-<p>This is an example to initialize and configure the AOI driver for a possible use case. Because the AOI module function is directly connected with an XBAR (Inter-peripheral crossbar) module, other peripheral drivers (PIT, CMP, and XBAR) are used to show full functionality of AOI module.</p>
-<p>For example: Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/aoi </p>
+<h2><a class="anchor" id="ADC_ETCSWTriggerConfig"></a>
+Software trigger Configuration</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/adc_etc </p>
+<h2><a class="anchor" id="ADC_ETCHWTriggerConfig"></a>
+Hardware trigger Configuration</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/adc_etc </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00278"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a00278">aoi_event_config_t</a></td></tr>
-<tr class="memdesc:a00278"><td class="mdescLeft">&#160;</td><td class="mdescRight">AOI event configuration structure.  <a href="a00009.html#a00278">More...</a><br/></td></tr>
-<tr class="separator:a00278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00289"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a00289">adc_etc_config_t</a></td></tr>
+<tr class="memdesc:a00289"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC configuration.  <a href="a00009.html#a00289">More...</a><br/></td></tr>
+<tr class="separator:a00289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00290"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a00290">adc_etc_trigger_chain_config_t</a></td></tr>
+<tr class="memdesc:a00290"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger chain configuration.  <a href="a00009.html#a00290">More...</a><br/></td></tr>
+<tr class="separator:a00290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00291"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a00291">adc_etc_trigger_config_t</a></td></tr>
+<tr class="memdesc:a00291"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger configuration.  <a href="a00009.html#a00291">More...</a><br/></td></tr>
+<tr class="separator:a00291"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga4d5017cedccd069f2b3e78d9066f8d36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4d5017cedccd069f2b3e78d9066f8d36"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga4d5017cedccd069f2b3e78d9066f8d36">AOI</a>&#160;&#160;&#160;AOI0</td></tr>
-<tr class="memdesc:ga4d5017cedccd069f2b3e78d9066f8d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">AOI peripheral address. <br/></td></tr>
-<tr class="separator:ga4d5017cedccd069f2b3e78d9066f8d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb13030471759f06c35f462ed2674023"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gabb13030471759f06c35f462ed2674023">FSL_ADC_ETC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00224.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
+<tr class="memdesc:gabb13030471759f06c35f462ed2674023"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC driver version.  <a href="#gabb13030471759f06c35f462ed2674023">More...</a><br/></td></tr>
+<tr class="separator:gabb13030471759f06c35f462ed2674023"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafcf58ac176e14d5434d45f3999f46a5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gafcf58ac176e14d5434d45f3999f46a5c">ADC_ETC_DMA_CTRL_TRGn_REQ_MASK</a>&#160;&#160;&#160;0xFF0000U</td></tr>
+<tr class="memdesc:gafcf58ac176e14d5434d45f3999f46a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mask of status flags cleared by writing 1.  <a href="#gafcf58ac176e14d5434d45f3999f46a5c">More...</a><br/></td></tr>
+<tr class="separator:gafcf58ac176e14d5434d45f3999f46a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga6b298657f6573de82fe6afc9600647e5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a2ebf6b53ef56f02183871be2186a8178">kAOI_LogicZero</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a01b027c922cff2bd4568898a6c7c267b">kAOI_InputSignal</a> = 0x1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a4bf6c7370e1579b17e57502e123d2709">kAOI_InvInputSignal</a> = 0x2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a> = 0x3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga6b298657f6573de82fe6afc9600647e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">AOI input configurations.  <a href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">More...</a><br/></td></tr>
-<tr class="separator:ga6b298657f6573de82fe6afc9600647e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeabaa3ab117a5d00875e9dea6ac3bc00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00">aoi_event_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a608d3d1b120130a8c457d1b4ae110f8a">kAOI_Event0</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a0956de460ec7d73296c08cf0fc2c6e03">kAOI_Event1</a> = 0x1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a0289ecc6237100a1863a9b6cdb70c501">kAOI_Event2</a> = 0x2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a9dd38a4189d89d398624cd6573950565">kAOI_Event3</a> = 0x3U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaeabaa3ab117a5d00875e9dea6ac3bc00"><td class="mdescLeft">&#160;</td><td class="mdescRight">AOI event indexes, where an event is the collection of the four product terms (0, 1, 2, and 3) and the four signal inputs (A, B, C, and D).  <a href="a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00">More...</a><br/></td></tr>
-<tr class="separator:gaeabaa3ab117a5d00875e9dea6ac3bc00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecc628cacd5a30243e25b0fd21cddeaa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gaecc628cacd5a30243e25b0fd21cddeaa">_adc_etc_status_flag_mask</a> </td></tr>
+<tr class="memdesc:gaecc628cacd5a30243e25b0fd21cddeaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC customized status flags mask. <br/></td></tr>
+<tr class="separator:gaecc628cacd5a30243e25b0fd21cddeaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46af1d713f9fda57d1a8976df9954a53"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a> </td></tr>
+<tr class="memdesc:ga46af1d713f9fda57d1a8976df9954a53"><td class="mdescLeft">&#160;</td><td class="mdescRight">External triggers sources. <br/></td></tr>
+<tr class="separator:ga46af1d713f9fda57d1a8976df9954a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23ca13fe73d35024cd8aca272722b9ff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga23ca13fe73d35024cd8aca272722b9ff">adc_etc_interrupt_enable_t</a> </td></tr>
+<tr class="memdesc:ga23ca13fe73d35024cd8aca272722b9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt enable/disable mask. <br/></td></tr>
+<tr class="separator:ga23ca13fe73d35024cd8aca272722b9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga7bec3331027807227ac745f0b69cd20c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga7bec3331027807227ac745f0b69cd20c">FSL_AOI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
-<tr class="memdesc:ga7bec3331027807227ac745f0b69cd20c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.1.  <a href="#ga7bec3331027807227ac745f0b69cd20c">More...</a><br/></td></tr>
-<tr class="separator:ga7bec3331027807227ac745f0b69cd20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-AOI Initialization</h2></td></tr>
-<tr class="memitem:ga5345854874ea6ff6f515f68fbe614814"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga5345854874ea6ff6f515f68fbe614814">AOI_Init</a> (AOI_Type *base)</td></tr>
-<tr class="memdesc:ga5345854874ea6ff6f515f68fbe614814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an AOI instance for operation.  <a href="#ga5345854874ea6ff6f515f68fbe614814">More...</a><br/></td></tr>
-<tr class="separator:ga5345854874ea6ff6f515f68fbe614814"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d3d000d6add6e502bac7cfb3128a216"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga1d3d000d6add6e502bac7cfb3128a216">AOI_Deinit</a> (AOI_Type *base)</td></tr>
-<tr class="memdesc:ga1d3d000d6add6e502bac7cfb3128a216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes an AOI instance for operation.  <a href="#ga1d3d000d6add6e502bac7cfb3128a216">More...</a><br/></td></tr>
-<tr class="separator:ga1d3d000d6add6e502bac7cfb3128a216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-AOI Get Set Operation</h2></td></tr>
-<tr class="memitem:ga199bb7b7633308b6527e137152fd5734"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga199bb7b7633308b6527e137152fd5734">AOI_GetEventLogicConfig</a> (AOI_Type *base, <a class="el" href="a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00">aoi_event_t</a> event, <a class="el" href="a00009.html#a00278">aoi_event_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga199bb7b7633308b6527e137152fd5734"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Boolean evaluation associated.  <a href="#ga199bb7b7633308b6527e137152fd5734">More...</a><br/></td></tr>
-<tr class="separator:ga199bb7b7633308b6527e137152fd5734"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11ad71a29ff2e4a56c5ad11760a9d17d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga11ad71a29ff2e4a56c5ad11760a9d17d">AOI_SetEventLogicConfig</a> (AOI_Type *base, <a class="el" href="a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00">aoi_event_t</a> event, const <a class="el" href="a00009.html#a00278">aoi_event_config_t</a> *eventConfig)</td></tr>
-<tr class="memdesc:ga11ad71a29ff2e4a56c5ad11760a9d17d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures an AOI event.  <a href="#ga11ad71a29ff2e4a56c5ad11760a9d17d">More...</a><br/></td></tr>
-<tr class="separator:ga11ad71a29ff2e4a56c5ad11760a9d17d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Initialization</h2></td></tr>
+<tr class="memitem:gac035c4e4918763d2a3c161bfc967c672"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gac035c4e4918763d2a3c161bfc967c672">ADC_ETC_Init</a> (ADC_ETC_Type *base, const <a class="el" href="a00009.html#a00289">adc_etc_config_t</a> *config)</td></tr>
+<tr class="memdesc:gac035c4e4918763d2a3c161bfc967c672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ADC_ETC module.  <a href="#gac035c4e4918763d2a3c161bfc967c672">More...</a><br/></td></tr>
+<tr class="separator:gac035c4e4918763d2a3c161bfc967c672"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd8e32731410e71c6f25bac9a30bdb73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gafd8e32731410e71c6f25bac9a30bdb73">ADC_ETC_Deinit</a> (ADC_ETC_Type *base)</td></tr>
+<tr class="memdesc:gafd8e32731410e71c6f25bac9a30bdb73"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-Initialize the ADC_ETC module.  <a href="#gafd8e32731410e71c6f25bac9a30bdb73">More...</a><br/></td></tr>
+<tr class="separator:gafd8e32731410e71c6f25bac9a30bdb73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gadbcb45c28030d9a31d33f7686fa36dc5">ADC_ETC_GetDefaultConfig</a> (<a class="el" href="a00009.html#a00289">adc_etc_config_t</a> *config)</td></tr>
+<tr class="memdesc:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for the ADC_ETC's configuration.  <a href="#gadbcb45c28030d9a31d33f7686fa36dc5">More...</a><br/></td></tr>
+<tr class="separator:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97ee7c65c9e858f6654b54cd76f65652"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga97ee7c65c9e858f6654b54cd76f65652">ADC_ETC_SetTriggerConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, const <a class="el" href="a00009.html#a00291">adc_etc_trigger_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga97ee7c65c9e858f6654b54cd76f65652"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the external XBAR trigger configuration.  <a href="#ga97ee7c65c9e858f6654b54cd76f65652">More...</a><br/></td></tr>
+<tr class="separator:ga97ee7c65c9e858f6654b54cd76f65652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga3a1d60607b5579c7de1e725ae23d3f4c">ADC_ETC_SetTriggerChainConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, uint32_t chainGroup, const <a class="el" href="a00009.html#a00290">adc_etc_trigger_chain_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the external XBAR trigger chain configuration.  <a href="#ga3a1d60607b5579c7de1e725ae23d3f4c">More...</a><br/></td></tr>
+<tr class="separator:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5152374108498e580fc013b6179b34b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gad5152374108498e580fc013b6179b34b">ADC_ETC_GetInterruptStatusFlags</a> (ADC_ETC_Type *base, <a class="el" href="a00009.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a> sourceIndex)</td></tr>
+<tr class="memdesc:gad5152374108498e580fc013b6179b34b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interrupt status flags of external XBAR and TSC triggers.  <a href="#gad5152374108498e580fc013b6179b34b">More...</a><br/></td></tr>
+<tr class="separator:gad5152374108498e580fc013b6179b34b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02bd53497e04d4899f3f19228de1b162"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga02bd53497e04d4899f3f19228de1b162">ADC_ETC_ClearInterruptStatusFlags</a> (ADC_ETC_Type *base, <a class="el" href="a00009.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a> sourceIndex, uint32_t mask)</td></tr>
+<tr class="memdesc:ga02bd53497e04d4899f3f19228de1b162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the ADC_ETC's interrupt status falgs.  <a href="#ga02bd53497e04d4899f3f19228de1b162">More...</a><br/></td></tr>
+<tr class="separator:ga02bd53497e04d4899f3f19228de1b162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbb2c7711568814bf30835708f5a1c70"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gacbb2c7711568814bf30835708f5a1c70">ADC_ETC_EnableDMA</a> (ADC_ETC_Type *base, uint32_t triggerGroup)</td></tr>
+<tr class="memdesc:gacbb2c7711568814bf30835708f5a1c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the DMA corresponding to each trigger source.  <a href="#gacbb2c7711568814bf30835708f5a1c70">More...</a><br/></td></tr>
+<tr class="separator:gacbb2c7711568814bf30835708f5a1c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43645b56e42577c7093d8edd7824a2a1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga43645b56e42577c7093d8edd7824a2a1">ADC_ETC_DisableDMA</a> (ADC_ETC_Type *base, uint32_t triggerGroup)</td></tr>
+<tr class="memdesc:ga43645b56e42577c7093d8edd7824a2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the DMA corresponding to each trigger sources.  <a href="#ga43645b56e42577c7093d8edd7824a2a1">More...</a><br/></td></tr>
+<tr class="separator:ga43645b56e42577c7093d8edd7824a2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb8ccf56f70bb9c4782a8a2bf75eb9b7"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gacb8ccf56f70bb9c4782a8a2bf75eb9b7">ADC_ETC_GetDMAStatusFlags</a> (ADC_ETC_Type *base)</td></tr>
+<tr class="memdesc:gacb8ccf56f70bb9c4782a8a2bf75eb9b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DMA request status falgs.  <a href="#gacb8ccf56f70bb9c4782a8a2bf75eb9b7">More...</a><br/></td></tr>
+<tr class="separator:gacb8ccf56f70bb9c4782a8a2bf75eb9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab717e13cea2ad6603e2c2cd54cf2732b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#gab717e13cea2ad6603e2c2cd54cf2732b">ADC_ETC_ClearDMAStatusFlags</a> (ADC_ETC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gab717e13cea2ad6603e2c2cd54cf2732b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the DMA request status falgs.  <a href="#gab717e13cea2ad6603e2c2cd54cf2732b">More...</a><br/></td></tr>
+<tr class="separator:gab717e13cea2ad6603e2c2cd54cf2732b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga79d524313efdc75a2725555b356a1990"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga79d524313efdc75a2725555b356a1990">ADC_ETC_DoSoftwareReset</a> (ADC_ETC_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga79d524313efdc75a2725555b356a1990"><td class="mdescLeft">&#160;</td><td class="mdescRight">When enable, all logical will be reset.  <a href="#ga79d524313efdc75a2725555b356a1990">More...</a><br/></td></tr>
+<tr class="separator:ga79d524313efdc75a2725555b356a1990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a719ef622ebe84c0130591611ff18d6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga6a719ef622ebe84c0130591611ff18d6">ADC_ETC_DoSoftwareTrigger</a> (ADC_ETC_Type *base, uint32_t triggerGroup)</td></tr>
+<tr class="memdesc:ga6a719ef622ebe84c0130591611ff18d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software trigger corresponding to each XBAR trigger sources.  <a href="#ga6a719ef622ebe84c0130591611ff18d6">More...</a><br/></td></tr>
+<tr class="separator:ga6a719ef622ebe84c0130591611ff18d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73f01f54a321d280e18be0fcbf4075a0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ga73f01f54a321d280e18be0fcbf4075a0">ADC_ETC_GetADCConversionValue</a> (ADC_ETC_Type *base, uint32_t triggerGroup, uint32_t chainGroup)</td></tr>
+<tr class="memdesc:ga73f01f54a321d280e18be0fcbf4075a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ADC conversion result from external XBAR sources.  <a href="#ga73f01f54a321d280e18be0fcbf4075a0">More...</a><br/></td></tr>
+<tr class="separator:ga73f01f54a321d280e18be0fcbf4075a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00278" id="a00278"></a>
+<a name="a00289" id="a00289"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct aoi_event_config_t</td>
+          <td class="memname">struct adc_etc_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Defines structure _aoi_event_config and use the <a class="el" href="a00009.html#ga11ad71a29ff2e4a56c5ad11760a9d17d" title="Configures an AOI event. ">AOI_SetEventLogicConfig()</a> function to make whole event configuration. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aea14fc46a854e63c9a6318c42835de05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea14fc46a854e63c9a6318c42835de05"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#aea14fc46a854e63c9a6318c42835de05">PT0AC</a></td></tr>
-<tr class="memdesc:aea14fc46a854e63c9a6318c42835de05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 0 input A. <br/></td></tr>
-<tr class="separator:aea14fc46a854e63c9a6318c42835de05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac226aa1e1e3154dd87372d81a11fed42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac226aa1e1e3154dd87372d81a11fed42"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ac226aa1e1e3154dd87372d81a11fed42">PT0BC</a></td></tr>
-<tr class="memdesc:ac226aa1e1e3154dd87372d81a11fed42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 0 input B. <br/></td></tr>
-<tr class="separator:ac226aa1e1e3154dd87372d81a11fed42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b4d001eaf4862c0ef0acc826f9728bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b4d001eaf4862c0ef0acc826f9728bb"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a1b4d001eaf4862c0ef0acc826f9728bb">PT0CC</a></td></tr>
-<tr class="memdesc:a1b4d001eaf4862c0ef0acc826f9728bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 0 input C. <br/></td></tr>
-<tr class="separator:a1b4d001eaf4862c0ef0acc826f9728bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67a2ba8ce6ff1c264f57c1a414e488f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67a2ba8ce6ff1c264f57c1a414e488f0"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a67a2ba8ce6ff1c264f57c1a414e488f0">PT0DC</a></td></tr>
-<tr class="memdesc:a67a2ba8ce6ff1c264f57c1a414e488f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 0 input D. <br/></td></tr>
-<tr class="separator:a67a2ba8ce6ff1c264f57c1a414e488f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69c2e717021698311e3154890c3b0f32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69c2e717021698311e3154890c3b0f32"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a69c2e717021698311e3154890c3b0f32">PT1AC</a></td></tr>
-<tr class="memdesc:a69c2e717021698311e3154890c3b0f32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 1 input A. <br/></td></tr>
-<tr class="separator:a69c2e717021698311e3154890c3b0f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affc8ee95d4e62908e2ccc8c428555112"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affc8ee95d4e62908e2ccc8c428555112"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#affc8ee95d4e62908e2ccc8c428555112">PT1BC</a></td></tr>
-<tr class="memdesc:affc8ee95d4e62908e2ccc8c428555112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 1 input B. <br/></td></tr>
-<tr class="separator:affc8ee95d4e62908e2ccc8c428555112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3cc5e94435bb02efbd37dd469901739"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3cc5e94435bb02efbd37dd469901739"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#ab3cc5e94435bb02efbd37dd469901739">PT1CC</a></td></tr>
-<tr class="memdesc:ab3cc5e94435bb02efbd37dd469901739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 1 input C. <br/></td></tr>
-<tr class="separator:ab3cc5e94435bb02efbd37dd469901739"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a304bc85601ba469cbdb7f72615515467"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a304bc85601ba469cbdb7f72615515467"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a304bc85601ba469cbdb7f72615515467">PT1DC</a></td></tr>
-<tr class="memdesc:a304bc85601ba469cbdb7f72615515467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 1 input D. <br/></td></tr>
-<tr class="separator:a304bc85601ba469cbdb7f72615515467"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5289f96ee94e31baa9df99e5d5b184a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5289f96ee94e31baa9df99e5d5b184a4"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a5289f96ee94e31baa9df99e5d5b184a4">PT2AC</a></td></tr>
-<tr class="memdesc:a5289f96ee94e31baa9df99e5d5b184a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 2 input A. <br/></td></tr>
-<tr class="separator:a5289f96ee94e31baa9df99e5d5b184a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04c5025b51dd202132f47b9966e992f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04c5025b51dd202132f47b9966e992f7"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a04c5025b51dd202132f47b9966e992f7">PT2BC</a></td></tr>
-<tr class="memdesc:a04c5025b51dd202132f47b9966e992f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 2 input B. <br/></td></tr>
-<tr class="separator:a04c5025b51dd202132f47b9966e992f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a702228a71c6642795d53e3b78b9ecb54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a702228a71c6642795d53e3b78b9ecb54"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a702228a71c6642795d53e3b78b9ecb54">PT2CC</a></td></tr>
-<tr class="memdesc:a702228a71c6642795d53e3b78b9ecb54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 2 input C. <br/></td></tr>
-<tr class="separator:a702228a71c6642795d53e3b78b9ecb54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a601043d203ed47740bc9c13f57e9ee81"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a601043d203ed47740bc9c13f57e9ee81"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a601043d203ed47740bc9c13f57e9ee81">PT2DC</a></td></tr>
-<tr class="memdesc:a601043d203ed47740bc9c13f57e9ee81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 2 input D. <br/></td></tr>
-<tr class="separator:a601043d203ed47740bc9c13f57e9ee81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b7d4ef26a639c25d28a3770438c46f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b7d4ef26a639c25d28a3770438c46f3"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a7b7d4ef26a639c25d28a3770438c46f3">PT3AC</a></td></tr>
-<tr class="memdesc:a7b7d4ef26a639c25d28a3770438c46f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 3 input A. <br/></td></tr>
-<tr class="separator:a7b7d4ef26a639c25d28a3770438c46f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44074e81c446954c4d875cac3a7ce605"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44074e81c446954c4d875cac3a7ce605"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a44074e81c446954c4d875cac3a7ce605">PT3BC</a></td></tr>
-<tr class="memdesc:a44074e81c446954c4d875cac3a7ce605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 3 input B. <br/></td></tr>
-<tr class="separator:a44074e81c446954c4d875cac3a7ce605"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdb9f372b1820f5b09fa5748dd004104"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdb9f372b1820f5b09fa5748dd004104"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#abdb9f372b1820f5b09fa5748dd004104">PT3CC</a></td></tr>
-<tr class="memdesc:abdb9f372b1820f5b09fa5748dd004104"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 3 input C. <br/></td></tr>
-<tr class="separator:abdb9f372b1820f5b09fa5748dd004104"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00e1069b81be7ee6e9621bf7d4f294ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a00e1069b81be7ee6e9621bf7d4f294ea"></a>
-<a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00009.html#a00e1069b81be7ee6e9621bf7d4f294ea">PT3DC</a></td></tr>
-<tr class="memdesc:a00e1069b81be7ee6e9621bf7d4f294ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Product term 3 input D. <br/></td></tr>
-<tr class="separator:a00e1069b81be7ee6e9621bf7d4f294ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
+<div class="textblock"></div>
+</div>
+</div>
+<a name="a00290" id="a00290"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_etc_trigger_chain_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div>
+</div>
+</div>
+<a name="a00291" id="a00291"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_etc_trigger_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga7bec3331027807227ac745f0b69cd20c"></a>
+<a class="anchor" id="gabb13030471759f06c35f462ed2674023"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_AOI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
+          <td class="memname">#define FSL_ADC_ETC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00224.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Version 2.2.1. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga6b298657f6573de82fe6afc9600647e5"></a>
+<a class="anchor" id="gafcf58ac176e14d5434d45f3999f46a5c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00009.html#ga6b298657f6573de82fe6afc9600647e5">aoi_input_config_t</a></td>
+          <td class="memname">#define ADC_ETC_DMA_CTRL_TRGn_REQ_MASK&#160;&#160;&#160;0xFF0000U</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The selection item represents the Boolean evaluations. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6b298657f6573de82fe6afc9600647e5a2ebf6b53ef56f02183871be2186a8178"></a>kAOI_LogicZero</em>&nbsp;</td><td class="fielddoc">
-<p>Forces the input to logical zero. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6b298657f6573de82fe6afc9600647e5a01b027c922cff2bd4568898a6c7c267b"></a>kAOI_InputSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Passes the input signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6b298657f6573de82fe6afc9600647e5a4bf6c7370e1579b17e57502e123d2709"></a>kAOI_InvInputSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Inverts the input signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8"></a>kAOI_LogicOne</em>&nbsp;</td><td class="fielddoc">
-<p>Forces the input to logical one. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaeabaa3ab117a5d00875e9dea6ac3bc00"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00">aoi_event_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaeabaa3ab117a5d00875e9dea6ac3bc00a608d3d1b120130a8c457d1b4ae110f8a"></a>kAOI_Event0</em>&nbsp;</td><td class="fielddoc">
-<p>Event 0 index. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaeabaa3ab117a5d00875e9dea6ac3bc00a0956de460ec7d73296c08cf0fc2c6e03"></a>kAOI_Event1</em>&nbsp;</td><td class="fielddoc">
-<p>Event 1 index. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaeabaa3ab117a5d00875e9dea6ac3bc00a0289ecc6237100a1863a9b6cdb70c501"></a>kAOI_Event2</em>&nbsp;</td><td class="fielddoc">
-<p>Event 2 index. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaeabaa3ab117a5d00875e9dea6ac3bc00a9dd38a4189d89d398624cd6573950565"></a>kAOI_Event3</em>&nbsp;</td><td class="fielddoc">
-<p>Event 3 index. </p>
-</td></tr>
-</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga5345854874ea6ff6f515f68fbe614814"></a>
+<a class="anchor" id="gac035c4e4918763d2a3c161bfc967c672"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void AOI_Init </td>
+          <td class="memname">void ADC_ETC_Init </td>
           <td>(</td>
-          <td class="paramtype">AOI_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function un-gates the AOI clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>AOI peripheral address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1d3d000d6add6e502bac7cfb3128a216"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void AOI_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">AOI_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function shutdowns AOI module.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>AOI peripheral address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga199bb7b7633308b6527e137152fd5734"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void AOI_GetEventLogicConfig </td>
-          <td>(</td>
-          <td class="paramtype">AOI_Type *&#160;</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00">aoi_event_t</a>&#160;</td>
-          <td class="paramname"><em>event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00009.html#a00278">aoi_event_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00009.html#a00289">adc_etc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -418,43 +282,90 @@ AOI Get Set Operation</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function returns the Boolean evaluation associated.</p>
-<p>Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00009.html#a00278">aoi_event_config_t</a> demoEventLogicStruct;</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00009.html#ga199bb7b7633308b6527e137152fd5734">AOI_GetEventLogicConfig</a>(<a class="code" href="a00009.html#ga4d5017cedccd069f2b3e78d9066f8d36">AOI</a>, <a class="code" href="a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a608d3d1b120130a8c457d1b4ae110f8a">kAOI_Event0</a>, &amp;demoEventLogicStruct);</div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>AOI peripheral address. </td></tr>
-    <tr><td class="paramname">event</td><td>Index of the event which will be set of type aoi_event_t. </td></tr>
-    <tr><td class="paramname">config</td><td>Selected input configuration . </td></tr>
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_config_t" structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga11ad71a29ff2e4a56c5ad11760a9d17d"></a>
+<a class="anchor" id="gafd8e32731410e71c6f25bac9a30bdb73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void AOI_SetEventLogicConfig </td>
+          <td class="memname">void ADC_ETC_Deinit </td>
           <td>(</td>
-          <td class="paramtype">AOI_Type *&#160;</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gadbcb45c28030d9a31d33f7686fa36dc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADC_ETC_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00009.html#a00289">adc_etc_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the ADC_ETC's configuration structure with available settings. The default values are: </p>
+<div class="fragment"><div class="line">*   config-&gt;enableTSCBypass = <span class="keyword">true</span>;</div>
+<div class="line">*   config-&gt;enableTSC0Trigger = <span class="keyword">false</span>;</div>
+<div class="line">*   config-&gt;enableTSC1Trigger = <span class="keyword">false</span>;</div>
+<div class="line">*   config-&gt;TSC0triggerPriority = 0U;</div>
+<div class="line">*   config-&gt;TSC1triggerPriority = 0U;</div>
+<div class="line">*   config-&gt;clockPreDivider = 0U;</div>
+<div class="line">*   config-&gt;XBARtriggerMask = 0U;</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_config_t" structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga97ee7c65c9e858f6654b54cd76f65652"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADC_ETC_SetTriggerConfig </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00009.html#gaeabaa3ab117a5d00875e9dea6ac3bc00">aoi_event_t</a>&#160;</td>
-          <td class="paramname"><em>event</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>triggerGroup</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00009.html#a00278">aoi_event_config_t</a> *&#160;</td>
-          <td class="paramname"><em>eventConfig</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00009.html#a00291">adc_etc_trigger_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -463,39 +374,417 @@ AOI Get Set Operation</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function configures an AOI event according to the aoiEventConfig structure. This function configures all inputs (A, B, C, and D) of all product terms (0, 1, 2, and 3) of a desired event.</p>
-<p>Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00009.html#a00278">aoi_event_config_t</a> demoEventLogicStruct;</div>
-<div class="line"></div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#aea14fc46a854e63c9a6318c42835de05">PT0AC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a4bf6c7370e1579b17e57502e123d2709">kAOI_InvInputSignal</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#ac226aa1e1e3154dd87372d81a11fed42">PT0BC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a01b027c922cff2bd4568898a6c7c267b">kAOI_InputSignal</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a1b4d001eaf4862c0ef0acc826f9728bb">PT0CC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a67a2ba8ce6ff1c264f57c1a414e488f0">PT0DC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line"></div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a69c2e717021698311e3154890c3b0f32">PT1AC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a2ebf6b53ef56f02183871be2186a8178">kAOI_LogicZero</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#affc8ee95d4e62908e2ccc8c428555112">PT1BC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#ab3cc5e94435bb02efbd37dd469901739">PT1CC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a304bc85601ba469cbdb7f72615515467">PT1DC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line"></div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a5289f96ee94e31baa9df99e5d5b184a4">PT2AC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a2ebf6b53ef56f02183871be2186a8178">kAOI_LogicZero</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a04c5025b51dd202132f47b9966e992f7">PT2BC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a702228a71c6642795d53e3b78b9ecb54">PT2CC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a601043d203ed47740bc9c13f57e9ee81">PT2DC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line"></div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a7b7d4ef26a639c25d28a3770438c46f3">PT3AC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a2ebf6b53ef56f02183871be2186a8178">kAOI_LogicZero</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a44074e81c446954c4d875cac3a7ce605">PT3BC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#abdb9f372b1820f5b09fa5748dd004104">PT3CC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line">demoEventLogicStruct.<a class="code" href="a00009.html#a00e1069b81be7ee6e9621bf7d4f294ea">PT3DC</a> = <a class="code" href="a00009.html#gga6b298657f6573de82fe6afc9600647e5a28ca837f9f894e130d7546295738c8f8">kAOI_LogicOne</a>;</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00009.html#ga11ad71a29ff2e4a56c5ad11760a9d17d">AOI_SetEventLogicConfig</a>(<a class="code" href="a00009.html#ga4d5017cedccd069f2b3e78d9066f8d36">AOI</a>, <a class="code" href="a00009.html#ggaeabaa3ab117a5d00875e9dea6ac3bc00a608d3d1b120130a8c457d1b4ae110f8a">kAOI_Event0</a>, demoEventLogicStruct);</div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>AOI peripheral address. </td></tr>
-    <tr><td class="paramname">event</td><td>Event which will be configured of type aoi_event_t. </td></tr>
-    <tr><td class="paramname">eventConfig</td><td>Pointer to type <a class="el" href="a00009.html#a00278" title="AOI event configuration structure. ">aoi_event_config_t</a> structure. The user is responsible for filling out the members of this structure and passing the pointer to this function. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_trigger_config_t" structure. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3a1d60607b5579c7de1e725ae23d3f4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADC_ETC_SetTriggerChainConfig </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>triggerGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>chainGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00009.html#a00290">adc_etc_trigger_chain_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For example, if triggerGroup is set to 0U and chainGroup is set to 1U, which means Trigger0 source's chain1 would be configurated.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+    <tr><td class="paramname">chainGroup</td><td>Trigger chain group index. Available number is 0~7. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_trigger_chain_config_t" structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad5152374108498e580fc013b6179b34b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ADC_ETC_GetInterruptStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00009.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a>&#160;</td>
+          <td class="paramname"><em>sourceIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">sourceIndex</td><td>trigger source index.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status flags mask of trigger. Refer to "_adc_etc_status_flag_mask". </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga02bd53497e04d4899f3f19228de1b162"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADC_ETC_ClearInterruptStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00009.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a>&#160;</td>
+          <td class="paramname"><em>sourceIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">sourceIndex</td><td>trigger source index. </td></tr>
+    <tr><td class="paramname">mask</td><td>Status flags mask of trigger. Refer to "_adc_etc_status_flag_mask". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacbb2c7711568814bf30835708f5a1c70"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ADC_ETC_EnableDMA </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>triggerGroup</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga43645b56e42577c7093d8edd7824a2a1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ADC_ETC_DisableDMA </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>triggerGroup</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacb8ccf56f70bb9c4782a8a2bf75eb9b7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t ADC_ETC_GetDMAStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Only external XBAR sources support DMA request.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mask of external XBAR tirgger's DMA request asserted flags. Available range is trigger0:0x01 to trigger7:0x80. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab717e13cea2ad6603e2c2cd54cf2732b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ADC_ETC_ClearDMAStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Only external XBAR sources support DMA request.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>Mask of external XBAR tirgger's DMA request asserted flags. Available range is trigger0:0x01 to trigger7:0x80. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga79d524313efdc75a2725555b356a1990"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ADC_ETC_DoSoftwareReset </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Enable/Disable the software reset. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6a719ef622ebe84c0130591611ff18d6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ADC_ETC_DoSoftwareTrigger </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>triggerGroup</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Each XBAR trigger sources can be configured as HW or SW trigger mode. In hardware trigger mode, trigger source is from XBAR. In software mode, trigger source is from software tigger. TSC trigger sources can only work in hardware trigger mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga73f01f54a321d280e18be0fcbf4075a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ADC_ETC_GetADCConversionValue </td>
+          <td>(</td>
+          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>triggerGroup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>chainGroup</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For example, if triggerGroup is set to 0U and chainGroup is set to 1U, which means the API would return Trigger0 source's chain1 conversion result.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+    <tr><td class="paramname">chainGroup</td><td>Trigger chain group index. Available number is 0~7. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ADC conversion result value. </dd></dl>
 
 </div>
 </div>

@@ -1,0 +1,13 @@
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:GetEventResponse xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<JobId>12345</JobId>
+<JobState>completed</JobState>
+<PrinterState>idle</PrinterState>
+<PrinterStateReasons>none</PrinterStateReasons>
+<OperationStatus>0x0000</OperationStatus>
+</u:GetEventResponse>
+</s:Body>
+</s:Envelope>

@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, LWIP_NETIF_API=1, ENET_RXBUFF_NUM=25, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, LWIP_NETIF_API=1, ENET_RXBUFF_NUM=25, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_ocram_noncacheable.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2021,6 +2021,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2034,16 +2044,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2464,9 +2464,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, LWIP_NETIF_API=1, ENET_RXBUFF_NUM=25, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, HIGH_SPEED_SDIO_CLOCK, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, IPERF3_ENET=1, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, USE_RTOS=1, LWIP_NETIF_API=1, ENET_RXBUFF_NUM=25, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2500,7 +2500,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_ocram_noncacheable.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4157,6 +4157,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4170,16 +4180,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -23,34 +23,39 @@
 
 /* ----------------------------------------- Exported Global Variables */
 #if 1
-BT_thread_mutex_type l2cap_dt_mutex;
-BT_thread_cond_type l2cap_dt_cond;
+DECL_STATIC BT_thread_mutex_type l2cap_dt_mutex;
+DECL_STATIC BT_thread_cond_type l2cap_dt_cond;
 #endif /* 0 */
 
 /* TBD: Get remote BD_ADDR */
-UCHAR l2cap_dt_remote_bd_addr[6U] = { 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U };
-
-/* Inquiry Buffer */
-UCHAR l2cap_dt_inq_buffer[2000U];
+DECL_STATIC UCHAR l2cap_dt_remote_bd_addr[6U] = { 0x0U, 0x0U, 0x0U, 0x0U, 0x0U, 0x0U };
 
 /* L2CAP PSM */
-UINT16 l2cap_dt_local_psm = 0x1231U;
-UINT16 l2cap_dt_remote_psm = 0x1231U;
+DECL_STATIC UINT16 l2cap_dt_local_psm  = 0x1231U;
+DECL_STATIC UINT16 l2cap_dt_remote_psm = 0x1231U;
 
 /* L2CAP DT Entities */
-L2CAP_DT_ENTITY l2cap_dt_entity [ L2CAP_DT_MAX_ENTITY ];
+DECL_STATIC L2CAP_DT_ENTITY l2cap_dt_entity [ L2CAP_DT_MAX_ENTITY ];
 
 /*
  *  InMTU & InFEC Configuration Parameters for L2CAP Channels
  *
  *  Index 0: default Config Options for Basic Mode
- *  Index 1: ddefault Config Options for Retransmission Mode
- *  Index 2: ddefault Config Options for Flow Control Mode
- *  Index 3: ddefault Config Options for Enhanced Retransmission Mode
- *  Index 4: ddefault Config Options for Streaming Mode
+ *  Index 1: default Config Options for Retransmission Mode
+ *  Index 2: default Config Options for Flow Control Mode
+ *  Index 3: default Config Options for Enhanced Retransmission Mode
+ *  Index 4: default Config Options for Streaming Mode
  */
-L2CAP_DT_CONFIG_OPTION l2cap_dt_config_option [ 5U ];
-UCHAR l2cap_dt_config_index = 0U;
+DECL_STATIC L2CAP_DT_CONFIG_OPTION l2cap_dt_config_option [ 5U ];
+DECL_STATIC UCHAR l2cap_dt_config_index = 0U;
+
+/**
+ * FCS configuration for a few L2CAP PTS Test Cases
+ *
+ * 1 : Use FCS
+ * 0 : Do not use FCS
+ */
+DECL_STATIC UCHAR appl_l2cap_fcs = L2CAP_FCS_OPTION_DEFAULT;
 
 /**
  * Basic Only Mode configuration for a few L2CAP PTS Test Cases
@@ -58,7 +63,15 @@ UCHAR l2cap_dt_config_index = 0U;
  * 1 : Basic Only Mode (using while responding to connection request)
  * 0 : Not Basic Only Mode
  */
-static UCHAR appl_l2cap_basic_only_mode = 0U;
+DECL_STATIC UCHAR appl_l2cap_basic_only_mode = 0U;
+
+/**
+ * SM Only Mode configuration for a few L2CAP PTS Test Cases
+ *
+ * 1 : SM Only Mode (using while responding to connection request)
+ * 0 : Not SM Only Mode
+ */
+DECL_STATIC UCHAR appl_l2cap_sm_only_mode = 0U;
 
 /*
  *  Extended Flow Specification Configuration
@@ -68,16 +81,17 @@ static UCHAR appl_l2cap_basic_only_mode = 0U;
  */
 #ifdef L2CAP_EXTENDED_FLOW_SPEC
 DECL_STATIC L2CAP_EXT_FLOW_SPEC l2cap_dt_ext_flow_spec_option[2U];
-UCHAR l2cap_dt_ext_flow_spec_index = 0U;
+DECL_STATIC UCHAR l2cap_dt_ext_flow_spec_index = 0U;
 #endif /* L2CAP_EXTENDED_FLOW_SPEC */
 
 /* To test Partial Config, enable this global */
-UCHAR l2cap_dt_partial_config = 0x0U;
+DECL_STATIC UCHAR l2cap_dt_partial_config = 0x0U;
 
+#ifdef L2CAP_TEST_PACKET_DROP
 /* Packet Drop Configuration */
-INT32 l2cap_dt_drop_percentage = 0x0U;
-UCHAR l2cap_dt_drop_flag = 0x0U;
-
+DECL_STATIC INT32 l2cap_dt_drop_percentage = 0x0U;
+DECL_STATIC UCHAR l2cap_dt_drop_flag = 0x0U;
+#endif /* L2CAP_TEST_PACKET_DROP */
 
 /* ----------------------------------------- Static Global Variables */
 static const char main_l2cap_options[] = " \n\
@@ -113,8 +127,15 @@ static const char main_l2cap_options[] = " \n\
    30. Set 'Best Effort' Extended Flow Specificiation Options \n\
    31. Set 'Guaranteed' Extended Flow Specificiation Options \n\
 \n\
+   40. Enable FCS\n\
+   41. Disable FCS\n\
+\n\
    50. Enable Basic Only Mode\n\
    51. Disable Basic Only Mode\n\
+   52. Enable ERTM Only Mode\n\
+   53. Disable ERTM Only Mode\n\
+   54. Enable Streaming Only Mode\n\
+   55. Disable Streaming Only Mode\n\
 \n\
   100. Send Echo Request \n\
   101. Send Info Request \n\
@@ -139,7 +160,7 @@ void l2cap_dt_config_option_init (void)
     l2cap_init_fec_option_default (&l2cap_dt_config_option[0U].in_fec);
     l2cap_dt_config_option[0U].in_fec.mode = L2CAP_MODE_BASIC;
 
-    l2cap_dt_config_option[0U].out_fcs = L2CAP_FCS_OPTION_DEFAULT;
+    l2cap_dt_config_option[0U].out_fcs = appl_l2cap_fcs;
 
 #ifndef BT_ENH_L2CAP
     /*
@@ -173,7 +194,7 @@ void l2cap_dt_config_option_init (void)
     l2cap_dt_config_option[1U].in_fec.retx_timeout = 10000U;
     l2cap_dt_config_option[1U].in_fec.monitor_timeout = 2000U;
 
-    l2cap_dt_config_option[1U].out_fcs = L2CAP_FCS_OPTION_DEFAULT;
+    l2cap_dt_config_option[1U].out_fcs = appl_l2cap_fcs;
 
 
     /*
@@ -199,7 +220,7 @@ void l2cap_dt_config_option_init (void)
     l2cap_dt_config_option[2U].in_fec.retx_timeout = 10000U;
     l2cap_dt_config_option[2U].in_fec.monitor_timeout = 2000U;
 
-    l2cap_dt_config_option[2U].out_fcs = L2CAP_FCS_OPTION_DEFAULT;
+    l2cap_dt_config_option[2U].out_fcs = appl_l2cap_fcs;
 
 #endif  /* !BT_ENH_L2CAP */
 
@@ -235,7 +256,7 @@ void l2cap_dt_config_option_init (void)
     l2cap_dt_config_option[3U].in_fec.retx_timeout = 10000U;
     l2cap_dt_config_option[3U].in_fec.monitor_timeout = 2000U;
 
-    l2cap_dt_config_option[3U].out_fcs = L2CAP_FCS_OPTION_DEFAULT;
+    l2cap_dt_config_option[3U].out_fcs = appl_l2cap_fcs;
 
 #ifdef L2CAP_EXTENDED_FLOW_SPEC
     l2cap_dt_config_option[3U].out_ext_flow_spec = NULL;
@@ -272,7 +293,7 @@ void l2cap_dt_config_option_init (void)
     l2cap_dt_config_option[4U].in_fec.retx_timeout = 10000U;
     l2cap_dt_config_option[4U].in_fec.monitor_timeout = 2000U;
 
-    l2cap_dt_config_option[4U].out_fcs = L2CAP_FCS_OPTION_DEFAULT;
+    l2cap_dt_config_option[4U].out_fcs = appl_l2cap_fcs;
 
 #ifdef L2CAP_EXTENDED_FLOW_SPEC
     l2cap_dt_config_option[3U].out_ext_flow_spec = NULL;
@@ -717,7 +738,7 @@ void main_l2cap_operations (void)
         switch(choice)
         {
         case 0:
-            printf("\nReturning from L2CAP-1.2 Test System ... \n");
+            printf("\nReturning from L2CAP application ... \n");
             break; /* return; */
 
         case 1:
@@ -778,19 +799,26 @@ void main_l2cap_operations (void)
             break;
 
         case 15:
+#ifdef L2CAP_TEST_PACKET_DROP
             /* Cancel Packet Drops */
             l2cap_dt_drop_flag = 0x00U;
+#endif /*L2CAP_TEST_PACKET_DROP*/
             break;
 
         case 16:
+#ifdef L2CAP_TEST_PACKET_DROP
             /* Config Packet Drop for all S-frames */
             l2cap_dt_drop_flag = 0x01U;
+#endif /*L2CAP_TEST_PACKET_DROP*/
             break;
 
         case 17:
+#ifdef L2CAP_TEST_PACKET_DROP
             /* Config Random Packet Drop of I & S-frames */
             l2cap_dt_drop_percentage = 5U;
             l2cap_dt_drop_flag = 0x02U;
+#endif /*L2CAP_TEST_PACKET_DROP*/
+
             break;
 
         case 20:
@@ -848,12 +876,32 @@ void main_l2cap_operations (void)
 #endif /* L2CAP_EXTENDED_FLOW_SPEC */
             break;
 
+        case 40:
+            appl_l2cap_fcs = L2CAP_FCS_OPTION_DEFAULT;
+            break;
+
+        case 41:
+            appl_l2cap_fcs = L2CAP_FCS_OPTION_NO_FCS;
+            break;
+
         case 50:
             appl_l2cap_basic_only_mode = 0x01U;
             break;
 
         case 51:
             appl_l2cap_basic_only_mode = 0x00U;
+            break;
+
+        case 52:	 /* Fall Through */
+        case 53:
+            break;
+
+        case 54:
+            appl_l2cap_sm_only_mode = 0x01U;
+            break;
+
+        case 55:
+            appl_l2cap_sm_only_mode = 0x00U;
             break;
 
         case 100:
@@ -958,7 +1006,7 @@ API_RESULT l2cap_dt_connect_ind
             if (index == L2CAP_DT_MAX_ENTITY)
             {
                 printf("*** FAILED to Find L2CAP DT Entity in W4_CONNECT_IND\n");
-                result = L2CAP_CONNECTION_REFUSED_SECURITY_BLOCK;
+                result = L2CAP_CONNECTION_REFUSED_NO_RESOURCE;
             }
             else
             {
@@ -1322,6 +1370,12 @@ API_RESULT l2cap_dt_disconnect_ind
     }
     else
     {
+        /* Signal if waiting */
+        if (BT_TRUE == l2cap_dt_entity[index].waiting_for_signal)
+        {
+            l2cap_dt_signal_tx_win_free();
+        }
+
         /* Free L2CAP DT Entity */
         l2cap_dt_entity_free(index);
     }
@@ -1361,8 +1415,11 @@ API_RESULT l2cap_dt_disconnect_cnf
         /* Free L2CAP DT Entity */
         l2cap_dt_entity_free(index);
 
-        /* Signal */
-        l2cap_dt_signal();
+        /* Signal if waiting */
+        if (BT_TRUE == l2cap_dt_entity[index].waiting_for_signal)
+        {
+            l2cap_dt_signal_tx_win_free();
+        }
     }
 
     BT_IGNORE_UNUSED_PARAM(result);
@@ -1576,6 +1633,8 @@ void l2cap_dt_entity_alloc (UCHAR *entity_index)
             l2cap_dt_entity[index].local_config_done = 0x0U;
             l2cap_dt_entity[index].remote_config_done = 0x0U;
 
+            l2cap_dt_entity[index].waiting_for_signal = BT_FALSE;
+
             l2cap_dt_entity[index].state = 0x0U;
             l2cap_dt_entity[index].lcid = 0x0000U;
 
@@ -1703,6 +1762,7 @@ void l2cap_dt_create_channels (void)
     DEVICE_HANDLE handle;
     BT_DEVICE_ADDR bd_addr;
     API_RESULT retval;
+    UCHAR      config_preference;
 
     printf("\n");
     printf("Initiating L2CAP Channel Establishment ...\n");
@@ -1737,22 +1797,38 @@ void l2cap_dt_create_channels (void)
              */
             if (4U == l2cap_dt_config_index)
             {
+                if (0x01 == appl_l2cap_sm_only_mode)
+                {
+                    config_preference = L2CAP_CONFIG_PREF_SM_ONLY;
+                }
+                else
+                {
+                    config_preference = L2CAP_CONFIG_PREF_SM_OPTIONAL;
+                }
                 retval = l2ca_connect_req_ex
                          (
                              l2cap_dt_local_psm,
                              l2cap_dt_remote_psm,
                              &handle,
-                             L2CAP_CONFIG_PREF_SM_OPTIONAL
+                             config_preference
                          );
             }
             else
             {
+                if (0x01 == appl_l2cap_sm_only_mode)
+                {
+                    config_preference = L2CAP_CONFIG_PREF_ERTM_ONLY;
+                }
+                else
+                {
+                    config_preference = L2CAP_CONFIG_PREF_ERTM_OPTIONAL;
+                }
                 retval = l2ca_connect_req_ex
                          (
                              l2cap_dt_local_psm,
                              l2cap_dt_remote_psm,
                              &handle,
-                             L2CAP_CONFIG_PREF_ERTM_OPTIONAL
+                             config_preference
                          );
             }
 
@@ -2044,7 +2120,9 @@ void l2cap_dt_send_data (void)
                 if (retval == L2CAP_FEC_TX_WINDOW_FULL)
                 {
                     printf("Waiting for TxWindow to become Free ...\n");
+                    l2cap_dt_entity[index].waiting_for_signal = BT_TRUE;
                     l2cap_dt_wait_for_tx_win_free();
+                    l2cap_dt_entity[index].waiting_for_signal = BT_FALSE;
                 }
                 else if (retval != API_SUCCESS)
                 {
@@ -2151,7 +2229,9 @@ void l2cap_dt_send_data_random (void)
             if (retval == L2CAP_FEC_TX_WINDOW_FULL)
             {
                 printf("Waiting for TxWindow to become Free ...\n");
+                l2cap_dt_entity[index].waiting_for_signal = BT_TRUE;
                 l2cap_dt_wait_for_tx_win_free();
+                l2cap_dt_entity[index].waiting_for_signal = BT_FALSE;
             }
             else if (retval != API_SUCCESS)
             {
@@ -2269,6 +2349,7 @@ void l2cap_dt_signal_tx_win_free(void)
 }
 
 
+#ifdef L2CAP_TEST_PACKET_DROP
 UCHAR l2cap_test_packet_drop_tx (UCHAR *header, UCHAR header_len)
 {
     INT32 num;
@@ -2455,6 +2536,7 @@ UCHAR l2cap_test_packet_drop_rx (UCHAR *header, UCHAR header_len)
 
     return 0U;
 }
+#endif /* L2CAP_TEST_PACKET_DROP */
 
 #ifdef BT_UCD
 
@@ -2550,11 +2632,27 @@ API_RESULT appl_l2cap_ucd_data_cb
                UINT16          datalen
            )
 {
+    UINT16 psm;
+
     printf("Received Unicast Connectionless Data (%d bytes) from Device Handle: 0x%02X\n", datalen, (*handle));
 
-    appl_dump_bytes(data, datalen);
+    /* Extract PSM */
+    if (2U > datalen)
+    {
+        printf("Invalid G-Frame. PSM field missing\n");
+
+        return API_FAILURE;
+    }
+
+    BT_UNPACK_LE_2_BYTE(&psm, data);
+    printf("[G-frame] PSM 0x%04X\n", psm);
+
+    /* Dump Information Payload */
+    printf("[G-frame] Info Payload of Length %d\n", (datalen - 2U));
+    appl_dump_bytes(&data[2U], (datalen - 2U));
 
     return API_SUCCESS;
 }
 #endif /* BT_UCD */
 #endif /* BR_EDR_L2CAP */
+

@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/include;../../../../../../components/osa;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -521,6 +521,16 @@
           <GroupName>usb/host</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
+            </File>
+            <File>
               <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
@@ -554,16 +564,6 @@
               <FileName>usb_host_framework.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
             </File>
             <File>
               <FileName>usb_host.h</FileName>
@@ -611,16 +611,6 @@
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_cdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_cdc_rndis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c</FilePath>
@@ -630,30 +620,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_host_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_cdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1931,6 +1906,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1944,16 +1929,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2008,6 +1983,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2044,26 +2064,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2394,9 +2394,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/include;../../../../../../components/osa;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2430,7 +2430,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2587,6 +2587,16 @@
           <GroupName>usb/host</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
+            </File>
+            <File>
               <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
@@ -2620,16 +2630,6 @@
               <FileName>usb_host_framework.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
             </File>
             <File>
               <FileName>usb_host.h</FileName>
@@ -2677,16 +2677,6 @@
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_cdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_cdc_rndis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c</FilePath>
@@ -2696,30 +2686,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_host_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_cdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3997,6 +3972,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4010,16 +3995,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4074,6 +4049,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -4110,26 +4130,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4460,9 +4460,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/include;../../../../../../components/osa;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4496,7 +4496,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__heap_noncacheable__=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__heap_noncacheable__=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4653,6 +4653,16 @@
           <GroupName>usb/host</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
+            </File>
+            <File>
               <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
@@ -4686,16 +4696,6 @@
               <FileName>usb_host_framework.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
             </File>
             <File>
               <FileName>usb_host.h</FileName>
@@ -4743,16 +4743,6 @@
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_cdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_cdc_rndis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c</FilePath>
@@ -4762,30 +4752,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_host_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_cdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6063,6 +6038,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -6076,16 +6061,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6140,6 +6115,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -6176,26 +6196,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6526,9 +6526,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/include;../../../../../../components/osa;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6562,7 +6562,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -6719,6 +6719,16 @@
           <GroupName>usb/host</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
+            </File>
+            <File>
               <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
@@ -6752,16 +6762,6 @@
               <FileName>usb_host_framework.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
             </File>
             <File>
               <FileName>usb_host.h</FileName>
@@ -6809,16 +6809,6 @@
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_cdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_cdc_rndis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c</FilePath>
@@ -6828,30 +6818,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_host_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_cdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8129,6 +8104,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -8142,16 +8127,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8206,6 +8181,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -8242,26 +8262,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8592,9 +8592,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/include;../../../../../../components/osa;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8628,7 +8628,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -8785,6 +8785,16 @@
           <GroupName>usb/host</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
+            </File>
+            <File>
               <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
@@ -8818,16 +8828,6 @@
               <FileName>usb_host_framework.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
             </File>
             <File>
               <FileName>usb_host.h</FileName>
@@ -8875,16 +8875,6 @@
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_cdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_cdc_rndis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c</FilePath>
@@ -8894,30 +8884,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_host_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_cdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10195,6 +10170,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -10208,16 +10193,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10272,6 +10247,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -10308,26 +10328,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10658,9 +10658,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_BM, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/include;../../../../../../components/osa;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../middleware/lwip/contrib/apps/ping;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10694,7 +10694,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__heap_noncacheable__=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__heap_noncacheable__=1" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -10851,6 +10851,16 @@
           <GroupName>usb/host</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
+            </File>
+            <File>
               <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
@@ -10884,16 +10894,6 @@
               <FileName>usb_host_framework.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_framework.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/usb_host_ehci.h</FilePath>
             </File>
             <File>
               <FileName>usb_host.h</FileName>
@@ -10941,16 +10941,6 @@
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
             </File>
             <File>
-              <FileName>usb_host_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_cdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_host_cdc_rndis.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c</FilePath>
@@ -10960,30 +10950,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_host_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_cdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_cdc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -12261,6 +12236,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -12274,16 +12259,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12338,6 +12313,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -12374,26 +12394,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>

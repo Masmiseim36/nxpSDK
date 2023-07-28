@@ -138,6 +138,10 @@ void main_pbap_pce_operations (void)
     connect_req_send.pin_info = NULL;
     connect_req_send.user_id = NULL;
 
+    /* MISRA C-2012 Rule 9.1 */
+    BT_mem_set(&search_val[0U], 0, sizeof(search_val));
+    BT_mem_set(&file_name[0U], 0, sizeof(file_name));
+
     BT_LOOP_FOREVER()
     {
         printf("%s", pbap_pce_options);
@@ -157,7 +161,7 @@ void main_pbap_pce_operations (void)
             LOG_DEBUG("Enter PBAP PSE's Bluetooth Device Address\n");
 
             /* Read the BD_ADDR of Remote Device */
-            appl_get_bd_addr(pbapc_bd_addr);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(pbapc_bd_addr);
             break;
 
         case 3:
@@ -423,7 +427,7 @@ void main_pbap_pce_operations (void)
 
             BT_mem_set(&req_info, 0, sizeof(PBAP_REQUEST_STRUCT));
 
-            name_req.length = appl_pbap_pce_read_string(file_name,30U);
+            name_req.length = appl_pbap_pce_read_string(file_name, 30U);
             name_req.value = file_name;
             req_info.name = &name_req;
 
@@ -1133,7 +1137,7 @@ void main_pbap_pce_operations (void)
                 else
                 {
                     appl_replace_special_chars(file_name);
-                    BT_str_n_copy(file_name_listing, "listing_", sizeof(file_name_listing));
+                    BT_str_n_copy(file_name_listing, "listing_", 9);
                     BT_str_n_cat(file_name_listing, file_name, (sizeof(file_name_listing) - BT_str_len(file_name_listing)));
                     BT_str_n_cat(file_name_listing, ".xml", (sizeof(file_name_listing) - BT_str_len(file_name_listing)));
 
@@ -1467,7 +1471,7 @@ void main_pbap_pce_operations (void)
         case 50:
             LOG_DEBUG("Enter the path: ");
             scanf("%s", path);
-            EM_fops_list_directory(path);
+            (void)BT_fops_list_directory(path);
             break;
 
         default:

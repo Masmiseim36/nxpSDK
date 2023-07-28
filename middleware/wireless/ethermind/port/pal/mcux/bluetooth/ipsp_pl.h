@@ -39,12 +39,14 @@
 /* --------------------------------------------- Internal Functions */
 
 /* --------------------------------------------- API Declarations */
+#ifdef IPSP_HAVE_6LO_NIFACE
 void ipsp_init_pl
      (
          BT_DEVICE_ADDR * local_mac,
          void (* read_cb)(UCHAR *data, UINT16 datalen),
          UCHAR is_router
      );
+#endif
 void ipsp_start_pl (BT_DEVICE_ADDR * remote_mac);
 void ipsp_stop_pl(void);
 void ipsp_write_pl (UCHAR * eth_data, UINT16 eth_datalen);

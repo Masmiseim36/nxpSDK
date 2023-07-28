@@ -1,47 +1,27 @@
 var a00054 =
 [
-    [ "notifier_notification_block_t", "a00054.html#a00450", [
-      [ "targetConfig", "a00054.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa", null ],
-      [ "policy", "a00054.html#a26aef2519eb2f9990e04f2ce961dfc9b", null ],
-      [ "notifyType", "a00054.html#a2ca3b1a52e315e072a8ab48fcc1dd62a", null ]
+    [ "lpuart_rtos_config_t", "a00054.html#a00456", [
+      [ "base", "a00054.html#abf5491a7b9c911ead3f256fc61357f65", null ],
+      [ "srcclk", "a00054.html#a5209f6a860555957f5d75940b2132ae5", null ],
+      [ "baudrate", "a00054.html#a86b9316f7c8bc63e672f7efd09bbb86a", null ],
+      [ "parity", "a00054.html#a77f066eb41ad7b46edd5a3ee9e72d700", null ],
+      [ "stopbits", "a00054.html#a347be0a813260f445e7829308a58f479", null ],
+      [ "buffer", "a00054.html#a355e354365fe669ddf27d8eb538c83e9", null ],
+      [ "buffer_size", "a00054.html#ad8ba8f4845a222fef29714542876ae55", null ],
+      [ "rx_timeout_constant_ms", "a00054.html#aa8dc452650aae3faefd0f92cffe2b6ab", null ],
+      [ "rx_timeout_multiplier_ms", "a00054.html#a7deed5c320a55485e10ccf7fb6f39d3b", null ],
+      [ "tx_timeout_constant_ms", "a00054.html#a42dc67e6be0ad089f67a8d404aee72d4", null ],
+      [ "tx_timeout_multiplier_ms", "a00054.html#a8fa692dea066c6e1393912ae32a5fc3a", null ],
+      [ "enableRxRTS", "a00054.html#a6bf2ba5df12af74dd4049e4377caa213", null ],
+      [ "enableTxCTS", "a00054.html#adc3d995c9c3c887bb00f2252882c9526", null ],
+      [ "txCtsSource", "a00054.html#a39ef6b032392c800cb96fbf3db2470f9", null ],
+      [ "txCtsConfig", "a00054.html#af09c2955ab27338fac430062ae812388", null ]
     ] ],
-    [ "notifier_callback_config_t", "a00054.html#a00448", [
-      [ "callback", "a00054.html#a116c9dd621ffc21178e769edbd9192e4", null ],
-      [ "callbackType", "a00054.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec", null ],
-      [ "callbackData", "a00054.html#a4e7db701bbf36647da1e6d0f0efe2ebf", null ]
-    ] ],
-    [ "notifier_handle_t", "a00054.html#a00449", [
-      [ "configsTable", "a00054.html#a8fd95d668f17b8a7705e2a4ff49f2e16", null ],
-      [ "configsNumber", "a00054.html#a59bdd44c33254cfd4626f5906d3c0a7a", null ],
-      [ "callbacksTable", "a00054.html#a423480d080ea2580628222dc6c492735", null ],
-      [ "callbacksNumber", "a00054.html#acd4e9338f2cd47c46fc0c02886daafbb", null ],
-      [ "errorCallbackIndex", "a00054.html#a6a8447a4b6045219363883663f40d300", null ],
-      [ "currentConfigIndex", "a00054.html#aae9d6d2cc9c47485863c098c0284a021", null ],
-      [ "userFunction", "a00054.html#a4f6589fa386e93c40c52ed292da4f47f", null ],
-      [ "userData", "a00054.html#a5e90e1dafbe97f2ea5187530ee04af0a", null ]
-    ] ],
-    [ "notifier_user_config_t", "a00054.html#gad0b6e919f3ff69992b36a2734a650ec7", null ],
-    [ "notifier_user_function_t", "a00054.html#gacb6a6d6f99e6ddfbb96dae53382949b2", null ],
-    [ "notifier_callback_t", "a00054.html#gafd1d8cc01c496de8b4cd3990ff85415c", null ],
-    [ "_notifier_status", "a00054.html#gacac871f1b98f53906b07b2663943c784", [
-      [ "kStatus_NOTIFIER_ErrorNotificationBefore", "a00054.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c", null ],
-      [ "kStatus_NOTIFIER_ErrorNotificationAfter", "a00054.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58", null ]
-    ] ],
-    [ "notifier_policy_t", "a00054.html#ga62e961564dc31b8155d128a3f6566409", [
-      [ "kNOTIFIER_PolicyAgreement", "a00054.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964", null ],
-      [ "kNOTIFIER_PolicyForcible", "a00054.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8", null ]
-    ] ],
-    [ "notifier_notification_type_t", "a00054.html#ga5ee4314c2a52ee0af61985e7163a1be9", [
-      [ "kNOTIFIER_NotifyRecover", "a00054.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94", null ],
-      [ "kNOTIFIER_NotifyBefore", "a00054.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c", null ],
-      [ "kNOTIFIER_NotifyAfter", "a00054.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00", null ]
-    ] ],
-    [ "notifier_callback_type_t", "a00054.html#gaad75237e3cea51f8315cf6577b35db91", [
-      [ "kNOTIFIER_CallbackBefore", "a00054.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1", null ],
-      [ "kNOTIFIER_CallbackAfter", "a00054.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc", null ],
-      [ "kNOTIFIER_CallbackBeforeAfter", "a00054.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005", null ]
-    ] ],
-    [ "NOTIFIER_CreateHandle", "a00054.html#gaa2dfe33b4724d9c1025acdde1b1b3c31", null ],
-    [ "NOTIFIER_SwitchConfig", "a00054.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97", null ],
-    [ "NOTIFIER_GetErrorCallbackIndex", "a00054.html#ga9736632c3beca486ec3f8dab504b839c", null ]
+    [ "FSL_LPUART_FREERTOS_DRIVER_VERSION", "a00054.html#gae78d379ef6bde2ad08e1fe64f1f09bf5", null ],
+    [ "LPUART_RTOS_Init", "a00054.html#ga5be9370b1fa0187c194475769e7138fc", null ],
+    [ "LPUART_RTOS_Deinit", "a00054.html#ga057e59dcc578ef4b303850bcd90ca50e", null ],
+    [ "LPUART_RTOS_Send", "a00054.html#ga275e067e13ecc77dde83d2d7938c038e", null ],
+    [ "LPUART_RTOS_Receive", "a00054.html#ga0561f87122863c6e9b20f8991a73a0fb", null ],
+    [ "LPUART_RTOS_SetRxTimeout", "a00054.html#ga3e211e0c1a2c93d9bdd73d6ca4639a10", null ],
+    [ "LPUART_RTOS_SetTxTimeout", "a00054.html#gad2317ff04710f0f4a2dc7d219f850c85", null ]
 ];

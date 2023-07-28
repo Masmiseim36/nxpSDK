@@ -46,7 +46,7 @@ static void work_queue_trigger_delayed_work(void)
 static void work_queue_task(void *param)
 {
     struct bt_work_queue *work_queue = (struct bt_work_queue *)param;
-    struct bt_work *work;
+    struct bt_work *work = NULL;
     bt_work_handler_t handler;
     uint32_t timeout;
     osa_status_t ret;
@@ -157,6 +157,12 @@ static void bt_work_submit_to_queue(struct bt_work_queue *work_queue,
 void bt_work_submit(struct bt_work *work)
 {
     bt_work_submit_to_queue(&s_workQueueHead, work);
+}
+
+void bt_work_cancel(struct bt_work *work)
+{
+    /* Here we could not remove from queue, so just mark it as "BT_WORK_STATE_NONE". */
+    work->state = BT_WORK_STATE_NONE;
 }
 
 /* delayed work queue start */

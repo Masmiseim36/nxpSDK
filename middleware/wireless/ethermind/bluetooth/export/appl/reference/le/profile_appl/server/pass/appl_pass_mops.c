@@ -10,8 +10,8 @@
  */
 
 /* ------------------------------- Header File Inclusion */
-#include "appl_pass.h"
-#include "appl_pass_mops.h"
+#include "appl_service.h"
+#include "appl_service_mops.h"
 
 #if (defined ATT && defined PASS)
 #ifdef APPL_MENU_OPS
@@ -26,24 +26,20 @@ extern GATT_DB_HANDLE  appl_ringer_settings_db_hndl;
 /* --------------------------------------------- Exported Global Variables */
 
 /* --------------------------------------------- Static Global Variables */
-static const char pass_menu[] = " \n\
+static const char pass_menu[] = "\n\
 ========= PASS : M A I N   M E N U ========= \n\
-\n\
     0. Exit \n\
     1. Refresh \n\
-\n\
     3. Change Application Notification State \n\
     4. Set Alert Status \n\
     5. Set Ringer Settings \n\
     6. Send Alert Status Notification \n\
     7. Send Ringer Settings Notification \n\
-\n\
    11. Update Peer BD Address to Auto-Connect\n\
    12. Set GAP Central Role\n\
-\n\
-    Your Option ?\n";
+Your Option ?\n";
 
-static const char alrt_status_menu[] = " \n\
+static const char alrt_status_menu[] = "\n\
  0 - No Alerts \n\
  1 - Set Ringer State not active \n\
  2 - Set Ringer State active \n\
@@ -79,8 +75,8 @@ void appl_pass_menu_handler (void)
 
         case 3:
             /* Set Application Notification State */
-            CONSOLE_OUT (" 1 - Auto Send Notification \n");
-            CONSOLE_OUT (" 2 - Menu Based Notification \n");
+            CONSOLE_OUT (" 1 - Auto Send Notification\n");
+            CONSOLE_OUT (" 2 - Menu Based Notification\n");
             CONSOLE_IN ("%d", &temp);
             /* Handle the Sub Menu for Alert Status */
             switch (temp)
@@ -250,8 +246,8 @@ void appl_pass_menu_handler (void)
 
         case 5:
             /* Set Ringer Settings */
-            CONSOLE_OUT(" 1 - Set Ringer Silent \n");
-            CONSOLE_OUT(" 2 - Set Ringer Normal \n");
+            CONSOLE_OUT(" 1 - Set Ringer Silent\n");
+            CONSOLE_OUT(" 2 - Set Ringer Normal\n");
             CONSOLE_IN ("%d", &temp);
 
             /* Handle the Sub Menu for Ringer Settings */

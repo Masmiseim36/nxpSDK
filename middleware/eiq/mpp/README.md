@@ -18,7 +18,7 @@ The basic pipeline structure - the _mpp_ in the API context - has a chain/queue 
 The pipeline continues with multiple **processing elements** having a single input and a single output:
 - Image format conversion
 - Labeled rectangle drawing
-- Machine learning inference with two frameworks:
+- Machine learning inference with three frameworks:
    - Tensorflow Lite Micro 
    - GLOW
    - DeepViewRT

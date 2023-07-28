@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021, 2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,8 +31,6 @@
 void bt_ble_platform_init(void)
 {
 #ifndef BT_BLE_PLATFORM_INIT_ESCAPE
-#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
-	(void)USB_HostMsdFatfsInit();
-#endif
-#endif
+    (void)USB_HostMsdFatfsInit();
+#endif /* BT_BLE_PLATFORM_INIT_ESCAPE */
 }

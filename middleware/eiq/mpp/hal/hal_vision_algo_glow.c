@@ -66,8 +66,7 @@ typedef struct {
 } glow_model_param_t;
 
 /*Initialize the dev for glow*/
-static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Init(vision_algo_dev_t *dev, valgo_dev_callback_t callback,
-		model_param_t *param)
+static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Init(vision_algo_dev_t *dev, model_param_t *param)
 {
 	hal_valgo_status_t ret = kStatus_HAL_ValgoSuccess;
 	glow_model_param_t *glow_model_param;
@@ -100,7 +99,6 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Init(vision_algo_dev_t *dev, va
 	}
 	/* Init the device */
 	memset(&dev->cap, 0, sizeof(dev->cap));
-	dev->cap.callback = callback;
 	dev->priv_data = MPP_MALLOC(sizeof(glow_model_param_t));
 	if(dev->priv_data == NULL){
 	    HAL_LOGE("NULL pointer\n");

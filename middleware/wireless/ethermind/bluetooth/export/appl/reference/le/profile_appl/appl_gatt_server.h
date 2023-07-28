@@ -25,6 +25,10 @@
 /* Flag that control enable disable of application event trace prints */
 #define APPL_GATT_SERVER_HAVE_EVT_TRC_SELECTION
 
+#ifndef APPL_HAVE_PROFILE_ATT_CB_SUPPORT
+#define APPL_HAVE_PROFILE_ATT_CB_SUPPORT
+#endif /* APPL_HAVE_PROFILE_ATT_CB_SUPPORT */
+
 /* --------------------------------------------- Structures/Data Types */
 typedef struct
 {
@@ -37,8 +41,19 @@ typedef struct
 
 typedef API_RESULT (*APPL_ATT_EXECUTE_WRITE_HANDLER)(ATT_HANDLE   *handle);
 
+#ifdef APPL_HAVE_PROFILE_ATT_CB_SUPPORT
+typedef API_RESULT(*APPL_EVENT_HANDLER_CB)
+        (
+            ATT_HANDLE    * handle,
+            UCHAR           att_event,
+            API_RESULT      event_result,
+            UCHAR         * event_data,
+            UINT16          event_datalen
+        )DECL_REENTRANT;
+#endif /* APPL_HAVE_PROFILE_ATT_CB_SUPPORT */
+
 /* --------------------------------------------- Macros */
-#define APPL_ATT_WRITE_QUEUE_SIZE         10U
+#define APPL_ATT_WRITE_QUEUE_SIZE         50U
 #define APPL_ATT_MAX_WRITE_BUFFER_SIZE    127U /* 255 */
 #define APPL_ATT_MTU                      ATT_DEFAULT_MTU
 
@@ -64,13 +79,9 @@ typedef API_RESULT (*APPL_ATT_EXECUTE_WRITE_HANDLER)(ATT_HANDLE   *handle);
 #define APPL_MAX_VALID_ATT_PDU_FOR_LEN_CHK            7
 
 /** Application Defined error */
-#define APPL_ATT_INVALID_OFFSET                0xFFFFU
+#define APPL_ATT_INVALID_OFFSET                       0xFFFFU
 
-#if 0
-#define ATT_INVALID_ATTR_HANDLE_VAL            0x0000
-#endif /* 0 */
-
-#define APPL_MAX_MULTIPLE_READ_COUNT           11U
+#define APPL_MAX_MULTIPLE_READ_COUNT                  11U
 
 #define APPL_CHECK_IF_ATT_REQUEST(type)\
         ((((((type) > 0x13) && ((type) < 0x16)) ||\
@@ -83,16 +94,19 @@ typedef API_RESULT (*APPL_ATT_EXECUTE_WRITE_HANDLER)(ATT_HANDLE   *handle);
         (0x10 == (type)) || (0x18 == (type)))? BT_TRUE : BT_FALSE)
 
 #define APPL_ATT_PREPARE_QUEUE_INIT(i)\
-        appl_att_write_queue[(i)].handle_value.handle = 0;\
-        appl_att_write_queue[(i)].offset = 0xFFFF;\
-        appl_att_write_queue[(i)].handle_value.value.len = 0;\
-        appl_att_write_queue[(i)].handle_value.value.val = NULL;
+        appl_att_write_queue[(i)].handle = 0x0000U;\
+        appl_att_write_queue[(i)].length = 0U;\
+        BT_mem_set(appl_att_write_queue[(i)].value, 0, sizeof(APPL_MAX_WRITELONG_SIZE));
 
 /* --------------------------------------------- Internal Functions */
 
 /* --------------------------------------------- API Declarations */
 
 void main_gatt_server_operations(void);
+
+#ifdef APPL_HAVE_PROFILE_ATT_CB_SUPPORT
+API_RESULT appl_register_cb(APPL_EVENT_HANDLER_CB appl_pams_cb);
+#endif /* APPL_HAVE_PROFILE_ATT_CB_SUPPORT */
 
 API_RESULT appl_handle_unsupported_op_code (ATT_HANDLE *handle,UCHAR op_code);
 
@@ -138,6 +152,15 @@ API_RESULT appl_handle_read_by_group_type_request
                ATT_HANDLE_RANGE    * range,
                ATT_VALUE           * uuid
            );
+
+#ifdef ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT
+API_RESULT appl_handle_read_multiple_var_len_request
+           (
+                /* IN */ ATT_HANDLE          * handle,
+                /* IN */ ATT_HANDLE_LIST     * list
+           );
+#endif /* ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT */
+
 API_RESULT appl_handle_read_multiple_request
            (
                 /* IN */ ATT_HANDLE          * handle,
@@ -172,9 +195,14 @@ void appl_gatt_signing_verification_complete
 void appl_parse_confirmation_data(ATT_HANDLE * handle, UINT16 evt_result);
 void appl_parse_ntf_tx_complete(ATT_HANDLE * handle, UCHAR * data, UINT16 datalen);
 
+API_RESULT appl_gatt_set_mtu(UINT16 mtu);
+
 #ifdef APPL_GATT_SERVER_HAVE_EVT_TRC_SELECTION
 void appl_set_gatt_server_evt_trc(UCHAR flag);
 #endif /* APPL_GATT_SERVER_HAVE_EVT_TRC_SELECTION */
 
-#endif /* _H_APPL_GATT_SERVER_ */
+#ifdef ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+API_RESULT appl_gatt_send_multi_handle_val_ntf_request(DEVICE_HANDLE dq_handle);
+#endif /* ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT */
 
+#endif /* _H_APPL_GATT_SERVER_ */

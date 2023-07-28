@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2020 SixOctets Systems
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -18,6 +18,10 @@
 #include <bluetooth/gatt.h>
 #include <central_ht.h>
 #include <bluetooth/services/hts.h>
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+#include "PWR_Interface.h"
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -182,6 +186,7 @@ static bool device_scanned(struct bt_data *data, void *user_data)
     uint16_t u16;
     int err;
     int i;
+    char dev[BT_ADDR_LE_STR_LEN];
     bool continueParse = true;
 
     /* return true to continue parsing or false to stop parsing */
@@ -211,7 +216,8 @@ static bool device_scanned(struct bt_data *data, void *user_data)
                         PRINTF("Stop LE scan failed (err %d)\n", err);
                         break;
                     }
-                    PRINTF("Found device: %s", addr);
+                    bt_addr_le_to_str(addr, dev, sizeof(dev));
+                    PRINTF("Found device: %s", dev);
 
                     /* Send connection request */
                     err = bt_conn_le_create(addr, BT_CONN_LE_CREATE_CONN,
@@ -345,14 +351,15 @@ static void bt_ready(int err)
         return;
     }
 
-    if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
-    {
-        settings_load();
-    }
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
+    settings_load();
+#endif /* CONFIG_BT_SETTINGS */
+
     PRINTF("Bluetooth initialized\n");
 
     /* Register connection callback */
     bt_conn_cb_register(&conn_callbacks);
+
 #if CONFIG_BT_SMP
     bt_conn_auth_cb_register(&auth_cb_display);
 #endif
@@ -366,12 +373,22 @@ static void bt_ready(int err)
     }
 
     PRINTF("Scanning started\n");
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+    /* Release the WFI constraint, the device will go to a lower power mode
+     * during idle */
+    PWR_ReleaseLowPowerModeConstraint(PWR_WFI);
+    /* In scan mode, the application core will wake up more often to exchange data with its peer, so we can
+     * restrain the low power mode to DeepSleep to allow faster wake up time */
+    PWR_SetLowPowerModeConstraint(PWR_DeepSleep);
+#endif
 }
 
 void central_ht_task(void *pvParameters)
 {
     int err;
 
+    PRINTF("BLE Central HT demo start...\n");
     err = bt_enable(bt_ready);
     if (err)
     {

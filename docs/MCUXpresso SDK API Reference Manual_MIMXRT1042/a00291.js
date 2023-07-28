@@ -1,10 +1,9 @@
 var a00291 =
 [
-    [ "CODEC Common Driver", "a00013.html", "a00013" ],
-    [ "CODEC I2C Driver", "a00014.html", "a00014" ],
-    [ "CS42888 Driver", "a00015.html", "a00015" ],
-    [ "DA7212 Driver", "a00017.html", "a00017" ],
-    [ "SGTL5000 Driver", "a00071.html", "a00071" ],
-    [ "WM8904 Driver", "a00082.html", "a00082" ],
-    [ "WM8960 Driver", "a00083.html", "a00083" ]
+    [ "MMC Card Driver", "a00055.html", "a00055" ],
+    [ "SD Card Driver", "a00065.html", "a00065" ],
+    [ "SDIO Card Driver", "a00066.html", "a00066" ],
+    [ "SDMMC Common", "a00054.html", "a00054" ],
+    [ "SDMMC HOST Driver", "a00292.html", "a00292" ],
+    [ "SDMMC OSA", "a00067.html", "a00067" ]
 ];

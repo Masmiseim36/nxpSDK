@@ -64,7 +64,7 @@
 #define APPL_BLUETOOTH_CLOCK_SYNC_TIME          (0x00003214U)
 
 #ifdef MCAP_CLOCK_SYNC
-UCHAR appl_mcap_read_clock_in_progress;
+DECL_STATIC UCHAR appl_mcap_read_clock_in_progress;
 #endif /* MCAP_CLOCK_SYNC */
 
 
@@ -103,7 +103,7 @@ static const char main_mcap_options[] = "\n\
     46. Read Piconet clock\n\
 \
 \n\
-Your Option ? \0";
+Your Option ?";
 
 DECL_STATIC L2CAP_FEC_OPTION data_strming_ch_fec_params;
 DECL_STATIC L2CAP_FEC_OPTION data_rlbl_ch_fec_params;
@@ -143,14 +143,10 @@ static const char config_menu[] = "\n\
 \n\
 Your Option ?\0";
 
-MCAP_HANDLE appl_mcap_handle;
+DECL_STATIC MCAP_HANDLE appl_mcap_handle;
 
 
 /* ----------------------------------------- Functions */
-
-
-
-
 void main_mcap_operations (void)
 {
     int choice, menu_choice;
@@ -212,15 +208,19 @@ void main_mcap_operations (void)
         case 25:
             appl_mcap_md_write ();
             break;
+
         case 26:
             appl_ch_params = &appl_strm_ch_params;
             break;
+
         case 27:
             appl_ch_params = &appl_rlbl_ch_params;
             break;
+
         case 28:
             appl_ch_params = &appl_dflt_ch_params;
             break;
+
         case 30:
             {
                 int val;
@@ -231,11 +231,13 @@ void main_mcap_operations (void)
                 accept_mdl = (UINT16)val;
             }
             break;
+
         case 31:
             {
                 send_md_create_rsp = BT_TRUE;
             }
             break;
+
         case 32:
             {
                 send_md_create_rsp = BT_FALSE;
@@ -564,7 +566,7 @@ void appl_mcap_mc_connect (void)
     MCAP_MC_CONNECT_PARAMS connect_params;
 
     printf ("Enter BD_ADDR: "); fflush(stdout);
-    appl_get_bd_addr (appl_mcap_handle.bd_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (appl_mcap_handle.bd_addr);
 
     printf ("Enter Control Channel PSM: "); fflush(stdout);
     scanf ("%04x", &val);

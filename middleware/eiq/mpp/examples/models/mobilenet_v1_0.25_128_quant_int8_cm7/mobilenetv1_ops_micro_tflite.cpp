@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,15 +12,29 @@
 
 #include "mpp_config.h"
 
-#if (TFLITE_ALL_OPS_RESOLVER == 0)
-
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
 #include "tensorflow/lite/micro/kernels/softmax.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
+#ifdef USE_NEUTRON_MODEL
+#include "tensorflow/lite/micro/kernels/neutron/neutron.h"
+#endif
 
-tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter)
+tflite::MicroOpResolver &MODEL_GetOpsResolver()
 {
-    static tflite::MicroMutableOpResolver<6> s_microOpResolver(errorReporter);
+#ifdef USE_NEUTRON_MODEL
+    static tflite::MicroMutableOpResolver<6> s_microOpResolver;
+
+    s_microOpResolver.AddAveragePool2D();
+    s_microOpResolver.AddConv2D();
+    s_microOpResolver.AddDepthwiseConv2D();
+    s_microOpResolver.AddDequantize();
+    s_microOpResolver.AddReshape();
+    s_microOpResolver.AddSlice();
+    s_microOpResolver.AddSoftmax();
+    s_microOpResolver.AddCustom(tflite::GetString_NEUTRON_GRAPH(),
+        tflite::Register_NEUTRON_GRAPH());
+#else
+    static tflite::MicroMutableOpResolver<6> s_microOpResolver;
 
     s_microOpResolver.AddAveragePool2D();
     s_microOpResolver.AddConv2D();
@@ -28,8 +42,6 @@ tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReport
     s_microOpResolver.AddDequantize();
     s_microOpResolver.AddReshape();
     s_microOpResolver.AddSoftmax();
-
+#endif
     return s_microOpResolver;
 }
-
-#endif // TFLITE_ALL_OPS_RESOLVER

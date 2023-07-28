@@ -120,7 +120,8 @@ API_RESULT gatt_db_hid_gatt_char_handler
         retval = API_SUCCESS;
     }
     /* HIDS Specific GATT Handlers */
-    else if (GATT_SER_HID_INST == handle->service_id)
+    else if ((GATT_SER_HID_KEYBOARD_INST == handle->service_id) ||
+             (GATT_SER_HID_MOUSE_INST == handle->service_id))
     {
         retval = gatt_db_hid_event_handler(handle, params);
     }

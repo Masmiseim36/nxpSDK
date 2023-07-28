@@ -16,7 +16,6 @@
 
 #include "audio_proc.h"
 #include "pipeline.h"
-#include "streamer_element_properties.h"
 
 /*!
  * @param pad: pad handle
@@ -300,6 +299,11 @@ static int32_t audio_proc_change_state(StreamElement *element_ptr, PipelineState
 
         case STATE_CHANGE_READY_TO_NULL:
             STREAMER_LOG_DEBUG(DBG_AUDIO_PROC, "[AUDIO_PROC]STATE_CHANGE_READY_TO_NULL\n");
+            if((audio_proc_ptr->initialized == true) && (audio_proc_ptr->deinit_func != NULL))
+            {
+                audio_proc_ptr->deinit_func();
+            }
+
             /* Nothing to do here for a AUDIO_PROC */
             break;
 
@@ -483,20 +487,42 @@ static int32_t audio_proc_set_property(StreamElement *element_ptr, uint16_t prop
 {
     int32_t ret = STREAM_OK;
 
-    // SET_BUFFER_DESC_T *buffer_desc_ptr = NULL;
-
     STREAMER_FUNC_ENTER(DBG_AUDIO_PROC);
 
     switch (prop)
     {
-        case PROP_AUDIO_PROC_FUNCPTR:
+        case PROP_VOICESEEKER_PROC_FUNCPTR:
+        case PROP_EAP_PROC_FUNCPTR:
+        case PROP_SRC_PROC_FUNCPTR:
         {
             EXT_PROCESS_DESC_T *desc_ptr = (EXT_PROCESS_DESC_T *)val;
             ret = audio_proc_register_ext_processing((ElementHandle)element_ptr, desc_ptr->init_func,
                                                      desc_ptr->proc_func, desc_ptr->deinit_func, desc_ptr->arg_ptr);
         }
         break;
-
+        case PROP_VITSINK_PROC_FUNCPTR:
+        {
+            EXT_PROCESS_DESC_T *desc_ptr = (EXT_PROCESS_DESC_T *)val;
+            ret = audio_proc_register_ext_processing((ElementHandle)element_ptr, desc_ptr->init_func,
+                                                     desc_ptr->proc_func, desc_ptr->deinit_func, desc_ptr->arg_ptr);
+        }
+        break;
+        case PROP_VOICESEEKER_PROC_REFDATA_FUNCPTR:
+        {
+            EXT_PROCESS_REFDAT_DESC_T *desc_ptr = (EXT_PROCESS_REFDAT_DESC_T *)val;
+            ret = audio_proc_register_refdata_processing((ElementHandle)element_ptr, desc_ptr->set_num_buff_func,
+                                                         desc_ptr->push_func, desc_ptr->set_debugging);
+        }
+        break;
+        case PROP_VOICESEEKER_PROC_REFDATA_NUM_BUFFERS:
+            ret = audio_proc_refdata_set_num_buff((ElementHandle)element_ptr, val);
+            break;
+        case PROP_VOICESEEKER_PROC_REFDATA_PUSH:
+            ret = audio_proc_refdata_push((ElementHandle)element_ptr, (AudioRefData_t *)val);
+            break;
+        case PROP_VOICESEEKER_PROC_SET_DEBUGGING:
+            ret = audio_proc_set_debugging((ElementHandle)element_ptr, (bool)val);
+            break;
         default:
             ret = STREAM_ERR_INFO_ABSENT;
             break;
@@ -650,6 +676,92 @@ int32_t audio_proc_register_ext_processing(ElementHandle element,
     audio_proc_ptr->proc_func   = proc_func_ptr;
     audio_proc_ptr->deinit_func = deinit_func_ptr;
     audio_proc_ptr->arg_ptr     = arg_ptr;
+
+    STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+    return ret;
+}
+
+int32_t audio_proc_register_refdata_processing(ElementHandle element,
+                                               AudioProcRefDataSetNumBuffFunc set_num_buff,
+                                               AudioProcRefDataPushFunc refdata_push,
+                                               AudioProcSetDebuggingFunc set_debugging)
+{
+    ElementAudioProc *audio_proc_ptr = (ElementAudioProc *)element;
+
+    STREAMER_FUNC_ENTER(DBG_AUDIO_PROC);
+
+    if ((NULL == audio_proc_ptr) || (NULL == set_num_buff) || (NULL == refdata_push))
+    {
+        STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+        return STREAM_ERR_INVALID_ARGS;
+    }
+
+    audio_proc_ptr->refdata_set_num_buff_func = set_num_buff;
+    audio_proc_ptr->refdata_push_func         = refdata_push;
+    audio_proc_ptr->set_debugging_func        = set_debugging;
+
+    STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+    return STREAM_OK;
+}
+
+int32_t audio_proc_refdata_push(ElementHandle element, AudioRefData_t *ref_data)
+{
+    int32_t ret = STREAM_OK;
+
+    ElementAudioProc *audio_proc_ptr = (ElementAudioProc *)element;
+    STREAMER_FUNC_ENTER(DBG_AUDIO_PROC);
+
+    if ((NULL == audio_proc_ptr) || (NULL == ref_data))
+    {
+        STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+        return STREAM_ERR_INVALID_ARGS;
+    }
+
+    ret = audio_proc_ptr->refdata_push_func(ref_data);
+
+    STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+    return ret;
+}
+
+int32_t audio_proc_refdata_set_num_buff(ElementHandle element, uint32_t num_buff)
+{
+    int32_t ret = STREAM_OK;
+
+    ElementAudioProc *audio_proc_ptr = (ElementAudioProc *)element;
+    STREAMER_FUNC_ENTER(DBG_AUDIO_PROC);
+
+    if (NULL == audio_proc_ptr)
+    {
+        STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+        return STREAM_ERR_INVALID_ARGS;
+    }
+
+    ret = audio_proc_ptr->refdata_set_num_buff_func((int)num_buff);
+
+    STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+    return ret;
+}
+
+int32_t audio_proc_set_debugging(ElementHandle element, bool set_debugging)
+{
+    int32_t ret = STREAM_OK;
+
+    ElementAudioProc *audio_proc_ptr = (ElementAudioProc *)element;
+    STREAMER_FUNC_ENTER(DBG_AUDIO_PROC);
+
+    if (NULL == audio_proc_ptr)
+    {
+        STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+        return STREAM_ERR_INVALID_ARGS;
+    }
+
+    if (audio_proc_ptr->set_debugging_func == NULL)
+    {
+        STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
+        return -1;
+    }
+
+    ret = audio_proc_ptr->set_debugging_func(set_debugging);
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_PROC);
     return ret;

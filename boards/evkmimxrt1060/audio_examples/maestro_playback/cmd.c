@@ -165,7 +165,7 @@ static uint32_t isFileOnSDcard(char *filename)
 
 static shell_status_t shellEcho(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-    PRINTF(" Maestro version: 1.2\r\n");
+    PRINTF(" Maestro version: 1.6\r\n");
 
 #ifdef EAP_PROC
     PRINTF(" EAP version: 3.0.12\r\n");
@@ -190,10 +190,8 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
 
     // lock ATT mutex if needed, but based on major usecase it is not necessary
     // be sure that this routine is as short as possible without any complex logic
-#ifdef MULTICHANNEL_EXAMPLE
     if (argc >= 2)
     {
-#endif
         if (strcmp(argv[1], "start") == 0)
         {
 #ifdef MULTICHANNEL_EXAMPLE
@@ -302,6 +300,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
                 {
                     get_eap_att_control()->volume  = value;
                     get_eap_att_control()->command = kAttCmdVolume;
+                    PRINTF("[CMD] Volume has been set to %d.\r\n", value);
                 }
                 else
                 {
@@ -349,18 +348,18 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
                             (dot && strncmp(dot + 1, "pcm", 4) == 0)
 #else
 #if (OGG_OPUS_DEC == 1)
-                        (dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
+                            (dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
 #endif
 #if (AAC_DEC == 1)
-                        (dot && strncmp(dot + 1, "aac", 3) == 0) ||
+                            (dot && strncmp(dot + 1, "aac", 3) == 0) ||
 #endif
 #if (WAV_DEC == 1)
-                        (dot && strncmp(dot + 1, "wav", 3) == 0) ||
+                            (dot && strncmp(dot + 1, "wav", 3) == 0) ||
 #endif
 #if (FLAC_DEC == 1)
-                        (dot && strncmp(dot + 1, "flac", 3) == 0) ||
+                            (dot && strncmp(dot + 1, "flac", 3) == 0) ||
 #endif
-                        (dot && strncmp(dot + 1, "mp3", 3) == 0)
+                        	(dot && strncmp(dot + 1, "mp3", 3) == 0)
 #endif
                         )
                         {
@@ -448,14 +447,12 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
             PRINTF("[CMD] Undefined att command option. \r\n");
             retVal = kStatus_SHELL_Error;
         }
-#ifdef MULTICHANNEL_EXAMPLE
     }
     else
     {
         PRINTF("[CMD] Enter correct command option. \r\n");
         retVal = kStatus_SHELL_Error;
     }
-#endif
     // unlock APP mutex
     return retVal;
 }

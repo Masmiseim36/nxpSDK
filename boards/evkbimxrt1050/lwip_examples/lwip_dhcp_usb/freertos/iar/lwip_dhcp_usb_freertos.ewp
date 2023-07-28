@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -228,9 +228,9 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -354,9 +354,8 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
@@ -370,9 +369,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -494,7 +494,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -700,7 +700,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1111,7 +1111,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1198,7 +1198,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1215,7 +1215,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1238,7 +1238,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1317,7 +1317,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1330,9 +1330,9 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1456,9 +1456,8 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
@@ -1472,9 +1471,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1596,7 +1596,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1802,7 +1802,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2213,7 +2213,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2300,7 +2300,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2317,7 +2317,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2340,7 +2340,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2419,7 +2419,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2432,9 +2432,9 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2558,9 +2558,8 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
@@ -2574,9 +2573,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2698,7 +2698,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2904,7 +2904,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3316,7 +3316,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3403,7 +3403,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3420,7 +3420,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3443,7 +3443,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3522,7 +3522,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3533,9 +3533,9 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3659,9 +3659,8 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
@@ -3675,9 +3674,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3799,7 +3799,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4005,7 +4005,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4416,7 +4416,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4503,7 +4503,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4520,7 +4520,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4543,7 +4543,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4622,7 +4622,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4635,9 +4635,9 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4761,9 +4761,8 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
@@ -4777,9 +4776,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4901,7 +4901,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5107,7 +5107,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5518,7 +5518,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5605,7 +5605,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5622,7 +5622,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5645,7 +5645,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5724,7 +5724,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5737,9 +5737,9 @@
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5863,9 +5863,8 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
@@ -5879,9 +5878,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6003,7 +6003,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6209,7 +6209,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6706,6 +6706,12 @@
     <group>
       <name>host</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_ehci.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_ehci.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
       </file>
       <file>
@@ -6741,24 +6747,18 @@
           <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub_app.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_cdc.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_cdc.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_cdc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_cdc.h</name>
+        </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_ehci.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_ehci.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
       </file>
@@ -6791,60 +6791,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -7729,6 +7675,60 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</name>
     </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>startup</name>

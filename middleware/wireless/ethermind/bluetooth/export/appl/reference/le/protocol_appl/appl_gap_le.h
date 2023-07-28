@@ -43,6 +43,11 @@
 
 /* --------------------------------------------- Data Types/ Structures */
 
+/**
+ * Already defined in 'appl_service.h'.
+ * Commented to avoid Duplicate definition.
+ */
+
 typedef struct
 {
     /* Describes ADV Data */
@@ -51,7 +56,7 @@ typedef struct
     /* Length of data, max value is 32 */
     UCHAR len;
 
-}APPL_GAP_ADV_DATA;
+}APPL_GAP_LE_ADV_DATA;
 
 typedef struct
 {
@@ -63,7 +68,7 @@ typedef struct
 
     UCHAR      filter_policy;
 
-}APPL_GAP_ADV_PARAM;
+}APPL_GAP_LE_ADV_PARAM;
 
 typedef struct
 {
@@ -73,7 +78,7 @@ typedef struct
 
     UCHAR      filter_policy;
 
-}APPL_GAP_SCAN_PARAM;
+}APPL_GAP_LE_SCAN_PARAM;
 
 typedef struct
 {
@@ -95,14 +100,14 @@ typedef struct
 
     UINT16     max_ce_length;
 
-}APPL_GAP_CONN_PARAM;
+}APPL_GAP_LE_CONN_PARAM;
 
 typedef struct
 {
     /* Describes various possibilities of adv data */
-    DECL_CONST APPL_GAP_ADV_DATA     * adv_data;
+    DECL_CONST APPL_GAP_LE_ADV_DATA     * adv_data;
 
-    DECL_CONST APPL_GAP_ADV_PARAM    * adv_param;
+    DECL_CONST APPL_GAP_LE_ADV_PARAM    * adv_param;
 
     UCHAR                            adv_param_id;
 
@@ -121,7 +126,7 @@ typedef struct
 
 typedef struct
 {
-    DECL_CONST APPL_GAP_SCAN_PARAM    * scan_param;
+    DECL_CONST APPL_GAP_LE_SCAN_PARAM    * scan_param;
 
     UCHAR                             scan_type;
 
@@ -139,7 +144,7 @@ typedef struct
 
 typedef struct
 {
-    DECL_CONST APPL_GAP_CONN_PARAM    * conn_param;
+    DECL_CONST APPL_GAP_LE_CONN_PARAM    * conn_param;
 
     UCHAR                             conn_param_id;
 

@@ -1,14 +1,8 @@
 /*
  * Copyright (c) 2015-2016 Intel Corporation
+ * Copyright 2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright 2022 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #if defined(BEACON_APP) && (BEACON_APP == 1)
@@ -90,7 +84,7 @@ void beacon_task(void *pvParameters)
 {
     int err;
     
-    PRINTF("Starting Beacon Demo\n");
+    PRINTF("BLE Beacon demo start...\n");
     
     /* Initialize the Bluetooth Subsystem */
     err = bt_enable(bt_ready);

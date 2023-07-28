@@ -20,21 +20,21 @@
 
 /* -------------------------------------------- Global Definitions */
 #ifndef HTTPS_PL_NO_DEBUG
-#define HTTPS_PL_ERR(...)             BT_debug_error(BT_MODULE_ID_HTTPS_PL, __VA_ARGS__)
+#define HTTPS_PL_ERR(...)         BT_debug_error(BT_MODULE_ID_GEN_PL, __VA_ARGS__)
 #else  /* HTTPS_PL_NO_DEBUG */
-#define HTTPS_PL_ERR                  BT_debug_null
+#define HTTPS_PL_ERR              BT_debug_null
 #endif /* HTTPS_PL_NO_DEBUG */
 
 #ifdef HTTPS_PL_DEBUG
-    #define HTTPS_PL_TRC(...)         BT_debug_trace(BT_MODULE_ID_HTTPS_PL, __VA_ARGS__)
-    #define HTTPS_PL_INF(...)         BT_debug_info (BT_MODULE_ID_HTTPS_PL, __VA_ARGS__)
+#define HTTPS_PL_TRC(...)         BT_debug_trace(BT_MODULE_ID_GEN_PL, __VA_ARGS__)
+#define HTTPS_PL_INF(...)         BT_debug_info (BT_MODULE_ID_GEN_PL, __VA_ARGS__)
 #else /* HTTPS_PL_DEBUG */
-    #define HTTPS_PL_TRC              BT_debug_null
-    #define HTTPS_PL_INF              BT_debug_null
+#define HTTPS_PL_TRC              BT_debug_null
+#define HTTPS_PL_INF              BT_debug_null
 #endif /* HTTPS_PL_DEBUG */
 
 /** HTTPS related error codes */
-#define HTTPS_PL_ERR_ID                              0xFFFFU
+#define HTTPS_PL_ERR_ID                              0xF100U
 #define HTTPS_PL_MUTEX_INIT_FAILED                   \
         (0x0001U | HTTPS_PL_ERR_ID)
 #define HTTPS_PL_COND_INIT_FAILED                    \
@@ -45,6 +45,10 @@
         (0x0004U | HTTPS_PL_ERR_ID)
 #define HTTPS_PL_MEMORY_ALLOCATION_FAILED            \
         (0x0005U | HTTPS_PL_ERR_ID)
+
+#define HTTPS_PL_HTTPS_TRANSPORT_EST_ERR             (0x0006U | HTTPS_PL_ERR_ID)
+#define HTTPS_PL_NETWORK_NOT_AVAILABLE               (0x0007U | HTTPS_PL_ERR_ID)
+#define HTTPS_PL_HTTPS_CONN_NOT_IMPLEMENTED          (0x0008U | HTTPS_PL_ERR_ID)
 
 /* HTTPS - HTTP Client Application Callback */
 typedef API_RESULT (* HTTPS_TRANSPORT_CB_PL)

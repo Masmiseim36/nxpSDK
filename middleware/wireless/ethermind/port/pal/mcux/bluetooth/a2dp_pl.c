@@ -14,6 +14,10 @@
 /* --------------------------------------------- Header File Inclusion */
 #include "a2dp_pl.h"
 
+#ifdef LEAUDIO
+#define A2DP_PL_SOURCE_FS_MEDIA
+#endif /* LEAUDIO */
+
 #ifdef A2DP_SOURCE
 
 /* For A2DP Source Streaming */
@@ -180,11 +184,6 @@ void a2dp_pl_produce_media(void)
     UINT16  medialen;
 
 #ifndef A2DP_PL_SOURCE_FS_MEDIA
-    /* Update the tone index */
-    if ((tone_index + (a2dp_src_num_samples << 2U)) > sizeof(beethoven))
-    {
-        tone_index = 0U;
-    }
 
     /* Music Audio is Stereo */
     medialen = (a2dp_src_num_samples << a2dp_src_nc);
@@ -195,7 +194,7 @@ void a2dp_pl_produce_media(void)
         UINT16 index;
 
         /* Allocate Memory */
-        media = (UCHAR *)BT_alloc_mem(medialen);
+        media = (UCHAR*)BT_alloc_mem(medialen);
 
         if (NULL == media)
         {
@@ -205,16 +204,45 @@ void a2dp_pl_produce_media(void)
 
         for (index = 0U; index < a2dp_src_num_samples; index++)
         {
-            media[(2U * index)] = *((UCHAR *)beethoven + tone_index + (4U * index));
-            media[(2U * index) + 1U] = *((UCHAR *)beethoven + tone_index + ((4U * index) + 1U));
+            media[(2U * index)] = *((UCHAR*)beethoven + tone_index);
+            media[(2U * index) + 1U] = *((UCHAR*)beethoven + tone_index + 1U);
+
+            /* Update the tone index */
+            tone_index += 4U;
+            if (tone_index >= sizeof(beethoven))
+            {
+                tone_index = 0U;
+            }
         }
     }
     else
     {
-        media = ((UCHAR *)beethoven + tone_index);
+        if ((tone_index + (a2dp_src_num_samples << 2U)) > sizeof(beethoven))
+        {
+            media = (UCHAR*)BT_alloc_mem(medialen);
+            if (NULL == media)
+            {
+                A2DP_PL_ERR("Memory Allocation failed in Produce Media\n");
+                return;
+            }
+            memcpy(media, ((UCHAR*)beethoven + tone_index), sizeof(beethoven) - tone_index);
+            memcpy(&media[sizeof(beethoven) - tone_index],
+                   ((UCHAR*)beethoven),
+                   ((a2dp_src_num_samples << 2U) - (sizeof(beethoven) - tone_index)));
+            /* Update the tone index */
+            tone_index = ((a2dp_src_num_samples << 2U) - (sizeof(beethoven) - tone_index));
+        }
+        else
+        {
+            media = ((UCHAR*)beethoven + tone_index);
+            /* Update the tone index */
+            tone_index += (a2dp_src_num_samples << 2U);
+            if (tone_index >= sizeof(beethoven))
+            {
+                tone_index = 0U;
+            }
+        }
     }
-
-    tone_index += (a2dp_src_num_samples << 2U);
 #else /* A2DP_PL_SOURCE_FS_MEDIA */
     API_RESULT retval;
     UINT16 readlen;
@@ -225,7 +253,7 @@ void a2dp_pl_produce_media(void)
         return;
     }
 
-    medialen = (a2dp_src_num_samples << 2U);
+    medialen = (a2dp_src_num_samples << a2dp_src_nc);
     media = BT_alloc_mem(medialen);
 
     if (NULL == media)

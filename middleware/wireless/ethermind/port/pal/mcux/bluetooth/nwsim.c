@@ -14,6 +14,7 @@
 #include "nwsim.h"
 #include "sco_audio_pl.h"
 #include "BT_at_parser_api.h"
+#include "appl_utils.h"
 
 /* --------------------------------------------- Global Definitions */
 /** Constant Response Strings */
@@ -230,9 +231,12 @@ static const char nwsim_menu[] = "\n\
 
 static void (* nwsim_rsp_iface)(UCHAR *rsp, UINT16 rsplen);
 static void (* nwsim_callstatus_iface)(UCHAR status);
+static UCHAR (* nwsim_get_inbandring_status_iface)(void);
+
+static void nwsim_reset(void);
 
 /* --------------------------------------------- Functions */
-void nwsim_reset(void)
+static void nwsim_reset(void)
 {
     UINT8 index;
 
@@ -261,7 +265,8 @@ void nwsim_reset(void)
 void nwsim_init
      (
          void (* read_cb)(UCHAR *rsp, UINT16 rsplen),
-         void (* call_control_cb)(UCHAR status)
+         void (* call_control_cb)(UCHAR status),
+         UCHAR(* get_inbandring_status)(void)
      )
 {
     static UCHAR done;
@@ -269,6 +274,7 @@ void nwsim_init
     /* Register callbacks */
     nwsim_rsp_iface = read_cb;
     nwsim_callstatus_iface = call_control_cb;
+    nwsim_get_inbandring_status_iface = get_inbandring_status;
 
     if (0x00U == done)
     {
@@ -311,7 +317,8 @@ void nwsim_command_send (UCHAR * cmd, UINT16 cmdlen)
 {
     AT_PARSER_RESPONSE at_response;
     UINT16 start_index, buffer_size, length, retval;
-    UCHAR index, option;
+    UCHAR index, option, count, input_val;
+    UINT16 i;
     CHAR *ptr;
 
     /* Call the AT parser to parse the AT command sent from unit */
@@ -414,10 +421,24 @@ void nwsim_command_send (UCHAR * cmd, UINT16 cmdlen)
             break;
 
         case ATD:
+            count = 0U;
             nwsim_send_rsp(NWSIM_OK, NULL);
             index = (UCHAR)BT_str_len((CHAR *)(at_response.global_at_str + at_response.param->start_of_value_index));
-            index -= 2U;
-            (at_response.global_at_str + at_response.param->start_of_value_index)[index] = '\0';
+
+            /* Get the index of last digit */
+            for (i = at_response.param->start_of_value_index; i <= index; i++)
+            {
+                input_val = at_response.global_at_str[i];
+                if(('0' <= input_val) && ('9' >= input_val))
+                {
+                    count ++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            (at_response.global_at_str + at_response.param->start_of_value_index)[count] = '\0';
             (BT_IGNORE_RETURN_VALUE) nwsim_dial((CHAR *)&at_response.global_at_str[at_response.param->start_of_value_index]);
             break;
 
@@ -549,9 +570,12 @@ void nwsim_command_send (UCHAR * cmd, UINT16 cmdlen)
 void nwsim_operations (void)
 {
     int choice;
+    API_RESULT retval;
 
     BT_LOOP_FOREVER()
     {
+        retval = API_SUCCESS;
+
         printf("%s\n", nwsim_menu);
         scanf("%d", &choice);
 
@@ -647,30 +671,42 @@ void nwsim_operations (void)
 
         case 45:
             printf("Enter the Signal Strength (0-5)[Current: %d]: ", nwsim_signal);
-            scanf("%d", &choice);
-            nwsim_signal = (UCHAR)choice;
-            nwsim_send_rsp(NWSIM_SIGNAL, &nwsim_signal);
+            retval = appl_validate_params(&choice,1U,0U,5U);
+            if (API_SUCCESS == retval)
+            {
+                nwsim_signal = (UCHAR)choice;
+                nwsim_send_rsp(NWSIM_SIGNAL, &nwsim_signal);
+            }
             break;
 
         case 46:
             printf("Enter the Battery Strength (0-5)[Current: %d]: ", nwsim_battery);
-            scanf("%d", &choice);
-            nwsim_battery = (UCHAR)choice;
-            nwsim_send_rsp(NWSIM_BATTERY, &nwsim_battery);
+            retval = appl_validate_params(&choice,1U,0U,5U);
+            if (API_SUCCESS == retval)
+            {
+                nwsim_battery = (UCHAR)choice;
+                nwsim_send_rsp(NWSIM_BATTERY, &nwsim_battery);
+            }
             break;
 
         case 47:
             printf("Enter the Service Availability (0-1)[Current: %d]: ", nwsim_service);
-            scanf("%d", &choice);
-            nwsim_service = (UCHAR)choice;
-            nwsim_send_rsp(NWSIM_SERVICE, &nwsim_service);
+            retval = appl_validate_params(&choice,1U,0U,1U);
+            if (API_SUCCESS == retval)
+            {
+                nwsim_service = (UCHAR)choice;
+                nwsim_send_rsp(NWSIM_SERVICE, &nwsim_service);
+            }
             break;
 
         case 48:
             printf("Enter the Signal Roaming (0-1)[Current: %d]: ", nwsim_roaming);
-            scanf("%d", &choice);
-            nwsim_roaming = (UCHAR)choice;
-            nwsim_send_rsp(NWSIM_ROAMING, &nwsim_roaming);
+            retval = appl_validate_params(&choice,1U,0U,1U);
+            if (API_SUCCESS == retval)
+            {
+                nwsim_roaming = (UCHAR)choice;
+                nwsim_send_rsp(NWSIM_ROAMING, &nwsim_roaming);
+            }
             break;
 
         case 50:
@@ -817,7 +853,10 @@ void nwsim_ring_timeout_handler(void * args, UINT16 size)
     {
         nwsim_send_rsp(NWSIM_CLIP, &nwsim_clipnum);
     }
-
+    if(1U == nwsim_get_inbandring_status_iface())
+    {
+        sco_audio_play_inband_ringtone_pl();
+    }
     /* Send ring and  clip in loop till accept/reject */
     (BT_IGNORE_RETURN_VALUE) BT_start_timer(&nwsim_ring_timer, 1U, nwsim_ring_timeout_handler, NULL, 0U);
 
@@ -894,8 +933,8 @@ void nwsim_outgoing_call_ring_timeout_handler(void * args, UINT16 size)
         printf("nwsim_outgoing_call_ring_timeout_handler Return\n");
         return;
     }
-    sco_audio_play_outgoing_ringtone_pl();
-    /* Send ring and  clip in loop till accept/reject */
+    /* Simulating Ring tone for Outgoing calls */
+    sco_audio_play_inband_ringtone_pl();
     (BT_IGNORE_RETURN_VALUE) BT_start_timer(&nwsim_outgoing_ring_timer, 1, nwsim_outgoing_call_ring_timeout_handler, NULL, 0);
 
     BT_IGNORE_UNUSED_PARAM(args);
@@ -1091,7 +1130,10 @@ API_RESULT nwsim_handle_call (UCHAR action)
             /* Stop the timer */
             (BT_IGNORE_RETURN_VALUE) BT_stop_timer(nwsim_ring_timer);
             nwsim_ring_timer = BT_TIMER_HANDLE_INIT_VAL;
-
+            if(1U == nwsim_get_inbandring_status_iface())
+            {
+                sco_audio_play_ringtone_exit_pl();
+            }
             nwsim_callcount++;
 
             /* Update active call ID */
@@ -1124,7 +1166,10 @@ API_RESULT nwsim_handle_call (UCHAR action)
             /* Stop the timer */
             (BT_IGNORE_RETURN_VALUE) BT_stop_timer(nwsim_ring_timer);
             nwsim_ring_timer = BT_TIMER_HANDLE_INIT_VAL;
-
+            if(1U == nwsim_get_inbandring_status_iface())
+            {
+                sco_audio_play_ringtone_exit_pl();
+            }
             /* Update active call ID */
             nwsim_callinfo[nwsim_setupcall_id].status = 0xFFU;
 
@@ -1144,7 +1189,10 @@ API_RESULT nwsim_handle_call (UCHAR action)
 
             /* Update state */
             NWSIM_SETCALLSTATE(NWSIM_CALLSACTIVE);
-
+            /* Stop the timer */
+            (BT_IGNORE_RETURN_VALUE) BT_stop_timer(nwsim_outgoing_ring_timer);
+            nwsim_outgoing_ring_timer = BT_TIMER_HANDLE_INIT_VAL;
+            sco_audio_play_ringtone_exit_pl();
             nwsim_callcount++;
 
             /* Update active call ID */
@@ -1173,7 +1221,10 @@ API_RESULT nwsim_handle_call (UCHAR action)
 
             /* Update state */
             NWSIM_SETCALLSTATEIDLE();
-
+            /* Stop the timer */
+            (BT_IGNORE_RETURN_VALUE) BT_stop_timer(nwsim_outgoing_ring_timer);
+            nwsim_outgoing_ring_timer = BT_TIMER_HANDLE_INIT_VAL;
+            sco_audio_play_ringtone_exit_pl();
             /* Update active call ID */
             nwsim_callinfo[nwsim_setupcall_id].status = 0xFFU;
 
@@ -1262,6 +1313,9 @@ API_RESULT nwsim_handle_twc (UCHAR action, UCHAR idx)
 
                     /* Update state */
                     NWSIM_RESETCALLHELD();
+
+                    nwsim_activecall_id = nwsim_heldcall_id;
+                    nwsim_callinfo[nwsim_activecall_id].status = 0U;
 
                     /* CallSetup 0 */
                     nwsim_callsetup = 0U;

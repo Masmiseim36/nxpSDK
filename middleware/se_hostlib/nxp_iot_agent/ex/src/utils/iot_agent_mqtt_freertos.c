@@ -1,4 +1,4 @@
-/* Copyright 2019, 2020, 2021. 2022 NXP
+/* Copyright 2019, 2020, 2021, 2022, 2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -14,7 +14,11 @@
 
 #include "using_mbedtls.h"
 
+#ifdef NXP_IOT_AGENT_USE_COREJSON
+#include "core_json.h"
+#else
 #include "jsmn.h"
+#endif
 
 #include <mbedtls/pk.h>
 
@@ -719,28 +723,28 @@ static const char AZURE_SERVER_ROOT_CERTIFICATE_PEM[] =
 "ksLi4xaNmjICq44Y3ekQEe5+NauQrz4wlHrQMz2nZQ/1/I6eYs9HRCwBXbsdtTLS\r\n"
 "R9I4LtD+gdwyah617jzV/OeBHRnDJELqYzmp\r\n"
 "-----END CERTIFICATE-----\r\n"
-/*DigiCert Global Root CA*/
+/*DigiCert Global Root G2*/
 "-----BEGIN CERTIFICATE-----\r\n"
-"MIIDrzCCApegAwIBAgIQCDvgVpBCRrGhdWrJWZHHSjANBgkqhkiG9w0BAQUFADBh\r\n"
+"MIIDjjCCAnagAwIBAgIQAzrx5qcRqaC7KGSxHQn65TANBgkqhkiG9w0BAQsFADBh\r\n"
 "MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\r\n"
-"d3cuZGlnaWNlcnQuY29tMSAwHgYDVQQDExdEaWdpQ2VydCBHbG9iYWwgUm9vdCBD\r\n"
-"QTAeFw0wNjExMTAwMDAwMDBaFw0zMTExMTAwMDAwMDBaMGExCzAJBgNVBAYTAlVT\r\n"
+"d3cuZGlnaWNlcnQuY29tMSAwHgYDVQQDExdEaWdpQ2VydCBHbG9iYWwgUm9vdCBH\r\n"
+"MjAeFw0xMzA4MDExMjAwMDBaFw0zODAxMTUxMjAwMDBaMGExCzAJBgNVBAYTAlVT\r\n"
 "MRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5j\r\n"
-"b20xIDAeBgNVBAMTF0RpZ2lDZXJ0IEdsb2JhbCBSb290IENBMIIBIjANBgkqhkiG\r\n"
-"9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4jvhEXLeqKTTo1eqUKKPC3eQyaKl7hLOllsB\r\n"
-"CSDMAZOnTjC3U/dDxGkAV53ijSLdhwZAAIEJzs4bg7/fzTtxRuLWZscFs3YnFo97\r\n"
-"nh6Vfe63SKMI2tavegw5BmV/Sl0fvBf4q77uKNd0f3p4mVmFaG5cIzJLv07A6Fpt\r\n"
-"43C/dxC//AH2hdmoRBBYMql1GNXRor5H4idq9Joz+EkIYIvUX7Q6hL+hqkpMfT7P\r\n"
-"T19sdl6gSzeRntwi5m3OFBqOasv+zbMUZBfHWymeMr/y7vrTC0LUq7dBMtoM1O/4\r\n"
-"gdW7jVg/tRvoSSiicNoxBN33shbyTApOB6jtSj1etX+jkMOvJwIDAQABo2MwYTAO\r\n"
-"BgNVHQ8BAf8EBAMCAYYwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUA95QNVbR\r\n"
-"TLtm8KPiGxvDl7I90VUwHwYDVR0jBBgwFoAUA95QNVbRTLtm8KPiGxvDl7I90VUw\r\n"
-"DQYJKoZIhvcNAQEFBQADggEBAMucN6pIExIK+t1EnE9SsPTfrgT1eXkIoyQY/Esr\r\n"
-"hMAtudXH/vTBH1jLuG2cenTnmCmrEbXjcKChzUyImZOMkXDiqw8cvpOp/2PV5Adg\r\n"
-"06O/nVsJ8dWO41P0jmP6P6fbtGbfYmbW0W5BjfIttep3Sp+dWOIrWcBAI+0tKIJF\r\n"
-"PnlUkiaY4IBIqDfv8NZ5YBberOgOzW6sRBc4L0na4UU+Krk2U886UAb3LujEV0ls\r\n"
-"YSEY1QSteDwsOoBrp+uvFRTp2InBuThs4pFsiv9kuXclVzDAGySj4dzp30d8tbQk\r\n"
-"CAUw7C29C79Fv1C5qfPrmAESrciIxpg0X40KPMbp1ZWVbd4=\r\n"
+"b20xIDAeBgNVBAMTF0RpZ2lDZXJ0IEdsb2JhbCBSb290IEcyMIIBIjANBgkqhkiG\r\n"
+"9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzfNNNx7a8myaJCtSnX/RrohCgiN9RlUyfuI\r\n"
+"2/Ou8jqJkTx65qsGGmvPrC3oXgkkRLpimn7Wo6h+4FR1IAWsULecYxpsMNzaHxmx\r\n"
+"1x7e/dfgy5SDN67sH0NO3Xss0r0upS/kqbitOtSZpLYl6ZtrAGCSYP9PIUkY92eQ\r\n"
+"q2EGnI/yuum06ZIya7XzV+hdG82MHauVBJVJ8zUtluNJbd134/tJS7SsVQepj5Wz\r\n"
+"tCO7TG1F8PapspUwtP1MVYwnSlcUfIKdzXOS0xZKBgyMUNGPHgm+F6HmIcr9g+UQ\r\n"
+"vIOlCsRnKPZzFBQ9RnbDhxSJITRNrw9FDKZJobq7nMWxM4MphQIDAQABo0IwQDAP\r\n"
+"BgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBhjAdBgNVHQ4EFgQUTiJUIBiV\r\n"
+"5uNu5g/6+rkS7QYXjzkwDQYJKoZIhvcNAQELBQADggEBAGBnKJRvDkhj6zHd6mcY\r\n"
+"1Yl9PMWLSn/pvtsrF9+wX3N3KjITOYFnQoQj8kVnNeyIv/iPsGEMNKSuIEyExtv4\r\n"
+"NeF22d+mQrvHRAiGfzZ0JFrabA0UWTW98kndth/Jsw1HKj2ZL7tcu7XUIOGZX1NG\r\n"
+"Fdtom/DzMNU+MeKNhJ7jitralj41E6Vf8PlwUHBHQRFXGU7Aj64GxJUTFy8bJZ91\r\n"
+"8rGOmaFvE7FBcf6IKshPECBV1/MUReXgRPTqh5Uykw7+U0b6LJ3/iyK5S9kJRaTe\r\n"
+"pLiaWN0bfVKfjllDiIGknibVb63dDcY3fe0Dkhvld1927jyNxF1WW6LZZm6zNTfl\r\n"
+"MrY=\r\n"
 "-----END CERTIFICATE-----\r\n";
 
 static const uint32_t AZURE_SERVER_ROOT_CERTIFICATE_PEM_LENGTH = sizeof(AZURE_SERVER_ROOT_CERTIFICATE_PEM);
@@ -771,6 +775,21 @@ typedef struct azure_connection_info
 
 azure_registration_info_t* pAzureRegInfo;
 
+#ifdef NXP_IOT_AGENT_USE_COREJSON
+static iot_agent_status_t get_value_from_tag(char *js, size_t js_size, const char * key, size_t key_size, char * value, size_t max_value_size) {
+  	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+	char* value_ptr;
+	size_t value_size = 0U;
+	ASSERT_OR_EXIT_MSG(js != NULL, "The input pointer is NULL");
+	ASSERT_OR_EXIT_MSG(key != NULL, "The input pointer is NULL");
+	ASSERT_OR_EXIT_MSG(value != NULL, "The input pointer is NULL");
+  	ASSERT_OR_EXIT_MSG(JSON_Search(js, js_size, key, key_size, &value_ptr, &value_size) == JSONSuccess, "Error in JSON string parsing");
+	ASSERT_OR_EXIT_MSG(value_size < max_value_size, "To less space allocated for the value buffer");
+	strncpy(value, value_ptr, value_size);
+exit:
+	return agent_status;
+}	  
+#else
 static iot_agent_status_t get_value_from_tag(char *js, const char * key, char * value)
 {
 	jsmn_parser p;
@@ -791,6 +810,7 @@ static iot_agent_status_t get_value_from_tag(char *js, const char * key, char * 
 	}
 	return IOT_AGENT_FAILURE;
 }
+#endif
 
 static void azureRegistrationCallback( MQTTContext_t * pxMqttContext,
         MQTTPacketInfo_t * pxPacketInfo,
@@ -802,14 +822,18 @@ static void azureRegistrationCallback( MQTTContext_t * pxMqttContext,
 
 		char opid[256] = {'\0'};
 		char status[64] = {'\0'};
-		char* payload = pvPortMalloc(pxDeserializedInfo->pPublishInfo->payloadLength + 1);
+		size_t payloadLength = pxDeserializedInfo->pPublishInfo->payloadLength + 1;
+		char* payload = pvPortMalloc(payloadLength);
 
-		memcpy(payload, pxDeserializedInfo->pPublishInfo->pPayload, pxDeserializedInfo->pPublishInfo->payloadLength);
-		payload[pxDeserializedInfo->pPublishInfo->payloadLength] = '\0';
-
+		memcpy(payload, pxDeserializedInfo->pPublishInfo->pPayload, payloadLength - 1);
+		payload[payloadLength - 1] = '\0';
+#ifdef NXP_IOT_AGENT_USE_COREJSON
+		get_value_from_tag(payload, payloadLength, "operationId", strlen("operationId"), opid, sizeof(opid));
+		get_value_from_tag(payload, payloadLength, "status", strlen("status"), status, sizeof(status));
+#else
 		get_value_from_tag(payload, "operationId", opid);
 		get_value_from_tag(payload, "status", status);
-
+#endif
 		azure_registration_info_t* reg_info = pAzureRegInfo;
 
 		if(strcmp(status, "assigning") == 0)
@@ -823,11 +847,20 @@ static void azureRegistrationCallback( MQTTContext_t * pxMqttContext,
 		else if(strcmp(status, "assigned") == 0)
 		{
 			IOT_AGENT_INFO("Device State is now ASSIGNED");
+#ifdef NXP_IOT_AGENT_USE_COREJSON
+			char* registrationState = pvPortMalloc(payloadLength);
 
+			memset(registrationState, '\0', payloadLength);
+			get_value_from_tag(payload, payloadLength, "registrationState", strlen("registrationState"), registrationState, payloadLength);
+			get_value_from_tag(registrationState, strlen(registrationState), "registrationId", strlen("registrationId"), reg_info->registrationId, sizeof(reg_info->registrationId));
+			get_value_from_tag(registrationState, strlen(registrationState), "assignedHub", strlen("assignedHub"), reg_info->assignedHub, sizeof(reg_info->assignedHub));
+			get_value_from_tag(registrationState, strlen(registrationState), "deviceId", strlen("deviceId"), reg_info->deviceId, sizeof(reg_info->deviceId));
+			vPortFree(registrationState);
+#else
 			get_value_from_tag(payload, "registrationId", reg_info->registrationId);
 			get_value_from_tag(payload, "assignedHub", reg_info->assignedHub);
 			get_value_from_tag(payload, "deviceId", reg_info->deviceId);
-
+#endif
 			reg_info->state = ASSIGNED;
 		}
 

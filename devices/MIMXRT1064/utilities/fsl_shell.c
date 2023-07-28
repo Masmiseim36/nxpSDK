@@ -78,6 +78,23 @@
 #define SHELL_WRITEX SHELL_Write
 #endif
 
+/* Weak function. */
+#if defined(__GNUC__)
+#define __WEAK_FUNC __attribute__((weak))
+#elif defined(__ICCARM__)
+#define __WEAK_FUNC __weak
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#define __WEAK_FUNC __attribute__((weak))
+#elif defined(__DSC__) || defined(__CW__)
+#define __WEAK_FUNC __attribute__((weak))
+#endif
+
+#if (!defined(GCOV_DO_COVERAGE) || (GCOV_DO_COVERAGE == 0))
+#define SHELL_STATIC static
+#else
+#define SHELL_STATIC __WEAK_FUNC
+#endif
+
 #if defined(OSA_USED)
 #if (defined(USE_RTOS) && (USE_RTOS > 0U))
 static OSA_MUTEX_HANDLE_DEFINE(s_shellMutex);
@@ -193,7 +210,7 @@ static shell_status_t SHELL_GetChar(shell_context_handle_t *shellContextHandle,
                                     uint8_t *ch); /*!< get a char from communication interface */
 
 #if (defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-static void SHELL_Task(void *param); /*!<  Shell task*/
+SHELL_STATIC void SHELL_Task(void *param); /*!<  Shell task*/
 #endif
 
 /*******************************************************************************
@@ -221,9 +238,9 @@ static OSA_TASK_DEFINE(SHELL_Task, SHELL_TASK_PRIORITY, 1, SHELL_TASK_STACK_SIZE
  ******************************************************************************/
 
 #if (defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-static void SHELL_SerialManagerRxCallback(void *callbackParam,
-                                          serial_manager_callback_message_t *message,
-                                          serial_manager_status_t status)
+SHELL_STATIC void SHELL_SerialManagerRxCallback(void *callbackParam,
+                                                serial_manager_callback_message_t *message,
+                                                serial_manager_status_t status)
 {
     shell_context_handle_t *shellHandle;
 
@@ -336,7 +353,7 @@ static void SHELL_hisOperation(uint8_t ch, shell_context_handle_t *shellContextH
     }
 }
 #if (defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-static void SHELL_Task(void *param)
+SHELL_STATIC void SHELL_Task(void *param)
 #else
 void SHELL_Task(shell_handle_t shellHandle)
 #endif
@@ -610,7 +627,17 @@ static void SHELL_ProcessCommand(shell_context_handle_t *shellContextHandle, con
     uint8_t i = 0;
 
     tmpLen = (uint8_t)strlen(cmd);
-    argc   = SHELL_ParseLine(cmd, tmpLen, argv);
+    if (tmpLen >= SHELL_BUFFER_SIZE - 1U)
+    {
+        (void)SHELL_Printf(shellContextHandle,
+                           "Command line length should not more than SHELL_BUFFER_SIZE, please input command less "
+                           "(SHELL_BUFFER_SIZE - 1) characters again!\r\n");
+        return;
+    }
+    else
+    {
+        argc = SHELL_ParseLine(cmd, tmpLen, argv);
+    }
 
     if ((argc > 0))
     {

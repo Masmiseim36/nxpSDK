@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -181,82 +189,46 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../GeneratedCode/_WidgetSetValueDisplayConfig.h"
 "${ProjDirPath}/../GeneratedCode/_WidgetSetWidgetConfig.h"
 "${ProjDirPath}/../GeneratedCode/ewlocale.h"
+"${ProjDirPath}/../EmbeddedWizard/Application.ewu"
+"${ProjDirPath}/../EmbeddedWizard/Dashboard.ewp"
+"${ProjDirPath}/../EmbeddedWizard/Dashboard.ews"
+"${ProjDirPath}/../EmbeddedWizard/Dashboard.ewu"
+"${ProjDirPath}/../EmbeddedWizard/Exo2-Bold.ttf"
+"${ProjDirPath}/../EmbeddedWizard/Exo2-Regular.ttf"
+"${ProjDirPath}/../EmbeddedWizard/Res/Battery.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/CenterGlowV2.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/GaugeGlowSegment.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/GaugeNeedle.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/HorizontalLine.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/Icons.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/KWIcon.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/LeftBottomGloomV1.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/LeftBottomGlowV1.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/LeftBricksV2.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/LeftGlowV2.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/LeftMiddleGlowV1.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/Logo.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/OffIcon.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/PWRIcon.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/RightBottomGloomV1.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/RightBottomGlowV1.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/RightBricksV2.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/RightGlowV2.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/RightMiddleGlowV1.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/StartEngine.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/StartEngineGloom.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/StartEngineStates.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/SwitchIcon.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/TopGlowV1.png"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../GeneratedCode
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1064/drivers
-    ${SdkRootDirPath}/components/ft5406_rt
-    ${SdkRootDirPath}/components/gt911
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/devices/MIMXRT1064/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1064/utilities/debug_console_lite
-    ${SdkRootDirPath}/middleware/EmbeddedWizard
-    ${SdkRootDirPath}/devices/MIMXRT1064
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1064/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1064/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(driver_cache_armv7_m7_MIMXRT1064)
-
-include(driver_elcdif_MIMXRT1064)
-
-include(driver_snvs_hp_MIMXRT1064)
-
-include(driver_pxp_MIMXRT1064)
-
-include(driver_lpi2c_MIMXRT1064)
-
-include(driver_ft5406_rt_MIMXRT1064)
-
-include(driver_gt911_MIMXRT1064)
-
-include(driver_video-common_MIMXRT1064)
-
-include(utility_debug_console_lite_MIMXRT1064)
-
-include(utility_assert_lite_MIMXRT1064)
-
-include(middleware_embedded_wizard_lib_evkmimxrt10xx_MIMXRT1064)
-
-include(driver_common_MIMXRT1064)
-
-include(driver_clock_MIMXRT1064)
-
-include(middleware_embedded_wizard_evkmimxrt1064_MIMXRT1064)
-
-include(device_MIMXRT1064_CMSIS_MIMXRT1064)
-
-include(component_lpuart_adapter_MIMXRT1064)
-
-include(component_lists_MIMXRT1064)
-
-include(driver_lpuart_MIMXRT1064)
-
-include(device_MIMXRT1064_startup_MIMXRT1064)
-
-include(driver_iomuxc_MIMXRT1064)
-
-include(driver_igpio_MIMXRT1064)
-
-include(driver_xip_device_MIMXRT1064)
-
-include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
-
-include(CMSIS_Include_core_cm_MIMXRT1064)
-
-include(utilities_misc_utilities_MIMXRT1064)
-
-include(device_MIMXRT1064_system_MIMXRT1064)
-
+include(${SdkRootDirPath}/devices/MIMXRT1064/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -266,22 +238,7 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565/libewgfx-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565/libewgfx-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

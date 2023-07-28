@@ -82,7 +82,6 @@
 #define APPL_RSC_CCD_IMPROPERLY_CONFIGURED              (APPL_ERR_ID | 0x81U)
 
 /* --------------------------------------------- External Global Variables */
-extern UCHAR appl_hvc_flag;
 
 /* --------------------------------------------- Exported Global Variables */
 
@@ -116,6 +115,12 @@ static UINT16          appl_msrmt_intrvl;
 static UCHAR           rsc_count;
 static UCHAR           appl_cntrl_point_cnfgd;
 static UCHAR           appl_snsr_calib_error;
+
+/**
+ * Global to track if Handle Value Confirmation is yet to be received
+ * for a previously sent Handle Value Indication
+ */
+static UCHAR           appl_rsc_hvc_flag;
 /* --------------------------------------------- Functions */
 
 void appl_rscs_init(void)
@@ -147,10 +152,6 @@ void appl_rscs_init(void)
 
     APPL_TRC(
     "[RSCS]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    /* Fetch and update the Maximum Attribute count in GATT DB */
-
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #endif /* GATT_DB_DYNAMIC */
 
  /* Populate the GATT DB HANDLE for RSC Measurement and RSC Control Point */
@@ -168,11 +169,11 @@ void appl_rscs_init(void)
 #endif /* GATT_DB_DYNAMIC */
 
     /* Register RSCS GATT DB Handler with PL Extension */
-    gatt_db_init_pl(gatt_db_rscs_gatt_char_handler);
+    (BT_IGNORE_RETURN_VALUE)gatt_db_init_pl(gatt_db_rscs_gatt_char_handler);
 
 #ifdef BT_DUAL_MODE
     /* Update RSCS Service Range in SDP Records */
-    appl_set_gatt_service_in_sdp_record
+    (BT_IGNORE_RETURN_VALUE)appl_set_gatt_service_in_sdp_record
     (
         (UCHAR)GATT_SER_RSCS_RSC_INST,
         DB_RECORD_RSC
@@ -454,7 +455,7 @@ void appl_rscs_server_reinitialize (void)
     rsc_count = 0U;
     appl_cntrl_point_cnfgd = BT_FALSE;
     appl_snsr_calib_error = BT_FALSE;
-    appl_hvc_flag = BT_FALSE;
+    appl_rsc_hvc_flag = BT_FALSE;
 
 #if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
     if (BT_TRUE == APPL_IS_GAP_PERIPHERAL_ROLE())
@@ -522,7 +523,7 @@ void appl_rscs_cntrl_point_timer_handle (void * data, UINT16 datalen)
 
     if (API_FAILURE != retval)
     {
-        appl_hvc_flag = BT_TRUE;
+        appl_rsc_hvc_flag = BT_TRUE;
     }
 }
 
@@ -548,7 +549,7 @@ API_RESULT appl_rsc_control_point_handler
     {
         retval = APPL_RSC_CCD_IMPROPERLY_CONFIGURED;
     }
-    else if (BT_TRUE != appl_hvc_flag)
+    else if (BT_TRUE != appl_rsc_hvc_flag)
     {
         if ((value->len >= 1U) && (value->val[0U] < 0x05U))
         {
@@ -681,6 +682,15 @@ void appl_rscs_handle_ind_complete
     CONSOLE_OUT(
     "\n [RSCS] IND Completed for Appl Handle 0x%02X with result 0x%04X\n",
     *handle, evt_result);
+    
+    /**
+     * Reset waiting for Handle Value Indication irrespective of the result.
+     * This routine can be invoked with Success result if Peer has sent a
+     * Handle Value Confirmation, or if there is a corresponding ATT Procedure
+     * Timeout for Handle Value Indication that was previously sent.
+     * Either ways Application can reset the wait for HVC state here.
+     */
+    appl_rsc_hvc_flag = BT_FALSE;
 
     if (ATT_RESPONSE_TIMED_OUT == evt_result)
     {
@@ -709,7 +719,8 @@ void appl_rscs_handle_mtu_update_complete
          UINT16      mtu
      )
 {
-    CONSOLE_OUT("\n [RSCS] Updated MTU is %d for Appl Handle 0x%02X", mtu, *handle);
+    APPL_TRC("\n[RSCS]: Updated MTU is %d for Appl Handle 0x%02X\n",
+    mtu, *handle);
 }
 
 #endif /* (defined ATT && defined RSCS) */

@@ -331,9 +331,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1015DAF5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1015DAF5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/examples/assets;../../../../../middleware/lvgl/lvgl/demos/stress/assets;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl/examples/assets;../../../../../middleware/lvgl/lvgl/demos/stress/assets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1015/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -415,12 +415,12 @@
             <File>
               <FileName>lvgl_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lvgl_support.h</FilePath>
+              <FilePath>../lvgl_support.h</FilePath>
             </File>
             <File>
               <FileName>lvgl_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lvgl_support.c</FilePath>
+              <FilePath>../lvgl_support.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -446,76 +446,6 @@
               <FileName>lvgl_demo_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../lvgl_demo_utils.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/benchmark</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demo_benchmark.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_demo_benchmark.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/benchmark/assets</GroupName>
-          <Files>
-            <File>
-              <FileName>img_benchmark_cogwheel_alpha16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_argb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_chroma_keyed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_indexed16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_rgb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_bechmark_montserrat_16_compr_az.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_bechmark_montserrat_12_compr_az.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_bechmark_montserrat_28_compr_az.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -736,6 +666,76 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/benchmark</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demo_benchmark.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_demo_benchmark.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/benchmark/assets</GroupName>
+          <Files>
+            <File>
+              <FileName>img_benchmark_cogwheel_alpha16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_argb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_chroma_keyed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_indexed16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_rgb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_16_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_12_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_28_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1085,23 +1085,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
           <Files>
+            <File>
+              <FileName>lv_draw_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_draw_pxp_blend.c</FileName>
               <FileType>1</FileType>
@@ -1138,6 +1133,16 @@
           <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
           <Files>
             <File>
+              <FileName>lv_draw_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_vglite_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
@@ -1168,16 +1173,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_draw_vglite_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
@@ -1186,6 +1181,26 @@
               <FileName>lv_draw_vglite_arc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1296,6 +1311,21 @@
               <FileName>lv_draw_sdl_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2342,6 +2372,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_fragment_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2825,6 +2860,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2861,26 +2921,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3214,9 +3254,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1015DAF5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1015DAF5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/examples/assets;../../../../../middleware/lvgl/lvgl/demos/stress/assets;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1015/drivers;../../../../../devices/MIMXRT1015/cmsis_drivers;../../../../../devices/MIMXRT1015/utilities/str;../../../../../devices/MIMXRT1015/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl/examples/assets;../../../../../middleware/lvgl/lvgl/demos/stress/assets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1015;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1015/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1015/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3250,7 +3290,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3298,12 +3338,12 @@
             <File>
               <FileName>lvgl_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lvgl_support.h</FilePath>
+              <FilePath>../lvgl_support.h</FilePath>
             </File>
             <File>
               <FileName>lvgl_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lvgl_support.c</FilePath>
+              <FilePath>../lvgl_support.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3329,76 +3369,6 @@
               <FileName>lvgl_demo_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../lvgl_demo_utils.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/benchmark</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demo_benchmark.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_demo_benchmark.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/benchmark/assets</GroupName>
-          <Files>
-            <File>
-              <FileName>img_benchmark_cogwheel_alpha16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_argb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_chroma_keyed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_indexed16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_benchmark_cogwheel_rgb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_bechmark_montserrat_16_compr_az.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_bechmark_montserrat_12_compr_az.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_bechmark_montserrat_28_compr_az.c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3619,6 +3589,76 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/benchmark</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demo_benchmark.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_demo_benchmark.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/benchmark/assets</GroupName>
+          <Files>
+            <File>
+              <FileName>img_benchmark_cogwheel_alpha16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_argb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_chroma_keyed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_indexed16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_rgb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_16_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_12_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_28_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3968,23 +4008,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
           <Files>
+            <File>
+              <FileName>lv_draw_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_draw_pxp_blend.c</FileName>
               <FileType>1</FileType>
@@ -4021,6 +4056,16 @@
           <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
           <Files>
             <File>
+              <FileName>lv_draw_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_vglite_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
@@ -4051,16 +4096,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_draw_vglite_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
@@ -4069,6 +4104,26 @@
               <FileName>lv_draw_vglite_arc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4179,6 +4234,21 @@
               <FileName>lv_draw_sdl_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5225,6 +5295,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_fragment_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5708,6 +5783,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_SPI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -5744,26 +5844,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_I2C.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_I2C.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_SPI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
           </Files>
         </Group>

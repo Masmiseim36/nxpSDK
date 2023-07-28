@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016, 2018, 2020 - 2021 NXP
+ * Copyright 2016, 2018, 2020 - 2021, 2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,6 +22,13 @@
 
 #include "fsl_debug_console.h"
 
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
+#undef CONFIG_BT_HOST_USB_IRQ_ENABLE
+#define CONFIG_BT_HOST_USB_IRQ_ENABLE 1
+#undef CONFIG_BT_HOST_USB_ENABLE
+#define CONFIG_BT_HOST_USB_ENABLE 1
+#endif
+
 #ifndef CONFIG_BT_DEBUG_HOST_MSD_FATFS
 #define CONFIG_BT_DEBUG_HOST_MSD_FATFS 0
 #endif
@@ -30,6 +37,22 @@
 #define LOG_MODULE_NAME bt_host_msd_fatfs
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
+
+#if CONFIG_BT_HOST_USB_ENABLE
+
+#ifndef CONTROLLER_ID
+#if (USB_HOST_CONFIG_KHCI > 0U)
+    #define CONTROLLER_ID kUSB_ControllerKhci0
+#elif (USB_HOST_CONFIG_EHCI > 0U)
+    #define CONTROLLER_ID kUSB_ControllerEhci0
+#elif (USB_HOST_CONFIG_OHCI > 0U)
+    #define CONTROLLER_ID kUSB_ControllerOhci0
+#elif (USB_HOST_CONFIG_IP3516HS > 0U)
+    #define CONTROLLER_ID kUSB_ControllerIp3516Hs0
+#else
+    #error The CONTROLLER_ID is not defined!
+#endif /* USB_HOST_CONFIG_KHCI */
+#endif /* CONTROLLER_ID */
 
 /*******************************************************************************
  * Definitions
@@ -904,7 +927,7 @@ static void USB_HostApplicationTask(void *param)
     }
 }
 
-#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0U))
+#if (defined(CONFIG_BT_HOST_USB_IRQ_ENABLE) && (CONFIG_BT_HOST_USB_IRQ_ENABLE > 0U))
 #if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
 #if (defined USBHS_IRQHandler)
 void USBHS_IRQHandler(void)
@@ -939,8 +962,21 @@ void USB0_IRQHandler(void)
 #endif
 #endif
 
+__WEAK_FUNC void USB_HostClockInit(void)
+{
+    assert(0);
+}
+
+__WEAK_FUNC void USB_HostIsrEnable(void)
+{
+    assert(0);
+}
+
+#endif /* CONFIG_BT_HOST_USB_ENABLE */
+
 int USB_HostMsdFatfsInit(void)
 {
+#if CONFIG_BT_HOST_USB_ENABLE
     /* Initialize USB for FS and create tasks */
     usb_status_t status = kStatus_USB_Success;
     EventBits_t uxBits;
@@ -1009,14 +1045,8 @@ int USB_HostMsdFatfsInit(void)
         /* Misra*/
     }
     return 0;
+#else
+    return -1;
+#endif /* CONFIG_BT_HOST_USB_ENABLE */
 }
 
-__WEAK_FUNC void USB_HostClockInit(void)
-{
-    assert(0);
-}
-
-__WEAK_FUNC void USB_HostIsrEnable(void)
-{
-    assert(0);
-}

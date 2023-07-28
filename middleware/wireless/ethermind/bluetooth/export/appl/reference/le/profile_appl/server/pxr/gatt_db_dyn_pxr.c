@@ -31,7 +31,7 @@ UINT16 GATT_CHAR_PXR_BATTERY_LVL_INST;
 UINT16 GATT_CHAR_PXR_LL_ALRT_LVL_INST;
 UINT16 GATT_CHAR_PXR_IM_ALRT_LVL_INST;
 UINT16 GATT_CHAR_PXR_TX_POWER_INST;
-UINT16 GATT_DB_MAX_ATTRIBUTES;
+
 /* --------------------------------------------- Static Global Variables */
 
 /* --------------------------------------------- Functions */

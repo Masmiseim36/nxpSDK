@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C Slave Driver</title>
+<title>MCUXpresso SDK API Reference Manual: GPT: General Purpose Timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,929 +100,658 @@ $(document).ready(function(){initNavTree('a00046.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C Slave Driver<div class="ingroups"><a class="el" href="a00272.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">GPT: General Purpose Timer</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a driver for the General Purpose Timer (GPT) of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="GPTFunc"></a>
+Function groups</h1>
+<p>The gpt driver supports the generation of PWM signals, input capture, and setting up the timer match conditions.</p>
+<h2><a class="anchor" id="GPTInit"></a>
+Initialization and deinitialization</h2>
+<p>The function <a class="el" href="a00046.html#ga6aeb20e99444bdaf31dd9c39c108e79f" title="Initialize GPT to reset state and initialize running mode. ">GPT_Init()</a> initializes the gpt with specified configurations. The function <a class="el" href="a00046.html#ga0f60fd16354f3fcf7bd02f1ccbee80e4" title="Fills in the GPT configuration structure with default settings. ">GPT_GetDefaultConfig()</a> gets the default configurations. The initialization function configures the restart/free-run mode and input selection when running.</p>
+<p>The function <a class="el" href="a00046.html#ga90be090ee63035f2a2b014adcfd8c60b" title="Disables the module and gates the GPT clock. ">GPT_Deinit()</a> stops the timer and turns off the module clock.</p>
+<h1><a class="anchor" id="GptCase"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="GPTInterruptExample"></a>
+GPT interrupt example</h2>
+<p>Set up a channel to trigger a periodic interrupt after every 1 second. Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/gpt </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00431"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00431">lpi2c_slave_config_t</a></td></tr>
-<tr class="memdesc:a00431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the LPI2C slave module.  <a href="a00046.html#a00431">More...</a><br/></td></tr>
-<tr class="separator:a00431"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00432"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00432">lpi2c_slave_transfer_t</a></td></tr>
-<tr class="memdesc:a00432"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer structure.  <a href="a00046.html#a00432">More...</a><br/></td></tr>
-<tr class="separator:a00432"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00320"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00320">lpi2c_slave_handle_t</a></td></tr>
-<tr class="memdesc:a00320"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave handle structure.  <a href="a00046.html#a00320">More...</a><br/></td></tr>
-<tr class="separator:a00320"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga2640285a708842a5e0e7c4c0090a2f58"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> )(LPI2C_Type *base, <a class="el" href="a00046.html#a00432">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
-<tr class="memdesc:ga2640285a708842a5e0e7c4c0090a2f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave event callback function pointer type.  <a href="#ga2640285a708842a5e0e7c4c0090a2f58">More...</a><br/></td></tr>
-<tr class="separator:ga2640285a708842a5e0e7c4c0090a2f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00448"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00448">gpt_config_t</a></td></tr>
+<tr class="memdesc:a00448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to configure the running mode.  <a href="a00046.html#a00448">More...</a><br/></td></tr>
+<tr class="separator:a00448"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gabd50effc706692c03b42faa72c34269b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b">_lpi2c_slave_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba80486f66e12276c945b8813269b90c0e">kLPI2C_SlaveTxReadyFlag</a> = LPI2C_SSR_TDF_MASK, 
+<tr class="memitem:gad0ed5e094d0bec112a065a0c6b057e56"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#ggad0ed5e094d0bec112a065a0c6b057e56a398f5e7765f47a492d625a7cb26bf499">kGPT_ClockSource_Off</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba01265ce6645e4a978b823b1f130a419f">kLPI2C_SlaveRxReadyFlag</a> = LPI2C_SSR_RDF_MASK, 
+&#160;&#160;<a class="el" href="a00046.html#ggad0ed5e094d0bec112a065a0c6b057e56a728cff5c785288f3884d4c2cbdf0b466">kGPT_ClockSource_Periph</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baf34a60fee419e0b3d387b353a38b4772">kLPI2C_SlaveAddressValidFlag</a> = LPI2C_SSR_AVF_MASK, 
+&#160;&#160;<a class="el" href="a00046.html#ggad0ed5e094d0bec112a065a0c6b057e56a1a2644f7461698f6515c3da0a7c1cbab">kGPT_ClockSource_HighFreq</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff">kLPI2C_SlaveTransmitAckFlag</a> = LPI2C_SSR_TAF_MASK, 
+&#160;&#160;<a class="el" href="a00046.html#ggad0ed5e094d0bec112a065a0c6b057e56ab76385e941d5ce14116ac5a55aaf5815">kGPT_ClockSource_Ext</a> = 3U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e">kLPI2C_SlaveRepeatedStartDetectFlag</a> = LPI2C_SSR_RSF_MASK, 
+&#160;&#160;<a class="el" href="a00046.html#ggad0ed5e094d0bec112a065a0c6b057e56acb33521779fb2addb21bb22f850c837d">kGPT_ClockSource_LowFreq</a> = 4U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7">kLPI2C_SlaveStopDetectFlag</a> = LPI2C_SSR_SDF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03">kLPI2C_SlaveBitErrFlag</a> = LPI2C_SSR_BEF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8">kLPI2C_SlaveFifoErrFlag</a> = LPI2C_SSR_FEF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba9fb3f57d810e280effee1dae37d062bb">kLPI2C_SlaveAddressMatch0Flag</a> = LPI2C_SSR_AM0F_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba62cc9694d6891b21af074122eeedca85">kLPI2C_SlaveAddressMatch1Flag</a> = LPI2C_SSR_AM1F_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba6a0fa821b530336ea8d1f19aadcbe1dc">kLPI2C_SlaveGeneralCallFlag</a> = LPI2C_SSR_GCF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d">kLPI2C_SlaveBusyFlag</a> = LPI2C_SSR_SBF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b">kLPI2C_SlaveBusBusyFlag</a> = LPI2C_SSR_BBF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba67a26ff8ddd90c39e772518636f4e832">kLPI2C_SlaveClearFlags</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baaf5e40570c34c37fd532dad21b1dca1f">kLPI2C_SlaveIrqFlags</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269bacb3e0258d950773e55c13829e787de36">kLPI2C_SlaveErrorFlags</a> = kLPI2C_SlaveFifoErrFlag | kLPI2C_SlaveBitErrFlag
+&#160;&#160;<a class="el" href="a00046.html#ggad0ed5e094d0bec112a065a0c6b057e56a9df479d2e5f5d539b053425ab986ad20">kGPT_ClockSource_Osc</a> = 5U
 <br/>
  }</td></tr>
-<tr class="memdesc:gabd50effc706692c03b42faa72c34269b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave peripheral flags.  <a href="a00046.html#gabd50effc706692c03b42faa72c34269b">More...</a><br/></td></tr>
-<tr class="separator:gabd50effc706692c03b42faa72c34269b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a> = 0U, 
+<tr class="memdesc:gad0ed5e094d0bec112a065a0c6b057e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of clock sources.  <a href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">More...</a><br/></td></tr>
+<tr class="separator:gad0ed5e094d0bec112a065a0c6b057e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad36eff6489251bee506c6806c64a86d0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#ggad36eff6489251bee506c6806c64a86d0a083b8ef10ac54db99013fdadaf40ea12">kGPT_InputCapture_Channel1</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675">kLPI2C_MatchAddress0OrAddress1</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb">kLPI2C_MatchAddress0ThroughAddress1</a> = 6U
+&#160;&#160;<a class="el" href="a00046.html#ggad36eff6489251bee506c6806c64a86d0a8ef1e1b7eee2eefaef9d4f9776bafe4a">kGPT_InputCapture_Channel2</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave address match options.  <a href="a00046.html#gac3564395ccab19eb1ce6ab46b36bb5bb">More...</a><br/></td></tr>
-<tr class="separator:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef">kLPI2C_SlaveAddressMatchEvent</a> = 0x01U, 
+<tr class="memdesc:gad36eff6489251bee506c6806c64a86d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of input capture channel number.  <a href="a00046.html#gad36eff6489251bee506c6806c64a86d0">More...</a><br/></td></tr>
+<tr class="separator:gad36eff6489251bee506c6806c64a86d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22997c2d644f6249b9c704afc230eedf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#gga22997c2d644f6249b9c704afc230eedfaf7ecc55be6dd63a6be40d96dc9f8d24e">kGPT_InputOperation_Disabled</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49">kLPI2C_SlaveTransmitEvent</a> = 0x02U, 
+&#160;&#160;<a class="el" href="a00046.html#gga22997c2d644f6249b9c704afc230eedfa17ede75d0bb581f4fed42f678e1b81d1">kGPT_InputOperation_RiseEdge</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18">kLPI2C_SlaveReceiveEvent</a> = 0x04U, 
+&#160;&#160;<a class="el" href="a00046.html#gga22997c2d644f6249b9c704afc230eedfaa0dcd1649563ba92f8f1e8230284edfa">kGPT_InputOperation_FallEdge</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0">kLPI2C_SlaveTransmitAckEvent</a> = 0x08U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4">kLPI2C_SlaveRepeatedStartEvent</a> = 0x10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c">kLPI2C_SlaveCompletionEvent</a> = 0x20U, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec">kLPI2C_SlaveAllEvents</a>
+&#160;&#160;<a class="el" href="a00046.html#gga22997c2d644f6249b9c704afc230eedfa5ad14d26a16fa7d607a446440c88b735">kGPT_InputOperation_BothEdge</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="a00046.html#ga0d99b4dba3841a4e02f7c431a59006c8">More...</a><br/></td></tr>
-<tr class="separator:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga22997c2d644f6249b9c704afc230eedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of input capture operation mode.  <a href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">More...</a><br/></td></tr>
+<tr class="separator:ga22997c2d644f6249b9c704afc230eedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6c9b96e71d6a276ce8437708acddfda"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#ggae6c9b96e71d6a276ce8437708acddfdaa68b52504e269393df3fc389c9b78c2d8">kGPT_OutputCompare_Channel1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggae6c9b96e71d6a276ce8437708acddfdaa1be13c4fe09bed476ee7656b59f25d37">kGPT_OutputCompare_Channel2</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggae6c9b96e71d6a276ce8437708acddfdaa55da6b048e4471add16448bd43a6829c">kGPT_OutputCompare_Channel3</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae6c9b96e71d6a276ce8437708acddfda"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of output compare channel number.  <a href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">More...</a><br/></td></tr>
+<tr class="separator:gae6c9b96e71d6a276ce8437708acddfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54e26b65b23236492c81c572ba36ab20"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#gga54e26b65b23236492c81c572ba36ab20adedc5e02092eeab85600f919bf2dec82">kGPT_OutputOperation_Disconnected</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga54e26b65b23236492c81c572ba36ab20acd8732f3636757f56665c6549a27c887">kGPT_OutputOperation_Toggle</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga54e26b65b23236492c81c572ba36ab20ab74f183a3e8eb815a40a39eb033dc532">kGPT_OutputOperation_Clear</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga54e26b65b23236492c81c572ba36ab20aae9329b2a4b5ea63e66ca10239efe669">kGPT_OutputOperation_Set</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga54e26b65b23236492c81c572ba36ab20a5bd080fd627f26d074da1b3dab7535f2">kGPT_OutputOperation_Activelow</a> = 4U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga54e26b65b23236492c81c572ba36ab20"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of output compare operation mode.  <a href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">More...</a><br/></td></tr>
+<tr class="separator:ga54e26b65b23236492c81c572ba36ab20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1d66bcf23acefc1a50049c7e24d77bb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gac1d66bcf23acefc1a50049c7e24d77bb">gpt_interrupt_enable_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#ggac1d66bcf23acefc1a50049c7e24d77bba61170acbca36f4757633d1d12d3246ba">kGPT_OutputCompare1InterruptEnable</a> = GPT_IR_OF1IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggac1d66bcf23acefc1a50049c7e24d77bba4ebb7fc65d182cd6643fe237d60d91ed">kGPT_OutputCompare2InterruptEnable</a> = GPT_IR_OF2IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggac1d66bcf23acefc1a50049c7e24d77bba5141f4b482113c7763819b89c4abcc09">kGPT_OutputCompare3InterruptEnable</a> = GPT_IR_OF3IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggac1d66bcf23acefc1a50049c7e24d77bba21a3c64b4edc196b24be9e12c061fe88">kGPT_InputCapture1InterruptEnable</a> = GPT_IR_IF1IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggac1d66bcf23acefc1a50049c7e24d77bbaf6dc605de633b7e545065bc952409562">kGPT_InputCapture2InterruptEnable</a> = GPT_IR_IF2IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggac1d66bcf23acefc1a50049c7e24d77bba2bbf44ee3464387de1fd11a2c28a5132">kGPT_RollOverFlagInterruptEnable</a> = GPT_IR_ROVIE_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gac1d66bcf23acefc1a50049c7e24d77bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of GPT interrupts.  <a href="a00046.html#gac1d66bcf23acefc1a50049c7e24d77bb">More...</a><br/></td></tr>
+<tr class="separator:gac1d66bcf23acefc1a50049c7e24d77bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21ce3ba40810ea60cf4b59a488e73cc5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#gga21ce3ba40810ea60cf4b59a488e73cc5a241fcd87ab22fa9a7212739a39134dfe">kGPT_OutputCompare1Flag</a> = GPT_SR_OF1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga21ce3ba40810ea60cf4b59a488e73cc5a75f50bb95d6a232c6bbb0b6c52db60e5">kGPT_OutputCompare2Flag</a> = GPT_SR_OF2_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga21ce3ba40810ea60cf4b59a488e73cc5abfc4b1e05ade49b83461447d4b4464b1">kGPT_OutputCompare3Flag</a> = GPT_SR_OF3_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga21ce3ba40810ea60cf4b59a488e73cc5af8d82fdf4783ec7125f8f4cdedaed062">kGPT_InputCapture1Flag</a> = GPT_SR_IF1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga21ce3ba40810ea60cf4b59a488e73cc5a64ff7cb952a6cd9c1d85d3dcffc1a50b">kGPT_InputCapture2Flag</a> = GPT_SR_IF2_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#gga21ce3ba40810ea60cf4b59a488e73cc5ae238e6b78d934129211d8e7aafef59a1">kGPT_RollOverFlag</a> = GPT_SR_ROV_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga21ce3ba40810ea60cf4b59a488e73cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status flag.  <a href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">More...</a><br/></td></tr>
+<tr class="separator:ga21ce3ba40810ea60cf4b59a488e73cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gadf34085d4557ceb3081fff9fe0e3189a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gadf34085d4557ceb3081fff9fe0e3189a">LPI2C_SlaveGetDefaultConfig</a> (<a class="el" href="a00046.html#a00431">lpi2c_slave_config_t</a> *slaveConfig)</td></tr>
-<tr class="memdesc:gadf34085d4557ceb3081fff9fe0e3189a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the LPI2C slave peripheral.  <a href="#gadf34085d4557ceb3081fff9fe0e3189a">More...</a><br/></td></tr>
-<tr class="separator:gadf34085d4557ceb3081fff9fe0e3189a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gae5cc8a03c784a99bb58b69852dfda5a5">LPI2C_SlaveInit</a> (LPI2C_Type *base, const <a class="el" href="a00046.html#a00431">lpi2c_slave_config_t</a> *slaveConfig, uint32_t sourceClock_Hz)</td></tr>
-<tr class="memdesc:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPI2C slave peripheral.  <a href="#gae5cc8a03c784a99bb58b69852dfda5a5">More...</a><br/></td></tr>
-<tr class="separator:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1a5cfe78acec0e1f8dd4af63a0f87f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaa1a5cfe78acec0e1f8dd4af63a0f87f8">LPI2C_SlaveDeinit</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:gaa1a5cfe78acec0e1f8dd4af63a0f87f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the LPI2C slave peripheral.  <a href="#gaa1a5cfe78acec0e1f8dd4af63a0f87f8">More...</a><br/></td></tr>
-<tr class="separator:gaa1a5cfe78acec0e1f8dd4af63a0f87f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf58f9ebf437d62936c45c201a68fb5d7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaf58f9ebf437d62936c45c201a68fb5d7">LPI2C_SlaveReset</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:gaf58f9ebf437d62936c45c201a68fb5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a software reset of the LPI2C slave peripheral.  <a href="#gaf58f9ebf437d62936c45c201a68fb5d7">More...</a><br/></td></tr>
-<tr class="separator:gaf58f9ebf437d62936c45c201a68fb5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae83a936eb8303218278cd704d8238a08"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gae83a936eb8303218278cd704d8238a08">LPI2C_SlaveEnable</a> (LPI2C_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gae83a936eb8303218278cd704d8238a08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the LPI2C module as slave.  <a href="#gae83a936eb8303218278cd704d8238a08">More...</a><br/></td></tr>
-<tr class="separator:gae83a936eb8303218278cd704d8238a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Driver version</h2></td></tr>
+<tr class="memitem:ga94106f68143140f2cf4292f02cf4ea21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga94106f68143140f2cf4292f02cf4ea21"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_GPT_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="separator:ga94106f68143140f2cf4292f02cf4ea21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave status</h2></td></tr>
-<tr class="memitem:ga18055724e510f601f35cc00940e9155c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga18055724e510f601f35cc00940e9155c">LPI2C_SlaveGetStatusFlags</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga18055724e510f601f35cc00940e9155c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the LPI2C slave status flags.  <a href="#ga18055724e510f601f35cc00940e9155c">More...</a><br/></td></tr>
-<tr class="separator:ga18055724e510f601f35cc00940e9155c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b5306231d96d7fa38ef26d9ca6526b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga3b5306231d96d7fa38ef26d9ca6526b1">LPI2C_SlaveClearStatusFlags</a> (LPI2C_Type *base, uint32_t statusMask)</td></tr>
-<tr class="memdesc:ga3b5306231d96d7fa38ef26d9ca6526b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the LPI2C status flag state.  <a href="#ga3b5306231d96d7fa38ef26d9ca6526b1">More...</a><br/></td></tr>
-<tr class="separator:ga3b5306231d96d7fa38ef26d9ca6526b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga6aeb20e99444bdaf31dd9c39c108e79f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga6aeb20e99444bdaf31dd9c39c108e79f">GPT_Init</a> (GPT_Type *base, const <a class="el" href="a00046.html#a00448">gpt_config_t</a> *initConfig)</td></tr>
+<tr class="memdesc:ga6aeb20e99444bdaf31dd9c39c108e79f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize GPT to reset state and initialize running mode.  <a href="#ga6aeb20e99444bdaf31dd9c39c108e79f">More...</a><br/></td></tr>
+<tr class="separator:ga6aeb20e99444bdaf31dd9c39c108e79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90be090ee63035f2a2b014adcfd8c60b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga90be090ee63035f2a2b014adcfd8c60b">GPT_Deinit</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga90be090ee63035f2a2b014adcfd8c60b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the module and gates the GPT clock.  <a href="#ga90be090ee63035f2a2b014adcfd8c60b">More...</a><br/></td></tr>
+<tr class="separator:ga90be090ee63035f2a2b014adcfd8c60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f60fd16354f3fcf7bd02f1ccbee80e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga0f60fd16354f3fcf7bd02f1ccbee80e4">GPT_GetDefaultConfig</a> (<a class="el" href="a00046.html#a00448">gpt_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga0f60fd16354f3fcf7bd02f1ccbee80e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the GPT configuration structure with default settings.  <a href="#ga0f60fd16354f3fcf7bd02f1ccbee80e4">More...</a><br/></td></tr>
+<tr class="separator:ga0f60fd16354f3fcf7bd02f1ccbee80e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave interrupts</h2></td></tr>
-<tr class="memitem:gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaf5b7a33a341fd95ca77dcb6fe7f1bf3c">LPI2C_SlaveEnableInterrupts</a> (LPI2C_Type *base, uint32_t interruptMask)</td></tr>
-<tr class="memdesc:gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the LPI2C slave interrupt requests.  <a href="#gaf5b7a33a341fd95ca77dcb6fe7f1bf3c">More...</a><br/></td></tr>
-<tr class="separator:gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9422103623a9866f350dd03aea984741"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga9422103623a9866f350dd03aea984741">LPI2C_SlaveDisableInterrupts</a> (LPI2C_Type *base, uint32_t interruptMask)</td></tr>
-<tr class="memdesc:ga9422103623a9866f350dd03aea984741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the LPI2C slave interrupt requests.  <a href="#ga9422103623a9866f350dd03aea984741">More...</a><br/></td></tr>
-<tr class="separator:ga9422103623a9866f350dd03aea984741"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d1fb84d337b8eb5cc19cbeced06c2a1"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga3d1fb84d337b8eb5cc19cbeced06c2a1">LPI2C_SlaveGetEnabledInterrupts</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga3d1fb84d337b8eb5cc19cbeced06c2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the set of currently enabled LPI2C slave interrupt requests.  <a href="#ga3d1fb84d337b8eb5cc19cbeced06c2a1">More...</a><br/></td></tr>
-<tr class="separator:ga3d1fb84d337b8eb5cc19cbeced06c2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Software Reset</h2></td></tr>
+<tr class="memitem:ga9cbb3514413d2eb8783bbce110451d60"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga9cbb3514413d2eb8783bbce110451d60">GPT_SoftwareReset</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga9cbb3514413d2eb8783bbce110451d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software reset of GPT module.  <a href="#ga9cbb3514413d2eb8783bbce110451d60">More...</a><br/></td></tr>
+<tr class="separator:ga9cbb3514413d2eb8783bbce110451d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave DMA control</h2></td></tr>
-<tr class="memitem:gaa13d0c04083818cf91af19a6add0e08f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaa13d0c04083818cf91af19a6add0e08f">LPI2C_SlaveEnableDMA</a> (LPI2C_Type *base, bool enableAddressValid, bool enableRx, bool enableTx)</td></tr>
-<tr class="memdesc:gaa13d0c04083818cf91af19a6add0e08f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the LPI2C slave peripheral DMA requests.  <a href="#gaa13d0c04083818cf91af19a6add0e08f">More...</a><br/></td></tr>
-<tr class="separator:gaa13d0c04083818cf91af19a6add0e08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Clock source and frequency control</h2></td></tr>
+<tr class="memitem:ga0328dbdc7fe6c17155f776f27692e3c1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga0328dbdc7fe6c17155f776f27692e3c1">GPT_SetClockSource</a> (GPT_Type *base, <a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> gptClkSource)</td></tr>
+<tr class="memdesc:ga0328dbdc7fe6c17155f776f27692e3c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set clock source of GPT.  <a href="#ga0328dbdc7fe6c17155f776f27692e3c1">More...</a><br/></td></tr>
+<tr class="separator:ga0328dbdc7fe6c17155f776f27692e3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ef3c43a4ea5e27291686fcf52a01c53"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga2ef3c43a4ea5e27291686fcf52a01c53">GPT_GetClockSource</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga2ef3c43a4ea5e27291686fcf52a01c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get clock source of GPT.  <a href="#ga2ef3c43a4ea5e27291686fcf52a01c53">More...</a><br/></td></tr>
+<tr class="separator:ga2ef3c43a4ea5e27291686fcf52a01c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga941a31e66563ec733dc4c69ab430af3f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga941a31e66563ec733dc4c69ab430af3f">GPT_SetClockDivider</a> (GPT_Type *base, uint32_t divider)</td></tr>
+<tr class="memdesc:ga941a31e66563ec733dc4c69ab430af3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pre scaler of GPT.  <a href="#ga941a31e66563ec733dc4c69ab430af3f">More...</a><br/></td></tr>
+<tr class="separator:ga941a31e66563ec733dc4c69ab430af3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e4fc77424a6dccfb8a80f33145aa85f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga9e4fc77424a6dccfb8a80f33145aa85f">GPT_GetClockDivider</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga9e4fc77424a6dccfb8a80f33145aa85f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get clock divider in GPT module.  <a href="#ga9e4fc77424a6dccfb8a80f33145aa85f">More...</a><br/></td></tr>
+<tr class="separator:ga9e4fc77424a6dccfb8a80f33145aa85f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81c59ed87813049b1b1931547c229688"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga81c59ed87813049b1b1931547c229688">GPT_SetOscClockDivider</a> (GPT_Type *base, uint32_t divider)</td></tr>
+<tr class="memdesc:ga81c59ed87813049b1b1931547c229688"><td class="mdescLeft">&#160;</td><td class="mdescRight">OSC 24M pre-scaler before selected by clock source.  <a href="#ga81c59ed87813049b1b1931547c229688">More...</a><br/></td></tr>
+<tr class="separator:ga81c59ed87813049b1b1931547c229688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f55308a463986caceb5dc78f97f72ea"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga7f55308a463986caceb5dc78f97f72ea">GPT_GetOscClockDivider</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga7f55308a463986caceb5dc78f97f72ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get OSC 24M clock divider in GPT module.  <a href="#ga7f55308a463986caceb5dc78f97f72ea">More...</a><br/></td></tr>
+<tr class="separator:ga7f55308a463986caceb5dc78f97f72ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave bus operations</h2></td></tr>
-<tr class="memitem:ga155ee1b5bc8c621b60b349b191c078fc"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga155ee1b5bc8c621b60b349b191c078fc">LPI2C_SlaveGetBusIdleState</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga155ee1b5bc8c621b60b349b191c078fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the bus is idle.  <a href="#ga155ee1b5bc8c621b60b349b191c078fc">More...</a><br/></td></tr>
-<tr class="separator:ga155ee1b5bc8c621b60b349b191c078fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga417e07e45369a955f7fecaa26e13b335"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga417e07e45369a955f7fecaa26e13b335">LPI2C_SlaveTransmitAck</a> (LPI2C_Type *base, bool ackOrNack)</td></tr>
-<tr class="memdesc:ga417e07e45369a955f7fecaa26e13b335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits either an ACK or NAK on the I2C bus in response to a byte from the master.  <a href="#ga417e07e45369a955f7fecaa26e13b335">More...</a><br/></td></tr>
-<tr class="separator:ga417e07e45369a955f7fecaa26e13b335"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga8219a79b748dc59c982c7c3a8470c3a6">LPI2C_SlaveGetReceivedAddress</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the slave address sent by the I2C master.  <a href="#ga8219a79b748dc59c982c7c3a8470c3a6">More...</a><br/></td></tr>
-<tr class="separator:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb2d085904e83ee63ee84f7c8402024c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gacb2d085904e83ee63ee84f7c8402024c">LPI2C_SlaveSend</a> (LPI2C_Type *base, void *txBuff, size_t txSize, size_t *actualTxSize)</td></tr>
-<tr class="memdesc:gacb2d085904e83ee63ee84f7c8402024c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I2C bus.  <a href="#gacb2d085904e83ee63ee84f7c8402024c">More...</a><br/></td></tr>
-<tr class="separator:gacb2d085904e83ee63ee84f7c8402024c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga36dd1b211a7fe488bfc062a1d8e74fc8">LPI2C_SlaveReceive</a> (LPI2C_Type *base, void *rxBuff, size_t rxSize, size_t *actualRxSize)</td></tr>
-<tr class="memdesc:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I2C bus.  <a href="#ga36dd1b211a7fe488bfc062a1d8e74fc8">More...</a><br/></td></tr>
-<tr class="separator:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Timer Start and Stop</h2></td></tr>
+<tr class="memitem:gafd643e0c52bdf9cb0ea78819cd5d1ca9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gafd643e0c52bdf9cb0ea78819cd5d1ca9">GPT_StartTimer</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:gafd643e0c52bdf9cb0ea78819cd5d1ca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start GPT timer.  <a href="#gafd643e0c52bdf9cb0ea78819cd5d1ca9">More...</a><br/></td></tr>
+<tr class="separator:gafd643e0c52bdf9cb0ea78819cd5d1ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d3298caf68180acb777d0bed3585a95"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga7d3298caf68180acb777d0bed3585a95">GPT_StopTimer</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga7d3298caf68180acb777d0bed3585a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop GPT timer.  <a href="#ga7d3298caf68180acb777d0bed3585a95">More...</a><br/></td></tr>
+<tr class="separator:ga7d3298caf68180acb777d0bed3585a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave non-blocking</h2></td></tr>
-<tr class="memitem:ga6afdc286db9c700bc057038518a19285"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga6afdc286db9c700bc057038518a19285">LPI2C_SlaveTransferCreateHandle</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, <a class="el" href="a00046.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
-<tr class="memdesc:ga6afdc286db9c700bc057038518a19285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new handle for the LPI2C slave non-blocking APIs.  <a href="#ga6afdc286db9c700bc057038518a19285">More...</a><br/></td></tr>
-<tr class="separator:ga6afdc286db9c700bc057038518a19285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga1ba7c9d0c254de8fe8c04091c007edff">LPI2C_SlaveTransferNonBlocking</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, uint32_t eventMask)</td></tr>
-<tr class="memdesc:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts accepting slave transfers.  <a href="#ga1ba7c9d0c254de8fe8c04091c007edff">More...</a><br/></td></tr>
-<tr class="separator:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga755b38638cbade1b05587146e9f7267d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga755b38638cbade1b05587146e9f7267d">LPI2C_SlaveTransferGetCount</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, size_t *count)</td></tr>
-<tr class="memdesc:ga755b38638cbade1b05587146e9f7267d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave transfer status during a non-blocking transfer.  <a href="#ga755b38638cbade1b05587146e9f7267d">More...</a><br/></td></tr>
-<tr class="separator:ga755b38638cbade1b05587146e9f7267d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d46d488aa043ab93bfa1574277a3985"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga7d46d488aa043ab93bfa1574277a3985">LPI2C_SlaveTransferAbort</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle)</td></tr>
-<tr class="memdesc:ga7d46d488aa043ab93bfa1574277a3985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the slave non-blocking transfers.  <a href="#ga7d46d488aa043ab93bfa1574277a3985">More...</a><br/></td></tr>
-<tr class="separator:ga7d46d488aa043ab93bfa1574277a3985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Read the timer period</h2></td></tr>
+<tr class="memitem:ga27f113c6b601234c6493e04ff7699f84"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga27f113c6b601234c6493e04ff7699f84">GPT_GetCurrentTimerCount</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga27f113c6b601234c6493e04ff7699f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current GPT counting value.  <a href="#ga27f113c6b601234c6493e04ff7699f84">More...</a><br/></td></tr>
+<tr class="separator:ga27f113c6b601234c6493e04ff7699f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave IRQ handler</h2></td></tr>
-<tr class="memitem:ga712654857bc4490644b46220c0c460bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga712654857bc4490644b46220c0c460bf">LPI2C_SlaveTransferHandleIRQ</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle)</td></tr>
-<tr class="memdesc:ga712654857bc4490644b46220c0c460bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle slave interrupts.  <a href="#ga712654857bc4490644b46220c0c460bf">More...</a><br/></td></tr>
-<tr class="separator:ga712654857bc4490644b46220c0c460bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+GPT Input/Output Signal Control</h2></td></tr>
+<tr class="memitem:gaa0d5805eba17bbc982af80077e780bb0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaa0d5805eba17bbc982af80077e780bb0">GPT_SetInputOperationMode</a> (GPT_Type *base, <a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> channel, <a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> mode)</td></tr>
+<tr class="memdesc:gaa0d5805eba17bbc982af80077e780bb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GPT operation mode of input capture channel.  <a href="#gaa0d5805eba17bbc982af80077e780bb0">More...</a><br/></td></tr>
+<tr class="separator:gaa0d5805eba17bbc982af80077e780bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga075a62145685b5e150392b5bf0162af7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga075a62145685b5e150392b5bf0162af7">GPT_GetInputOperationMode</a> (GPT_Type *base, <a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> channel)</td></tr>
+<tr class="memdesc:ga075a62145685b5e150392b5bf0162af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT operation mode of input capture channel.  <a href="#ga075a62145685b5e150392b5bf0162af7">More...</a><br/></td></tr>
+<tr class="separator:ga075a62145685b5e150392b5bf0162af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga613c750bc61498e596cc34bf3d7c8705"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga613c750bc61498e596cc34bf3d7c8705">GPT_GetInputCaptureValue</a> (GPT_Type *base, <a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> channel)</td></tr>
+<tr class="memdesc:ga613c750bc61498e596cc34bf3d7c8705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT input capture value of certain channel.  <a href="#ga613c750bc61498e596cc34bf3d7c8705">More...</a><br/></td></tr>
+<tr class="separator:ga613c750bc61498e596cc34bf3d7c8705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b4b3962e3f263e53d83ccabf2f3b489"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga2b4b3962e3f263e53d83ccabf2f3b489">GPT_SetOutputOperationMode</a> (GPT_Type *base, <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel, <a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> mode)</td></tr>
+<tr class="memdesc:ga2b4b3962e3f263e53d83ccabf2f3b489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GPT operation mode of output compare channel.  <a href="#ga2b4b3962e3f263e53d83ccabf2f3b489">More...</a><br/></td></tr>
+<tr class="separator:ga2b4b3962e3f263e53d83ccabf2f3b489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4ed0958938a4a9c3c58050e26511026"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaa4ed0958938a4a9c3c58050e26511026">GPT_GetOutputOperationMode</a> (GPT_Type *base, <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel)</td></tr>
+<tr class="memdesc:gaa4ed0958938a4a9c3c58050e26511026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT operation mode of output compare channel.  <a href="#gaa4ed0958938a4a9c3c58050e26511026">More...</a><br/></td></tr>
+<tr class="separator:gaa4ed0958938a4a9c3c58050e26511026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4482de4377738cf0ee065f6ad7d3547"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gab4482de4377738cf0ee065f6ad7d3547">GPT_SetOutputCompareValue</a> (GPT_Type *base, <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel, uint32_t value)</td></tr>
+<tr class="memdesc:gab4482de4377738cf0ee065f6ad7d3547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GPT output compare value of output compare channel.  <a href="#gab4482de4377738cf0ee065f6ad7d3547">More...</a><br/></td></tr>
+<tr class="separator:gab4482de4377738cf0ee065f6ad7d3547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf152c66a815fd38352742ed4ba01d507"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaf152c66a815fd38352742ed4ba01d507">GPT_GetOutputCompareValue</a> (GPT_Type *base, <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel)</td></tr>
+<tr class="memdesc:gaf152c66a815fd38352742ed4ba01d507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT output compare value of output compare channel.  <a href="#gaf152c66a815fd38352742ed4ba01d507">More...</a><br/></td></tr>
+<tr class="separator:gaf152c66a815fd38352742ed4ba01d507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82938d7d324ba16a8462f1b68284b6ba"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga82938d7d324ba16a8462f1b68284b6ba">GPT_ForceOutput</a> (GPT_Type *base, <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel)</td></tr>
+<tr class="memdesc:ga82938d7d324ba16a8462f1b68284b6ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force GPT output action on output compare channel, ignoring comparator.  <a href="#ga82938d7d324ba16a8462f1b68284b6ba">More...</a><br/></td></tr>
+<tr class="separator:ga82938d7d324ba16a8462f1b68284b6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+GPT Interrupt and Status Interface</h2></td></tr>
+<tr class="memitem:gaf441b1f196d31f08319db26487bbe496"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaf441b1f196d31f08319db26487bbe496">GPT_EnableInterrupts</a> (GPT_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaf441b1f196d31f08319db26487bbe496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected GPT interrupts.  <a href="#gaf441b1f196d31f08319db26487bbe496">More...</a><br/></td></tr>
+<tr class="separator:gaf441b1f196d31f08319db26487bbe496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4fd7eccba69c67e4facf6e9a5e9c62e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaa4fd7eccba69c67e4facf6e9a5e9c62e">GPT_DisableInterrupts</a> (GPT_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa4fd7eccba69c67e4facf6e9a5e9c62e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected GPT interrupts.  <a href="#gaa4fd7eccba69c67e4facf6e9a5e9c62e">More...</a><br/></td></tr>
+<tr class="separator:gaa4fd7eccba69c67e4facf6e9a5e9c62e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga471739441f35a3f65707e40e8d5f0649"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga471739441f35a3f65707e40e8d5f0649">GPT_GetEnabledInterrupts</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga471739441f35a3f65707e40e8d5f0649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled GPT interrupts.  <a href="#ga471739441f35a3f65707e40e8d5f0649">More...</a><br/></td></tr>
+<tr class="separator:ga471739441f35a3f65707e40e8d5f0649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status Interface</h2></td></tr>
+<tr class="memitem:ga9e19600458e9121125a370720b4f6f6d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga9e19600458e9121125a370720b4f6f6d">GPT_GetStatusFlags</a> (GPT_Type *base, <a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> flags)</td></tr>
+<tr class="memdesc:ga9e19600458e9121125a370720b4f6f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT status flags.  <a href="#ga9e19600458e9121125a370720b4f6f6d">More...</a><br/></td></tr>
+<tr class="separator:ga9e19600458e9121125a370720b4f6f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0cdd59a23d43441a5a160bf01351754"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gad0cdd59a23d43441a5a160bf01351754">GPT_ClearStatusFlags</a> (GPT_Type *base, <a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> flags)</td></tr>
+<tr class="memdesc:gad0cdd59a23d43441a5a160bf01351754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the GPT status flags.  <a href="#gad0cdd59a23d43441a5a160bf01351754">More...</a><br/></td></tr>
+<tr class="separator:gad0cdd59a23d43441a5a160bf01351754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00431" id="a00431"></a>
+<a name="a00448" id="a00448"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpi2c_slave_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>This structure holds configuration settings for the LPI2C slave peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00046.html#gadf34085d4557ceb3081fff9fe0e3189a" title="Provides a default configuration for the LPI2C slave peripheral. ">LPI2C_SlaveGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
-<p>The configuration structure can be made constant so it resides in flash. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad220cfa81b4117fd1d952b43ff0d5511"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ad220cfa81b4117fd1d952b43ff0d5511">enableSlave</a></td></tr>
-<tr class="memdesc:ad220cfa81b4117fd1d952b43ff0d5511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable slave mode.  <a href="#ad220cfa81b4117fd1d952b43ff0d5511">More...</a><br/></td></tr>
-<tr class="separator:ad220cfa81b4117fd1d952b43ff0d5511"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16f171990f815872142d3fe73eb74ff4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a16f171990f815872142d3fe73eb74ff4">address0</a></td></tr>
-<tr class="memdesc:a16f171990f815872142d3fe73eb74ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave's 7-bit address.  <a href="#a16f171990f815872142d3fe73eb74ff4">More...</a><br/></td></tr>
-<tr class="separator:a16f171990f815872142d3fe73eb74ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb3035cd87a9746bdbe5c6618a492034"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#afb3035cd87a9746bdbe5c6618a492034">address1</a></td></tr>
-<tr class="memdesc:afb3035cd87a9746bdbe5c6618a492034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate slave 7-bit address.  <a href="#afb3035cd87a9746bdbe5c6618a492034">More...</a><br/></td></tr>
-<tr class="separator:afb3035cd87a9746bdbe5c6618a492034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dc82ff6416b69128c0d6d78d533b093"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a1dc82ff6416b69128c0d6d78d533b093">addressMatchMode</a></td></tr>
-<tr class="memdesc:a1dc82ff6416b69128c0d6d78d533b093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address matching options.  <a href="#a1dc82ff6416b69128c0d6d78d533b093">More...</a><br/></td></tr>
-<tr class="separator:a1dc82ff6416b69128c0d6d78d533b093"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cbbafe55351cb52d25b3de1a71e2231"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a4cbbafe55351cb52d25b3de1a71e2231">filterDozeEnable</a></td></tr>
-<tr class="memdesc:a4cbbafe55351cb52d25b3de1a71e2231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter in doze mode.  <a href="#a4cbbafe55351cb52d25b3de1a71e2231">More...</a><br/></td></tr>
-<tr class="separator:a4cbbafe55351cb52d25b3de1a71e2231"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fcca02d50a48b5a3a2923ea449316ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a6fcca02d50a48b5a3a2923ea449316ce">filterEnable</a></td></tr>
-<tr class="memdesc:a6fcca02d50a48b5a3a2923ea449316ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter.  <a href="#a6fcca02d50a48b5a3a2923ea449316ce">More...</a><br/></td></tr>
-<tr class="separator:a6fcca02d50a48b5a3a2923ea449316ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a061ed35a72d6e8ffe9a02be00f633f87">enableGeneralCall</a></td></tr>
-<tr class="memdesc:a061ed35a72d6e8ffe9a02be00f633f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable general call address matching.  <a href="#a061ed35a72d6e8ffe9a02be00f633f87">More...</a><br/></td></tr>
-<tr class="separator:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae68493537f90f7bff4a421ff534fb7a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ae68493537f90f7bff4a421ff534fb7a1">ignoreAck</a></td></tr>
-<tr class="memdesc:ae68493537f90f7bff4a421ff534fb7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue transfers after a NACK is detected.  <a href="#ae68493537f90f7bff4a421ff534fb7a1">More...</a><br/></td></tr>
-<tr class="separator:ae68493537f90f7bff4a421ff534fb7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac273a825233fe937aa16d98e38664812"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ac273a825233fe937aa16d98e38664812">enableReceivedAddressRead</a></td></tr>
-<tr class="memdesc:ac273a825233fe937aa16d98e38664812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable reading the address received address as the first byte of data.  <a href="#ac273a825233fe937aa16d98e38664812">More...</a><br/></td></tr>
-<tr class="separator:ac273a825233fe937aa16d98e38664812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c28ef56af23d2e059942e8d80e5cd15"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a7c28ef56af23d2e059942e8d80e5cd15">sdaGlitchFilterWidth_ns</a></td></tr>
-<tr class="memdesc:a7c28ef56af23d2e059942e8d80e5cd15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SDA signal.  <a href="#a7c28ef56af23d2e059942e8d80e5cd15">More...</a><br/></td></tr>
-<tr class="separator:a7c28ef56af23d2e059942e8d80e5cd15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a793ea7dd26bfb1f68daae2523e70d5a5">sclGlitchFilterWidth_ns</a></td></tr>
-<tr class="memdesc:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SCL signal.  <a href="#a793ea7dd26bfb1f68daae2523e70d5a5">More...</a><br/></td></tr>
-<tr class="separator:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a920288e7667b3b363f019384ebc58606"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a920288e7667b3b363f019384ebc58606">dataValidDelay_ns</a></td></tr>
-<tr class="memdesc:a920288e7667b3b363f019384ebc58606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the data valid delay.  <a href="#a920288e7667b3b363f019384ebc58606">More...</a><br/></td></tr>
-<tr class="separator:a920288e7667b3b363f019384ebc58606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a2e672f5446e7d86eb9d74bdc785df0fb">clockHoldTime_ns</a></td></tr>
-<tr class="memdesc:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the clock hold time.  <a href="#a2e672f5446e7d86eb9d74bdc785df0fb">More...</a><br/></td></tr>
-<tr class="separator:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2cd4a19f68523031122851dd0ab1386"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ab2cd4a19f68523031122851dd0ab1386">enableAck</a></td></tr>
-<tr class="memdesc:ab2cd4a19f68523031122851dd0ab1386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching during slave-transmit address byte(s) and slave-receiver address and data byte(s) to allow software to write the Transmit ACK Register before the ACK or NACK is transmitted.  <a href="#ab2cd4a19f68523031122851dd0ab1386">More...</a><br/></td></tr>
-<tr class="separator:ab2cd4a19f68523031122851dd0ab1386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ad0fea92e29e7afff3d7072ab3c722bc8">enableTx</a></td></tr>
-<tr class="memdesc:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the transmit data flag is set during a slave-transmit transfer.  <a href="#ad0fea92e29e7afff3d7072ab3c722bc8">More...</a><br/></td></tr>
-<tr class="separator:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aff856d2084ff0ede49f0ff25e6cf5529">enableRx</a></td></tr>
-<tr class="memdesc:aff856d2084ff0ede49f0ff25e6cf5529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when receive data flag is set during a slave-receive transfer.  <a href="#aff856d2084ff0ede49f0ff25e6cf5529">More...</a><br/></td></tr>
-<tr class="separator:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a6ec794389bd9fb5e51c802bb0b9ee26b">enableAddress</a></td></tr>
-<tr class="memdesc:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the address valid flag is asserted.  <a href="#a6ec794389bd9fb5e51c802bb0b9ee26b">More...</a><br/></td></tr>
-<tr class="separator:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad220cfa81b4117fd1d952b43ff0d5511"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableSlave</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a16f171990f815872142d3fe73eb74ff4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t lpi2c_slave_config_t::address0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="afb3035cd87a9746bdbe5c6618a492034"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t lpi2c_slave_config_t::address1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a1dc82ff6416b69128c0d6d78d533b093"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00046.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a> lpi2c_slave_config_t::addressMatchMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4cbbafe55351cb52d25b3de1a71e2231"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::filterDozeEnable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6fcca02d50a48b5a3a2923ea449316ce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::filterEnable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a061ed35a72d6e8ffe9a02be00f633f87"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableGeneralCall</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab2cd4a19f68523031122851dd0ab1386"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableAck</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Clock stretching occurs when transmitting the 9th bit. When enableAckSCLStall is enabled, there is no need to set either enableRxDataSCLStall or enableAddressSCLStall. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad0fea92e29e7afff3d7072ab3c722bc8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableTx</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aff856d2084ff0ede49f0ff25e6cf5529"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableRx</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6ec794389bd9fb5e51c802bb0b9ee26b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableAddress</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae68493537f90f7bff4a421ff534fb7a1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::ignoreAck</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac273a825233fe937aa16d98e38664812"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableReceivedAddressRead</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7c28ef56af23d2e059942e8d80e5cd15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::sdaGlitchFilterWidth_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set to 0 to disable. </p>
-
-</div>
-</div>
-<a class="anchor" id="a793ea7dd26bfb1f68daae2523e70d5a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::sclGlitchFilterWidth_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set to 0 to disable. </p>
-
-</div>
-</div>
-<a class="anchor" id="a920288e7667b3b363f019384ebc58606"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::dataValidDelay_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2e672f5446e7d86eb9d74bdc785df0fb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::clockHoldTime_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00432" id="a00432"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpi2c_slave_transfer_t</td>
+          <td class="memname">struct gpt_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a19df3bc5c35ed8ae03a927dcc89daa48">event</a></td></tr>
-<tr class="memdesc:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason the callback is being invoked.  <a href="#a19df3bc5c35ed8ae03a927dcc89daa48">More...</a><br/></td></tr>
-<tr class="separator:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a336e15a483043ed7ace990517fff6686"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a336e15a483043ed7ace990517fff6686">receivedAddress</a></td></tr>
-<tr class="memdesc:a336e15a483043ed7ace990517fff6686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matching address send by master.  <a href="#a336e15a483043ed7ace990517fff6686">More...</a><br/></td></tr>
-<tr class="separator:a336e15a483043ed7ace990517fff6686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54436075594000b4d56471b29dd6734f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54436075594000b4d56471b29dd6734f"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a54436075594000b4d56471b29dd6734f">data</a></td></tr>
-<tr class="memdesc:a54436075594000b4d56471b29dd6734f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer. <br/></td></tr>
-<tr class="separator:a54436075594000b4d56471b29dd6734f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcd4de20f8efd725bd93d72180b32f2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcd4de20f8efd725bd93d72180b32f2d"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#afcd4de20f8efd725bd93d72180b32f2d">dataSize</a></td></tr>
-<tr class="memdesc:afcd4de20f8efd725bd93d72180b32f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
-<tr class="separator:afcd4de20f8efd725bd93d72180b32f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aafd14bc835c1c23de6bf06834d1a0b3c">completionStatus</a></td></tr>
-<tr class="memdesc:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success or error code describing how the transfer completed.  <a href="#aafd14bc835c1c23de6bf06834d1a0b3c">More...</a><br/></td></tr>
-<tr class="separator:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67e03ab90367cb1d48d42b718e6438f5"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a67e03ab90367cb1d48d42b718e6438f5">transferredCount</a></td></tr>
-<tr class="memdesc:a67e03ab90367cb1d48d42b718e6438f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes actually transferred since start or last repeated start.  <a href="#a67e03ab90367cb1d48d42b718e6438f5">More...</a><br/></td></tr>
-<tr class="separator:a67e03ab90367cb1d48d42b718e6438f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25f268bc5fecec8069a572c4c3b58fc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a25f268bc5fecec8069a572c4c3b58fc7">clockSource</a></td></tr>
+<tr class="memdesc:a25f268bc5fecec8069a572c4c3b58fc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">clock source for GPT module.  <a href="#a25f268bc5fecec8069a572c4c3b58fc7">More...</a><br/></td></tr>
+<tr class="separator:a25f268bc5fecec8069a572c4c3b58fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2407ae05cf065f7670679b3e1c2c2b50"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a2407ae05cf065f7670679b3e1c2c2b50">divider</a></td></tr>
+<tr class="memdesc:a2407ae05cf065f7670679b3e1c2c2b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">clock divider (prescaler+1) from clock source to counter.  <a href="#a2407ae05cf065f7670679b3e1c2c2b50">More...</a><br/></td></tr>
+<tr class="separator:a2407ae05cf065f7670679b3e1c2c2b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae502b9cc970005480f6ff1658972d53"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aae502b9cc970005480f6ff1658972d53">enableFreeRun</a></td></tr>
+<tr class="memdesc:aae502b9cc970005480f6ff1658972d53"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: FreeRun mode, false: Restart mode.  <a href="#aae502b9cc970005480f6ff1658972d53">More...</a><br/></td></tr>
+<tr class="separator:aae502b9cc970005480f6ff1658972d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ddfd1bd9f2f22b721a2bff60673fac5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a4ddfd1bd9f2f22b721a2bff60673fac5">enableRunInWait</a></td></tr>
+<tr class="memdesc:a4ddfd1bd9f2f22b721a2bff60673fac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in wait mode.  <a href="#a4ddfd1bd9f2f22b721a2bff60673fac5">More...</a><br/></td></tr>
+<tr class="separator:a4ddfd1bd9f2f22b721a2bff60673fac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b8bb88a27214987d3e877a6c0371db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a10b8bb88a27214987d3e877a6c0371db">enableRunInStop</a></td></tr>
+<tr class="memdesc:a10b8bb88a27214987d3e877a6c0371db"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in stop mode.  <a href="#a10b8bb88a27214987d3e877a6c0371db">More...</a><br/></td></tr>
+<tr class="separator:a10b8bb88a27214987d3e877a6c0371db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cfe8142bf85397f51921301055b1bb8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a0cfe8142bf85397f51921301055b1bb8">enableRunInDoze</a></td></tr>
+<tr class="memdesc:a0cfe8142bf85397f51921301055b1bb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in doze mode.  <a href="#a0cfe8142bf85397f51921301055b1bb8">More...</a><br/></td></tr>
+<tr class="separator:a0cfe8142bf85397f51921301055b1bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c3a30242ed5d7d2675be2d300eed4d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a5c3a30242ed5d7d2675be2d300eed4d1">enableRunInDbg</a></td></tr>
+<tr class="memdesc:a5c3a30242ed5d7d2675be2d300eed4d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in debug mode.  <a href="#a5c3a30242ed5d7d2675be2d300eed4d1">More...</a><br/></td></tr>
+<tr class="separator:a5c3a30242ed5d7d2675be2d300eed4d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c9bf1a239e33da721076aabd0c2b079"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a0c9bf1a239e33da721076aabd0c2b079">enableMode</a></td></tr>
+<tr class="memdesc:a0c9bf1a239e33da721076aabd0c2b079"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment"> true:  counter reset to 0 when enabled;
+</pre><p> false: counter retain its value when enabled.  <a href="#a0c9bf1a239e33da721076aabd0c2b079">More...</a><br/></td></tr>
+<tr class="separator:a0c9bf1a239e33da721076aabd0c2b079"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a19df3bc5c35ed8ae03a927dcc89daa48"></a>
+<a class="anchor" id="a25f268bc5fecec8069a572c4c3b58fc7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00046.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a> lpi2c_slave_transfer_t::event</td>
+          <td class="memname"><a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> gpt_config_t::clockSource</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a336e15a483043ed7ace990517fff6686"></a>
+<a class="anchor" id="a2407ae05cf065f7670679b3e1c2c2b50"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpi2c_slave_transfer_t::receivedAddress</td>
+          <td class="memname">uint32_t gpt_config_t::divider</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aafd14bc835c1c23de6bf06834d1a0b3c"></a>
+<a class="anchor" id="aae502b9cc970005480f6ff1658972d53"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> lpi2c_slave_transfer_t::completionStatus</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Only applies for <a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c" title="A stop was detected, completing the transfer. ">kLPI2C_SlaveCompletionEvent</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a67e03ab90367cb1d48d42b718e6438f5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t lpi2c_slave_transfer_t::transferredCount</td>
+          <td class="memname">bool gpt_config_t::enableFreeRun</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-
-</div>
-</div>
-<a name="a00320" id="a00320"></a>
+<a class="anchor" id="a4ddfd1bd9f2f22b721a2bff60673fac5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _lpi2c_slave_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aed2dec763e40c6caa129c082603852d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#a00432">lpi2c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aed2dec763e40c6caa129c082603852d5">transfer</a></td></tr>
-<tr class="memdesc:aed2dec763e40c6caa129c082603852d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer copy.  <a href="#aed2dec763e40c6caa129c082603852d5">More...</a><br/></td></tr>
-<tr class="separator:aed2dec763e40c6caa129c082603852d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a8f0662c2c78df7b8e8b5ed4c1119823d">isBusy</a></td></tr>
-<tr class="memdesc:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether transfer is busy.  <a href="#a8f0662c2c78df7b8e8b5ed4c1119823d">More...</a><br/></td></tr>
-<tr class="separator:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0a187d43f251bc67fb9c34dedbf9253"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#af0a187d43f251bc67fb9c34dedbf9253">wasTransmit</a></td></tr>
-<tr class="memdesc:af0a187d43f251bc67fb9c34dedbf9253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the last transfer was a transmit.  <a href="#af0a187d43f251bc67fb9c34dedbf9253">More...</a><br/></td></tr>
-<tr class="separator:af0a187d43f251bc67fb9c34dedbf9253"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bceee16dd6f07c8cb6918580e45e540"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a5bceee16dd6f07c8cb6918580e45e540">eventMask</a></td></tr>
-<tr class="memdesc:a5bceee16dd6f07c8cb6918580e45e540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask of enabled events.  <a href="#a5bceee16dd6f07c8cb6918580e45e540">More...</a><br/></td></tr>
-<tr class="separator:a5bceee16dd6f07c8cb6918580e45e540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ac9f4d0665e8ec4c56eb89e816c4b5324">transferredCount</a></td></tr>
-<tr class="memdesc:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of bytes transferred.  <a href="#ac9f4d0665e8ec4c56eb89e816c4b5324">More...</a><br/></td></tr>
-<tr class="separator:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e16ba71a57adfe84058af632a604e40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a0e16ba71a57adfe84058af632a604e40">callback</a></td></tr>
-<tr class="memdesc:a0e16ba71a57adfe84058af632a604e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event.  <a href="#a0e16ba71a57adfe84058af632a604e40">More...</a><br/></td></tr>
-<tr class="separator:a0e16ba71a57adfe84058af632a604e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa394f46d8677c977aa39b64fb0c353ce"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#aa394f46d8677c977aa39b64fb0c353ce">userData</a></td></tr>
-<tr class="memdesc:aa394f46d8677c977aa39b64fb0c353ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback.  <a href="#aa394f46d8677c977aa39b64fb0c353ce">More...</a><br/></td></tr>
-<tr class="separator:aa394f46d8677c977aa39b64fb0c353ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aed2dec763e40c6caa129c082603852d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00046.html#a00432">lpi2c_slave_transfer_t</a> lpi2c_slave_handle_t::transfer</td>
+          <td class="memname">bool gpt_config_t::enableRunInWait</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8f0662c2c78df7b8e8b5ed4c1119823d"></a>
+<a class="anchor" id="a10b8bb88a27214987d3e877a6c0371db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_handle_t::isBusy</td>
+          <td class="memname">bool gpt_config_t::enableRunInStop</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af0a187d43f251bc67fb9c34dedbf9253"></a>
+<a class="anchor" id="a0cfe8142bf85397f51921301055b1bb8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_handle_t::wasTransmit</td>
+          <td class="memname">bool gpt_config_t::enableRunInDoze</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5bceee16dd6f07c8cb6918580e45e540"></a>
+<a class="anchor" id="a5c3a30242ed5d7d2675be2d300eed4d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_handle_t::eventMask</td>
+          <td class="memname">bool gpt_config_t::enableRunInDbg</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac9f4d0665e8ec4c56eb89e816c4b5324"></a>
+<a class="anchor" id="a0c9bf1a239e33da721076aabd0c2b079"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_handle_t::transferredCount</td>
+          <td class="memname">bool gpt_config_t::enableMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0e16ba71a57adfe84058af632a604e40"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00046.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> lpi2c_slave_handle_t::callback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa394f46d8677c977aa39b64fb0c353ce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* lpi2c_slave_handle_t::userData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga2640285a708842a5e0e7c4c0090a2f58"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* lpi2c_slave_transfer_callback_t)(LPI2C_Type *base, <a class="el" href="a00046.html#a00432">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This callback is used only for the slave non-blocking transfer API. To install a callback, use the LPI2C_SlaveSetCallback() function after you have created a handle.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address for the LPI2C instance on which the event occurred. </td></tr>
-    <tr><td class="paramname">transfer</td><td>Pointer to transfer descriptor containing values passed to and/or from the callback. </td></tr>
-    <tr><td class="paramname">userData</td><td>Arbitrary pointer-sized value passed from the application. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gabd50effc706692c03b42faa72c34269b"></a>
+<a class="anchor" id="gad0ed5e094d0bec112a065a0c6b057e56"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b">_lpi2c_slave_flags</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The following status register flags can be cleared:</p>
-<ul>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e" title="Repeated start detect flag. ">kLPI2C_SlaveRepeatedStartDetectFlag</a></li>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7" title="Stop detect flag. ">kLPI2C_SlaveStopDetectFlag</a></li>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03" title="Bit error flag. ">kLPI2C_SlaveBitErrFlag</a></li>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8" title="FIFO error flag. ">kLPI2C_SlaveFifoErrFlag</a></li>
-</ul>
-<p>All flags except <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d" title="Master busy flag. ">kLPI2C_SlaveBusyFlag</a> and <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b" title="Bus busy flag. ">kLPI2C_SlaveBusBusyFlag</a> can be enabled as interrupts.</p>
-<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Actual number of clock sources is SoC dependent </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba80486f66e12276c945b8813269b90c0e"></a>kLPI2C_SlaveTxReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Transmit data flag. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a398f5e7765f47a492d625a7cb26bf499"></a>kGPT_ClockSource_Off</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source Off. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba01265ce6645e4a978b823b1f130a419f"></a>kLPI2C_SlaveRxReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Receive data flag. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a728cff5c785288f3884d4c2cbdf0b466"></a>kGPT_ClockSource_Periph</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from Peripheral Clock. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baf34a60fee419e0b3d387b353a38b4772"></a>kLPI2C_SlaveAddressValidFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Address valid flag. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a1a2644f7461698f6515c3da0a7c1cbab"></a>kGPT_ClockSource_HighFreq</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from High Frequency Reference Clock. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff"></a>kLPI2C_SlaveTransmitAckFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Transmit ACK flag. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56ab76385e941d5ce14116ac5a55aaf5815"></a>kGPT_ClockSource_Ext</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from external pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e"></a>kLPI2C_SlaveRepeatedStartDetectFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Repeated start detect flag. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56acb33521779fb2addb21bb22f850c837d"></a>kGPT_ClockSource_LowFreq</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from Low Frequency Reference Clock. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7"></a>kLPI2C_SlaveStopDetectFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Stop detect flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03"></a>kLPI2C_SlaveBitErrFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Bit error flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8"></a>kLPI2C_SlaveFifoErrFlag</em>&nbsp;</td><td class="fielddoc">
-<p>FIFO error flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba9fb3f57d810e280effee1dae37d062bb"></a>kLPI2C_SlaveAddressMatch0Flag</em>&nbsp;</td><td class="fielddoc">
-<p>Address match 0 flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba62cc9694d6891b21af074122eeedca85"></a>kLPI2C_SlaveAddressMatch1Flag</em>&nbsp;</td><td class="fielddoc">
-<p>Address match 1 flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba6a0fa821b530336ea8d1f19aadcbe1dc"></a>kLPI2C_SlaveGeneralCallFlag</em>&nbsp;</td><td class="fielddoc">
-<p>General call flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d"></a>kLPI2C_SlaveBusyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Master busy flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b"></a>kLPI2C_SlaveBusBusyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Bus busy flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba67a26ff8ddd90c39e772518636f4e832"></a>kLPI2C_SlaveClearFlags</em>&nbsp;</td><td class="fielddoc">
-<p>All flags which are cleared by the driver upon starting a transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baaf5e40570c34c37fd532dad21b1dca1f"></a>kLPI2C_SlaveIrqFlags</em>&nbsp;</td><td class="fielddoc">
-<p>IRQ sources enabled by the non-blocking transactional API. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269bacb3e0258d950773e55c13829e787de36"></a>kLPI2C_SlaveErrorFlags</em>&nbsp;</td><td class="fielddoc">
-<p>Errors to check for. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a9df479d2e5f5d539b053425ab986ad20"></a>kGPT_ClockSource_Osc</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from Crystal oscillator. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gac3564395ccab19eb1ce6ab46b36bb5bb"></a>
+<a class="anchor" id="gad36eff6489251bee506c6806c64a86d0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5"></a>kLPI2C_MatchAddress0</em>&nbsp;</td><td class="fielddoc">
-<p>Match only address 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad36eff6489251bee506c6806c64a86d0a083b8ef10ac54db99013fdadaf40ea12"></a>kGPT_InputCapture_Channel1</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Input Capture Channel1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675"></a>kLPI2C_MatchAddress0OrAddress1</em>&nbsp;</td><td class="fielddoc">
-<p>Match either address 0 or address 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb"></a>kLPI2C_MatchAddress0ThroughAddress1</em>&nbsp;</td><td class="fielddoc">
-<p>Match a range of slave addresses from address 0 through address 1. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad36eff6489251bee506c6806c64a86d0a8ef1e1b7eee2eefaef9d4f9776bafe4a"></a>kGPT_InputCapture_Channel2</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Input Capture Channel2. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga0d99b4dba3841a4e02f7c431a59006c8"></a>
+<a class="anchor" id="ga22997c2d644f6249b9c704afc230eedf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00046.html#ga1ba7c9d0c254de8fe8c04091c007edff" title="Starts accepting slave transfers. ">LPI2C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
-<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef"></a>kLPI2C_SlaveAddressMatchEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Received the slave address after a start or repeated start. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfaf7ecc55be6dd63a6be40d96dc9f8d24e"></a>kGPT_InputOperation_Disabled</em>&nbsp;</td><td class="fielddoc">
+<p>Don't capture. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49"></a>kLPI2C_SlaveTransmitEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Callback is requested to provide data to transmit (slave-transmitter role). </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfa17ede75d0bb581f4fed42f678e1b81d1"></a>kGPT_InputOperation_RiseEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on rising edge of input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18"></a>kLPI2C_SlaveReceiveEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Callback is requested to provide a buffer in which to place received data (slave-receiver role). </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfaa0dcd1649563ba92f8f1e8230284edfa"></a>kGPT_InputOperation_FallEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on falling edge of input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0"></a>kLPI2C_SlaveTransmitAckEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Callback needs to either transmit an ACK or NACK. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfa5ad14d26a16fa7d607a446440c88b735"></a>kGPT_InputOperation_BothEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on both edges of input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4"></a>kLPI2C_SlaveRepeatedStartEvent</em>&nbsp;</td><td class="fielddoc">
-<p>A repeated start was detected. </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae6c9b96e71d6a276ce8437708acddfda"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae6c9b96e71d6a276ce8437708acddfdaa68b52504e269393df3fc389c9b78c2d8"></a>kGPT_OutputCompare_Channel1</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c"></a>kLPI2C_SlaveCompletionEvent</em>&nbsp;</td><td class="fielddoc">
-<p>A stop was detected, completing the transfer. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6c9b96e71d6a276ce8437708acddfdaa1be13c4fe09bed476ee7656b59f25d37"></a>kGPT_OutputCompare_Channel2</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec"></a>kLPI2C_SlaveAllEvents</em>&nbsp;</td><td class="fielddoc">
-<p>Bit mask of all available events. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6c9b96e71d6a276ce8437708acddfdaa55da6b048e4471add16448bd43a6829c"></a>kGPT_OutputCompare_Channel3</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga54e26b65b23236492c81c572ba36ab20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20adedc5e02092eeab85600f919bf2dec82"></a>kGPT_OutputOperation_Disconnected</em>&nbsp;</td><td class="fielddoc">
+<p>Don't change output pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20acd8732f3636757f56665c6549a27c887"></a>kGPT_OutputOperation_Toggle</em>&nbsp;</td><td class="fielddoc">
+<p>Toggle output pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20ab74f183a3e8eb815a40a39eb033dc532"></a>kGPT_OutputOperation_Clear</em>&nbsp;</td><td class="fielddoc">
+<p>Set output pin low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20aae9329b2a4b5ea63e66ca10239efe669"></a>kGPT_OutputOperation_Set</em>&nbsp;</td><td class="fielddoc">
+<p>Set output pin high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20a5bd080fd627f26d074da1b3dab7535f2"></a>kGPT_OutputOperation_Activelow</em>&nbsp;</td><td class="fielddoc">
+<p>Generate a active low pulse on output pin. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gac1d66bcf23acefc1a50049c7e24d77bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00046.html#gac1d66bcf23acefc1a50049c7e24d77bb">gpt_interrupt_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba61170acbca36f4757633d1d12d3246ba"></a>kGPT_OutputCompare1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba4ebb7fc65d182cd6643fe237d60d91ed"></a>kGPT_OutputCompare2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba5141f4b482113c7763819b89c4abcc09"></a>kGPT_OutputCompare3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba21a3c64b4edc196b24be9e12c061fe88"></a>kGPT_InputCapture1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture Channel1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bbaf6dc605de633b7e545065bc952409562"></a>kGPT_InputCapture2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture Channel1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba2bbf44ee3464387de1fd11a2c28a5132"></a>kGPT_RollOverFlagInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Counter rolled over interrupt enable. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga21ce3ba40810ea60cf4b59a488e73cc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5a241fcd87ab22fa9a7212739a39134dfe"></a>kGPT_OutputCompare1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Output compare channel 1 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5a75f50bb95d6a232c6bbb0b6c52db60e5"></a>kGPT_OutputCompare2Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Output compare channel 2 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5abfc4b1e05ade49b83461447d4b4464b1"></a>kGPT_OutputCompare3Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Output compare channel 3 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5af8d82fdf4783ec7125f8f4cdedaed062"></a>kGPT_InputCapture1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture channel 1 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5a64ff7cb952a6cd9c1d85d3dcffc1a50b"></a>kGPT_InputCapture2Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture channel 2 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5ae238e6b78d934129211d8e7aafef59a1"></a>kGPT_RollOverFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Counter reaches maximum value and rolled over to 0 event. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gadf34085d4557ceb3081fff9fe0e3189a"></a>
+<a class="anchor" id="ga6aeb20e99444bdaf31dd9c39c108e79f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPI2C_SlaveGetDefaultConfig </td>
+          <td class="memname">void GPT_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00046.html#a00431">lpi2c_slave_config_t</a> *&#160;</td>
-          <td class="paramname"><em>slaveConfig</em></td><td>)</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00046.html#a00448">gpt_config_t</a> *&#160;</td>
+          <td class="paramname"><em>initConfig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">initConfig</td><td>GPT mode setting configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga90be090ee63035f2a2b014adcfd8c60b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GPT_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function provides the following default configuration for the LPI2C slave peripheral: </p>
-<div class="fragment"><div class="line">*  slaveConfig-&gt;enableSlave               = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;address0                  = 0U;</div>
-<div class="line">*  slaveConfig-&gt;address1                  = 0U;</div>
-<div class="line">*  slaveConfig-&gt;addressMatchMode          = <a class="code" href="a00046.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a>;</div>
-<div class="line">*  slaveConfig-&gt;filterDozeEnable          = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;filterEnable              = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;enableGeneralCall         = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableAck        = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableTx         = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableRx         = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableAddress    = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;ignoreAck                 = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;enableReceivedAddressRead = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;sdaGlitchFilterWidth_ns   = 0;</div>
-<div class="line">*  slaveConfig-&gt;sclGlitchFilterWidth_ns   = 0;</div>
-<div class="line">*  slaveConfig-&gt;dataValidDelay_ns         = 0;</div>
-<div class="line">*  slaveConfig-&gt;clockHoldTime_ns          = 0;</div>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0f60fd16354f3fcf7bd02f1ccbee80e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GPT_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00046.html#a00448">gpt_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The default values are: </p>
+<div class="fragment"><div class="line">*    config-&gt;clockSource = <a class="code" href="a00046.html#ggad0ed5e094d0bec112a065a0c6b057e56a728cff5c785288f3884d4c2cbdf0b466">kGPT_ClockSource_Periph</a>;</div>
+<div class="line">*    config-&gt;divider = 1U;</div>
+<div class="line">*    config-&gt;enableRunInStop = <span class="keyword">true</span>;</div>
+<div class="line">*    config-&gt;enableRunInWait = <span class="keyword">true</span>;</div>
+<div class="line">*    config-&gt;enableRunInDoze = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;enableRunInDbg = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;enableFreeRun = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;enableMode  = <span class="keyword">true</span>;</div>
 <div class="line">* </div>
-</div><!-- fragment --><p>After calling this function, override any settings to customize the configuration, prior to initializing the master driver with <a class="el" href="a00046.html#gae5cc8a03c784a99bb58b69852dfda5a5" title="Initializes the LPI2C slave peripheral. ">LPI2C_SlaveInit()</a>. Be sure to override at least the <em>address0</em> member of the configuration structure with the desired slave address.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure that is set to default values. Refer to <a class="el" href="a00046.html#a00431" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a>. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the user configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gae5cc8a03c784a99bb58b69852dfda5a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPI2C_SlaveInit </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00046.html#a00431">lpi2c_slave_config_t</a> *&#160;</td>
-          <td class="paramname"><em>slaveConfig</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sourceClock_Hz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function enables the peripheral clock and initializes the LPI2C slave peripheral as described by the user provided configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">slaveConfig</td><td>User provided peripheral configuration. Use <a class="el" href="a00046.html#gadf34085d4557ceb3081fff9fe0e3189a" title="Provides a default configuration for the LPI2C slave peripheral. ">LPI2C_SlaveGetDefaultConfig()</a> to get a set of defaults that you can override. </td></tr>
-    <tr><td class="paramname">sourceClock_Hz</td><td>Frequency in Hertz of the LPI2C functional clock. Used to calculate the filter widths, data valid delay, and clock hold time. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa1a5cfe78acec0e1f8dd4af63a0f87f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPI2C_SlaveDeinit </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables the LPI2C slave peripheral and gates the clock. It also performs a software reset to restore the peripheral to reset conditions.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf58f9ebf437d62936c45c201a68fb5d7"></a>
+<a class="anchor" id="ga9cbb3514413d2eb8783bbce110451d60"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1030,9 +759,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPI2C_SlaveReset </td>
+          <td class="memname">static void GPT_SoftwareReset </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1045,14 +774,14 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gae83a936eb8303218278cd704d8238a08"></a>
+<a class="anchor" id="ga0328dbdc7fe6c17155f776f27692e3c1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1060,16 +789,16 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPI2C_SlaveEnable </td>
+          <td class="memname">static void GPT_SetClockSource </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a>&#160;</td>
+          <td class="paramname"><em>gptClkSource</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1085,15 +814,15 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Pass true to enable or false to disable the specified LPI2C as slave. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">gptClkSource</td><td>Clock source (see <a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> typedef enumeration). </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga18055724e510f601f35cc00940e9155c"></a>
+<a class="anchor" id="ga2ef3c43a4ea5e27291686fcf52a01c53"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1101,9 +830,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t LPI2C_SlaveGetStatusFlags </td>
+          <td class="memname">static <a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> GPT_GetClockSource </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1114,23 +843,17 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   </tr>
 </table>
 </div><div class="memdoc">
-<p>A bit mask with the state of all LPI2C slave status flags is returned. For each flag, the corresponding bit in the return value is set if the flag is asserted.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>State of the status flags:<ul>
-<li>1: related status flag is set.</li>
-<li>0: related status flag is not set. </li>
-</ul>
-</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>clock source (see <a class="el" href="a00046.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> typedef enumeration). </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3b5306231d96d7fa38ef26d9ca6526b1"></a>
+<a class="anchor" id="ga941a31e66563ec733dc4c69ab430af3f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1138,16 +861,16 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPI2C_SlaveClearStatusFlags </td>
+          <td class="memname">static void GPT_SetClockDivider </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>statusMask</em>&#160;</td>
+          <td class="paramname"><em>divider</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1161,26 +884,17 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The following status register flags can be cleared:</p>
-<ul>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e" title="Repeated start detect flag. ">kLPI2C_SlaveRepeatedStartDetectFlag</a></li>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7" title="Stop detect flag. ">kLPI2C_SlaveStopDetectFlag</a></li>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03" title="Bit error flag. ">kLPI2C_SlaveBitErrFlag</a></li>
-<li><a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8" title="FIFO error flag. ">kLPI2C_SlaveFifoErrFlag</a></li>
-</ul>
-<p>Attempts to clear other flags has no effect.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">statusMask</td><td>A bitmask of status flags that are to be cleared. The mask is composed of <a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> enumerators OR'd together. You may pass the result of a previous call to <a class="el" href="a00046.html#ga18055724e510f601f35cc00940e9155c" title="Gets the LPI2C slave status flags. ">LPI2C_SlaveGetStatusFlags()</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">divider</td><td>Divider of GPT (1-4096). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a>. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"></a>
+<a class="anchor" id="ga9e4fc77424a6dccfb8a80f33145aa85f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1188,93 +902,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPI2C_SlaveEnableInterrupts </td>
+          <td class="memname">static uint32_t GPT_GetClockDivider </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>interruptMask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>All flags except <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d" title="Master busy flag. ">kLPI2C_SlaveBusyFlag</a> and <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b" title="Bus busy flag. ">kLPI2C_SlaveBusBusyFlag</a> can be enabled as interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to enable. See <a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9422103623a9866f350dd03aea984741"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveDisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>interruptMask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>All flags except <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d" title="Master busy flag. ">kLPI2C_SlaveBusyFlag</a> and <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b" title="Bus busy flag. ">kLPI2C_SlaveBusBusyFlag</a> can be enabled as interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to disable. See <a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3d1fb84d337b8eb5cc19cbeced06c2a1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPI2C_SlaveGetEnabledInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1287,15 +917,15 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A bitmask composed of <a class="el" href="a00046.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> enumerators OR'd together to indicate the set of enabled interrupts. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>clock divider in GPT module (1-4096). </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa13d0c04083818cf91af19a6add0e08f"></a>
+<a class="anchor" id="ga81c59ed87813049b1b1931547c229688"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1303,331 +933,16 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPI2C_SlaveEnableDMA </td>
+          <td class="memname">static void GPT_SetOscClockDivider </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enableAddressValid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enableRx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enableTx</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">enableAddressValid</td><td>Enable flag for the address valid DMA request. Pass true for enable, false for disable. The address valid DMA request is shared with the receive data DMA request. </td></tr>
-    <tr><td class="paramname">enableRx</td><td>Enable flag for the receive data DMA request. Pass true for enable, false for disable. </td></tr>
-    <tr><td class="paramname">enableTx</td><td>Enable flag for the transmit data DMA request. Pass true for enable, false for disable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga155ee1b5bc8c621b60b349b191c078fc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool LPI2C_SlaveGetBusIdleState </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Requires the slave mode to be enabled.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Bus is busy. </td></tr>
-    <tr><td class="paramname">false</td><td>Bus is idle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga417e07e45369a955f7fecaa26e13b335"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveTransmitAck </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>ackOrNack</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Use this function to send an ACK or NAK when the <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff" title="Transmit ACK flag. ">kLPI2C_SlaveTransmitAckFlag</a> is asserted. This only happens if you enable the sclStall.enableAck field of the <a class="el" href="a00046.html#a00431" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a> configuration structure used to initialize the slave peripheral.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">ackOrNack</td><td>Pass true for an ACK or false for a NAK. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8219a79b748dc59c982c7c3a8470c3a6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPI2C_SlaveGetReceivedAddress </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function should only be called if the <a class="el" href="a00046.html#ggabd50effc706692c03b42faa72c34269baf34a60fee419e0b3d387b353a38b4772" title="Address valid flag. ">kLPI2C_SlaveAddressValidFlag</a> is asserted.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The 8-bit address matched by the LPI2C slave. Bit 0 contains the R/w direction bit, and the 7-bit slave address is in the upper 7 bits. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gacb2d085904e83ee63ee84f7c8402024c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveSend </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>txBuff</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>txSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>actualTxSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">txBuff</td><td>The pointer to the data to be transferred. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">txSize</td><td>The length in bytes of the data to be transferred. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">actualTxSize</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Error or success status returned by API. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga36dd1b211a7fe488bfc062a1d8e74fc8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveReceive </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>rxBuff</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>rxSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>actualRxSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">rxBuff</td><td>The pointer to the data to be transferred. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">rxSize</td><td>The length in bytes of the data to be transferred. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">actualRxSize</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Error or success status returned by API. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6afdc286db9c700bc057038518a19285"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPI2C_SlaveTransferCreateHandle </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00046.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The creation of a handle is for use with the non-blocking APIs. Once a handle is created, there is not a corresponding destroy handle. If the user wants to terminate a transfer, the <a class="el" href="a00046.html#ga7d46d488aa043ab93bfa1574277a3985" title="Aborts the slave non-blocking transfers. ">LPI2C_SlaveTransferAbort()</a> API shall be called.</p>
-<dl class="section note"><dt>Note</dt><dd>The function also enables the NVIC IRQ for the input LPI2C. Need to notice that on some SoCs the LPI2C IRQ is connected to INTMUX, in this case user needs to enable the associated INTMUX IRQ in application.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">handle</td><td>Pointer to the LPI2C slave driver handle. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">callback</td><td>User provided pointer to the asynchronous callback function. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">userData</td><td>User provided pointer to the application callback data. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1ba7c9d0c254de8fe8c04091c007edff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>eventMask</em>&#160;</td>
+          <td class="paramname"><em>divider</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1635,130 +950,168 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Call this API after calling I2C_SlaveInit() and <a class="el" href="a00046.html#ga6afdc286db9c700bc057038518a19285" title="Creates a new handle for the LPI2C slave non-blocking APIs. ">LPI2C_SlaveTransferCreateHandle()</a> to start processing transactions driven by an I2C master. The slave monitors the I2C bus and pass events to the callback that was passed into the call to <a class="el" href="a00046.html#ga6afdc286db9c700bc057038518a19285" title="Creates a new handle for the LPI2C slave non-blocking APIs. ">LPI2C_SlaveTransferCreateHandle()</a>. The callback is always invoked from the interrupt context.</p>
-<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00046.html#ga0d99b4dba3841a4e02f7c431a59006c8" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kLPI2C_SlaveTransmitEvent</a> and <a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kLPI2C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00046.html#ga0d99b4dba3841a4e02f7c431a59006c8" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00046.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> to enable all events.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Slave transfers were successfully started. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00272.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">divider</td><td>OSC Divider(1-16). </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga755b38638cbade1b05587146e9f7267d"></a>
+<a class="anchor" id="ga7f55308a463986caceb5dc78f97f72ea"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferGetCount </td>
+          <td class="memname">static uint32_t GPT_GetOscClockDivider </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Pointer to i2c_slave_handle_t structure. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">count</td><td>Pointer to a value to hold the number of bytes transferred. May be NULL if the count is not required. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td></td></tr>
+<dl class="section return"><dt>Returns</dt><dd>OSC clock divider in GPT module (1-16). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafd643e0c52bdf9cb0ea78819cd5d1ca9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_StartTimer </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7d46d488aa043ab93bfa1574277a3985"></a>
+<a class="anchor" id="ga7d3298caf68180acb777d0bed3585a95"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void LPI2C_SlaveTransferAbort </td>
+          <td class="memname">static void GPT_StopTimer </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API could be called at any time to stop slave for handling the bus events. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-    <tr><td class="paramname"><a class="el" href="a00272.html#ggafb730582952b7ceec73d7dc9bf7bef39a6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td></td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga712654857bc4490644b46220c0c460bf"></a>
+<a class="anchor" id="ga27f113c6b601234c6493e04ff7699f84"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void LPI2C_SlaveTransferHandleIRQ </td>
+          <td class="memname">static uint32_t GPT_GetCurrentTimerCount </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current GPT counter value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa0d5805eba17bbc982af80077e780bb0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_SetInputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1766,12 +1119,518 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function does not need to be called unless you are reimplementing the non blocking API's interrupt handler routines to add special functionality. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT capture channel (see <a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> typedef enumeration). </td></tr>
+    <tr><td class="paramname">mode</td><td>GPT input capture operation mode (see <a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga075a62145685b5e150392b5bf0162af7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> GPT_GetInputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT capture channel (see <a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT input capture operation mode (see <a class="el" href="a00046.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> typedef enumeration). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga613c750bc61498e596cc34bf3d7c8705"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetInputCaptureValue </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT capture channel (see <a class="el" href="a00046.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT input capture value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2b4b3962e3f263e53d83ccabf2f3b489"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_SetOutputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+    <tr><td class="paramname">mode</td><td>GPT output operation mode (see <a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa4ed0958938a4a9c3c58050e26511026"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> GPT_GetOutputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT output operation mode (see <a class="el" href="a00046.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> typedef enumeration). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab4482de4377738cf0ee065f6ad7d3547"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_SetOutputCompareValue </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+    <tr><td class="paramname">value</td><td>GPT output compare value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf152c66a815fd38352742ed4ba01d507"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetOutputCompareValue </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT output compare value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga82938d7d324ba16a8462f1b68284b6ba"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_ForceOutput </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00046.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf441b1f196d31f08319db26487bbe496"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00046.html#gac1d66bcf23acefc1a50049c7e24d77bb" title="List of GPT interrupts. ">gpt_interrupt_enable_t</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa4fd7eccba69c67e4facf6e9a5e9c62e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration <a class="el" href="a00046.html#gac1d66bcf23acefc1a50049c7e24d77bb" title="List of GPT interrupts. ">gpt_interrupt_enable_t</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga471739441f35a3f65707e40e8d5f0649"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetEnabledInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00046.html#gac1d66bcf23acefc1a50049c7e24d77bb" title="List of GPT interrupts. ">gpt_interrupt_enable_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9e19600458e9121125a370720b4f6f6d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a>&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">flags</td><td>GPT status flag mask (see <a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> for bit definition). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT status, each bit represents one status flag. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad0cdd59a23d43441a5a160bf01351754"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a>&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">flags</td><td>GPT status flag mask (see <a class="el" href="a00046.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> for bit definition). </td></tr>
   </table>
   </dd>
 </dl>

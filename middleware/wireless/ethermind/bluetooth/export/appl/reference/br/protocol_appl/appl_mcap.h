@@ -38,7 +38,7 @@ extern UINT16 l2cap_dt_acl_handle;
 API_RESULT mcap_cb
            (
                MCAP_HANDLE    * handle,
-               UCHAR          event,
+               UCHAR          mcap_event,
                UINT16         response,
                void          * event_param,
                UINT16         event_len

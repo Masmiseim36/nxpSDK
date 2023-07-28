@@ -47,7 +47,7 @@ typedef DIR EM_fops_object_handle;
 #if EM_FOPS_FILE_SYNC_IN_IDLE
 
 #ifndef EM_FOPS_FILE_SYNC_TASK_PRIORITY
-#define EM_FOPS_FILE_SYNC_TASK_PRIORITY (configMAX_PRIORITIES - 4)
+#define EM_FOPS_FILE_SYNC_TASK_PRIORITY (OSA_TASK_PRIORITY_MIN - 2)
 #endif
 
 #ifndef EM_FOPS_FILE_SYNC_TASK_STACK_SIZE
@@ -133,7 +133,7 @@ typedef DIR EM_fops_object_handle;
 #define EM_FOPS_GET_BIT(bitmap, mask)         (((bitmap) & (mask)) == (mask))
 #define EM_FOPS_RESET_BIT(bitmap, mask)       (bitmap) ^= (mask)
 
-#define EM_fops_file_print(fd,...)            (void)f_printf((fd), __VA_ARGS__)
+#define EM_fops_file_print(fd,...)            (void)fd;do{(void)EM_fops_file_sync(fd);(void)f_printf((fd), __VA_ARGS__);}while(0)
 
 /* -------------------------------------------- Data Structures */
 typedef struct _EM_FOPS_FILINFO
@@ -258,6 +258,11 @@ EM_RESULT EM_fops_file_get_formatted
           );
 
 EM_RESULT EM_fops_file_close
+           (
+               /* IN */  EM_fops_file_handle  file_handle
+           );
+
+EM_RESULT EM_fops_file_sync
            (
                /* IN */  EM_fops_file_handle  file_handle
            );

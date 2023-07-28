@@ -21,18 +21,17 @@ extern "C" {
 #include "mpp_api.h"
 }
 
-#define DETECTION_TRESHOLD  22
+#define DETECTION_TRESHOLD  30
 #define NUM_RESULTS         1
 #define EOL                 "\r\n"
 #define NANODET_TENSOR_TYPE MPP_TENSOR_TYPE_FLOAT32
 #define NANODET_WIDTH       320
 #define NANODET_HEIGHT      320
 #define MODEL_STRIDE        32
-#define MAX_POINTS          100 //maximum number of center priors
 #define NANODET_NUM_CLASS   80
 #define NANODET_NUM_REGS    32
 #define REG_MAX             7
-#define NMS_THRESH          0.5f
+#define NMS_THRESH          0.4f
 #define NUM_BOXES_MAX       MAX_POINTS
 #define NUM_BOX_COORDS      4   /* top, left, bottom, right */
 
@@ -42,12 +41,11 @@ typedef struct {
     int stride;
 } center_prior;
 
-box_data g_boxes[MAX_POINTS] = {0};
 int8_t g_cls_int[NANODET_NUM_CLASS * NUM_BOXES_MAX * sizeof(int8_t)] = {0};
 int8_t g_reg_int[(REG_MAX + 1) * NUM_BOX_COORDS * NUM_BOXES_MAX * sizeof(int8_t)] = {0};
 
 
-static int generate_center_priors(const int input_height, const int input_width, int stride, center_prior *centers, int center_size){
+static void generate_center_priors(const int input_height, const int input_width, int stride, center_prior *centers, int center_size){
     int num_points = 0;
     int feat_w = ceil((float)input_width / stride);
     int feat_h = ceil((float)input_height / stride);
@@ -65,7 +63,7 @@ static int generate_center_priors(const int input_height, const int input_width,
             num_points = num_points + 1;
         }
     }
-    return num_points;
+    return;
 }
 
 #ifdef NMS_USE_SOFTMAX
@@ -140,7 +138,9 @@ static void boxes_distribution_prediction_int8(box_data *box, const int8_t *reg_
 }
 
 #ifdef NMS_USE_FLOAT
-static void decode_output(int num_points, const float *cls_predictions, const float *reg_predictions, const center_prior *centers, box_data boxes[], int num_class){
+static void decode_output(const float *cls_predictions, const float *reg_predictions,
+        const center_prior *centers, box_data boxes[])
+{
     int cls_offset = 0;
     int reg_offset = 0;
     float value = 0.0f;
@@ -170,37 +170,51 @@ static void decode_output(int num_points, const float *cls_predictions, const fl
 }
 #endif /* NMS_USE_FLOAT */
 
-static void decode_output_int8(int num_points, const int8_t *cls_predictions, const int8_t *reg_predictions, const center_prior *centers, box_data boxes[], int num_class){
+/* decode the output tensor and fill-in boxes above detection threshold.
+ * returns the number of valid boxes.
+ **/
+static int decode_output_int8(const int8_t *cls_predictions, const int8_t *reg_predictions,
+        const center_prior *centers, box_data boxes[])
+{
     int cls_offset = 0;
     int reg_offset = 0;
     int8_t value = 0;
+    int boxidx = 0;
 
     /* initialize elements */
-    for (int i = 0; i < NUM_BOXES_MAX; i++){
+    for (int i = 0; i < NUM_BOXES_MAX; i++)
+    {
     	int8_t score = -128;
         int curr_label = 0;
         const int threshold = DETECTION_TRESHOLD * 256 / 100 - 128;
         const int8_t *reg_preds = reg_predictions + reg_offset;
         // Get top prediction score + index
-        for (int j = cls_offset; j < NANODET_NUM_CLASS + cls_offset; j++){
+        for (int j = cls_offset; j < NANODET_NUM_CLASS + cls_offset; j++)
+        {
             value = cls_predictions[j];
-            if (value > score){
+            if (value > score)
+            {
                 score = value;
                 curr_label = j - cls_offset;
             }
         }
-        boxes[i].label = curr_label;
-        boxes[i].score = (score + 128.0f) / 256.0f;
-        if (score >= threshold){
-            boxes_distribution_prediction_int8(&boxes[i], reg_preds, centers[i]);
+
+        if (score >= threshold)
+        {
+            boxes[boxidx].label = curr_label;
+            boxes[boxidx].score = (score + 128.0f) / 256.0f;
+            boxes_distribution_prediction_int8(&boxes[boxidx], reg_preds, centers[i]);
+            boxidx++;
         }
         cls_offset = cls_offset + NANODET_NUM_CLASS;
         reg_offset = reg_offset + NANODET_NUM_REGS;
     }
+    return boxidx+1;
 }
 
 // Used for models with float output tensors
-static void convert_float_int(const float *cls_preds, const float *reg_preds, int8_t *cls_preds_int, int8_t *reg_preds_int)
+static void convert_float_int(const float *cls_preds, const float *reg_preds,
+        int8_t *cls_preds_int, int8_t *reg_preds_int)
 {
 	// class scores from GLOW are floats between 0 and 1 (sigmoid output).
 	// We stretch these scores to the int8 range to match TFLite output.
@@ -220,7 +234,7 @@ static void convert_float_int(const float *cls_preds, const float *reg_preds, in
 	}
 }
 
-int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data** final_boxes)
+int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data* final_boxes)
 {
     if (inf_out == NULL)
     {
@@ -278,13 +292,13 @@ int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data*
     }
     center_prior centers[MAX_POINTS];
 
-    int num_points = generate_center_priors(NANODET_HEIGHT, NANODET_WIDTH, MODEL_STRIDE, centers, MAX_POINTS);
+    generate_center_priors(NANODET_HEIGHT, NANODET_WIDTH, MODEL_STRIDE, centers, MAX_POINTS);
 
-    decode_output_int8(num_points, cls_preds_int, reg_preds_int, (const center_prior *)centers, g_boxes, NANODET_NUM_CLASS);
+    memset(final_boxes, 0, NUM_BOXES_MAX*sizeof(box_data));
 
-    memset(final_boxes, 0, NUM_BOXES_MAX*sizeof(box_data*));
+    int nb_box = decode_output_int8(cls_preds_int, reg_preds_int, (const center_prior *)centers, final_boxes);
 
-    nms(g_boxes, final_boxes, NUM_BOXES_MAX, NMS_THRESH, DETECTION_TRESHOLD/100.0);
+    nms(final_boxes, nb_box, NMS_THRESH, DETECTION_TRESHOLD/100.0);
 
     return 0;
 }

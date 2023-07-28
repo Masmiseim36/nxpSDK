@@ -29,12 +29,45 @@
 
 /* ----------------------------------------- Structures/ Data Types */
 
+typedef enum
+{
+    SPP_STARTED,
+    SPP_CONNECTED,
+    SPP_DATA_TRANSFER
+}APPL_SPP_HANDLE_STATUS;
+
+typedef struct _APPL_SPP_CONN_STATUS
+{
+    /**
+     * Stores the BDADDR of device connected.
+     */
+    UCHAR bd_addr[BT_BD_ADDR_SIZE];
+
+    /**
+     * Connection Status:
+     *  - 0->started
+     *  - 1->connected,
+     *  - 2->data transfer
+     */
+    APPL_SPP_HANDLE_STATUS status;
+
+    /* spp_handle */
+    SPP_HANDLE spp_handle;
+
+    /* Number of bytes in each SPP write */
+    UINT16 appl_nbytes;
+    /* Number of times the SPP Write to be performed */
+    UINT16 appl_loop;
+    /* Counter to maintain the number of SPP Write/Read has completed */
+    UINT16 appl_count;
+
+}APPL_SPP_CONN_STATUS;
 
 /* ----------------------------------------- Function Declarations */
 
 /* Main */
 void main_spp_operations (void);
-void spp_write_data(void);
+void spp_write_data(SPP_HANDLE spp_handle);
 /* SPP callback */
 API_RESULT spp_application_callback
            (
@@ -53,5 +86,9 @@ void appl_spp_sdp_cb
          UINT16   length,
          UINT16   status
      );
+
+/* Display the status of spp_handle instances */
+UCHAR appl_spp_display_conn_status(void);
 #endif /* _H_APPL_SPP_ */
+
 

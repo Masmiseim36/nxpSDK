@@ -51,7 +51,8 @@ void ht_read_task_create_pl (BT_THREAD_START_ROUTINE routine)
     /* Initialize the Write Task Attributes */
     ht_task_attr.thread_name       = (DECL_CONST CHAR  *)"EtherMind RD Task";
     ht_task_attr.thread_stack_size = BT_TASK_STACK_DEPTH;
-    ht_task_attr.thread_priority   = BT_TASK_PRIORITY;
+    /* Setting the Priority 1 Higher than the Default EtherMind Tasks */
+    ht_task_attr.thread_priority   = BT_TASK_PRIORITY + 1;
 
     if ( BT_thread_create ( &ht_tid,
                             &ht_task_attr,

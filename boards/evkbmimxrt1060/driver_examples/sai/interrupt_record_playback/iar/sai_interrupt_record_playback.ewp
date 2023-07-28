@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -74,7 +74,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,12 +115,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,19 +217,19 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -353,12 +353,12 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
@@ -366,8 +366,8 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -489,7 +489,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -693,7 +693,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1102,7 +1102,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1165,7 +1165,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -1189,7 +1189,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1206,12 +1206,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -1229,7 +1229,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1308,7 +1308,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1316,13 +1316,13 @@
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1446,12 +1446,12 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
@@ -1459,8 +1459,8 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1582,7 +1582,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1786,7 +1786,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2195,7 +2195,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2258,7 +2258,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -2282,7 +2282,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2299,12 +2299,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -2322,7 +2322,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2401,7 +2401,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2409,13 +2409,13 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2539,12 +2539,12 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
@@ -2552,8 +2552,8 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2675,7 +2675,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2879,7 +2879,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3288,7 +3288,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3351,7 +3351,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -3375,7 +3375,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3392,12 +3392,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -3415,7 +3415,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3494,19 +3494,19 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3630,12 +3630,12 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
@@ -3643,8 +3643,8 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3766,7 +3766,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3970,7 +3970,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4379,7 +4379,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4442,7 +4442,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -4466,7 +4466,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4483,12 +4483,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -4506,7 +4506,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4585,7 +4585,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4593,13 +4593,13 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4723,12 +4723,12 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
@@ -4736,8 +4736,8 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4859,7 +4859,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5063,7 +5063,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5472,7 +5472,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5535,7 +5535,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -5559,7 +5559,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5576,12 +5576,12 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1062xxx6A	NXP MIMXRT1062xxx6A</state>
+          <state>MIMXRT1062xxx6B	NXP MIMXRT1062xxx6B</state>
         </option>
         <option>
           <name>FPU2</name>
@@ -5599,7 +5599,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5678,7 +5678,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5686,13 +5686,13 @@
           <state>NDEBUG</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
+          <state>CPU_MIMXRT1062DVL6B</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>CODEC_MULTI_ADAPTERS=1</state>
           <state>CODEC_CS42448_ENABLE</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5816,12 +5816,12 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
@@ -5829,8 +5829,8 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5952,7 +5952,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6156,7 +6156,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6603,18 +6603,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
     </file>
     <file>
@@ -6625,6 +6613,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_sai.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
@@ -6649,12 +6649,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/wm8960/fsl_wm8960.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <group>
       <name>port</name>
@@ -6686,6 +6680,12 @@
         <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
     </file>

@@ -15,14 +15,11 @@
 
 /* --------------------------------------------- Header File Inclusion */
 #include "avrcp_al_internal.h"
+#include "avrcp_al_extern.h"
 
 #if ((defined AVRCP_TG) || (defined AVRCP_CT))
 
 /* --------------------------------------------- External Global Variables */
-/* Global MAP MCE mutex variable */
-BT_DEFINE_MUTEX_TYPE(extern, avrcp_al_mutex);
-
-extern AVRCP_AL_EVENT_NTF_CB al_event_ntf_cb;
 
 /* --------------------------------------------- Exported Global Variables */
 

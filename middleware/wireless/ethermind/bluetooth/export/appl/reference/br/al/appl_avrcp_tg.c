@@ -61,7 +61,7 @@ static UCHAR   avrcp16_tg_additional_protocol_desc_list[] =
                    (UCHAR)COVER_ART_GOEP_L2CAP_PSM, 0x35U, 0x03U, 0x19U, 0x00U, 0x08U
                };
 
-AVRCP_CA_HANDLE                            appl_avrcp_tg_ca_handles[AVRCP_CAR_NUM_ENTITIES];
+static AVRCP_CA_HANDLE                     appl_avrcp_tg_ca_handles[AVRCP_CAR_NUM_ENTITIES];
 
 static UCHAR                               obex_connect_state;
 
@@ -157,6 +157,7 @@ void main_avrcp_tg_operations (void)
             break;
 
         default:
+	    LOG_DEBUG("Invalid Choice\n");
             break;
         }
 
@@ -680,7 +681,7 @@ void appl_avrcp_tg_send_get_capability_cmd_rsp
                 avrcp_pack_3_byte_metadata_param
                 (
                     &param[offset],
-                    &company_id_list.company_id_list[i]
+                    &company_id_list.c_id_list[i]
                 );
 
                 offset += 3U;
@@ -708,7 +709,7 @@ void appl_avrcp_tg_send_get_capability_cmd_rsp
 
             for (i = 0U; i < event_id_list.no_ids; i++)
             {
-                param[offset++] = event_id_list.event_id_list[i];
+                param[offset++] = event_id_list.e_id_list[i];
             }
 
             vd_rsp_info.vd_cmd_data = param;
@@ -1464,6 +1465,7 @@ void appl_avrcp_tg_send_get_element_attributes_cmd_rsp
                 LOG_DEBUG ("       - 0x%04x\n", attr_id);
             }
 
+#ifdef AVRCP_COVER_ART
             /**
              * To skip Cover Art Handle in the response.
              * Few PTS testcases require not sent CoverArt Handles
@@ -1478,6 +1480,7 @@ void appl_avrcp_tg_send_get_element_attributes_cmd_rsp
                     break;
                 }
             }
+#endif /* AVRCP_COVER_ART */
         }
         else
         {
@@ -2015,6 +2018,13 @@ void appl_avrcp_tg_send_notify_cmd_interim_rsp
                     param[offset++] = player_appl_info.attr_id_info[i].attr_id;
                     param[offset++] = player_appl_info.attr_id_info[i].cur_attr_val.val;
                 }
+
+                /* register */
+                (BT_IGNORE_RETURN_VALUE)appl_mp_register_player_event
+                (
+                    event_id,
+                    vd_cmd_info->tl
+                );
             }
 
             break;
@@ -2323,8 +2333,13 @@ void appl_avrcp_tg_handle_abort_continue_response
 
         rsp_pdu_info.tl             = vd_cmd_info->tl;
         rsp_pdu_info.cmd_type       = AVRCP_RESPONSE_TYPE_ACCEPTED;
-        rsp_pdu_info.packet_type    = AVRCP_METADATA_PACKET_TYPE_END;
-        rsp_pdu_info.pdu_id         = pdu_id;
+        rsp_pdu_info.packet_type = AVRCP_METADATA_PACKET_TYPE_SINGLE;
+
+        /**
+         * PDU ID in the response has to AVRCP_METADATA_PDU_ID_ABORT_CONTINUING_RESPONSE
+         * instead of pdu_id which was received in the request.
+         */
+        rsp_pdu_info.pdu_id = AVRCP_METADATA_PDU_ID_ABORT_CONTINUING_RESPONSE;
         rsp_pdu_info.vd_cmd_data    = NULL;
         rsp_pdu_info.vd_cmd_datalen = 0x00U;
 
@@ -2496,7 +2511,9 @@ void appl_avrcp_tg_send_play_item_rsp
     UCHAR       param;
     UINT16      paramlen;
     UCHAR       reject, rsp_type;
-    UCHAR       i, j, item_found;
+    UCHAR       i = 0;
+    UCHAR		j = 0;
+    UCHAR	    item_found;
     AVRCP_AL_VD_CMD_INFO rsp_pdu_info;
     APPL_AVRCP_MEDIA_ELEMENT_ITEM_TYPE_INFO  *media_item_ptr;
 
@@ -2609,68 +2626,129 @@ void appl_avrcp_tg_send_play_item_rsp
                     break;
                 }
             }
+        }
+        else if (AVRCP_SCOPE_SEARCH == scope)
+        {
+            /* Find the Media Item */
+            for (i = 0U; i < APPL_AVRCP_MAX_SEARCH_LIST_COUNT; i++)
+            {
+                if ((uid[0U] == media_search_list_info[i].item_uid_msb) &&
+                   (uid[1U] == media_search_list_info[i].item_uid_lsb))
+                {
+                    item_found = 0x01U;
+                    break;
+                }
+            }
 
-            if (((media_list_count + 1U) < APPL_AVRCP_MAX_MEDIA_LIST_COUNT) &&
-                 (0x01U == item_found))
+            if (0x01U != item_found)
+            {
+                /* Reject */
+                reject   = 0x01U;
+                rsp_type = AVRCP_RESPONSE_TYPE_REJECTED;
+                param    = AVRCP_BOW_ERROR_DOES_NOT_EXIST;
+                paramlen = 1U;
+                goto SEND_RSP;
+            }
+        }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
+        }
+
+        if (((media_list_count + 1U) < APPL_AVRCP_MAX_MEDIA_LIST_COUNT) &&
+             (0x01U == item_found))
+        {
+            if (AVRCP_SCOPE_VIRTUAL_FILESYSTEM == scope)
             {
                 /*  Assign the Media Item info pointer */
                 media_item_ptr = &vf_list_info[i][j].media_item_info;
+            }
+            else if (AVRCP_SCOPE_SEARCH == scope)
+            {
+                media_item_ptr = &media_search_list_info[i].media_item_info;
+            }
+            else
+            {
+                /* MISRA C-2012 Rule 15.7 */
+            }
 
-                /* === Copy the item to Media Item List === */
-                media_list_info[media_list_count].item_type = APPL_AVRCP_ITEM_TYPE_MEDIA;
+            /* === Copy the item to Media Item List === */
+            media_list_info[media_list_count].item_type = APPL_AVRCP_ITEM_TYPE_MEDIA;
 
-                media_list_info[media_list_count].item_uid_lsb = uid[1U];
-                media_list_info[media_list_count].item_uid_msb = uid[0U];
+            media_list_info[media_list_count].item_uid_lsb = uid[1U];
+            media_list_info[media_list_count].item_uid_msb = uid[0U];
 
-                media_list_info[media_list_count].media_item_info.char_set = media_item_ptr->char_set;
-                media_list_info[media_list_count].media_item_info.name_len = media_item_ptr->name_len;
+            media_list_info[media_list_count].media_item_info.char_set = media_item_ptr->char_set;
+            media_list_info[media_list_count].media_item_info.name_len = media_item_ptr->name_len;
 
-                BT_mem_copy
-                (
-                    media_list_info[media_list_count].media_item_info.name,
-                    media_item_ptr->name,
-                    media_item_ptr->name_len
-                );
+            BT_mem_copy
+            (
+                media_list_info[media_list_count].media_item_info.name,
+                media_item_ptr->name,
+                media_item_ptr->name_len
+            );
 
-                media_list_info[media_list_count].media_item_info.num_attr = media_item_ptr->num_attr;
+            media_list_info[media_list_count].media_item_info.num_attr = media_item_ptr->num_attr;
 
-                if (0x00U != media_item_ptr->num_attr)
+            if (0x00U != media_item_ptr->num_attr)
+            {
+                 /* Copy attributes id and values */
+                for (i = 0U;  i < APPL_AVRCP_MAX_ATTR_COUNT; i++)
                 {
-                     /* Copy attributes id and values */
-                    for (i = 0U;  i < APPL_AVRCP_MAX_ATTR_COUNT; i++)
+                    attr_id = media_item_ptr->attr_info[i].attr_id;
+
+                    if (0x00U != attr_id)
                     {
-                        attr_id = media_item_ptr->attr_info[i].attr_id;
+                        media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].attr_id =
+                                    media_item_ptr->attr_info[attr_id-1U].attr_id;
 
-                        if (0x00U != attr_id)
-                        {
-                            media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].attr_id =
-                                        media_item_ptr->attr_info[attr_id-1U].attr_id;
-
-                            media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].char_set =
-                                        media_item_ptr->attr_info[attr_id-1U].char_set;
+                        media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].char_set =
+                                    media_item_ptr->attr_info[attr_id-1U].char_set;
 
 
-                            media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].att_val_len =
-                                        media_item_ptr->attr_info[attr_id-1U].att_val_len;
+                        media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].att_val_len =
+                                    media_item_ptr->attr_info[attr_id-1U].att_val_len;
 
-                            BT_mem_copy
-                            (
-                                media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].att_val,
-                                media_item_ptr->attr_info[attr_id-1U].att_val,
-                                media_item_ptr->attr_info[attr_id-1U].att_val_len
-                            );
-                        }
+                        BT_mem_copy
+                        (
+                            media_list_info[media_list_count].media_item_info.attr_info[attr_id-1U].att_val,
+                            media_item_ptr->attr_info[attr_id-1U].att_val,
+                            media_item_ptr->attr_info[attr_id-1U].att_val_len
+                        );
                     }
                 }
+            }
 
-                media_list_count ++;
+            media_list_count ++;
 
-                /* Increment UID counter */
-                global_uid_counter ++;
+            /* Increment UID counter */
+            global_uid_counter ++;
+        }
+        if (AVRCP_SCOPE_NOW_PLAYING == scope)
+        {
+            /* Find the Media Item */
+            for (i = 0U; i < APPL_AVRCP_MAX_MEDIA_LIST_COUNT; i++)
+            {
+                if ((uid[0U] == media_list_info[i].item_uid_msb) &&
+                        (uid[1U] == media_list_info[i].item_uid_lsb))
+                {
+                    item_found = 0x01U;
+                    break;
+                }
+            }
+
+            if (0x01U != item_found)
+            {
+                /* Reject */
+                reject   = 0x01U;
+                rsp_type = AVRCP_RESPONSE_TYPE_REJECTED;
+                param    = AVRCP_BOW_ERROR_DOES_NOT_EXIST;
+                paramlen = 1U;
+                goto SEND_RSP;
             }
         }
 
-     SEND_RSP:
+        SEND_RSP:
 
         /* Update PDU parameters */
         rsp_pdu_info.tl              = vd_cmd_info->tl;
@@ -3371,9 +3449,9 @@ void appl_avrcp_tg_handle_get_virtual_filesystem_list
      * but that can be taken care in a more complex product level
      * application.
      */
-    if (num_items > 4U)
+    if (num_items > 5U)
     {
-        num_items = 4U;
+        num_items = 5U;
     }
 
     reject = 0x00U;
@@ -5215,7 +5293,7 @@ void appl_avrcp_tg_notify_change_rsp
     int                     choice, read_val;
     API_RESULT              retval;
     UCHAR                   play_status;
-    UCHAR                   event_id, tl, i;
+    UCHAR                   event_id, tl, i, reg_status;
     UCHAR                  *param;
     UCHAR                   rsp_status;
     UINT16                  param_len, offset;
@@ -5239,9 +5317,6 @@ void appl_avrcp_tg_notify_change_rsp
     LOG_DEBUG ("    e. Reject register notifications\n");
 
     fflush (stdout);
-    scanf ("%x", &choice);
-    event_id = (UCHAR)choice;
-
     /* Init */
     offset    = 0x00U;
     param     = NULL;
@@ -5249,378 +5324,384 @@ void appl_avrcp_tg_notify_change_rsp
     tl        = 0U;
     retval = API_SUCCESS;
 
-    switch (event_id)
+    scanf ("%x", &choice);
+    event_id = (UCHAR)choice;
+    reg_status = appl_mp_get_registered_player_event_reg_status(event_id);
+    if (0x00U == reg_status)
     {
-    case AVRCP_EVENT_PLAYBACK_STATUS_CHANGED:
-        LOG_DEBUG ("   Enter the Play status\n");
-        LOG_DEBUG ("        0. Stopped\n");
-        LOG_DEBUG ("        1. Playing\n");
-        LOG_DEBUG ("        2. Paused\n");
-        LOG_DEBUG ("        3. FWD seek\n");
-        LOG_DEBUG ("        4. REV seek\n");
-        LOG_DEBUG ("        5. Error\n");
-        LOG_DEBUG ("    Enter you choice = ");
-        fflush (stdout);
-        scanf ("%d", &read_val);
-        play_status = (UCHAR )read_val;
-
-        param_len = 2U;
-        tl = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
+        printf("Event ID 0x%x is not registered for notification\n", event_id);
+        choice = 0xFFU;
+    }
+    else
+    {
+        switch (event_id)
         {
-            LOG_DEBUG ("Failed to allocate memory\n");
-            retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-            param[offset++] = event_id;
-            param[offset] = play_status;
+        case AVRCP_EVENT_PLAYBACK_STATUS_CHANGED:
+            printf ("   Enter the Play status\n");
+            printf ("        0. Stopped\n");
+            printf ("        1. Playing\n");
+            printf ("        2. Paused\n");
+            printf ("        3. FWD seek\n");
+            printf ("        4. REV seek\n");
+            printf ("        5. Error\n");
+            printf ("    Enter you choice = ");
+            fflush (stdout);
+            scanf ("%d", &read_val);
+            play_status = (UCHAR )read_val;
 
-            /* Save the status */
-            cur_song_play_status.song_play_status = play_status;
-        }
+            param_len = 2U;
+            tl = appl_mp_get_registered_player_event_tl (event_id);
 
-        break;
-
-    case AVRCP_EVENT_TRACK_CHANGED:
-
-        /* Calculate parameter length */
-        param_len = 9U;
-        tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
-        {
-            LOG_DEBUG ("Failed to allocate memory\n");
-            retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-            param[offset++] = event_id;
-
-            /* Sending UID of 2nd element in media_list_info[] */
-            avrcp_pack_4_byte_metadata_param
-            (
-                &param[offset],
-                &media_list_info[1U].item_uid_msb
-            );
-
-            offset += 4U;
-
-            avrcp_pack_4_byte_metadata_param
-            (
-                &param[offset],
-                &media_list_info[1U].item_uid_lsb
-            );
-
-            offset += 4U;
-        }
-
-        break;
-
-    case AVRCP_EVENT_TRACK_REACHED_END:
-    case AVRCP_EVENT_TRACK_REACHED_START: /* Fall Through */
-
-        /* Calculate parameter length */
-        param_len = 1U;
-        tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
-        {
-            LOG_DEBUG ("Failed to allocate memory\n");
-            retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-            param[offset] = event_id;
-        }
-
-        break;
-
-    case AVRCP_EVENT_PLAYBACK_POS_CHANGED:
-        LOG_DEBUG ("    Enter the playback position = ");
-        scanf ("%d", &read_val);
-        play_back_pos = read_val;
-
-        /* Calculate parameter length */
-        param_len = 5U;
-        tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
-        {
-            LOG_DEBUG ("Failed to allocate memory\n");
-            retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-            param[offset++] = event_id;
-
-            avrcp_pack_4_byte_metadata_param
-            (
-                &param[offset],
-                &play_back_pos
-            );
-
-            offset += 4U;
-        }
-
-        break;
-
-    case AVRCP_EVENT_BATT_STATUS_CHANGED:
-
-        /* Calculate parameter length */
-        param_len  = 2U;
-        tl         = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
-        {
-            LOG_DEBUG ("Failed to allocate memory\n");
-            retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-            param[offset++] = event_id;
-            param[offset] = battery_status;
-        }
-
-        break;
-
-    case AVRCP_EVENT_SYSTEM_STATUS_CHANGED:
-
-        /* Calculate parameter length */
-        param_len  = 2U;
-        tl         = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
-        {
-            LOG_DEBUG ("Failed to allocate memory\n");
-            retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-            param[offset++] = event_id;
-            param[offset] = system_status;
-        }
-
-        break;
-
-    case AVRCP_EVENT_PLAYER_APP_SETTING_CHANGED:
-
-        /* Note: Update player_appl_info using mplayer menu */
-
-        /* No. Attr_id + (attr_id + attr_val) */
-        param_len = 1U + 1U + 2U * (UINT16)(player_appl_info.no_attr);
-        tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
-        {
-            LOG_DEBUG ("Failed to allocate memory\n");
-            retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-            param[offset++] = event_id;
-            param[offset++] = player_appl_info.no_attr;
-
-            for (i = 0U; i < player_appl_info.no_attr; i++)
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
             {
-                param[offset++] = player_appl_info.attr_id_info[i].attr_id;
-                param[offset++] = player_appl_info.attr_id_info[i].cur_attr_val.val;
-            }
-        }
-
-        break;
-
-    case AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED:
-         /* Calculate parameter length */
-         param_len = 1U;
-         tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-         /* Allocate memory */
-         param = BT_alloc_mem(param_len);
-         if (NULL == param)
-         {
-             LOG_DEBUG ("Failed to allocate memory\n");
-             retval = API_FAILURE; /* return; */
-         }
-         else
-         {
-             param[offset] = event_id;
-         }
-
-         break;
-
-    case AVRCP_EVENT_AVAILABLE_PLAYER_CHANGED:
-         /* Calculate parameter length */
-         param_len  = 1U;
-         tl         = appl_mp_get_registered_player_event_tl (event_id);
-
-         /* Allocate memory */
-         param = BT_alloc_mem(param_len);
-         if (NULL == param)
-         {
-             LOG_DEBUG ("Failed to allocate memory\n");
-             retval = API_FAILURE; /* return; */
-         }
-         else
-         {
-             param[offset] = event_id;
-         }
-
-        break;
-
-    case AVRCP_EVENT_ADDRESSED_PLAYER_CHANGED:
-         /* Calculate parameter length */
-         param_len = 5U;
-         tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-         /* Allocate memory */
-         param = BT_alloc_mem(param_len);
-         if (NULL == param)
-         {
-             LOG_DEBUG ("Failed to allocate memory\n");
-             retval = API_FAILURE; /* return; */
-         }
-         else
-         {
-             param[offset++] = event_id;
-
-            if (current_player_id == addressed_player_id)
-            {
-                current_player_id = browsed_player_id;
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
             }
             else
             {
-                current_player_id = addressed_player_id;
+                param[offset++] = event_id;
+                param[offset] = play_status;
+
+                /* Save the status */
+                cur_song_play_status.song_play_status = play_status;
             }
 
-             avrcp_pack_2_byte_metadata_param
-             (
-                 &param[offset],
-                 &current_player_id
-             );
+            break;
 
-            offset += 2U;
+        case AVRCP_EVENT_TRACK_CHANGED:
 
-            avrcp_pack_2_byte_metadata_param
-             (
-                 &param[offset],
-                 &global_uid_counter
-             );
+            /* Calculate parameter length */
+            param_len = 9U;
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
 
-            offset += 2U;
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset++] = event_id;
+
+                /* Sending UID of 2nd element in media_list_info[] */
+                avrcp_pack_4_byte_metadata_param
+                (
+                    &param[offset],
+                    &media_list_info[1U].item_uid_msb
+                );
+
+                offset += 4U;
+
+                avrcp_pack_4_byte_metadata_param
+                (
+                    &param[offset],
+                    &media_list_info[1U].item_uid_lsb
+                );
+
+                offset += 4U;
+            }
+
+            break;
+
+        case AVRCP_EVENT_TRACK_REACHED_END:
+        case AVRCP_EVENT_TRACK_REACHED_START: /* Fall Through */
+
+            /* Calculate parameter length */
+            param_len = 1U;
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset] = event_id;
+            }
+
+            break;
+
+        case AVRCP_EVENT_PLAYBACK_POS_CHANGED:
+            printf ("    Enter the playback position = ");
+            scanf ("%d", &read_val);
+            play_back_pos = read_val;
+
+            /* Calculate parameter length */
+            param_len = 5U;
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset++] = event_id;
+
+                avrcp_pack_4_byte_metadata_param
+                (
+                    &param[offset],
+                    &play_back_pos
+                );
+
+                offset += 4U;
+            }
+
+            break;
+
+        case AVRCP_EVENT_BATT_STATUS_CHANGED:
+
+            /* Calculate parameter length */
+            param_len  = 2U;
+            tl         = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset++] = event_id;
+                param[offset] = battery_status;
+            }
+
+            break;
+
+        case AVRCP_EVENT_SYSTEM_STATUS_CHANGED:
+
+            /* Calculate parameter length */
+            param_len  = 2U;
+            tl         = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset++] = event_id;
+                param[offset] = system_status;
+            }
+
+            break;
+
+        case AVRCP_EVENT_PLAYER_APP_SETTING_CHANGED:
+
+            /* Note: Update player_appl_info using mplayer menu */
+
+            /* No. Attr_id + (attr_id + attr_val) */
+            param_len = 1U + 1U + 2U * (UINT16)(player_appl_info.no_attr);
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset++] = event_id;
+                param[offset++] = player_appl_info.no_attr;
+
+                for (i = 0U; i < player_appl_info.no_attr; i++)
+                {
+                    param[offset++] = player_appl_info.attr_id_info[i].attr_id;
+                    param[offset++] = player_appl_info.attr_id_info[i].cur_attr_val.val;
+                }
+            }
+
+            break;
+
+        case AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED:
+            /* Calculate parameter length */
+            param_len = 1U;
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset] = event_id;
+            }
+
+            break;
+
+        case AVRCP_EVENT_AVAILABLE_PLAYER_CHANGED:
+            /* Calculate parameter length */
+            param_len  = 1U;
+            tl         = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset] = event_id;
+            }
+
+            break;
+
+        case AVRCP_EVENT_ADDRESSED_PLAYER_CHANGED:
+            /* Calculate parameter length */
+            param_len = 5U;
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset++] = event_id;
+
+                if (current_player_id == addressed_player_id)
+                {
+                    current_player_id = browsed_player_id;
+                }
+                else
+                {
+                    current_player_id = addressed_player_id;
+                }
+
+                avrcp_pack_2_byte_metadata_param
+                (
+                    &param[offset],
+                    &current_player_id
+                );
+
+                offset += 2U;
+
+                avrcp_pack_2_byte_metadata_param
+                (
+                    &param[offset],
+                    &global_uid_counter
+                );
+
+                offset += 2U;
+            }
+
+            break;
+
+        case AVRCP_EVENT_UIDS_CHANGED:
+            /* Calculate parameter length */
+            param_len = 3U;
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+                param[offset++] = event_id;
+
+                /* Update the UID counter and send */
+                global_uid_counter++;
+
+                avrcp_pack_2_byte_metadata_param
+                (
+                    &param[offset],
+                    &global_uid_counter
+                );
+
+                offset += 2U;
+            }
+            break;
+
+        case AVRCP_EVENT_VOLUME_CHANGED:
+            /* Calculate parameter length */
+            param_len = 2U;
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            /* Allocate memory */
+            param = BT_alloc_mem(param_len);
+            if (NULL == param)
+            {
+                printf ("Failed to allocate memory\n");
+                retval = API_FAILURE; /* return; */
+            }
+            else
+            {
+
+                param[offset++] = event_id;
+                param[offset] = system_volume;
+            }
+
+            break;
+
+        case 0x0EU:
+
+            choice = 0xFE;
+
+            printf ("Select the Event ID to reject\n");
+            printf ("    1. Playback Status Changed\n");
+            printf ("    2. Track Changed\n");
+            printf ("    3. Track Reached End\n");
+            printf ("    4. Track Reacged Start\n");
+            printf ("    5. Playback Pos Changed\n");
+            printf ("    6. Battery Status Changed\n");
+            printf ("    7. System Status Changed\n");
+            printf ("    8. Player Application Setting Changed\n");
+            printf ("    9. Now Playing Content Changed\n");
+            printf ("    a. Available Player Changed\n");
+            printf ("    b. Address Player Changed\n");
+            printf ("    c. UIDS Change\n");
+            printf ("    d. Volume Changed\n");
+
+            fflush (stdout);
+            scanf ("%x", &read_val);
+            event_id = (UCHAR )read_val;
+
+            tl        = appl_mp_get_registered_player_event_tl (event_id);
+
+            break;
+
+        default:
+            printf ("Invalid Choice\n");
+            choice = 0xFF;
+            break;
         }
-
-        break;
-
-    case AVRCP_EVENT_UIDS_CHANGED:
-         /* Calculate parameter length */
-         param_len = 3U;
-         tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-         /* Allocate memory */
-         param = BT_alloc_mem(param_len);
-         if (NULL == param)
-         {
-             LOG_DEBUG ("Failed to allocate memory\n");
-             retval = API_FAILURE; /* return; */
-         }
-         else
-         {
-             param[offset++] = event_id;
-
-             /* Update the UID counter and send */
-             global_uid_counter++;
-
-             avrcp_pack_2_byte_metadata_param
-             (
-                 &param[offset],
-                 &global_uid_counter
-             );
-
-             offset += 2U;
-         }
-         break;
-
-    case AVRCP_EVENT_VOLUME_CHANGED:
-        /* Calculate parameter length */
-        param_len = 2U;
-        tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-        /* Allocate memory */
-        param = BT_alloc_mem(param_len);
-        if (NULL == param)
-        {
-         LOG_DEBUG ("Failed to allocate memory\n");
-         retval = API_FAILURE; /* return; */
-        }
-        else
-        {
-
-            param[offset++] = event_id;
-            param[offset] = system_volume;
-        }
-
-        break;
-
-    case 0x0EU:
-
-        choice = 0xFE;
-
-        LOG_DEBUG ("Select the Event ID to reject\n");
-        LOG_DEBUG ("    1. Playback Status Changed\n");
-        LOG_DEBUG ("    2. Track Changed\n");
-        LOG_DEBUG ("    3. Track Reached End\n");
-        LOG_DEBUG ("    4. Track Reacged Start\n");
-        LOG_DEBUG ("    5. Playback Pos Changed\n");
-        LOG_DEBUG ("    6. Battery Status Changed\n");
-        LOG_DEBUG ("    7. System Status Changed\n");
-        LOG_DEBUG ("    8. Player Application Setting Changed\n");
-        LOG_DEBUG ("    9. Now Playing Content Changed\n");
-        LOG_DEBUG ("    a. Available Player Changed\n");
-        LOG_DEBUG ("    b. Address Player Changed\n");
-        LOG_DEBUG ("    c. UIDS Change\n");
-        LOG_DEBUG ("    d. Volume Changed\n");
-
-        fflush (stdout);
-        scanf ("%x", &read_val);
-        event_id = (UCHAR )read_val;
-
-        tl        = appl_mp_get_registered_player_event_tl (event_id);
-
-        break;
-
-    default:
-        LOG_DEBUG ("Invalid Choice\n");
-        choice = 0xFF;
-        break;
     }
-
     /**
      * For invalide choice, not sending pdu
      */
     if (0xFFU == choice)
     {
-        rsp_status = AVRCP_METADATA_ERROR_INVALID_PARAMETER;
-
-        rsp_pdu_info.cmd_type    = AVRCP_RESPONSE_TYPE_REJECTED;
-
-        rsp_pdu_info.vd_cmd_data    = &rsp_status;
-        rsp_pdu_info.vd_cmd_datalen = 1U;
+        retval = API_FAILURE;
+        printf("Not sending pdu\n");
     }
     else if (0xFEU == choice)
     {
@@ -5637,14 +5718,16 @@ void appl_avrcp_tg_notify_change_rsp
 
         rsp_pdu_info.vd_cmd_data    = param;
         rsp_pdu_info.vd_cmd_datalen = param_len;
+        appl_mp_un_register_player_event_reg_status(event_id);
     }
-
-    rsp_pdu_info.tl          = tl;
-    rsp_pdu_info.pdu_id      = AVRCP_METADATA_PDU_ID_REGISTER_NOTIFICATION;
-    rsp_pdu_info.packet_type = AVRCP_METADATA_PACKET_TYPE_SINGLE;
 
     if (API_SUCCESS == retval)
     {
+        rsp_pdu_info.tl          = tl;
+        rsp_pdu_info.pdu_id      = AVRCP_METADATA_PDU_ID_REGISTER_NOTIFICATION;
+        rsp_pdu_info.packet_type = AVRCP_METADATA_PACKET_TYPE_SINGLE;
+
+    
         retval = BT_avrcp_al_send_metadata_pdu
                  (
                      &appl_avrcp_handle[inst],
@@ -5770,12 +5853,14 @@ API_RESULT appl_avrcp_car_callback
 
             /* Set response to be sent */
             send_response = 1U;
+            BT_mem_set(img_properties, 0, sizeof(img_properties));
 
             if (sent == 0U)
             {
                 if((NULL == ca_headers->ca_req_info->img_handle) ||
                    (NULL == ca_headers->ca_req_info->img_handle->value) ||
-                   (0U    == ca_headers->ca_req_info->img_handle->length))
+                   (0U  == ca_headers->ca_req_info->img_handle->length) ||
+                   (8U < ca_headers->ca_req_info->img_handle->length))
                 {
                     LOG_DEBUG ("Invalid Image Handle \n");
 
@@ -5803,7 +5888,7 @@ API_RESULT appl_avrcp_car_callback
                     ca_headers->ca_req_info->img_handle->value);
 
                 /* Get the length of image properties object */
-                image_prop_obj_size = (UINT16)BT_str_len(img_properties);
+                image_prop_obj_size = (UINT16)BT_str_n_len(img_properties, sizeof(img_properties)-1);
 
                 remaining = image_prop_obj_size;
             }

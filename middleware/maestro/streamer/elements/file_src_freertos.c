@@ -1126,7 +1126,7 @@ static int32_t filesrc_set_property(StreamElement *element_ptr, uint16_t prop, u
 
         case PROP_FILESRC_SET_FILE_TYPE:
             STREAMER_LOG_DEBUG(DBG_FILESRC, "set file type:%d\n", val);
-            if (val < 0 || val > 1)
+            if (val > 1)
             {
                 ret = STREAM_ERR_INVALID_ARGS;
             }

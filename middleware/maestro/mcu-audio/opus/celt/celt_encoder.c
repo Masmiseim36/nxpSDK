@@ -1794,7 +1794,7 @@ int celt_encode_with_ec(CELTEncoder *OPUS_RESTRICT st,
         pf_on = run_prefilter(st, in, prefilter_mem, CC, N, prefilter_tapset, &pitch_index, &gain1, &qg, enabled,
                               nbAvailableBytes, &st->analysis);
         if ((gain1 > QCONST16(.4f, 15) || st->prefilter_gain > QCONST16(.4f, 15)) &&
-            (!st->analysis.valid || st->analysis.tonality > (float).3) &&
+            (!st->analysis.valid || st->analysis.tonality > (float).3f) &&
             (pitch_index > 1.26 * st->prefilter_period || pitch_index < .79 * st->prefilter_period))
             pitch_change = 1;
         if (pf_on == 0)

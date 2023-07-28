@@ -196,7 +196,7 @@ _sdr_Init()
   __writeMemory32(0x00000081, 0x402F000C, "Memory"); // BMCR1
   __writeMemory32(0x8000001B, 0x402F0010, "Memory"); // BR0, 32MB
  
-  __writeMemory32(0x00000F31, 0x402F0040, "Memory"); // SDRAMCR0
+  __writeMemory32(0x00000F07, 0x402F0040, "Memory"); // SDRAMCR0
   __writeMemory32(0x00662A22, 0x402F0044, "Memory"); // SDRAMCR1
   __writeMemory32(0x000A0A0A, 0x402F0048, "Memory"); // SDRAMCR2
   __writeMemory32(0x08080A00, 0x402F004C, "Memory"); // SDRAMCR3
@@ -211,7 +211,7 @@ _sdr_Init()
   SDRAM_WaitIpCmdDone();
   __writeMemory32(0xA55A000C, 0x402F009C, "Memory"); // SD_CC_IAF
   SDRAM_WaitIpCmdDone();
-  __writeMemory32(0x00000033, 0x402F00A0, "Memory"); // IPTXDAT
+  __writeMemory32(0x00000030, 0x402F00A0, "Memory"); // IPTXDAT
   __writeMemory32(0xA55A000A, 0x402F009C, "Memory"); // SD_CC_IMS
   SDRAM_WaitIpCmdDone();
 

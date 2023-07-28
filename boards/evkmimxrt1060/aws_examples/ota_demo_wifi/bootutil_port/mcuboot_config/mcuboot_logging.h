@@ -13,6 +13,11 @@
 // * logging subsystem.
 // */
 
+#ifdef NDEBUG
+#undef assert
+#define assert(x) ((void)(x))
+#endif
+
 #define MCUBOOT_LOG_MODULE_DECLARE(domain)  // LOG_MODULE_DECLARE(domain, CONFIG_MCUBOOT_LOG_LEVEL)
 #define MCUBOOT_LOG_MODULE_REGISTER(domain) // LOG_MODULE_REGISTER(domain, CONFIG_MCUBOOT_LOG_LEVEL)
 

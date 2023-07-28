@@ -27,6 +27,8 @@
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000400 : 0;
 define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x000003FF : 0;
 
+define symbol LITTLEFS_REGION_SIZE     = 0x00200000;
+
 define symbol m_interrupts_start       = 0x60002000;
 define symbol m_interrupts_end         = 0x600023FF;
 
@@ -50,10 +52,12 @@ define symbol m_boot_hdr_ivt_start           = 0x60001000;
 define symbol m_boot_hdr_boot_data_start     = 0x60001020;
 define symbol m_boot_hdr_dcd_data_start      = 0x60001030;
 
+/* NOTE: The last LITTLEFS_REGION_SIZE Flash( in range (m_text_end + 1) ~ (m_text_end + LITTLEFS_REGION_SIZE)) is reserved for litteFS data */
+
 /*** littleFS configuration Start ***/
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = 0x60600000;
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (0x60800000 - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = m_text_end + 1;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE   = 0x1000;  /* 4k flash sector size */
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS   = LITTLEFS_REGION_SIZE / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
 /*** littleFS configuration End ***/
 
 /* Sizes */
@@ -98,7 +102,6 @@ initialize by copy {
   section DataQuickAccess,
   /* Place in RAM flash and performance dependent functions */
   object fsl_adapter_flexspi_nor_flash.o,
-  object NV_Flash.o,
   object mflash_drv.o,
   object fsl_flexspi.o,
   section .textrw

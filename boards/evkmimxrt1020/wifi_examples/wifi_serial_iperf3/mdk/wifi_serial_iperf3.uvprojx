@@ -328,7 +328,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/serial_mwm;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1021xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -456,6 +456,11 @@
           <GroupName>component/serial_mwm</GroupName>
           <Files>
             <File>
+              <FileName>serial_mwm_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>serial_mwm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.h</FilePath>
@@ -464,11 +469,6 @@
               <FileName>serial_mwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_mwm_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -816,6 +816,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -829,16 +839,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1274,7 +1274,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/serial_mwm;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1310,7 +1310,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1402,6 +1402,11 @@
           <GroupName>component/serial_mwm</GroupName>
           <Files>
             <File>
+              <FileName>serial_mwm_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>serial_mwm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.h</FilePath>
@@ -1410,11 +1415,6 @@
               <FileName>serial_mwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_mwm_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1762,6 +1762,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1775,16 +1785,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2220,7 +2220,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/serial_mwm;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -2256,7 +2256,7 @@
             <ScatterFile>MIMXRT1021xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2348,6 +2348,11 @@
           <GroupName>component/serial_mwm</GroupName>
           <Files>
             <File>
+              <FileName>serial_mwm_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>serial_mwm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.h</FilePath>
@@ -2356,11 +2361,6 @@
               <FileName>serial_mwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_mwm_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2708,6 +2708,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2721,16 +2731,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3166,7 +3166,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/serial_mwm;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -3202,7 +3202,7 @@
             <ScatterFile>MIMXRT1021xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3294,6 +3294,11 @@
           <GroupName>component/serial_mwm</GroupName>
           <Files>
             <File>
+              <FileName>serial_mwm_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>serial_mwm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.h</FilePath>
@@ -3302,11 +3307,6 @@
               <FileName>serial_mwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_mwm_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3654,6 +3654,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3667,16 +3677,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4112,7 +4112,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/serial_mwm;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -4148,7 +4148,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4240,6 +4240,11 @@
           <GroupName>component/serial_mwm</GroupName>
           <Files>
             <File>
+              <FileName>serial_mwm_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>serial_mwm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.h</FilePath>
@@ -4248,11 +4253,6 @@
               <FileName>serial_mwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_mwm_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4600,6 +4600,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4613,16 +4623,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5058,7 +5058,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/serial_mwm;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -5094,7 +5094,7 @@
             <ScatterFile>MIMXRT1021xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5186,6 +5186,11 @@
           <GroupName>component/serial_mwm</GroupName>
           <Files>
             <File>
+              <FileName>serial_mwm_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>serial_mwm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.h</FilePath>
@@ -5194,11 +5199,6 @@
               <FileName>serial_mwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_mwm/serial_mwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_mwm_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_mwm/serial_mwm_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5546,6 +5546,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -5559,16 +5569,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>

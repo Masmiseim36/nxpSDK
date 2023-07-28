@@ -319,7 +319,7 @@ DECL_CONST UCHAR gatt_const_value_arr[GATT_CONST_VALUE_ARRAY_SIZE] =
     0x02U, 0x1CU, 0x00U, 0x50U, 0x2AU,
 
     /* 160 - PnPID(11); Default: 0 */
-    0x01U, 0x6AU, 0x00U, 0x4DU, 0x01U, 0x00U, 0x01U,
+    0x01U, 0x25U, 0x00U, 0x00U, 0x00U, 0x01U, 0x00U,
 
     /* 167 - BatteryLevel(12); Property: 0x12, Value Handle: 0x001F, UUID: 0x2A19 */
     0x12U, 0x1FU, 0x00U, 0x19U, 0x2AU,
@@ -667,7 +667,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* Dummy */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -689,7 +689,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 0 - GAP - Service Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -711,7 +711,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 0 - DeviceName - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -733,7 +733,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 0 - DeviceName - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -755,7 +755,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 1 - Appearance - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -777,7 +777,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 1 - Appearance - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -799,7 +799,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 1 - GATT - Service Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -821,7 +821,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 2 - Service Changed - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -865,8 +865,8 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 2 - Service Changed - CCD */
     {
         /* Property */
-        GATT_DB_READ |
-        GATT_DB_WRITE,
+        GATT_DB_CHAR_READ_PROPERTY |
+        GATT_DB_CHAR_WRITE_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY |
@@ -889,7 +889,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 2 - DeviceInformation - Service Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -911,7 +911,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 3 - ManufacturerName - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -933,13 +933,13 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 3 - ManufacturerName - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
 
         /* Value Length */
-        17U,
+        sizeof(APPL_MANUFACTURER_NAME),
 
         /* Next Attribute Type Index */
         ATT_INVALID_ATTR_HANDLE_VAL,
@@ -948,14 +948,14 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
         32U,
 
         /* Value */
-        (UCHAR *)(&gatt_const_value_arr[34U]),
+        (UCHAR *)(&appl_manufacturer_name_ext),
     },
 
     /* Handle - 0x000D */
     /* 4 - ModelNumber - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -977,7 +977,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 4 - ModelNumber - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -999,7 +999,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 5 - SerialNumber - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1021,7 +1021,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 5 - SerialNumber - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1043,7 +1043,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 6 - FirmwareRevision - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1065,7 +1065,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 6 - FirmwareRevision - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1087,7 +1087,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 7 - HardwareRevision - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1109,7 +1109,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 7 - HardwareRevision - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1131,7 +1131,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 8 - SoftwareRevision - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1153,7 +1153,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 8 - SoftwareRevision - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1175,7 +1175,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 9 - SystemId - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1197,7 +1197,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 9 - SystemId - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1219,7 +1219,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 10 - RegCertDataList - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1241,7 +1241,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 10 - RegCertDataList - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1263,7 +1263,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 11 - PnPID - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1285,7 +1285,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 11 - PnPID - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1307,7 +1307,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 3 - Battery - Service Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1329,7 +1329,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 12 - BatteryLevel - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1351,7 +1351,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 12 - BatteryLevel - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ |
+        GATT_DB_CHAR_READ_PROPERTY |
         GATT_DB_CHAR_NOTIFY_PROPERTY,
 
         /* Auxillary Property */
@@ -1374,8 +1374,8 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 12 - BatteryLevel - CCD */
     {
         /* Property */
-        GATT_DB_READ |
-        GATT_DB_WRITE,
+        GATT_DB_CHAR_READ_PROPERTY |
+        GATT_DB_CHAR_WRITE_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY |
@@ -1398,7 +1398,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* Characteristic 12 - BatteryLevel - Presentation Format */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1420,7 +1420,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 4 - CSC - Service Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1442,7 +1442,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 13 - CSC Measurement - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1486,8 +1486,8 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 13 - CSC Measurement - CCD */
     {
         /* Property */
-        GATT_DB_READ |
-        GATT_DB_WRITE,
+        GATT_DB_CHAR_READ_PROPERTY |
+        GATT_DB_CHAR_WRITE_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY |
@@ -1510,7 +1510,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 14 - CSC Feature - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1532,7 +1532,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 14 - CSC Feature - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1554,7 +1554,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 15 - Sensor Location - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1576,7 +1576,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 15 - Sensor Location - Characteristic Value */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1598,7 +1598,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 16 - SC Control Point - Characteristic Declaration */
     {
         /* Property */
-        GATT_DB_READ,
+        GATT_DB_CHAR_READ_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY,
@@ -1620,7 +1620,7 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 16 - SC Control Point - Characteristic Value */
     {
         /* Property */
-        GATT_DB_WRITE |
+        GATT_DB_CHAR_WRITE_PROPERTY |
         GATT_DB_CHAR_INDICATE_PROPERTY,
 
         /* Auxillary Property */
@@ -1643,8 +1643,8 @@ DECL_CONST GATT_DB_DESC_DATA gatt_db_attr_table[GATT_DB_MAX_ATTRIBUTES] =
     /* 16 - SC Control Point - CCD */
     {
         /* Property */
-        GATT_DB_READ |
-        GATT_DB_WRITE,
+        GATT_DB_CHAR_READ_PROPERTY |
+        GATT_DB_CHAR_WRITE_PROPERTY,
 
         /* Auxillary Property */
         GATT_DB_FIXED_LENGTH_PROPERTY |

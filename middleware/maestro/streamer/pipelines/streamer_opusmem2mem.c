@@ -37,7 +37,7 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     int ret;
     STREAMER_FUNC_ENTER(DBG_CORE);
 
-    task_data->pipeline_type = pipeline_type;
+    task_data->pipeline_type[pipeline_index] = pipeline_type;
 
     /* Create pipeline */
     ret = create_pipeline(&task_data->pipes[pipeline_index], pipeline_index, pipeline_type, &task_data->mq_out);
@@ -49,7 +49,7 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     /* Create the input memory element */
-    ret = create_element(&task_data->elems[ELEMENT_MEM_SRC_INDEX], TYPE_ELEMENT_MEM_SRC, 0);
+    ret = create_element(&task_data->elems[pipeline_index][ELEMENT_MEM_SRC_INDEX], TYPE_ELEMENT_MEM_SRC, 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", TYPE_ELEMENT_MEM_SRC, ret);
@@ -57,7 +57,7 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     /* Create the encoder element */
-    ret = create_element(&task_data->elems[ELEMENT_ENCODER_INDEX], TYPE_ELEMENT_ENCODER, 0);
+    ret = create_element(&task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX], TYPE_ELEMENT_ENCODER, 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", TYPE_ELEMENT_ENCODER, ret);
@@ -65,7 +65,7 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     /* Create the output memory element */
-    ret = create_element(&task_data->elems[ELEMENT_MEM_SINK_INDEX], TYPE_ELEMENT_MEM_SINK, 0);
+    ret = create_element(&task_data->elems[pipeline_index][ELEMENT_MEM_SINK_INDEX], TYPE_ELEMENT_MEM_SINK, 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", TYPE_ELEMENT_MEM_SINK, ret);
@@ -75,7 +75,8 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     /* POPULATE THE PIPELINE */
 
     /* Source */
-    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_MEM_SRC_INDEX], level++);
+    ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                               task_data->elems[pipeline_index][ELEMENT_MEM_SRC_INDEX], level++);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", ELEMENT_MEM_SRC_INDEX, ret);
@@ -83,7 +84,8 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     /* Encoder */
-    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_ENCODER_INDEX], level++);
+    ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                               task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX], level++);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", ELEMENT_ENCODER_INDEX, ret);
@@ -91,7 +93,8 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     /* Sink */
-    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_MEM_SINK_INDEX], level++);
+    ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                               task_data->elems[pipeline_index][ELEMENT_MEM_SINK_INDEX], level++);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", ELEMENT_MEM_SINK_INDEX, ret);
@@ -101,7 +104,8 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     /* LINK ELEMENTS */
 
     /* MemSrc[sink: 0] => Encoder[src: 0] */
-    ret = link_elements(task_data->elems[ELEMENT_MEM_SRC_INDEX], 0, task_data->elems[ELEMENT_ENCODER_INDEX], 0);
+    ret = link_elements(task_data->elems[pipeline_index][ELEMENT_MEM_SRC_INDEX], 0,
+                        task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX], 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d) to element(%d) PAD 0 failed: %d\n",
@@ -110,7 +114,8 @@ int streamer_build_opusmem2mem_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     /* Encoder[sink: 0] => MemSink[src: 0] */
-    ret = link_elements(task_data->elems[ELEMENT_ENCODER_INDEX], 0, task_data->elems[ELEMENT_MEM_SINK_INDEX], 0);
+    ret = link_elements(task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX], 0,
+                        task_data->elems[pipeline_index][ELEMENT_MEM_SINK_INDEX], 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d) to element(%d) PAD 0 failed: %d\n",
@@ -135,7 +140,8 @@ int streamer_destroy_opusmem2mem_pipeline(int8_t pipeline_index, STREAMER_T *tas
     /* UNLINK ELEMENTS */
 
     /* MemSrc[sink: 0] =/=> Opus[src: 0] */
-    ret = unlink_elements(task_data->elems[ELEMENT_MEM_SRC_INDEX], 0, task_data->elems[ELEMENT_ENCODER_INDEX], 0);
+    ret = unlink_elements(task_data->elems[pipeline_index][ELEMENT_MEM_SRC_INDEX], 0,
+                          task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX], 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "unlink element(%d) from element(%d) PAD 0 failed:%d\n",
@@ -144,7 +150,8 @@ int streamer_destroy_opusmem2mem_pipeline(int8_t pipeline_index, STREAMER_T *tas
     }
 
     /* Opus[sink: 0] =/=> MemSink[src: 0] */
-    ret = unlink_elements(task_data->elems[ELEMENT_ENCODER_INDEX], 0, task_data->elems[ELEMENT_MEM_SINK_INDEX], 0);
+    ret = unlink_elements(task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX], 0,
+                          task_data->elems[pipeline_index][ELEMENT_MEM_SINK_INDEX], 0);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "unlink element(%d) from element(%d) PAD 0 failed:%d\n",
@@ -155,7 +162,8 @@ int streamer_destroy_opusmem2mem_pipeline(int8_t pipeline_index, STREAMER_T *tas
     /* REMOVE ELEMENTS */
 
     /* MemSrc */
-    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_MEM_SRC_INDEX]);
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                  task_data->elems[pipeline_index][ELEMENT_MEM_SRC_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "remove element (%d) failed: %d", ELEMENT_MEM_SRC_INDEX, ret);
@@ -163,7 +171,8 @@ int streamer_destroy_opusmem2mem_pipeline(int8_t pipeline_index, STREAMER_T *tas
     }
 
     /* Encoder */
-    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_ENCODER_INDEX]);
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                  task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "remove element (%d) failed: %d", ELEMENT_ENCODER_INDEX, ret);
@@ -171,7 +180,8 @@ int streamer_destroy_opusmem2mem_pipeline(int8_t pipeline_index, STREAMER_T *tas
     }
 
     /* MemSink */
-    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_MEM_SINK_INDEX]);
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                  task_data->elems[pipeline_index][ELEMENT_MEM_SINK_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "remove element (%d) failed: %d", ELEMENT_MEM_SINK_INDEX, ret);
@@ -181,31 +191,31 @@ int streamer_destroy_opusmem2mem_pipeline(int8_t pipeline_index, STREAMER_T *tas
     /* DESTROY ELEMENTS */
 
     /* MemSrc */
-    ret = destroy_element(task_data->elems[ELEMENT_MEM_SRC_INDEX]);
+    ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_MEM_SRC_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "element destroy (%d) failed: %d", ELEMENT_MEM_SRC_INDEX, ret);
         return ret;
     }
-    task_data->elems[ELEMENT_MEM_SRC_INDEX] = (uintptr_t)NULL;
+    task_data->elems[pipeline_index][ELEMENT_MEM_SRC_INDEX] = (uintptr_t)NULL;
 
     /* Encoder */
-    ret = destroy_element(task_data->elems[ELEMENT_ENCODER_INDEX]);
+    ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "element destroy (%d) failed: %d", ELEMENT_ENCODER_INDEX, ret);
         return ret;
     }
-    task_data->elems[ELEMENT_ENCODER_INDEX] = (uintptr_t)NULL;
+    task_data->elems[pipeline_index][ELEMENT_ENCODER_INDEX] = (uintptr_t)NULL;
 
     /* MemSink */
-    ret = destroy_element(task_data->elems[ELEMENT_MEM_SINK_INDEX]);
+    ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_MEM_SINK_INDEX]);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "element destroy (%d) failed: %d", ELEMENT_MEM_SINK_INDEX, ret);
         return ret;
     }
-    task_data->elems[ELEMENT_MEM_SINK_INDEX] = (uintptr_t)NULL;
+    task_data->elems[pipeline_index][ELEMENT_MEM_SINK_INDEX] = (uintptr_t)NULL;
 
     /* DESTROY PIPELINE */
     ret = destroy_pipeline(task_data->pipes[pipeline_index]);

@@ -1,33 +1,47 @@
 var a00047 =
 [
-    [ "pit_config_t", "a00047.html#a00346", [
-      [ "enableRunInDebug", "a00047.html#ade3a74504e1c6ecf10eb1f30fe5c0921", null ]
+    [ "notifier_notification_block_t", "a00047.html#a00357", [
+      [ "targetConfig", "a00047.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa", null ],
+      [ "policy", "a00047.html#a26aef2519eb2f9990e04f2ce961dfc9b", null ],
+      [ "notifyType", "a00047.html#a2ca3b1a52e315e072a8ab48fcc1dd62a", null ]
     ] ],
-    [ "FSL_PIT_DRIVER_VERSION", "a00047.html#ga55a6c6a9b7ee34302c636f9496d0ea2f", null ],
-    [ "pit_chnl_t", "a00047.html#ga7628036278f539e87bd3f76795917737", [
-      [ "kPIT_Chnl_0", "a00047.html#gga7628036278f539e87bd3f76795917737a771abd65f098ad80d8f693e0b97a7e76", null ],
-      [ "kPIT_Chnl_1", "a00047.html#gga7628036278f539e87bd3f76795917737ac7733ad1c04ea00e2f7890a3c737cb7b", null ],
-      [ "kPIT_Chnl_2", "a00047.html#gga7628036278f539e87bd3f76795917737ad12ab59290845fcaebd2d9f01ae2f561", null ],
-      [ "kPIT_Chnl_3", "a00047.html#gga7628036278f539e87bd3f76795917737a4666db554c10bce47cfa628e8bb4ab93", null ]
+    [ "notifier_callback_config_t", "a00047.html#a00355", [
+      [ "callback", "a00047.html#a116c9dd621ffc21178e769edbd9192e4", null ],
+      [ "callbackType", "a00047.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec", null ],
+      [ "callbackData", "a00047.html#a4e7db701bbf36647da1e6d0f0efe2ebf", null ]
     ] ],
-    [ "pit_interrupt_enable_t", "a00047.html#gaa7063bba27d49c1195a3369b88a85bcd", [
-      [ "kPIT_TimerInterruptEnable", "a00047.html#ggaa7063bba27d49c1195a3369b88a85bcda98c517b7246326afb50c93fe515916e0", null ]
+    [ "notifier_handle_t", "a00047.html#a00356", [
+      [ "configsTable", "a00047.html#a8fd95d668f17b8a7705e2a4ff49f2e16", null ],
+      [ "configsNumber", "a00047.html#a59bdd44c33254cfd4626f5906d3c0a7a", null ],
+      [ "callbacksTable", "a00047.html#a423480d080ea2580628222dc6c492735", null ],
+      [ "callbacksNumber", "a00047.html#acd4e9338f2cd47c46fc0c02886daafbb", null ],
+      [ "errorCallbackIndex", "a00047.html#a6a8447a4b6045219363883663f40d300", null ],
+      [ "currentConfigIndex", "a00047.html#aae9d6d2cc9c47485863c098c0284a021", null ],
+      [ "userFunction", "a00047.html#a4f6589fa386e93c40c52ed292da4f47f", null ],
+      [ "userData", "a00047.html#a5e90e1dafbe97f2ea5187530ee04af0a", null ]
     ] ],
-    [ "pit_status_flags_t", "a00047.html#ga83e319df67d942ffb2988f55803eebbb", [
-      [ "kPIT_TimerFlag", "a00047.html#gga83e319df67d942ffb2988f55803eebbba6792e6d30409cb5054b3f12c4e735cc0", null ]
+    [ "notifier_user_config_t", "a00047.html#gad0b6e919f3ff69992b36a2734a650ec7", null ],
+    [ "notifier_user_function_t", "a00047.html#gacb6a6d6f99e6ddfbb96dae53382949b2", null ],
+    [ "notifier_callback_t", "a00047.html#gafd1d8cc01c496de8b4cd3990ff85415c", null ],
+    [ "_notifier_status", "a00047.html#gacac871f1b98f53906b07b2663943c784", [
+      [ "kStatus_NOTIFIER_ErrorNotificationBefore", "a00047.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c", null ],
+      [ "kStatus_NOTIFIER_ErrorNotificationAfter", "a00047.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58", null ]
     ] ],
-    [ "PIT_Init", "a00047.html#ga51eb6396276b3f1ec564bd1879c97c06", null ],
-    [ "PIT_Deinit", "a00047.html#ga1f9b6d5e9e463844f85e31102458c1fc", null ],
-    [ "PIT_GetDefaultConfig", "a00047.html#gae7dc830a1a71ec7597ba78ccc76abfb6", null ],
-    [ "PIT_SetTimerChainMode", "a00047.html#gabe6831cfb502ca058f15fcf065cd13de", null ],
-    [ "PIT_EnableInterrupts", "a00047.html#ga157360547de18885d6a783d2b510d87e", null ],
-    [ "PIT_DisableInterrupts", "a00047.html#ga12d03e0905453194bd5c3560996eb976", null ],
-    [ "PIT_GetEnabledInterrupts", "a00047.html#ga9ecb3ef65be040e9002a0277b13bb8e3", null ],
-    [ "PIT_GetStatusFlags", "a00047.html#ga503619dd8ee2244edd12da3e27fa13e2", null ],
-    [ "PIT_ClearStatusFlags", "a00047.html#gadc0f51c2e1b91fb0c529d752b71477e6", null ],
-    [ "PIT_SetTimerPeriod", "a00047.html#ga944e9c9bd6848d861a9eb17b617d72f7", null ],
-    [ "PIT_GetCurrentTimerCount", "a00047.html#ga1ffacaa2e8582f59194436ebc6de2db9", null ],
-    [ "PIT_StartTimer", "a00047.html#ga3f6b9762079e4ce2de6799e030b14964", null ],
-    [ "PIT_StopTimer", "a00047.html#ga32f1b8ca9cf0fc82ef192890e97899b8", null ],
-    [ "PIT_GetLifetimeTimerCount", "a00047.html#gaadfcf653873f3c881b316f6b9d9ca79c", null ]
+    [ "notifier_policy_t", "a00047.html#ga62e961564dc31b8155d128a3f6566409", [
+      [ "kNOTIFIER_PolicyAgreement", "a00047.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964", null ],
+      [ "kNOTIFIER_PolicyForcible", "a00047.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8", null ]
+    ] ],
+    [ "notifier_notification_type_t", "a00047.html#ga5ee4314c2a52ee0af61985e7163a1be9", [
+      [ "kNOTIFIER_NotifyRecover", "a00047.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94", null ],
+      [ "kNOTIFIER_NotifyBefore", "a00047.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c", null ],
+      [ "kNOTIFIER_NotifyAfter", "a00047.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00", null ]
+    ] ],
+    [ "notifier_callback_type_t", "a00047.html#gaad75237e3cea51f8315cf6577b35db91", [
+      [ "kNOTIFIER_CallbackBefore", "a00047.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1", null ],
+      [ "kNOTIFIER_CallbackAfter", "a00047.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc", null ],
+      [ "kNOTIFIER_CallbackBeforeAfter", "a00047.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005", null ]
+    ] ],
+    [ "NOTIFIER_CreateHandle", "a00047.html#gaa2dfe33b4724d9c1025acdde1b1b3c31", null ],
+    [ "NOTIFIER_SwitchConfig", "a00047.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97", null ],
+    [ "NOTIFIER_GetErrorCallbackIndex", "a00047.html#ga9736632c3beca486ec3f8dab504b839c", null ]
 ];

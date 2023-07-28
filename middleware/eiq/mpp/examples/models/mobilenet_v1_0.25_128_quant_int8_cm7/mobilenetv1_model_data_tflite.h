@@ -1,6 +1,6 @@
 /*
  * Copyright 2017 The TensorFlow Authors
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * Apache 2.0 License
@@ -21,8 +21,11 @@
 #endif
 
 #define MODEL_NAME "mobilenet_v1_0.25_128_quant_int8"
-#define MODEL_INPUT_MEAN 127.0f
-#define MODEL_INPUT_STD 1.0f
+#define MODEL_INPUT_MEAN -1.0f
+// STD value should be multiplied by 127 to get input image between -1 and 1 before normalization
+#define MODEL_INPUT_STD   1.0f  // 127.0f * 0.0078431f ~= 1.0f
+#define MODEL_WIDTH       128
+#define MODEL_HEIGHT      128
 
 static const uint8_t model_data[] __ALIGNED(16) = {
   0x24, 0x00, 0x00, 0x00, 0x54, 0x46, 0x4c, 0x33, 0x00, 0x00, 0x00, 0x00,

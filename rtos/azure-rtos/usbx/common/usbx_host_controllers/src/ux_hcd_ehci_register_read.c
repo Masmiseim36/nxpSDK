@@ -73,8 +73,9 @@
 /**************************************************************************/
 ULONG  _ux_hcd_ehci_register_read(UX_HCD_EHCI *hcd_ehci, ULONG ehci_register)
 {
-    
+    volatile ULONG *reg_ptr = (volatile ULONG *)(hcd_ehci -> ux_hcd_ehci_base + ehci_register);
+
     /* Return value of EHCI register.  */
-    return(*(hcd_ehci -> ux_hcd_ehci_base + ehci_register));
+    return (*reg_ptr);
 }
 

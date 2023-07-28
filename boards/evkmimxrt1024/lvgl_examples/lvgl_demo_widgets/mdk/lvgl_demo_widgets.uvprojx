@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/template;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1024xxxxx_flexspi_nor_ocram_noncacheable.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -413,12 +413,12 @@
             <File>
               <FileName>lvgl_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lvgl_support.h</FilePath>
+              <FilePath>../lvgl_support.h</FilePath>
             </File>
             <File>
               <FileName>lvgl_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lvgl_support.c</FilePath>
+              <FilePath>../lvgl_support.c</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -469,51 +469,6 @@
               <FileName>lvgl_demo_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../lvgl_demo_utils.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/widgets</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demo_widgets.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_demo_widgets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/widgets/assets</GroupName>
-          <Files>
-            <File>
-              <FileName>img_clothes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_demo_widgets_avatar.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_lvgl_logo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -719,6 +674,51 @@
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/widgets</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demo_widgets.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_demo_widgets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/widgets/assets</GroupName>
+          <Files>
+            <File>
+              <FileName>img_clothes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_demo_widgets_avatar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_lvgl_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1068,23 +1068,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
           <Files>
+            <File>
+              <FileName>lv_draw_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_draw_pxp_blend.c</FileName>
               <FileType>1</FileType>
@@ -1121,6 +1116,16 @@
           <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
           <Files>
             <File>
+              <FileName>lv_draw_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_vglite_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
@@ -1151,16 +1156,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_draw_vglite_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
@@ -1169,6 +1164,26 @@
               <FileName>lv_draw_vglite_arc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1279,6 +1294,21 @@
               <FileName>lv_draw_sdl_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2325,6 +2355,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_fragment_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2796,6 +2831,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2809,16 +2854,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2873,47 +2908,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -2929,6 +2924,11 @@
               <FileName>Driver_SPI.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3099,6 +3099,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3429,9 +3469,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl/demos;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/template;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3465,7 +3505,7 @@
             <ScatterFile>MIMXRT1024xxxxx_flexspi_nor_ocram_noncacheable.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3514,12 +3554,12 @@
             <File>
               <FileName>lvgl_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lvgl_support.h</FilePath>
+              <FilePath>../lvgl_support.h</FilePath>
             </File>
             <File>
               <FileName>lvgl_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lvgl_support.c</FilePath>
+              <FilePath>../lvgl_support.c</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -3570,51 +3610,6 @@
               <FileName>lvgl_demo_utils.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../lvgl_demo_utils.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/widgets</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demo_widgets.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_demo_widgets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos/widgets/assets</GroupName>
-          <Files>
-            <File>
-              <FileName>img_clothes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_demo_widgets_avatar.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c</FilePath>
-            </File>
-            <File>
-              <FileName>img_lvgl_logo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/demos</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_demos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3820,6 +3815,51 @@
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/widgets</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demo_widgets.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_demo_widgets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos/widgets/assets</GroupName>
+          <Files>
+            <File>
+              <FileName>img_clothes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_demo_widgets_avatar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_lvgl_logo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/demos</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4169,23 +4209,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
           <Files>
+            <File>
+              <FileName>lv_draw_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_draw_pxp_blend.c</FileName>
               <FileType>1</FileType>
@@ -4222,6 +4257,16 @@
           <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
           <Files>
             <File>
+              <FileName>lv_draw_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_vglite_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
@@ -4252,16 +4297,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_draw_vglite_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
@@ -4270,6 +4305,26 @@
               <FileName>lv_draw_vglite_arc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4380,6 +4435,21 @@
               <FileName>lv_draw_sdl_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5426,6 +5496,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_fragment_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5897,6 +5972,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -5910,16 +5995,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5974,47 +6049,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -6030,6 +6065,11 @@
               <FileName>Driver_SPI.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6200,6 +6240,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

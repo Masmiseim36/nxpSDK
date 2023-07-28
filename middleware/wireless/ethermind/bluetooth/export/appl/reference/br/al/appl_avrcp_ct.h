@@ -15,7 +15,7 @@
 
 /* ----------------------------------------- Header File Inclusion */
 #include "BT_sdp_api.h"
-#include "appl_utils.h"
+
 #ifdef AVRCP_COVER_ART
 #include "BT_avrcp_ca_api.h"
 #endif /* AVRCP_COVER_ART */
@@ -24,6 +24,9 @@
 #include "appl_avrcp_tg_virtual_media_player.h"
 
 /* ----------------------------------------- External Global Variables */
+
+extern AVRCP_AL_GET_FOLDER_ITEMS_PARAM       get_folder_items_param;
+
 /* Image Descriptor with pixels attribute described as a range */
 #define IMAGE_DESCRIPTOR_DEFAULT "<image-descriptor version=\"1.0\" > \n\
 <pixel = \"0*0-65535*65535\" /> \n\
@@ -160,8 +163,8 @@ API_RESULT appl_avrcp_ct_display_virtual_filesystem_items (void);
 
 void appl_avrcp_ct_handle_get_media_element_list_rsp
      (
-         UCHAR    *media_list_info,
-         UINT16    media_list_info_len
+         UCHAR    *media_list_data,
+         UINT16    media_list_data_len
      );
 
 void appl_avrcp_ct_reset_media_element_list (void);

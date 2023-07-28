@@ -23,29 +23,58 @@ UINT16 GATT_SER_HID_GATT_INST;
 UINT16 GATT_SER_HID_GAP_INST;
 UINT16 GATT_SER_HID_DEV_INFO_INST;
 UINT16 GATT_SER_HID_BATTERY_INST;
-UINT16 GATT_SER_HID_INST;
+UINT16 GATT_SER_HID_KEYBOARD_INST;
+UINT16 GATT_SER_HID_MOUSE_INST;
 UINT16 GATT_SER_HID_SCAN_PARAM_INST;
 
 /* Characteristic Instances */
 UINT16 GATT_CHAR_HID_BATTERY_LVL_INST;
 
-UINT16 GATT_CHAR_HID_PROTO_MODE_INST;
-UINT16 GATT_CHAR_HID_REPORT_MAP_INST;
-UINT16 GATT_CHAR_HID_REPORT_INST0;
-UINT16 GATT_CHAR_HID_REPORT_INST1;
-UINT16 GATT_CHAR_HID_REPORT_INST2;
-UINT16 GATT_CHAR_HID_CNTRL_PNT_INST;
-UINT16 GATT_CHAR_HID_INFO_INST;
+/* 1st instance of HID characteristics */
+UINT16 GATT_CHAR_HID_KEYBOARD_PROTO_MODE_INST;
+UINT16 GATT_CHAR_HID_KEYBOARD_REPORT_MAP_INST;
+UINT16 GATT_CHAR_HID_KEYBOARD_REPORT_INST0;
+UINT16 GATT_CHAR_HID_KEYBOARD_REPORT_INST1;
+UINT16 GATT_CHAR_HID_KEYBOARD_REPORT_INST2;
+UINT16 GATT_CHAR_HID_KEYBOARD_CNTRL_PNT_INST;
+UINT16 GATT_CHAR_HID_KEYBOARD_HID_INFO_INST;
+UINT16 GATT_CHAR_HID_KEYBOARD_KBD_IN_INST;
+UINT16 GATT_CHAR_HID_KEYBOARD_KBD_OUT_INST;
+
+/* 2nd instance of HID characteristics */
+UINT16 GATT_CHAR_HID_MOUSE_PROTO_MODE_INST;
+UINT16 GATT_CHAR_HID_MOUSE_REPORT_MAP_INST;
+UINT16 GATT_CHAR_HID_MOUSE_REPORT_INST0;
+UINT16 GATT_CHAR_HID_MOUSE_REPORT_INST1;
+UINT16 GATT_CHAR_HID_MOUSE_REPORT_INST2;
+UINT16 GATT_CHAR_HID_MOUSE_CNTRL_PNT_INST;
+UINT16 GATT_CHAR_HID_MOUSE_HID_INFO_INST;
 UINT16 GATT_CHAR_HID_MOUSE_IN_INST;
-UINT16 GATT_CHAR_HID_KBD_IN_INST;
-UINT16 GATT_CHAR_HID_KBD_OUT_INST;
 
 UINT16 GATT_CHAR_HID_SCAN_INTRVL_WNDW_INST;
 UINT16 GATT_CHAR_HID_SCAN_REFRESH_INST;
 
-UINT16 GATT_DB_MAX_ATTRIBUTES;
-
 /* --------------------------------------------- Static Global Variables */
+/* HID Characteristic Values related globals */
+static UCHAR hid_rprtmap[] =
+                      {
+                          0x05U, 0x01U, 0x09U, 0x06U, 0xA1U, 0x01U, 0x05U, 0x07U,
+                          0x19U, 0xE0U, 0x29U, 0xE7U, 0x15U, 0x00U, 0x25U, 0x01U,
+                          0x75U, 0x01U, 0x95U, 0x08U, 0x81U, 0x02U, 0x95U, 0x01U,
+                          0x75U, 0x08U, 0x81U, 0x03U, 0x95U, 0x05U, 0x75U, 0x01U,
+                          0x05U, 0x08U, 0x19U, 0x01U, 0x29U, 0x05U, 0x91U, 0x02U,
+                          0x95U, 0x01U, 0x75U, 0x03U, 0x91U, 0x03U, 0x95U, 0x06U,
+                          0x75U, 0x08U, 0x15U, 0x00U, 0x25U, 0x65U, 0x05U, 0x07U,
+                          0x19U, 0x00U, 0x29U, 0x65U, 0x81U, 0x00U, 0xC0U
+                      };
+static UCHAR protocol_mode            = 0x01U;
+static UCHAR input_hid_rprt[]         = {0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U};
+static UCHAR output_hid_rprt[]        = {0x00U, 0x00U, 0x00U};
+static UCHAR feature_hid_rprt[]       = {0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U};
+static UCHAR hid_info[]               = {0x13U, 0x02U, 0x40U, 0x01U};
+static UCHAR boot_mouse_input_rprt[]  = {0x00U, 0x00U, 0x00U};
+static UCHAR boot_kbd_input_rprt[]    = {0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U};
+static UCHAR boot_kbd_output_rprt[]   = {0x00U, 0x00U, 0x00U};
 
 /* --------------------------------------------- Functions */
 
@@ -439,6 +468,15 @@ API_RESULT appl_hid_add_bas(void)
     return retval;
 }
 
+/**
+ * The is a reference sample of DIS with few associated characteristics
+ * added here along with other Sevice that comprise of the HID.
+ * Currently the Characteristics Added to DIS are:
+ * 1. Manufacturer Name
+ * 2. Model Number
+ *
+ * All other DIS specific characteristics are not part of this application.
+ */
 API_RESULT appl_hid_add_dis(void)
 {
     API_RESULT           retval;
@@ -481,16 +519,14 @@ API_RESULT appl_hid_add_dis(void)
 
         /* ManufacturerName */
         {
-            /* Mindtree Limited */
-            UCHAR manufacturer_name[] = { 'M', 'i', 'n', 'd', 't', 'r', 'e', 'e', ' ', 'L', 'i', 'm', 'i', 't', 'e', 'd' };
             char_uuid.uuid_format     = ATT_16_BIT_UUID_FORMAT;
             char_uuid.uuid.uuid_16    = GATT_MANUFACTURER_NAME_CHARACTERISTIC;
 
             perm                      = GATT_DB_PERM_READ;
             property                  = GATT_DB_CHAR_READ_PROPERTY;
 
-            char_value.val            = manufacturer_name;
-            char_value.len            = sizeof(manufacturer_name);
+            char_value.val            = appl_manufacturer_name_ext;
+            char_value.len            = sizeof(APPL_MANUFACTURER_NAME);
             char_value.actual_len     = char_value.len;
 
             retval = BT_gatt_db_add_characteristic
@@ -542,239 +578,12 @@ API_RESULT appl_hid_add_dis(void)
                 retval);
             }
         }
-
-        /* SerialNumber */
-        {
-            /* 1.0.0 */
-            UCHAR serial_number[]  = { '1', '.', '0', '.', '0' };
-            char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-            char_uuid.uuid.uuid_16 = GATT_SERIAL_NUMBER_CHARACTERISTIC;
-
-            perm                   = GATT_DB_PERM_READ;
-            property               = GATT_DB_CHAR_READ_PROPERTY;
-
-            char_value.val         = serial_number;
-            char_value.len         = sizeof(serial_number);
-            char_value.actual_len  = char_value.len;
-
-            retval = BT_gatt_db_add_characteristic
-                     (
-                         service_handle,
-                         &char_uuid,
-                         perm,
-                         property,
-                         &char_value,
-                         &char_handle
-                     );
-
-            if (API_SUCCESS != retval)
-            {
-                APPL_TRC(
-                "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-                retval);
-            }
-        }
-
-        /* FirmwareRevision */
-        {
-            /* 1.0.0 */
-            UCHAR fw_revision[]    = { '1', '.', '0', '.', '0' };
-            char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-            char_uuid.uuid.uuid_16 = GATT_FIRMWARE_REV_CHARACTERISTIC;
-
-            perm                   = GATT_DB_PERM_READ;
-            property               = GATT_DB_CHAR_READ_PROPERTY;
-
-            char_value.val         = fw_revision;
-            char_value.len         = sizeof(fw_revision);
-            char_value.actual_len  = char_value.len;
-
-            retval = BT_gatt_db_add_characteristic
-                     (
-                         service_handle,
-                         &char_uuid,
-                         perm,
-                         property,
-                         &char_value,
-                         &char_handle
-                     );
-
-            if (API_SUCCESS != retval)
-            {
-                APPL_TRC(
-                "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-                retval);
-            }
-        }
-
-        /* HardwareRevision */
-        {
-            /* 1.0.0 */
-            UCHAR hw_revision[]    = { '1', '.', '0', '.', '0' };
-            char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-            char_uuid.uuid.uuid_16 = GATT_HARDWARE_REV_CHARACTERISTIC;
-
-            perm                   = GATT_DB_PERM_READ;
-            property               = GATT_DB_CHAR_READ_PROPERTY;
-
-            char_value.val         = hw_revision;
-            char_value.len         = sizeof(hw_revision);
-            char_value.actual_len  = char_value.len;
-
-            retval = BT_gatt_db_add_characteristic
-                     (
-                         service_handle,
-                         &char_uuid,
-                         perm,
-                         property,
-                         &char_value,
-                         &char_handle
-                     );
-
-            if (API_SUCCESS != retval)
-            {
-                APPL_TRC(
-                "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-                retval);
-            }
-        }
-
-        /* SoftwareRevision */
-        {
-            /* 1.0.0 */
-            UCHAR sw_revision[]    = { '1', '.', '0', '.', '0' };
-            char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-            char_uuid.uuid.uuid_16 = GATT_SOFTWARE_REV_CHARACTERISTIC;
-
-            perm                   = GATT_DB_PERM_READ;
-            property               = GATT_DB_CHAR_READ_PROPERTY;
-
-            char_value.val         = sw_revision;
-            char_value.len         = sizeof(sw_revision);
-            char_value.actual_len  = char_value.len;
-
-            retval = BT_gatt_db_add_characteristic
-                     (
-                         service_handle,
-                         &char_uuid,
-                         perm,
-                         property,
-                         &char_value,
-                         &char_handle
-                     );
-
-            if (API_SUCCESS != retval)
-            {
-                APPL_TRC(
-                "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-                retval);
-            }
-        }
-
-        /* SystemId */
-        {
-            /* 11223344 */
-            UCHAR sys_id[]         = { '1', '1', '2', '2', '3', '3', '4', '4' };
-            char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-            char_uuid.uuid.uuid_16 = GATT_SYSTEM_ID_CHARACTERISTIC;
-
-            perm                   = GATT_DB_PERM_READ;
-            property               = GATT_DB_CHAR_READ_PROPERTY;
-
-            char_value.val         = sys_id;
-            char_value.len         = sizeof(sys_id);
-            char_value.actual_len  = char_value.len;
-
-            retval = BT_gatt_db_add_characteristic
-                     (
-                         service_handle,
-                         &char_uuid,
-                         perm,
-                         property,
-                         &char_value,
-                         &char_handle
-                     );
-
-            if (API_SUCCESS != retval)
-            {
-                APPL_TRC(
-                "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-                retval);
-            }
-        }
-
-        /* RegCertDataList */
-        {
-            /* 11223344 */
-            UCHAR cert[]          = {
-                                        0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,
-                                        0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,
-                                        0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U };
-            char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-            char_uuid.uuid.uuid_16 = GATT_REG_CERT_DATA_CHARACTERISTIC;
-
-            perm                   = GATT_DB_PERM_READ;
-            property               = GATT_DB_CHAR_READ_PROPERTY;
-
-            char_value.val         = cert;
-            char_value.len         = sizeof(cert);
-            char_value.actual_len  = char_value.len;
-
-            retval = BT_gatt_db_add_characteristic
-                     (
-                         service_handle,
-                         &char_uuid,
-                         perm,
-                         property,
-                         &char_value,
-                         &char_handle
-                     );
-
-            if (API_SUCCESS != retval)
-            {
-                APPL_TRC(
-                "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-                retval);
-            }
-        }
-
-        /* PnPID */
-        {
-            /* Vendor: 0x006A[Mindtree], Product: 0x014D, Version: 0x100 */
-            UCHAR pnp_id[]         = { 0x01U, 0x6AU, 0x00U, 0x4DU, 0x01U, 0x00U, 0x01U };
-            char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-            char_uuid.uuid.uuid_16 = GATT_PNP_ID_CHARACTERISTIC;
-
-            perm                   = GATT_DB_PERM_READ;
-            property               = GATT_DB_CHAR_READ_PROPERTY;
-
-            char_value.val         = pnp_id;
-            char_value.len         = sizeof(pnp_id);
-            char_value.actual_len  = char_value.len;
-
-            retval = BT_gatt_db_add_characteristic
-                     (
-                         service_handle,
-                         &char_uuid,
-                         perm,
-                         property,
-                         &char_value,
-                         &char_handle
-                     );
-
-            if (API_SUCCESS != retval)
-            {
-                APPL_TRC(
-                "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-                retval);
-            }
-        }
     }
 
     return retval;
 }
 
-API_RESULT appl_hid_add_hid(void)
+API_RESULT appl_hid_add_hid_keyboard(void)
 {
     API_RESULT           retval;
     GATT_DB_SERVICE_INFO service_info;
@@ -785,24 +594,6 @@ API_RESULT appl_hid_add_hid(void)
     UINT16               property;
     ATT_VALUE            char_value;
     UINT16               char_handle;
-    UCHAR hid_rprtmap[] = {
-                          0x05U, 0x01U, 0x09U, 0x06U, 0xA1U, 0x01U, 0x05U, 0x07U,
-                          0x19U, 0xE0U, 0x29U, 0xE7U, 0x15U, 0x00U, 0x25U, 0x01U,
-                          0x75U, 0x01U, 0x95U, 0x08U, 0x81U, 0x02U, 0x95U, 0x01U,
-                          0x75U, 0x08U, 0x81U, 0x03U, 0x95U, 0x05U, 0x75U, 0x01U,
-                          0x05U, 0x08U, 0x19U, 0x01U, 0x29U, 0x05U, 0x91U, 0x02U,
-                          0x95U, 0x01U, 0x75U, 0x03U, 0x91U, 0x03U, 0x95U, 0x06U,
-                          0x75U, 0x08U, 0x15U, 0x00U, 0x25U, 0x65U, 0x05U, 0x07U,
-                          0x19U, 0x00U, 0x29U, 0x65U, 0x81U, 0x00U, 0xC0U
-                          };
-    UCHAR protocol_mode            = 0x01U;
-    UCHAR input_hid_rprt[]         = {0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U};
-    UCHAR output_hid_rprt[]        = {0x00U, 0x00U, 0x00U};
-    UCHAR feature_hid_rprt[]       = {0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U};
-    UCHAR hid_info[]               = {0x13U, 0x02U, 0x40U, 0x01U};
-    UCHAR boot_mouse_input_rprt[]  = {0x00U, 0x00U, 0x00U};
-    UCHAR boot_kbd_input_rprt[]    = {0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U};
-    UCHAR boot_kbd_output_rprt[]   = {0x00U, 0x00U, 0x00U};
 
     service_info.is_primary        = BT_TRUE;
     service_info.uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
@@ -827,7 +618,7 @@ API_RESULT appl_hid_add_hid(void)
     }
     else
     {
-        GATT_SER_HID_INST      = service_handle;
+        GATT_SER_HID_KEYBOARD_INST      = service_handle;
 
         /* HIDProtocolMode */
         /* Mindtree Limited */
@@ -858,7 +649,7 @@ API_RESULT appl_hid_add_hid(void)
         else
         {
             /* Save HID Protocol Mode */
-            GATT_CHAR_HID_PROTO_MODE_INST = char_handle;
+            GATT_CHAR_HID_KEYBOARD_PROTO_MODE_INST = char_handle;
         }
 
         /* HIDReportMap */
@@ -890,7 +681,7 @@ API_RESULT appl_hid_add_hid(void)
         else
         {
             /* Save HID Report Map */
-            GATT_CHAR_HID_REPORT_MAP_INST = char_handle;
+            GATT_CHAR_HID_KEYBOARD_REPORT_MAP_INST = char_handle;
 
             /* Add Profile defined descriptor */
             retval = appl_add_hid_report_map_hld_desp(service_handle, char_handle);
@@ -925,7 +716,7 @@ API_RESULT appl_hid_add_hid(void)
         else
         {
             /* Save HID Input Report Map */
-            GATT_CHAR_HID_REPORT_INST0 = char_handle;
+            GATT_CHAR_HID_KEYBOARD_REPORT_INST0 = char_handle;
 
             /* Add CCCD */
             retval = appl_add_cccd(service_handle, char_handle);
@@ -963,7 +754,7 @@ API_RESULT appl_hid_add_hid(void)
         else
         {
             /* Save Output HID Report */
-            GATT_CHAR_HID_REPORT_INST1 = char_handle;
+            GATT_CHAR_HID_KEYBOARD_REPORT_INST1 = char_handle;
 
             /* Add Profile defined descriptor */
             retval = appl_add_op_report_ref_hld_desp(service_handle, char_handle);
@@ -998,7 +789,7 @@ API_RESULT appl_hid_add_hid(void)
         else
         {
             /* Save Feature HID Report Map */
-            GATT_CHAR_HID_REPORT_INST2 = char_handle;
+            GATT_CHAR_HID_KEYBOARD_REPORT_INST2 = char_handle;
 
             /* Add Profile defined descriptor */
             retval = appl_add_feature_report_ref_hld_desp(service_handle, char_handle);
@@ -1033,7 +824,7 @@ API_RESULT appl_hid_add_hid(void)
         else
         {
             /* Save HID control point */
-            GATT_CHAR_HID_CNTRL_PNT_INST = char_handle;
+            GATT_CHAR_HID_KEYBOARD_CNTRL_PNT_INST = char_handle;
         }
 
         /* HIDInformation */
@@ -1065,7 +856,354 @@ API_RESULT appl_hid_add_hid(void)
         else
         {
             /* Save HID Information */
-            GATT_CHAR_HID_INFO_INST = char_handle;
+            GATT_CHAR_HID_KEYBOARD_HID_INFO_INST = char_handle;
+        }
+
+        /* BootKeyboardInputReport */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_BOOT_KYBRD_IN_RPT_CHARACTERISTIC;
+        perm                   = (GATT_DB_PERM_READ | GATT_DB_PERM_WRITE);
+        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_PROPERTY | GATT_DB_CHAR_NOTIFY_PROPERTY);
+        char_value.val         = boot_kbd_input_rprt;
+        char_value.len         = sizeof(boot_kbd_input_rprt);
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* HID Boot Keyboard Input Report */
+            GATT_CHAR_HID_KEYBOARD_KBD_IN_INST = char_handle;
+
+            /* Add CCCD */
+            retval = appl_add_cccd(service_handle, char_handle);
+        }
+
+        /* BootKeyboardOutputReport */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_BOOT_KYBRD_OP_CHARACTERISTIC;
+        perm                   = (GATT_DB_PERM_READ | GATT_DB_PERM_WRITE | GATT_DB_PERM_NONE);
+        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_PROPERTY | GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY);
+        char_value.val         = boot_kbd_output_rprt;
+        char_value.len         = sizeof(boot_kbd_output_rprt);
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+             retval);
+        }
+        else
+        {
+            /* Save HID Boot Keyboard Output Report */
+            GATT_CHAR_HID_KEYBOARD_KBD_OUT_INST = char_handle;
+        }
+    }
+
+    return API_SUCCESS;
+}
+
+API_RESULT appl_hid_add_hid_mouse(void)
+{
+    API_RESULT           retval;
+    GATT_DB_SERVICE_INFO service_info;
+    UINT16               num_attr_handles;
+    UINT16               service_handle;
+    GATT_DB_UUID_TYPE    char_uuid;
+    UINT16               perm;
+    UINT16               property;
+    ATT_VALUE            char_value;
+    UINT16               char_handle;
+
+    service_info.is_primary        = BT_TRUE;
+    service_info.uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+    service_info.uuid.uuid.uuid_16 = GATT_HID_SERVICE;
+    service_info.link_req = GATT_DB_SER_SUPPORT_LE_LINK_TYPE;
+    service_info.sec_req = GATT_DB_SER_NO_SECURITY_PROPERTY;
+
+    num_attr_handles = 30U;
+
+    retval = BT_gatt_db_add_service
+             (
+                 &service_info,
+                 num_attr_handles,
+                 &service_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC(
+        "[HID APPL]: BT_gatt_db_add_service() failed. Result: 0x%04X\n",
+        retval);
+    }
+    else
+    {
+        GATT_SER_HID_MOUSE_INST = service_handle;
+
+        /* HIDProtocolMode */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_HID_PROTO_MODE_CHARACTERISTIC;
+        perm                   = GATT_DB_PERM_READ;
+        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY);
+        char_value.val         = &protocol_mode;
+        char_value.len         = sizeof(protocol_mode);
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* Save HID Protocol Mode */
+            GATT_CHAR_HID_MOUSE_PROTO_MODE_INST = char_handle;
+        }
+
+        /* HIDReportMap */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_HID_RPT_MAP_CHARACTERISTIC;
+        perm                   = GATT_DB_PERM_READ;
+        property               = GATT_DB_CHAR_READ_PROPERTY;
+        char_value.val         = hid_rprtmap;
+        char_value.len         = sizeof(hid_rprtmap);
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* Save HID Report Map */
+            GATT_CHAR_HID_MOUSE_REPORT_MAP_INST = char_handle;
+
+            /* Add Profile defined descriptor */
+            retval = appl_add_hid_report_map_hld_desp(service_handle, char_handle);
+        }
+
+        /* Input HIDReport */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_HID_RPT_CHARACTERISTIC;
+        perm                   = (GATT_DB_PERM_READ | GATT_DB_PERM_WRITE);
+        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_PROPERTY | GATT_DB_CHAR_NOTIFY_PROPERTY);
+        char_value.val         = input_hid_rprt;
+        char_value.len         = sizeof(input_hid_rprt);
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* Save HID Input Report Map */
+            GATT_CHAR_HID_MOUSE_REPORT_INST0 = char_handle;
+
+            /* Add CCCD */
+            retval = appl_add_cccd(service_handle, char_handle);
+
+            /* Add Profile defined descriptor */
+            retval = appl_add_ip_report_ref_hld_desp(service_handle, char_handle);
+        }
+
+        /* Output HIDReport */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_HID_RPT_CHARACTERISTIC;
+        perm                   = (GATT_DB_PERM_READ | GATT_DB_PERM_WRITE);
+        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_PROPERTY | GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY);
+        char_value.val         = output_hid_rprt;
+        char_value.len         = sizeof(output_hid_rprt);
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* Save Output HID Report */
+            GATT_CHAR_HID_MOUSE_REPORT_INST1 = char_handle;
+
+            /* Add Profile defined descriptor */
+            retval = appl_add_op_report_ref_hld_desp(service_handle, char_handle);
+        }
+
+        /* Feature HIDReport */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_HID_RPT_CHARACTERISTIC;
+        perm                   = (GATT_DB_PERM_READ | GATT_DB_PERM_WRITE);
+        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_PROPERTY);
+        char_value.val         = feature_hid_rprt;
+        char_value.len         = sizeof(feature_hid_rprt);
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* Save Feature HID Report Map */
+            GATT_CHAR_HID_MOUSE_REPORT_INST2 = char_handle;
+
+            /* Add Profile defined descriptor */
+            retval = appl_add_feature_report_ref_hld_desp(service_handle, char_handle);
+        }
+
+        /* HIDControlPoint */
+        /* Mindtree Limited */
+        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16 = GATT_HID_CP_CHARACTERISTIC;
+        perm                   = GATT_DB_PERM_NONE;
+        property               = GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY;
+        char_value.val         = NULL;
+        char_value.len         = 0;
+        char_value.actual_len  = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* Save HID control point */
+            GATT_CHAR_HID_MOUSE_CNTRL_PNT_INST = char_handle;
+        }
+
+        /* HIDInformation */
+        /* Mindtree Limited */
+        char_uuid.uuid_format   = ATT_16_BIT_UUID_FORMAT;
+        char_uuid.uuid.uuid_16  = GATT_HID_INFO_CHARACTERISTIC;
+        perm                    = GATT_DB_PERM_READ;
+        property                = GATT_DB_CHAR_READ_PROPERTY;
+        char_value.val          = hid_info;
+        char_value.len          = sizeof(hid_info);
+        char_value.actual_len   = char_value.len;
+
+        retval = BT_gatt_db_add_characteristic
+                 (
+                     service_handle,
+                     &char_uuid,
+                     perm,
+                     property,
+                     &char_value,
+                     &char_handle
+                 );
+
+        if (API_SUCCESS != retval)
+        {
+            APPL_TRC(
+            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
+            retval);
+        }
+        else
+        {
+            /* Save HID Information */
+            GATT_CHAR_HID_MOUSE_HID_INFO_INST = char_handle;
         }
 
         /* BootMouseInputReport */
@@ -1101,73 +1239,6 @@ API_RESULT appl_hid_add_hid(void)
 
             /* Add CCCD */
             retval = appl_add_cccd(service_handle, char_handle);
-        }
-
-        /* BootKeyboardInputReport */
-        /* Mindtree Limited */
-        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-        char_uuid.uuid.uuid_16 = GATT_BOOT_KYBRD_IN_RPT_CHARACTERISTIC;
-        perm                   = (GATT_DB_PERM_READ | GATT_DB_PERM_WRITE);
-        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_PROPERTY | GATT_DB_CHAR_NOTIFY_PROPERTY);
-        char_value.val         = boot_kbd_input_rprt;
-        char_value.len         = sizeof(boot_kbd_input_rprt);
-        char_value.actual_len  = char_value.len;
-
-        retval = BT_gatt_db_add_characteristic
-                 (
-                     service_handle,
-                     &char_uuid,
-                     perm,
-                     property,
-                     &char_value,
-                     &char_handle
-                 );
-
-        if (API_SUCCESS != retval)
-        {
-            APPL_TRC(
-            "[ HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-            retval);
-        }
-        else
-        {
-            /* HID Boot Keyboard Input Report */
-            GATT_CHAR_HID_KBD_IN_INST = char_handle;
-
-            /* Add CCCD */
-            retval = appl_add_cccd(service_handle, char_handle);
-        }
-
-        /* BootKeyboardOutputReport */
-        /* Mindtree Limited */
-        char_uuid.uuid_format  = ATT_16_BIT_UUID_FORMAT;
-        char_uuid.uuid.uuid_16 = GATT_BOOT_KYBRD_OP_CHARACTERISTIC;
-        perm                   = (GATT_DB_PERM_READ | GATT_DB_PERM_WRITE | GATT_DB_PERM_NONE);
-        property               = (GATT_DB_CHAR_READ_PROPERTY | GATT_DB_CHAR_WRITE_PROPERTY | GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY);
-        char_value.val         = boot_kbd_output_rprt;
-        char_value.len         = sizeof(boot_kbd_output_rprt);
-        char_value.actual_len  = char_value.len;
-
-        retval = BT_gatt_db_add_characteristic
-                 (
-                     service_handle,
-                     &char_uuid,
-                     perm,
-                     property,
-                     &char_value,
-                     &char_handle
-                 );
-
-        if (API_SUCCESS != retval)
-        {
-            APPL_TRC(
-            "[HID APPL]: BT_gatt_db_add_characteristic() failed. Result: 0x%04X\n",
-             retval);
-        }
-        else
-        {
-            /* Save HID Boot Keyboard Output Report */
-            GATT_CHAR_HID_KBD_OUT_INST = char_handle;
         }
     }
 

@@ -55,12 +55,12 @@ static HCI_CONNECTION_LIST appl_bnep_acl_list [BT_MAX_REMOTE_DEVICES];
 static UINT16 appl_bnep_setup_ind_reply = BNEP_SETUP_SUCCESSFUL;
 
 /* Local BD_ADDR */
-UCHAR appl_bnep_local_bd_addr [BT_BD_ADDR_SIZE];
+static UCHAR appl_bnep_local_bd_addr [BT_BD_ADDR_SIZE];
 
 
 #ifdef BNEP_TEST_MODE_RAW
 /* Enable/Disable BNEP Raw Rx/Tx */
-UCHAR appl_bnep_raw;
+static UCHAR appl_bnep_raw;
 
 static UCHAR appl_packet_setup [7U+1U] =
              {
@@ -274,13 +274,13 @@ void main_bnep_operations (void)
 void appl_bnep_registration ( void )
 {
     API_RESULT retval;
-    BNEP_CALLBACKS bnep_cb;
+    BNEP_CALLBACKS appl_bnep_cb;
 
-    bnep_cb.bnep_event_ind = appl_bnep_event_ind;
-    bnep_cb.bnep_read_ind = appl_bnep_read_ind;
+    appl_bnep_cb.bnep_event_ind = appl_bnep_event_ind;
+    appl_bnep_cb.bnep_read_ind = appl_bnep_read_ind;
 
     printf("Registering to BNEP ... "); fflush (stdout);
-    retval = BT_bnep_register (&bnep_cb);
+    retval = BT_bnep_register (&appl_bnep_cb);
     if (API_SUCCESS != retval)
     {
         printf("FAILED !! Reason = 0x%04x.\n", retval);
@@ -585,10 +585,10 @@ void appl_bnep_filter ( void )
                     for (i = 0U; i < num_range; i++)
                     {
                         printf("\tFilter %d: Start = ", i); fflush(stdout);
-                        appl_get_bd_addr(mc_addr_filter[i].start);
+                        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(mc_addr_filter[i].start);
 
                         printf("\tFilter %d: End   = ", i); fflush(stdout);
-                        appl_get_bd_addr(mc_addr_filter[i].end);
+                        (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(mc_addr_filter[i].end);
                     }
                 }
 
@@ -707,11 +707,11 @@ void appl_bnep_write_data ( void )
         {
             /* Get Ethernet Destination Address */
             printf("Enter Ethernet Dst Address = "); fflush(stdout);
-            appl_get_bd_addr (eth_header);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (eth_header);
 
             /* Get Ethernet Source Address */
             printf("Enter Ethernet Src Address = "); fflush(stdout);
-            appl_get_bd_addr (&eth_header[6U]);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (&eth_header[6U]);
         }
         else if (1U == read_val)
         {
@@ -721,13 +721,13 @@ void appl_bnep_write_data ( void )
 
             /* Get Ethernet Source Address */
             printf("Enter Ethernet Src Address = "); fflush(stdout);
-            appl_get_bd_addr (&eth_header[BT_BD_ADDR_SIZE]);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (&eth_header[BT_BD_ADDR_SIZE]);
         }
         else if (2U == read_val)
         {
             /* Get Ethernet Destination Address */
             printf("Enter Ethernet Dst Address = "); fflush(stdout);
-            appl_get_bd_addr (eth_header);
+            (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (eth_header);
 
             /* Set Ethernet Source Address */
             bnep_convert_address (eth_bd, appl_bnep_local_bd_addr);

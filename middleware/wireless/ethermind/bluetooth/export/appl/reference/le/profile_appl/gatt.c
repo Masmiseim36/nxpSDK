@@ -32,15 +32,71 @@ DECL_STATIC GATT_CONTEXT gatt_ctx[GATT_NUM_CONTEXTS];
 /* GATT application callback */
 DECL_STATIC GATT_APP_CB gatt_app_cb;
 
-UCHAR   * val_ptr;
+DECL_STATIC UCHAR   * val_ptr;
 
-UINT16  reliable_write_count;
+DECL_STATIC UINT16  reliable_write_count;
 
-GATT_PREPARE_WRITE_REQ_PARAM prep_write_req_param;
+DECL_STATIC GATT_PREPARE_WRITE_REQ_PARAM prep_write_req_param;
 
-UCHAR    char_desc_start;
+DECL_STATIC UCHAR    char_desc_start;
 
 /* --------------------------------------------- Functions */
+
+/**
+ * Function to convert UUID into a String.
+ * Currently this converts 16Bit and 128Bit UUIDs into a formatted
+ * String, which is used for Logging the messages.
+ */
+CHAR * gatt_uuid_to_str(ATT_UUID * uuid, UCHAR frmt)
+{
+    /**
+     * Declaring a static CHAR array of size 50 Bytes.
+     * The Maximum Value of this Formatted String for
+     * a UUID of 128Bit is 42Bytes.
+     */
+    DECL_STATIC CHAR uuid_str[50];
+
+    /* Initialize */
+    BT_mem_set(&uuid_str[0], 0x0, sizeof(uuid_str));
+
+    if (ATT_16_BIT_UUID_FORMAT == frmt)
+    {
+        /**
+         * Fromat the 16Bit UUID string as
+         * "UUID_16:0x1234"
+         */
+        BT_str_print((CHAR *)&uuid_str[0], "UUID_16:0x%04X", uuid->uuid_16);
+    }
+    else if (ATT_128_BIT_UUID_FORMAT == frmt)
+    {
+        /**
+         * Format the 128 Bit UUID string as
+         * "UUID_128:0x00112233445566778899AABBCCDDEEFF"
+         */
+        BT_str_print
+        (
+            (CHAR *)&uuid_str[0],
+            "UUID_128:0x%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            uuid->uuid_128.value[15], uuid->uuid_128.value[14], uuid->uuid_128.value[13],
+            uuid->uuid_128.value[12], uuid->uuid_128.value[11], uuid->uuid_128.value[10],
+            uuid->uuid_128.value[9], uuid->uuid_128.value[8], uuid->uuid_128.value[7],
+            uuid->uuid_128.value[6], uuid->uuid_128.value[5], uuid->uuid_128.value[4],
+            uuid->uuid_128.value[3], uuid->uuid_128.value[2], uuid->uuid_128.value[1],
+            uuid->uuid_128.value[0]
+        );
+    }
+    else
+    {
+        /**
+         * Format any other UUID Type as
+         * "UUID: INVALID"
+         */
+        BT_str_print((CHAR *)&uuid_str[0], "UUID: INVALID");
+    }
+
+    /* Return the Formatted String */
+    return &uuid_str[0];
+}
 
 API_RESULT gatt_search_context (ATT_HANDLE * att_handle, UCHAR * id)
 {
@@ -208,11 +264,14 @@ void gatt_handle_characteristics_search_complete
     ATT_FIND_INFO_REQ_PARAM param;
     ATT_HANDLE handle;
 
+    GATT_INF ("Char Search Complete with proc 0x%04X\n", context->proc);
+
     GATT_TRC ("No of Characteristics - %d\n", context->attr_index);
 
     /* Notify application if Descriptor Discovery is not requested */
     /* MISRA C - 2012 Rule 13.5 */
     context->index++;
+
     if ((0U == (GATT_CHAR_DESC_DISCOVERY & context->proc)) ||
          (0U == context->attr_index) ||
          (context->index > context->attr_index))
@@ -222,6 +281,11 @@ void gatt_handle_characteristics_search_complete
 
         /* Free the context */
         (BT_IGNORE_RETURN_VALUE) gatt_free_context (&context->att_handle);
+
+        GATT_INF (
+        "Invoking Callback back with Event GATT_CHAR_DISCOVERY_RSP, "
+        "Number of Characteristics - %d\n",
+        context->attr_index);
 
         GATT_APP_CB_NTF
         (
@@ -260,11 +324,49 @@ void gatt_handle_characteristics_search_complete
                                  value_handle + 1U;
             param.end_handle = context->handle;
 
+            /**
+             * If the Start Handle is greater than the End Handle, it
+             * indicates the possibility of no more Characteristics to be
+             * found in the Handle Range.
+             * In that case, then loop back to the start of the loop.
+             * This will ensure that Characteristic Search is deemed completed
+             * with the required index values.
+             *
+             * If the Start Handle is smaller than the End Handle, then
+             * Try to find other potential characteristic descriptors in the
+             * Handle Range.
+             *
+             * If end handle is ATT_ATTR_HANDLE_END_RANGE then always
+             * end handle will be grater than start handle. But, it also
+             * means that there is no other characteristics to look for
+             * in this current handle range. In that case too, Try to find
+             * other potential characteristic descriptors in the
+             * Handle Range.
+             */
             if (param.start_handle > param.end_handle)
             {
                 context->index ++;
+
+                GATT_TRC (
+                "Looping back Param SH: 0x%04X, Param EH: 0x%04X, "
+                "Context Index 0x%04X\n", param.start_handle, param.end_handle,
+                context->index);
+
                 continue;
             }
+
+            /**
+             * Start searching for any Characteristic Descriptors with-in this
+             * Handle range.
+             * If there are any valid Descriptors in this range,
+             * then Server's response will be handled in
+             * gatt_handle_find_info_response(...).
+             * If there are no Descriptors in this range for this particular
+             * service then Server will respond with Error response which will
+             * be handled at gatt_handle_error_response(...)
+             */
+            /* Set Char Descriptor Start flag */
+            char_desc_start = BT_TRUE;
 
             /* Send Request */
             retval = BT_att_send_find_info_req
@@ -275,10 +377,21 @@ void gatt_handle_characteristics_search_complete
 
             if (API_SUCCESS != retval)
             {
-                GATT_ERR ("ATT Request failed\n");
+                GATT_ERR ("BT_att_send_find_info_req failed\n");
 
                 /* Free the context */
                 (BT_IGNORE_RETURN_VALUE) gatt_free_context (&context->att_handle);
+
+                /* Reset Char Descriptor Start flag on failure */
+                char_desc_start = BT_FALSE;
+            }
+            else
+            {
+                GATT_TRC (
+                "Invoking Find Info Request for Param SH: 0x%04X, Param EH: "
+                "0x%04X, Context SEH 0x%04X, Context H 0x%04X\n",
+                param.start_handle, param.end_handle, context->se_handle,
+                context->handle);
             }
 
             break;
@@ -296,9 +409,9 @@ void gatt_handle_char_desc_search_complete
     ATT_HANDLE handle;
 
     /* To keep some compilers happy */
-    param.start_handle = 0U;
-    param.end_handle = 0U;
-    retval = API_SUCCESS;
+    param.start_handle = ATT_INVALID_ATTR_HANDLE_VAL;
+    param.end_handle   = ATT_INVALID_ATTR_HANDLE_VAL;
+    retval             = API_SUCCESS;
 
     GATT_INF ("Char Desc Search Complete with proc 0x%04X\n", context->proc);
 
@@ -337,6 +450,11 @@ void gatt_handle_char_desc_search_complete
 
                 if (param.start_handle > param.end_handle)
                 {
+                    GATT_TRC (
+                    "Looping back Param SH: 0x%04X, Param EH: 0x%04X, "
+                    "Context Index 0x%04X\n", param.start_handle, param.end_handle,
+                    context->index);
+
                     continue;
                 }
 
@@ -348,10 +466,18 @@ void gatt_handle_char_desc_search_complete
                          );
                 if (API_SUCCESS != retval)
                 {
-                    GATT_ERR ("ATT Request failed\n");
+                    GATT_ERR ("BT_att_send_find_info_req failed\n");
 
                     /* Free the context */
                     (BT_IGNORE_RETURN_VALUE) gatt_free_context (&context->att_handle);
+                }
+                else
+                {
+                    GATT_TRC (
+                    "Invoking Find Info Request for Param SH: 0x%04X, Param EH: "
+                    "0x%04X, Context SEH 0x%04X, Context H 0x%04X\n",
+                    param.start_handle, param.end_handle, context->se_handle,
+                    context->handle);
                 }
 
                 break;
@@ -396,8 +522,8 @@ API_RESULT gatt_handle_find_by_type_value_response
     UCHAR value[ATT_128_BIT_UUID_SIZE];
 
     /* Initialize */
-    range.start_handle = 0x0000U;
-    range.end_handle   = 0x0000U;
+    range.start_handle = ATT_INVALID_ATTR_HANDLE_VAL;
+    range.end_handle   = ATT_INVALID_ATTR_HANDLE_VAL;
 
     /* Get the context */
     retval = gatt_search_context (att_handle, &id);
@@ -578,8 +704,8 @@ API_RESULT gatt_handle_read_by_group_response
     UCHAR uuid_type;
 
     /* Initialize */
-    range.start_handle = 0x0000U;
-    range.end_handle   = 0x0000U;
+    range.start_handle = ATT_INVALID_ATTR_HANDLE_VAL;
+    range.end_handle   = ATT_INVALID_ATTR_HANDLE_VAL;
 
     /* Get the context */
     retval = gatt_search_context (att_handle, &id);
@@ -837,9 +963,6 @@ API_RESULT gatt_handle_find_info_response
         {
             GATT_INF("Invoking Char Desc Search Complete after all Desc Discovered\n");
 
-            /* Reset Char Descriptor Discovery Start flag */
-            char_desc_start = BT_FALSE;
-
             gatt_handle_char_desc_search_complete (ctx);
         }
         else
@@ -1079,7 +1202,8 @@ API_RESULT gatt_handle_read_by_type_response
             else if ((GATT_CHAR_READ == ctx->proc) &&
                 (!(GATT_CHECK_UUID(&(ctx->uuid),&temp_uuid,ATT_16_BIT_UUID_FORMAT))))
             {
-                retval = API_FAILURE; break; /* return API_FAILURE; */
+                retval = API_FAILURE;
+                break; /* return API_FAILURE; */
             }
             else
             {
@@ -1099,7 +1223,7 @@ API_RESULT gatt_handle_read_by_type_response
                 {
                     /* There could be more included services, Discover them */
                     range.start_handle = handle + 1U;
-                    range.end_handle = ATT_ATTR_HANDLE_END_RANGE;
+                    range.end_handle = ctx->handle;
 
                     param.range = range;
 #ifdef ATT_SUPPORT_128_BIT_UUID
@@ -1304,7 +1428,8 @@ API_RESULT gatt_handle_error_response
     API_RESULT retval;
 
     /* Init */
-    retval = API_FAILURE;
+    /* MISRA C - 2012 Rule 2.2 */
+    /* retval = API_FAILURE; */
 
     /* Get the context */
     retval = gatt_search_context (att_handle, &id);
@@ -1405,7 +1530,7 @@ API_RESULT gatt_cb
     UINT16 proc;
 
     GATT_TRC
-    ("[ATT]:[0x%02X]:[0x%02X]: Received ATT Event 0x%02X with result 0x%04X",
+    ("[ATT]:[0x%02X]:[0x%02X]: Received ATT Event 0x%02X with result 0x%04X\n",
     (handle->att_id), (handle->device_id), att_event, event_result);
 
     /* Dump received data */
@@ -1425,7 +1550,22 @@ API_RESULT gatt_cb
     {
 #ifdef ATT_ON_BR_EDR_SUPPORT
     case ATT_CONNECT_REQ:
-        (BT_IGNORE_RETURN_VALUE) BT_att_connect_rsp (handle,ATT_ACCEPT_CONNECTION);
+#ifdef ATT_ON_ECBFC_SUPPORT
+        if (NULL == event_data)
+#endif /* ATT_ON_ECBFC_SUPPORT */
+        {
+            (BT_IGNORE_RETURN_VALUE) BT_att_connect_rsp (handle,ATT_ACCEPT_CONNECTION);
+        }
+#ifdef ATT_ON_ECBFC_SUPPORT
+        else
+        {
+            /* Check if connection for ECBFC */
+            if (L2CAP_MODE_ECBFC == (*event_data))
+            {
+                (BT_IGNORE_RETURN_VALUE) BT_att_ecbfc_connect_rsp(handle, event_datalen, ATT_ACCEPT_CONNECTION);
+            }
+        }
+#endif /* ATT_ON_ECBFC_SUPPORT */
         break;
 #endif /* ATT_ON_BR_EDR_SUPPORT */
 
@@ -1740,8 +1880,9 @@ API_RESULT gatt_discover_service (ATT_HANDLE * att_handle, ATT_UUID uuid, UCHAR 
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         retval = API_FAILURE; /* return API_FAILURE; */
     }
@@ -1859,8 +2000,9 @@ API_RESULT gatt_discover_is (ATT_HANDLE * att_handle, UINT16 sh, UINT16 eh)
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         retval = API_FAILURE; /* return API_FAILURE; */
     }
@@ -1935,8 +2077,9 @@ API_RESULT gatt_discover_char
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         retval = API_FAILURE; /* return API_FAILURE; */
     }
@@ -2013,8 +2156,9 @@ API_RESULT gatt_discover_char_desc (ATT_HANDLE * att_handle, UINT16 sh, UINT16 e
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         /* return API_FAILURE; */
     }
@@ -2080,8 +2224,9 @@ API_RESULT gatt_char_read (ATT_HANDLE * att_handle, UINT16 sh, UINT16 eh, ATT_UU
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         retval = API_FAILURE; /* return API_FAILURE; */
     }
@@ -2175,8 +2320,9 @@ API_RESULT gatt_char_read_long (ATT_HANDLE * att_handle, UINT16 hdl, UINT16 offs
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         /* return API_FAILURE; */
     }
@@ -2234,8 +2380,9 @@ API_RESULT gatt_char_read_multiple (ATT_HANDLE * att_handle, ATT_READ_MULTIPLE_R
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         /* return API_FAILURE; */
     }
@@ -2289,8 +2436,9 @@ API_RESULT gatt_char_wr (ATT_HANDLE * att_handle, UINT16 hdl, UCHAR * value, UIN
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         /* return API_FAILURE; */
     }
@@ -2365,8 +2513,9 @@ API_RESULT gatt_char_wr_long (ATT_HANDLE * att_handle, ATT_PREPARE_WRITE_REQ_PAR
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         /* return API_FAILURE; */
     }
@@ -2443,8 +2592,9 @@ API_RESULT gatt_char_reliable_wr (ATT_HANDLE * att_handle, GATT_PREPARE_WRITE_RE
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         /* return API_FAILURE; */
     }
@@ -2540,8 +2690,9 @@ API_RESULT gatt_char_hv_action
     retval = gatt_search_context (att_handle, &id);
     if (API_SUCCESS == retval)
     {
-        GATT_ERR ("Context exists for device at %02X with operation for %04X\n",
-            id, gatt_ctx[id].uuid);
+        GATT_ERR(
+        "Context exists for device at %02X for %s\n",
+        id, gatt_uuid_to_str(&gatt_ctx[id].uuid, gatt_ctx[id].frmt));
 
         /* return API_FAILURE; */
     }

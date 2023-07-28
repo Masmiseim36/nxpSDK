@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -152,6 +152,25 @@ void ethernetif_probe_link(struct netif *netif_);
  */
 err_enum_t ethernetif_wait_linkup(struct netif *netif_, long timeout_ms);
 
+/**
+ * This function blocks until the link on at least one netif in array becomes up.
+ *
+ * If RTOS is used and LWIP_NETIF_EXT_STATUS_CALLBACK is defined to 1 thread
+ * will be blocked on queue. On baremetal, busy wait will be used.
+ *
+ * @warn The function is not reentrant and also must NOT be called concurently
+ *       with @ref ethernetif_wait_ipv4_valid.
+ *
+ * @param netif_array       Array of selected interfaces
+ * @param netif_array_len   Length of netif_array
+ * @param timeout_ms        Maximum time to wait in ms or @ref ETHERNETIF_WAIT_FOREVER
+ *
+ * @return  ERR_OK       When interface becomes up
+ *          ERR_TIMEOUT  Timeout reached
+ *          ERR_MEM      Out of memory, can't allocate queue
+ */
+err_enum_t ethernetif_wait_linkup_array(struct netif **netif_array, int netif_array_len, long timeout_ms);
+
 #if LWIP_DHCP == 1
 /**
  * This function blocks until IPv4 addres on netif becomes valid (diferrent from
@@ -178,6 +197,17 @@ err_enum_t ethernetif_wait_ipv4_valid(struct netif *netif_, long timeout_ms);
 
 #endif /* #if (defined(SDK_OS_FREE_RTOS) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1)) || \
               (!defined(SDK_OS_FREE_RTOS)) */
+
+#if ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1))
+/**
+ * This function sets a callback to be invoke when any of IPv6 addresses'
+ * state changes from valid to not-valid or vice versa.
+ *
+ * @param callback_fn The callback function to set,
+ *                    can be NULL to remove a previously set callback.
+ */
+void set_ipv6_valid_state_cb(netif_status_callback_fn callback_fn);
+#endif /* ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1)) */
 
 #if defined(__cplusplus)
 }

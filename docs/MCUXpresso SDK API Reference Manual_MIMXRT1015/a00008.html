@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: ADC_ETC: ADC External Trigger Control</title>
+<title>MCUXpresso SDK API Reference Manual: ADC: 12-bit Analog to Digital Converter Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,179 +103,782 @@ $(document).ready(function(){initNavTree('a00008.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">ADC_ETC: ADC External Trigger Control</div>  </div>
+<div class="title">ADC: 12-bit Analog to Digital Converter Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the ADC_ETC module of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="ADC_ETCTpyUC"></a>
+<p>The MCUXpresso SDK provides a peripheral driver for the 12-bit Analog to Digital Converter (ADC) module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="ADCTpyUC"></a>
 Typical use case</h1>
-<h2><a class="anchor" id="ADC_ETCSWTriggerConfig"></a>
-Software trigger Configuration</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/adc_etc </p>
-<h2><a class="anchor" id="ADC_ETCHWTriggerConfig"></a>
-Hardware trigger Configuration</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/adc_etc </p>
+<h2><a class="anchor" id="ADCIntConfig"></a>
+Polling Configuration</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/fsl_adc </p>
+<h2><a class="anchor" id="ADCPolConfig"></a>
+Polling Configuration</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/fsl_adc </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00275"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00275">adc_etc_config_t</a></td></tr>
-<tr class="memdesc:a00275"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC configuration.  <a href="a00008.html#a00275">More...</a><br/></td></tr>
-<tr class="separator:a00275"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00276"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00276">adc_etc_trigger_chain_config_t</a></td></tr>
-<tr class="memdesc:a00276"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger chain configuration.  <a href="a00008.html#a00276">More...</a><br/></td></tr>
-<tr class="separator:a00276"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00277"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00277">adc_etc_trigger_config_t</a></td></tr>
-<tr class="memdesc:a00277"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC trigger configuration.  <a href="a00008.html#a00277">More...</a><br/></td></tr>
-<tr class="separator:a00277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00288"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00288">adc_config_t</a></td></tr>
+<tr class="memdesc:a00288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter configuration.  <a href="a00008.html#a00288">More...</a><br/></td></tr>
+<tr class="separator:a00288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00293"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00293">adc_offest_config_t</a></td></tr>
+<tr class="memdesc:a00293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter Offset configuration.  <a href="a00008.html#a00293">More...</a><br/></td></tr>
+<tr class="separator:a00293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00292"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00292">adc_hardware_compare_config_t</a></td></tr>
+<tr class="memdesc:a00292"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC hardware compare configuration.  <a href="a00008.html#a00292">More...</a><br/></td></tr>
+<tr class="separator:a00292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00287"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00287">adc_channel_config_t</a></td></tr>
+<tr class="memdesc:a00287"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC channel conversion configuration.  <a href="a00008.html#a00287">More...</a><br/></td></tr>
+<tr class="separator:a00287"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gabb13030471759f06c35f462ed2674023"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gabb13030471759f06c35f462ed2674023">FSL_ADC_ETC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
-<tr class="memdesc:gabb13030471759f06c35f462ed2674023"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC driver version.  <a href="#gabb13030471759f06c35f462ed2674023">More...</a><br/></td></tr>
-<tr class="separator:gabb13030471759f06c35f462ed2674023"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafcf58ac176e14d5434d45f3999f46a5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gafcf58ac176e14d5434d45f3999f46a5c">ADC_ETC_DMA_CTRL_TRGn_REQ_MASK</a>&#160;&#160;&#160;0xFF0000U</td></tr>
-<tr class="memdesc:gafcf58ac176e14d5434d45f3999f46a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mask of status flags cleared by writing 1.  <a href="#gafcf58ac176e14d5434d45f3999f46a5c">More...</a><br/></td></tr>
-<tr class="separator:gafcf58ac176e14d5434d45f3999f46a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5838d9fe654d6e1503be047d08ce5b32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga5838d9fe654d6e1503be047d08ce5b32">FSL_ADC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00224.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="memdesc:ga5838d9fe654d6e1503be047d08ce5b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC driver version.  <a href="#ga5838d9fe654d6e1503be047d08ce5b32">More...</a><br/></td></tr>
+<tr class="separator:ga5838d9fe654d6e1503be047d08ce5b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaecc628cacd5a30243e25b0fd21cddeaa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaecc628cacd5a30243e25b0fd21cddeaa">_adc_etc_status_flag_mask</a> </td></tr>
-<tr class="memdesc:gaecc628cacd5a30243e25b0fd21cddeaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC_ETC customized status flags mask. <br/></td></tr>
-<tr class="separator:gaecc628cacd5a30243e25b0fd21cddeaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46af1d713f9fda57d1a8976df9954a53"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a> </td></tr>
-<tr class="memdesc:ga46af1d713f9fda57d1a8976df9954a53"><td class="mdescLeft">&#160;</td><td class="mdescRight">External triggers sources. <br/></td></tr>
-<tr class="separator:ga46af1d713f9fda57d1a8976df9954a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23ca13fe73d35024cd8aca272722b9ff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga23ca13fe73d35024cd8aca272722b9ff">adc_etc_interrupt_enable_t</a> </td></tr>
-<tr class="memdesc:ga23ca13fe73d35024cd8aca272722b9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt enable/disable mask. <br/></td></tr>
-<tr class="separator:ga23ca13fe73d35024cd8aca272722b9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacff8041ab38ca08dce9972e00363ca1a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gacff8041ab38ca08dce9972e00363ca1a">adc_etc_dma_mode_selection_t</a> </td></tr>
-<tr class="memdesc:gacff8041ab38ca08dce9972e00363ca1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA mode selection. <br/></td></tr>
-<tr class="separator:gacff8041ab38ca08dce9972e00363ca1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b9efd088db3a98e8512a555b68dacb6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga9b9efd088db3a98e8512a555b68dacb6">adc_status_flags_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga9b9efd088db3a98e8512a555b68dacb6a26a124489a3ad750ab3fe895c432256e">kADC_ConversionActiveFlag</a> = ADC_GS_ADACT_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga9b9efd088db3a98e8512a555b68dacb6aca473dd141f867ff6bd127fbd0dd4420">kADC_CalibrationFailedFlag</a> = ADC_GS_CALF_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga9b9efd088db3a98e8512a555b68dacb6ad409e989ca96b924e600f38d8a4f3cb6">kADC_AsynchronousWakeupInterruptFlag</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga9b9efd088db3a98e8512a555b68dacb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's status flags.  <a href="a00008.html#ga9b9efd088db3a98e8512a555b68dacb6">More...</a><br/></td></tr>
+<tr class="separator:ga9b9efd088db3a98e8512a555b68dacb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80a9e50536500f09d71bbaf2669bb475"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a> { <a class="el" href="a00008.html#gga80a9e50536500f09d71bbaf2669bb475a5e9ee06d2d0e11637b20c53a282e420d">kADC_ReferenceVoltageSourceAlt0</a> = 0U
+ }</td></tr>
+<tr class="memdesc:ga80a9e50536500f09d71bbaf2669bb475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference voltage source.  <a href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">More...</a><br/></td></tr>
+<tr class="separator:ga80a9e50536500f09d71bbaf2669bb475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga110319c67e48f7baa38752980936043e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea9c687744893914fe17d59cfc9e403959">kADC_SamplePeriod2or12Clocks</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea40767f8e49acb7e374abdd1d6776795e">kADC_SamplePeriod4or16Clocks</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043eae0e0d856ff108dd866e735d7cf3d9d15">kADC_SamplePeriod6or20Clocks</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea2b479e745a372132d6b24e16cde1eb7c">kADC_SamplePeriod8or24Clocks</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea5dbfde0ee4985a9b9ba63b7e749c093e">kADC_SamplePeriodLong12Clcoks</a> = kADC_SamplePeriod2or12Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea4e059ccfb09bc4fc8db266d88b1ed0c8">kADC_SamplePeriodLong16Clcoks</a> = kADC_SamplePeriod4or16Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea370fc35d725ecf897d0feba4eafcc7d3">kADC_SamplePeriodLong20Clcoks</a> = kADC_SamplePeriod6or20Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043eabdcc07378825dccb6049a3506cc978a5">kADC_SamplePeriodLong24Clcoks</a> = kADC_SamplePeriod8or24Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea7aa48ce81074eb4291e4c8c108b306c9">kADC_SamplePeriodShort2Clocks</a> = kADC_SamplePeriod2or12Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea32fa5b2c6b644d21e36ba89e2e8851b8">kADC_SamplePeriodShort4Clocks</a> = kADC_SamplePeriod4or16Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea65af03b9393e06810b9bd5984dda9629">kADC_SamplePeriodShort6Clocks</a> = kADC_SamplePeriod6or20Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea3f6bac06353d25e806f275fa2e509e52">kADC_SamplePeriodShort8Clocks</a> = kADC_SamplePeriod8or24Clocks
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga110319c67e48f7baa38752980936043e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample time duration.  <a href="a00008.html#ga110319c67e48f7baa38752980936043e">More...</a><br/></td></tr>
+<tr class="separator:ga110319c67e48f7baa38752980936043e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47aed78c6efcf8af7af8950c5bfda044"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a576ebe98baa68fbb9cca4900f1bc100c">kADC_ClockSourceIPG</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a4e052bb05025d8203c1dc67a612ec4b7">kADC_ClockSourceIPGDiv2</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a467486968f174736d2a62db0a67ffad3">kADC_ClockSourceALT</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a75a9ae600c6368a2792a7fa11f1bcbf9">kADC_ClockSourceAD</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga47aed78c6efcf8af7af8950c5bfda044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source.  <a href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">More...</a><br/></td></tr>
+<tr class="separator:ga47aed78c6efcf8af7af8950c5bfda044"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a3e6521c65338f070fe6b90f2b07a2a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa51648a44017cdc8158167d782c3278ac">kADC_ClockDriver1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa1efe12ede1148ea29316e29e8fd590fb">kADC_ClockDriver2</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa87afba538dc7e965114c6fc1353090c3">kADC_ClockDriver4</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa7e2a0f3c06e6b88c3ecd72f3dc8d41a6">kADC_ClockDriver8</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga4a3e6521c65338f070fe6b90f2b07a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock divider for the converter.  <a href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">More...</a><br/></td></tr>
+<tr class="separator:ga4a3e6521c65338f070fe6b90f2b07a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf88bfcbfc4a19c82f8bb423218d13cda"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaabf3e2dd3e94a57b07c291dde055957e0">kADC_Resolution8Bit</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa862f1d412b57ff93e21ff371a57abd98">kADC_Resolution10Bit</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa8c879e001f4fc89b1d67b75fe7852202">kADC_Resolution12Bit</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf88bfcbfc4a19c82f8bb423218d13cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's resolution.  <a href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">More...</a><br/></td></tr>
+<tr class="separator:gaf88bfcbfc4a19c82f8bb423218d13cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaad2e15aea85bfb064575c9424c8b7f7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7a143f2e6b064ecbb16c5d1e7c4ce2463b">kADC_HardwareCompareMode0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7aa8721777f06cd345c7ec65f5e4e2a973">kADC_HardwareCompareMode1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7a611654b81d84d2d14e686524a2446f0c">kADC_HardwareCompareMode2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7aadd87d9d5dc67ef6baf4878dd57592cb">kADC_HardwareCompareMode3</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaaad2e15aea85bfb064575c9424c8b7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware compare mode.  <a href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">More...</a><br/></td></tr>
+<tr class="separator:gaaad2e15aea85bfb064575c9424c8b7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5057b50038de3ec61aa23fdf6039edee"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeeaf39c8892d166cde6a202d3a5d5afb970">kADC_HardwareAverageCount4</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea64e657f493e47f665b3e87b9b514afc8">kADC_HardwareAverageCount8</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea7c42d79c1e0eed68dd40f030c6870639">kADC_HardwareAverageCount16</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea9ec04ff198a8a9c98a4451febeac9797">kADC_HardwareAverageCount32</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea0411428810c0fedbd5c2753826c725d5">kADC_HardwareAverageDiasable</a> = 4U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga5057b50038de3ec61aa23fdf6039edee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware average mode.  <a href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">More...</a><br/></td></tr>
+<tr class="separator:ga5057b50038de3ec61aa23fdf6039edee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization</h2></td></tr>
-<tr class="memitem:gac035c4e4918763d2a3c161bfc967c672"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gac035c4e4918763d2a3c161bfc967c672">ADC_ETC_Init</a> (ADC_ETC_Type *base, const <a class="el" href="a00008.html#a00275">adc_etc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gac035c4e4918763d2a3c161bfc967c672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ADC_ETC module.  <a href="#gac035c4e4918763d2a3c161bfc967c672">More...</a><br/></td></tr>
-<tr class="separator:gac035c4e4918763d2a3c161bfc967c672"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd8e32731410e71c6f25bac9a30bdb73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gafd8e32731410e71c6f25bac9a30bdb73">ADC_ETC_Deinit</a> (ADC_ETC_Type *base)</td></tr>
-<tr class="memdesc:gafd8e32731410e71c6f25bac9a30bdb73"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-Initialize the ADC_ETC module.  <a href="#gafd8e32731410e71c6f25bac9a30bdb73">More...</a><br/></td></tr>
-<tr class="separator:gafd8e32731410e71c6f25bac9a30bdb73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gadbcb45c28030d9a31d33f7686fa36dc5">ADC_ETC_GetDefaultConfig</a> (<a class="el" href="a00008.html#a00275">adc_etc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for the ADC_ETC's configuration.  <a href="#gadbcb45c28030d9a31d33f7686fa36dc5">More...</a><br/></td></tr>
-<tr class="separator:gadbcb45c28030d9a31d33f7686fa36dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97ee7c65c9e858f6654b54cd76f65652"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga97ee7c65c9e858f6654b54cd76f65652">ADC_ETC_SetTriggerConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, const <a class="el" href="a00008.html#a00277">adc_etc_trigger_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga97ee7c65c9e858f6654b54cd76f65652"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the external XBAR trigger configuration.  <a href="#ga97ee7c65c9e858f6654b54cd76f65652">More...</a><br/></td></tr>
-<tr class="separator:ga97ee7c65c9e858f6654b54cd76f65652"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga3a1d60607b5579c7de1e725ae23d3f4c">ADC_ETC_SetTriggerChainConfig</a> (ADC_ETC_Type *base, uint32_t triggerGroup, uint32_t chainGroup, const <a class="el" href="a00008.html#a00276">adc_etc_trigger_chain_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the external XBAR trigger chain configuration.  <a href="#ga3a1d60607b5579c7de1e725ae23d3f4c">More...</a><br/></td></tr>
-<tr class="separator:ga3a1d60607b5579c7de1e725ae23d3f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5152374108498e580fc013b6179b34b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gad5152374108498e580fc013b6179b34b">ADC_ETC_GetInterruptStatusFlags</a> (ADC_ETC_Type *base, <a class="el" href="a00008.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a> sourceIndex)</td></tr>
-<tr class="memdesc:gad5152374108498e580fc013b6179b34b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interrupt status flags of external XBAR and TSC triggers.  <a href="#gad5152374108498e580fc013b6179b34b">More...</a><br/></td></tr>
-<tr class="separator:gad5152374108498e580fc013b6179b34b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02bd53497e04d4899f3f19228de1b162"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga02bd53497e04d4899f3f19228de1b162">ADC_ETC_ClearInterruptStatusFlags</a> (ADC_ETC_Type *base, <a class="el" href="a00008.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a> sourceIndex, uint32_t mask)</td></tr>
-<tr class="memdesc:ga02bd53497e04d4899f3f19228de1b162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the ADC_ETC's interrupt status falgs.  <a href="#ga02bd53497e04d4899f3f19228de1b162">More...</a><br/></td></tr>
-<tr class="separator:ga02bd53497e04d4899f3f19228de1b162"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacbb2c7711568814bf30835708f5a1c70"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gacbb2c7711568814bf30835708f5a1c70">ADC_ETC_EnableDMA</a> (ADC_ETC_Type *base, uint32_t triggerGroup)</td></tr>
-<tr class="memdesc:gacbb2c7711568814bf30835708f5a1c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the DMA corresponding to each trigger source.  <a href="#gacbb2c7711568814bf30835708f5a1c70">More...</a><br/></td></tr>
-<tr class="separator:gacbb2c7711568814bf30835708f5a1c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43645b56e42577c7093d8edd7824a2a1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga43645b56e42577c7093d8edd7824a2a1">ADC_ETC_DisableDMA</a> (ADC_ETC_Type *base, uint32_t triggerGroup)</td></tr>
-<tr class="memdesc:ga43645b56e42577c7093d8edd7824a2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the DMA corresponding to each trigger sources.  <a href="#ga43645b56e42577c7093d8edd7824a2a1">More...</a><br/></td></tr>
-<tr class="separator:ga43645b56e42577c7093d8edd7824a2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb8ccf56f70bb9c4782a8a2bf75eb9b7"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gacb8ccf56f70bb9c4782a8a2bf75eb9b7">ADC_ETC_GetDMAStatusFlags</a> (ADC_ETC_Type *base)</td></tr>
-<tr class="memdesc:gacb8ccf56f70bb9c4782a8a2bf75eb9b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DMA request status falgs.  <a href="#gacb8ccf56f70bb9c4782a8a2bf75eb9b7">More...</a><br/></td></tr>
-<tr class="separator:gacb8ccf56f70bb9c4782a8a2bf75eb9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab717e13cea2ad6603e2c2cd54cf2732b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gab717e13cea2ad6603e2c2cd54cf2732b">ADC_ETC_ClearDMAStatusFlags</a> (ADC_ETC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gab717e13cea2ad6603e2c2cd54cf2732b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the DMA request status falgs.  <a href="#gab717e13cea2ad6603e2c2cd54cf2732b">More...</a><br/></td></tr>
-<tr class="separator:gab717e13cea2ad6603e2c2cd54cf2732b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79d524313efdc75a2725555b356a1990"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga79d524313efdc75a2725555b356a1990">ADC_ETC_DoSoftwareReset</a> (ADC_ETC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga79d524313efdc75a2725555b356a1990"><td class="mdescLeft">&#160;</td><td class="mdescRight">When enable, all logical will be reset.  <a href="#ga79d524313efdc75a2725555b356a1990">More...</a><br/></td></tr>
-<tr class="separator:ga79d524313efdc75a2725555b356a1990"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a719ef622ebe84c0130591611ff18d6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga6a719ef622ebe84c0130591611ff18d6">ADC_ETC_DoSoftwareTrigger</a> (ADC_ETC_Type *base, uint32_t triggerGroup)</td></tr>
-<tr class="memdesc:ga6a719ef622ebe84c0130591611ff18d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software trigger corresponding to each XBAR trigger sources.  <a href="#ga6a719ef622ebe84c0130591611ff18d6">More...</a><br/></td></tr>
-<tr class="separator:ga6a719ef622ebe84c0130591611ff18d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga73f01f54a321d280e18be0fcbf4075a0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga73f01f54a321d280e18be0fcbf4075a0">ADC_ETC_GetADCConversionValue</a> (ADC_ETC_Type *base, uint32_t triggerGroup, uint32_t chainGroup)</td></tr>
-<tr class="memdesc:ga73f01f54a321d280e18be0fcbf4075a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ADC conversion result from external XBAR sources.  <a href="#ga73f01f54a321d280e18be0fcbf4075a0">More...</a><br/></td></tr>
-<tr class="separator:ga73f01f54a321d280e18be0fcbf4075a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa407371ebd58e5aa7f75d38bfdad6169"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaa407371ebd58e5aa7f75d38bfdad6169">ADC_Init</a> (ADC_Type *base, const <a class="el" href="a00008.html#a00288">adc_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaa407371ebd58e5aa7f75d38bfdad6169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ADC module.  <a href="#gaa407371ebd58e5aa7f75d38bfdad6169">More...</a><br/></td></tr>
+<tr class="separator:gaa407371ebd58e5aa7f75d38bfdad6169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e87d0842217dd30d2d9699df580e237"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga9e87d0842217dd30d2d9699df580e237">ADC_Deinit</a> (ADC_Type *base)</td></tr>
+<tr class="memdesc:ga9e87d0842217dd30d2d9699df580e237"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the ADC module.  <a href="#ga9e87d0842217dd30d2d9699df580e237">More...</a><br/></td></tr>
+<tr class="separator:ga9e87d0842217dd30d2d9699df580e237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69c1682f87ee05264946329a2532792e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga69c1682f87ee05264946329a2532792e">ADC_GetDefaultConfig</a> (<a class="el" href="a00008.html#a00288">adc_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga69c1682f87ee05264946329a2532792e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for the converter's configuration.  <a href="#ga69c1682f87ee05264946329a2532792e">More...</a><br/></td></tr>
+<tr class="separator:ga69c1682f87ee05264946329a2532792e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabdc0231135fe660b665f79c70ebe5574"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gabdc0231135fe660b665f79c70ebe5574">ADC_SetChannelConfig</a> (ADC_Type *base, uint32_t channelGroup, const <a class="el" href="a00008.html#a00287">adc_channel_config_t</a> *config)</td></tr>
+<tr class="memdesc:gabdc0231135fe660b665f79c70ebe5574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the conversion channel.  <a href="#gabdc0231135fe660b665f79c70ebe5574">More...</a><br/></td></tr>
+<tr class="separator:gabdc0231135fe660b665f79c70ebe5574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7252ba884ef96ac034afc83ae4619cc"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gad7252ba884ef96ac034afc83ae4619cc">ADC_GetChannelConversionValue</a> (ADC_Type *base, uint32_t channelGroup)</td></tr>
+<tr class="memdesc:gad7252ba884ef96ac034afc83ae4619cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the conversion value.  <a href="#gad7252ba884ef96ac034afc83ae4619cc">More...</a><br/></td></tr>
+<tr class="separator:gad7252ba884ef96ac034afc83ae4619cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2036da14750059b15c079e2c1d783c64"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga2036da14750059b15c079e2c1d783c64">ADC_GetChannelStatusFlags</a> (ADC_Type *base, uint32_t channelGroup)</td></tr>
+<tr class="memdesc:ga2036da14750059b15c079e2c1d783c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the status flags of channel.  <a href="#ga2036da14750059b15c079e2c1d783c64">More...</a><br/></td></tr>
+<tr class="separator:ga2036da14750059b15c079e2c1d783c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53e020121680274054210c6e67d2b6e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga53e020121680274054210c6e67d2b6e4">ADC_DoAutoCalibration</a> (ADC_Type *base)</td></tr>
+<tr class="memdesc:ga53e020121680274054210c6e67d2b6e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automates the hardware calibration.  <a href="#ga53e020121680274054210c6e67d2b6e4">More...</a><br/></td></tr>
+<tr class="separator:ga53e020121680274054210c6e67d2b6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32bc964854dec8f304cf34e8df320c6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga32bc964854dec8f304cf34e8df320c6a">ADC_SetOffsetConfig</a> (ADC_Type *base, const <a class="el" href="a00008.html#a00293">adc_offest_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga32bc964854dec8f304cf34e8df320c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set user defined offset.  <a href="#ga32bc964854dec8f304cf34e8df320c6a">More...</a><br/></td></tr>
+<tr class="separator:ga32bc964854dec8f304cf34e8df320c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05884660d3a0fe8d5fb19dbed29c1954"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga05884660d3a0fe8d5fb19dbed29c1954">ADC_EnableDMA</a> (ADC_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga05884660d3a0fe8d5fb19dbed29c1954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables generating the DMA trigger when the conversion is complete.  <a href="#ga05884660d3a0fe8d5fb19dbed29c1954">More...</a><br/></td></tr>
+<tr class="separator:ga05884660d3a0fe8d5fb19dbed29c1954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga61d74093ee3f9c660255ed87073ab6f0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga61d74093ee3f9c660255ed87073ab6f0">ADC_EnableHardwareTrigger</a> (ADC_Type *base, bool enable)</td></tr>
+<tr class="memdesc:ga61d74093ee3f9c660255ed87073ab6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the hardware trigger mode.  <a href="#ga61d74093ee3f9c660255ed87073ab6f0">More...</a><br/></td></tr>
+<tr class="separator:ga61d74093ee3f9c660255ed87073ab6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1edf14f1af191bf293a9341274e1cf6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaf1edf14f1af191bf293a9341274e1cf6">ADC_SetHardwareCompareConfig</a> (ADC_Type *base, const <a class="el" href="a00008.html#a00292">adc_hardware_compare_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaf1edf14f1af191bf293a9341274e1cf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the hardware compare mode.  <a href="#gaf1edf14f1af191bf293a9341274e1cf6">More...</a><br/></td></tr>
+<tr class="separator:gaf1edf14f1af191bf293a9341274e1cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d55fa95561b47bc57234a6145926224"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga2d55fa95561b47bc57234a6145926224">ADC_SetHardwareAverageConfig</a> (ADC_Type *base, <a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a> mode)</td></tr>
+<tr class="memdesc:ga2d55fa95561b47bc57234a6145926224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the hardware average mode.  <a href="#ga2d55fa95561b47bc57234a6145926224">More...</a><br/></td></tr>
+<tr class="separator:ga2d55fa95561b47bc57234a6145926224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92ee1fdbb8cdadbdc1850e94afed432b"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga92ee1fdbb8cdadbdc1850e94afed432b">ADC_GetStatusFlags</a> (ADC_Type *base)</td></tr>
+<tr class="memdesc:ga92ee1fdbb8cdadbdc1850e94afed432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the converter's status flags.  <a href="#ga92ee1fdbb8cdadbdc1850e94afed432b">More...</a><br/></td></tr>
+<tr class="separator:ga92ee1fdbb8cdadbdc1850e94afed432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga871b519e0f4f7966725201fc07614020"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga871b519e0f4f7966725201fc07614020">ADC_ClearStatusFlags</a> (ADC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga871b519e0f4f7966725201fc07614020"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the converter's status falgs.  <a href="#ga871b519e0f4f7966725201fc07614020">More...</a><br/></td></tr>
+<tr class="separator:ga871b519e0f4f7966725201fc07614020"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00275" id="a00275"></a>
+<a name="a00288" id="a00288"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct adc_etc_config_t</td>
+          <td class="memname">struct adc_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<a name="a00276" id="a00276"></a>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a19d83f209fe0268bd19db07a40afc183"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a19d83f209fe0268bd19db07a40afc183">enableOverWrite</a></td></tr>
+<tr class="memdesc:a19d83f209fe0268bd19db07a40afc183"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the overwriting.  <a href="#a19d83f209fe0268bd19db07a40afc183">More...</a><br/></td></tr>
+<tr class="separator:a19d83f209fe0268bd19db07a40afc183"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a0ab8cefc9823454fe3c2293d1c4add"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a2a0ab8cefc9823454fe3c2293d1c4add">enableContinuousConversion</a></td></tr>
+<tr class="memdesc:a2a0ab8cefc9823454fe3c2293d1c4add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the continuous conversion mode.  <a href="#a2a0ab8cefc9823454fe3c2293d1c4add">More...</a><br/></td></tr>
+<tr class="separator:a2a0ab8cefc9823454fe3c2293d1c4add"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29f0906444baf75003692febf409bc07"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a29f0906444baf75003692febf409bc07">enableHighSpeed</a></td></tr>
+<tr class="memdesc:a29f0906444baf75003692febf409bc07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the high-speed mode.  <a href="#a29f0906444baf75003692febf409bc07">More...</a><br/></td></tr>
+<tr class="separator:a29f0906444baf75003692febf409bc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0b0c627142525a2b0306e462c863e1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#af0b0c627142525a2b0306e462c863e1e">enableLowPower</a></td></tr>
+<tr class="memdesc:af0b0c627142525a2b0306e462c863e1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the low power mode.  <a href="#af0b0c627142525a2b0306e462c863e1e">More...</a><br/></td></tr>
+<tr class="separator:af0b0c627142525a2b0306e462c863e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0333df72c9a193681417adeb6bb203a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a0333df72c9a193681417adeb6bb203a0">enableLongSample</a></td></tr>
+<tr class="memdesc:a0333df72c9a193681417adeb6bb203a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the long sample mode.  <a href="#a0333df72c9a193681417adeb6bb203a0">More...</a><br/></td></tr>
+<tr class="separator:a0333df72c9a193681417adeb6bb203a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb2c387fadd9482e02b6c1db8698f41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#adbb2c387fadd9482e02b6c1db8698f41">enableAsynchronousClockOutput</a></td></tr>
+<tr class="memdesc:adbb2c387fadd9482e02b6c1db8698f41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the asynchronous clock output.  <a href="#adbb2c387fadd9482e02b6c1db8698f41">More...</a><br/></td></tr>
+<tr class="separator:adbb2c387fadd9482e02b6c1db8698f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a796b7bfba0959eb808b843832dcf0279"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a796b7bfba0959eb808b843832dcf0279">referenceVoltageSource</a></td></tr>
+<tr class="memdesc:a796b7bfba0959eb808b843832dcf0279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the reference voltage source.  <a href="#a796b7bfba0959eb808b843832dcf0279">More...</a><br/></td></tr>
+<tr class="separator:a796b7bfba0959eb808b843832dcf0279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d941c8171a5e5039040474e5c114278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a5d941c8171a5e5039040474e5c114278">samplePeriodMode</a></td></tr>
+<tr class="memdesc:a5d941c8171a5e5039040474e5c114278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the sample period in long sample mode or short mode.  <a href="#a5d941c8171a5e5039040474e5c114278">More...</a><br/></td></tr>
+<tr class="separator:a5d941c8171a5e5039040474e5c114278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5031662a5db79e7448b810c463062e1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a5031662a5db79e7448b810c463062e1d">clockSource</a></td></tr>
+<tr class="memdesc:a5031662a5db79e7448b810c463062e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the input clock source to generate the internal clock ADCK.  <a href="#a5031662a5db79e7448b810c463062e1d">More...</a><br/></td></tr>
+<tr class="separator:a5031662a5db79e7448b810c463062e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04a397df8ca708dcff3710d76ccecd61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a04a397df8ca708dcff3710d76ccecd61">clockDriver</a></td></tr>
+<tr class="memdesc:a04a397df8ca708dcff3710d76ccecd61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the divide ratio used by the ADC to generate the internal clock ADCK.  <a href="#a04a397df8ca708dcff3710d76ccecd61">More...</a><br/></td></tr>
+<tr class="separator:a04a397df8ca708dcff3710d76ccecd61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d83267d7a76c64b2a209c4afc8a30cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a4d83267d7a76c64b2a209c4afc8a30cd">resolution</a></td></tr>
+<tr class="memdesc:a4d83267d7a76c64b2a209c4afc8a30cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the ADC resolution mode.  <a href="#a4d83267d7a76c64b2a209c4afc8a30cd">More...</a><br/></td></tr>
+<tr class="separator:a4d83267d7a76c64b2a209c4afc8a30cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a19d83f209fe0268bd19db07a40afc183"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct adc_etc_trigger_chain_config_t</td>
+          <td class="memname">bool adc_config_t::enableOverWrite</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<a name="a00277" id="a00277"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct adc_etc_trigger_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gabb13030471759f06c35f462ed2674023"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_ADC_ETC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Version 2.2.1. </p>
 
 </div>
 </div>
-<a class="anchor" id="gafcf58ac176e14d5434d45f3999f46a5c"></a>
+<a class="anchor" id="a2a0ab8cefc9823454fe3c2293d1c4add"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ADC_ETC_DMA_CTRL_TRGn_REQ_MASK&#160;&#160;&#160;0xFF0000U</td>
+          <td class="memname">bool adc_config_t::enableContinuousConversion</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a29f0906444baf75003692febf409bc07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool adc_config_t::enableHighSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af0b0c627142525a2b0306e462c863e1e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool adc_config_t::enableLowPower</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0333df72c9a193681417adeb6bb203a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool adc_config_t::enableLongSample</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="adbb2c387fadd9482e02b6c1db8698f41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool adc_config_t::enableAsynchronousClockOutput</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a796b7bfba0959eb808b843832dcf0279"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a> adc_config_t::referenceVoltageSource</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5d941c8171a5e5039040474e5c114278"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a> adc_config_t::samplePeriodMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5031662a5db79e7448b810c463062e1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a> adc_config_t::clockSource</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a04a397df8ca708dcff3710d76ccecd61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a> adc_config_t::clockDriver</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4d83267d7a76c64b2a209c4afc8a30cd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a> adc_config_t::resolution</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00293" id="a00293"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_offest_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a61676f66f36c8cc1c5402b2ba7471e46"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a61676f66f36c8cc1c5402b2ba7471e46">enableSigned</a></td></tr>
+<tr class="memdesc:a61676f66f36c8cc1c5402b2ba7471e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">if false,The offset value is added with the raw result.  <a href="#a61676f66f36c8cc1c5402b2ba7471e46">More...</a><br/></td></tr>
+<tr class="separator:a61676f66f36c8cc1c5402b2ba7471e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79136d5e9ab922cd1a0d200812e6e832"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a79136d5e9ab922cd1a0d200812e6e832">offsetValue</a></td></tr>
+<tr class="memdesc:a79136d5e9ab922cd1a0d200812e6e832"><td class="mdescLeft">&#160;</td><td class="mdescRight">User configurable offset value(0-4095).  <a href="#a79136d5e9ab922cd1a0d200812e6e832">More...</a><br/></td></tr>
+<tr class="separator:a79136d5e9ab922cd1a0d200812e6e832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a61676f66f36c8cc1c5402b2ba7471e46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool adc_offest_config_t::enableSigned</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>if true,The offset value is subtracted from the raw converted value. </p>
+
+</div>
+</div>
+<a class="anchor" id="a79136d5e9ab922cd1a0d200812e6e832"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t adc_offest_config_t::offsetValue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00292" id="a00292"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_hardware_compare_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>In kADC_HardwareCompareMode0, compare true if the result is less than the value1. In kADC_HardwareCompareMode1, compare true if the result is greater than or equal to value1. In kADC_HardwareCompareMode2, Value1 &lt;= Value2, compare true if the result is less than value1 Or the result is Greater than value2. Value1 &gt; Value2, compare true if the result is less than value1 And the result is Greater than value2. In kADC_HardwareCompareMode3, Value1 &lt;= Value2, compare true if the result is greater than or equal to value1 And the result is less than or equal to value2. Value1 &gt; Value2, compare true if the result is greater than or equal to value1 Or the result is less than or equal to value2. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:af1db114f296c68ff883b773d45b1964a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#af1db114f296c68ff883b773d45b1964a">hardwareCompareMode</a></td></tr>
+<tr class="memdesc:af1db114f296c68ff883b773d45b1964a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the hardware compare mode.  <a href="#af1db114f296c68ff883b773d45b1964a">More...</a><br/></td></tr>
+<tr class="separator:af1db114f296c68ff883b773d45b1964a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40873953dfaca82e7f8e0346a312e2e0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a40873953dfaca82e7f8e0346a312e2e0">value1</a></td></tr>
+<tr class="memdesc:a40873953dfaca82e7f8e0346a312e2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting value1(0-4095) for hardware compare mode.  <a href="#a40873953dfaca82e7f8e0346a312e2e0">More...</a><br/></td></tr>
+<tr class="separator:a40873953dfaca82e7f8e0346a312e2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bee6b6b6d9376acf6a05e0a3855a6c9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a6bee6b6b6d9376acf6a05e0a3855a6c9">value2</a></td></tr>
+<tr class="memdesc:a6bee6b6b6d9376acf6a05e0a3855a6c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting value2(0-4095) for hardware compare mode.  <a href="#a6bee6b6b6d9376acf6a05e0a3855a6c9">More...</a><br/></td></tr>
+<tr class="separator:a6bee6b6b6d9376acf6a05e0a3855a6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="af1db114f296c68ff883b773d45b1964a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a> adc_hardware_compare_config_t::hardwareCompareMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>See "adc_hardware_compare_mode_t". </p>
+
+</div>
+</div>
+<a class="anchor" id="a40873953dfaca82e7f8e0346a312e2e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t adc_hardware_compare_config_t::value1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6bee6b6b6d9376acf6a05e0a3855a6c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t adc_hardware_compare_config_t::value2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00287" id="a00287"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct adc_channel_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aad852da01296532dca52642ccfda4cbb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#aad852da01296532dca52642ccfda4cbb">channelNumber</a></td></tr>
+<tr class="memdesc:aad852da01296532dca52642ccfda4cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting the conversion channel number.  <a href="#aad852da01296532dca52642ccfda4cbb">More...</a><br/></td></tr>
+<tr class="separator:aad852da01296532dca52642ccfda4cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4cddcc772816883795e9ac42c5701d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#aab4cddcc772816883795e9ac42c5701d">enableInterruptOnConversionCompleted</a></td></tr>
+<tr class="memdesc:aab4cddcc772816883795e9ac42c5701d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an interrupt request once the conversion is completed.  <a href="#aab4cddcc772816883795e9ac42c5701d">More...</a><br/></td></tr>
+<tr class="separator:aab4cddcc772816883795e9ac42c5701d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="aad852da01296532dca52642ccfda4cbb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t adc_channel_config_t::channelNumber</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The available range is 0-31. See channel connection information for each chip in Reference Manual document. </p>
+
+</div>
+</div>
+<a class="anchor" id="aab4cddcc772816883795e9ac42c5701d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool adc_channel_config_t::enableInterruptOnConversionCompleted</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga5838d9fe654d6e1503be047d08ce5b32"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_ADC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00224.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Version 2.0.4. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga9b9efd088db3a98e8512a555b68dacb6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#ga9b9efd088db3a98e8512a555b68dacb6">adc_status_flags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9b9efd088db3a98e8512a555b68dacb6a26a124489a3ad750ab3fe895c432256e"></a>kADC_ConversionActiveFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Conversion is active,not support w1c. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9b9efd088db3a98e8512a555b68dacb6aca473dd141f867ff6bd127fbd0dd4420"></a>kADC_CalibrationFailedFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Calibration is failed,support w1c. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9b9efd088db3a98e8512a555b68dacb6ad409e989ca96b924e600f38d8a4f3cb6"></a>kADC_AsynchronousWakeupInterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Asynchronous wakeup interrupt occurred, support w1c. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga80a9e50536500f09d71bbaf2669bb475"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga80a9e50536500f09d71bbaf2669bb475a5e9ee06d2d0e11637b20c53a282e420d"></a>kADC_ReferenceVoltageSourceAlt0</em>&nbsp;</td><td class="fielddoc">
+<p>For external pins pair of VrefH and VrefL. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga110319c67e48f7baa38752980936043e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea9c687744893914fe17d59cfc9e403959"></a>kADC_SamplePeriod2or12Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 12 clocks or short sample 2 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea40767f8e49acb7e374abdd1d6776795e"></a>kADC_SamplePeriod4or16Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 16 clocks or short sample 4 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043eae0e0d856ff108dd866e735d7cf3d9d15"></a>kADC_SamplePeriod6or20Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 20 clocks or short sample 6 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea2b479e745a372132d6b24e16cde1eb7c"></a>kADC_SamplePeriod8or24Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 24 clocks or short sample 8 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea5dbfde0ee4985a9b9ba63b7e749c093e"></a>kADC_SamplePeriodLong12Clcoks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 12 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea4e059ccfb09bc4fc8db266d88b1ed0c8"></a>kADC_SamplePeriodLong16Clcoks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 16 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea370fc35d725ecf897d0feba4eafcc7d3"></a>kADC_SamplePeriodLong20Clcoks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 20 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043eabdcc07378825dccb6049a3506cc978a5"></a>kADC_SamplePeriodLong24Clcoks</em>&nbsp;</td><td class="fielddoc">
+<p>Long sample 24 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea7aa48ce81074eb4291e4c8c108b306c9"></a>kADC_SamplePeriodShort2Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Short sample 2 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea32fa5b2c6b644d21e36ba89e2e8851b8"></a>kADC_SamplePeriodShort4Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Short sample 4 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea65af03b9393e06810b9bd5984dda9629"></a>kADC_SamplePeriodShort6Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Short sample 6 clocks. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea3f6bac06353d25e806f275fa2e509e52"></a>kADC_SamplePeriodShort8Clocks</em>&nbsp;</td><td class="fielddoc">
+<p>Short sample 8 clocks. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga47aed78c6efcf8af7af8950c5bfda044"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a576ebe98baa68fbb9cca4900f1bc100c"></a>kADC_ClockSourceIPG</em>&nbsp;</td><td class="fielddoc">
+<p>Select IPG clock to generate ADCK. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a4e052bb05025d8203c1dc67a612ec4b7"></a>kADC_ClockSourceIPGDiv2</em>&nbsp;</td><td class="fielddoc">
+<p>Select IPG clock divided by 2 to generate ADCK. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a467486968f174736d2a62db0a67ffad3"></a>kADC_ClockSourceALT</em>&nbsp;</td><td class="fielddoc">
+<p>Select alternate clock to generate ADCK. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a75a9ae600c6368a2792a7fa11f1bcbf9"></a>kADC_ClockSourceAD</em>&nbsp;</td><td class="fielddoc">
+<p>Select Asynchronous clock to generate ADCK. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga4a3e6521c65338f070fe6b90f2b07a2a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa51648a44017cdc8158167d782c3278ac"></a>kADC_ClockDriver1</em>&nbsp;</td><td class="fielddoc">
+<p>For divider 1 from the input clock to the module. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa1efe12ede1148ea29316e29e8fd590fb"></a>kADC_ClockDriver2</em>&nbsp;</td><td class="fielddoc">
+<p>For divider 2 from the input clock to the module. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa87afba538dc7e965114c6fc1353090c3"></a>kADC_ClockDriver4</em>&nbsp;</td><td class="fielddoc">
+<p>For divider 4 from the input clock to the module. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa7e2a0f3c06e6b88c3ecd72f3dc8d41a6"></a>kADC_ClockDriver8</em>&nbsp;</td><td class="fielddoc">
+<p>For divider 8 from the input clock to the module. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gaf88bfcbfc4a19c82f8bb423218d13cda"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf88bfcbfc4a19c82f8bb423218d13cdaabf3e2dd3e94a57b07c291dde055957e0"></a>kADC_Resolution8Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Single End 8-bit resolution. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf88bfcbfc4a19c82f8bb423218d13cdaa862f1d412b57ff93e21ff371a57abd98"></a>kADC_Resolution10Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Single End 10-bit resolution. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf88bfcbfc4a19c82f8bb423218d13cdaa8c879e001f4fc89b1d67b75fe7852202"></a>kADC_Resolution12Bit</em>&nbsp;</td><td class="fielddoc">
+<p>Single End 12-bit resolution. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gaaad2e15aea85bfb064575c9424c8b7f7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7a143f2e6b064ecbb16c5d1e7c4ce2463b"></a>kADC_HardwareCompareMode0</em>&nbsp;</td><td class="fielddoc">
+<p>Compare true if the result is less than the value1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7aa8721777f06cd345c7ec65f5e4e2a973"></a>kADC_HardwareCompareMode1</em>&nbsp;</td><td class="fielddoc">
+<p>Compare true if the result is greater than or equal to value1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7a611654b81d84d2d14e686524a2446f0c"></a>kADC_HardwareCompareMode2</em>&nbsp;</td><td class="fielddoc">
+<p>Value1 &lt;= Value2, compare true if the result is less than value1 Or the result is Greater than value2. </p>
+<p>Value1 &gt; Value2, compare true if the result is less than value1 And the result is greater than value2 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7aadd87d9d5dc67ef6baf4878dd57592cb"></a>kADC_HardwareCompareMode3</em>&nbsp;</td><td class="fielddoc">
+<p>Value1 &lt;= Value2, compare true if the result is greater than or equal to value1 And the result is less than or equal to value2. </p>
+<p>Value1 &gt; Value2, compare true if the result is greater than or equal to value1 Or the result is less than or equal to value2. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga5057b50038de3ec61aa23fdf6039edee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeeaf39c8892d166cde6a202d3a5d5afb970"></a>kADC_HardwareAverageCount4</em>&nbsp;</td><td class="fielddoc">
+<p>For hardware average with 4 samples. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea64e657f493e47f665b3e87b9b514afc8"></a>kADC_HardwareAverageCount8</em>&nbsp;</td><td class="fielddoc">
+<p>For hardware average with 8 samples. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea7c42d79c1e0eed68dd40f030c6870639"></a>kADC_HardwareAverageCount16</em>&nbsp;</td><td class="fielddoc">
+<p>For hardware average with 16 samples. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea9ec04ff198a8a9c98a4451febeac9797"></a>kADC_HardwareAverageCount32</em>&nbsp;</td><td class="fielddoc">
+<p>For hardware average with 32 samples. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea0411428810c0fedbd5c2753826c725d5"></a>kADC_HardwareAverageDiasable</em>&nbsp;</td><td class="fielddoc">
+<p>Disable the hardware average function. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac035c4e4918763d2a3c161bfc967c672"></a>
+<a class="anchor" id="gaa407371ebd58e5aa7f75d38bfdad6169"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ADC_ETC_Init </td>
+          <td class="memname">void ADC_Init </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00275">adc_etc_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#a00288">adc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -287,22 +890,22 @@ Initialization</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_config_t" structure. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to "adc_config_t" structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gafd8e32731410e71c6f25bac9a30bdb73"></a>
+<a class="anchor" id="ga9e87d0842217dd30d2d9699df580e237"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ADC_ETC_Deinit </td>
+          <td class="memname">void ADC_Deinit </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -310,64 +913,68 @@ Initialization</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gadbcb45c28030d9a31d33f7686fa36dc5"></a>
+<a class="anchor" id="ga69c1682f87ee05264946329a2532792e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ADC_ETC_GetDefaultConfig </td>
+          <td class="memname">void ADC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00008.html#a00275">adc_etc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00008.html#a00288">adc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the ADC_ETC's configuration structure with available settings. The default values are: </p>
-<div class="fragment"><div class="line">*   config-&gt;enableTSCBypass = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;enableTSC0Trigger = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;enableTSC1Trigger = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;TSC0triggerPriority = 0U;</div>
-<div class="line">*   config-&gt;TSC1triggerPriority = 0U;</div>
-<div class="line">*   config-&gt;clockPreDivider = 0U;</div>
-<div class="line">*   config-&gt;XBARtriggerMask = 0U;</div>
+<p>This function initializes the converter configuration structure with available settings. The default values are: </p>
+<div class="fragment"><div class="line">*  config-&gt;enableAsynchronousClockOutput = <span class="keyword">true</span>;</div>
+<div class="line">*  config-&gt;enableOverWrite =               <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;enableContinuousConversion =    <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;enableHighSpeed =               <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;enableLowPower =                <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;enableLongSample =              <span class="keyword">false</span>;</div>
+<div class="line">*  config-&gt;referenceVoltageSource =        <a class="code" href="a00008.html#gga80a9e50536500f09d71bbaf2669bb475a5e9ee06d2d0e11637b20c53a282e420d">kADC_ReferenceVoltageSourceAlt0</a>;</div>
+<div class="line">*  config-&gt;samplePeriodMode =              <a class="code" href="a00008.html#gga110319c67e48f7baa38752980936043ea9c687744893914fe17d59cfc9e403959">kADC_SamplePeriod2or12Clocks</a>;</div>
+<div class="line">*  config-&gt;clockSource =                   <a class="code" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a75a9ae600c6368a2792a7fa11f1bcbf9">kADC_ClockSourceAD</a>;</div>
+<div class="line">*  config-&gt;clockDriver =                   <a class="code" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa51648a44017cdc8158167d782c3278ac">kADC_ClockDriver1</a>;</div>
+<div class="line">*  config-&gt;resolution =                    <a class="code" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa8c879e001f4fc89b1d67b75fe7852202">kADC_Resolution12Bit</a>;</div>
 <div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_config_t" structure. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga97ee7c65c9e858f6654b54cd76f65652"></a>
+<a class="anchor" id="gabdc0231135fe660b665f79c70ebe5574"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ADC_ETC_SetTriggerConfig </td>
+          <td class="memname">void ADC_SetChannelConfig </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerGroup</em>, </td>
+          <td class="paramname"><em>channelGroup</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00277">adc_etc_trigger_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#a00287">adc_channel_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -377,140 +984,20 @@ Initialization</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This operation triggers the conversion when in software trigger mode. When in hardware trigger mode, this API configures the channel while the external trigger source helps to trigger the conversion.</p>
+<p>Note that the "Channel Group" has a detailed description. To allow sequential conversions of the ADC to be triggered by internal peripherals, the ADC has more than one group of status and control registers, one for each conversion. The channel group parameter indicates which group of registers are used, for example channel group 0 is for Group A registers and channel group 1 is for Group B registers. The channel groups are used in a "ping-pong" approach to control the ADC operation. At any point, only one of the channel groups is actively controlling ADC conversions. The channel group 0 is used for both software and hardware trigger modes. Channel groups 1 and greater indicate potentially multiple channel group registers for use only in hardware trigger mode. See the chip configuration information in the appropriate MCU reference manual about the number of SC1n registers (channel groups) specific to this device. None of the channel groups 1 or greater are used for software trigger operation. Therefore, writing to these channel groups does not initiate a new conversion. Updating the channel group 0 while a different channel group is actively controlling a conversion is allowed and vice versa. Writing any of the channel group registers while that specific channel group is actively controlling a conversion aborts the current conversion.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_trigger_config_t" structure. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">channelGroup</td><td>Channel group index. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the "adc_channel_config_t" structure for the conversion channel. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3a1d60607b5579c7de1e725ae23d3f4c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADC_ETC_SetTriggerChainConfig </td>
-          <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerGroup</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>chainGroup</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00276">adc_etc_trigger_chain_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>For example, if triggerGroup is set to 0U and chainGroup is set to 1U, which means Trigger0 source's chain1 would be configurated.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
-    <tr><td class="paramname">chainGroup</td><td>Trigger chain group index. Available number is 0~7. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to "adc_etc_trigger_chain_config_t" structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad5152374108498e580fc013b6179b34b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ADC_ETC_GetInterruptStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00008.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a>&#160;</td>
-          <td class="paramname"><em>sourceIndex</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">sourceIndex</td><td>trigger source index.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status flags mask of trigger. Refer to "_adc_etc_status_flag_mask". </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga02bd53497e04d4899f3f19228de1b162"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ADC_ETC_ClearInterruptStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00008.html#ga46af1d713f9fda57d1a8976df9954a53">adc_etc_external_trigger_source_t</a>&#160;</td>
-          <td class="paramname"><em>sourceIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">sourceIndex</td><td>trigger source index. </td></tr>
-    <tr><td class="paramname">mask</td><td>Status flags mask of trigger. Refer to "_adc_etc_status_flag_mask". </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacbb2c7711568814bf30835708f5a1c70"></a>
+<a class="anchor" id="gad7252ba884ef96ac034afc83ae4619cc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -518,16 +1005,16 @@ Initialization</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ADC_ETC_EnableDMA </td>
+          <td class="memname">static uint32_t ADC_GetChannelConversionValue </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerGroup</em>&#160;</td>
+          <td class="paramname"><em>channelGroup</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -543,15 +1030,16 @@ Initialization</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">channelGroup</td><td>Channel group index.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Conversion value. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga43645b56e42577c7093d8edd7824a2a1"></a>
+<a class="anchor" id="ga2036da14750059b15c079e2c1d783c64"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -559,16 +1047,16 @@ Initialization</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ADC_ETC_DisableDMA </td>
+          <td class="memname">static uint32_t ADC_GetChannelStatusFlags </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerGroup</em>&#160;</td>
+          <td class="paramname"><em>channelGroup</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -582,66 +1070,64 @@ Initialization</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>A conversion is completed when the result of the conversion is transferred into the data result registers. (provided the compare function &amp; hardware averaging is disabled), this is indicated by the setting of COCOn. If hardware averaging is enabled, COCOn sets only, if the last of the selected number of conversions is complete. If the compare function is enabled, COCOn sets and conversion result data is transferred only if the compare condition is true. If both hardware averaging and compare functions are enabled, then COCOn sets only if the last of the selected number of conversions is complete and the compare condition is true.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">channelGroup</td><td>Channel group index.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Status flags of channel.return 0 means COCO flag is 0,return 1 means COCOflag is 1. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gacb8ccf56f70bb9c4782a8a2bf75eb9b7"></a>
+<a class="anchor" id="ga53e020121680274054210c6e67d2b6e4"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t ADC_ETC_GetDMAStatusFlags </td>
+          <td class="memname"><a class="el" href="a00224.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ADC_DoAutoCalibration </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>Only external XBAR sources support DMA request.</p>
+<p>This auto calibration helps to adjust the plus/minus side gain automatically. Execute the calibration before using the converter. Note that the software trigger should be used during calibration.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Mask of external XBAR tirgger's DMA request asserted flags. Available range is trigger0:0x01 to trigger7:0x80. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Execution status. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Calibration is done successfully. </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>Calibration has failed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gab717e13cea2ad6603e2c2cd54cf2732b"></a>
+<a class="anchor" id="ga32bc964854dec8f304cf34e8df320c6a"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ADC_ETC_ClearDMAStatusFlags </td>
+          <td class="memname">void ADC_SetOffsetConfig </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#a00293">adc_offest_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -649,24 +1135,18 @@ Initialization</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>Only external XBAR sources support DMA request.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Mask of external XBAR tirgger's DMA request asserted flags. Available range is trigger0:0x01 to trigger7:0x80. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to "adc_offest_config_t" structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga79d524313efdc75a2725555b356a1990"></a>
+<a class="anchor" id="ga05884660d3a0fe8d5fb19dbed29c1954"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -674,9 +1154,9 @@ Initialization</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ADC_ETC_DoSoftwareReset </td>
+          <td class="memname">static void ADC_EnableDMA </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -699,15 +1179,15 @@ Initialization</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable/Disable the software reset. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Switcher of the DMA feature. "true" means enabled, "false" means not enabled. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6a719ef622ebe84c0130591611ff18d6"></a>
+<a class="anchor" id="ga61d74093ee3f9c660255ed87073ab6f0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -715,16 +1195,16 @@ Initialization</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void ADC_ETC_DoSoftwareTrigger </td>
+          <td class="memname">static void ADC_EnableHardwareTrigger </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerGroup</em>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -738,38 +1218,31 @@ Initialization</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Each XBAR trigger sources can be configured as HW or SW trigger mode. In hardware trigger mode, trigger source is from XBAR. In software mode, trigger source is from software tigger. TSC trigger sources can only work in hardware trigger mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">enable</td><td>Switcher of the trigger mode. "true" means hardware tirgger mode,"false" means software mode. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga73f01f54a321d280e18be0fcbf4075a0"></a>
+<a class="anchor" id="gaf1edf14f1af191bf293a9341274e1cf6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ADC_ETC_GetADCConversionValue </td>
+          <td class="memname">void ADC_SetHardwareCompareConfig </td>
           <td>(</td>
-          <td class="paramtype">ADC_ETC_Type *&#160;</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerGroup</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>chainGroup</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#a00292">adc_hardware_compare_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -778,16 +1251,112 @@ Initialization</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>For example, if triggerGroup is set to 0U and chainGroup is set to 1U, which means the API would return Trigger0 source's chain1 conversion result.</p>
+<p>The hardware compare mode provides a way to process the conversion result automatically by using hardware. Only the result in the compare range is available. To compare the range, see "adc_hardware_compare_mode_t" or the appopriate reference manual for more information.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>ADC_ETC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerGroup</td><td>Trigger group index. Available number is 0~7. </td></tr>
-    <tr><td class="paramname">chainGroup</td><td>Trigger chain group index. Available number is 0~7. </td></tr>
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to "adc_hardware_compare_config_t" structure. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ADC conversion result value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2d55fa95561b47bc57234a6145926224"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADC_SetHardwareAverageConfig </td>
+          <td>(</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The hardware average mode provides a way to process the conversion result automatically by using hardware. The multiple conversion results are accumulated and averaged internally making them easier to read.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">mode</td><td>Setting the hardware average mode. See "adc_hardware_average_mode_t". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga92ee1fdbb8cdadbdc1850e94afed432b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t ADC_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC peripheral base address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Flags' mask if indicated flags are asserted. See "adc_status_flags_t". </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga871b519e0f4f7966725201fc07614020"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ADC_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ADC peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>Mask value for the cleared flags. See "adc_status_flags_t". </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -2,28 +2,30 @@
  *
  *  @brief main file
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020,2023 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
  *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
  *
- */
-
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGE.
+*/
 ///////////////////////////////////////////////////////////////////////////////
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,53 +36,56 @@
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "wifi.h"
+#if !defined(RW610_SERIES) && !defined(RW612_SERIES)
+#include "fsl_sai.h"
 
 #include "fsl_sdmmc_host.h"
+#endif /* (RW610_SERIES) && !defined(RW612_SERIES */
+
 #include "fsl_common.h"
-
 #include "fsl_device_registers.h"
-#include "usb_host_config.h"
-#include "usb_host.h"
-#include "usb_phy.h"
-#include "usb_host_msd.h"
-#include "host_msd_fatfs.h"
-#include "ff.h"
-#include "diskio.h"
-#include "app.h"
 
-#if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
-#error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
-#endif
+#include "app.h"
 
 #include "BT_common.h"
 #include "BT_version.h"
 #include "BT_hci_api.h"
 
 #include "fsl_gpio.h"
+#if !defined(RW610_SERIES) && !defined(RW612_SERIES)
 #include "fsl_iomuxc.h"
+#endif /* (RW610_SERIES) && !defined(RW612_SERIES */
 
 #include "controller.h"
 #include "appl_utils.h"
+#include "appl_main.h"
 
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+#include "PWR_Interface.h"
+#endif /* APP_LOWPOWER_ENABLED */
+
+#include "controller_hci_uart.h"
+#include "usb_host_config.h"
+#include "usb_host.h"
+#include "usb_phy.h"
 #include "netif/ethernet.h"
-#include "enet_ethernetif.h"
-#include "fsl_phyksz8081.h"
-#include "fsl_enet_mdio.h"
+#include "ethernetif.h"
+#include "fsl_enet.h"
+#include "fsl_lpuart_edma.h"
+#include "fsl_edma.h"
+#include "fsl_dmamux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define os_thread_sleep(ticks)  vTaskDelay(ticks)
+#define os_msec_to_ticks(msecs) ((msecs) / (portTICK_PERIOD_MS))
+
 /* Allocate the memory for the heap. */
 #if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
 APP_FREERTOS_HEAP_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
 #endif
 
-
-/*! @brief USB host msd fatfs instance global variable */
-extern usb_host_msd_fatfs_instance_t g_MsdFatfsInstance;
-usb_host_handle g_HostHandle;
-
-const int TASK_MAIN_PRIO       = OS_PRIO_3;
+const int TASK_MAIN_PRIO       = (configMAX_PRIORITIES - 5);
 const int TASK_MAIN_STACK_SIZE = (2 * 1024);
 
 portSTACK_TYPE *task_main_stack = NULL;
@@ -91,29 +96,22 @@ TaskHandle_t audio_task_handler;
 OSA_SEMAPHORE_HANDLE_DEFINE(xSemaphoreAudio);
 #endif /* A2DP_SINK */
 
+#ifdef LEAUDIO
+OSA_SEMAPHORE_HANDLE_DEFINE(xSemaphoreLEsinkAudio);
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static void USB_HostApplicationInit(void);
 
-extern void BOARD_InitEnet1GPins(void);    /*fix build warning: function declared implicitly.*/
-
-extern void USB_HostClockInit(void);
-extern void USB_HostIsrEnable(void);
-extern void USB_HostTaskFn(void *param);
-
-extern int appl_main (int argc, char **argv);
+extern int appl_main(int argc, char **argv);
 #ifdef A2DP_SINK
-extern void (* a2dp_snk_cb)(UCHAR *data, UINT16 datalen);
+extern void (*a2dp_snk_cb)(UCHAR *data, UINT16 datalen);
 #endif /* A2DP_SINK */
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-mdio_handle_t mdioHandle = {.ops = &enet_ops};
-phy_handle_t phyHandle   = {.phyAddr = BOARD_ENET0_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &phyksz8081_ops};
-extern mdio_handle_t mdioHandle;
-extern phy_handle_t phyHandle;
 
 /*******************************************************************************
  * Code
@@ -125,13 +123,36 @@ extern phy_handle_t phyHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void get_enet_handles(phy_handle_t *phyHandles, netif_init_fn *enetif)
+static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
 {
-    mdioHandle.resource.csrClock_Hz = CLOCK_GetFreq(kCLOCK_IpgClk);
-    *phyHandles                     = phyHandle;
-    *enetif                         = ethernetif0_init;
+    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
+}
+
+static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
+{
+    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
+}
+
+void get_enetif(netif_init_fn *enetif)
+{
+    *enetif = ethernetif0_init;
     return;
 }
+
+void set_mdio(uint32_t srcClockHz)
+{
+    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
+    ENET_SetSMI(ENET, srcClockHz, false);
+    return;
+}
+
+void get_mdio_resource(mdioRead *rd, mdioWrite *wr)
+{
+    *rd = MDIO_Read;
+    *wr = MDIO_Write;
+    return;
+}
+
 #if (defined(HPS) || defined(IPSPR) ||                                                              \
      defined(PAN)) /* Enet have pin(B0_09) conflict with Sco, so default we will not set Enet pins. \
                     */
@@ -170,8 +191,181 @@ static void BOARD_EnetHardwareInit(void)
 }
 #endif /* HPS | IPSPR | PAN */
 
+#ifdef OOB_WAKEUP
 
-#if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD))
+/*Deep-Sleep C2H GPIO/IRQ Config, RT1060-EVKB J33.1*/
+#define APP_C2H_SLEEP_WAKEUP_GPIO     GPIO1
+#define APP_C2H_SLEEP_WAKEUP_GPIO_PIN (26U)
+#define APP_C2H_GPIO_IRQ_HANDLER      GPIO1_Combined_16_31_IRQHandler
+#define APP_C2H_GPIO_IRQ              GPIO1_Combined_16_31_IRQn
+
+/*Deep-Sleep H2C GPIO/IRQ Config, RT1060-EVKB J16.3*/
+#define APP_H2C_SLEEP_WAKEUP_GPIO     GPIO1
+#define APP_H2C_SLEEP_WAKEUP_GPIO_PIN (11U)
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+static uint32_t g_savedPrimask;
+int sleep_host;
+
+void Configure_H2C_gpio(void)
+{
+    IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_11_GPIO1_IO11, /* GPIO_AD_B0_11 is configured as GPIO1_IO11 */
+                     0U);
+
+    gpio_pin_config_t out_config = {
+        kGPIO_DigitalOutput,
+        0,
+        kGPIO_NoIntmode,
+    };
+
+    GPIO_PinInit(APP_H2C_SLEEP_WAKEUP_GPIO, APP_H2C_SLEEP_WAKEUP_GPIO_PIN, &out_config);
+}
+
+void H2C_wakeup(void)
+{
+    GPIO_PinWrite(APP_H2C_SLEEP_WAKEUP_GPIO, APP_H2C_SLEEP_WAKEUP_GPIO_PIN, 0);
+}
+
+void H2C_sleep(void)
+{
+    GPIO_PinWrite(APP_H2C_SLEEP_WAKEUP_GPIO, APP_H2C_SLEEP_WAKEUP_GPIO_PIN, 1);
+}
+
+static void APP_C2H_GPIO_IRQ_HANDLER(void)
+{
+    if ((1U << APP_C2H_SLEEP_WAKEUP_GPIO_PIN) & GPIO_GetPinsInterruptFlags(APP_C2H_SLEEP_WAKEUP_GPIO))
+    {
+        if (GPIO_PinRead(APP_C2H_SLEEP_WAKEUP_GPIO, APP_C2H_SLEEP_WAKEUP_GPIO_PIN) == 1)
+        {
+            printf("Host can now go to sleep\n");
+            GPIO_PortClearInterruptFlags(APP_C2H_SLEEP_WAKEUP_GPIO, 1U << APP_C2H_SLEEP_WAKEUP_GPIO_PIN);
+            sleep_host = 1;
+        }
+        if (GPIO_PinRead(APP_C2H_SLEEP_WAKEUP_GPIO, APP_C2H_SLEEP_WAKEUP_GPIO_PIN) == 0)
+        {
+            printf("Host is now wakeup\n");
+            GPIO_PortClearInterruptFlags(APP_C2H_SLEEP_WAKEUP_GPIO, 1U << APP_C2H_SLEEP_WAKEUP_GPIO_PIN);
+        }
+    }
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+void Configure_SW7(void)
+{
+    gpio_pin_config_t gpio_config = {
+        .direction = kGPIO_DigitalInput, .outputLogic = 0U, .interruptMode = kGPIO_IntRisingEdge};
+
+    /* Enable the Interrupt */
+    EnableIRQ(BOARD_USER_BUTTON_IRQ);
+
+    GPIO_PinInit(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &gpio_config);
+
+    GPIO_PortEnableInterrupts(BOARD_USER_BUTTON_GPIO, 1U << BOARD_USER_BUTTON_GPIO_PIN);
+}
+
+static void BOARD_USER_BUTTON_IRQ_HANDLER(void)
+{
+    H2C_wakeup();
+
+    /* Disable interrupt. */
+    GPIO_PortClearInterruptFlags(BOARD_USER_BUTTON_GPIO, 1U << BOARD_USER_BUTTON_GPIO_PIN);
+
+    SDK_ISR_EXIT_BARRIER;
+}
+
+void C2H_sleep_gpio_cfg(void)
+{
+    gpio_pin_config_t gpio_config = {
+        .direction = kGPIO_DigitalInput, .outputLogic = 0U, .interruptMode = kGPIO_IntRisingOrFallingEdge};
+
+    IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_10_GPIO1_IO26, 0U);
+
+    GPIO_PinInit(APP_C2H_SLEEP_WAKEUP_GPIO, APP_C2H_SLEEP_WAKEUP_GPIO_PIN, &gpio_config);
+    /*For RB3+/CA2, C2H IRQ disabled due to WSW-27403*/
+    GPIO_ClearPinsInterruptFlags(APP_C2H_SLEEP_WAKEUP_GPIO, 1U << APP_C2H_SLEEP_WAKEUP_GPIO_PIN);
+    GPIO_EnableInterrupts(APP_C2H_SLEEP_WAKEUP_GPIO, 1U << APP_C2H_SLEEP_WAKEUP_GPIO_PIN);
+    /* Enable the Interrupt */
+    EnableIRQ(APP_C2H_GPIO_IRQ);
+}
+
+AT_QUICKACCESS_SECTION_CODE(void LPM_EnterSleepMode(clock_mode_t mode));
+void LPM_EnterSleepMode(clock_mode_t mode)
+{
+    assert(mode != kCLOCK_ModeRun);
+
+    g_savedPrimask = DisableGlobalIRQ();
+    __DSB();
+    __ISB();
+
+    if (mode == kCLOCK_ModeWait)
+    {
+        /* Clear the SLEEPDEEP bit to go into sleep mode (WAIT) */
+        SCB->SCR &= ~SCB_SCR_SLEEPDEEP_Msk;
+    }
+    else
+    {
+        /* Set the SLEEPDEEP bit to enable deep sleep mode (STOP) */
+        SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+    }
+
+    /* WFI instruction will start entry into WAIT/STOP mode */
+    __WFI();
+
+    EnableGlobalIRQ(g_savedPrimask);
+    __DSB();
+    __ISB();
+}
+
+#if 0
+void CpuModeTransition(void)
+{
+    GPC_CM_SetNextCpuMode(GPC_CPU_MODE_CTRL_0, kGPC_WaitMode);
+    GPC_CM_EnableCpuSleepHold(GPC_CPU_MODE_CTRL_0, true);
+
+    GPC_CPU_MODE_CTRL_0->CM_NON_IRQ_WAKEUP_MASK |=
+        GPC_CPU_MODE_CTRL_CM_NON_IRQ_WAKEUP_MASK_EVENT_WAKEUP_MASK_MASK |
+        GPC_CPU_MODE_CTRL_CM_NON_IRQ_WAKEUP_MASK_DEBUG_WAKEUP_MASK_MASK; /* Mask debugger wakeup */
+
+    GPC_CM_RequestStandbyMode(GPC_CPU_MODE_CTRL_0, kGPC_WaitMode);
+    LPM_EnterSleepMode(kCLOCK_ModeWait);
+}
+
+void LPM_EnableWakeupSource(uint32_t irq)
+{
+    GPC_EnableIRQ(GPC, irq);
+}
+
+void LPM_DisableWakeupSource(uint32_t irq)
+{
+    GPC_DisableIRQ(GPC, irq);
+}
+
+void GPC_EnableWakeupSource(uint32_t irq)
+{
+    GPC_EnableIRQ(GPC, irq);
+}
+
+void GPC_DisableWakeupSource(uint32_t irq)
+{
+    GPC_DisableIRQ(GPC, irq);
+}
+#endif
+
+void Host_sleep(void)
+{
+    fflush(stdout);
+    // CpuModeTransition();
+    printf("System host is wakeup from sleep\r\n");
+}
+#endif /*OOB_WAKEUP*/
+
+
+#if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_USD))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -184,6 +378,14 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->instance        = BOARD_BT_UART_INSTANCE;
     config->enableRxRTS     = 1u;
     config->enableTxCTS     = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 4U;
+    config->tx_channel       = 5U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
 #elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
@@ -193,79 +395,47 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     {
         return -1;
     }
-    config->clockSrc        = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance        = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS     = 1u;
-    config->enableTxCTS     = 1u;
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 4U;
+    config->tx_channel       = 5U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
-#elif defined(WIFI_BOARD_IW61x)
+#elif defined(WIFI_IW61x_BOARD_RD_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
     {
         return -1;
     }
-    config->clockSrc        = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance        = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS     = 1u;
-    config->enableTxCTS     = 1u;
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 4U;
+    config->tx_channel       = 5U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
 #else
 #endif
-
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < 1000000; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
-}
-
-void USB_OTG1_IRQHandler(void)
-{
-    USB_HostEhciIsrFunction(g_HostHandle);
-}
-
-void USB_OTG2_IRQHandler(void)
-{
-    USB_HostEhciIsrFunction(g_HostHandle);
-}
-
-void USB_HostClockInit(void)
-{
-    uint32_t usbClockFreq;
-	
-    usb_phy_config_struct_t phyConfig = {
-        BOARD_USB_PHY_D_CAL,
-        BOARD_USB_PHY_TXCAL45DP,
-        BOARD_USB_PHY_TXCAL45DM,
-    };
- 
-#if defined(CPU_MIMXRT1176DVMAA_cm7) 
-    usbClockFreq = 24000000;
-#elif (defined(CPU_MIMXRT1062DVMAA_cm7) || (CPU_MIMXRT1062DVL6A_cm7)) 
-    usbClockFreq = 480000000;
-#endif
-
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M,usbClockFreq);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, usbClockFreq);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, usbClockFreq);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, usbClockFreq);
-    }
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
-}
 
 void USB_HostIsrEnable(void)
 {
@@ -284,146 +454,47 @@ void USB_HostIsrEnable(void)
     EnableIRQ((IRQn_Type)irqNumber);
 }
 
-void USB_HostTaskFn(void *param)
+void USB_HostClockInit(void)
 {
-    USB_HostEhciTaskFunction(param);
-}
+    uint32_t usbClockFreq;
 
-/*!
- * @brief USB isr function.
- */
+    usb_phy_config_struct_t phyConfig = {
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
+    };
 
-#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-extern usb_status_t USB_HostTestEvent(usb_device_handle deviceHandle,
-                                      usb_host_configuration_handle configurationHandle,
-                                      uint32_t eventCode);
-#endif
+    usbClockFreq = 480000000;
 
-static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
-                                  usb_host_configuration_handle configurationHandle,
-                                  uint32_t eventCode)
-{
-#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-    usb_host_configuration_t *configuration;
-    usb_status_t status1;
-    usb_status_t status2;
-    uint8_t interfaceIndex = 0;
-#endif
-    usb_status_t status = kStatus_USB_Success;
-    switch (eventCode & 0x0000FFFFU)
+    if (CONTROLLER_ID == kUSB_ControllerEhci0)
     {
-        case kUSB_HostEventAttach:
-#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-            status1 = USB_HostTestEvent(deviceHandle, configurationHandle, eventCode);
-            status2 = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
-            if ((status1 == kStatus_USB_NotSupported) && (status2 == kStatus_USB_NotSupported))
-            {
-                status = kStatus_USB_NotSupported;
-            }
-#else
-            status = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
-#endif
-            break;
-
-        case kUSB_HostEventNotSupported:
-#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-            configuration = (usb_host_configuration_t *)configurationHandle;
-            for (interfaceIndex = 0; interfaceIndex < configuration->interfaceCount; ++interfaceIndex)
-            {
-                if (((usb_descriptor_interface_t *)configuration->interfaceList[interfaceIndex].interfaceDesc)
-                        ->bInterfaceClass == 9U) /* 9U is hub class code */
-                {
-                    break;
-                }
-            }
-
-            if (interfaceIndex < configuration->interfaceCount)
-            {
-                usb_echo("unsupported hub\r\n");
-            }
-            else
-            {
-                usb_echo("Unsupported Device\r\n");
-            }
-#else
-            usb_echo("Unsupported Device\r\n");
-#endif
-            break;
-
-        case kUSB_HostEventEnumerationDone:
-        	usb_echo("enumeration done\r\n");
-#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-            status1 = USB_HostTestEvent(deviceHandle, configurationHandle, eventCode);
-            status2 = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
-            if ((status1 != kStatus_USB_Success) && (status2 != kStatus_USB_Success))
-            {
-                status = kStatus_USB_Error;
-            }
-#else
-            status = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
-#endif
-            break;
-
-        case kUSB_HostEventDetach:
-#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-            status1 = USB_HostTestEvent(deviceHandle, configurationHandle, eventCode);
-            status2 = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
-            if ((status1 != kStatus_USB_Success) && (status2 != kStatus_USB_Success))
-            {
-                status = kStatus_USB_Error;
-            }
-#else
-            status = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
-#endif
-            break;
-
-        case kUSB_HostEventEnumerationFail:
-            usb_echo("enumeration failed\r\n");
-            break;
-
-        default:
-            break;
+        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, usbClockFreq);
+        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, usbClockFreq);
     }
-    return status;
-}
-
-static void USB_HostApplicationInit(void)
-{
-    usb_status_t status = kStatus_USB_Success;
-
-    USB_HostClockInit();
-
-#if ((defined FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT))
-    SYSMPU_Enable(SYSMPU, 0);
-#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
-
-    status = USB_HostInit(CONTROLLER_ID, &g_HostHandle, USB_HostEvent);
-    if (status != kStatus_USB_Success)
+    else
     {
-        usb_echo("host init error\r\n");
-        return;
+        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, usbClockFreq);
+        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, usbClockFreq);
     }
-    USB_HostIsrEnable();
-
-    usb_echo("host init done\r\n");
+    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
 }
 
-static void USB_HostTask(void *param)
+
+void delay(void)
 {
-    while (1)
+    volatile uint32_t i = 0;
+    for (i = 0; i < 1000000; ++i)
     {
-        USB_HostTaskFn(param);
+        __asm("NOP"); /* delay */
     }
 }
 
-static void USB_HostApplicationTask(void *param)
+__WEAK void APP_InitServices(void)
 {
-    while(1)
-    {
-        USB_HostMsdTask(param);
-    }
+  
 }
 
+#ifndef LEAUDIO
 #ifdef A2DP_SINK
 void AudioTask(void *handle)
 {
@@ -431,14 +502,50 @@ void AudioTask(void *handle)
     while (1U)
     {
         OSA_SemaphoreWait(xSemaphoreAudio, osaWaitForever_c);
-        if(NULL != a2dp_snk_cb)
+        if (NULL != a2dp_snk_cb)
         {
             a2dp_snk_cb(NULL, 0);
         }
-
     }
 }
 #endif /* A2DP_SINK */
+#else
+OSA_MSGQ_HANDLE_DEFINE(lc3_q_handle, 10, 960);
+INT8  dec8_dq_buffer[960];
+void AudioTask(void *handle)
+{
+	int ret, qavailablecnt=0;
+	sai_transfer_t xfer = {0};
+
+	xfer.dataSize = 960;
+
+	OSA_SemaphoreCreate(xSemaphoreAudio, 0);
+	OSA_SemaphorePost(xSemaphoreAudio);
+
+	OSA_SemaphoreCreate(xSemaphoreLEsinkAudio, 0);
+	while (1U)
+	{
+			OSA_SemaphoreWait(xSemaphoreLEsinkAudio, osaWaitForever_c);
+
+			OSA_SemaphoreWait(xSemaphoreAudio, osaWaitForever_c);
+			memset(dec8_dq_buffer, 0, 960);
+			if ((qavailablecnt=OSA_MsgQAvailableMsgs((osa_msgq_handle_t)lc3_q_handle)) != 0)
+			{
+				ret = OSA_MsgQGet((osa_msgq_handle_t)lc3_q_handle, dec8_dq_buffer, 0);
+				if(KOSA_StatusSuccess != ret)
+				{
+					printf("OSA_MsgQGet ret %d\r\n",ret);
+				}
+
+				//printf("qavailablecnt %d\r\n",qavailablecnt);
+			}
+
+			xfer.data = dec8_dq_buffer;
+			lc3_sendto_saiedma(&xfer);
+			OSA_SemaphorePost(xSemaphoreLEsinkAudio);
+	}
+}
+#endif
 
 static void printSeparator(void)
 {
@@ -451,42 +558,75 @@ void task_main(void *param)
     (void)result;
 
     printSeparator();
-#if defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
-    PRINTF("     Initialize 1XK_USD_Murata Driver\r\n");
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#if defined(WIFI_IW416_BOARD_AW_AM457_USD)
     PRINTF("     Initialize AW-AM457-uSD Driver\r\n");
-#elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
-    PRINTF("     Initialize 1ZM_USD_Murata Driver\r\n");
 #elif defined(WIFI_88W8987_BOARD_AW_CM358_USD)
     PRINTF("     Initialize AW-CM358-uSD Driver\r\n");
-#elif defined(IW61x)
+#elif defined(WIFI_IW61x_BOARD_RD_USD)
     PRINTF("     Initialize Firecrest Driver\r\n");
+#elif defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
+    PRINTF("     Initialize 1XK_USD_Murata Driver\r\n");
+#elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
+    PRINTF("     Initialize 1ZM_USD_Murata Driver\r\n");
+    #elif defined(WIFI_IW61x_BOARD_MURATA_2EL_USD)
+    PRINTF("     Initialize Firecrest-2EL USD Module\r\n");
+#elif defined(WIFI_IW61x_BOARD_MURATA_2EL_M2)
+    PRINTF("     Initialize Firecrest-2EL M2 Module\r\n");
 #endif
     printSeparator();
 
+#ifdef DOWNLOAD_BT_FW
+    controller_init_uart();
+#else
+#ifndef BT_THIRDPARTY_SUPPORT
     controller_init();
+#endif
+#endif
 
-    /* Initialize USB for FS and create tasks */
-    USB_HostApplicationInit();
-    if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), g_HostHandle, BT_TASK_PRIORITY - 2, NULL) != pdPASS)
-    {
-        usb_echo("create host task error\r\n");
-    }
-    if (xTaskCreate(USB_HostApplicationTask, "app task", 2300L / sizeof(portSTACK_TYPE), &g_MsdFatfsInstance, BT_TASK_PRIORITY - 5,
-                    NULL) != pdPASS)
-    {
-        usb_echo("create mouse task error\r\n");
-    }
+#if defined(PCAL6408A_IO_EXP_ENABLE) && defined(WIFI_IW61x_BOARD_MURATA_2EL_M2)
+    pcal6408a_pins_cfg_t config;
+    status_t ret = PCAL6408A_Init(&config);
+    printf ("init i2c master, configure io expander, %d\n", ret);
+    printf ("#### IO Expander Reg Values ####\nIO-Configured:%x\nInput-Port:%x\nOutput-Port:%x\nOP-Port-Config:%x\nPolarity:%x\nPullupSelected:%x\nPullUp-Enabled:%x\nOP-Drive-Strength1:%x\nOP-Drive-Strength2:%x\n################\n",
+															config.configured, \
+															config.input_port_value, \
+	 														config.output_port_value, \
+															config.output_port_config, \
+															config.polarity, \
+															config.pull_ups_selected, \
+															config.pulls_enabled, \
+															config.ouput_drive_strength1, \
+															config.ouput_drive_strength2);
+#endif /*defined(PCAL6408A_IO_EXP_ENABLE) && defined(WIFI_IW61x_BOARD_MURATA_2EL_M2)*/
+
+#ifdef OOB_WAKEUP
+    extern void Configure_H2C_gpio(void);
+    extern void C2H_sleep_gpio_cfg(void);
+    extern void Configure_SW7(void);
+
+    Configure_H2C_gpio();
+    C2H_sleep_gpio_cfg();
+    Configure_SW7();
+#endif /*OOB_WAKEUP*/
+
+    extern int USB_HostMsdFatfsInit(void);
+
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
+    (void)USB_HostMsdFatfsInit();
+#endif
 
     /* wait for interface up */
     os_thread_sleep(os_msec_to_ticks(3000));
-
-    appl_main(0 , NULL);
-
+    appl_main(0, NULL);
     while (1)
     {
         os_thread_sleep(os_msec_to_ticks(1000));
     }
+}
+
+void stackOverflowHookHandler(void* task_name)
+{
+	printf("stack-overflow exception from task: %s\r\n",(char*)task_name);
 }
 
 /*******************************************************************************
@@ -498,7 +638,7 @@ int main(void)
     BaseType_t result = 0;
     (void)result;
 
-    extern void BOARD_InitHardware(void);    /*fix build warning: function declared implicitly.*/
+    extern void BOARD_InitHardware(void); /*fix build warning: function declared implicitly.*/
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
@@ -513,29 +653,52 @@ int main(void)
                     */
     BOARD_EnetHardwareInit();
 #endif /* HPS | IPSPR | PAN */
-#ifdef OOB_WAKEUP
-    Configure_H2C_gpio();
-    C2H_sleep_gpio_cfg();
-#endif
 
 #ifdef OOB_WAKEUP
     Configure_H2C_gpio();
     C2H_sleep_gpio_cfg();
 #endif
 
+    /*Initialize global EDMA and DMA-MUX for LPUART/SAI interfaces*/
+    edma_config_t dmaConfig = {0};
+    EDMA_GetDefaultConfig(&dmaConfig);
+    EDMA_Init(DMA0, &dmaConfig);
+    DMAMUX_Init(DMAMUX);
+    APP_InitServices();
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+    /* Stay in WFI only when idle for now to keep CLI working */
+    PWR_SetLowPowerModeConstraint(PWR_WFI);
+#endif
+
+#ifndef LC3_TEST
     printSeparator();
     PRINTF("       EtherMind Menu Application\r\n");
     printSeparator();
+#else /* LC3_TEST */
+    printSeparator();
+    PRINTF("       EtherMind LC3 Test\r\n");
+    printSeparator();
+#endif /* LC3_TEST */
+
+#ifdef LEAUDIO
+    result = OSA_MsgQCreate((osa_msgq_handle_t)lc3_q_handle, 30, 480<<1);
+    if (KOSA_StatusError == result)
+    {
+    	printf("q create err\r\n");
+    }
+#endif
 
     result =
         xTaskCreate(task_main, "main", TASK_MAIN_STACK_SIZE, task_main_stack, TASK_MAIN_PRIO, &task_main_task_handler);
     assert(pdPASS == result);
 
 #ifdef A2DP_SINK
-    result =
-        xTaskCreate(AudioTask, "audio", TASK_MAIN_STACK_SIZE, NULL, BT_TASK_PRIORITY, &audio_task_handler);
+    result = xTaskCreate(AudioTask, "audio", TASK_MAIN_STACK_SIZE, NULL, BT_TASK_PRIORITY, &audio_task_handler);
     assert(pdPASS == result);
 #endif
+
+    EM_register_sof_handler(stackOverflowHookHandler);
 
     vTaskStartScheduler();
     for (;;)
@@ -543,6 +706,60 @@ int main(void)
         ;
     }
 }
+
+#if defined(RW610_SERIES) || defined(RW612_SERIES)
+void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
+{
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+    eSleepModeStatus eSleepStatus;
+    TickType_t xIdleTime_tick;
+    uint64_t expectedIdleTimeUs, actualIdleTimeUs;
+
+    uint32_t irqMask = DisableGlobalIRQ();
+
+    /* Disable Systicks for tickless mode */
+    SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
+
+    /* Make sure it's still ok to enter low power mode */
+    eSleepStatus = eTaskConfirmSleepModeStatus();
+
+    if (eSleepStatus != eAbortSleep)
+    {
+        if (eSleepStatus == eNoTasksWaitingTimeout)
+        {
+            /* if no tasks are waiting a timeout we set expectedIdleTimeUs,
+             * PWR_EnterLowPowerWithTimeout() will just call PWR_EnterLowPower()
+             */
+            expectedIdleTimeUs = 0;
+        }
+        else
+        {
+            assert(eSleepStatus == eStandardSleep);
+
+            /* Convert the expected idle time in us for the PWR function, the
+             * sleep mode will not last any longer than this expected idle time
+             */
+            expectedIdleTimeUs = xExpectedIdleTime * (portTICK_PERIOD_MS * 1000);
+        }
+
+        /* Enter low power with timeout */
+        actualIdleTimeUs = PWR_EnterLowPower(expectedIdleTimeUs);
+
+        xIdleTime_tick = (TickType_t)(actualIdleTimeUs / (portTICK_PERIOD_MS * 1000));
+
+        /* Update the OS time ticks. */
+        vTaskStepTick(xIdleTime_tick);
+    }
+
+    /* Re-enable Systicks before releasing interrupts in case an interrupt fires
+     * directly, otherwise we could loose some precision */
+    SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
+
+    /* Exit from critical section */
+    EnableGlobalIRQ(irqMask);
+#endif /* APP_LOWPOWER_ENABLED */
+}
+#endif /* RW610_SERIES || defined(RW612_SERIES) */
 
 #ifndef __GNUC__
 void __assert_func(const char *file, int line, const char *func, const char *failedExpr)

@@ -41,7 +41,8 @@
 void hfp_ag_init_pl
      (
          void (* read_cb)(UCHAR *rsp, UINT16 rsplen),
-         void (* call_cb)(UCHAR status)
+         void (* call_cb)(UCHAR status),
+         UCHAR(* inbandring_status_cb)(void)
      );
 void hfp_ag_start_pl (UINT16 sf);
 void hfp_ag_stop_pl(void);

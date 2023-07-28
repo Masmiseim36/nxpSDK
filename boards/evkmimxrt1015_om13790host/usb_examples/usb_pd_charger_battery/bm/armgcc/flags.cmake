@@ -38,6 +38,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DFSL_OSA_BM_TIMER_CONFIG=0 \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -65,6 +66,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DFSL_OSA_BM_TIMER_CONFIG=0 \
     -DI2C_RETRY_TIMES=40000 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \

@@ -59,7 +59,7 @@
 #define LITTLEFS_LOOKAHEAD_SIZE 16
 #endif
 
-#if (!(defined(__CC_ARM) || defined(__UVISION_VERSION)))
+#if (!(defined(__CC_ARM) || defined(__ARMCC_VERSION)))
 /*
  * Name: EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS
  * Description: EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS from linker command file is used by this code

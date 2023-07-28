@@ -101,7 +101,7 @@ UINT  _ux_hcd_ehci_isochronous_endpoint_destroy(UX_HCD_EHCI *hcd_ehci, UX_ENDPOI
     return(UX_FUNCTION_NOT_SUPPORTED);
 #else
 
-UX_EHCI_HSISO_ED                *ed;
+UX_EHCI_HSISO_ED                *ed = NULL;
 UX_EHCI_PERIODIC_LINK_POINTER   ed_td;
 UX_EHCI_PERIODIC_LINK_POINTER   lp;
 ULONG                           max_packet_size;

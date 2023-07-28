@@ -48,8 +48,7 @@ typedef struct _deep_view_rt_model_param
 } deep_view_rt_model_param_t;
 
 /* Initialize the dev for DVRT */
-static hal_valgo_status_t hal_vision_algo_dev_dvrt_init(vision_algo_dev_t *dev, valgo_dev_callback_t callback,
-                                                              model_param_t *param)
+static hal_valgo_status_t hal_vision_algo_dev_dvrt_init(vision_algo_dev_t *dev, model_param_t *param)
 {
     hal_valgo_status_t ret = kStatus_HAL_ValgoSuccess;
     deep_view_rt_model_param_t *deep_view_rt_model_param;
@@ -58,7 +57,6 @@ static hal_valgo_status_t hal_vision_algo_dev_dvrt_init(vision_algo_dev_t *dev, 
 
     // init the device
     memset(&dev->cap, 0, sizeof(dev->cap));
-    dev->cap.callback = callback;
     dev->priv_data = MPP_MALLOC(sizeof(deep_view_rt_model_param_t));
     if(dev->priv_data == NULL) {
             HAL_LOGE("ERROR: DVRT: NULL pointer to vision algo device private data\n");

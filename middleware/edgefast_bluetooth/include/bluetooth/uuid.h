@@ -2202,7 +2202,80 @@ struct bt_uuid_128 {
  *  @brief Active Preset Index Characteristic
  */
 #define BT_UUID_HAS_ACTIVE_PRESET_INDEX \
-	BT_UUID_DECLARE_16(BT_UUID_HAS_ACTIVE_PRESET_INDEX_VAL)
+	BT_UUID_DECLARE_16(BT_UUID_HAS_ACTIVE_PRESET_INDEX_VAL) 
+/**
+ *  @brief Reference Time Update UUID value
+ */
+#define BT_UUID_RTUS_VAL 0x1806
+/**
+ *  @brief Reference Time Update Service
+ */
+#define BT_UUID_RTUS \
+	BT_UUID_DECLARE_16(BT_UUID_RTUS_VAL)
+/**
+ *  @brief Current Time Service UUID value
+ */
+#define BT_UUID_CTS_VAL 0x1805
+/**
+ *  @brief Current Time Service
+ */
+#define BT_UUID_CTS \
+	BT_UUID_DECLARE_16(BT_UUID_CTS_VAL)
+/**
+ *  @brief RTUS Characteristic Time Update State UUID value
+ */
+#define BT_UUID_RTUS_TIME_UPDATE_STATE_VAL 0x2a17
+/**
+ *  @brief RTUS Characteristic Time Update State
+ */
+#define BT_UUID_RTUS_TIME_UPDATE_STATE \
+	BT_UUID_DECLARE_16(BT_UUID_RTUS_TIME_UPDATE_STATE_VAL)
+/**
+ *  @brief RTUS Characteristic Time Update COntrol Point UUID value
+ */
+#define BT_UUID_RTUS_CONTROL_POINT_VAL 0x2a16
+/**
+ *  @brief RTUS Characteristic Time Update COntrol Point
+ */
+#define BT_UUID_RTUS_CONTROL_POINT \
+	BT_UUID_DECLARE_16(BT_UUID_RTUS_CONTROL_POINT_VAL)
+/**
+ *  @brief CTS Characteristic Local Time Information UUID value
+ */
+#define BT_UUID_CTS_LOCAL_TIME_INFORMATION_VAL 0x2A0F
+/**
+ *  @brief CTS Characteristic Local Time Information
+ */
+#define BT_UUID_CTS_LOCAL_TIME_INFORMATION \
+	BT_UUID_DECLARE_16(BT_UUID_CTS_LOCAL_TIME_INFORMATION_VAL)
+/**
+ *  @brief CTS Characteristic Reference Time Information UUID value
+ */
+#define BT_UUID_CTS_REFERENCE_TIME_INFORMATION_VAL 0x2A14
+/**
+ *  @brief CTS Characteristic Reference Time Information
+ */
+#define BT_UUID_CTS_REFERENCE_TIME_INFORMATION \
+	BT_UUID_DECLARE_16(BT_UUID_CTS_REFERENCE_TIME_INFORMATION_VAL)
+/**
+ *  @brief Next DST Change UUID value
+ */
+#define BT_UUID_NDTS_VAL 0x1807
+/**
+ *  @brief Next DST Change
+ */
+#define BT_UUID_NDTS \
+	BT_UUID_DECLARE_16(BT_UUID_NDTS_VAL)
+/**
+ *  @brief NDTS Time with DST UUID value
+ */
+#define BT_UUID_NDTS_TIME_WITH_DTS_VAL 0x2A11
+/**
+ *  @brief Time with DST
+ */
+#define BT_UUID_NDTS_TIME_WITH_DTS \
+	BT_UUID_DECLARE_16(BT_UUID_NDTS_TIME_WITH_DTS_VAL)
+
 /*
  * Protocol UUIDs
  */

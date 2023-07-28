@@ -54,6 +54,9 @@ struct _ElementMemSrc
     uint32_t read_position; /*!< @brief Last read offset */
     uint32_t size;          /*!< @brief Overall size */
     uint8_t mem_type;       /*!< @brief Memory type */
+    uint32_t sample_rate;   /*!< @brief Sample rate */
+    uint8_t num_channels;   /*!< @brief Number of channels */
+    uint8_t bit_width;      /*!< @brief Bit width */
 };
 typedef struct _ElementMemSrc ElementMemSrc;
 

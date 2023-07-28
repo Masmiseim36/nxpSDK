@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP.
+ * Copyright 2018-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -33,9 +33,13 @@
 #endif
 #endif
 
+#ifdef STREAMER_ENABLE_NETBUFSRC
 #include "netbuf_src.h"
+#endif
 
+#ifdef STREAMER_ENABLE_DECODER
 #include "decoder.h"
+#endif
 
 #ifdef STREAMER_ENABLE_FILE_SINK
 #include "file_sink.h"
@@ -81,8 +85,12 @@ static const ElementInit element_list[] = {
     {0, NULL},
 #endif
 
+#ifdef STREAMER_ENABLE_NETBUFSRC
     /*! TYPE_ELEMENT_NETBUF_SRC */
     {sizeof(ElementNetbufSrc), netbufsrc_init},
+#else
+	{0, NULL},
+#endif
 
     /*! TYPE_ELEMENT_AUDIO_SRC */
     {sizeof(ElementAudioSrc), audiosrc_init},
@@ -105,8 +113,13 @@ static const ElementInit element_list[] = {
     /*! TYPE_ELEMENT_AUDIO_SINK */
     {sizeof(ElementAudioSink), audiosink_init_element},
 
+#ifdef STREAMER_ENABLE_DECODER
     /*! TYPE_ELEMENT_DECODER */
     {sizeof(ElementDecoder), decoder_init_element},
+#else
+    {0, NULL},
+#endif
+
 
 #ifdef STREAMER_ENABLE_ENCODER
     /*! TYPE_ELEMENT_ENCODER */

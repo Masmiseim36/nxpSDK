@@ -1,12 +1,11 @@
 var a00267 =
 [
-    [ "FSL_DMAMUX_DRIVER_VERSION", "a00267.html#ga52b927e4f978ddf42faf0acf6de3df57", null ],
-    [ "DMAMUX_Init", "a00267.html#ga850545ac61a004df8ca312db2ca9db73", null ],
-    [ "DMAMUX_Deinit", "a00267.html#gab663257d094b9b7b6fa1b894fbf8000b", null ],
-    [ "DMAMUX_EnableChannel", "a00267.html#gaecac68802d961c31a06389caa97387f5", null ],
-    [ "DMAMUX_DisableChannel", "a00267.html#ga4d68cf7796e4a6a9cd0c4289712ca120", null ],
-    [ "DMAMUX_SetSource", "a00267.html#ga97083a74f4af599de628cdd8864d6676", null ],
-    [ "DMAMUX_EnablePeriodTrigger", "a00267.html#ga9b873510e45bcc998b5cede12ed359d0", null ],
-    [ "DMAMUX_DisablePeriodTrigger", "a00267.html#ga7a632ca1a6bd05a936a4f4ba1295e158", null ],
-    [ "DMAMUX_EnableAlwaysOn", "a00267.html#ga70912895b0619dcfb911663501cb03f5", null ]
+    [ "FSL_IOMUXC_DRIVER_VERSION", "a00267.html#gaa82996f29b9fa7947fdc478b7a874757", null ],
+    [ "IOMUXC_SetPinMux", "a00267.html#gaff65bf655b0d541b868b4a9d15415ce8", null ],
+    [ "IOMUXC_SetPinConfig", "a00267.html#gab7a6f9e42bd00d9e80457b53712748de", null ],
+    [ "IOMUXC_EnableMode", "a00267.html#gaeba2c5aab7783f6458d02bd78ffc8cf9", null ],
+    [ "IOMUXC_SetSaiMClkClockSource", "a00267.html#ga540a7b7a45e2c47b277acc52b6fe045b", null ],
+    [ "IOMUXC_MQSEnterSoftwareReset", "a00267.html#gab11fd4c56268fce42153f1a9b310f6a5", null ],
+    [ "IOMUXC_MQSEnable", "a00267.html#ga252dddec1e615b8efc9a1771e5de0f3c", null ],
+    [ "IOMUXC_MQSConfig", "a00267.html#gafab34e7bfa5e484026e28addd0daa418", null ]
 ];

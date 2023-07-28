@@ -10,8 +10,8 @@
  */
 
 /* ------------------------------- Header File Inclusion */
-#include "appl_cpms.h"
-#include "appl_cpms_mops.h"
+#include "appl_service.h"
+#include "appl_service_mops.h"
 
 #if (defined ATT && defined CPMS)
 #ifdef APPL_MENU_OPS
@@ -28,6 +28,7 @@ static const char cpms_options[] = "\n\
     1.  Refresh\n\
 \n\
    10.  Make CPM server set in incorrect position for offset compensation\n\
+   11.  Register L2cap callback\n\
 \n\
    Your Option ?\0";
 
@@ -35,6 +36,7 @@ static const char cpms_options[] = "\n\
 void appl_cpms_menu_handler(void)
 {
     int choice;
+    API_RESULT retval;
 
     BT_LOOP_FOREVER()
     {
@@ -44,17 +46,22 @@ void appl_cpms_menu_handler(void)
 
         switch (choice)
         {
-        case 0:
+        case 0U:
             CONSOLE_OUT("\nExiting BlueLitE Menu Based Application ...\n\n");
             return;
 
-        case 1:
+        case 1U:
             CONSOLE_OUT("\nRefreshing ...\n\n");
             break;
 
-        case 10:
+        case 10U:
             CONSOLE_OUT("\nSetting CPM server in an incorrect position for offset compensation... \n");
             incorrect_calbn_position = BT_TRUE;
+            break;
+
+        case 11U:
+            /** Register L2CAP */
+            retval = BT_l2cap_register_le_event_cb(appl_cpms_l2cap_callback);
             break;
 
         default:

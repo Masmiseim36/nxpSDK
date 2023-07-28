@@ -59,6 +59,10 @@ extern struct net_buf_pool _net_buf_pool_list[];
 
 struct net_buf_pool *net_buf_pool_get(int id)
 {
+#if defined(__ICCARM__)
+	(void)_net_buf_pool_list_end;
+#endif /* __ICCARM__ */
+
 	return &_net_buf_pool_list[id];
 }
 
@@ -253,7 +257,7 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 #endif
 {
 	uint32_t alloc_start = OSA_TimeGetMsec();
-	struct net_buf *buf;
+	struct net_buf *buf = NULL;
 	unsigned int key;
 	osa_status_t ret;
 
@@ -436,7 +440,8 @@ struct net_buf *net_buf_get_debug(osa_msgq_handle_t fifo, k_timeout_t timeout,
 struct net_buf *net_buf_get(osa_msgq_handle_t fifo, k_timeout_t timeout)
 #endif
 {
-	struct net_buf *buf, *frag;
+	struct net_buf *buf = NULL;
+	struct net_buf *frag = NULL;
 	osa_status_t ret;
 
 	NET_BUF_DBG("%s():%d: fifo %p timeout %d", func, line, fifo, timeout);

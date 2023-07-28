@@ -118,7 +118,7 @@ API_RESULT hid_appl_set_request
            );
 
 API_RESULT hid_appl_get_event(
-                                 /* IN */ UCHAR enent_info,
+                                 /* IN */ UCHAR event_info,
                                  /* IN */ UCHAR *event_data,
                                  /* IN */ UINT16 *event_data_len
                              );

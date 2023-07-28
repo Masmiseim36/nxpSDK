@@ -20,9 +20,9 @@ In order create your own GUI application powered by the latest version of
 Embedded Wizard that is suitable for the i.MX RT1060 Evaluation Kit, please
 visit https://doc.embedded-wizard.de/getting-started-mimxrt1060-evk
 
-For this example a simulation of the user interface is also available. 
-It can be used under following link 
-http://www.embedded-wizard.de/NXP-SDK-Examples/IMXRT1060-EVK/SmartThermostat/Simulation/ 
+For this example a simulation of the user interface is also available.
+It can be used under following link
+http://www.embedded-wizard.de/NXP-SDK-Examples/IMXRT1060-EVK/SmartThermostat/Simulation/
 with any web browser. The simulation uses the JS/WebGL Embedded Wizard Platform Package.
 For further information about Embedded Wizard, please visit our web site at
 https://www.embedded-wizard.de/platforms/nxp/imx-rt
@@ -30,10 +30,10 @@ https://www.embedded-wizard.de/platforms/nxp/imx-rt
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- GCC ARM Embedded  10.3.1
-- Keil MDK  5.37
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- GCC ARM Embedded  12.2
+- Keil MDK  5.38.1
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
@@ -103,3 +103,9 @@ Glyph cache size                             256 x 256
 Max issue tasks                              100
 Surface rotation                             0
 ---------------------------------------------
+
+Known issues
+
+1. The display of the demo is incorrect. Instead of the smart thermostat it displays the pulse oxymeter.
+   There is a possible workaround - to replace the GeneratedCode folder from another board with this demo (i.e. IMXRT1060-EVK).
+   This issue will be fixed in SDK 2.14.0 Major

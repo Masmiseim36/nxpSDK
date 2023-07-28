@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -57,11 +65,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../sample_azure_iot.c"
+"${ProjDirPath}/../nx_azure_iot_cert.c"
+"${ProjDirPath}/../nx_azure_iot_cert.h"
 "${ProjDirPath}/../get_seed.c"
 "${ProjDirPath}/../tx_user.h"
-"${ProjDirPath}/../nx_driver_imxrt_irq.c"
-"${ProjDirPath}/../nx_driver_imxrt.c"
-"${ProjDirPath}/../nx_driver_imxrt.h"
 "${ProjDirPath}/../nx_user.h"
 "${ProjDirPath}/../fx_user.h"
 "${ProjDirPath}/../board.c"
@@ -72,88 +79,18 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/rtos/azure-rtos
-    ${SdkRootDirPath}/devices/MIMXRT1064/drivers
-    ${SdkRootDirPath}/components/phy/device/phyksz8081
-    ${SdkRootDirPath}/devices/MIMXRT1064
-    ${SdkRootDirPath}/devices/MIMXRT1064/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1064/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1064/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/components/phy
-)
 
-# include modules
-include(middleware_azure_rtos_nxd_MIMXRT1064)
+include(${SdkRootDirPath}/devices/MIMXRT1064/all_lib_device.cmake)
 
-include(driver_enet_MIMXRT1064)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ${SdkRootDirPath}/rtos/azure-rtos/build/libnetxduo)
 
-include(driver_phy-device-ksz8081_MIMXRT1064)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ${SdkRootDirPath}/rtos/azure-rtos/build/libfilex)
 
-include(driver_trng_MIMXRT1064)
-
-include(driver_clock_MIMXRT1064)
-
-include(driver_common_MIMXRT1064)
-
-include(device_MIMXRT1064_CMSIS_MIMXRT1064)
-
-include(utility_debug_console_MIMXRT1064)
-
-include(component_lpuart_adapter_MIMXRT1064)
-
-include(component_serial_manager_MIMXRT1064)
-
-include(component_lists_MIMXRT1064)
-
-include(component_serial_manager_uart_MIMXRT1064)
-
-include(driver_lpuart_MIMXRT1064)
-
-include(device_MIMXRT1064_startup_MIMXRT1064)
-
-include(driver_iomuxc_MIMXRT1064)
-
-include(utility_assert_MIMXRT1064)
-
-include(driver_igpio_MIMXRT1064)
-
-include(driver_xip_device_MIMXRT1064)
-
-include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
-
-include(middleware_azure_rtos_nxd_template_MIMXRT1064)
-
-include(middleware_azure_rtos_fx_MIMXRT1064)
-
-include(middleware_azure_rtos_fx_template_MIMXRT1064)
-
-include(middleware_azure_rtos_tx_MIMXRT1064)
-
-include(middleware_azure_rtos_tx_template_MIMXRT1064)
-
-include(CMSIS_Include_core_cm_MIMXRT1064)
-
-include(driver_phy-common_MIMXRT1064)
-
-include(utilities_misc_utilities_MIMXRT1064)
-
-include(device_MIMXRT1064_system_MIMXRT1064)
-
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ./CMakeFiles/libnetxduo)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ./CMakeFiles/libfilex)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ${SdkRootDirPath}/rtos/azure-rtos/build/libthreadx)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -169,4 +106,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

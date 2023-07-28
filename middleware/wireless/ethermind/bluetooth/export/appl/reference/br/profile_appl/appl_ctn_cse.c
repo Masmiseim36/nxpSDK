@@ -34,6 +34,11 @@ static BT_fops_file_handle  ctn_tx_fp;
 static BT_fops_file_handle ctn_rx_fp;
 static UINT16 actual;
 static UCHAR  ctn_push_started;
+
+/**
+ * Flag to enable sending a large file for Get Request
+ * This is required to pass PTS testcase: CTN/CSE/GOEP/SRMP/BI-02-C.
+ */
 static UCHAR  appl_send_large_file_flag = 0U;
 
 /* File indices */
@@ -48,7 +53,7 @@ static UINT16 ctn_ns_xchg_size;
 static UCHAR srmp_wait_count;
 
 /* TODO: Update this later, by adjusting the sizes at the applicaion */
-UINT16 acount_info_max_xchng_size = 0U;
+static UINT16 acount_info_max_xchng_size = 0U;
 
 static BT_fops_file_handle fp = NULL;
 static UINT16   sent = 0U;
@@ -62,7 +67,7 @@ static UCHAR    appl_ctn_cse_put_obj_name[MAX_CTN_OBJECT_NAME_LEN];
 static UCHAR    appl_ctn_cse_event_obj_name[MAX_CTN_OBJECT_NAME_LEN];
 static UCHAR    appl_ctn_cse_event_type[40U];
 static UCHAR    appl_ctn_cse_event_handle[40U];
-static UCHAR    appl_ctn_cse_event_cal_type[16U];
+static UCHAR    appl_ctn_cse_event_cal_type[MAX_CTN_ATTR_CAL_TYPE_LEN];
 
 /* Contains information for CTN listing response */
 static CTN_OBJ_LISTING_INFO listing_obj_info;
@@ -115,7 +120,7 @@ static const UCHAR ctn_cse_menu[] =
 \n \
 \t50. List Directory \n\
 \n \
-\t60. Send large file \n \
+\t60. Set to send large file for the Get request.\n \
 \t61. Add a new calender file to the respository\n \
 \n \
 Your Choice: ";
@@ -231,6 +236,12 @@ void main_ctn_cse_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
+                if (CTN_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
                 if (val == 1U)
                 {
                     phandle = &cas_instance[handle].instance.handle;
@@ -297,7 +308,7 @@ void main_ctn_cse_operations (void)
                 ctn_app_instance = (UCHAR)choice;
 
                 LOG_DEBUG ("Enter peer device address: ");
-                appl_get_bd_addr (bd_addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
                 cns_instance[ctn_app_instance].ctn_sdp_record.ctn_len_attrib_data
                                                       = CTN_SDP_RECORD_DATA_SIZE;
@@ -309,9 +320,10 @@ void main_ctn_cse_operations (void)
                     appl_ctn_cse_cns_sdp_callback
                 );
 
-                retval = BT_sdp_open(
-                    &cns_instance[ctn_app_instance].ctn_sdp_record.ctn_sdp_handle
-                    );
+                retval = BT_sdp_open
+                         (
+                             &cns_instance[ctn_app_instance].ctn_sdp_record.ctn_sdp_handle
+                         );
 
                 if ( retval != API_SUCCESS )
                 {
@@ -334,10 +346,18 @@ void main_ctn_cse_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Closing on CTN CSE Instance %d\n", handle);
+                if (CTN_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Closing on CTN CSE Instance %d\n", handle);
                 retval = BT_ctn_cse_transport_close
-                    (&cas_instance[handle].instance.handle);
-                LOG_DEBUG ("Retval - 0x%04X\n", retval);
+                         (
+                             &cas_instance[handle].instance.handle
+                         );
+                printf ("Retval - 0x%04X\n", retval);
                 break;
 
 #ifdef CTN_SUPPORT_NOTIFICATION
@@ -346,6 +366,12 @@ void main_ctn_cse_operations (void)
 
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
+
+                if (CTN_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
 
 #if 0
                 /* bd addrs */
@@ -356,7 +382,7 @@ void main_ctn_cse_operations (void)
                 connect_info.max_recv_size = 512;
 #else
                 LOG_DEBUG ("Enter peer device address: ");
-                appl_get_bd_addr (bd_addr);
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr (bd_addr);
 
                 /* bd addrs */
                 connect_info.bd_addr = bd_addr;
@@ -387,7 +413,13 @@ void main_ctn_cse_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Disconnecting on CTN CSE Instance %d\n", handle);
+                if (CTN_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Disconnecting on CTN CSE Instance %d\n", handle);
                 retval = BT_ctn_cse_ns_disconnect (&cns_instance[handle].handle);
                 LOG_DEBUG ("Retval - 0x%04X\n", retval);
                 break;
@@ -398,7 +430,13 @@ void main_ctn_cse_operations (void)
                 LOG_DEBUG ("Select Application Instance: ");
                 scanf ("%d", &handle);
 
-                LOG_DEBUG ("Closing on CTN CSE Instance %d\n", handle);
+                if (CTN_SERVER_NUM_INSTANCES <= handle)
+                {
+                    printf ("Invalid Application Instance\n");
+                    break;
+                }
+
+                printf ("Closing on CTN CSE Instance %d\n", handle);
                 retval = BT_ctn_cse_ns_transport_close (&cns_instance[handle].handle);
                 LOG_DEBUG ("Retval - 0x%04X\n", retval);
                 break;
@@ -406,8 +444,15 @@ void main_ctn_cse_operations (void)
             case 25: /* Send event */
                 ctn_cse_print_appl_instances();
 
-                LOG_DEBUG ("Select Application Instance: ");
-                scanf ("%d", &handle);
+                /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+                handle = 0;
+
+                printf ("Select Application Instance: ");
+                retval = appl_validate_params(&handle,1U,0U,CTN_SERVER_NUM_INSTANCES - 1U);
+                if (API_SUCCESS != retval)
+                {
+                    break;
+                }
 
                 CTN_RESET_APPL_PARAM_FLAG(appl_param.appl_param_flag);
 
@@ -426,12 +471,17 @@ void main_ctn_cse_operations (void)
                 );
 
                 BT_str_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE);
-
-                LOG_DEBUG ("Enter event type: ");
+                BT_mem_set(appl_ctn_cse_event_handle, 0, sizeof(appl_ctn_cse_event_handle));
+                printf ("Enter event type: ");
                 scanf ("%s", appl_ctn_cse_event_type);
                 LOG_DEBUG ("Enter event handle : ");
                 scanf ("%s", appl_ctn_cse_event_handle);
-                LOG_DEBUG ("Enter cal_type: ");
+                retval = appl_validate_strparams(appl_ctn_cse_event_handle,40U);
+                if (API_SUCCESS != retval)
+                {
+                    break;
+                }
+                printf ("Enter cal_type: ");
                 scanf ("%s", appl_ctn_cse_event_cal_type);
 
                 /* Build Event file */
@@ -514,6 +564,14 @@ void main_ctn_cse_operations (void)
                 sent += actual;
                 remaining = fsize - sent;
 
+                /* Adjust the file read pointer to the actual bytes transmitted */
+                if (body_req.length != actual)
+                {
+                    printf("read length = %d, actual sent = %d\n", body_req.length, actual);
+                    printf("Adjusting the file read pointer\n");
+                    (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+                }
+
                 /* If operation has failed or completed, perform cleanup */
                 if ((API_SUCCESS != retval) || (0U == remaining))
                 {
@@ -537,7 +595,7 @@ void main_ctn_cse_operations (void)
             case 50:
                 LOG_DEBUG("Enter the path: ");
                 scanf("%s", path);
-                EM_fops_list_directory(path);
+                (void)BT_fops_list_directory(path);
                 break;
 
             case 60:
@@ -659,7 +717,7 @@ API_RESULT appl_ctn_cse_callback
     UINT16              path_size, obj_size;
 
 #ifdef CTN_SUPPORT_NOTIFICATION
-    UCHAR ntf_status;
+    UCHAR ctn_ntf_status;
     UCHAR acoustic_alarm_status;
 #endif /* CTN_SUPPORT_NOTIFICATION */
 
@@ -876,20 +934,20 @@ API_RESULT appl_ctn_cse_callback
             path_size = sizeof(appl_ctn_object_path) - 1;
 
             /* CTN objects base directory */
-            BT_str_n_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE, path_size);
+            BT_str_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE);
 
             /* Check if the requested folder is for "calendar" or "notes" or "tasks" */
             if (NULL != BT_str_str(ctn_headers->ctn_req_info->name->value, "calendar"))
             {
-                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
             }
             else  if (NULL != BT_str_str(ctn_headers->ctn_req_info->name->value, "notes"))
             {
-                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
             }
             else if (NULL != BT_str_str(ctn_headers->ctn_req_info->name->value, "tasks"))
             {
-                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
             }
             else
             {
@@ -1513,10 +1571,10 @@ API_RESULT appl_ctn_cse_callback
             }
 
             BT_mem_set(appl_ctn_object_path, 0x00, sizeof(appl_ctn_object_path));
-            path_size = sizeof(appl_ctn_object_path);
+            path_size = sizeof(appl_ctn_object_path) - 1;
 
             /* CTN objects base directory */
-            BT_str_n_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE, path_size);
+            BT_str_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE);
 
             put_rsp_object_handle_len = 0x00U;
 
@@ -1531,7 +1589,7 @@ API_RESULT appl_ctn_cse_callback
             /* Check if the requested folder is for "calendar" or "notes" or "tasks" */
             if (NULL != BT_str_str(ctn_headers->ctn_req_info->name->value, "calendar"))
             {
-                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
                 if (appl_ctn_event_obj_list.num_objects < (MAX_CTN_OBJ_COUNT-1U))
                 {
@@ -1595,7 +1653,7 @@ API_RESULT appl_ctn_cse_callback
             }
             else  if (NULL != BT_str_str(ctn_headers->ctn_req_info->name->value, "notes"))
             {
-                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
                 if (appl_ctn_notes_obj_list.num_objects < (MAX_CTN_OBJ_COUNT - 1U))
                 {
@@ -1658,7 +1716,7 @@ API_RESULT appl_ctn_cse_callback
             }
             else if (NULL != BT_str_str(ctn_headers->ctn_req_info->name->value, "tasks"))
             {
-                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
                 if (appl_ctn_task_obj_list.num_objects < (MAX_CTN_OBJ_COUNT - 1U))
                 {
@@ -2098,7 +2156,7 @@ API_RESULT appl_ctn_cse_callback
         {
             if (ctn_headers->ctn_req_info->appl_params != NULL)
             {
-                ntf_status =
+                ctn_ntf_status =
                 ctn_headers->ctn_req_info->appl_params->notification_status;
 
                 /* Check for the Notification status */
@@ -2108,11 +2166,11 @@ API_RESULT appl_ctn_cse_callback
                          CTN_FLAG_NOTIFICATIONSTATUS
                      )))
                 {
-                    if (0x01U == ntf_status)
+                    if (0x01U == ctn_ntf_status)
                     {
                         LOG_DEBUG ("Notification Enabled\n");
                     }
-                    else if (0x00U == ntf_status)
+                    else if (0x00U == ctn_ntf_status)
                     {
                         LOG_DEBUG ("Notification Disabled\n");
                     }
@@ -2382,6 +2440,14 @@ API_RESULT appl_ctn_cse_callback
             sent += actual;
             remaining = fsize - sent;
 
+            /* Adjust the file read pointer to the actual bytes transmitted */
+            if (body_req.length != actual)
+            {
+                printf("read length = %d, actual sent = %d\n", body_req.length, actual);
+                printf("Adjusting the file read pointer\n");
+                (BT_IGNORE_RETURN_VALUE)BT_fops_file_seek(fp, sent, SEEK_SET);
+            }
+
             /* If operation has failed or completed, perform cleanup */
             if ((API_SUCCESS != retval) || (0U == remaining))
             {
@@ -2594,8 +2660,8 @@ API_RESULT appl_ctn_cse_update_folders(void)
 
     /* Refresh the object details in calendar folder */
     BT_mem_set(appl_ctn_object_path, 0x00, sizeof(appl_ctn_object_path));
-    BT_str_n_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE, path_size);
-    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+    BT_str_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE);
+    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
     retval = BT_ctn_get_object_list
              (
@@ -2609,8 +2675,8 @@ API_RESULT appl_ctn_cse_update_folders(void)
 
     /* Refresh the object details in notes folder */
     BT_mem_set(appl_ctn_object_path, 0x00, sizeof(appl_ctn_object_path));
-    BT_str_n_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE, path_size);
-    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+    BT_str_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE);
+    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
     retval = BT_ctn_get_object_list
              (
@@ -2624,8 +2690,8 @@ API_RESULT appl_ctn_cse_update_folders(void)
 
     /* Refresh the object details in task folder */
     BT_mem_set(appl_ctn_object_path, 0x00, sizeof(appl_ctn_object_path));
-    BT_str_n_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE, path_size);
-    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+    BT_str_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE);
+    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
     retval = BT_ctn_get_object_list
              (
@@ -2670,10 +2736,10 @@ API_RESULT appl_ctn_cse_get_object_name_for_handle
     {
         *obj_folder_type = APPL_CTN_OBJ_TYPE_INVALIDE;
 
-        path_size = sizeof(appl_ctn_object_path);
+        path_size = sizeof(appl_ctn_object_path) - 1;
 
         BT_mem_set(appl_ctn_object_path, 0x00, sizeof(appl_ctn_object_path));
-        BT_str_n_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE, path_size);
+        BT_str_copy(appl_ctn_object_path, APPL_CTN_ROOT_FOLDER_REFERENCE);
 
         /* Search for the request handle in calendar folder */
         for (i = 0U; i < appl_ctn_event_obj_list.num_objects; i++)
@@ -2687,7 +2753,7 @@ API_RESULT appl_ctn_cse_get_object_name_for_handle
                       ))
                 )
             {
-                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                BT_str_n_cat(appl_ctn_object_path, APPL_CTN_CALENDAR_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
                 /* Create object name with path */
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
@@ -2716,7 +2782,7 @@ API_RESULT appl_ctn_cse_get_object_name_for_handle
                              appl_ctn_notes_obj_list.obj_details[i].handle_len
                          ))
                 {
-                    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_NOTES_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
                     /* Create object name with path */
                     /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
@@ -2746,7 +2812,7 @@ API_RESULT appl_ctn_cse_get_object_name_for_handle
                              appl_ctn_task_obj_list.obj_details[i].handle_len
                          ))
                 {
-                    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_len(appl_ctn_object_path)));
+                    BT_str_n_cat(appl_ctn_object_path, APPL_CTN_TASKS_FOLDER_PATH, (path_size - BT_str_n_len(appl_ctn_object_path,sizeof(appl_ctn_object_path)-1)));
 
                     /* Create object name with path */
                     /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */

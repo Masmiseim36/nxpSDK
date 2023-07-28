@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</title>
+<title>MCUXpresso SDK API Reference Manual: LPUART CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,57 +98,33 @@ $(document).ready(function(){initNavTree('a00288.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</div>  </div>
+<div class="title">LPUART CMSIS Driver<div class="ingroups"><a class="el" href="a00287.html">LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides drivers to access the Secure Digital Card(up to v3.0), Embedded MultiMedia Card(up to v5.0) and sdio card(up to v3.0) based on the SDHC/USDHC/SDIF driver. Here is a simple block diagram about the drivers:</p>
-<pre class="fragment">                ---------------------------
-                |       Application       |
-                ---------------------------
-                            |
-                            v
-                ---------------------------
-                |       Card driver       |
-                ---------------------------
-                            |
-                            v
-                ------------- -------------
-                |host driver| |OSA adapter|
-                ------------- -------------
-                            |
-                            v
-                ----------------------------
-                |  host controller driver  |
-                ----------------------------
-                            |
-                            v
-                ----------------------------
-                |host controller peripheral|
-                ----------------------------
-                            |
-                            v
-                ----------------------------
-                |          card            |
-                ----------------------------</pre> <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00053"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html">MMC Card Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00063"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html">SD Card Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00064"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html">SDIO Card Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00052"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00052.html">SDMMC Common</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00289"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html">SDMMC HOST Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00065"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html">SDMMC OSA</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+<p>This section describes the programming interface of the LPUART Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<p>The LPUART driver includes transactional APIs.</p>
+<p>Transactional APIs can be used to enable the peripheral quickly and in the application if the code size and performance of transactional APIs can satisfy the requirements. If the code size and performance are critical requirements please write custom code.</p>
+<h1><a class="anchor" id="LPUARTFunGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="LPUARTGetVersionOps"></a>
+LPUART CMSIS GetVersion Operation</h2>
+<p>This function group will return the LPUART CMSIS Driver version to user.</p>
+<h2><a class="anchor" id="LPUARTGetCapOps"></a>
+LPUART CMSIS GetCapabilities Operation</h2>
+<p>This function group will return the capabilities of this driver.</p>
+<h2><a class="anchor" id="LPUARTInitResetOps"></a>
+LPUART CMSIS Initialize and Uninitialize Operation</h2>
+<p>This function will initialize and uninitialize the lpuart instance . And this API must be called before you configure a lpuart instance or after you Deinit a lpuart instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
+<h2><a class="anchor" id="LPUARTTransOps"></a>
+LPUART CMSIS Transfer Operation</h2>
+<p>This function group controls the transfer, send/receive data.</p>
+<h2><a class="anchor" id="LPUARTStatusOps"></a>
+LPUART CMSIS Status Operation</h2>
+<p>This function group gets the LPUART transfer status.</p>
+<h2><a class="anchor" id="LPUARTControlOps"></a>
+LPUART CMSIS Control Operation</h2>
+<p>This function can configure an instance ,set baudrate for lpuart, get current baudrate ,set transfer data bits and other control command. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

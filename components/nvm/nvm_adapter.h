@@ -31,14 +31,19 @@
 #endif
 
 typedef int (*nvm_adapter_table_init)(void);
+typedef int (*nvm_adapter_table_load)(void);
+typedef int (*nvm_adapter_table_commit)(void);
 
 typedef struct _nvm_adapter_table
 {
     NVM_DataEntry_t *table;
     uint32_t tableCount;
     nvm_adapter_table_init init;
+    nvm_adapter_table_load load;
+    nvm_adapter_table_commit commit;
 } nvm_adapter_table_t;
 
 int NVM_AdapterInit(void);
+int NVM_AdapterLoad(void);
 
 #endif /* __NVM_ADAPTER_H__ */

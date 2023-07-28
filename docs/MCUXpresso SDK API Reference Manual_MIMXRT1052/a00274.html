@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: ENET CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,99 +99,102 @@ $(document).ready(function(){initNavTree('a00274.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LPI2C CMSIS Driver<div class="ingroups"><a class="el" href="a00272.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">ENET CMSIS Driver<div class="ingroups"><a class="el" href="a00025.html">ENET: Ethernet MAC Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the LPI2C Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<p>The LPI2C CMSIS driver includes transactional APIs.</p>
+<p>This section describes the programming interface of the ENET Cortex Microcontroller Software Interface Standard (CMSIS) driver. This driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<p>The ENET CMSIS driver includes transactional APIs.</p>
 <p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
-<h1><a class="anchor" id="LPI2CCMSISDriver"></a>
-LPI2C CMSIS Driver</h1>
-<h2><a class="anchor" id="LPI2CMasterOpsTransIRQ"></a>
-Master Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
+<h1><a class="anchor" id="ENETTpyUC"></a>
+Typical use case</h1>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ENET_SignalEvent_t(uint32_t event)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_RX_FRAME)</div>
 <div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">        uint32_t size;</div>
+<div class="line">        uint32_t len;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
+<div class="line">        size =  EXAMPLE_ENET.GetRxFrameSize();</div>
+<div class="line">        <span class="comment">/* Call ENET_ReadFrame when there is a received frame. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (size != 0)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">/* Received valid frame. Deliver the rx buffer with the size equal to length. */</span></div>
+<div class="line">            uint8_t *data = (uint8_t *)malloc(size);</div>
+<div class="line">            <span class="keywordflow">if</span> (data)</div>
+<div class="line">            {</div>
+<div class="line">                len = EXAMPLE_ENET.ReadFrame(data, size);</div>
+<div class="line">                <span class="keywordflow">if</span> (size == len)</div>
+<div class="line">                {</div>
+<div class="line">                    <span class="comment">/* Increase the received frame numbers. */</span></div>
+<div class="line">                    <span class="keywordflow">if</span> (g_rxIndex &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
+<div class="line">                    {</div>
+<div class="line">                        g_rxIndex++;</div>
+<div class="line">                    }                        </div>
+<div class="line">                }</div>
+<div class="line">                free(data);                             </div>
+<div class="line">            }</div>
+<div class="line">         }</div>
 <div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"><span class="comment">/*Init I2C0*/</span></div>
-<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transmit*/</span></div>
-<div class="line">Driver_I2C0.MasterTransmit(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPI2CMasterOpsTransDMA"></a>
-Master Operation in DMA transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_TX_FRAME)</div>
 <div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* DMAMux init and EDMA init. */</span></div>
-<div class="line"><a class="code" href="a00266.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(EXAMPLE_LPI2C_DMAMUX_BASEADDR);</div>
-<div class="line"><a class="code" href="a00021.html#a00367">edma_config_t</a> edmaConfig;</div>
-<div class="line"><a class="code" href="a00021.html#ga9851dc5addd6a1fc557bfdb625aa5c19">EDMA_GetDefaultConfig</a>(&amp;edmaConfig);</div>
-<div class="line"><a class="code" href="a00021.html#gaf7588eb4b54499f0f55c698bd98bc1bb">EDMA_Init</a>(EXAMPLE_LPI2C_DMA_BASEADDR, &amp;edmaConfig);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C0*/</span></div>
-<div class="line">Driver_I2C0.Initialize(I2C_MasterSignalEvent_t);</div>
-<div class="line"></div>
-<div class="line">Driver_I2C0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*config transmit speed*/</span></div>
-<div class="line">Driver_I2C0.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">Driver_I2C0.MasterReceive(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPI2CSlaveOpsTransIRQ"></a>
-Slave Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_SlaveSignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/*  Transfer done */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
-<div class="line">    {</div>
-<div class="line">        g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">        g_testTxNum ++;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/*Init I2C1*/</span></div>
-<div class="line">Driver_I2C1.Initialize(I2C_SlaveSignalEvent_t);</div>
+<div class="line">    <span class="comment">/* Initialize the ENET module. */</span></div>
+<div class="line">    EXAMPLE_ENET.Initialize(ENET_SignalEvent_t);</div>
+<div class="line">    EXAMPLE_ENET.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">    EXAMPLE_ENET.SetMacAddress((ARM_ETH_MAC_ADDR *)g_macAddr); </div>
+<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONFIGURE, linkInfo.speed &lt;&lt; ARM_ETH_MAC_SPEED_Pos  |</div>
+<div class="line">                 linkInfo.duplex &lt;&lt; ARM_ETH_MAC_DUPLEX_Pos | ARM_ETH_MAC_ADDRESS_BROADCAST);  </div>
+<div class="line">    EXAMPLE_ENET_PHY.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">    EXAMPLE_ENET_PHY.SetMode(ARM_ETH_PHY_AUTO_NEGOTIATE);</div>
+<div class="line">      EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_RX, 1);</div>
+<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_TX, 1);</div>
+<div class="line">    <span class="keywordflow">if</span> (EXAMPLE_ENET_PHY.GetLinkState() == ARM_ETH_LINK_UP)</div>
+<div class="line">    {</div>
+<div class="line">        linkInfo = EXAMPLE_ENET_PHY.GetLinkInfo();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;\r\nPHY Link down, please check the cable connection and link partner setting.\r\n&quot;</span>);</div>
+<div class="line">    }</div>
 <div class="line"></div>
-<div class="line">Driver_I2C1.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">    <span class="comment">/* Build broadcast for sending. */</span></div>
+<div class="line">    ENET_BuildBroadCastFrame();</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/*config slave addr*/</span></div>
-<div class="line">Driver_I2C1.Control(ARM_I2C_OWN_ADDRESS, I2C_MASTER_SLAVE_ADDR);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*start transfer*/</span></div>
-<div class="line">Driver_I2C1.SlaveReceive(g_slave_buff, I2C_DATA_LENGTH);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
+<div class="line">    <span class="keywordflow">while</span> (1)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">/* Check the total number of received number. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (g_rxCheckIdx != g_rxIndex)</div>
+<div class="line">        {</div>
+<div class="line">            <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame has been successfuly received!\r\n&quot;</span>, g_rxIndex);</div>
+<div class="line">            g_rxCheckIdx = g_rxIndex;</div>
+<div class="line">        }          </div>
+<div class="line">        <span class="keywordflow">if</span> ( g_testTxNum &amp;&amp; (g_txCheckIdx != g_testTxNum))</div>
+<div class="line">        {</div>
+<div class="line">            g_txCheckIdx = g_testTxNum;</div>
+<div class="line">            <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame transmitted success!\r\n&quot;</span>, g_txCheckIdx);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (txnumber &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
+<div class="line">        {</div>
+<div class="line">            txnumber ++;</div>
+<div class="line">            <span class="comment">/* Send a multicast frame when the PHY is link up. */</span></div>
+<div class="line">            <span class="keywordflow">if</span> (EXAMPLE_ENET.SendFrame(&amp;g_frame[0], ENET_DATA_LENGTH, ARM_ETH_MAC_TX_FRAME_EVENT) == ARM_DRIVER_OK)</div>
+<div class="line">            {</div>
+<div class="line">                <span class="keywordflow">for</span> (uint32_t count = 0; count &lt; 0x3FF; count++)</div>
+<div class="line">                {</div>
+<div class="line">                    __ASM(<span class="stringliteral">&quot;nop&quot;</span>);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">else</span></div>
+<div class="line">            {</div>
+<div class="line">                <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot; \r\nTransmit frame failed!\r\n&quot;</span>);</div>
+<div class="line">            }</div>
+<div class="line">         }</div>
+<div class="line">    }</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

@@ -52,11 +52,9 @@ mpp_t mpp_create(mpp_params_t *params, int *ret);
  * @param [in] mpp input pipeline
  * @param [in] name camera driver name
  * @param [in] params parameters to be configured on the camera
- * @param [in] defconfig if set, default camera params are returned
- *                into the params structure
  * @return \ref return_codes
  */
-int mpp_camera_add(mpp_t mpp, const char *name, mpp_camera_params_t *params, _Bool defconfig);
+int mpp_camera_add(mpp_t mpp, const char *name, mpp_camera_params_t *params);
 
 
 /**

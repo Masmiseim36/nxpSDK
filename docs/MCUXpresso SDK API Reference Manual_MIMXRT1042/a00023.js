@@ -1,6 +1,6 @@
 var a00023 =
 [
-    [ "enc_config_t", "a00023.html#a00378", [
+    [ "enc_config_t", "a00023.html#a00384", [
       [ "enableReverseDirection", "a00023.html#a522c7ab99e1a8b897de8dd34868a0c75", null ],
       [ "decoderWorkMode", "a00023.html#a5e87b6b545b87079f90cbecd93e7f809", null ],
       [ "HOMETriggerMode", "a00023.html#a6ae2c5f9ba4a1dafbaac4b5b5eadd04d", null ],
@@ -9,6 +9,7 @@ var a00023 =
       [ "enableTRIGGERClearHoldPositionCounter", "a00023.html#a347cca3f04709a2372dcb0d1ff706420", null ],
       [ "enableWatchdog", "a00023.html#a818e09227f3a5892bda5e1128f2a03b4", null ],
       [ "watchdogTimeoutValue", "a00023.html#a4061699ed317acca6ad5a796cd8ff634", null ],
+      [ "filterPrescaler", "a00023.html#a49ad7b86094a8dba3342b36e0215b4c1", null ],
       [ "filterCount", "a00023.html#a28e5850a83a55194a165d0cac8f4add1", null ],
       [ "filterSamplePeriod", "a00023.html#a76b510d862901687d3afe0f9693232b7", null ],
       [ "positionMatchMode", "a00023.html#aaf23078fa2f9d81476596f10fa6f34c2", null ],
@@ -18,7 +19,7 @@ var a00023 =
       [ "positionModulusValue", "a00023.html#a9c4ca08aaa0a4680a62fae18c1f907a7", null ],
       [ "positionInitialValue", "a00023.html#a42ff0a11bf950e3383e2c86df34c1380", null ]
     ] ],
-    [ "enc_self_test_config_t", "a00023.html#a00379", [
+    [ "enc_self_test_config_t", "a00023.html#a00385", [
       [ "signalDirection", "a00023.html#a43c1f46f38185c53d70945706d0f7379", null ],
       [ "signalCount", "a00023.html#a8aff93755f8b555b1665c5ecff59c4e2", null ],
       [ "signalPeriod", "a00023.html#aa7425889c344d1b9804603666b7beedc", null ]
@@ -75,6 +76,16 @@ var a00023 =
     [ "enc_self_test_direction_t", "a00023.html#ga0771658dcc0d7fb694a3f6c3df1f7815", [
       [ "kENC_SelfTestDirectionPositive", "a00023.html#gga0771658dcc0d7fb694a3f6c3df1f7815a15fa41a761cf10c06dc032ad51b9d72c", null ],
       [ "kENC_SelfTestDirectionNegative", "a00023.html#gga0771658dcc0d7fb694a3f6c3df1f7815a1536128883baf0c538ecf287c5b65a4a", null ]
+    ] ],
+    [ "enc_filter_prescaler_t", "a00023.html#gae3e644bd53700d46a953149acbae5122", [
+      [ "kENC_FilterPrescalerDiv1", "a00023.html#ggae3e644bd53700d46a953149acbae5122a76291ef01adcaa0961982a9007a51589", null ],
+      [ "kENC_FilterPrescalerDiv2", "a00023.html#ggae3e644bd53700d46a953149acbae5122acd8b815c59baed0c00014970c2a5c928", null ],
+      [ "kENC_FilterPrescalerDiv4", "a00023.html#ggae3e644bd53700d46a953149acbae5122a600cb489a542e684ac05bc7cb3f73371", null ],
+      [ "kENC_FilterPrescalerDiv8", "a00023.html#ggae3e644bd53700d46a953149acbae5122ae3b740de00d7530dfc52571ebe5acb72", null ],
+      [ "kENC_FilterPrescalerDiv16", "a00023.html#ggae3e644bd53700d46a953149acbae5122ad5a6d9b0b50b4e225acb81494ecac252", null ],
+      [ "kENC_FilterPrescalerDiv32", "a00023.html#ggae3e644bd53700d46a953149acbae5122a1c4bbfad04d3dc590239b2e9a5f7357c", null ],
+      [ "kENC_FilterPrescalerDiv64", "a00023.html#ggae3e644bd53700d46a953149acbae5122aa9a8965e68dd261d402e7bb53160a157", null ],
+      [ "kENC_FilterPrescalerDiv128", "a00023.html#ggae3e644bd53700d46a953149acbae5122ad2477df289faffc530f1011259d2f8d7", null ]
     ] ],
     [ "ENC_Init", "a00023.html#ga3137a28cb8af9082c19244923faa6c7a", null ],
     [ "ENC_Deinit", "a00023.html#gae5541a81fcbffecd6184d3c88eb7ae4b", null ],

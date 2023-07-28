@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2022 NXP.
+ * Copyright 2020-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -7,7 +7,15 @@
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.
  */
 
-/*
+/**
+ * @defgroup HAL_TYPES HAL Types
+ *
+ * This section provides the detailed documentation for the MPP HAL types
+ *
+ * @{
+ */
+
+/**
  * @brief hal camera device declaration. Camera devices can enqueue and dequeue frames as well as react to events from
  * input devices via the "inputNotify" function. Camera devices can use any number of interfaces, including MIPI and CSI
  * as long as the HAL driver implements the necessary functions found in camera_dev_operator_t.
@@ -18,45 +26,24 @@
 #define _HAL_CAMERA_DEV_H_
 
 #include "mpp_api_types.h"
-#include "fsl_video_common.h"
 #include "hal_types.h"
-
-/**
- * @brief declare the camera dev ##name
- */
-#define HAL_CAMERA_DEV_DECLARE(name) int HAL_CameraDev_##name##_Register();
-
-/**
- * @brief register the camera dev ##name
- */
-#define HAL_CAMERA_DEV_REGISTER(name, ret)                             \
-    {                                                                  \
-        ret = HAL_CameraDev_##name##_Register();                       \
-        if (ret != 0)                                                  \
-        {                                                              \
-            HAL_LOGE("HAL_CameraDev_%s_Register error %d\n", "##name", ret); \
-            return ret;                                                \
-        }                                                              \
-    }
 
 typedef struct _camera_dev camera_dev_t;
 
+/** Camera return status*/
 typedef enum _hal_camera_status
 {
-    kStatus_HAL_CameraSuccess = 0,  /*!< Successfully */
+    kStatus_HAL_CameraSuccess = 0,  /*!< HAL camera successful */
     kStatus_HAL_CameraBusy,         /*!< Camera is busy */
     kStatus_HAL_CameraNonBlocking,  /*!< Camera will return immediately */
     kStatus_HAL_CameraError         /*!< Error occurs on HAL Camera */
 } hal_camera_status_t;
 
-/*! @brief Type of events that are supported by calling the callback function */
+/** @brief Type of events that are supported by calling the callback function */
 typedef enum _camera_event
 {
-    /* Camera new frame is available */
-    kCameraEvent_SendFrame,
-    /* Camera device finished the init process */
-    kCameraEvent_CameraDeviceInit,
-    kCameraEvent_Count
+    kCameraEvent_SendFrame,        /*!< Camera new frame is available */
+    kCameraEvent_CameraDeviceInit, /*!< Camera device finished the initialization process */
 } camera_event_t;
 
 /**
@@ -69,69 +56,69 @@ typedef enum _camera_event
  */
 typedef int (*camera_dev_callback_t)(const camera_dev_t *dev, camera_event_t event, void *param, uint8_t fromISR);
 
-/*! @brief Operation that needs to be implemented by a camera device */
+/** @} */
+
+/**
+ * @defgroup HAL_OPERATIONS HAL OPERATIONS
+ *
+ * This section provides the detailed documentation for the MPP HAL operations that needs to be implemented
+ * for each component.
+ *
+ * @{
+ */
+
+/** @brief Operation that needs to be implemented by a camera device */
 typedef struct _camera_dev_operator
 {
-    /* initialize the dev */
-    hal_camera_status_t (*init)(camera_dev_t *dev, mpp_camera_params_t *config, camera_dev_callback_t callback, void *param);
-    /* deinitialize the dev */
-    hal_camera_status_t (*deinit)(camera_dev_t *dev);
-    /* start the dev */
-    hal_camera_status_t (*start)(const camera_dev_t *dev);
-    /* stop the dev */
-    hal_camera_status_t (*stop)(const camera_dev_t *dev);
-    /* enqueue a buffer to the dev */
-    hal_camera_status_t (*enqueue)(const camera_dev_t *dev, void *data);
-    /* dequeue a buffer from the dev */
-    hal_camera_status_t (*dequeue)(const camera_dev_t *dev, void **data, mpp_pixel_format_t *format);
-    /* get buffer descriptors and policy */
-    hal_camera_status_t (*get_buf_desc)(const camera_dev_t *dev, hw_buf_desc_t *out_buf, mpp_memory_policy_t *policy);
+    hal_camera_status_t (*init)(camera_dev_t *dev, mpp_camera_params_t *config, camera_dev_callback_t callback, void *param); /*!< initialize the dev */
+    hal_camera_status_t (*deinit)(camera_dev_t *dev);      /*!< deinitialize the dev */
+    hal_camera_status_t (*start)(const camera_dev_t *dev); /*!< start the dev */
+    hal_camera_status_t (*stop)(const camera_dev_t *dev);  /*!< stop the dev */
+    hal_camera_status_t (*enqueue)(const camera_dev_t *dev, void *data); /*!< enqueue a buffer to the dev */
+    hal_camera_status_t (*dequeue)(const camera_dev_t *dev, void **data, mpp_pixel_format_t *format); /*!< dequeue a buffer from the dev */
+    hal_camera_status_t (*get_buf_desc)(const camera_dev_t *dev, hw_buf_desc_t *out_buf, mpp_memory_policy_t *policy); /*!< get buffer descriptors and policy */
 } camera_dev_operator_t;
 
-/*! @brief Structure that characterize the camera device. */
+/** @} */
+
+/*! \addtogroup HAL_TYPES
+ *  @{
+ */
+
+/** @brief Structure that characterizes the camera device. */
 typedef struct
 {
-    /* buffer resolution */
-    int height;
-    int width;
-    int pitch;
-    /* active rect */
-    int left;
-    int top;
-    int right;
-    int bottom;
-    /* rotate degree */
-    mpp_rotate_degree_t rotate;
-    /* flip */
-    mpp_flip_mode_t flip;
-    /* swap byte per two bytes */
-    int swapByte;
-    video_pixel_format_t format;
-    int framerate;
+    int height;                  /*!< buffer height */
+    int width;                   /*!< buffer width */
+    int pitch;                   /*!< buffer pitch */
+    int left;                    /*!< left position */
+    int top;                     /*!< top position */
+    int right;                   /*!< right position */
+    int bottom;                  /*!< bottom position */
+    mpp_rotate_degree_t rotate;  /*!< rotate degree */
+    mpp_flip_mode_t flip;        /*!< flip */
+    int swapByte;                /*!< swap byte per two bytes */
+    mpp_pixel_format_t format;   /*!< pixel format */
+    int framerate;               /*!< frame rate */
 } camera_dev_static_config_t;
 
+/** @brief camera device private capability. */
 typedef struct
 {
-    /* callback */
-    camera_dev_callback_t callback;
-    /* param for the callback */
-    void *param;
+    camera_dev_callback_t callback;  /*!< callback */
+    void *param;                     /*!< parameter for the callback */
 } camera_dev_private_capability_t;
 
-/*! @brief Attributes of a camera device. */
+/** @brief Attributes of a camera device. */
 struct _camera_dev
 {
-    /* unique id which is assigned by camera manager during registration */
-    int id;
-    /* name of the device */
-    char name[HAL_DEVICE_NAME_MAX_LENGTH];
-
-    /* operations */
-    const camera_dev_operator_t *ops;
-    /* static configs */
-    camera_dev_static_config_t config;
-    /* private capability */
-    camera_dev_private_capability_t cap;
+    int id; /*!< unique id which is assigned by camera manager during registration */
+    char name[HAL_DEVICE_NAME_MAX_LENGTH]; /*!< name of the device */
+    const camera_dev_operator_t *ops;      /*!< operations */
+    camera_dev_static_config_t config;     /*!< static configurations */
+    camera_dev_private_capability_t cap;   /*!< private capability */
 };
+
+/** @} */
 
 #endif /*_HAL_CAMERA_DEV_H_*/

@@ -1,4 +1,5 @@
 var a00289 =
 [
-    [ "USDHC HOST adapter Driver", "a00065.html", "a00065" ]
+    [ "Secure Non-Volatile Storage High-Power", "a00075.html", "a00075" ],
+    [ "Secure Non-Volatile Storage Low-Power", "a00076.html", "a00076" ]
 ];

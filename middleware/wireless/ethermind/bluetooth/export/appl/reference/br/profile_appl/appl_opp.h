@@ -18,7 +18,7 @@
 #include "BT_sdp_api.h"
 #include "BT_opp_api.h"
 #include "BT_fops.h"
-#include "appl_utils.h"
+
 #ifdef OPP
 
 /* ----------------------------------------- External Global Variables */
@@ -33,7 +33,8 @@
 /* OPP Object Type */
 #define OPP_OBJECT_TYPE_VCARD               "VCARD"
 #define OPP_OBJECT_TYPE_VCAL                "VCALENDAR"
-#define OPP_OBJECT_TYPE_VMAG                "VMSG"
+#define OPP_OBJECT_TYPE_VMSG                "VMSG"
+#define OPP_OBJECT_TYPE_VNOTE               "VNOTE"
 
 #define OPP_ROOT_FOLDER_BASE             BT_FOPS_PATH_JOIN(BT_FOPS_BASE, "data" BT_FOPS_PATH_SEP "opp")
 #define OPP_ROOT_RX_FOLDER_BASE          BT_FOPS_PATH_JOIN(BT_FOPS_BASE, "data" BT_FOPS_PATH_SEP "opp" BT_FOPS_PATH_SEP "rx")
@@ -42,11 +43,17 @@
 
 #define OPP_SDP_RECORD_DATA_SIZE         512U
 
+#define OPP_MAX_NUM_OBJECTS              5U
+#define OPP_MAX_OBJECT_TYPE_LEN          32U
+#define OPP_MAX_OBJECT_NAME_LEN          32U
+
+
 /**
  * OPP Object Type Header.Values
  */
 #define OPP_TYPE_HDR_VCALENDER           "text/x-vcalender"
 #define OPP_TYPE_HDR_VMSG                "text/x-vmsg"
+#define OPP_TYPE_HDR_VNOTE               "text/x-vnote"
 
 /* ----------------------------------------- Exported Global Variables */
 
@@ -82,6 +89,38 @@ typedef struct _OPP_INSTANCE
     UINT32 max_xchg_size;
 
 }OPP_INSTANCE;
+
+/**
+ *  \brief Data type to specify the information used while pushing multiple objects.
+ *
+ *  \par Description:
+ *       This structure contains object type, file name and length of the file name.
+ */
+typedef struct _OPP_APP_MULTIPLE_OBJECTS
+{
+    /**
+     * object type
+     */
+    UCHAR   object_type[OPP_MAX_OBJECT_TYPE_LEN];
+
+    /**
+     * file name.
+     */
+    UCHAR   file_name[OPP_MAX_OBJECT_NAME_LEN];
+
+    /**
+     * object type length
+     */
+    UINT16  object_type_len;
+
+    /**
+     * file name length.
+     */
+    UINT16  file_name_len;
+
+} OPP_APP_MULTIPLE_OBJECTS;
+
+
 
 /* To Reset a OPP handle */
 #define OPP_RESET_INSTANCE(hdl)    \

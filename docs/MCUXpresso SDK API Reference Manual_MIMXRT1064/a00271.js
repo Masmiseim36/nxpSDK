@@ -1,9 +1,15 @@
 var a00271 =
 [
-    [ "FSL_GPC_DRIVER_VERSION", "a00271.html#ga91a1b6b08dc09200c3b0ee314b362b74", null ],
-    [ "GPC_EnableIRQ", "a00271.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e", null ],
-    [ "GPC_DisableIRQ", "a00271.html#gacfd07601d1a0e90e3b80fffe14830010", null ],
-    [ "GPC_GetIRQStatusFlag", "a00271.html#ga1118000efd3c822329c63a7155bbe12e", null ],
-    [ "GPC_RequestPdram0PowerDown", "a00271.html#ga8270fba73a065a4e14af1bc895e55969", null ],
-    [ "GPC_RequestMEGAPowerOn", "a00271.html#gaac50bee55eb34b329680e6fd0d2a9582", null ]
+    [ "FSL_AIPSTZ_DRIVER_VERSION", "a00271.html#ga63da39530bbcd0dc57e95ea907626d30", null ],
+    [ "aipstz_master_privilege_level_t", "a00271.html#ga50d1d18a2f10ab6d0978dc59ac7062e0", [
+      [ "kAIPSTZ_MasterBufferedWriteEnable", "a00271.html#gga50d1d18a2f10ab6d0978dc59ac7062e0a0b72fa18391c6c78eb6a099d20294269", null ],
+      [ "kAIPSTZ_MasterTrustedForReadEnable", "a00271.html#gga50d1d18a2f10ab6d0978dc59ac7062e0a9519e4b78bb722c6e0cc66f2f5ddeeee", null ],
+      [ "kAIPSTZ_MasterTrustedForWriteEnable", "a00271.html#gga50d1d18a2f10ab6d0978dc59ac7062e0ac266137d6fc99b702e03eacd79ff5280", null ],
+      [ "kAIPSTZ_MasterForceUserModeEnable", "a00271.html#gga50d1d18a2f10ab6d0978dc59ac7062e0ac588fb9df7c0231b66a302077e08a5de", null ]
+    ] ],
+    [ "aipstz_master_t", "a00271.html#ga1b7e45a44dadf636d9941f600e5f8cf4", null ],
+    [ "aipstz_peripheral_access_control_t", "a00271.html#ga85073f011425a31234f80e72f0574701", null ],
+    [ "aipstz_peripheral_t", "a00271.html#ga8c8376b4734c8b7d16219d52e375d1c8", null ],
+    [ "AIPSTZ_SetMasterPriviledgeLevel", "a00271.html#gaa0b2d889df182cd605ae955fc65e333a", null ],
+    [ "AIPSTZ_SetPeripheralAccessControl", "a00271.html#ga6dd3e90419600f38e9d4b970f723e918", null ]
 ];

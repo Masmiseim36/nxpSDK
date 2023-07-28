@@ -19,8 +19,7 @@
 
 #include "gatt_db.h"
 
-/* #define APPL_BPS_SINGLE_BOND_SUPPORT */
-
+/* --------------------------------------------- Macros */
 /* BPS Database Signature */
 /* NOTE: Currently having a dummy signature where
  * - the 2 Upper Bytes are 0x1234
@@ -63,6 +62,17 @@ void appl_bps_handle_mtu_update_complete
          APPL_HANDLE * handle,
          UINT16      mtu
      );
+void appl_bps_set_target_address_in_adv_data(UCHAR offset);
+void appl_reset_adv_data_to_default_value(void);
+void appl_bps_timer_expiry_hndlr(void *data, UINT16 datalen);
+void appl_bps_update_multi_bond_flag(UCHAR flag);
+void appl_bps_update_target_addr_flag(UCHAR flag);
+void appl_bps_update_body_movement_flag(UCHAR flag);
+void appl_bps_update_cuff_fit_Detection_flag(UCHAR flag);
+void appl_bps_update_irregular_pulse_flag(UCHAR flag);
+void appl_bps_update_pulse_rate_range_flag(UCHAR flag);
+void appl_bps_update_measurment_position_flag(UCHAR flag);
+
 #ifdef GATT_DB_HAVE_REGISTERATION_SUPPORT
 void appl_bps_gatt_db_register(void);
 #else

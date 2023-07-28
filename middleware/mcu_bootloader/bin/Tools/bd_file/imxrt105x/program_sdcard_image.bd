@@ -1,0 +1,28 @@
+
+# The source block assign file name to identifiers
+sources {
+ myBootImageFile = extern (0);
+}
+
+# The section block specifies the sequence of boot commands to be written to the SB file
+section (0) {
+
+    #1. Prepare SDCard option block
+    load 0xd0000000 > 0x100;
+    load 0x00000000 > 0x104;
+ 
+    #2. Configure SDCard 
+    enable sdcard 0x100;
+
+    #3. Erase blocks as needed.
+    erase sdcard 0x400..0x14000;
+
+    #4. Program SDCard Image
+    load sdcard myBootImageFile > 0x400;
+    
+    #5. Program Efuse for optimal read performance (optional)
+    # Note: It is just a template, please program the actual Fuse required in the application
+    # and remove the # to enable the command
+    #load fuse 0x00000000 > 0x07;
+
+}

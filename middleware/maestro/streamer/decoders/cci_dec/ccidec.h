@@ -25,6 +25,8 @@
  * STRUCTURES AND OTHER TYPEDEFS
  */
 
+#define NUM_OF_PING_PONG_BUFFER 2
+
 /**
  * @brief Common codec interface information
  *
@@ -42,7 +44,7 @@ typedef struct
                                       decrement this as read from filesrc_buffer */
     uint32_t filesrc_offset[3];    /*!< @brief represents offset into the file
                                     (from StreamBuffer buffer.offset) */
-    uint8_t *packed_buffer[CASCFG_NUM_OF_PING_PONG_BUFFER]; /*!< @brief buffer used to create audio packet -
+    uint8_t *packed_buffer[NUM_OF_PING_PONG_BUFFER]; /*!< @brief buffer used to create audio packet -
                                  used by StreamBuffer */
     int32_t dec_frame_size;                                 /*!< @brief Used to keep the maximum buffer size
                                                                   and depending of the decoder type>*/

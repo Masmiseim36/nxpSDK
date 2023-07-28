@@ -15,7 +15,6 @@
 #include "streamer_api.h"
 #include "streamer_pcm_speaker.h"
 #include "streamer_element_properties.h"
-#include "audio_proc.h"
 
 int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineType pipeline_type, STREAMER_T *task_data)
 {
@@ -27,7 +26,7 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     //
     // [filesrc] => [audio_proc] => [audiosink]
     //
-    task_data->pipeline_type = pipeline_type;
+    task_data->pipeline_type[pipeline_index] = pipeline_type;
 
     // Create pipeline
     ret = create_pipeline(&task_data->pipes[pipeline_index], pipeline_index, pipeline_type, &task_data->mq_out);
@@ -38,61 +37,61 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     // Create filesrc
-    ret = create_element(&task_data->elems[ELEMENT_FILE_SRC_INDEX], TYPE_ELEMENT_FILE_SRC, 0);
+    ret = create_element(&task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX], TYPE_ELEMENT_FILE_SRC, 0);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", ELEMENT_FILE_SRC_INDEX, ret);
         goto err_catch;
     }
 
-    if (pipeline_type == STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO)
+    if (pipeline_type == STREAM_PIPELINE_PCM_EAP_PROC_AUDIO)
     {
-        /* CREATE AUDIO_PROC ELEMENT */
-        ret = create_element(&task_data->elems[ELEMENT_AUDIO_PROC_INDEX], TYPE_ELEMENT_AUDIO_PROC, 0);
+        /* CREATE EAP_PROC ELEMENT */
+        ret = create_element(&task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX], TYPE_ELEMENT_AUDIO_PROC, 0);
         if (STREAM_OK != ret)
         {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed:%d\n", ELEMENT_AUDIO_PROC_INDEX,
-                             ret);
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed:%d\n", ELEMENT_EAP_PROC_INDEX, ret);
             goto err_catch;
         }
     }
 
     // Create audiosink
-    ret = create_element(&task_data->elems[ELEMENT_AUDIO_SINK_INDEX], TYPE_ELEMENT_AUDIO_SINK, 0);
+    ret = create_element(&task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], TYPE_ELEMENT_AUDIO_SINK, 0);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed: %d\n", ELEMENT_AUDIO_SINK_INDEX, ret);
         goto err_catch;
     }
     // Set audiosink scheduling to push
-    element                         = (StreamElement *)task_data->elems[ELEMENT_AUDIO_SINK_INDEX];
+    element                         = (StreamElement *)task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX];
     element->sink_pad[0].scheduling = SCHEDULING_PUSH;
 
     // Add elements to pipeline
 
     // + filesrc
-    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_FILE_SRC_INDEX], level++);
+    ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                               task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX], level++);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed: %d\n", ELEMENT_FILE_SRC_INDEX, ret);
         goto err_catch;
     }
 
-    if (pipeline_type == STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO)
+    if (pipeline_type == STREAM_PIPELINE_PCM_EAP_PROC_AUDIO)
     {
-        /* Add audio_proc to pipeline */
-        ret =
-            add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_PROC_INDEX], level++);
-
+        /* Add eap_proc to pipeline */
+        ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                                   task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX], level++);
         if (STREAM_OK != ret)
         {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed:%d\n", ELEMENT_AUDIO_PROC_INDEX, ret);
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed:%d\n", ELEMENT_EAP_PROC_INDEX, ret);
             goto err_catch;
         }
     }
 
     // + audiosink
-    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_SINK_INDEX], level++);
+    ret = add_element_pipeline(task_data->pipes[pipeline_index],
+                               task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], level++);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed: %d\n", ELEMENT_AUDIO_SINK_INDEX, ret);
@@ -100,23 +99,24 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     }
 
     // Link elements in pipeline
-    if (pipeline_type == STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO)
+    if (pipeline_type == STREAM_PIPELINE_PCM_EAP_PROC_AUDIO)
     {
-        /*Link file src to audio_proc*/
-        ret = link_elements(task_data->elems[ELEMENT_FILE_SRC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0);
+        /*Link file src to eap_proc*/
+        ret = link_elements(task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX], 0,
+                            task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX], 0);
         if (STREAM_OK != ret)
         {
             STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d) to element(%d) failed:%d\n",
-                             ELEMENT_FILE_SRC_INDEX, ELEMENT_AUDIO_PROC_INDEX, ret);
+                             ELEMENT_FILE_SRC_INDEX, ELEMENT_EAP_PROC_INDEX, ret);
             goto err_catch;
         }
 
-        /* Link the AUDIO_PROC to the audio sink */
-        ret =
-            link_elements(task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_SINK_INDEX], 0);
+        /* Link the EAP_PROC to the audio sink */
+        ret = link_elements(task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX], 0,
+                            task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], 0);
         if (ret != STREAM_OK)
         {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element %d => %d failed: %d\n", ELEMENT_AUDIO_PROC_INDEX,
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element %d => %d failed: %d\n", ELEMENT_EAP_PROC_INDEX,
                              ELEMENT_AUDIO_SINK_INDEX, ret);
             goto err_catch;
         }
@@ -124,7 +124,8 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     else
     {
         // [filesrc: sink0] => [src0: audiosink]
-        ret = link_elements(task_data->elems[ELEMENT_FILE_SRC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_SINK_INDEX], 0);
+        ret = link_elements(task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX], 0,
+                            task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], 0);
         if (ret != STREAM_OK)
         {
             STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element %d => %d failed: %d\n", ELEMENT_FILE_SRC_INDEX,
@@ -140,7 +141,7 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     prop.prop = PROP_AUDIOSINK_DEVICE_DRIVER_TYPE;
     prop.val  = STREAMER_DEFAULT_OUT_DEVICE;
 
-    ret = element_set_property(task_data->elems[ELEMENT_AUDIO_SINK_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -154,7 +155,7 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     prop.prop = PROP_AUDIOSINK_TIME_UPDATE_MS;
     prop.val  = STREAMER_DEFAULT_UPDATE_DURATION;
 
-    ret = element_set_property(task_data->elems[ELEMENT_AUDIO_SINK_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -168,7 +169,7 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     prop.prop = PROP_FILESRC_SET_FILE_TYPE;
     prop.val  = AUDIO_DATA;
 
-    ret = element_set_property(task_data->elems[ELEMENT_FILE_SRC_INDEX], prop.prop, prop.val);
+    ret = element_set_property(task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX], prop.prop, prop.val);
 
     if (STREAM_OK != ret)
     {
@@ -193,21 +194,21 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
     int ret;
 
     // Unlink elements in pipeline
-    if (task_data->pipeline_type == STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO)
+    if (task_data->pipeline_type[pipeline_index] == STREAM_PIPELINE_PCM_EAP_PROC_AUDIO)
     {
-        ret =
-            unlink_elements(task_data->elems[ELEMENT_FILE_SRC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0);
+        ret = unlink_elements(task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX], 0,
+                              task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX], 0);
         if (STREAM_OK != ret)
         {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to unlink decoder and AUDIO_PROC\n");
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to unlink decoder and EAP_PROC\n");
             return ret;
         }
 
-        ret = unlink_elements(task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_SINK_INDEX],
-                              0);
+        ret = unlink_elements(task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX], 0,
+                              task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], 0);
         if (ret != STREAM_OK)
         {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Unlink %d =/=> %d failed: %d\n", ELEMENT_AUDIO_PROC_INDEX,
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Unlink %d =/=> %d failed: %d\n", ELEMENT_EAP_PROC_INDEX,
                              ELEMENT_AUDIO_SINK_INDEX, ret);
             return ret;
         }
@@ -215,8 +216,8 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
     else
     {
         // [filesrc: sink0] =/=> [src0: audiosink]
-        ret =
-            unlink_elements(task_data->elems[ELEMENT_FILE_SRC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_SINK_INDEX], 0);
+        ret = unlink_elements(task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX], 0,
+                              task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX], 0);
         if (ret != STREAM_OK)
         {
             STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Unlink %d =/=> %d failed: %d\n", ELEMENT_FILE_SRC_INDEX,
@@ -228,24 +229,27 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
     // Remove elements in pipeline
 
     // -audiosink
-    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_SINK_INDEX]);
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                  task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX]);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Remove element %d failed: %d\n", ELEMENT_AUDIO_SINK_INDEX, ret);
         return ret;
     }
-    if (task_data->pipeline_type == STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO)
+    if (task_data->pipeline_type[pipeline_index] == STREAM_PIPELINE_PCM_EAP_PROC_AUDIO)
     {
-        ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_PROC_INDEX]);
+        ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                      task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX]);
         if (STREAM_OK != ret)
         {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove AUDIO_PROC\n");
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove EAP_PROC\n");
             return ret;
         }
     }
 
     // -filesrc
-    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_FILE_SRC_INDEX]);
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index],
+                                  task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX]);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Remove element %d failed: %d\n", ELEMENT_FILE_SRC_INDEX, ret);
@@ -253,49 +257,34 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
     }
 
     // Destroy elements
-
-    if (task_data->pipeline_type == STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO)
+    if (task_data->pipeline_type[pipeline_index] == STREAM_PIPELINE_PCM_EAP_PROC_AUDIO)
     {
-        // AUDIO_PROC also needs to deinit external lib
-        ElementAudioProc *audio_proc_ptr = (ElementAudioProc *)task_data->elems[ELEMENT_AUDIO_PROC_INDEX];
-        if (audio_proc_ptr->deinit_func == NULL)
-        {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "External AUDIO_PROC deinit function is not registered");
-            return STREAM_ERR_GENERAL;
-        }
-        ret = audio_proc_ptr->deinit_func();
-        if (ret != STREAM_OK)
-        {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to deinit AUDIO_PROC with error: %d\n", ret);
-            return STREAM_ERR_GENERAL;
-        }
-
-        ret = destroy_element(task_data->elems[ELEMENT_AUDIO_PROC_INDEX]);
+        ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX]);
         if (STREAM_OK != ret)
         {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to destroy decoder\n");
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to destroy EAP_PROC\n");
             return ret;
         }
-        task_data->elems[ELEMENT_AUDIO_PROC_INDEX] = (uintptr_t)NULL;
+        task_data->elems[pipeline_index][ELEMENT_EAP_PROC_INDEX] = (uintptr_t)NULL;
     }
 
     // audiosink
-    ret = destroy_element(task_data->elems[ELEMENT_AUDIO_SINK_INDEX]);
+    ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX]);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Destroy element %d failed: %d\n", ELEMENT_AUDIO_SINK_INDEX, ret);
         return ret;
     }
-    task_data->elems[ELEMENT_AUDIO_SINK_INDEX] = (uintptr_t)NULL;
+    task_data->elems[pipeline_index][ELEMENT_AUDIO_SINK_INDEX] = (uintptr_t)NULL;
 
     // filesrc
-    ret = destroy_element(task_data->elems[ELEMENT_FILE_SRC_INDEX]);
+    ret = destroy_element(task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX]);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Destroy element %d failed: %d\n", ELEMENT_FILE_SRC_INDEX, ret);
         return ret;
     }
-    task_data->elems[ELEMENT_FILE_SRC_INDEX] = (uintptr_t)NULL;
+    task_data->elems[pipeline_index][ELEMENT_FILE_SRC_INDEX] = (uintptr_t)NULL;
 
     /* destroy pipeline*/
     ret = destroy_pipeline(task_data->pipes[pipeline_index]);

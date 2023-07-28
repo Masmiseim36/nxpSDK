@@ -54,8 +54,11 @@
  * Default EM Task's preferred Stack Depth and Priority
  */
 #define EM_OS_TASK_STACKDEPTH           (4U * 1024U)
+#if !defined(CONFIG_WIFI_BLE_COEX_APP) || (CONFIG_WIFI_BLE_COEX_APP == 0)
 #define EM_OS_TASK_PRIORITY             (6U)
-
+#else
+#define EM_OS_TASK_PRIORITY             (3U)
+#endif
 /**
  * Macro for Default Task Name.
  * The default task name is mapped to the Stringized form of the Task routine

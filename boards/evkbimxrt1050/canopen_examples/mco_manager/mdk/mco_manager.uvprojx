@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1200,7 +1200,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2036,7 +2036,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2872,7 +2872,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3708,7 +3708,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4544,7 +4544,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../middleware/canopen/mcolibs/imxrt/mco_manager/libMCO_MGR_IMXRT10xx_KSDK_2.a --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>

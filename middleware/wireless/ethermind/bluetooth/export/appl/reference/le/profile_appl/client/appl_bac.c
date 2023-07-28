@@ -26,17 +26,17 @@ extern ATT_HANDLE appl_gatt_client_handle;
 static ATT_ATTR_HANDLE bat_lvl_hdl;
 static ATT_ATTR_HANDLE bat_lvl_ccd_hdl;
 
-static const UCHAR bac_client_menu[] =
-"\n\
+static const UCHAR bac_client_menu[] = "\n\
     0 - Exit\n\
-    1 - Refresh\n\n\
+    1 - Refresh\n\
    --- Battery Service ---\n\
    20 - Discover Battery Service/Characteristics\n\
    21 - Read Battery Level\n\
    22 - Read Battery Level CCD \n\
    23 - Configure Battery Level for Notification \n\
-   24 - Disable Battery Level Notification \n\n\
-\nYour Option ? ";
+   24 - Disable Battery Level Notification \n\
+Your Option ?\n\
+";
 
 /* ------------------------------- Functions */
 
@@ -54,7 +54,7 @@ void bac_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT1
                 break;
 
             default:
-                /* LOG_DEBUG("Invalid...\n"); */
+                /* CONSOLE_OUT("Invalid...\n"); */
                 break;
         }
 
@@ -71,7 +71,7 @@ void bac_notify_gatt_chardata (GATT_CHARACTERISTIC_PARAM * characteristic, UINT1
                             bat_lvl_ccd_hdl = characteristic->descriptor[j].handle;
                             break;
                         default:
-                            /* LOG_DEBUG("Invalid...\n"); */
+                            /* CONSOLE_OUT("Invalid...\n"); */
                             break;
                     }
                 }
@@ -92,7 +92,7 @@ void bac_profile_operations (void)
     BT_LOOP_FOREVER()
     {
         CONSOLE_OUT ("%s \n", bac_client_menu);
-        LOG_DEBUG ("Enter you choice : ");
+        CONSOLE_OUT ("Enter you choice : ");
         CONSOLE_IN ( "%u",&choice);
         menu_choice = choice;
 
@@ -165,7 +165,7 @@ void bac_profile_operations (void)
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 

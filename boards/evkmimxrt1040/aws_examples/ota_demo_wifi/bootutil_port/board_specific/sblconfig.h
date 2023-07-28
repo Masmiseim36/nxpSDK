@@ -8,14 +8,7 @@
 #ifndef SBL_CONFIG_H__
 #define SBL_CONFIG_H__
 
-/* MCU-SBL RT1040 Configuration */
-
-#define SOC_IMXRT1040_SERIES
-#define ARCH_ARM_CORTEX_M7
-#define ARCH_ARM_CORTEX_FPU
-#define SOC_IMXRTYYYY_SERIES
-
-/* MCU SBL core */
+/* MCUBoot Flash Config */
 
 #define CONFIG_MCUBOOT_MAX_IMG_SECTORS 800
 
@@ -38,11 +31,7 @@
 /* Board specific register for flash remap functionality */
 #define FLASH_REMAP_OFFSET_REG 0x400AC080 /* RT1040 flash remap offset register */
 
-/* Flash device parameters */
-
-#define COMPONENT_FLASHIAP_SIZE 8388608
-
-/* secure */
+/* Crypto Config */
 
 #define COMPONENT_MCUBOOT_SECURE
 #define CONFIG_BOOT_SIGNATURE

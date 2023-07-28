@@ -53,7 +53,7 @@ typedef struct _user_data_t {
  ******************************************************************************/
 
 /* Use TensorFlowLite-Micro as an inference engine by default */
-#if !defined(INFERENCE_ENGINE_DeepViewRT) && !defined(INFERENCE_ENGINE_GLOW)
+#if !defined(INFERENCE_ENGINE_TFLM) && !defined(INFERENCE_ENGINE_DeepViewRT) && !defined(INFERENCE_ENGINE_GLOW)
 #define INFERENCE_ENGINE_TFLM
 #endif
 
@@ -69,22 +69,74 @@ typedef struct _user_data_t {
 #error "ERROR: An inference engine must be selected"
 #endif
 
+/*
+ * SWAP_DIMS = 1 if source/display dims are reversed
+ * SWAP_DIMS = 0 if source/display have the same orientation
+ */
+#define SWAP_DIMS (((APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_90) || (APP_DISPLAY_LANDSCAPE_ROTATE == ROTATE_270)) ? 1 : 0)
+
+/* display small and large dims */
 #define DISPLAY_SMALL_DIM MIN(APP_DISPLAY_WIDTH, APP_DISPLAY_HEIGHT)
 #define DISPLAY_LARGE_DIM MAX(APP_DISPLAY_WIDTH, APP_DISPLAY_HEIGHT)
 
-#define CROP_TOP 0
-#define CROP_LEFT (APP_CAMERA_WIDTH - APP_CAMERA_HEIGHT)/2
-#define CROP_SIZE APP_CAMERA_HEIGHT
-
 #define RECT_LINE_WIDTH 2
-/* The detection zone rectangle is a square centered on the display */
-/* The square length is the display smallest dimension minus the rectangle line width */
-#define DETECTION_ZONE_RECT_TOP 0
-#define DETECTION_ZONE_RECT_LEFT (DISPLAY_LARGE_DIM - DISPLAY_SMALL_DIM)/2
-#define DETECTION_ZONE_RECT_LENGTH DISPLAY_SMALL_DIM - RECT_LINE_WIDTH
 
-#define MODEL_WIDTH  128
-#define MODEL_HEIGHT 128
+#define MODEL_ASPECT_RATIO   (1.0f * MODEL_WIDTH / MODEL_HEIGHT)
+/* output is displayed in landscape mode */
+#define DISPLAY_ASPECT_RATIO (1.0f * DISPLAY_LARGE_DIM / DISPLAY_SMALL_DIM)
+/* camera aspect ratio */
+#define CAMERA_ASPECT_RATIO  (1.0f * APP_CAMERA_WIDTH / APP_CAMERA_HEIGHT)
+
+/*
+ * The detection zone is a rectangle centered on the display. It has the same shape as the model input.
+ * The rectangle dimensions are calculated based on the display small dim and respecting the model aspect ratio
+ * The detection zone width and height depend on the display_aspect_ratio compared to the model aspect_ratio:
+ * if the display_aspect_ratio >= model_aspect_ratio then :
+ *                  (width, height) = (display_small_dim * model_aspect_ratio, display_small_dim)
+ * if the display_aspect_ratio < model_aspect_ratio then :
+ *                  (width, height) = (display_small_dim, display_small_dim / model_aspect_ratio)
+ *
+ * */
+#define DETECTION_ZONE_RECT_HEIGHT ((DISPLAY_ASPECT_RATIO >= MODEL_ASPECT_RATIO) ? \
+		DISPLAY_SMALL_DIM : (DISPLAY_SMALL_DIM / MODEL_ASPECT_RATIO))
+#define DETECTION_ZONE_RECT_WIDTH  ((DISPLAY_ASPECT_RATIO >= MODEL_ASPECT_RATIO) ? \
+		(DISPLAY_SMALL_DIM * MODEL_ASPECT_RATIO) : DISPLAY_SMALL_DIM)
+
+/* detection zone top/left offsets */
+#define DETECTION_ZONE_RECT_TOP  (DISPLAY_SMALL_DIM - DETECTION_ZONE_RECT_HEIGHT)/2
+#define DETECTION_ZONE_RECT_LEFT (DISPLAY_LARGE_DIM - DETECTION_ZONE_RECT_WIDTH)/2
+
+/*
+ *  The computation of the crop size(width and height) and the crop top/left depends on the detection
+ *  zone dims and offsets and on the camera-display scaling factor SF which is calculated differently
+ *  depending on 2 constraints:
+ *           * Constraint 1: display aspect ratio compared to the camera aspect ratio.
+ *           * Constraint 2: SWAP_DIMS value.
+ * if the display_aspect_ratio < camera_aspect_ratio :
+ *            - SWAP_DIMS = 0: SF = APP_DISPLAY_WIDTH / APP_CAMERA_WIDTH
+ *            - SWAP_DIMS = 1: SF = APP_DISPLAY_HEIGHT / APP_CAMERA_HEIGHT
+ * if the display_aspect_ratio >= camera_aspect_ratio:
+ *            - SWAP_DIMS = 0: SF = APP_DISPLAY_HEIGHT / APP_CAMERA_HEIGHT
+ *            - SWAP_DIMS = 1: SF = APP_DISPLAY_WIDTH / APP_CAMERA_WIDTH
+ * the crop dims and offsets are calculated in the following way:
+ * CROP_SIZE_TOP = DETECTION_ZONE_RECT_HEIGHT / SF
+ * CROP_SIZE_LEFT = DETECTION_ZONE_RECT_WIDTH / SF
+ * CROP_TOP = DETECTION_ZONE_RECT_HEIGHT / SF
+ * CROP_LEFT = DETECTION_ZONE_RECT_LEFT / SF
+ * */
+#if ((DISPLAY_LARGE_DIM * APP_CAMERA_HEIGHT) < (DISPLAY_SMALL_DIM * APP_CAMERA_WIDTH))
+#define CROP_SIZE_TOP   ((DETECTION_ZONE_RECT_HEIGHT * APP_CAMERA_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+#define CROP_SIZE_LEFT  ((DETECTION_ZONE_RECT_WIDTH * APP_CAMERA_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+
+#define CROP_TOP  ((DETECTION_ZONE_RECT_TOP * APP_CAMERA_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+#define CROP_LEFT ((DETECTION_ZONE_RECT_LEFT * APP_CAMERA_WIDTH) / (SWAP_DIMS ? APP_DISPLAY_HEIGHT : APP_DISPLAY_WIDTH))
+#else   /* DISPLAY_ASPECT_RATIO() >= CAMERA_ASPECT_RATIO() */
+#define CROP_SIZE_TOP   ((DETECTION_ZONE_RECT_HEIGHT * APP_CAMERA_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+#define CROP_SIZE_LEFT  ((DETECTION_ZONE_RECT_WIDTH * APP_CAMERA_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+
+#define CROP_TOP  ((DETECTION_ZONE_RECT_TOP * APP_CAMERA_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+#define CROP_LEFT ((DETECTION_ZONE_RECT_LEFT * APP_CAMERA_HEIGHT) / (SWAP_DIMS ? APP_DISPLAY_WIDTH : APP_DISPLAY_HEIGHT))
+#endif  /* DISPLAY_ASPECT_RATIO() < CAMERA_ASPECT_RATIO() */
 
 static const char s_display_name[] = APP_DISPLAY_NAME;
 static const char s_camera_name[] = APP_CAMERA_NAME;
@@ -173,13 +225,13 @@ static void app_task(void *params)
     user_data_t user_data = {0};
     int ret;
 
-    PRINTF("[%s]\n", mpp_get_version());
+    PRINTF("[%s]\r\n", mpp_get_version());
 #if defined(INFERENCE_ENGINE_TFLM)
     PRINTF("Inference Engine: TensorFlow-Lite Micro \r\n");
 #elif defined (INFERENCE_ENGINE_GLOW)
     PRINTF("Inference Engine: Glow \r\n");
 #elif defined(INFERENCE_ENGINE_DeepViewRT)
-    PRINTF("---INFERENCE ENGINE: DeepViewRT---\n");
+    PRINTF("Inference Engine: DeepViewRT \r\n");
 #else
 #error "Please select inference engine"
 #endif
@@ -214,7 +266,7 @@ static void app_task(void *params)
     cam_params.width =  APP_CAMERA_WIDTH;
     cam_params.format = APP_CAMERA_FORMAT;
     cam_params.fps    = 30;
-    ret = mpp_camera_add(mp, s_camera_name, &cam_params, false);
+    ret = mpp_camera_add(mp, s_camera_name, &cam_params);
     if (ret) {
         PRINTF("Failed to add camera %s\n", s_camera_name);
         goto err;
@@ -235,23 +287,24 @@ static void app_task(void *params)
     /* First do crop + resize + color convert */
     mpp_element_params_t elem_params;
     memset(&elem_params, 0, sizeof(elem_params));
+    /* pick default device from the first listed and supported by Hw */
+    elem_params.convert.dev_name = NULL;
+    /* set output buffer dims */
+    elem_params.convert.out_buf.width = MODEL_WIDTH;
+    elem_params.convert.out_buf.height = MODEL_HEIGHT;
     /* color convert */
     elem_params.convert.pixel_format = MPP_PIXEL_RGB;
     elem_params.convert.ops = MPP_CONVERT_COLOR;
-    /* resize */
-    elem_params.convert.height = MODEL_HEIGHT;
-    elem_params.convert.width  = MODEL_WIDTH;
-    elem_params.convert.ops |= MPP_CONVERT_SCALE;
     /* crop center of image */
     elem_params.convert.crop.top = CROP_TOP;
-    elem_params.convert.crop.bottom = CROP_TOP + CROP_SIZE - 1;
+    elem_params.convert.crop.bottom = CROP_TOP + CROP_SIZE_TOP - 1;
     elem_params.convert.crop.left = CROP_LEFT;
-    elem_params.convert.crop.right = CROP_LEFT + CROP_SIZE - 1;
-    elem_params.convert.out_area.top = 0;
-    elem_params.convert.out_area.bottom = MODEL_HEIGHT - 1;
-    elem_params.convert.out_area.left = 0;
-    elem_params.convert.out_area.right = MODEL_WIDTH - 1;
+    elem_params.convert.crop.right = CROP_LEFT + CROP_SIZE_LEFT - 1;
     elem_params.convert.ops |= MPP_CONVERT_CROP;
+    /* resize: scaling parameters */
+    elem_params.convert.scale.width = MODEL_WIDTH;
+    elem_params.convert.scale.height = MODEL_HEIGHT;
+    elem_params.convert.ops |= MPP_CONVERT_SCALE;
 
     ret = mpp_element_add(mp_split, MPP_ELEMENT_CONVERT, &elem_params, NULL);
     if (ret ) {
@@ -305,10 +358,14 @@ static void app_task(void *params)
     }
 
     /* On the main branch of the pipeline, send the frame to the display */
-    /* First do color-convert + rotate */
+    /* First do color-convert + flip */
     memset(&elem_params, 0, sizeof(elem_params));
+    /* pick default device from the first listed and supported by Hw */
+    elem_params.convert.dev_name = NULL;
+    /* set output buffer dims */
+    elem_params.convert.out_buf.width = APP_CAMERA_WIDTH;
+    elem_params.convert.out_buf.height = APP_CAMERA_HEIGHT;
     elem_params.convert.pixel_format = APP_DISPLAY_FORMAT;
-    elem_params.convert.angle = APP_CAMERA_DISPLAY_ROTATE;
     elem_params.convert.flip = FLIP_HORIZONTAL;
     elem_params.convert.ops = MPP_CONVERT_COLOR | MPP_CONVERT_ROTATE;
     ret = mpp_element_add(mp, MPP_ELEMENT_CONVERT, &elem_params, NULL);
@@ -327,20 +384,11 @@ static void app_task(void *params)
     elem_params.labels.detected_count = 1;
     elem_params.labels.rectangles = user_data.labels;
 
-    /* first */
-    if ((APP_CAMERA_DISPLAY_ROTATE != ROTATE_0) &&
-        (APP_CAMERA_DISPLAY_ROTATE != ROTATE_180)) {
-        /* camera and display have different orientation */
-        user_data.labels[0].top    = DETECTION_ZONE_RECT_LEFT;
-        user_data.labels[0].left   = DETECTION_ZONE_RECT_TOP;
-        user_data.labels[0].bottom = DETECTION_ZONE_RECT_LEFT + DETECTION_ZONE_RECT_LENGTH;
-        user_data.labels[0].right  = DETECTION_ZONE_RECT_TOP + DETECTION_ZONE_RECT_LENGTH;
-    } else {
-        user_data.labels[0].top    = DETECTION_ZONE_RECT_TOP;
-        user_data.labels[0].left   = DETECTION_ZONE_RECT_LEFT;
-        user_data.labels[0].bottom = DETECTION_ZONE_RECT_TOP + DETECTION_ZONE_RECT_LENGTH;
-        user_data.labels[0].right  = DETECTION_ZONE_RECT_LEFT + DETECTION_ZONE_RECT_LENGTH;
-    }
+    /* first add detection zone box */
+    user_data.labels[0].top    = DETECTION_ZONE_RECT_TOP;
+    user_data.labels[0].left   = DETECTION_ZONE_RECT_LEFT;
+    user_data.labels[0].bottom = DETECTION_ZONE_RECT_TOP + DETECTION_ZONE_RECT_HEIGHT;
+    user_data.labels[0].right  = DETECTION_ZONE_RECT_LEFT + DETECTION_ZONE_RECT_WIDTH;
     user_data.labels[0].line_width = RECT_LINE_WIDTH;
     user_data.labels[0].line_color.rgb.B = 0xff;
     strcpy((char *)user_data.labels[0].label, "no label");
@@ -350,6 +398,22 @@ static void app_task(void *params)
     if (ret) {
         PRINTF("Failed to add element LABELED_RECTANGLE (0x%x)\r\n", ret);
         goto err;
+    }
+
+    /* then rotate if needed */
+    if (APP_DISPLAY_LANDSCAPE_ROTATE != ROTATE_0) {
+    	memset(&elem_params, 0, sizeof(elem_params));
+    	/* set output buffer dims */
+    	elem_params.convert.out_buf.width = APP_DISPLAY_WIDTH;
+    	elem_params.convert.out_buf.height = APP_DISPLAY_HEIGHT;
+    	elem_params.convert.angle = APP_DISPLAY_LANDSCAPE_ROTATE;
+    	elem_params.convert.ops = MPP_CONVERT_ROTATE;
+    	ret = mpp_element_add(mp, MPP_ELEMENT_CONVERT, &elem_params, NULL);
+
+    	if (ret) {
+    		PRINTF("Failed to add element CONVERT\r\n");
+    		goto err;
+    	}
     }
 
     mpp_display_params_t disp_params;

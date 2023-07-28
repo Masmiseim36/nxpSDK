@@ -1,62 +1,23 @@
 var a00074 =
 [
-    [ "snvs_lp_passive_tamper_t", "a00074.html#a00515", null ],
-    [ "snvs_lp_srtc_datetime_t", "a00074.html#a00517", [
-      [ "year", "a00074.html#a03a4361ff2481ab7ed890c60f3ac68b7", null ],
-      [ "month", "a00074.html#afeeab32d19b15b5dd7ebbcd3c1322e28", null ],
-      [ "day", "a00074.html#a8325ab17dc714294c88414f24d03320d", null ],
-      [ "hour", "a00074.html#a4a70a512ba988adb1fb1e4e62ba11f29", null ],
-      [ "minute", "a00074.html#a266253051fa3ee775a27bffb92d9be5b", null ],
-      [ "second", "a00074.html#a24f3ad7303d4b70ca927c385490a3448", null ]
+    [ "USB Device Configuration", "a00307.html", null ],
+    [ "serial_port_usb_cdc_config_t", "a00074.html#a00530", [
+      [ "controllerIndex", "a00074.html#a164ef9f84df063b85674cc8aa6edd872", null ]
     ] ],
-    [ "snvs_lp_srtc_config_t", "a00074.html#a00516", [
-      [ "srtcCalEnable", "a00074.html#a876e4c24fd02f7b939354f625e81b0a3", null ],
-      [ "srtcCalValue", "a00074.html#a86c9d09f47c6c6fa4dd60c24088f2d4f", null ]
-    ] ],
-    [ "FSL_SNVS_LP_DRIVER_VERSION", "a00074.html#gac5e0fc5d0c368b596733f3d40b212366", null ],
-    [ "SNVS_ZMK_REG_COUNT", "a00074.html#ga0eb6096d8a29431a527f42d2207df7bd", null ],
-    [ "SNVS_LP_MAX_TAMPER", "a00074.html#ga5e9e92e31bccf270bf2355cc6e80041a", null ],
-    [ "snvs_lp_srtc_interrupts_t", "a00074.html#ga806041c275061b615faf70ee97505a00", [
-      [ "kSNVS_SRTC_AlarmInterrupt", "a00074.html#gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515", null ]
-    ] ],
-    [ "snvs_lp_srtc_status_flags_t", "a00074.html#gadcecf6b4fd6c8c56133821ebbd2df9de", [
-      [ "kSNVS_SRTC_AlarmInterruptFlag", "a00074.html#ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1", null ]
-    ] ],
-    [ "snvs_lp_external_tamper_status_t", "a00074.html#ga123f0196672467755ef8b828db230b24", null ],
-    [ "snvs_lp_external_tamper_polarity_t", "a00074.html#gae5f4aea285aec7abf629056ef0eb3163", null ],
-    [ "snvs_lp_zmk_program_mode_t", "a00074.html#gae44e3f9132afa438f0bfd6233928355f", [
-      [ "kSNVS_ZMKSoftwareProgram", "a00074.html#ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614", null ],
-      [ "kSNVS_ZMKHardwareProgram", "a00074.html#ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f", null ]
-    ] ],
-    [ "snvs_lp_master_key_mode_t", "a00074.html#ga10b65b574393c82d6b6f3e5033c55d7b", [
-      [ "kSNVS_OTPMK", "a00074.html#gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62", null ],
-      [ "kSNVS_ZMK", "a00074.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe", null ],
-      [ "kSNVS_CMK", "a00074.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e", null ]
-    ] ],
-    [ "SNVS_LP_Init", "a00074.html#ga742e45feb782fa6b454e20f405d1f3d9", null ],
-    [ "SNVS_LP_Deinit", "a00074.html#gaf6184db24094f481adb2fa4511fdaa6a", null ],
-    [ "SNVS_LP_SRTC_Init", "a00074.html#gad2bc4630c869c62dcaee50c1bcd0897e", null ],
-    [ "SNVS_LP_SRTC_Deinit", "a00074.html#ga5d3d092911324c7436c84516a3cc53ab", null ],
-    [ "SNVS_LP_SRTC_GetDefaultConfig", "a00074.html#gab52bbf92230eca2bcfc590ad5733d6aa", null ],
-    [ "SNVS_LP_SRTC_SetDatetime", "a00074.html#ga3c35b4b1671c53939c335097411b6e7d", null ],
-    [ "SNVS_LP_SRTC_GetDatetime", "a00074.html#gaf65b902de3d06aa9940686ae86b7f8fd", null ],
-    [ "SNVS_LP_SRTC_SetAlarm", "a00074.html#gadb419ef8b369945b4858abcb76e36462", null ],
-    [ "SNVS_LP_SRTC_GetAlarm", "a00074.html#gab9120c6c286567d4144763b875725ac3", null ],
-    [ "SNVS_LP_SRTC_EnableInterrupts", "a00074.html#gabff8182f0b6daa2a2bbafcaab0caf582", null ],
-    [ "SNVS_LP_SRTC_DisableInterrupts", "a00074.html#gaecc4336193810a19ed278327f1d9b320", null ],
-    [ "SNVS_LP_SRTC_GetEnabledInterrupts", "a00074.html#gada2c47f87ffb9ff6eaeabe62796627bd", null ],
-    [ "SNVS_LP_SRTC_GetStatusFlags", "a00074.html#ga8d98bd36bcee5f9639346172eba5294b", null ],
-    [ "SNVS_LP_SRTC_ClearStatusFlags", "a00074.html#ga4b35224486431ebc7dd76707e5ab2c84", null ],
-    [ "SNVS_LP_SRTC_StartTimer", "a00074.html#gaa4af8e629107ca2df7b64d11a5afa01e", null ],
-    [ "SNVS_LP_SRTC_StopTimer", "a00074.html#ga413bc4eb1389aec4a61e3e54a08ec5f3", null ],
-    [ "SNVS_LP_PassiveTamperPin_GetDefaultConfig", "a00074.html#ga5b3b4bc95b7ad64a7c37d75f94f57a05", null ],
-    [ "SNVS_LP_EnableMonotonicCounter", "a00074.html#gaef92c80f282401b4db14ae4899997f20", null ],
-    [ "SNVS_LP_GetMonotonicCounter", "a00074.html#ga5a8eacfd2bae28cc0417785f8355f141", null ],
-    [ "SNVS_LP_IncreaseMonotonicCounter", "a00074.html#ga47bb73abadc43aa50a4dfdaa86a78293", null ],
-    [ "SNVS_LP_WriteZeroizableMasterKey", "a00074.html#ga10144a7135dd4a278c541d5e37a27ba1", null ],
-    [ "SNVS_LP_SetZeroizableMasterKeyValid", "a00074.html#ga4f8c7a22bd75612f3ecfcc64b2ca12d9", null ],
-    [ "SNVS_LP_GetZeroizableMasterKeyValid", "a00074.html#ga84aa6371b64d17ad9dd059a32cfcf0ba", null ],
-    [ "SNVS_LP_SetZeroizableMasterKeyProgramMode", "a00074.html#gaa4468c4f948d4529d21d2717f9af21fb", null ],
-    [ "SNVS_LP_EnableZeroizableMasterKeyECC", "a00074.html#ga9f0c2c01a10193906563254794af6f2b", null ],
-    [ "SNVS_LP_SetMasterKeyMode", "a00074.html#gaf546c45ff65189f400d757cf5f35223f", null ]
+    [ "SERIAL_PORT_USB_CDC_HANDLE_SIZE", "a00074.html#ga360a6c81305a4e09848df9aece70ad40", null ],
+    [ "USB_DEVICE_INTERRUPT_PRIORITY", "a00074.html#ga9fb260c0db8e2e75fa339416c82084b9", null ],
+    [ "serial_port_usb_cdc_controller_index_t", "a00074.html#ga0d579054cbf9827f77f7018cd6f84c29", [
+      [ "kSerialManager_UsbControllerKhci0", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29aba414efbedc13dd6605fdc76daee832f", null ],
+      [ "kSerialManager_UsbControllerKhci1", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a2992ed3c36bb733a2f3760b8a5927fdd", null ],
+      [ "kSerialManager_UsbControllerEhci0", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29aa9a69ebd4f3d306f583cb23ff5bc8aad", null ],
+      [ "kSerialManager_UsbControllerEhci1", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a48e611ec0653efbf4a8b01168b8668b3", null ],
+      [ "kSerialManager_UsbControllerLpcIp3511Fs0", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29afd13021033517524c07c581fa500a83d", null ],
+      [ "kSerialManager_UsbControllerLpcIp3511Fs1", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a4fc76a970dded05f11d3adc8c99880c3", null ],
+      [ "kSerialManager_UsbControllerLpcIp3511Hs0", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a78c55818f572f8120a85f13337ec9274", null ],
+      [ "kSerialManager_UsbControllerLpcIp3511Hs1", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a3e09ecce4e5aee8338fa0d1574139d47", null ],
+      [ "kSerialManager_UsbControllerOhci0", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29acb150e43e1572c4f7abb9b374783ba30", null ],
+      [ "kSerialManager_UsbControllerOhci1", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a2a98602358806c8f01cdbe42cc4c763c", null ],
+      [ "kSerialManager_UsbControllerIp3516Hs0", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a51d953a091b2650c6b8283e2ce5639ae", null ],
+      [ "kSerialManager_UsbControllerIp3516Hs1", "a00074.html#gga0d579054cbf9827f77f7018cd6f84c29a863a8a6669f791ce5b5207b3d85c6664", null ]
+    ] ]
 ];

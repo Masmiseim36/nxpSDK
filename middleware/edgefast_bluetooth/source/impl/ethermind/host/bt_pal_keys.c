@@ -260,6 +260,7 @@ struct bt_keys *bt_keys_find_irk(uint8_t id, const bt_addr_le_t *addr)
 			continue;
 		}
 
+#if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP))
 		if (bt_rpa_irk_matches(key_pool[i].irk.val, &addr->a)) {
 			BT_DBG("RPA %s matches %s",
 			       bt_addr_str(&key_pool[i].irk.rpa),
@@ -269,6 +270,7 @@ struct bt_keys *bt_keys_find_irk(uint8_t id, const bt_addr_le_t *addr)
 
 			return &key_pool[i];
 		}
+#endif /* CONFIG_BT_SMP */
 	}
 
 	BT_DBG("No IRK for %s", bt_addr_le_str(addr));
@@ -307,9 +309,11 @@ void bt_keys_clear(struct bt_keys *keys)
 
 	BT_DBG("%s (keys 0x%04x)", bt_addr_le_str(&keys->addr), keys->keys);
 
+#if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP))
 	if (keys->state & BT_KEYS_ID_ADDED) {
 		bt_id_del(keys);
 	}
+#endif /* CONFIG_BT_SMP */
 
 #if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {

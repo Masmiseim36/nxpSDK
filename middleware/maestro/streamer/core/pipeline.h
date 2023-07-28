@@ -341,6 +341,15 @@ int32_t send_msg_pipeline(Pipeline *pipeline, StreamMessage *msg);
  * @return none
  */
 int32_t set_repeat_pipeline(PipelineHandle handle, bool repeat);
+
+/*!
+ * @brief Get pipeline repeat mode
+ * @param handle Pointer to a pipeline object
+ *
+ * @return repeat repeat true or false
+ */
+bool get_repeat_pipeline(PipelineHandle handle);
+
 /*!
  * @brief Clears the pipeline track info cache
  * @details Clears all track info from the pipeline cache

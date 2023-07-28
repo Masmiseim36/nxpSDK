@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
+ * Copyright 2019-2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -11,15 +11,25 @@
 extern "C" {
 #endif /* __cplusplus*/
 
+/*! \addtogroup HAL_TYPES
+*  @{
+*/
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /*! @brief Local text buffer size. */
 #define GUI_PRINTF_BUF_SIZE 64
 
+/** @} */
+
 /*******************************************************************************
  * API
  ******************************************************************************/
+
+/*! \addtogroup HAL_OPERATIONS
+*  @{
+*/
 
 /*!
  * @brief Draws pixel with RGB565 color to defined point.
@@ -70,8 +80,11 @@ void hal_draw_text(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t
 void hal_draw_rect(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, uint32_t ysize,
                   uint32_t r, uint32_t g, uint32_t b, uint32_t width);
 
+/** @} */
+
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus*/
+
 
 #endif /* HAL_DRAW_H */

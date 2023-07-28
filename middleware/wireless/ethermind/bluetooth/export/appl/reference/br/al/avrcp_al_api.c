@@ -13,6 +13,7 @@
 
 /* --------------------------------------------- Header File Inclusion */
 #include "avrcp_al_internal.h"
+#include "avrcp_al_extern.h"
 
 #if ((defined AVRCP_TG) || (defined AVRCP_CT))
 
@@ -29,7 +30,7 @@ BT_DEFINE_MUTEX (avrcp_al_mutex)
  */
 AVRCP_AL_EVENT_NTF_CB al_event_ntf_cb;
 
-UCHAR  avrcp_al_init_state = AVRCP_AL_STATE_INVALID;
+static UCHAR  avrcp_al_init_state = AVRCP_AL_STATE_INVALID;
 
 /* --------------------------------------------- Functions */
 

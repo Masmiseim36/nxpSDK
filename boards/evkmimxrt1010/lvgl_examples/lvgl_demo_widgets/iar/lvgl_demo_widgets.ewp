@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -227,9 +227,9 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1011DAE5A</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -269,7 +269,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -310,7 +310,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -352,13 +352,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl</state>
@@ -370,10 +370,11 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/template</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -495,7 +496,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -700,7 +701,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1109,7 +1110,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1196,7 +1197,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1213,7 +1214,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1236,7 +1237,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1315,7 +1316,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1325,9 +1326,9 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1011DAE5A</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1367,7 +1368,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1408,7 +1409,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1450,13 +1451,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl</state>
@@ -1468,10 +1469,11 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/template</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1593,7 +1595,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1798,7 +1800,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2221,10 +2223,10 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../lvgl_support.h</name>
+      <name>$PROJ_DIR$/../lvgl_support.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../lvgl_support.c</name>
+      <name>$PROJ_DIR$/../lvgl_support.c</name>
     </file>
   </group>
   <group>
@@ -2250,6 +2252,240 @@
     <file>
       <name>$PROJ_DIR$/../../lvgl_demo_utils.c</name>
     </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>lcd</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.c</name>
+    </file>
+  </group>
+  <group>
+    <name>touchpanel</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.c</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpspi_cmsis.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpspi_cmsis.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpi2c_cmsis.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpi2c_cmsis.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi.h</name>
+    </file>
+  </group>
+  <group>
+    <name>freertos</name>
+    <group>
+      <name>freertos-kernel</name>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM4F</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+            </file>
+          </group>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>lvgl</name>
@@ -2486,14 +2722,14 @@
           </group>
           <group>
             <name>nxp</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</name>
-            </file>
             <group>
               <name>pxp</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</name>
+              </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c</name>
               </file>
@@ -2516,6 +2752,12 @@
             <group>
               <name>vglite</name>
               <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</name>
               </file>
               <file>
@@ -2534,16 +2776,22 @@
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</name>
-              </file>
-              <file>
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</name>
               </file>
             </group>
           </group>
@@ -2611,6 +2859,15 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</name>
             </file>
           </group>
           <group>
@@ -3238,6 +3495,9 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</name>
               </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</name>
+              </file>
             </group>
             <group>
               <name>ime</name>
@@ -3476,240 +3736,6 @@
     </group>
   </group>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
-    </file>
-  </group>
-  <group>
-    <name>lcd</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/ili9341/fsl_ili9341.c</name>
-    </file>
-  </group>
-  <group>
-    <name>touchpanel</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/ft6x06/fsl_ft6x06.c</name>
-    </file>
-  </group>
-  <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_dmamux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpspi_cmsis.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpspi_cmsis.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpi2c_cmsis.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/cmsis_drivers/fsl_lpi2c_cmsis.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers/fsl_lpspi.h</name>
-    </file>
-  </group>
-  <group>
-    <name>freertos</name>
-    <group>
-      <name>freertos-kernel</name>
-      <group>
-        <name>portable</name>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-        </group>
-        <group>
-          <name>IAR</name>
-          <group>
-            <name>ARM_CM4F</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
-            </file>
-          </group>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
-      </file>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1011/fsl_device_registers.h</name>
@@ -3762,6 +3788,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -3769,12 +3801,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -3809,6 +3835,24 @@
     </file>
   </group>
   <group>
+    <name>CMSIS_driver</name>
+    <group>
+      <name>Include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_I2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_SPI.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
@@ -3827,18 +3871,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_I2C.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_Common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Driver/Include/Driver_SPI.h</name>
     </file>
   </group>
 </project>

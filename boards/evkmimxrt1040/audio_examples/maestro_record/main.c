@@ -23,6 +23,7 @@
 
 #include "fsl_debug_console.h"
 
+#include "app_definitions.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_dmamux.h"
@@ -36,11 +37,10 @@
 #ifdef __MCUXPRESSO
 #include "fsl_flexram.h"
 #endif
-#include "app_definitions.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_SHELL_TASK_STACK_SIZE (1024)
+#define APP_SHELL_TASK_STACK_SIZE (256)
 #define SDCARD_TASK_STACK_SIZE    (512)
 
 /*******************************************************************************

@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -49,91 +57,16 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkmimxrt1015/emwin_examples/common
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/ili9341
-    ${SdkRootDirPath}/components/ft6x06
-    ${SdkRootDirPath}/devices/MIMXRT1015/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1015/cmsis_drivers
-    ${SdkRootDirPath}/devices/MIMXRT1015/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1015/utilities/debug_console_lite
-    ${SdkRootDirPath}/middleware/emwin
-    ${SdkRootDirPath}/devices/MIMXRT1015
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1015/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1015/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/CMSIS/Driver/Include
-)
+set_source_files_properties("${ProjDirPath}/../RTE_Device.h" PROPERTIES COMPONENT_CONFIG_FILE "RTE_Device.MIMXRT1015")
+set_source_files_properties("${ProjDirPath}/../emwin_support.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_emwin_template")
+set_source_files_properties("${ProjDirPath}/../emwin_support.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_emwin_template")
 
-# include modules
-include(driver_ili9341_MIMXRT1015)
-
-include(driver_ft6x06_MIMXRT1015)
-
-include(driver_clock_MIMXRT1015)
-
-include(driver_lpuart_MIMXRT1015)
-
-include(driver_cache_armv7_m7_MIMXRT1015)
-
-include(driver_edma_MIMXRT1015)
-
-include(driver_dmamux_MIMXRT1015)
-
-include(driver_lpi2c_MIMXRT1015)
-
-include(driver_lpi2c_edma_MIMXRT1015)
-
-include(driver_lpspi_edma_MIMXRT1015)
-
-include(driver_cmsis_lpspi_MIMXRT1015)
-
-include(driver_cmsis_lpi2c_MIMXRT1015)
-
-include(utility_debug_console_lite_MIMXRT1015)
-
-include(utility_assert_lite_MIMXRT1015)
-
-include(middleware_emwin_MIMXRT1015)
-
-include(driver_common_MIMXRT1015)
-
-include(device_MIMXRT1015_CMSIS_MIMXRT1015)
-
-include(component_lpuart_adapter_MIMXRT1015)
-
-include(component_lists_MIMXRT1015)
-
-include(device_MIMXRT1015_startup_MIMXRT1015)
-
-include(driver_iomuxc_MIMXRT1015)
-
-include(driver_igpio_MIMXRT1015)
-
-include(driver_xip_device_MIMXRT1015)
-
-include(driver_xip_board_evkmimxrt1015_MIMXRT1015)
-
-include(CMSIS_Include_core_cm_MIMXRT1015)
-
-include(CMSIS_Driver_Include_I2C_MIMXRT1015)
-
-include(CMSIS_Driver_Include_Common_MIMXRT1015)
-
-include(driver_lpspi_MIMXRT1015)
-
-include(CMSIS_Driver_Include_SPI_MIMXRT1015)
-
-include(utilities_misc_utilities_MIMXRT1015)
-
-include(device_MIMXRT1015_system_MIMXRT1015)
-
+include(${SdkRootDirPath}/devices/MIMXRT1015/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -143,14 +76,7 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

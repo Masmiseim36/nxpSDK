@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -58,137 +66,27 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${SdkRootDirPath}/middleware/eiq/mpp/README.md"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../display_support.c"
 "${ProjDirPath}/../display_support.h"
 "${ProjDirPath}/../camera_support.c"
 "${ProjDirPath}/../camera_support.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../hal/hal_evkbimxrt1050.c"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/middleware/eiq/mpp/examples/static_image_nanodet_view
     ${SdkRootDirPath}/middleware/eiq/mpp/examples
     ${SdkRootDirPath}/middleware/eiq/mpp/boards/evkbimxrt1050/inc
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/video/camera/device
-    ${SdkRootDirPath}/components/video/camera/receiver
-    ${SdkRootDirPath}/components/video/camera/device/sccb
-    ${SdkRootDirPath}/components/video/camera/device/ov7725
-    ${SdkRootDirPath}/components/video/camera/device/mt9m114
-    ${SdkRootDirPath}/components/video/camera
-    ${SdkRootDirPath}/components/video/camera/receiver/csi
-    ${SdkRootDirPath}/devices/MIMXRT1052/drivers
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/components/video/i2c
-    ${SdkRootDirPath}/components/video/display/dc
-    ${SdkRootDirPath}/components/video/display/dc/elcdif
-    ${SdkRootDirPath}/devices/MIMXRT1052/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1052/utilities/debug_console_lite
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite
-    ${SdkRootDirPath}/middleware/eiq
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/devices/MIMXRT1052
-    ${SdkRootDirPath}/devices/MIMXRT1052/xip
-    ${SdkRootDirPath}/boards/evkbimxrt1050/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/third_party/cmsis
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-)
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(driver_camera-device-common_MIMXRT1052)
-
-include(driver_camera-receiver-common_MIMXRT1052)
-
-include(driver_camera-device-sccb_MIMXRT1052)
-
-include(driver_camera-device-ov7725_MIMXRT1052)
-
-include(driver_camera-device-mt9m114_MIMXRT1052)
-
-include(driver_camera-common_MIMXRT1052)
-
-include(driver_camera-receiver-csi_MIMXRT1052)
-
-include(driver_csi_MIMXRT1052)
-
-include(driver_video-common_MIMXRT1052)
-
-include(driver_video-i2c_MIMXRT1052)
-
-include(driver_elcdif_MIMXRT1052)
-
-include(driver_pxp_MIMXRT1052)
-
-include(driver_dc-fb-common_MIMXRT1052)
-
-include(driver_dc-fb-elcdif_MIMXRT1052)
-
-include(driver_igpio_MIMXRT1052)
-
-include(utility_debug_console_lite_MIMXRT1052)
-
-include(utility_assert_lite_MIMXRT1052)
-
-include(middleware_eiq_tensorflow_lite_micro_MIMXRT1052)
-
-include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1052)
-
-include(middleware_eiq_mpp_MIMXRT1052)
-
-include(component_lists_MIMXRT1052)
-
-include(component_lpuart_adapter_MIMXRT1052)
-
-include(driver_common_MIMXRT1052)
-
-include(driver_lpuart_MIMXRT1052)
-
-include(device_MIMXRT1052_CMSIS_MIMXRT1052)
-
-include(device_MIMXRT1052_startup_MIMXRT1052)
-
-include(driver_clock_MIMXRT1052)
-
-include(driver_iomuxc_MIMXRT1052)
-
-include(driver_lpi2c_MIMXRT1052)
-
-include(driver_cache_armv7_m7_MIMXRT1052)
-
-include(driver_xip_device_MIMXRT1052)
-
-include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
-
-include(CMSIS_Include_core_cm_MIMXRT1052)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT1052)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT1052)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT1052)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1052)
-
-include(middleware_freertos-kernel_MIMXRT1052)
-
-include(middleware_freertos-kernel_extension_MIMXRT1052)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT1052)
-
-include(middleware_eiq_deepviewrt_MIMXRT1052)
-
-include(utilities_misc_utilities_MIMXRT1052)
-
-include(device_MIMXRT1052_system_MIMXRT1052)
-
+include(${SdkRootDirPath}/devices/MIMXRT1052/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -198,22 +96,7 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/mpp/lib/libmpp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepview-rt-cortex-m7f.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/mpp/lib/libmpp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepview-rt-cortex-m7f.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

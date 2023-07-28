@@ -32,6 +32,7 @@
 #include "sco_audio_pl.h"
 
 /* ----------------------------------------- External Global Variables */
+extern BT_DEVICE_ADDR g_bd_addr;
 
 /* ----------------------------------------- Exported Global Variables */
 
@@ -41,7 +42,7 @@
 DECL_STATIC APPL_HCI_CB_PTR appl_hci_cb_list [ APPL_MAX_NUM_HCI_CB ];
 
 /** Running Counter of Number of HCI Profile Event Indication CB Registered */
-UCHAR appl_num_hci_cb;
+DECL_STATIC UCHAR appl_num_hci_cb;
 #endif /* APPL_HCI_NO_PROFILE_EVENT_IND */
 
 #ifdef BR_EDR_HCI
@@ -74,8 +75,10 @@ DECL_STATIC UCHAR appl_hci_sync_conn_reject_reason;
 #endif /* HCI_NO_ESCO_AUTO_ACCEPT */
 #endif /* BR_EDR_HCI */
 
-DECL_STATIC UINT16                 sco_connection_handle;
+DECL_STATIC UINT16                 sco_connection_handle = HCI_INVALID_CONNECTION_HANDLE;
+#ifdef BR_EDR_HCI
 DECL_STATIC SCO_AUDIO_EP_INFO  sco_audio_config;
+#endif
 
 #ifdef HCI_SCO
 DECL_STATIC UCHAR                  sco_tx_pcm_data[256U];
@@ -418,17 +421,85 @@ static const char hci_options[] = "\
     71. Test Mode - RX Test. \n\
     72. Test Mode - TX Test. \n\
  \n\
-    75. HCI generic command\n\
-    76. Enable Test Mode \n\
+    74. Vendor Specific commands.\n\
+    75. HCI generic command. \n\
+    76. Enable Test Mode. \n\
  \n\
     80. LE Operations. \n\
  \n\
    100. HCI Reset. \n\
  \n\
-Your Option ? \0";
+Your Option ?";
 
+static const char appl_vendor_specific_menu[] = "\
+================ Vendor Specific Commands MENU ============\n\
+    0.  Exit \n\
+    1.  Refresh \n\
+    2.  Write BD Address. \n\
+";
 
+#ifdef BR_EDR_HCI
+static UCHAR link_type;
+#endif
 /* ----------------------------------------- Functions */
+
+void Write_BD_Address(void)
+{
+    UCHAR          param[8];
+
+    BT_DEVICE_ADDR   bd_addr;
+
+    param[0] = 0xfe;
+    param[1] = 0x6;
+
+    APPL_TRC(" Enter bd address:\n");
+
+    appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
+
+    BT_mem_copy(&param[2],&bd_addr,6);
+
+    BT_hci_vendor_specific_command(0x22U, (UCHAR *)param, sizeof(param));
+}
+
+void appl_vendor_specific_commands (void)
+{
+    int choice, menu_choice;
+
+    CONSOLE_OUT ("%s", appl_vendor_specific_menu);
+
+    BT_LOOP_FOREVER()
+    {
+        CONSOLE_OUT ("\nEnter your choice : ");
+        CONSOLE_IN ("%d", &choice);
+        menu_choice = choice;
+
+        switch(choice)
+        {
+        case 0:
+            break; /* return; */
+
+        case 1:
+            CONSOLE_OUT ("%s", appl_vendor_specific_commands);
+            break;
+
+        /* write BD address */
+        case 2:
+             Write_BD_Address();
+             break;
+        default:
+            CONSOLE_OUT ("Invalid choice. try again..\n");
+            break;
+        }
+
+        if (0 == menu_choice)
+        {
+            /* return */
+            break;
+        }
+    }
+
+    return;
+}
 
 API_RESULT appl_hci_event_indication_callback
            (
@@ -443,7 +514,7 @@ API_RESULT appl_hci_event_indication_callback
 
 #ifdef BR_EDR_HCI
     UCHAR * bd_addr;
-    UCHAR num_responses, link_type;
+    UCHAR num_responses;
     UINT32 count, value_3;
 #endif /* BR_EDR_HCI */
 
@@ -613,6 +684,10 @@ API_RESULT appl_hci_event_indication_callback
         appl_hci_print_bd_addr(bd_addr);
         event_data += 6U;
 
+        /* Update the global address */
+        BT_COPY_BD_ADDR(g_bd_addr.addr, bd_addr);
+        g_bd_addr.type = 0x00U;
+
         /* Link Type */
         hci_unpack_1_byte_param(&link_type, event_data);
         printf("\tLink Type: 0x%02X", link_type);
@@ -760,6 +835,7 @@ API_RESULT appl_hci_event_indication_callback
         break;
 #endif /* BR_EDR_HCI */
 
+#ifdef BR_EDR_HCI
     case HCI_DISCONNECTION_COMPLETE_EVENT:
         printf("Received HCI_DISCONNECTION_COMPLETE_EVENT.\n");
 
@@ -778,7 +854,7 @@ API_RESULT appl_hci_event_indication_callback
         printf("\tReason: 0x%02X\n", value_1);
         event_data += 1U;
 
-        if (connection_handle == sco_connection_handle)
+        if ( (connection_handle == sco_connection_handle) && ((link_type == HCI_SCO_LINK) || (link_type == HCI_ESCO_LINK)) )
         {
             /**
              * Stop Voice Path
@@ -791,7 +867,8 @@ API_RESULT appl_hci_event_indication_callback
         }
 
         break;
-
+#endif /* BR_EDR_HCI */
+        
 #ifdef BR_EDR_HCI
     case HCI_AUTHENTICATION_COMPLETE_EVENT:
         printf("Received HCI_AUTHENTICATION_COMPLETE_EVENT.\n");
@@ -1205,6 +1282,23 @@ API_RESULT appl_hci_event_indication_callback
 
                     break;
                 }
+                case HCI_READ_LOCAL_NAME_OPCODE:
+                {
+                    UCHAR c, i;
+                    for(i = 0U; i < (event_datalen - 4U); i ++)
+                    {
+                        c =  event_data[i];
+                        /* UTF-8 chars range is 0x20U to 0x7EU.*/
+                        if ( (c < 0x20U) || (c > 0x7EU) )
+                        {
+                            break;
+                        }
+                    }
+                    printf("\tReturn Parameters: ");
+                    appl_dump_bytes(event_data, i);
+                    printf("\n");
+                    break;
+                }
 
                 default:
                 {
@@ -1230,6 +1324,7 @@ API_RESULT appl_hci_event_indication_callback
 #endif /* APPL_LIMIT_LOGS */
 
     case HCI_COMMAND_STATUS_EVENT:
+#ifndef APPL_LIMIT_LOGS
         printf("Received HCI_COMMAND_STATUS_EVENT.\n");
 
         /* Status */
@@ -1247,7 +1342,7 @@ API_RESULT appl_hci_event_indication_callback
         printf("\tCommand Opcode: 0x%04X (%s)\n",
         value_2, appl_hci_get_command_name(value_2));
         event_data += 2U;
-
+#endif
         break;
 
     case HCI_HARDWARE_ERROR_EVENT:
@@ -1408,11 +1503,23 @@ API_RESULT appl_hci_event_indication_callback
         case 0x00U:
             printf(" -> Combination Key\n");
             break;
-        case 0x01U:
-            printf(" -> Local Unit Key\n");
+        case 0x03U:
+            printf(" -> Debug Combination Key\n");
             break;
-        case 0x02U:
-            printf(" -> Remote Unit Key\n");
+        case 0x04U:
+            printf(" -> Unauthenticated Combination Key (P-192)\n");
+            break;
+        case 0x05U:
+            printf(" -> Authenticated Combination Key (P-192)\n");
+            break;
+        case 0x06U:
+            printf(" -> Changed Combination Key\n");
+            break;
+        case 0x07U:
+            printf(" -> Unauthenticated Combination Key (P-256)\n");
+            break;
+        case 0x08U:
+            printf(" -> Authenticated Combination Key (P-256)\n");
             break;
         default:
             printf(" -> ???\n");
@@ -1531,21 +1638,6 @@ API_RESULT appl_hci_event_indication_callback
         hci_unpack_2_byte_param(&connection_handle, event_data);
         printf("\tConnection Handle: 0x%04X\n", connection_handle);
         event_data += 2U;
-
-        break;
-
-    case HCI_PAGE_SCAN_MODE_CHANGE_EVENT:
-        printf("Received HCI_PAGE_SCAN_MODE_CHANGE_EVENT.\n");
-
-        /* BD_ADDR */
-        printf("\tBD_ADDR: ");
-        appl_hci_print_bd_addr(event_data);
-        event_data += 6U;
-
-        /* Page Scan Mode */
-        hci_unpack_1_byte_param(&value_1, event_data);
-        printf("\tPage Scan Mode: 0x%02X\n", value_1);
-        event_data += 1U;
 
         break;
 
@@ -1688,8 +1780,8 @@ API_RESULT appl_hci_event_indication_callback
 
         break;
 
-    case HCI_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT:
-        printf("Received HCI_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT.\n");
+    case HCI_READ_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT:
+        printf("Received HCI_READ_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT.\n");
 
         /* Status */
         hci_unpack_1_byte_param(&status, event_data);
@@ -1979,6 +2071,8 @@ void main_hci_operations ( void )
     int choice, menu_choice;
     UINT16 handle;
     static UCHAR first_time = 0x0U;
+    UCHAR  str[5] = "";
+    UINT16 length,j = 0;
 
     if (0x0U == first_time)
     {
@@ -2096,8 +2190,10 @@ void main_hci_operations ( void )
             break;
 
         case 4:
-            appl_hci_write_scan_enable();
-            appl_hci_read_scan_enable();
+            if(API_SUCCESS == appl_hci_write_scan_enable())
+            {
+                appl_hci_read_scan_enable();
+            }
             break;
 
         case 10:
@@ -2140,41 +2236,47 @@ void main_hci_operations ( void )
 #endif /* HCI_ENH_SCO */
             break;
 
+#ifdef BR_EDR_HCI
+#ifndef HCI_NO_ESCO_AUTO_ACCEPT
+#ifdef BT_HCI_1_2
+            
         case 19:
-#if defined(BR_EDR_HCI) && !defined(HCI_NO_ESCO_AUTO_ACCEPT)
             printf ("Enter eSCO Auto Accept Response\n"
                     "  0 - Synchronous Connection Accept,\n"
                     "  1 - Enhanced Synchronous Connection Accept,\n"
                     "  2 - No response,\n"
                     "  3 - Synchronous Connection Reject\n"
                     "Your Choice: ");
-            scanf ("%d", &choice);
-            appl_hci_sync_conn_accept_auto_rsp = (UCHAR) choice;
+            scanf ("%s", str);
+            length = (UINT16)BT_str_len(str);
 
-            if (3U == choice)
+            if ((1U < length ) || !((str[j] >= '0') && (str[j] <= '3')))
             {
-                printf ("Enter Reason (in HEX) for Reject: ");
-                scanf ("%x", &choice);
-                appl_hci_sync_conn_reject_reason = (UCHAR)choice;
-            }
-            else if((3U < choice) || (0U == choice))
-            {
-                printf ("Invalid choice ");
+                printf ("Invalid option\n");
             }
             else
             {
-                printf("Invalid choice ");
+                choice = appl_str_to_num(str,length);
+                if (3 == choice)
+                {
+                    printf("Enter Reason (in HEX) for Reject: ");
+                    scanf("%x", &choice);
+                    appl_hci_sync_conn_reject_reason = (UCHAR)choice;
+                }
+                else if (3 > choice)
+                {
+                    appl_hci_sync_conn_accept_auto_rsp = (UCHAR)choice;
+                }
+                else
+                {
+                    /* MISRA C-2012 Rule 15.7 */
+                }
             }
-#else
-#ifndef BR_EDR_HCI
-            printf("\nBR_EDR_HCI is not defined !\n");
-#endif /* BR_EDR_HCI */
-#ifdef HCI_NO_ESCO_AUTO_ACCEPT
-            printf("\nHCI_NO_ESCO_AUTO_ACCEPT is defined !\n");
-#endif /* HCI_NO_ESCO_AUTO_ACCEPT */
-#endif /* defined(BR_EDR_HCI) && !defined(HCI_NO_ESCO_AUTO_ACCEPT) */
-
             break;
+            
+#endif /* BT_HCI_1_2 */
+#endif /* HCI_NO_ESCO_AUTO_ACCEPT */
+#endif /* BR_EDR_HCI */
 
         case 20:
             appl_hci_get_connection_details();
@@ -2448,6 +2550,11 @@ void main_hci_operations ( void )
 #endif
             break;
 
+        case 74:
+            printf("Vendor Specific command\n");
+            appl_vendor_specific_commands();
+            break;
+
         case 75:
             printf("Generic HCI command\n");
             appl_hci_generic_command();
@@ -2587,7 +2694,7 @@ API_RESULT appl_hci_register_callback
         APPL_HCI_MUTEX_UNLOCK();
     }
 
-    return API_SUCCESS;
+    return retval; /* API_SUCCESS; */
 }
 
 
@@ -2733,7 +2840,7 @@ API_RESULT appl_hci_set_esco_channel_parameters
         (appl_esco_params.voice_setting & LMP_VOICE_AIR_CODING_TRANSPARENT))? BT_TRUE: BT_FALSE;
         sco_audio_set_wideband_pl(enable);
 
-        BT_hci_set_esco_channel_parameters (&appl_esco_params);
+        (BT_IGNORE_RETURN_VALUE)BT_hci_set_esco_channel_parameters (&appl_esco_params);
 
         /* Unlock HCI */
         APPL_HCI_MUTEX_UNLOCK();
@@ -3763,7 +3870,7 @@ void appl_hci_tx_test_command(void)
 #endif/*BT_RF_TEST*/
 
 
-void appl_hci_generic_command()
+void appl_hci_generic_command(void)
 {
     UCHAR          ogf;
     UINT16         ocf;
@@ -3794,7 +3901,8 @@ void appl_hci_generic_command()
         APPL_TRC("\n");
     }
 
-    BT_hci_send_command(ogf, ocf, (UCHAR *)param, param_len);
+    (BT_IGNORE_RETURN_VALUE)BT_hci_send_command(ogf, ocf, (UCHAR *)param, param_len);
 
     BT_free_mem(param);
 };
+

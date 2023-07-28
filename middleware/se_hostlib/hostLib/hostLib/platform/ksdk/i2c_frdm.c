@@ -9,6 +9,7 @@
  */
 
 #include <board.h>
+#include "se_board_config.h"
 
 #if defined(FSL_FEATURE_SOC_I2C_COUNT) && FSL_FEATURE_SOC_I2C_COUNT > 0 && defined(FREEDOM)
 #include "i2c_a7.h"
@@ -38,24 +39,6 @@
 #define DELAY_I2C_US            (0)
 
 #define I2C_LOG_PRINTF PRINTF
-
-#if defined(FRDM_KW41Z) || defined (FRDM_KL26Z)
-#   define AX_I2CM              I2C1
-#   define AX_I2C_CLK_SRC       I2C1_CLK_SRC
-#   define AX_I2CM_IRQN         I2C1_IRQn
-#endif
-
-#ifdef FRDM_K82F
-#   define AX_I2CM              I2C3
-#   define AX_I2C_CLK_SRC       I2C3_CLK_SRC
-#   define AX_I2CM_IRQN         I2C3_IRQn
-#endif
-
-#ifdef FRDM_K64F
-#   define AX_I2CM              I2C0
-#   define AX_I2C_CLK_SRC       I2C0_CLK_SRC
-#   define AX_I2CM_IRQN         I2C0_IRQn
-#endif
 
 #if defined(FLOW_SILENT)
 #define DEBUG_PRINT_KINETIS_I2C(Operation, status)

@@ -63,13 +63,13 @@ API_RESULT appl_obex_server_shutdown (void);
 
 API_RESULT appl_obex_server_start
            (
-               APPL_OBEX_HANDLE *obex_appl_handle,
-               OBEX_NOTIFY_CB notify_cb
+               APPL_OBEX_HANDLE *obex_app_handle,
+               OBEX_NOTIFY_CB obex_notify_cb
            );
 
 API_RESULT appl_obex_server_stop
            (
-               APPL_OBEX_HANDLE *obex_appl_handle
+               APPL_OBEX_HANDLE *obex_app_handle
            );
 
 API_RESULT appl_obex_server_callback
@@ -83,10 +83,10 @@ API_RESULT appl_obex_server_callback
 
 API_RESULT appl_obex_server_send_rsp
            (
-               UCHAR                    *obex_app_handle,
-               UCHAR                     event_type,
+               APPL_OBEX_HANDLE                    *obex_app_handle,
+               UINT8                     event_type,
                UCHAR                     event_result,
-               APPL_OBEX_RSP_STRUCT     *app_rsq_hdrs
+               APPL_OBEX_RSP_STRUCT     *app_rsp_hdrs
            );
 
 API_RESULT appl_obex_server_transport_disconnect

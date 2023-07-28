@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021, 2022 NXP
+ * Copyright 2018, 2019, 2020, 2021, 2022, 2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -56,25 +56,34 @@
 phy_ksz8081_resource_t g_phy_resource;
 #endif
 
+#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#include "fsl_enet.h"
+#include "fsl_phyrtl8211f.h"
+phy_rtl8211f_resource_t g_phy_resource;
+#endif
+
 #ifdef EXAMPLE_USE_100M_ENET_PORT
+#define EXAMPLE_ENET ENET
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
 extern phy_ksz8081_resource_t g_phy_resource;
 /* PHY operations. */
 #define EXAMPLE_PHY_OPS &phyksz8081_ops
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
 
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #else
+#define EXAMPLE_ENET          ENET_1G
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS   BOARD_ENET1_PHY_ADDRESS
 /* PHY operations. */
-#define EXAMPLE_PHY_OPS       phyrtl8211f_ops
+#define EXAMPLE_PHY_OPS       &phyrtl8211f_ops
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif1_init
+extern phy_rtl8211f_resource_t g_phy_resource;
 #endif // EXAMPLE_USE_100M_ENET_PORT
+#define EXAMPLE_PHY_RESOURCE &g_phy_resource
 
 #endif  // (LPC_ENET)
 
@@ -119,21 +128,21 @@ static phy_handle_t phyHandle;
  ******************************************************************************/
 static struct netif fsl_netif0;
 
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1176DVMAA_cm7)
 static void MDIO_Init(void)
 {
-    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
-    ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
+    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
+    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
 }
 
 static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
 {
-    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
+    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
 }
 
 static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
 {
-    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
+    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
 }
 #endif
 
@@ -146,7 +155,7 @@ iot_agent_status_t network_init(void)
                                             .srcClockHz  = EXAMPLE_CLOCK_FREQ,
                                             .macAddress = configMAC_ADDR
     };
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1176DVMAA_cm7)
     MDIO_Init();
     g_phy_resource.read  = MDIO_Read;
     g_phy_resource.write = MDIO_Write;

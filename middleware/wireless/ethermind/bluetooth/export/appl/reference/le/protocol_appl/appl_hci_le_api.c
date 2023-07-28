@@ -12,6 +12,7 @@
 
 /* ----------------------------------------- Header File Inclusion */
 #include "appl_hci_le.h"
+#include "appl_utils.h"
 
 #ifdef BT_LE
 
@@ -120,7 +121,7 @@ void appl_hci_le_set_random_address(void)
     UCHAR        appl_random_address[BT_BD_ADDR_SIZE];
 
     APPL_TRC("Enter random_address : \n");
-    appl_get_bd_addr(appl_random_address);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_random_address);
 
     retval = BT_hci_le_set_random_address
              (
@@ -177,7 +178,7 @@ void appl_hci_le_set_advertising_parameters(void)
     direct_addr_type = (UCHAR) read_val;
 
     APPL_TRC("Enter direct_addr : \n");
-    appl_get_bd_addr(appl_direct_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(appl_direct_addr);
 
     APPL_TRC("Enter advertising_channel_map : \n");
     scanf("%X",&read_val);
@@ -448,8 +449,8 @@ void appl_hci_le_create_connection(void)
     API_RESULT   retval;
     UCHAR        initiator_filter_policy;
     UCHAR        own_address_type;
-    UCHAR        peer_address[BT_BD_ADDR_SIZE];
-    UCHAR        peer_address_type;
+    UCHAR        appl_peer_address[BT_BD_ADDR_SIZE];
+    UCHAR        appl_peer_address_type;
     UINT16       conn_interval_max;
     UINT16       conn_interval_min;
     UINT16       conn_latency;
@@ -458,37 +459,53 @@ void appl_hci_le_create_connection(void)
     UINT16       maximum_ce_length;
     UINT16       minimum_ce_length;
     UINT16       supervision_timeout;
-    unsigned int read_val;
+    int          read_val;
+
+    /* Init */
+    appl_peer_address_type = (UCHAR)0x00U;
+    own_address_type = (UCHAR)0x00U;
+    conn_interval_min = (UINT16)0x0000U;
+    conn_interval_max = (UINT16)0x0000U;
+    conn_latency = (UINT16)0x0000U;
+    supervision_timeout = (UINT16)0x0000U;
+    maximum_ce_length = (UINT16)0x0000U;
+    minimum_ce_length = (UINT16)0x0000U;
 
     APPL_TRC("Set Default: Yes (1), No (0)\n");
     scanf("%X", &read_val);
 
-    if (1U == read_val)
+    if (1 == read_val)
     {
         le_scan_interval        = (UINT16) 0x0040U;
         le_scan_window          = (UINT16) 0x0040U;
         initiator_filter_policy = (UCHAR) 0x00U;
-        peer_address_type       = (UCHAR) 0x00U;
+        appl_peer_address_type       = (UCHAR) 0x00U;
 
         CONSOLE_OUT("Enter peer_address : \n");
-        appl_get_bd_addr(peer_address);
-
-        CONSOLE_OUT("\n0 - Public\n1 - Random\n");
-        CONSOLE_OUT("Enter Peer Address Type : \n");
-        CONSOLE_IN("%u", &read_val);
-        peer_address_type       = (UCHAR) read_val;
-
-        CONSOLE_OUT("\n0 - Public\n1 - Random\n");
-        CONSOLE_OUT("Enter Own Address Type : \n");
-        CONSOLE_IN("%u", &read_val);
-        own_address_type        = (UCHAR) read_val;
-
-        conn_interval_min       = (UINT16) 0x0006U;
-        conn_interval_max       = (UINT16) 0x0006U;
-        conn_latency            = (UINT16) 0x0000U;
-        supervision_timeout     = (UINT16) 0x03BBU;
-        maximum_ce_length       = (UINT16) 0x0000U;
-        minimum_ce_length       = (UINT16) 0x0000U;
+        retval = appl_get_bd_addr(appl_peer_address);
+        if (API_SUCCESS == retval)
+        {
+            CONSOLE_OUT("\n0 - Public\n1 - Random\n");
+            CONSOLE_OUT("Enter Peer Address Type : \n");
+            retval = appl_validate_params(&read_val,1U,0U,1U);
+            if (API_SUCCESS == retval)
+            {
+                appl_peer_address_type       = (UCHAR) read_val;
+                CONSOLE_OUT("\n0 - Public\n1 - Random\n");
+                CONSOLE_OUT("Enter Own Address Type : \n");
+                retval = appl_validate_params(&read_val,1U,0U,1U);
+                if (API_SUCCESS == retval)
+                {
+                    own_address_type        = (UCHAR) read_val;
+                    conn_interval_min       = (UINT16) 0x0006U;
+                    conn_interval_max       = (UINT16) 0x0006U;
+                    conn_latency            = (UINT16) 0x0000U;
+                    supervision_timeout     = (UINT16) 0x03BBU;
+                    maximum_ce_length       = (UINT16) 0x0000U;
+                    minimum_ce_length       = (UINT16) 0x0000U;
+                }
+            }
+        }
     }
     else
     {
@@ -505,57 +522,64 @@ void appl_hci_le_create_connection(void)
         initiator_filter_policy = (UCHAR) read_val;
 
         APPL_TRC("Enter peer_address_type : \n");
-        scanf("%X", &read_val);
-        peer_address_type       = (UCHAR) read_val;
+        retval = appl_validate_params(&read_val,2U,0U,1U);
+        if (API_SUCCESS == retval)
+        {
+            appl_peer_address_type       = (UCHAR) read_val;
+            APPL_TRC("Enter peer_address : \n");
+            retval = appl_get_bd_addr(appl_peer_address);
+            if (API_SUCCESS == retval)
+            {
+                APPL_TRC("Enter own_address_type : \n");
+                retval = appl_validate_params(&read_val,2U,0U,1U);
+                if (API_SUCCESS == retval)
+                {
+                    own_address_type        = (UCHAR) read_val;
+                    APPL_TRC("Enter conn_interval_min : \n");
+                    scanf("%X", &read_val);
+                    conn_interval_min       = (UINT16) read_val;
+                    APPL_TRC("Enter conn_interval_max : \n");
+                    scanf("%X", &read_val);
+                    conn_interval_max       = (UINT16) read_val;
 
-        APPL_TRC("Enter peer_address : \n");
-        appl_get_bd_addr(peer_address);
+                    APPL_TRC("Enter conn_latency : \n");
+                    scanf("%X", &read_val);
+                    conn_latency            = (UINT16) read_val;
 
-        APPL_TRC("Enter own_address_type : \n");
-        scanf("%X", &read_val);
-        own_address_type        = (UCHAR) read_val;
+                    APPL_TRC("Enter supervision_timeout : \n");
+                    scanf("%X", &read_val);
+                    supervision_timeout     = (UINT16) read_val;
 
-        APPL_TRC("Enter conn_interval_min : \n");
-        scanf("%X", &read_val);
-        conn_interval_min       = (UINT16) read_val;
+                    APPL_TRC("Enter maximum_ce_length : \n");
+                    scanf("%X", &read_val);
+                    maximum_ce_length       = (UINT16) read_val;
 
-        APPL_TRC("Enter conn_interval_max : \n");
-        scanf("%X", &read_val);
-        conn_interval_max       = (UINT16) read_val;
-
-        APPL_TRC("Enter conn_latency : \n");
-        scanf("%X", &read_val);
-        conn_latency            = (UINT16) read_val;
-
-        APPL_TRC("Enter supervision_timeout : \n");
-        scanf("%X", &read_val);
-        supervision_timeout     = (UINT16) read_val;
-
-        APPL_TRC("Enter maximum_ce_length : \n");
-        scanf("%X", &read_val);
-        maximum_ce_length       = (UINT16) read_val;
-
-        APPL_TRC("Enter minimum_ce_length : \n");
-        scanf("%X", &read_val);
-        minimum_ce_length       = (UINT16) read_val;
+                    APPL_TRC("Enter minimum_ce_length : \n");
+                    scanf("%X", &read_val);
+                    minimum_ce_length       = (UINT16) read_val;
+                }
+            }
+        }
     }
 
-    retval = BT_hci_le_create_connection
-              (
-                   le_scan_interval,
-                   le_scan_window,
-                   initiator_filter_policy,
-                   peer_address_type,
-                   peer_address,
-                   own_address_type,
-                   conn_interval_min,
-                   conn_interval_max,
-                   conn_latency,
-                   supervision_timeout,
-                   maximum_ce_length,
-                   minimum_ce_length
-              );
-
+    if (API_SUCCESS == retval)
+    {
+        retval = BT_hci_le_create_connection
+                  (
+                      le_scan_interval,
+                      le_scan_window,
+                      initiator_filter_policy,
+                      appl_peer_address_type,
+                      appl_peer_address,
+                      own_address_type,
+                      conn_interval_min,
+                      conn_interval_max,
+                      conn_latency,
+                      supervision_timeout,
+                      maximum_ce_length,
+                      minimum_ce_length
+                 );
+    }
     if(API_SUCCESS != retval)
     {
         APPL_TRC("FAILED !!! Error code = %04X\n", retval);
@@ -635,7 +659,7 @@ void appl_hci_le_add_device_to_white_list(void)
     addr_type = (UCHAR) read_val;
 
     APPL_TRC("Enter addr : \n");
-    appl_get_bd_addr(addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(addr);
 
     retval = BT_hci_le_add_device_to_white_list
              (
@@ -668,7 +692,7 @@ void appl_hci_le_remove_device_from_white_list(void)
     addr_type = (UCHAR) read_val;
 
     APPL_TRC("Enter addr : \n");
-    appl_get_bd_addr(addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(addr);
 
     retval = BT_hci_le_remove_device_from_white_list
              (
@@ -1335,7 +1359,7 @@ void appl_le_send_data(void)
     UINT32         index;
 
     APPL_TRC("Enter Bluetooth address : \n");
-    appl_get_bd_addr(bd_addr.addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(bd_addr.addr);
 
     APPL_TRC("Enter bd_addr_type ");
     scanf("%X", &read_val);
@@ -1346,7 +1370,7 @@ void appl_le_send_data(void)
     lcid = (UINT16) read_val;
 
     APPL_TRC("Enter data length (<= %d) [in decimal]: ",
-    (sizeof(appl_l2cap_le_fixed_data) - L2CAP_HDR_LEN));
+    (UINT16)(sizeof(appl_l2cap_le_fixed_data) - L2CAP_HDR_LEN));
 
     scanf("%d", &read_val);
     len = (UINT16) read_val;
@@ -1554,7 +1578,7 @@ void appl_hci_le_add_device_to_resolving_list(void)
     peer_id_addr_type = (UCHAR )read_val;
 
     APPL_TRC("Enter peer identity addr: \n");
-    appl_get_bd_addr(peer_id_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(peer_id_addr);
 
     APPL_TRC("Enter peer IRK: \n");
     for(index = 0U; index < 16U; index++)
@@ -1605,7 +1629,7 @@ void appl_hci_le_remove_device_from_resolving_list(void)
     peer_id_addr_type = (UCHAR )read_val;
 
     APPL_TRC("Enter peer identity addr: \n");
-    appl_get_bd_addr(peer_id_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(peer_id_addr);
 
     retval = BT_hci_le_remove_device_from_resolving_list
                 (
@@ -1682,7 +1706,7 @@ void appl_hci_le_read_peer_resolvable_address(void)
     peer_id_addr_type = (UCHAR )read_val;
 
     APPL_TRC("Enter peer identity addr: \n");
-    appl_get_bd_addr(peer_id_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(peer_id_addr);
 
     retval = BT_hci_le_read_peer_resolvable_address
                 (
@@ -1717,7 +1741,7 @@ void appl_hci_le_read_local_resolvable_address(void)
     peer_id_addr_type = (UCHAR )read_val;
 
     APPL_TRC("Enter peer identity addr: \n");
-    appl_get_bd_addr(peer_id_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(peer_id_addr);
 
     retval = BT_hci_le_read_local_resolvable_address
                 (
@@ -1769,15 +1793,21 @@ void appl_hci_le_set_address_resolution_enable(void)
 void appl_hci_le_set_resolvable_private_address_timeout(void)
 {
 #ifdef HCI_LE_SET_RESOLVABLE_PRIVATE_ADDR_TIMEOUT_SUPPORT
-    UINT16       rpa_timeout;
-    API_RESULT   retval;
-    unsigned int read_val;
+    UINT16     rpa_timeout;
+    API_RESULT retval;
+    int        read_val;
 
-    APPL_TRC("Enter RPA timeout(in Hex): \n");
-    scanf("%X",  &read_val);
-    rpa_timeout = (UINT16) read_val;
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    read_val = 0;
 
-    retval = BT_hci_le_set_resolvable_private_address_timeout (rpa_timeout);
+    APPL_TRC("Enter RPA timeout(1sec < range < 3600sec): \n");
+    retval = appl_validate_params(&read_val,4U,1U,3600U);
+    if (API_SUCCESS == retval)
+    {
+        printf("%d",read_val);
+        rpa_timeout = (UINT16) read_val;
+        retval = BT_hci_le_set_resolvable_private_address_timeout (rpa_timeout);
+    }
     if(API_SUCCESS != retval)
     {
         APPL_TRC("FAILED !!! Error code = %04X\n", retval);
@@ -1971,7 +2001,7 @@ void appl_hci_le_set_extended_advertising_params(void)
     peer_addr_type = (UCHAR)read_val;
 
     APPL_TRC("Enter peer address : \n");
-    appl_get_bd_addr(peer_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(peer_addr);
 
     APPL_TRC("Enter advertising_filter_policy : \n");
     scanf("%x", &read_val);
@@ -2043,11 +2073,11 @@ void appl_hci_le_set_periodic_adv_params(void)
     scanf("%x", &read_val);
     periodic_adv_hndl = (UCHAR)read_val;
 
-    APPL_TRC("Enter Periodic Avertising interval Minimum : \n");
+    APPL_TRC("Enter Periodic Advertising interval Minimum : \n");
     scanf("%x", &read_val);
     periodic_adv_intval_min = (UINT16)read_val;
 
-    APPL_TRC("Enter Periodic Avertising interval Maximum : \n");
+    APPL_TRC("Enter Periodic Advertising interval Maximum : \n");
     scanf("%x", &read_val);
     periodic_adv_intval_max = (UINT16)read_val;
 
@@ -2097,7 +2127,7 @@ void appl_hci_le_set_extended_advertising_data(void)
     scanf("%x", &read_val);
     frgment_pref = (UCHAR)read_val;
 
-    APPL_TRC("Enter Extended Advertertising data length in[DECIMAL]: \n");
+    APPL_TRC("Enter Extended Advertising data length in[DECIMAL]: \n");
     scanf("%d", &read_val);
     adv_data_len = (UCHAR)read_val;
 
@@ -2109,7 +2139,7 @@ void appl_hci_le_set_extended_advertising_data(void)
         MAX_EXTENDED_ADVERTISING_DATA_SIZE
     );
 
-    APPL_TRC("Enter Extended Advertertising data: \n");
+    APPL_TRC("Enter Extended Advertising data: \n");
     for (index = 0U; index < adv_data_len; index++)
     {
         scanf("%x", &read_val);
@@ -2435,7 +2465,7 @@ void appl_hci_le_periodic_adv_create_sync(void)
     addr_type = (UCHAR)read_val;
 
     APPL_TRC("Enter Peer address : \n");
-    appl_get_bd_addr(addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(addr);
 
     APPL_TRC("Enter skip: \n");
     scanf("%x", &read_val);
@@ -2485,7 +2515,7 @@ void appl_hci_le_add_dev_to_periodic_advertiser_list(void)
     addr_type = (UCHAR)read_val;
 
     APPL_TRC("Enter Advertiser_Address : \n");
-    appl_get_bd_addr(addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(addr);
 
     APPL_TRC("Enter Advertising_SID: \n");
     scanf("%x", &read_val);
@@ -2523,7 +2553,7 @@ void appl_hci_le_rm_dev_from_periodic_advertiser_list(void)
     addr_type = (UCHAR)read_val;
 
     APPL_TRC("Enter Advertiser_Address : \n");
-    appl_get_bd_addr(addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(addr);
 
     APPL_TRC("Enter Advertising_SID: \n");
     scanf("%x", &read_val);
@@ -2617,7 +2647,7 @@ void appl_hci_le_set_advertising_random_address(void)
     adv_handle = (UCHAR)read_val;
 
     APPL_TRC("Enter random_address in[HEX]: \n");
-    appl_get_bd_addr(random_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(random_addr);
 
     retval = BT_hci_le_set_adv_set_random_address
              (
@@ -2788,7 +2818,7 @@ void appl_hci_le_extended_create_connection(void)
     peer_addr_type = (UCHAR)read_val;
 
     APPL_TRC("Enter peer_address: \n");
-    appl_get_bd_addr(peer_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(peer_addr);
 
     /**
     * Initiating Phy values are
@@ -2975,6 +3005,94 @@ void appl_hci_le_extended_create_connection(void)
     return;
 }
 
+void appl_hci_le_connect(BT_DEVICE_ADDR * bd_addr, UCHAR mode)
+{
+    UCHAR   init_filr_policy;
+    UCHAR   own_addr_type;
+    UCHAR   peer_addr_type;
+    UCHAR   peer_addr[BT_BD_ADDR_SIZE];
+    UCHAR   init_phy;
+
+    UINT16  scan_intval[APPL_MAX_NUM_OF_INIT_PHYS];
+    UINT16  scan_window[APPL_MAX_NUM_OF_INIT_PHYS];
+    UINT16  conn_interval_min[APPL_MAX_NUM_OF_INIT_PHYS];
+    UINT16  conn_interval_max[APPL_MAX_NUM_OF_INIT_PHYS];
+    UINT16  conn_latency[APPL_MAX_NUM_OF_INIT_PHYS];
+    UINT16  supn_timeout[APPL_MAX_NUM_OF_INIT_PHYS];
+    UINT16  min_ce_len[APPL_MAX_NUM_OF_INIT_PHYS];
+    UINT16  max_ce_len[APPL_MAX_NUM_OF_INIT_PHYS];
+    API_RESULT retval;
+
+    init_filr_policy     = 0x00;
+#ifndef BT_THIRDPARTY_SUPPORT
+    own_addr_type        = BD_ADDR_TYPE_PUBLIC;
+#else
+    own_addr_type        = BD_ADDR_TYPE_RANDOM;
+#endif
+    init_phy             = 0x01;
+    scan_intval[0]       = 0x0020;
+    scan_window[0]       = 0x0020;
+    conn_interval_min[0] = 0x0050;
+    conn_interval_max[0] = 0x0050;
+    conn_latency[0]      = 0x00;
+    supn_timeout[0]      = 0x09D0;
+    min_ce_len[0]        = 0x0;
+    max_ce_len[0]        = 0x0;
+
+    /* Copy the BD Address */
+    BT_COPY_BD_ADDR(peer_addr, bd_addr->addr);
+    peer_addr_type = bd_addr->type;
+
+    if (0x00 != mode)
+    {
+        printf("Initiating LE Extended Connection...\n");
+        retval = BT_hci_le_extended_create_connection
+                 (
+                     init_filr_policy,
+                     own_addr_type,
+                     peer_addr_type,
+                     peer_addr,
+                     init_phy,
+                     scan_intval,
+                     scan_window,
+                     conn_interval_min,
+                     conn_interval_max,
+                     conn_latency,
+                     supn_timeout,
+                     min_ce_len,
+                     max_ce_len
+                 );
+    }
+    else
+    {
+        printf("Initiating LE Connection...\n");
+        retval = BT_hci_le_create_connection
+                  (
+                       scan_intval[0],
+                       scan_window[0],
+                       init_filr_policy,
+                       peer_addr_type,
+                       peer_addr,
+                       own_addr_type,
+                       conn_interval_min[0],
+                       conn_interval_max[0],
+                       conn_latency[0],
+                       supn_timeout[0],
+                       max_ce_len[0],
+                       min_ce_len[0]
+                  );
+    }
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
 void appl_hci_le_set_privacy_mode(void)
 {
     unsigned int read_val;
@@ -2988,7 +3106,7 @@ void appl_hci_le_set_privacy_mode(void)
     peer_identity_addr_type = (UCHAR)read_val;
 
     APPL_TRC("Enter peer_identity_address : \n");
-    appl_get_bd_addr(peer_identity_addr);
+    (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(peer_identity_addr);
 
     APPL_TRC("Enter privacy_mode : \n");
     scanf("%x", &read_val);
@@ -3880,10 +3998,1736 @@ void appl_hci_le_modify_sleep_clock_accuracy(void)
     {
         APPL_TRC("API returned success...\n");
     }
-
-    return;
 }
 
 #endif /* BT_5_1 */
+
+#ifdef BT_5_2
+void appl_hci_le_read_iso_tx_sync(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    retval = BT_hci_le_read_iso_tx_sync
+             (
+                 connection_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_set_cig_parameters(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  cig_id;
+    UINT32 sdu_interval_m_to_s;
+    UINT32 sdu_interval_s_to_m;
+    UCHAR  sca;
+    UCHAR  packing;
+    UCHAR  framing;
+    UINT16 max_transport_latency_m_to_s;
+    UINT16 max_transport_latency_s_to_m;
+    UCHAR  cis_count;
+    UCHAR * cis_id;
+    UINT16 * max_sdu_m_to_s;
+    UINT16 * max_sdu_s_to_m;
+    UCHAR * phy_m_to_s;
+    UCHAR * phy_s_to_m;
+    UCHAR * rtn_m_to_s;
+    UCHAR * rtn_s_to_m;
+    UINT32 index;
+
+    APPL_TRC("Enter cig_id :\n");
+    scanf("%x", &read_val);
+    cig_id = (UCHAR)read_val;
+
+    APPL_TRC("Enter sdu_interval_m_to_s :\n");
+    scanf("%x", &read_val);
+    sdu_interval_m_to_s = (UINT32)read_val;
+
+    APPL_TRC("Enter sdu_interval_s_to_m :\n");
+    scanf("%x", &read_val);
+    sdu_interval_s_to_m = (UINT32)read_val;
+
+    APPL_TRC("Enter sca :\n");
+    scanf("%x", &read_val);
+    sca = (UCHAR)read_val;
+
+    APPL_TRC("Enter packing :\n");
+    scanf("%x", &read_val);
+    packing = (UCHAR)read_val;
+
+    APPL_TRC("Enter framing :\n");
+    scanf("%x", &read_val);
+    framing = (UCHAR)read_val;
+
+    APPL_TRC("Enter max_transport_latency_m_to_s :\n");
+    scanf("%x", &read_val);
+    max_transport_latency_m_to_s = (UINT16)read_val;
+
+    APPL_TRC("Enter max_transport_latency_s_to_m :\n");
+    scanf("%x", &read_val);
+    max_transport_latency_s_to_m = (UINT16)read_val;
+
+    APPL_TRC("Enter cis_count :\n");
+    scanf("%x", &read_val);
+    cis_count = (UCHAR)read_val;
+
+    /* Allocate memory for cis_id */
+    cis_id = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == cis_id)
+    {
+        APPL_TRC("Memory allocation for cis_id Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter cis_id :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        cis_id[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for max_sdu_m_to_s */
+    max_sdu_m_to_s = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == max_sdu_m_to_s)
+    {
+        APPL_TRC("Memory allocation for max_sdu_m_to_s Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter max_sdu_m_to_s :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        max_sdu_m_to_s[index] = (UINT16)read_val;
+    }
+
+    /* Allocate memory for max_sdu_s_to_m */
+    max_sdu_s_to_m = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == max_sdu_s_to_m)
+    {
+        APPL_TRC("Memory allocation for max_sdu_s_to_m Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter max_sdu_s_to_m :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        max_sdu_s_to_m[index] = (UINT16)read_val;
+    }
+
+    /* Allocate memory for phy_m_to_s */
+    phy_m_to_s = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == phy_m_to_s)
+    {
+        APPL_TRC("Memory allocation for phy_m_to_s Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter phy_m_to_s :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        phy_m_to_s[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for phy_s_to_m */
+    phy_s_to_m = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == phy_s_to_m)
+    {
+        APPL_TRC("Memory allocation for phy_s_to_m Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter phy_s_to_m :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        phy_s_to_m[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for rtn_m_to_s */
+    rtn_m_to_s = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == rtn_m_to_s)
+    {
+        APPL_TRC("Memory allocation for rtn_m_to_s Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter rtn_m_to_s :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        rtn_m_to_s[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for rtn_s_to_m */
+    rtn_s_to_m = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == rtn_s_to_m)
+    {
+        APPL_TRC("Memory allocation for rtn_s_to_m Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter rtn_s_to_m :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        rtn_s_to_m[index] = (UCHAR)read_val;
+    }
+
+    retval = BT_hci_le_set_cig_parameters
+             (
+                 cig_id,
+                 sdu_interval_m_to_s,
+                 sdu_interval_s_to_m,
+                 sca,
+                 packing,
+                 framing,
+                 max_transport_latency_m_to_s,
+                 max_transport_latency_s_to_m,
+                 cis_count,
+                 cis_id,
+                 max_sdu_m_to_s,
+                 max_sdu_s_to_m,
+                 phy_m_to_s,
+                 phy_s_to_m,
+                 rtn_m_to_s,
+                 rtn_s_to_m
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    BT_free_mem(cis_id);
+    BT_free_mem(max_sdu_m_to_s);
+    BT_free_mem(max_sdu_s_to_m);
+    BT_free_mem(phy_m_to_s);
+    BT_free_mem(phy_s_to_m);
+    BT_free_mem(rtn_m_to_s);
+    BT_free_mem(rtn_s_to_m);
+}
+
+void appl_hci_le_set_cig_parameters_test(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  cig_id;
+    UINT32 sdu_interval_m_to_s;
+    UINT32 sdu_interval_s_to_m;
+    UCHAR  ft_m_to_s;
+    UCHAR  ft_s_to_m;
+    UINT16 iso_interval;
+    UCHAR  sca;
+    UCHAR  packing;
+    UCHAR  framing;
+    UCHAR  cis_count;
+    UCHAR * cis_id;
+    UCHAR * nse;
+    UINT16 * max_sdu_m_to_s;
+    UINT16 * max_sdu_s_to_m;
+    UINT16 * max_pdu_m_to_s;
+    UINT16 * max_pdu_s_to_m;
+    UCHAR * phy_m_to_s;
+    UCHAR * phy_s_to_m;
+    UCHAR * bn_m_to_s;
+    UCHAR * bn_s_to_m;
+    UINT32 index;
+
+    APPL_TRC("Enter cig_id :\n");
+    scanf("%x", &read_val);
+    cig_id = (UCHAR)read_val;
+
+    APPL_TRC("Enter sdu_interval_m_to_s :\n");
+    scanf("%x", &read_val);
+    sdu_interval_m_to_s = (UINT32)read_val;
+
+    APPL_TRC("Enter sdu_interval_s_to_m :\n");
+    scanf("%x", &read_val);
+    sdu_interval_s_to_m = (UINT32)read_val;
+
+    APPL_TRC("Enter ft_m_to_s :\n");
+    scanf("%x", &read_val);
+    ft_m_to_s = (UCHAR)read_val;
+
+    APPL_TRC("Enter ft_s_to_m :\n");
+    scanf("%x", &read_val);
+    ft_s_to_m = (UCHAR)read_val;
+
+    APPL_TRC("Enter iso_interval :\n");
+    scanf("%x", &read_val);
+    iso_interval = (UINT16)read_val;
+
+    APPL_TRC("Enter sca :\n");
+    scanf("%x", &read_val);
+    sca = (UCHAR)read_val;
+
+    APPL_TRC("Enter packing :\n");
+    scanf("%x", &read_val);
+    packing = (UCHAR)read_val;
+
+    APPL_TRC("Enter framing :\n");
+    scanf("%x", &read_val);
+    framing = (UCHAR)read_val;
+
+    APPL_TRC("Enter cis_count :\n");
+    scanf("%x", &read_val);
+    cis_count = (UCHAR)read_val;
+
+    /* Allocate memory for cis_id */
+    cis_id = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == cis_id)
+    {
+        APPL_TRC("Memory allocation for cis_id Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter cis_id :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        cis_id[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for nse */
+    nse = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == nse)
+    {
+        APPL_TRC("Memory allocation for nse Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter nse :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        nse[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for max_sdu_m_to_s */
+    max_sdu_m_to_s = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == max_sdu_m_to_s)
+    {
+        APPL_TRC("Memory allocation for max_sdu_m_to_s Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter max_sdu_m_to_s :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        max_sdu_m_to_s[index] = (UINT16)read_val;
+    }
+
+    /* Allocate memory for max_sdu_s_to_m */
+    max_sdu_s_to_m = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == max_sdu_s_to_m)
+    {
+        APPL_TRC("Memory allocation for max_sdu_s_to_m Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter max_sdu_s_to_m :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        max_sdu_s_to_m[index] = (UINT16)read_val;
+    }
+
+    /* Allocate memory for max_pdu_m_to_s */
+    max_pdu_m_to_s = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == max_pdu_m_to_s)
+    {
+        APPL_TRC("Memory allocation for max_pdu_m_to_s Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter max_pdu_m_to_s :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        max_pdu_m_to_s[index] = (UINT16)read_val;
+    }
+
+    /* Allocate memory for max_pdu_s_to_m */
+    max_pdu_s_to_m = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == max_pdu_s_to_m)
+    {
+        APPL_TRC("Memory allocation for max_pdu_s_to_m Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter max_pdu_s_to_m :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        max_pdu_s_to_m[index] = (UINT16)read_val;
+    }
+
+    /* Allocate memory for phy_m_to_s */
+    phy_m_to_s = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == phy_m_to_s)
+    {
+        APPL_TRC("Memory allocation for phy_m_to_s Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter phy_m_to_s :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        phy_m_to_s[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for phy_s_to_m */
+    phy_s_to_m = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == phy_s_to_m)
+    {
+        APPL_TRC("Memory allocation for phy_s_to_m Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter phy_s_to_m :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        phy_s_to_m[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for bn_m_to_s */
+    bn_m_to_s = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == bn_m_to_s)
+    {
+        APPL_TRC("Memory allocation for bn_m_to_s Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter bn_m_to_s :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        bn_m_to_s[index] = (UCHAR)read_val;
+    }
+
+    /* Allocate memory for bn_s_to_m */
+    bn_s_to_m = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * cis_count);
+    if (NULL == bn_s_to_m)
+    {
+        APPL_TRC("Memory allocation for bn_s_to_m Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter bn_s_to_m :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        bn_s_to_m[index] = (UCHAR)read_val;
+    }
+
+    retval = BT_hci_le_set_cig_parameters_test
+             (
+                 cig_id,
+                 sdu_interval_m_to_s,
+                 sdu_interval_s_to_m,
+                 ft_m_to_s,
+                 ft_s_to_m,
+                 iso_interval,
+                 sca,
+                 packing,
+                 framing,
+                 cis_count,
+                 cis_id,
+                 nse,
+                 max_sdu_m_to_s,
+                 max_sdu_s_to_m,
+                 max_pdu_m_to_s,
+                 max_pdu_s_to_m,
+                 phy_m_to_s,
+                 phy_s_to_m,
+                 bn_m_to_s,
+                 bn_s_to_m
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    BT_free_mem(cis_id);
+    BT_free_mem(nse);
+    BT_free_mem(max_sdu_m_to_s);
+    BT_free_mem(max_sdu_s_to_m);
+    BT_free_mem(max_pdu_m_to_s);
+    BT_free_mem(max_pdu_s_to_m);
+    BT_free_mem(phy_m_to_s);
+    BT_free_mem(phy_s_to_m);
+    BT_free_mem(bn_m_to_s);
+    BT_free_mem(bn_s_to_m);
+}
+
+void appl_hci_le_create_cis(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  cis_count;
+    UINT16 * cis_connection_handle;
+    UINT16 * acl_connection_handle;
+    UINT32 index;
+
+    APPL_TRC("Enter cis_count :\n");
+    scanf("%x", &read_val);
+    cis_count = (UCHAR)read_val;
+
+    /* Allocate memory for cis_connection_handle */
+    cis_connection_handle = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == cis_connection_handle)
+    {
+        APPL_TRC("Memory allocation for cis_connection_handle Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter cis_connection_handle :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        cis_connection_handle[index] = (UINT16)read_val;
+    }
+
+    /* Allocate memory for acl_connection_handle */
+    acl_connection_handle = (UINT16 *)BT_alloc_mem(sizeof(UINT16) * cis_count);
+    if (NULL == acl_connection_handle)
+    {
+        APPL_TRC("Memory allocation for acl_connection_handle Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter acl_connection_handle :\n");
+    for(index = 0; index < cis_count; index++)
+    {
+        scanf("%x", &read_val);
+        acl_connection_handle[index] = (UINT16)read_val;
+    }
+
+    retval = BT_hci_le_create_cis
+             (
+                 cis_count,
+                 cis_connection_handle,
+                 acl_connection_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    BT_free_mem(cis_connection_handle);
+    BT_free_mem(acl_connection_handle);
+}
+
+void appl_hci_le_remove_cig(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  cig_id;
+
+    APPL_TRC("Enter cig_id :\n");
+    scanf("%x", &read_val);
+    cig_id = (UCHAR)read_val;
+
+    retval = BT_hci_le_remove_cig
+             (
+                 cig_id
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_accept_cis_request(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    retval = BT_hci_le_accept_cis_request
+             (
+                 connection_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_reject_cis_request(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  reason;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter reason :\n");
+    scanf("%x", &read_val);
+    reason = (UCHAR)read_val;
+
+    retval = BT_hci_le_reject_cis_request
+             (
+                 connection_handle,
+                 reason
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_create_big(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  big_handle;
+    UCHAR  advertising_handle;
+    UCHAR  num_bis;
+    UINT32 sdu_interval;
+    UINT16 max_sdu;
+    UINT16 max_transport_latency;
+    UCHAR  rtn;
+    UCHAR  phy;
+    UCHAR  packing;
+    UCHAR  framing;
+    UCHAR  encryption;
+    UCHAR * broadcast_code;
+    UINT32 index;
+
+    APPL_TRC("Enter big_handle :\n");
+    scanf("%x", &read_val);
+    big_handle = (UCHAR)read_val;
+
+    APPL_TRC("Enter advertising_handle :\n");
+    scanf("%x", &read_val);
+    advertising_handle = (UCHAR)read_val;
+
+    APPL_TRC("Enter num_bis :\n");
+    scanf("%x", &read_val);
+    num_bis = (UCHAR)read_val;
+
+    APPL_TRC("Enter sdu_interval :\n");
+    scanf("%x", &read_val);
+    sdu_interval = (UINT32)read_val;
+
+    APPL_TRC("Enter max_sdu :\n");
+    scanf("%x", &read_val);
+    max_sdu = (UINT16)read_val;
+
+    APPL_TRC("Enter max_transport_latency :\n");
+    scanf("%x", &read_val);
+    max_transport_latency = (UINT16)read_val;
+
+    APPL_TRC("Enter rtn :\n");
+    scanf("%x", &read_val);
+    rtn = (UCHAR)read_val;
+
+    APPL_TRC("Enter phy :\n");
+    scanf("%x", &read_val);
+    phy = (UCHAR)read_val;
+
+    APPL_TRC("Enter packing :\n");
+    scanf("%x", &read_val);
+    packing = (UCHAR)read_val;
+
+    APPL_TRC("Enter framing :\n");
+    scanf("%x", &read_val);
+    framing = (UCHAR)read_val;
+
+    APPL_TRC("Enter encryption :\n");
+    scanf("%x", &read_val);
+    encryption = (UCHAR)read_val;
+
+    APPL_TRC("Enter broadcast_code :\n");
+    /* Allocate memory for broadcast_code */
+    broadcast_code = (UCHAR *)BT_alloc_mem(16);
+    if (NULL == broadcast_code)
+    {
+        APPL_TRC("Memory allocation for broadcast_code Failed. Returning\n");
+        return;
+    }
+
+    for(index = 0; index < 16; index++)
+    {
+        scanf("%x", &read_val);
+        broadcast_code[index] = (UCHAR)read_val;
+    }
+
+    retval = BT_hci_le_create_big
+             (
+                 big_handle,
+                 advertising_handle,
+                 num_bis,
+                 sdu_interval,
+                 max_sdu,
+                 max_transport_latency,
+                 rtn,
+                 phy,
+                 packing,
+                 framing,
+                 encryption,
+                 broadcast_code
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    BT_free_mem(broadcast_code);
+}
+
+void appl_hci_le_create_big_test(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  big_handle;
+    UCHAR  advertising_handle;
+    UCHAR  num_bis;
+    UINT32 sdu_interval;
+    UINT16 iso_interval;
+    UCHAR  nse;
+    UINT16 max_sdu;
+    UINT16 max_pdu;
+    UCHAR  phy;
+    UCHAR  packing;
+    UCHAR  framing;
+    UCHAR  bn;
+    UCHAR  irc;
+    UCHAR  pto;
+    UCHAR  encryption;
+    UCHAR * broadcast_code;
+    UINT32 index;
+
+    APPL_TRC("Enter big_handle :\n");
+    scanf("%x", &read_val);
+    big_handle = (UCHAR)read_val;
+
+    APPL_TRC("Enter advertising_handle :\n");
+    scanf("%x", &read_val);
+    advertising_handle = (UCHAR)read_val;
+
+    APPL_TRC("Enter num_bis :\n");
+    scanf("%x", &read_val);
+    num_bis = (UCHAR)read_val;
+
+    APPL_TRC("Enter sdu_interval :\n");
+    scanf("%x", &read_val);
+    sdu_interval = (UINT32)read_val;
+
+    APPL_TRC("Enter iso_interval :\n");
+    scanf("%x", &read_val);
+    iso_interval = (UINT16)read_val;
+
+    APPL_TRC("Enter nse :\n");
+    scanf("%x", &read_val);
+    nse = (UCHAR)read_val;
+
+    APPL_TRC("Enter max_sdu :\n");
+    scanf("%x", &read_val);
+    max_sdu = (UINT16)read_val;
+
+    APPL_TRC("Enter max_pdu :\n");
+    scanf("%x", &read_val);
+    max_pdu = (UINT16)read_val;
+
+    APPL_TRC("Enter phy :\n");
+    scanf("%x", &read_val);
+    phy = (UCHAR)read_val;
+
+    APPL_TRC("Enter packing :\n");
+    scanf("%x", &read_val);
+    packing = (UCHAR)read_val;
+
+    APPL_TRC("Enter framing :\n");
+    scanf("%x", &read_val);
+    framing = (UCHAR)read_val;
+
+    APPL_TRC("Enter bn :\n");
+    scanf("%x", &read_val);
+    bn = (UCHAR)read_val;
+
+    APPL_TRC("Enter irc :\n");
+    scanf("%x", &read_val);
+    irc = (UCHAR)read_val;
+
+    APPL_TRC("Enter pto :\n");
+    scanf("%x", &read_val);
+    pto = (UCHAR)read_val;
+
+    APPL_TRC("Enter encryption :\n");
+    scanf("%x", &read_val);
+    encryption = (UCHAR)read_val;
+
+    APPL_TRC("Enter broadcast_code :\n");
+    /* Allocate memory for broadcast_code */
+    broadcast_code = (UCHAR *)BT_alloc_mem(16);
+    if (NULL == broadcast_code)
+    {
+        APPL_TRC("Memory allocation for broadcast_code Failed. Returning\n");
+        return;
+    }
+
+    for(index = 0; index < 16; index++)
+    {
+        scanf("%x", &read_val);
+        broadcast_code[index] = (UCHAR)read_val;
+    }
+
+    retval = BT_hci_le_create_big_test
+             (
+                 big_handle,
+                 advertising_handle,
+                 num_bis,
+                 sdu_interval,
+                 iso_interval,
+                 nse,
+                 max_sdu,
+                 max_pdu,
+                 phy,
+                 packing,
+                 framing,
+                 bn,
+                 irc,
+                 pto,
+                 encryption,
+                 broadcast_code
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    BT_free_mem(broadcast_code);
+}
+
+void appl_hci_le_terminate_big(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  big_handle;
+    UCHAR  reason;
+
+    APPL_TRC("Enter big_handle :\n");
+    scanf("%x", &read_val);
+    big_handle = (UCHAR)read_val;
+
+    APPL_TRC("Enter reason :\n");
+    scanf("%x", &read_val);
+    reason = (UCHAR)read_val;
+
+    retval = BT_hci_le_terminate_big
+             (
+                 big_handle,
+                 reason
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_big_create_sync(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  big_handle;
+    UINT16 sync_handle;
+    UCHAR  encryption;
+    UCHAR * broadcast_code;
+    UCHAR  mse;
+    UINT16 big_sync_timeout;
+    UCHAR  num_bis;
+    UCHAR * bis;
+    UINT32 index;
+
+    APPL_TRC("Enter big_handle :\n");
+    scanf("%x", &read_val);
+    big_handle = (UCHAR)read_val;
+
+    APPL_TRC("Enter sync_handle :\n");
+    scanf("%x", &read_val);
+    sync_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter encryption :\n");
+    scanf("%x", &read_val);
+    encryption = (UCHAR)read_val;
+
+    APPL_TRC("Enter broadcast_code :\n");
+    /* Allocate memory for broadcast_code */
+    broadcast_code = (UCHAR *)BT_alloc_mem(16);
+    if (NULL == broadcast_code)
+    {
+        APPL_TRC("Memory allocation for broadcast_code Failed. Returning\n");
+        return;
+    }
+
+    for(index = 0; index < 16; index++)
+    {
+        scanf("%x", &read_val);
+        broadcast_code[index] = (UCHAR)read_val;
+    }
+
+    APPL_TRC("Enter mse :\n");
+    scanf("%x", &read_val);
+    mse = (UCHAR)read_val;
+
+    APPL_TRC("Enter big_sync_timeout :\n");
+    scanf("%x", &read_val);
+    big_sync_timeout = (UINT16)read_val;
+
+    APPL_TRC("Enter num_bis :\n");
+    scanf("%x", &read_val);
+    num_bis = (UCHAR)read_val;
+
+    /* Allocate memory for bis */
+    bis = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * num_bis);
+    if (NULL == bis)
+    {
+        APPL_TRC("Memory allocation for bis Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter bis :\n");
+    for(index = 0; index < num_bis; index++)
+    {
+        scanf("%x", &read_val);
+        bis[index] = (UCHAR)read_val;
+    }
+
+    retval = BT_hci_le_big_create_sync
+             (
+                 big_handle,
+                 sync_handle,
+                 encryption,
+                 broadcast_code,
+                 mse,
+                 big_sync_timeout,
+                 num_bis,
+                 bis
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    BT_free_mem(broadcast_code);
+    BT_free_mem(bis);
+}
+
+void appl_hci_le_big_terminate_sync(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  big_handle;
+
+    APPL_TRC("Enter big_handle :\n");
+    scanf("%x", &read_val);
+    big_handle = (UCHAR)read_val;
+
+    retval = BT_hci_le_big_terminate_sync
+             (
+                 big_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_request_peer_sca(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    retval = BT_hci_le_request_peer_sca
+             (
+                 connection_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_setup_iso_data_path(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  data_path_direction;
+    UCHAR  data_path_id;
+    UCHAR * codec_id;
+    UINT32 controller_delay;
+    UCHAR  codec_configuration_length;
+    UCHAR * codec_configuration;
+    UINT32 index;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter data_path_direction :\n");
+    scanf("%x", &read_val);
+    data_path_direction = (UCHAR)read_val;
+
+    APPL_TRC("Enter data_path_id :\n");
+    scanf("%x", &read_val);
+    data_path_id = (UCHAR)read_val;
+
+    APPL_TRC("Enter codec_id :\n");
+    /* Allocate memory for codec_id */
+    codec_id = (UCHAR *)BT_alloc_mem(5);
+    if (NULL == codec_id)
+    {
+        APPL_TRC("Memory allocation for codec_id Failed. Returning\n");
+        return;
+    }
+
+    for(index = 0; index < 5; index++)
+    {
+        scanf("%x", &read_val);
+        codec_id[index] = (UCHAR)read_val;
+    }
+
+    APPL_TRC("Enter controller_delay :\n");
+    scanf("%x", &read_val);
+    controller_delay = (UINT32)read_val;
+
+    APPL_TRC("Enter codec_configuration_length :\n");
+    scanf("%x", &read_val);
+    codec_configuration_length = (UCHAR)read_val;
+
+    /* Allocate memory for codec_configuration */
+    codec_configuration = (UCHAR *)BT_alloc_mem(sizeof(UCHAR) * codec_configuration_length);
+    if (NULL == codec_configuration)
+    {
+        APPL_TRC("Memory allocation for codec_configuration Failed. Returning\n");
+        return;
+    }
+
+    APPL_TRC("Enter codec_configuration :\n");
+    for(index = 0; index < codec_configuration_length; index++)
+    {
+        scanf("%x", &read_val);
+        codec_configuration[index] = (UCHAR)read_val;
+    }
+
+    retval = BT_hci_le_setup_iso_data_path
+             (
+                 connection_handle,
+                 data_path_direction,
+                 data_path_id,
+                 codec_id,
+                 controller_delay,
+                 codec_configuration_length,
+                 codec_configuration
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    BT_free_mem(codec_id);
+    BT_free_mem(codec_configuration);
+}
+
+void appl_hci_le_remove_iso_data_path(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  data_path_direction;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter data_path_direction :\n");
+    scanf("%x", &read_val);
+    data_path_direction = (UCHAR)read_val;
+
+    retval = BT_hci_le_remove_iso_data_path
+             (
+                 connection_handle,
+                 data_path_direction
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_iso_transmit_test(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  payload_type;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter payload_type :\n");
+    scanf("%x", &read_val);
+    payload_type = (UCHAR)read_val;
+
+    retval = BT_hci_le_iso_transmit_test
+             (
+                 connection_handle,
+                 payload_type
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_iso_receive_test(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  payload_type;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter payload_type :\n");
+    scanf("%x", &read_val);
+    payload_type = (UCHAR)read_val;
+
+    retval = BT_hci_le_iso_receive_test
+             (
+                 connection_handle,
+                 payload_type
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_iso_read_test_counters(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    retval = BT_hci_le_iso_read_test_counters
+             (
+                 connection_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_iso_test_end(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    retval = BT_hci_le_iso_test_end
+             (
+                 connection_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_set_host_feature(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UCHAR  bit_number;
+    UCHAR  bit_value;
+
+    APPL_TRC("Enter bit_number :\n");
+    scanf("%x", &read_val);
+    bit_number = (UCHAR)read_val;
+
+    APPL_TRC("Enter bit_value :\n");
+    scanf("%x", &read_val);
+    bit_value = (UCHAR)read_val;
+
+    retval = BT_hci_le_set_host_feature
+             (
+                 bit_number,
+                 bit_value
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_read_iso_link_quality(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    retval = BT_hci_le_read_iso_link_quality
+             (
+                 connection_handle
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_iso_write(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR      ts_flag;
+    UINT32     ts;
+    UINT16     seq_num;
+    UCHAR sdu[10] = { 2, 2, 2, 2, 2, 2, 2, 2, 2 ,2 };
+    UINT16     sdu_len;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    ts_flag = 0;
+    ts = 0x1234;
+    seq_num = 1;
+    sdu_len = 10;
+
+    retval = BT_hci_iso_write
+             (
+                 connection_handle,
+                 ts_flag,
+                 ts,
+                 seq_num,
+                 &sdu[0],
+                 sdu_len
+            );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+API_RESULT appl_hci_iso_data_ind_cb(UCHAR* header, UCHAR* data, UINT16 datalen)
+{
+    APPL_TRC("Received ISO Data with length: %d", datalen);
+    appl_dump_bytes(data, datalen);
+    return API_SUCCESS;
+}
+
+void appl_hci_register_iso_data_handle(void)
+{
+    API_RESULT retval;
+
+    retval = BT_hci_register_iso_data_handler
+             (
+                 &appl_hci_iso_data_ind_cb
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_read_local_supported_controller_delay(void)
+{
+#ifdef HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_SUPPORT
+    API_RESULT retval;
+
+    UCHAR codec_id[5];
+
+    BT_mem_set(codec_id, 0x00, sizeof(codec_id));
+    codec_id[0] = 0x03;
+
+    retval = BT_hci_read_local_supported_controller_delay(&codec_id[0], 0x03, 0x00, 0, NULL);
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    retval = BT_hci_read_local_supported_controller_delay(&codec_id[0], 0x03, 0x01, 0, NULL);
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+#endif /* HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_SUPPORT */
+}
+
+void appl_hci_read_local_supported_codec_capabilities(void)
+{
+#ifdef HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_SUPPORT
+    API_RESULT retval;
+
+    UCHAR codec_id[5] = { 0 };
+
+    APPL_TRC("Enter Codec ID:\n");
+    scanf("%d", codec_id[0]);
+
+    retval = BT_hci_read_local_supported_codec_capabilities(codec_id, 0x03, 0x01);
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    retval = BT_hci_read_local_supported_codec_capabilities(codec_id, 0x03, 0x00);
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+#endif /* HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_SUPPORT */
+}
+
+void appl_hci_read_local_supported_codecs_ga(void)
+{
+#ifdef HCI_READ_LOCAL_SUPPORTED_CODECS_V2_SUPPORT
+    API_RESULT retval;
+
+    retval = BT_hci_read_local_supported_codecs();
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+
+    retval = BT_hci_read_local_supported_codecs_v2();
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+#endif /* HCI_READ_LOCAL_SUPPORTED_CODECS_V2_SUPPORT */
+}
+
+void appl_hci_le_enhanced_read_transmit_power_level(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  phy;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter phy :\n");
+    scanf("%x", &read_val);
+    phy = (UCHAR)read_val;
+
+    retval = BT_hci_le_enhanced_read_transmit_power_level
+             (
+                 connection_handle,
+                 phy
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_read_remote_transmit_power_level(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  phy;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter phy :\n");
+    scanf("%x", &read_val);
+    phy = (UCHAR)read_val;
+
+    retval = BT_hci_le_read_remote_transmit_power_level
+             (
+                 connection_handle,
+                 phy
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_set_path_loss_reporting_parameters(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  high_threshold;
+    UCHAR  high_hysteresis;
+    UCHAR  low_threshold;
+    UCHAR  low_hysteresis;
+    UINT16 min_time_spent;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter high_threshold :\n");
+    scanf("%x", &read_val);
+    high_threshold = (UCHAR)read_val;
+
+    APPL_TRC("Enter high_hysteresis :\n");
+    scanf("%x", &read_val);
+    high_hysteresis = (UCHAR)read_val;
+
+    APPL_TRC("Enter low_threshold :\n");
+    scanf("%x", &read_val);
+    low_threshold = (UCHAR)read_val;
+
+    APPL_TRC("Enter low_hysteresis :\n");
+    scanf("%x", &read_val);
+    low_hysteresis = (UCHAR)read_val;
+
+    APPL_TRC("Enter min_time_spent :\n");
+    scanf("%x", &read_val);
+    min_time_spent = (UINT16)read_val;
+
+    retval = BT_hci_le_set_path_loss_reporting_parameters
+             (
+                 connection_handle,
+                 high_threshold,
+                 high_hysteresis,
+                 low_threshold,
+                 low_hysteresis,
+                 min_time_spent
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_set_path_loss_reporting_enable(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  enable;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter enable :\n");
+    scanf("%x", &read_val);
+    enable = (UCHAR)read_val;
+
+    retval = BT_hci_le_set_path_loss_reporting_enable
+             (
+                 connection_handle,
+                 enable
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_set_transmit_power_reporting_enable(void)
+{
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR  local_enable;
+    UCHAR  remote_enable;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+
+    APPL_TRC("Enter local_enable :\n");
+    scanf("%x", &read_val);
+    local_enable = (UCHAR)read_val;
+
+    APPL_TRC("Enter remote_enable :\n");
+    scanf("%x", &read_val);
+    remote_enable = (UCHAR)read_val;
+
+    retval = BT_hci_le_set_transmit_power_reporting_enable
+             (
+                 connection_handle,
+                 local_enable,
+                 remote_enable
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+}
+
+void appl_hci_le_vs_change_local_tx_power(void)
+{
+#if 0
+    unsigned int read_val;
+    API_RESULT retval;
+    UINT16 connection_handle;
+    UCHAR tx_power;
+    UCHAR send_pwr_change_ind;
+    UCHAR packet[4];
+    UINT16 ocf;
+
+    ocf = 0x01A0;
+
+    APPL_TRC("Enter connection_handle :\n");
+    scanf("%x", &read_val);
+    connection_handle = (UINT16)read_val;
+    hci_pack_2_byte_param(packet + 0, &connection_handle);
+
+    APPL_TRC("Enter tx_power :\n");
+    scanf("%x", &read_val);
+    tx_power = (UCHAR)read_val;
+    hci_pack_1_byte_param(packet + 2, &tx_power);
+
+    APPL_TRC("Enter send_pwr_change_ind :\n");
+    scanf("%x", &read_val);
+    send_pwr_change_ind = (UCHAR)read_val;
+    hci_pack_1_byte_param(packet + 3, &send_pwr_change_ind);
+
+    retval = BT_hci_vendor_specific_command
+             (
+                 ocf,
+                 packet,
+                 sizeof(packet)
+             );
+
+    if (API_SUCCESS != retval)
+    {
+        APPL_TRC("FAILED !!! Error code = %04X\n", retval);
+    }
+    else
+    {
+        APPL_TRC("API returned success...\n");
+    }
+#else
+    /**
+     *  One of the vendor specific implementation to change
+     *  Tx Power Level is shown above.
+     */
+    APPL_TRC("Implement Vendor Specific changing of Tx Power Level\n");
+#endif /* 0 */
+}
+
+#endif /* BT_5_2 */
 
 #endif /* BT_LE */

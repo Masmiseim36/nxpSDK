@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CODEC Adapter</title>
+<title>MCUXpresso SDK API Reference Manual: SWO</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,97 +98,76 @@ $(document).ready(function(){initNavTree('a00248.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">CODEC Adapter<div class="ingroups"><a class="el" href="a00012.html">CODEC Common Driver</a></div></div>  </div>
+<div class="title">SWO<div class="ingroups"><a class="el" href="a00245.html">Debug Console</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gae8a3b6a5d0d3244ed73924ab2421a0d0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0acb2ee31cd4ee06712e3cf445e12cb389">kCODEC_WM8904</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0aa15237d33f0b971a6596458ef7aa8d99">kCODEC_WM8960</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a57b2941cff245c37272e1ea4598c3ab0">kCODEC_WM8524</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a870028cfe305a220c90a187029ae3408">kCODEC_SGTL5000</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a533359b62306ff77d6cd4a6aeaf075ab">kCODEC_DA7212</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae667850df8261ea1e8c02201e1ccafee">kCODEC_CS42888</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a32073f5e23a3c6e7960d937c0816286b">kCODEC_CS42448</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a58d64d2b7b432eb8ede4e22a811cadf1">kCODEC_AK4497</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a67f0293553ad8cc4bbb432b6b09f6900">kCODEC_AK4458</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a448b697ab0cc0c28740e77484faad04f">kCODEC_TFA9XXX</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a899f42fede26bf5fd37ea863fb4e5624">kCODEC_TFA9896</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a018d6b6d07eab64fe414983199950dc8">kCODEC_WM8962</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gae8a3b6a5d0d3244ed73924ab2421a0d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec type  <a href="a00248.html#gae8a3b6a5d0d3244ed73924ab2421a0d0">More...</a><br/></td></tr>
-<tr class="separator:gae8a3b6a5d0d3244ed73924ab2421a0d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gae8a3b6a5d0d3244ed73924ab2421a0d0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="anchor" id="_codec_type"></a></p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0acb2ee31cd4ee06712e3cf445e12cb389"></a>kCODEC_WM8904</em>&nbsp;</td><td class="fielddoc">
-<p>wm8904 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0aa15237d33f0b971a6596458ef7aa8d99"></a>kCODEC_WM8960</em>&nbsp;</td><td class="fielddoc">
-<p>wm8960 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a57b2941cff245c37272e1ea4598c3ab0"></a>kCODEC_WM8524</em>&nbsp;</td><td class="fielddoc">
-<p>wm8524 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a870028cfe305a220c90a187029ae3408"></a>kCODEC_SGTL5000</em>&nbsp;</td><td class="fielddoc">
-<p>sgtl5000 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a533359b62306ff77d6cd4a6aeaf075ab"></a>kCODEC_DA7212</em>&nbsp;</td><td class="fielddoc">
-<p>da7212 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0ae667850df8261ea1e8c02201e1ccafee"></a>kCODEC_CS42888</em>&nbsp;</td><td class="fielddoc">
-<p>CS42888. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a32073f5e23a3c6e7960d937c0816286b"></a>kCODEC_CS42448</em>&nbsp;</td><td class="fielddoc">
-<p>CS42448. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a58d64d2b7b432eb8ede4e22a811cadf1"></a>kCODEC_AK4497</em>&nbsp;</td><td class="fielddoc">
-<p>AK4497. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a67f0293553ad8cc4bbb432b6b09f6900"></a>kCODEC_AK4458</em>&nbsp;</td><td class="fielddoc">
-<p>ak4458 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a448b697ab0cc0c28740e77484faad04f"></a>kCODEC_TFA9XXX</em>&nbsp;</td><td class="fielddoc">
-<p>tfa9xxx </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a899f42fede26bf5fd37ea863fb4e5624"></a>kCODEC_TFA9896</em>&nbsp;</td><td class="fielddoc">
-<p>tfa9896 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae8a3b6a5d0d3244ed73924ab2421a0d0a018d6b6d07eab64fe414983199950dc8"></a>kCODEC_WM8962</em>&nbsp;</td><td class="fielddoc">
-<p>wm8962 </p>
-</td></tr>
-</table>
-
-</div>
-</div>
+<p>Serial wire output is a mechanism for ARM targets to output signal from core through a single pin. Some IDEs also support SWO, such IAR and KEIL, both input and output are supported, see below for details.</p>
+<h1><a class="anchor" id="SWOSDKGrps"></a>
+Guide SWO for SDK</h1>
+<p><b>NOTE:</b> After the setting both "printf" and "PRINTF" are available for debugging, JlinkSWOViewer can be used to capture the output log.</p>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>Define SERIAL_PORT_TYPE_SWO in your project settings.</li>
+<li>Prepare code, the port and baudrate can be decided by application, clkSrcFreq should be mcu core clock frequency: <div class="fragment"><div class="line"><a class="code" href="a00245.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(instance, baudRate, <a class="code" href="a00057.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>, clkSrcFreq);</div>
+</div><!-- fragment --></li>
+<li>Use PRINTF or printf to print some thing in application. <h2>Step 2: Building the project</h2>
+</li>
+</ol>
+<h2>Step 3: Download and run project</h2>
+<h1><a class="anchor" id="SWOIARGrps"></a>
+Guide SWO for IAR</h1>
+<p><b>NOTE:</b> After the setting both "printf" and "scanf" are available for debugging.</p>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>Choose project -&gt; "Options" -&gt; "Debugger" -&gt; "J-Link/J-Trace".</li>
+<li>Choose tab "J-Link/J-Trace" -&gt; "Connection" tab -&gt; "SWD".</li>
+<li>Choose tab "General Options" -&gt; "Library Configurations", select Semihosted, select Via SWO.</li>
+<li>To configure the hardware’s generation of trace data, click the SWO Configuration button available in the SWO Configuration dialog box. ●The value of the CPU clock option must reflect the frequency of the CPU clock speed at which the application executes. Note also that the settings you make are preserved between debug sessions. ●To decrease the amount of transmissions on the communication channel, you can disable the Timestamp option. Alternatively, set a lower rate for PC Sampling or use a higher SWO clock frequency.</li>
+<li>Open the SWO Trace window from J-LINK,and click the Activate button to enable trace data collection.</li>
+<li>There are three cases for this SDK_DEBUGCONSOLE_UART whether or not defined. a: if use uppercase PRINTF to output log,The SDK_DEBUGCONSOLE_UART defined or not defined will not effect debug function. b: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to zero,then debug function ok. c: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to one,then debug function ok.</li>
+</ol>
+<p><b>NOTE:</b> Case a or c only apply at example which enable swo function,the SDK_DEBUGCONSOLE_UART definition in fsl_debug_console.h. For case a and c, Do and not do the above third step will be not affect function.</p>
+<ol type="1">
+<li>Start the project by choosing Project&gt;Download and Debug. <h2>Step 2: Building the project</h2>
+</li>
+</ol>
+<h2>Step 3: Starting swo</h2>
+<ol type="1">
+<li>Download and debug application.</li>
+<li>Choose View -&gt; Terminal I/O to display the output from the I/O operations.</li>
+<li>Run application.</li>
+</ol>
+<h1><a class="anchor" id="SWOKeilGrps"></a>
+Guide SWO for Keil µVision</h1>
+<p><b>NOTE:</b> After the setting both "printf" and "scanf" are available for debugging.</p>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>There are three cases for this SDK_DEBUGCONSOLE_UART whether or not defined. a: if use uppercase PRINTF to output log,the SDK_DEBUGCONSOLE_UART definition does not affect the functionality and skip the second step directly. b: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to zero,then start the second step. c: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to one,then skip the second step directly.</li>
+</ol>
+<p><b>NOTE:</b> Case a or c only apply at example which enable swo function,the SDK_DEBUGCONSOLE_UART definition in fsl_debug_console.h.</p>
+<ol type="1">
+<li>In menu bar, click Management Run-Time Environment icon, select Compiler, unfold I/O, enable STDERR/STDIN/STDOUT and set the variant to ITM.</li>
+<li>Open Project&gt;Options for target or using Alt+F7 or click.</li>
+<li>Select “Debug” tab, select “J-Link/J-Trace Cortex” and click “Setting button”.</li>
+<li>Select “Debug” tab and choose Port:SW, then select "Trace" tab, choose "Enable" and click OK, please make sure the Core clock is set correctly, enable autodetect max SWO clk, enable ITM Stimulus Ports 0.</li>
+</ol>
+<h2>Step 3: Building the project</h2>
+<ol type="1">
+<li>Compile and link the project by choosing Project&gt;Build Target or using F7.</li>
+</ol>
+<h2>Step 4: Run the project</h2>
+<ol type="1">
+<li>Choose “Debug” on menu bar or Ctrl F5.</li>
+<li>In menu bar, choose "Serial Window" and click to "Debug (printf) Viewer".</li>
+<li>Run line by line to see result in Console Window.</li>
+</ol>
+<h1><a class="anchor" id="SWOMCUXGrps"></a>
+Guide SWO for MCUXpresso IDE</h1>
+<p><b>NOTE:</b> MCUX support SWO for LPC-Link2 debug probe only.</p>
+<h1><a class="anchor" id="SWOARMGCCGrps"></a>
+Guide SWO for ARMGCC</h1>
+<p><b>NOTE:</b> ARMGCC has no library support SWO. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

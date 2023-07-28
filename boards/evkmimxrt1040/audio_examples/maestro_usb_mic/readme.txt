@@ -35,9 +35,9 @@ Notes
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
@@ -62,6 +62,7 @@ Prepare the Demo
 3. Download the program to the target board.
 4. Connect the second micro USB cable between the PC host and the USB port on the board.
 5. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+
 Running the demo
 ================
 When the example runs successfully, you should see similar output on the serial terminal as below:

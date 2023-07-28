@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -52,200 +60,121 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../DeviceDriver.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Application.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Core.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Effects.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Graphics.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Oximeter.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Resources.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Templates.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Views.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/WidgetSet.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Application.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Core.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Effects.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Graphics.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Oximeter.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Resources.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Templates.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/Views.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/WidgetSet.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ApplicationApplication.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorEvent.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorGrabEvent.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreCursorHit.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreDialogContext.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreDragEvent.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreEvent.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreGroup.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreKeyEvent.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreKeyPressHandler.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutContext.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutLineContext.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLayoutQuadContext.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreLineView.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreModalContext.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreOutline.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CorePropertyObserver.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreQuadView.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreRectView.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreResource.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreRoot.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreRotateTouchHandler.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreSimpleTouchHandler.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreSlideTouchHandler.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreTask.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreTaskQueue.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreTimer.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_CoreView.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsEffect.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsEffectTimerClass.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsFloatEffect.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsInt32Effect.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsRectEffect.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_EffectsTimingList.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsArcPath.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsCanvas.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsPath.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_GraphicsWarpMatrix.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterAnalogDisplay.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterBackground.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterBattery.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDataStorage.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDeviceClass.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDigitsLarge.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterDigitsSmall.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontCaption.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontL.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterFontM.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterGlow.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterGraph.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterGraphPanel.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterHeartLarge.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterIconButton.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterLungLarge.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterMainMenu.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterMenuButton.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterMenuIcons.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterNumberDisplay.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOximeter.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenGradient.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenPanel.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterOxygenSettings.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPlotter.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulseGradient.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulsePanel.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPulseSettings.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterPushButton.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackground.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackgroundFlow.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryBackgroundOxygen.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryThumbMax.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterRotaryThumbMin.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterThumb.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterToggleButton.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterTrack.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_OximeterValueDisplay.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ResourcesBitmap.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ResourcesFont.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ResourcesWhiteBitmapStripe.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_TemplatesDeviceClass.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsFillPath.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsFrame.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsImage.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsLine.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsRectangle.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsStrokePath.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsText.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsWallpaper.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsWarpImage.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_ViewsWarpView.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetHorizontalSlider.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetHorizontalSliderConfig.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetPushButton.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetPushButtonConfig.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetRotaryKnob.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetRotaryKnobConfig.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetToggleButton.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetToggleButtonConfig.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/_WidgetSetWidgetConfig.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode/ewlocale.h"
+"${ProjDirPath}/../GeneratedCode/Application.c"
+"${ProjDirPath}/../GeneratedCode/Core.c"
+"${ProjDirPath}/../GeneratedCode/Effects.c"
+"${ProjDirPath}/../GeneratedCode/Graphics.c"
+"${ProjDirPath}/../GeneratedCode/Resources.c"
+"${ProjDirPath}/../GeneratedCode/Templates.c"
+"${ProjDirPath}/../GeneratedCode/Thermostat.c"
+"${ProjDirPath}/../GeneratedCode/Views.c"
+"${ProjDirPath}/../GeneratedCode/WidgetSet.c"
+"${ProjDirPath}/../GeneratedCode/Application.h"
+"${ProjDirPath}/../GeneratedCode/Core.h"
+"${ProjDirPath}/../GeneratedCode/Effects.h"
+"${ProjDirPath}/../GeneratedCode/Graphics.h"
+"${ProjDirPath}/../GeneratedCode/Resources.h"
+"${ProjDirPath}/../GeneratedCode/Templates.h"
+"${ProjDirPath}/../GeneratedCode/Thermostat.h"
+"${ProjDirPath}/../GeneratedCode/Views.h"
+"${ProjDirPath}/../GeneratedCode/WidgetSet.h"
+"${ProjDirPath}/../GeneratedCode/_ApplicationApplication.h"
+"${ProjDirPath}/../GeneratedCode/_CoreCursorEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreCursorGrabEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreCursorHit.h"
+"${ProjDirPath}/../GeneratedCode/_CoreDialogContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreDragEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreGroup.h"
+"${ProjDirPath}/../GeneratedCode/_CoreKeyEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreKeyPressHandler.h"
+"${ProjDirPath}/../GeneratedCode/_CoreLayoutContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreLayoutQuadContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreModalContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreOutline.h"
+"${ProjDirPath}/../GeneratedCode/_CorePropertyObserver.h"
+"${ProjDirPath}/../GeneratedCode/_CoreQuadView.h"
+"${ProjDirPath}/../GeneratedCode/_CoreRectView.h"
+"${ProjDirPath}/../GeneratedCode/_CoreResource.h"
+"${ProjDirPath}/../GeneratedCode/_CoreRoot.h"
+"${ProjDirPath}/../GeneratedCode/_CoreRotateTouchHandler.h"
+"${ProjDirPath}/../GeneratedCode/_CoreSimpleTouchHandler.h"
+"${ProjDirPath}/../GeneratedCode/_CoreTask.h"
+"${ProjDirPath}/../GeneratedCode/_CoreTaskQueue.h"
+"${ProjDirPath}/../GeneratedCode/_CoreTimer.h"
+"${ProjDirPath}/../GeneratedCode/_CoreView.h"
+"${ProjDirPath}/../GeneratedCode/_EffectsEffect.h"
+"${ProjDirPath}/../GeneratedCode/_EffectsEffectTimerClass.h"
+"${ProjDirPath}/../GeneratedCode/_EffectsInt32Effect.h"
+"${ProjDirPath}/../GeneratedCode/_EffectsTimingList.h"
+"${ProjDirPath}/../GeneratedCode/_GraphicsCanvas.h"
+"${ProjDirPath}/../GeneratedCode/_GraphicsPath.h"
+"${ProjDirPath}/../GeneratedCode/_GraphicsWarpMatrix.h"
+"${ProjDirPath}/../GeneratedCode/_ResourcesBitmap.h"
+"${ProjDirPath}/../GeneratedCode/_ResourcesFont.h"
+"${ProjDirPath}/../GeneratedCode/_TemplatesDeviceClass.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatBackgroundDay.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatBackgroundDefault.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatBackgroundNight.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatButtonDay.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatButtonNight.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatButtonVacation.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatController.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatDeviceClass.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatErgosign.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatFontL.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatFontM.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatFontXXL.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatNeedle.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatSwingSwitch.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatSymbolFan.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatSymbolHeadCool.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatTemperatureController.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatThermostat.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatVertBar.h"
+"${ProjDirPath}/../GeneratedCode/_ThermostatWheels.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsFrame.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsImage.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsStrokePath.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsText.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsWallpaper.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsWarpImage.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsWarpView.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetRadioButton.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetRadioButtonConfig.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetToggleButton.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetToggleButtonConfig.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetVerticalSlider.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetVerticalSliderConfig.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetWidgetConfig.h"
+"${ProjDirPath}/../GeneratedCode/ewlocale.h"
+"${ProjDirPath}/../EmbeddedWizard/Application.ewu"
+"${ProjDirPath}/../EmbeddedWizard/SmartThermostat.ewp"
+"${ProjDirPath}/../EmbeddedWizard/SmartThermostat.ews"
+"${ProjDirPath}/../EmbeddedWizard/Thermostat.ewu"
+"${ProjDirPath}/../EmbeddedWizard/Res/BackgroundDay.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/BackgroundDefault.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/BackgroundNight.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/ButtonDay.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/ButtonNight.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/ButtonVacation.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/Controller.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/Ergosign.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/Needle.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/SwingSwitch.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/SymbolFan.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/SymbolHeadCool.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/VertBar.png"
+"${ProjDirPath}/../EmbeddedWizard/Res/Wheels.png"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${SdkRootDirPath}/boards/evkbmimxrt1060/ew_gui_examples/ew_gui_pulse_oximeter/GeneratedCode
+    ${ProjDirPath}/../GeneratedCode
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1062/drivers
-    ${SdkRootDirPath}/components/ft5406_rt
-    ${SdkRootDirPath}/components/gt911
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/devices/MIMXRT1062/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1062/utilities/debug_console_lite
-    ${SdkRootDirPath}/middleware/EmbeddedWizard
-    ${SdkRootDirPath}/devices/MIMXRT1062
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1062/xip
-    ${SdkRootDirPath}/boards/evkbmimxrt1060/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(driver_cache_armv7_m7_MIMXRT1062)
-
-include(driver_elcdif_MIMXRT1062)
-
-include(driver_snvs_hp_MIMXRT1062)
-
-include(driver_pxp_MIMXRT1062)
-
-include(driver_lpi2c_MIMXRT1062)
-
-include(driver_ft5406_rt_MIMXRT1062)
-
-include(driver_gt911_MIMXRT1062)
-
-include(driver_video-common_MIMXRT1062)
-
-include(utility_debug_console_lite_MIMXRT1062)
-
-include(utility_assert_lite_MIMXRT1062)
-
-include(middleware_embedded_wizard_lib_evkmimxrt10xx_MIMXRT1062)
-
-include(driver_common_MIMXRT1062)
-
-include(driver_clock_MIMXRT1062)
-
-include(middleware_embedded_wizard_evkbmimxrt1060_MIMXRT1062)
-
-include(device_MIMXRT1062_CMSIS_MIMXRT1062)
-
-include(component_lpuart_adapter_MIMXRT1062)
-
-include(component_lists_MIMXRT1062)
-
-include(driver_lpuart_MIMXRT1062)
-
-include(device_MIMXRT1062_startup_MIMXRT1062)
-
-include(driver_iomuxc_MIMXRT1062)
-
-include(driver_igpio_MIMXRT1062)
-
-include(driver_xip_device_MIMXRT1062)
-
-include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
-
-include(CMSIS_Include_core_cm_MIMXRT1062)
-
-include(utilities_misc_utilities_MIMXRT1062)
-
-include(device_MIMXRT1062_system_MIMXRT1062)
-
+include(${SdkRootDirPath}/devices/MIMXRT1062/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -255,22 +184,7 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565/libewgfx-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565/libewgfx-m7-gcc.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

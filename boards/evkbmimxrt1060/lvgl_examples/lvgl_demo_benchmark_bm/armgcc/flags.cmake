@@ -38,14 +38,14 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DSKIP_SYSCLK_INIT \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
-    -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -58,6 +58,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -69,13 +70,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DSKIP_SYSCLK_INIT \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DNDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
-    -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -88,17 +89,17 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
     -DDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
     -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -112,16 +113,16 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
     -DNDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
     -DMCUXPRESSO_SDK \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -135,6 +136,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")

@@ -11,7 +11,8 @@
      defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
      defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
      defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
-     defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2))
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
+     defined (WIFI_IW61x_BOARD_MURATA_2EL_USD) || defined (WIFI_IW61x_BOARD_MURATA_2EL_M2))
 
 #ifndef CONTROLLER_INIT_ESCAPE
 #if defined(SD8978)
@@ -20,7 +21,11 @@
 #include "sduart8987_wlan_bt.h"
 #elif defined(IW61x)
 #ifndef BT_THIRDPARTY_SUPPORT
-#include "sduart_nw61x.h"
+    #if ( defined (WIFI_IW61x_BOARD_MURATA_2EL_USD) || defined (WIFI_IW61x_BOARD_MURATA_2EL_M2) )
+    #include "sduart_nw61x_se.h" /*secure FC firmware*/
+    #else
+    #include "sduart_nw61x.h" /*non-secure FC firmware*/
+    #endif /* ( defined (WIFI_IW61x_BOARD_MURATA_2EL_USD) || defined (WIFI_IW61x_BOARD_MURATA_2EL_M2) )*/
 #endif
 #else
 #error The Wi-Fi module is unsupported

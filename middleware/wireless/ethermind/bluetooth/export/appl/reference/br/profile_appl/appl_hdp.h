@@ -187,6 +187,12 @@ API_RESULT hdp_appl_check_rel_data_chnls
                UINT16  hdp_appl_cntrl_chnl_id
            );
 
+/**
+ * Function return API_SUCCESS if all data channels are deleted */
+API_RESULT hdp_appl_delete_all_data_chnls
+           (
+               UCHAR * bd_addr
+           );
 
 #ifdef HDP_APPL_STORAGE
 /*  Add Comment  */
@@ -232,9 +238,9 @@ void main_hdp_operations (void);
  */
 void hdp_appl_config_cb
      (
-         /* IN */ HDP_HANDLE            * handle,
-         /* IN */ UCHAR                   config_pref,
-         /* OUT */ L2CAP_CONFIG_OPTION  **l2cap_config
+         /* IN */  HDP_HANDLE            * handle,
+         /* IN */  UCHAR                   channel_prf,
+         /* OUT */ L2CAP_CONFIG_OPTION  ** l2cap_config
      );
 
 /* Function is registered with SDP handles SDP events */
@@ -261,6 +267,12 @@ API_RESULT appl_hdp_send_echo_request
                /* IN */ UCHAR      * echo_payload,
                /* IN */ UINT16       echo_payload_len
            );
+
+void appl_print_mdep_element
+     (
+         /* IN */ UCHAR *mdep_element,
+         /* IN */ UINT32 mdep_element_length
+     );
 
 #ifdef HDP_CLOCK_SYNC
 

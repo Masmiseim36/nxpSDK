@@ -152,6 +152,7 @@ typedef struct
 
 } PARSER_CLI_RESULT;
 
+#ifdef HFP_UNIT_1_8
 typedef struct _PARSER_BVRA_TEXT
 {
     UINT32  text_id;
@@ -171,6 +172,7 @@ typedef struct
 
     PARSER_BVRA_TEXT  text_rep;
 } PARSER_BVRA_RESULT;
+#endif /* HFP_UNIT_1_8 */
 
 typedef UINT8 APPL_PARSER_TOKEN_TYPE;
 
@@ -181,7 +183,9 @@ typedef union
     PARSER_CNUM_RESULT   cnum_resp_result;
     PARSER_CLCC_RESULT   clcc_resp_result;
     PARSER_CLI_RESULT    cli_info;
+#ifdef HFP_UNIT_1_8
     PARSER_BVRA_RESULT   bvra_result;
+#endif /* HFP_UNIT_1_8 */
     UCHAR                uchar_result;
     UCHAR                digits[ HFP_UNIT_DIGIT_ARRAY_SIZE ];
 } APPL_PARSER_RESPONSE;

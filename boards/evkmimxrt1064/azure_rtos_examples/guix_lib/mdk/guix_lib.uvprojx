@@ -24,7 +24,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>debug\</OutputDirectory>
-          <OutputName>libguix.lib</OutputName>
+          <OutputName>guix_lib.out</OutputName>
           <CreateExecutable>0</CreateExecutable>
           <CreateLib>1</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -348,7 +348,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1064DVL6A, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1064DVL6A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/guix/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
@@ -606,6 +606,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/guix/common</GroupName>
+          <Files>
+            <File>
+              <FileName>gx_source.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/gx_source.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/guix/common/src</GroupName>
           <Files>
             <File>
@@ -694,11 +704,6 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
-              <FileName>gx_display_driver_16bpp_row_pitch_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_row_pitch_get.c</FilePath>
-            </File>
-            <File>
               <FileName>gx_display_driver_16bpp_rotated_block_move.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_block_move.c</FilePath>
@@ -752,6 +757,11 @@
               <FileName>gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_row_pitch_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_row_pitch_get.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_16bpp_simple_line_draw.c</FileName>
@@ -1394,11 +1404,6 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
-              <FileName>gx_display_driver_8bpp_row_pitch_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_row_pitch_get.c</FilePath>
-            </File>
-            <File>
               <FileName>gx_display_driver_8bpp_rotated_block_move.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_block_move.c</FilePath>
@@ -1469,6 +1474,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_8bpp_row_pitch_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_row_pitch_get.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_8bpp_simple_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_simple_line_draw.c</FilePath>
@@ -1484,14 +1494,254 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_arc_clipping_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_arc_clipping_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_filled_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_filled_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_fixed_point_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_fixed_point_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_alphamap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_alphamap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_arc_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_arc_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_circle_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_circle_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_drawing_complete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_drawing_complete.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_drawing_initiate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_drawing_initiate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_ellipse_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_ellipse_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_filled_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_filled_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_glyph_4bpp_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_glyph_4bpp_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_glyph_8bpp_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_glyph_8bpp_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_cursor_define.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_cursor_define.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_enable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_enable.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_position_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_position_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_pie_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_pie_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_polygon_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_polygon_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_polygon_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_polygon_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_alphamap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_alphamap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_arc_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_arc_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_circle_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_circle_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_ellipse_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_ellipse_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_glyph_4bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_glyph_4bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_glyph_8bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_glyph_8bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_pie_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_pie_fill.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_generic_rotated_polygon_fill.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_polygon_fill.c</FilePath>
             </File>
             <File>
-              <FileName>gx_system_font_mono.c</FileName>
+              <FileName>gx_display_driver_generic_rotated_wide_line_fill.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_mono.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_wide_line_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_simple_pie_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_simple_pie_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_simple_wide_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_simple_wide_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_line_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_line_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_line_points_calculate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_line_points_calculate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_horizontal_line_alpha_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_horizontal_line_alpha_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_monochrome_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_monochrome_setup.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_simple_line_alpha_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_simple_line_alpha_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_vertical_line_alpha_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_vertical_line_alpha_draw.c</FilePath>
             </File>
             <File>
               <FileName>gx_system_font_4bpp.c</FileName>
@@ -1502,6 +1752,16 @@
               <FileName>gx_system_font_8bpp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_8bpp.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system_font_mono.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_mono.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
             </File>
             <File>
               <FileName>gx_utility_1555xrgb_pixelmap_resize.c</FileName>
@@ -1579,24 +1839,194 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_8bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
+              <FileName>gx_utility_alphamap_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_alphamap_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_arabic_shaping.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_arabic_shaping.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_bracket_pair_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_bracket_pair_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_character_type_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_character_type_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_mirroring_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_mirroring_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_paragraph_reorder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_paragraph_reorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_resolved_text_info_delete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_resolved_text_info_delete.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_canvas_to_bmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_canvas_to_bmp.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_circle_point_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_circle_point_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_easing_function_calculate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_easing_function_calculate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_gradient_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_gradient_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_gradient_delete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_gradient_delete.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_ltoa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_ltoa.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_acos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_acos.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_asin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_asin.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_cos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_cos.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_sin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_sin.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_sqrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_sqrt.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_pixelmap_resize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_pixelmap_resize.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_pixelmap_simple_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_pixelmap_simple_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_center.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_center.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_center_find.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_center_find.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_combine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_combine.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_compare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_compare.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_define.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_define.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_inside_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_inside_detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_overlap_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_overlap_detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_point_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_point_detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_resize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_resize.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_shift.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_utility_string_compare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_compare.c</FilePath>
             </File>
             <File>
-              <FileName>gx_system_initialize.c</FileName>
+              <FileName>gx_utility_string_length_check.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_length_check.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/guix/common</GroupName>
-          <Files>
             <File>
-              <FileName>gx_source.c</FileName>
+              <FileName>gx_utility_string_to_alphamap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/gx_source.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_to_alphamap.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_thai_glyph_shaping.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_thai_glyph_shaping.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_unicode_to_utf8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_unicode_to_utf8.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_utf8_string_backward_character_length_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_utf8_string_backward_character_length_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_utf8_string_character_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_utf8_string_character_get.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1708,7 +2138,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>release\</OutputDirectory>
-          <OutputName>libguix.lib</OutputName>
+          <OutputName>guix_lib.out</OutputName>
           <CreateExecutable>0</CreateExecutable>
           <CreateLib>1</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -2032,7 +2462,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1064DVL6A, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1064DVL6A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/guix/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
@@ -2290,6 +2720,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/guix/common</GroupName>
+          <Files>
+            <File>
+              <FileName>gx_source.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/gx_source.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/guix/common/src</GroupName>
           <Files>
             <File>
@@ -2378,11 +2818,6 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
-              <FileName>gx_display_driver_16bpp_row_pitch_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_row_pitch_get.c</FilePath>
-            </File>
-            <File>
               <FileName>gx_display_driver_16bpp_rotated_block_move.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_block_move.c</FilePath>
@@ -2436,6 +2871,11 @@
               <FileName>gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_row_pitch_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_row_pitch_get.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_16bpp_simple_line_draw.c</FileName>
@@ -3078,11 +3518,6 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
-              <FileName>gx_display_driver_8bpp_row_pitch_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_row_pitch_get.c</FilePath>
-            </File>
-            <File>
               <FileName>gx_display_driver_8bpp_rotated_block_move.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_block_move.c</FilePath>
@@ -3153,6 +3588,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_8bpp_row_pitch_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_row_pitch_get.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_8bpp_simple_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_simple_line_draw.c</FilePath>
@@ -3168,14 +3608,254 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_arc_clipping_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_arc_clipping_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_filled_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_filled_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_fixed_point_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_fixed_point_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_aliased_wide_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_aliased_wide_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_alphamap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_alphamap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_arc_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_arc_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_circle_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_circle_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_drawing_complete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_drawing_complete.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_drawing_initiate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_drawing_initiate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_ellipse_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_ellipse_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_filled_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_filled_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_glyph_4bpp_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_glyph_4bpp_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_glyph_8bpp_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_glyph_8bpp_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_cursor_define.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_cursor_define.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_enable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_enable.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_mouse_position_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_mouse_position_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_pie_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_pie_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_polygon_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_polygon_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_polygon_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_polygon_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_alphamap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_alphamap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_arc_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_arc_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_circle_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_circle_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_ellipse_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_ellipse_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_glyph_4bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_glyph_4bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_glyph_8bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_glyph_8bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_pie_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_pie_fill.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_generic_rotated_polygon_fill.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_polygon_fill.c</FilePath>
             </File>
             <File>
-              <FileName>gx_system_font_mono.c</FileName>
+              <FileName>gx_display_driver_generic_rotated_wide_line_fill.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_mono.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_wide_line_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_simple_pie_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_simple_pie_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_simple_wide_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_simple_wide_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_arc_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_arc_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_circle_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_circle_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_ellipse_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_ellipse_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_line_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_line_fill.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_wide_line_points_calculate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_wide_line_points_calculate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_horizontal_line_alpha_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_horizontal_line_alpha_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_monochrome_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_monochrome_setup.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_simple_line_alpha_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_simple_line_alpha_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_vertical_line_alpha_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_vertical_line_alpha_draw.c</FilePath>
             </File>
             <File>
               <FileName>gx_system_font_4bpp.c</FileName>
@@ -3186,6 +3866,16 @@
               <FileName>gx_system_font_8bpp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_8bpp.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system_font_mono.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_mono.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
             </File>
             <File>
               <FileName>gx_utility_1555xrgb_pixelmap_resize.c</FileName>
@@ -3263,24 +3953,194 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_8bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
+              <FileName>gx_utility_alphamap_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_alphamap_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_arabic_shaping.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_arabic_shaping.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_bracket_pair_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_bracket_pair_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_character_type_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_character_type_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_mirroring_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_mirroring_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_paragraph_reorder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_paragraph_reorder.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_bidi_resolved_text_info_delete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_bidi_resolved_text_info_delete.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_canvas_to_bmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_canvas_to_bmp.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_circle_point_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_circle_point_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_easing_function_calculate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_easing_function_calculate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_gradient_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_gradient_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_gradient_delete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_gradient_delete.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_ltoa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_ltoa.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_acos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_acos.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_asin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_asin.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_cos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_cos.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_sin.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_sin.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_math_sqrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_math_sqrt.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_pixelmap_resize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_pixelmap_resize.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_pixelmap_simple_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_pixelmap_simple_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_center.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_center.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_center_find.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_center_find.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_combine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_combine.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_compare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_compare.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_define.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_define.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_inside_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_inside_detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_overlap_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_overlap_detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_point_detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_point_detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_resize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_resize.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_rectangle_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_rectangle_shift.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_utility_string_compare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_compare.c</FilePath>
             </File>
             <File>
-              <FileName>gx_system_initialize.c</FileName>
+              <FileName>gx_utility_string_length_check.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_length_check.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/guix/common</GroupName>
-          <Files>
             <File>
-              <FileName>gx_source.c</FileName>
+              <FileName>gx_utility_string_to_alphamap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/gx_source.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_to_alphamap.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_thai_glyph_shaping.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_thai_glyph_shaping.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_unicode_to_utf8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_unicode_to_utf8.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_utf8_string_backward_character_length_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_utf8_string_backward_character_length_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_utility_utf8_string_character_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_utf8_string_character_get.c</FilePath>
             </File>
           </Files>
         </Group>

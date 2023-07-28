@@ -1,27 +1,23 @@
 var a00052 =
 [
-    [ "ocotp_timing_t", "a00052.html#a00427", [
-      [ "wait", "a00052.html#acd8c4f8763dcb388f62bfa50d6e97a64", null ],
-      [ "relax", "a00052.html#a9fea8ef8e47c7341a275e2dae68efa0e", null ],
-      [ "strobe_prog", "a00052.html#a8e99b30121ba46182baae7906e68ca21", null ],
-      [ "strobe_read", "a00052.html#abef3ec7b5191795eba9de0374b4e15cc", null ]
+    [ "lpuart_rtos_config_t", "a00052.html#a00437", [
+      [ "base", "a00052.html#abf5491a7b9c911ead3f256fc61357f65", null ],
+      [ "srcclk", "a00052.html#a5209f6a860555957f5d75940b2132ae5", null ],
+      [ "baudrate", "a00052.html#a86b9316f7c8bc63e672f7efd09bbb86a", null ],
+      [ "parity", "a00052.html#a77f066eb41ad7b46edd5a3ee9e72d700", null ],
+      [ "stopbits", "a00052.html#a347be0a813260f445e7829308a58f479", null ],
+      [ "buffer", "a00052.html#a355e354365fe669ddf27d8eb538c83e9", null ],
+      [ "buffer_size", "a00052.html#ad8ba8f4845a222fef29714542876ae55", null ],
+      [ "rx_timeout_constant_ms", "a00052.html#aa8dc452650aae3faefd0f92cffe2b6ab", null ],
+      [ "rx_timeout_multiplier_ms", "a00052.html#a7deed5c320a55485e10ccf7fb6f39d3b", null ],
+      [ "tx_timeout_constant_ms", "a00052.html#a42dc67e6be0ad089f67a8d404aee72d4", null ],
+      [ "tx_timeout_multiplier_ms", "a00052.html#a8fa692dea066c6e1393912ae32a5fc3a", null ]
     ] ],
-    [ "FSL_OCOTP_DRIVER_VERSION", "a00052.html#ga211ad512cb6afc3a8649a61c4f887dd5", [
-      [ "kStatus_OCOTP_AccessError", "a00052.html#gga84627a72058502328269676b81780f89a6133e2fb03bd09bc490982251048c8de", null ],
-      [ "kStatus_OCOTP_CrcFail", "a00052.html#gga84627a72058502328269676b81780f89a6c5aa99c2965029cf80feaf36cd0763a", null ],
-      [ "kStatus_OCOTP_ReloadError", "a00052.html#gga84627a72058502328269676b81780f89aa1a3a69603c6973128021852a03cf9ce", null ],
-      [ "kStatus_OCOTP_ProgramFail", "a00052.html#gga84627a72058502328269676b81780f89ae3aafd3ae27db94a954965038445d240", null ],
-      [ "kStatus_OCOTP_Locked", "a00052.html#gga84627a72058502328269676b81780f89a3a38a5c2c3c0f0146c9b773e855812a6", null ]
-    ] ],
-    [ "OCOTP_Init", "a00052.html#ga54480b3c489116b8cb76053b16f02c89", null ],
-    [ "OCOTP_Deinit", "a00052.html#gaafffa3b5fe3f1f69f077e88ba5a7e107", null ],
-    [ "OCOTP_CheckBusyStatus", "a00052.html#gaa3040092099624ec476dd81bd022712c", null ],
-    [ "OCOTP_CheckErrorStatus", "a00052.html#gaf0ee0166ccd35b0273d468b7eb72c954", null ],
-    [ "OCOTP_ClearErrorStatus", "a00052.html#gad9294be0c39be4dfaa1eea436ac85171", null ],
-    [ "OCOTP_ReloadShadowRegister", "a00052.html#ga7a7b1cd03383fafde15157a06fdda557", null ],
-    [ "OCOTP_ReadFuseShadowRegister", "a00052.html#gaecc991ccf4be0c49286fb13cba97e389", null ],
-    [ "OCOTP_ReadFuseShadowRegisterExt", "a00052.html#gaa1b0f813fa5ca43225d71d9218c48a28", null ],
-    [ "OCOTP_WriteFuseShadowRegister", "a00052.html#ga43636ab96125958c9a14fe82c176e33e", null ],
-    [ "OCOTP_WriteFuseShadowRegisterWithLock", "a00052.html#ga4f837c7b4a66ffe3153f2975fd5c6388", null ],
-    [ "OCOTP_GetVersion", "a00052.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5", null ]
+    [ "FSL_LPUART_FREERTOS_DRIVER_VERSION", "a00052.html#gae78d379ef6bde2ad08e1fe64f1f09bf5", null ],
+    [ "LPUART_RTOS_Init", "a00052.html#ga5be9370b1fa0187c194475769e7138fc", null ],
+    [ "LPUART_RTOS_Deinit", "a00052.html#ga057e59dcc578ef4b303850bcd90ca50e", null ],
+    [ "LPUART_RTOS_Send", "a00052.html#ga275e067e13ecc77dde83d2d7938c038e", null ],
+    [ "LPUART_RTOS_Receive", "a00052.html#ga0561f87122863c6e9b20f8991a73a0fb", null ],
+    [ "LPUART_RTOS_SetRxTimeout", "a00052.html#ga3e211e0c1a2c93d9bdd73d6ca4639a10", null ],
+    [ "LPUART_RTOS_SetTxTimeout", "a00052.html#gad2317ff04710f0f4a2dc7d219f850c85", null ]
 ];

@@ -33,17 +33,126 @@
 /* #define APPL_AUTO_DISCOVERY_ON_CONNECTION */
 
 /* --------------------------------------------- External Global Variables */
+#ifdef BT_GAM
+/* Temporary */
+API_RESULT ga_gatt_cb_pl
+           (
+               ATT_HANDLE    * handle,
+               UCHAR         att_event,
+               API_RESULT    event_result,
+               void          * eventdata,
+               UINT16        event_datalen
+           );
+#else
+#define ga_gatt_cb_pl(h, ae, er, ed, dl)
+#endif /* BT_GAM */
 
 /* --------------------------------------------- Exported Global Variables */
 ATT_HANDLE appl_gatt_client_handle;
 
+/**
+ * List of ATT Handles.
+ * 0th - Fixed Channel one (assuming only one BLE connection)
+ * Remaining ones are for ECBFC or CBFC channels
+ */
+#ifdef BT_EATT
+ATT_HANDLE appl_gatt_client_handle_list[1 + L2CAP_ECBFC_MAX_NUM_CIDS];
+#else
+ATT_HANDLE appl_gatt_client_handle_list[1];
+#endif /* BT_EATT */
+
 /* --------------------------------------------- Static Global Variables */
+static API_RESULT appl_gatt_client_save_att_handle
+                  (
+                      /* IN */ ATT_HANDLE * handle
+                  )
+{
+    UINT32 index;
+    API_RESULT retval;
+
+    retval = API_FAILURE;
+    for (index = 0; index < (sizeof(appl_gatt_client_handle_list) / sizeof(ATT_HANDLE)); index++)
+    {
+        /* Check if ATT Handle index is free, save and return success */
+        if (ATT_CON_ID_INIT_VAL == appl_gatt_client_handle_list[index].att_id)
+        {
+            appl_gatt_client_handle_list[index] = (*handle);
+            retval = API_SUCCESS;
+            break;
+        }
+    }
+
+    return retval;
+}
+
+static API_RESULT appl_gatt_client_search_att_handle
+                  (
+                      /* IN */  ATT_HANDLE * handle,
+                      /* OUT */ UINT32     * handle_index
+                  )
+{
+    UINT32 index;
+    API_RESULT retval;
+
+    retval = API_FAILURE;
+    for (index = 0; index < (sizeof(appl_gatt_client_handle_list) / sizeof(ATT_HANDLE)); index++)
+    {
+        /* Check if ATT Handle is present and return success */
+        if ((handle->device_id == appl_gatt_client_handle_list[index].device_id) &&
+            (handle->att_id == appl_gatt_client_handle_list[index].att_id))
+        {
+            *handle_index = index;
+            retval = API_SUCCESS;
+            break;
+        }
+    }
+
+    return retval;
+}
+
+/* MISRA C - 2012 Rule 2.2 */
+#if 0
+static API_RESULT appl_gatt_client_select_att_handle(void)
+{
+    UINT32 index;
+    API_RESULT retval;
+    int        choice;
+
+    CONSOLE_OUT("Select ATT Handle from below List\n");
+    for (index = 0; index < (sizeof(appl_gatt_client_handle_list) / sizeof(ATT_HANDLE)); index++)
+    {
+        /* Print ATT Handles from the list */
+        CONSOLE_OUT("[0x%02X]: Device ID (0x%04X), ATT ID (0x%04X) [%s] \n",
+        (UINT8)index, appl_gatt_client_handle_list[index].device_id,
+        appl_gatt_client_handle_list[index].att_id,
+        ((ATT_CON_ID_INIT_VAL == appl_gatt_client_handle_list[index].att_id)? "Invalid" : "Valid"));
+    }
+
+    CONSOLE_OUT("Your choice: (in decimal)\n");
+    CONSOLE_IN("%d", &choice);
+
+    /* Range Check */
+    retval = API_SUCCESS;
+    if (choice >= (sizeof(appl_gatt_client_handle_list) / sizeof(ATT_HANDLE)))
+    {
+        CONSOLE_OUT("Invalid ATT Handle Index (%d) selection. Returning Failure\n", choice);
+        retval = API_FAILURE;
+    }
+    else
+    {
+        appl_gatt_client_handle = appl_gatt_client_handle_list[choice];
+    }
+
+    return retval;
+}
+#endif /* 0 */
+
 API_RESULT appl_gatt_cb
            (
                ATT_HANDLE    * handle,
                UCHAR         att_event,
                API_RESULT    event_result,
-               void          * event_data,
+               void          * eventdata,
                UINT16        event_datalen
            );
 
@@ -67,7 +176,8 @@ static UCHAR auto_discovery;
  * Default: Set False
  * On General Service Discovery: Set True
  */
-static UCHAR general_service_discovery;
+/** NOTE: Setting Value to 1 for GA testing */
+static UCHAR general_service_discovery = 0x01;
 
 static const UCHAR *profile_client_menu = (UCHAR *) \
  "\n--------------------------------------------\n"\
@@ -124,10 +234,11 @@ static const UCHAR *gatt_client_menu = (UCHAR *) \
    "5 - Connect ATT over BR/EDR\n"\
    "6 - Disconnect ATT over BR/EDR\n"\
    "7 - Connect ATT over LE\n"\
-   "8 - Disconnect ATT over LE\n\n"\
-   "Primary Service Discovery\n"\
+   "8 - Disconnect ATT over LE\n\n\n"\
+   "Primary/Secondary Service Discovery\n"\
    "10 - Discover All Primary Services \n"\
    "11 - Discover Primary Services By Service UUID\n\n"\
+   "12 - Discover All Secondary Services \n"\
    "Relationship Discovery\n"\
    "20 - Find Included Services \n\n"\
    "Characteristic Discovery\n"\
@@ -153,7 +264,12 @@ static const UCHAR *gatt_client_menu = (UCHAR *) \
    "80 - Write Characteristic Descriptors\n"\
    "81 - Write Long Characteristic Descriptors\n\n"\
    "Server Configuration\n"\
-   "90 - Exchange MTU Request\n"\
+   "90 - Exchange MTU Request\n\n"\
+   "eCBFC Connection\n"\
+   "95 - Connect ATT over ECBFC\n"\
+   "96 - Disconnect ATT over ECBFC\n"\
+   "97 - Get EATT Channel Info\n\n"\
+   "99 - Initiate Disconnection\n\n"\
    "100 - Profile Client Operations\n"\
    "200 - Enable/Disable Application Event Trace\n"\
    "Your Option ?\n";
@@ -209,14 +325,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
         (UCHAR *)"Device Information"
     },
     {
-        GATT_NWA_SERVICE,
-        (UCHAR *)"Network Availability"
-    },
-    {
-        GATT_WATCH_DOG_SERVICE,
-        (UCHAR *)"Watchdog Service"
-    },
-    {
         GATT_PHONE_ALERT_STATUS_SERVICE,
         (UCHAR *)"Phone Alert Status Service"
     },
@@ -255,6 +363,10 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
     {
         GATT_AIOS_SERVICE,
         (UCHAR *)"Automation IO Service"
+    },
+    {
+        GATT_HPS_SERVICE,
+        (UCHAR *)"HTTP Proxy Service"
     },
     {
         GATT_DEVICE_NAME_CHARACTERISTIC,
@@ -301,10 +413,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
         (UCHAR *)"Time"
     },
     {
-        GATT_EXACT_TIME_100_CHARACTERISTIC,
-        (UCHAR *)"Exact Time 100"
-    },
-    {
         GATT_EXACT_TIME_256_CHARACTERISTIC,
         (UCHAR *)"Exact Time 256"
     },
@@ -321,10 +429,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
         (UCHAR *)"Local Time Information"
     },
     {
-        GATT_SEC_TIME_ZONE_CHARACTERISTIC,
-        (UCHAR *)"Secondary Time Zone"
-    },
-    {
         GATT_TIME_WITH_DST_CHARACTERISTIC,
         (UCHAR *)"Time with DST"
     },
@@ -339,10 +443,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
     {
         GATT_REF_TIME_INFO_CHARACTERISTIC,
         (UCHAR *)"Reference Time Information"
-    },
-    {
-        GATT_TIME_BROADCAST_CHARACTERISTIC,
-        (UCHAR *)"Time Broadcast"
     },
     {
         GATT_TIME_UPDATE_CONTROL_POINT,
@@ -362,14 +462,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
         (UCHAR *)"Battery Level"
     },
     {
-        GATT_BATTERY_PWR_ST_CHARCTERISTIC,
-        (UCHAR *)"Battery Power State"
-    },
-    {
-        GATT_BATTERY_LEVEL_ST_CHARACTERISTIC,
-        (UCHAR *)"Battery Level State"
-    },
-    {
         GATT_TEMPERATURE_MSMNT_CHARACTERISTIC,
         (UCHAR *)"Temperature Measurement"
     },
@@ -380,14 +472,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
     {
         GATT_INTERMEDIATE_TEMP_CHARACTERISTIC,
         (UCHAR *)"Intermediate Temperature"
-    },
-    {
-        0x2A1FU,
-        (UCHAR *)"Temperature Celsius"
-    },
-    {
-        0x2A20U,
-        (UCHAR *)"Temperature Fahrenheit"
     },
     {
         GATT_MSMNT_INTERVAL_CHARATACTERISTIC,
@@ -466,26 +550,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
         (UCHAR *)"CPM Control Point"
     },
     {
-        0x2A2CU,
-        (UCHAR *)"Elevation"
-    },
-    {
-        0x2A2DU,
-        (UCHAR *)"Latitude"
-    },
-    {
-        0x2A2EU,
-        (UCHAR *)"Longitude"
-    },
-    {
-        0x2A2FU,
-        (UCHAR *)"Position 2D"
-    },
-    {
-        0x2A30U,
-        (UCHAR *)"Position 3D"
-    },
-    {
         GATT_SCAN_REFRESH_CHARACTERISTIC,
         (UCHAR *)"Scan Refresh"
     },
@@ -539,18 +603,6 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
     {
         GATT_INTRMDT_CUFF_PRSR_CHARACTERISTIC,
         (UCHAR *)"Intermediate Cuff Measurement"
-    },
-    {
-        0x2A3AU,
-        (UCHAR *)"Removable"
-    },
-    {
-        0x2A3BU,
-        (UCHAR *)"Service Required"
-    },
-    {
-        GATT_NWA_CHARACTERISTIC,
-        (UCHAR *)"Network Availability"
     },
     {
         GATT_ALERT_STATUS_CHARACTERISTIC,
@@ -697,32 +749,452 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
         (UCHAR *)"AIO Aggregate"
     },
     {
-        GATT_HPS_SERVICE,
-        (UCHAR *)"HTTP Proxy Service"
+        GATT_INSULIN_DELIVERY_SERVICE,
+        (UCHAR *)"Insulin Delivery Service"
+    },
+    {
+        GATT_IDD_STATUS_CHANGED_CHARACTERISTIC,
+        (UCHAR *)"IDD Status Changed"
+    },
+    {
+        GATT_IDD_STATUS_CHARACTERISTIC,
+        (UCHAR *)"IDD Status"
+    },
+    {
+        GATT_IDD_ANNUN_STATUS_CHARACTERISTIC,
+        (UCHAR *)"IDD Annunciation Status"
+    },
+    {
+        GATT_IDD_FEATURE_CHARACTERISTIC,
+        (UCHAR *)"IDD Feature"
+    },
+    {
+        GATT_IDD_STATUS_READER_CP_CHARACTERISTIC,
+        (UCHAR *)"IDD Status Reader Control Point"
+    },
+    {
+        GATT_IDD_COMMAND_CP_CHARACTERISTIC,
+        (UCHAR *)"IDD Command Control Point"
+    },
+    {
+        GATT_IDD_COMMAND_DATA_CHARACTERISTIC,
+        (UCHAR *)"IDD Command Data"
+    },
+    {
+        GATT_IDD_RACP_CHARACTERISTIC,
+        (UCHAR *)"IDD Record Access Control Point"
+    },
+    {
+        GATT_IDD_HISTORY_DATA_CHARACTERISTIC,
+        (UCHAR *)"IDD History Data"
+    },
+    {
+        GATT_CGM_SERVICE,
+        (UCHAR *)"Continuous Glucose Monitor"
+    },
+    {
+        GATT_CGM_MSRMT_CHARACTERISTIC,
+        (UCHAR *)"CGM Measurement"
+    },
+    {
+        GATT_CGM_FEATURES_CHARACTERISTIC,
+        (UCHAR *)"CGM Features"
+    },
+    {
+        GATT_CGM_STATUS_CHARACTERISTIC,
+        (UCHAR *)"CGM Status"
+    },
+    {
+        GATT_CGM_SSN_STRT_TIME_CHARACTERISTIC,
+        (UCHAR *)"CGM Session Start Time"
+    },
+    {
+        GATT_CGM_SSN_RUN_TIME_CHARACTERISTIC,
+        (UCHAR *)"CGM Session Run Time"
+    },
+    {
+        GATT_CGM_SPECIFIC_OPS_CP_CHARACTERISTIC,
+        (UCHAR *)"CGM Specific Ops"
+    },
+    {
+        GATT_OBJECT_TRANSFER_SERVICE,
+        (UCHAR *)"Object Transfer Service"
     },
     {
         GATT_HPC_URI_CHARACTERISTIC,
-        (UCHAR *)"URI Characteristic"
+        (UCHAR *)"URI"
     },
     {
         GATT_HPC_HTTP_HEADERS_CHARACTERISTIC,
-        (UCHAR *)"HTTP Headers Characteristic"
-    },
-    {
-        GATT_HPC_HTTP_ENTITY_BODY_CHARACTERISTIC,
-        (UCHAR *)"HTTP Entity Body Characteristic"
-    },
-    {
-        GATT_HPC_HTTP_CP_CHARACTERISTIC,
-        (UCHAR *)"HTTP Control Point Characteristic"
+        (UCHAR *)"HTTP Header"
     },
     {
         GATT_HPC_HTTP_STATUS_CODE_CHARACTERISTIC,
-        (UCHAR *)"HTTP Status Code Characteristic"
+        (UCHAR *)"HTTP Status Code"
+    },
+    {
+        GATT_HPC_HTTP_ENTITY_BODY_CHARACTERISTIC,
+        (UCHAR *)"HTTP Entity Body"
+    },
+    {
+        GATT_HPC_HTTP_CP_CHARACTERISTIC,
+        (UCHAR *)"HTTP Control Point"
     },
     {
         GATT_HPC_HTTPS_SECURITY_CHARACTERISTIC,
-        (UCHAR *)"HTTPS Security Characteristic"
+        (UCHAR *)"HTTP Security"
+    },
+    {
+        GATT_VC_VOLUME_STATE_CHARACTERISTIC,
+        (UCHAR *)"VCS Volume State"
+    },
+    {
+        GATT_VC_VOLUME_CP_CHARACTERISTIC,
+        (UCHAR *)"VCS Volume Control Point"
+    },
+    {
+        GATT_VC_VOLUME_FLAG_CHARACTERISTIC ,
+        (UCHAR *)"VCS Volume Flag"
+    },
+    {
+        GATT_VOC_OFFSET_STATE_CHARACTERISTIC ,
+        (UCHAR *)"VOCS Offset State"
+    },
+    {
+        GATT_VOC_AUDIO_LOCATION_CHARACTERISTIC ,
+        (UCHAR *)"VOCS Audio Location"
+    },
+    {
+        GATT_VOC_OFFSET_CP_CHARACTERISTIC ,
+        (UCHAR *)"VOCS Offset Control Point"
+    },
+    {
+        GATT_VOC_AUDIO_OP_DESC_CHARACTERISTIC ,
+        (UCHAR *)"VOCS Output Description"
+    },
+    {
+        GATT_AIC_INPUT_STATE_CHARACTERISTIC,
+        (UCHAR *)"AICS Input State"
+    },
+    {
+        GATT_AIC_GAIN_SETTING_CHARACTERISTIC,
+        (UCHAR *)"AICS Gain Setting"
+    },
+    {
+        GATT_AIC_INPUT_TYPE_CHARACTERISTIC,
+        (UCHAR *)"AICS Input Type"
+    },
+    {
+        GATT_AIC_INPUT_STATUS_CHARACTERISTIC,
+        (UCHAR *)"AICS Input Status"
+    },
+    {
+        GATT_AIC_AUDIO_INPUT_CP_CHARACTERISTIC,
+        (UCHAR *)"AICS Audio Input Control Point"
+    },
+    {
+        GATT_AIC_AUDIO_INPUT_DESC_CHARACTERISTIC,
+        (UCHAR *)"AICS Audio Input Descriptor"
+    },
+    {
+        GATT_VCS_SERVICE,
+        (UCHAR *)"Volume Control Service"
+    },
+    {
+        GATT_VOCS_SERVICE,
+        (UCHAR *)"Volume Offset Control Service"
+    },
+    {
+        GATT_AICS_SERVICE,
+        (UCHAR *)"Audio Input Control Service"
+    },
+    {
+        GATT_TBS_SERVICE,
+        (UCHAR *)"TelePhone Bearer Service"
+    },
+    {
+        GATT_TBS_BRR_PROVIDER_NAME_CHARACTERISTIC,
+        (UCHAR *)"Bearer Provider Name"
+    },
+    {
+        GATT_TBS_BRR_UCI_CHARACTERISTIC,
+        (UCHAR *)"Bearer UCI"
+    },
+    {
+        GATT_TBS_BRR_TECHNOLOGY_CHARACTERISTIC,
+        (UCHAR *)"Bearer Technology"
+    },
+    {
+        GATT_TBS_BRR_URI_SCHEMES_SUPPORTED_LIST_CHARACTERISTIC,
+        (UCHAR *)"Bearer URI Schemes Supported List"
+    },
+    {
+        GATT_TBS_BRR_SIGSTRENGTH_CHARACTERISTIC,
+        (UCHAR *)"Bearer Signal Strength"
+    },
+    {
+        GATT_TBS_BRR_SIGSTRENGTH_REPORTING_INTERVAL_CHARACTERISTIC,
+        (UCHAR *)"Bearer Signal Strength Reporting Interval"
+    },
+    {
+        GATT_TBS_BRR_LIST_CUR_CALLS_CHARACTERISTIC,
+        (UCHAR *)"Bearer List Current Calls"
+    },
+    {
+        GATT_CONTENT_CONTROL_ID_CHARACTERISTIC,
+        (UCHAR *)"Content Control ID"
+    },
+    {
+        GATT_TBS_INCOMING_CALL_TARGET_BRR_URI_CHARACTERISTIC,
+        (UCHAR *)"Incoming Call Target Bearer Caller ID"
+    },
+    {
+        GATT_TBS_STATUS_FLAGS_CHARACTERISTIC,
+        (UCHAR *)"Status Flags"
+    },
+    {
+        GATT_TBS_CALL_STATE_CHARACTERISTIC,
+        (UCHAR *)"Call State"
+    },
+    {
+        GATT_TBS_CALL_CP_CHARACTERISTIC,
+        (UCHAR *)"Call Control Point"
+    },
+    {
+        GATT_TBS_CALL_CP_OPTIONAL_OPCODES_CHARACTERISTIC,
+        (UCHAR *)"Call Control Point Supported Opcodes"
+    },
+    {
+        GATT_TBS_TERMINATION_REASON_CHARACTERISTIC,
+        (UCHAR *)"Termination Reason"
+    },
+    {
+        GATT_TBS_INCOMING_CALL_CHARACTERISTIC,
+        (UCHAR *)"Incoming Call"
+    },
+    {
+        GATT_TBS_CALL_FRIENDLY_NAME_CHARACTERISTIC,
+        (UCHAR *)"Call Friendly Name"
+    },
+    {
+        GATT_MICS_SERVICE,
+        (UCHAR *)"Microphone Control Service"
+    },
+    {
+        GATT_MCS_SERVICE,
+        (UCHAR *)"Media Control Service"
+    },
+    {
+        GATT_CSIS_SERVICE,
+        (UCHAR *)"Coordinated Set Identification"
+    },
+    {
+        GATT_PACS_SERVICE,
+        (UCHAR *)"Published Audio Capability Service"
+    },
+    {
+        GATT_ASCS_SERVICE,
+        (UCHAR *)"Audio Stream Control Service"
+    },
+    {
+        GATT_BASS_SERVICE,
+        (UCHAR *)"Broadcast Audio Scan Service"
+    },
+    {
+        GATT_BAAS_SERVICE,
+        (UCHAR *)"Basic Audio Announcement Service"
+    },
+    {
+        GATT_BCAS_SERVICE,
+        (UCHAR *)"Broadcast Audio Announcement Service"
+    },
+    {
+        GATT_GMCS_SERVICE,
+        (UCHAR *)"Generic Media Control Service"
+    },
+    {
+        GATT_MIC_MUTE_CHARACTERISTIC,
+        (UCHAR *)"Mute characteristic"
+    },
+    {
+        GATT_PAC_SNK_PAC_CHARACTERISTIC,
+        (UCHAR *)"Sink PAC"
+    },
+    {
+        GATT_PAC_SNK_AUDIO_LOC_CHARACTERISTIC,
+        (UCHAR *)"Sink Audio Locations"
+    },
+    {
+        GATT_PAC_SRC_PAC_CHARACTERISTIC,
+        (UCHAR *)"Source PAC"
+    },
+    {
+        GATT_PAC_SRC_AUDIO_LOC_CHARACTERISTIC,
+        (UCHAR *)"Source Audio Locations"
+    },
+    {
+        GATT_CSI_RANK_CHARACTERISTIC,
+        (UCHAR *)"Rank Characteristic"
+    },
+    {
+        GATT_CSI_SIRK_CHARACTERISTIC,
+        (UCHAR *)"Set Identity Resolving Key Characteristic"
+    },
+    {
+        GATT_CSI_SIZE_CHARACTERISITC,
+        (UCHAR *)"Size Characteristic"
+    },
+    {
+        GATT_CSI_LOCK_CHARACTERISTIC,
+        (UCHAR *)"Lock Characteristic"
+    },
+    {
+        GATT_MCS_MEDIA_PLAYER_NAME_CHARACTERISTIC,
+        (UCHAR *)"Media Player Name Characteristic"
+    },
+    {
+        GATT_MCS_MEDIA_PLAYER_ICON_OBJ_ID_CHARACTERISTIC,
+        (UCHAR *)"Media Icon Object Characteristic"
+    },
+    {
+        GATT_MCS_MEDIA_PLAYER_ICON_URL_CHARACTERISTIC,
+        (UCHAR *)"Media Icon URI Characteristic"
+    },
+    {
+        GATT_MCS_TRACK_CHGD_CHARACTERISTIC,
+        (UCHAR *)"Track Changed Characteristic"
+    },
+    {
+        GATT_MCS_TRACK_TITLE_CHARACTERISTIC,
+        (UCHAR *)"Track Title Characteristic"
+    },
+    {
+        GATT_MCS_TRACK_DURATION_CHARACTERISTIC,
+        (UCHAR *)"Track Duration Characteristic"
+    },
+    {
+        GATT_MCS_TRACK_POS_CHARACTERISTIC,
+        (UCHAR *)"Track Position Characteristic"
+    },
+    {
+        GATT_MCS_PLAYBACK_SPEED_CHARACTERISTIC,
+        (UCHAR *)"Playback Speed Characteristic"
+    },
+    {
+        GATT_MCS_SEEKING_SPEED_CHARACTERISTIC,
+        (UCHAR *)"Seeking Speed Characteristic"
+    },
+    {
+        GATT_MCS_CURR_TRACK_SEG_OBJ_ID_CHARACTERISTIC,
+        (UCHAR *)"Track Segments Object Characteristic"
+    },
+    {
+        GATT_MCS_CURR_TRACK_OBJ_ID_CHARACTERISTIC,
+        (UCHAR *)"Current Track Object Characteristic"
+    },
+    {
+        GATT_MCS_NEXT_TRACK_OBJ_ID_CHARACTERISTIC,
+        (UCHAR *)"Next Track Object Characteristic"
+    },
+    {
+        GATT_MCS_CURR_GROUP_OBJ_ID_CHARACTERISTIC,
+        (UCHAR *)"Current Group Object Characteristic"
+    },
+    {
+        GATT_MCS_PLAYING_ORDER_CHARACTERISTIC,
+        (UCHAR *)"Playing Order Characteristic"
+    },
+    {
+        GATT_MCS_PLAYING_ORDERS_SUPP_CHARACTERISTIC,
+        (UCHAR *)"Playing Order Supported Characteristic"
+    },
+    {
+        GATT_MCS_MEDIA_STATE_CHARACTERISTIC,
+        (UCHAR *)"Media State Characteristic"
+    },
+    {
+        GATT_MCS_MEDIA_CONTROL_POINT_CHARACTERISTIC,
+        (UCHAR *)"Media Control Point  Characteristic"
+    },
+    {
+        GATT_MCS_MCP_OPC_SUPP_CHARACTERISTIC,
+        (UCHAR *)"Media Control Opcodes Supported  Characteristic"
+    },
+    {
+        GATT_MCS_SEARCH_RES_OBJ_ID_CHARACTERISTIC,
+        (UCHAR *)"Search Results Object Characteristic"
+    },
+    {
+        GATT_MCS_SEARCH_CONTROL_POINT_CHARACTERISTIC,
+        (UCHAR *)"Search Control Point Characteristic"
+    },
+    {
+        GATT_OTS_FEATURE_CHARACTERISTIC,
+        (UCHAR *)"OTS Feature Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_NAME_CHARACTERISTIC,
+        (UCHAR *)"OTS Object Name Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_TYPE_CHARACTERISTIC,
+        (UCHAR *)"OTS Object Type Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_SIZE_CHARACTERISTIC,
+        (UCHAR *)"OTS Object Size Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_FIRST_CRTD_CHARACTERISTIC,
+        (UCHAR *)"OTS Object First Created Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_LAST_MODFD_CHARACTERISTIC,
+        (UCHAR *)"OTS Object Last Modified Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_ID_CHARACTERISTIC,
+        (UCHAR *)"OTS Object ID Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_PRPTY_CHARACTERISTIC,
+        (UCHAR *)"OTS Object Property Characteristic"
+    },
+    {
+        GATT_OTS_OACP_CHARACTERISTIC,
+        (UCHAR *)"OTS OACP Characteristic"
+    },
+    {
+        GATT_OTS_OLCP_CHARACTERISTIC,
+        (UCHAR *)"OTS OLCP Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_LIST_FILTER_CHARACTERISTIC,
+        (UCHAR *)"OTS Object List Filter Characteristic"
+    },
+    {
+        GATT_OTS_OBJ_CHANGED_CHARACTERISTIC,
+        (UCHAR *)"OTS Object Changed Characteristic"
+    },
+    {
+        GATT_ASCS_SINK_ASE_CHARACTERISTIC,
+        (UCHAR *)"Audio Sink Endpoint Characteristic"
+    },
+    {
+        GATT_ASCS_SOURCE_ASE_CHARACTERISTIC,
+        (UCHAR *)"Audio Source Endpoint Characteristic"
+    },
+    {
+        GATT_ASCS_ASE_CP_CHARACTERISTIC,
+        (UCHAR *)"ASE Control Point Characteristic"
+    },
+    {
+        GATT_BASS_BCAST_AUDIO_SCAN_CP_CHARACTERISTIC,
+        (UCHAR *)"Broadcast AudioScan CP Characteristic"
+    },
+    {
+        GATT_BASS_BCAST_RECEIVE_STATE_CHARACTERISTIC,
+        (UCHAR *)"Broadcast Receive State Characteristic"
     },
     {
         GATT_EXTENDED_PROPERTIES,
@@ -751,6 +1223,14 @@ const APPL_UUID_DESC appl_uuid_desc_table[] =
     {
         GATT_VALID_RANGE,
         (UCHAR *)"Valid Range"
+    },
+    {
+        GATT_EXTERNAL_REPORT_REF,
+        (UCHAR *)"External Report Reference"
+    },
+    {
+        GATT_IP_OP_FEATURE_REPORT_REF,
+        (UCHAR *)"Input/Output Feature Report"
     },
     {
         0x0000U,
@@ -790,7 +1270,7 @@ static API_RESULT appl_gatt_verify_mtu_size(UINT16 payload_len)
 
     if (API_SUCCESS != retval)
     {
-        LOG_DEBUG (
+        CONSOLE_OUT (
         "[APPL]: Failed to fetch current MTU for Handle with retval 0x%04X:\n"
         "   -> Device_ID       : 0x%02X\n"
         "   -> ATT_Instance_ID : 0x%02X\n\n",
@@ -804,7 +1284,7 @@ static API_RESULT appl_gatt_verify_mtu_size(UINT16 payload_len)
     {
         if (curr_mtu < payload_len)
         {
-            LOG_DEBUG(
+            CONSOLE_OUT(
                 "[APPL]: Failed to send data(%d Bytes) larger than Current "
                 "MTU(%d Bytes)\n", payload_len, curr_mtu);
 
@@ -851,7 +1331,7 @@ API_RESULT appl_gatt_cb
     /* Drop if we receive an unexpected PDU for the current state */
     if (ATT_UNEXPECTED_PDU == event_result)
     {
-        LOG_DEBUG(
+        CONSOLE_OUT(
         "\n***\n[ATT]:[0x%02X: 0x%02X]: Received UNEXPECTED ATT Event 0x%02X in current state.\n***\n",
         handle->device_id, handle->att_id, att_event);
 
@@ -868,6 +1348,7 @@ API_RESULT appl_gatt_cb
         if (BT_TRUE == appl_gatt_client_evt_trc)
 #endif /* APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION */
         {
+            /*
             LOG_DEBUG(
             "[ATT]:[0x%02X: 0x%02X]: Received ATT Event 0x%02X with result 0x%04X\n",
             handle->device_id, handle->att_id, att_event, event_result);
@@ -876,22 +1357,35 @@ API_RESULT appl_gatt_cb
             {
                 appl_dump_bytes(event_data, event_datalen);
             }
+            */
         }
 
         /* Set no server application callback */
         att_scb = 0x00U;
         uuid_16 = 0x0000U;
 
-        /* Initialize the Characterist Start and End Handles */
+        /* Initialize the Characteristic Start and End Handles */
         csh = 0x0000U;
         ceh = 0x0000U;
 
         switch(att_event)
         {
         case ATT_CONNECTION_IND:
-            CONSOLE_OUT (
-            "[0x%02X: 0x%02X]:Received Connection Indication, Result 0x%04X!\n",
-            handle->device_id, handle->att_id, event_result);
+        CONSOLE_OUT (
+        "Received ATT Connection Indication, Result 0x%04X!\n",
+        event_result);
+
+        /**
+         * For fixed channel, event will be bd_addr and type and event datalen
+         * will be associated structure length
+         */
+        if (sizeof(BT_DEVICE_ADDR) == event_datalen)
+        {
+            CONSOLE_OUT("[ATT] ATT connected over LE Fixed Channel!\n");
+            CONSOLE_OUT("[ATT HANDLE]: (Dev ID: 0x%02X, ATT ID: 0x%02X\n",
+            handle->device_id, handle->att_id);
+
+            appl_gatt_client_handle_list[0] = *handle;
 
             appl_gatt_client_handle = *handle;
 
@@ -903,9 +1397,79 @@ API_RESULT appl_gatt_cb
             auto_discovery = 0x01U;
             gatt_discover_ps (handle, 0x0000U);
 #endif /* APPL_AUTO_DISCOVERY_ON_CONNECTION */
-            break;
+        }
+        else if (0U == event_datalen)
+        {
+            if (API_SUCCESS == event_result)
+            {
+                CONSOLE_OUT("[ATT] ATT connected over BREDR ATT Channel!\n");
+                CONSOLE_OUT("[ATT HANDLE]: (Dev ID: 0x%02X, ATT ID: 0x%02X\n",
+                handle->device_id, handle->att_id);
 
-        case ATT_DISCONNECTION_IND:
+                /**
+                 * TODO: Check for the scenario of simultaneous LE & BREDR
+                 *       connection with the same device.
+                 */
+                appl_gatt_client_handle_list[0U] = *handle;
+
+                appl_gatt_client_handle = *handle;
+
+                att_scb = 0x01U;
+
+                appl_notify_gatt_conn();
+            }
+        }
+        else
+        {
+            att_scb = 0x00U;
+
+            /* Check if connection is success */
+            if (API_SUCCESS == event_result)
+            {
+                UINT32 conn_index;
+
+                /* Check for the free element in ATT Handle list and save */
+                for (conn_index = 0U; conn_index < event_datalen; conn_index++)
+                {
+                    /** Add ATT Handle to the list */
+                    retval = appl_gatt_client_save_att_handle(&(handle[conn_index]));
+
+                    if (API_SUCCESS != retval)
+                    {
+                        CONSOLE_OUT("Failed to save ATT Handle Index: 0x%08X. returning\n",
+                        conn_index);
+
+                        break;
+                    }
+
+                    CONSOLE_OUT("[ATT] ATT connected over EATT Channel!\n");
+                    CONSOLE_OUT("[ATT HANDLE]: (Dev ID: 0x%02X, ATT ID: 0x%02X\n",
+                    handle[conn_index].device_id, handle[conn_index].att_id);
+                }
+            }
+        }
+
+        /**
+         * NOTE:
+         * This is temporary. Will be cleaned-up with better interfaces
+         * soon!
+         */
+        ga_gatt_cb_pl
+        (
+            handle,
+            att_event,
+            event_result,
+            event_data,
+            event_datalen
+        );
+
+        break;
+
+    case ATT_DISCONNECTION_IND:
+        {
+            UINT32 handle_index;
+            API_RESULT  search_retval;
+
             CONSOLE_OUT (
             "[0x%02X: 0x%02X]:Received Disconnection Indication, Result 0x%04X!\n",
             handle->device_id, handle->att_id, event_result);
@@ -914,7 +1478,28 @@ API_RESULT appl_gatt_cb
 
             att_scb = 0x01U;
 
-            break;
+            search_retval = appl_gatt_client_search_att_handle(handle, &handle_index);
+
+            if (API_SUCCESS == search_retval)
+            {
+                ATT_INIT_HANDLE(appl_gatt_client_handle_list[handle_index]);
+            }
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
+        }
+        break;
 
         case ATT_ERROR_RSP:
             if (NULL != event_data)
@@ -930,32 +1515,74 @@ API_RESULT appl_gatt_cb
                 BT_IGNORE_UNUSED_PARAM(rsp_code);
 #endif /* APPL_LIMIT_LOGS */
             }
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_XCHNG_MTU_REQ:
             if (NULL != event_data)
             {
                 BT_UNPACK_LE_2_BYTE(&mtu, event_data);
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "Received Exchange MTU Request with Result 0x%04X. MTU Size "
                 "= 0x%04X!\n", event_result, mtu);
             }
 
             att_scb = 0x01U;
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
+
             break;
 
         case ATT_XCHNG_MTU_RSP:
             if (NULL != event_data)
             {
                 BT_UNPACK_LE_2_BYTE(&mtu, event_data);
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "Received Exchange MTU Response with Result 0x%04X. MTU Size "
                 "= 0x%04X!\n",event_result,mtu);
             }
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_FIND_INFO_RSP:
-            LOG_DEBUG ("Received Find Information Response Opcode!\n");
+            CONSOLE_OUT ("Received Find Information Response Opcode!\n");
 
             if (NULL != event_data)
             {
@@ -964,7 +1591,7 @@ API_RESULT appl_gatt_cb
             break;
 
         case ATT_READ_BY_TYPE_RSP:
-            LOG_DEBUG ("Received Read Type Response Opcode 0x%04X!\n",
+            CONSOLE_OUT ("Received Read Type Response Opcode 0x%04X!\n",
                     event_result);
             if (NULL != event_data)
             {
@@ -973,7 +1600,7 @@ API_RESULT appl_gatt_cb
 
             break;
         case ATT_READ_BY_GROUP_RSP:
-            LOG_DEBUG ("Received Read Group Type Response Opcode 0x%04X!\n", event_result);
+            CONSOLE_OUT ("Received Read Group Type Response Opcode 0x%04X!\n", event_result);
 
             if (NULL != event_data)
             {
@@ -981,71 +1608,128 @@ API_RESULT appl_gatt_cb
             }
             break;
         case ATT_FIND_BY_TYPE_VAL_RSP:
-            LOG_DEBUG ("Received Find by Type Value Response Opcode!\n");
+            CONSOLE_OUT ("Received Find by Type Value Response Opcode!\n");
 
             if (NULL != event_data)
             {
-                LOG_DEBUG("Found Handle        End Found Handle\n");
+                CONSOLE_OUT("Found Handle        End Found Handle\n");
                 for (i = 0U; i < event_datalen; i += 4U)
                 {
                     BT_UNPACK_LE_2_BYTE(&attr_handle, (event_data + i));
-                    LOG_DEBUG("%04X", attr_handle);
+                    CONSOLE_OUT("%04X", attr_handle);
                     BT_UNPACK_LE_2_BYTE(&attr_handle, (&event_data[i + 2U]));
-                    LOG_DEBUG("                  %04X\n", attr_handle);
+                    CONSOLE_OUT("                  %04X\n", attr_handle);
                 }
             }
             break;
 
         case ATT_READ_RSP:
-            LOG_DEBUG ("Received Read Response Opcode!\n");
+            CONSOLE_OUT ("Received Read Response Opcode!\n");
 
             if (NULL != event_data)
             {
-                LOG_DEBUG("Handle Value Received - \n");
+                CONSOLE_OUT("Handle Value Received - \n");
                 appl_dump_bytes(event_data, event_datalen);
 
                 appl_parse_read_data(event_data, event_datalen);
             }
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
+
             break;
 
         case ATT_READ_BLOB_RSP:
-            LOG_DEBUG ("Received Read Response Opcode!\n");
+            CONSOLE_OUT ("Received Read Response Opcode!\n");
 
             if (NULL != event_data)
             {
-                LOG_DEBUG("Handle Value Received - \n");
+                CONSOLE_OUT("Handle Value Received - \n");
                 appl_dump_bytes(event_data, event_datalen);
 
                 appl_parse_read_data(event_data, event_datalen);
             }
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_READ_MULTIPLE_RSP:
-            LOG_DEBUG ("Received read multiple response Opcode!\n");
+            CONSOLE_OUT ("Received read multiple response Opcode!\n");
 
             if (NULL != event_data)
             {
-                LOG_DEBUG("Byte stream of values received [not separated by handle]");
+                CONSOLE_OUT("Byte stream of values received [not separated by handle]");
                 appl_dump_bytes(event_data, event_datalen);
             }
             break;
 
         case ATT_WRITE_RSP:
-            LOG_DEBUG ("Received Write Response Opcode!\n");
+            CONSOLE_OUT ("Received Write Response Opcode!\n");
             appl_notify_write_rsp();
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_WRITE_CMD_TX_COMPLETE:
-            LOG_DEBUG("Received Write Command Tx Complete (Locally generated)\n");
+            CONSOLE_OUT("Received Write Command Tx Complete (Locally generated)\n");
 
             if (NULL != event_data)
             {
                 appl_dump_bytes(event_data, event_datalen);
             }
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_SIGNED_WRITE_CMD_TX_COMPLETE:
-            LOG_DEBUG("Received Signed Write Command Tx Complete (Locally generated)\n");
+            CONSOLE_OUT("Received Signed Write Command Tx Complete (Locally generated)\n");
 
             if (NULL != event_data)
             {
@@ -1054,33 +1738,61 @@ API_RESULT appl_gatt_cb
             break;
 
         case ATT_PREPARE_WRITE_RSP:
-            LOG_DEBUG ("Prepare Write Response, Event Result 0x%04X\n",event_result);
+            CONSOLE_OUT ("Prepare Write Response, Event Result 0x%04X\n",event_result);
 
             if (NULL != event_data)
             {
                 BT_UNPACK_LE_2_BYTE(&attr_handle, event_data);
-                LOG_DEBUG ("Handle - 0x%04X\n", attr_handle);
+                CONSOLE_OUT ("Handle - 0x%04X\n", attr_handle);
                 BT_UNPACK_LE_2_BYTE(&offset, event_data+2U);
-                LOG_DEBUG ("Offset - 0x%04X\n", offset);
-                LOG_DEBUG ("Handle Value Received - \n");
+                CONSOLE_OUT ("Offset - 0x%04X\n", offset);
+                CONSOLE_OUT ("Handle Value Received - \n");
                 appl_dump_bytes(event_data + 4U, event_datalen - 4U);
             }
-            LOG_DEBUG ("\n");
+            CONSOLE_OUT ("\n");
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_EXECUTE_WRITE_RSP:
-            LOG_DEBUG ("Received Execute Write Response\n");
+            CONSOLE_OUT ("Received Execute Write Response\n");
             appl_notify_execute_write_rsp();
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_HANDLE_VALUE_NTF:
-            LOG_DEBUG ("Received HVN\n");
+            CONSOLE_OUT ("Received HVN\n");
 
             if (NULL != event_data)
             {
                 BT_UNPACK_LE_2_BYTE(&attr_handle, event_data);
-                LOG_DEBUG("Handle - 0x%04X\n", attr_handle);
-                LOG_DEBUG("Handle Value Received - \n");
+                CONSOLE_OUT("Handle - 0x%04X\n", attr_handle);
+                CONSOLE_OUT("Handle Value Received - \n");
 #ifndef AMC
                 appl_dump_bytes(event_data + 2U, (event_datalen - 2U));
 #endif /* AMC */
@@ -1093,21 +1805,139 @@ API_RESULT appl_gatt_cb
                     (event_datalen - 2U)
                 );
             }
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
 
         case ATT_HANDLE_VALUE_IND:
-            LOG_DEBUG ("Received HVI\n");
+            CONSOLE_OUT ("Received HVI\n");
 
             if (NULL != event_data)
             {
                 BT_UNPACK_LE_2_BYTE(&attr_handle, event_data);
-                LOG_DEBUG("Handle - 0x%04X\n", attr_handle);
-                LOG_DEBUG("Handle Value Received - \n");
+                CONSOLE_OUT("Handle - 0x%04X\n", attr_handle);
+                CONSOLE_OUT("Handle Value Received - \n");
                 appl_dump_bytes(event_data + 2U, (event_datalen - 2U));
                 retval = BT_att_send_hndl_val_cnf(handle);
                 appl_parse_indication_data(attr_handle, (event_data + 2U), (event_datalen - 2U));
             }
+
+            /**
+             * NOTE:
+             * This is temporary. Will be cleaned-up with better interfaces
+             * soon!
+             */
+            ga_gatt_cb_pl
+            (
+                handle,
+                att_event,
+                event_result,
+                event_data,
+                event_datalen
+            );
             break;
+
+
+#ifdef ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+    case ATT_HANDLE_VALUE_MULTIPLE_NTF:
+    {
+        /* Handle Length Value Tuple - elements */
+        UINT16 hlvt_attr_hdl, hlvt_len, hlvt_index;
+        UINT8 * hlvt_val;
+        UINT16  remaining;
+
+        printf("Received HVMN\n");
+
+        /**
+        * Add utility function to decode and print
+        * (<Handle:2 Octet><Length:2 Octet><Value:Length no of Octets>) tuples
+        */
+        printf("Byte stream of values received [not separated by handles]");
+        if ((NULL != event_data) && (0U != event_datalen))
+        {
+            appl_dump_bytes(event_data, event_datalen);
+        }
+        printf("\n");
+
+        remaining = event_datalen;
+        hlvt_val = event_data;
+        hlvt_index = 0U;
+
+        /* Atleast the handle and length fields shall be present */
+        while ((remaining >= 4U) &&
+               (NULL != hlvt_val))
+        {
+            BT_UNPACK_LE_2_BYTE(&hlvt_attr_hdl, hlvt_val);
+            hlvt_val += 2U;
+            remaining -= 2U;
+
+            BT_UNPACK_LE_2_BYTE(&hlvt_len, hlvt_val);
+            hlvt_val += 2U;
+            remaining -= 2U;
+
+            printf("Tuple[%d]: <hdl> 0x%04X, <len> 0x%04X, \n", hlvt_index, hlvt_attr_hdl, hlvt_len);
+            hlvt_index++;
+
+            if (hlvt_len > remaining)
+            {
+                printf("<Partial Value>: \n");
+                appl_dump_bytes(hlvt_val, remaining);
+                remaining = 0U;
+
+                break;
+            }
+            else if (hlvt_len == remaining)
+            {
+                printf("<Last Value>: \n");
+                appl_dump_bytes(hlvt_val, remaining);
+                remaining = 0U;
+
+                break;
+            }
+            else
+            {
+                printf("<Value>: \n");
+                appl_dump_bytes(hlvt_val, hlvt_len);
+                remaining -= hlvt_len;
+                hlvt_val += hlvt_len;
+            }
+        }
+
+        if (0U != remaining)
+        {
+            printf("Could not parse following last %d octets\n", remaining);
+
+            appl_dump_bytes(hlvt_val, remaining);
+        }
+
+        /**
+         * NOTE:
+         * This is temporary. Will be cleaned-up with better interfaces
+         * soon!
+         */
+        ga_gatt_cb_pl
+        (
+            handle,
+            att_event,
+            event_result,
+            event_data,
+            event_datalen
+        );
+    }
+    break;
+#endif /* ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT */
 
         case GATT_PS_DISCOVERY_RSP:
             printf ("Received GATT_PS_DISCOVERY_RSP\n");
@@ -1172,6 +2002,20 @@ API_RESULT appl_gatt_cb
                         /* MISRA C-2012 Rule 15.7 */
                     }
 
+                    /**
+                     * NOTE:
+                     * This is temporary. Will be cleaned-up with better interfaces
+                     * soon!
+                     */
+                    ga_gatt_cb_pl
+                    (
+                        handle,
+                        GATT_PS_DISCOVERY_RSP,
+                        API_SUCCESS,
+                        service,
+                        sizeof(GATT_SERVICE_PARAM)
+                    );
+
                     /* Call Primary Service Discovery Completion Handler */
                     appl_notify_gatt_servdata(service, sizeof(GATT_SERVICE_PARAM));
 
@@ -1179,6 +2023,19 @@ API_RESULT appl_gatt_cb
                     service++;
                 }
 
+                /**
+                 * NOTE:
+                 * This is temporary. Will be cleaned-up with better interfaces
+                 * soon!
+                 */
+                ga_gatt_cb_pl
+                (
+                    handle,
+                    GATT_PS_DISCOVERY_RSP,
+                    ((0U == i)? API_FAILURE: API_SUCCESS),
+                    NULL,
+                    0U
+                );
                 if (0U == general_service_discovery)
                 {
                     (BT_IGNORE_RETURN_VALUE) gatt_discover_char
@@ -1201,8 +2058,8 @@ API_RESULT appl_gatt_cb
             break;
 
         case GATT_SS_DISCOVERY_RSP:
-            LOG_DEBUG ("Received GATT_SS_DISCOVERY_RSP\n");
-            LOG_DEBUG ("No. Secondary Services - %d\n\n", event_datalen);
+            CONSOLE_OUT ("Received GATT_SS_DISCOVERY_RSP\n");
+            CONSOLE_OUT ("No. Secondary Services - %d\n\n", event_datalen);
 
             service = (GATT_SERVICE_PARAM *) eventdata;
 
@@ -1213,7 +2070,7 @@ API_RESULT appl_gatt_cb
 #ifdef ATT_SUPPORT_128_BIT_UUID
                     if (ATT_16_BIT_UUID_FORMAT == service->uuid_type)
                     {
-                        LOG_DEBUG(
+                        CONSOLE_OUT(
                         "UUID: 0x%04X (%s)\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
                         service->uuid.uuid_16, appl_display_uuid_label(service->uuid.uuid_16),
                         service->range.start_handle, service->range.end_handle);
@@ -1228,21 +2085,49 @@ API_RESULT appl_gatt_cb
                             BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                         }
 
-                        LOG_DEBUG("UUID: ");
+                        CONSOLE_OUT("UUID: ");
                         appl_print_128_bit_uuid(&service->uuid.uuid_128);
-                        LOG_DEBUG(
+                        CONSOLE_OUT(
                         " (%s)\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
                         appl_display_uuid_label(uuid_16),
                         service->range.start_handle, service->range.end_handle);
                     }
 #else /* ATT_SUPPORT_128_BIT_UUID */
-                    LOG_DEBUG("UUID: 0x%04X (%s)\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
+                    CONSOLE_OUT("UUID: 0x%04X (%s)\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
                     service->uuid, appl_display_uuid_label(service->uuid),
                     service->range.start_handle, service->range.end_handle);
 #endif /* ATT_SUPPORT_128_BIT_UUID */
 
+                    /**
+                     * NOTE:
+                     * This is temporary. Will be cleaned-up with better interfaces
+                     * soon!
+                     */
+                    ga_gatt_cb_pl
+                    (
+                        handle,
+                        GATT_SS_DISCOVERY_RSP,
+                        API_SUCCESS,
+                        service,
+                        sizeof(GATT_SERVICE_PARAM)
+                    );
+
                     service++;
                 }
+
+                /**
+                 * NOTE:
+                 * This is temporary. Will be cleaned-up with better interfaces
+                 * soon!
+                 */
+                ga_gatt_cb_pl
+                (
+                    handle,
+                    GATT_SS_DISCOVERY_RSP,
+                    ((0U == i) ? API_FAILURE : API_SUCCESS),
+                    NULL,
+                    0U
+                );
 
 #ifdef APPL_AUTO_DISCOVERY_ON_CONNECTION
                 if (0x01U == auto_discovery)
@@ -1254,8 +2139,8 @@ API_RESULT appl_gatt_cb
             break;
 
         case GATT_IS_DISCOVERY_RSP:
-            LOG_DEBUG ("Received GATT_IS_DISCOVERY_RSP\n");
-            LOG_DEBUG ("No. Included Services - %d\n\n", event_datalen);
+            CONSOLE_OUT ("Received GATT_IS_DISCOVERY_RSP\n");
+            CONSOLE_OUT ("No. Included Services - %d\n\n", event_datalen);
 
             inc_service = (GATT_INC_SERVICE_PARAM *) eventdata;
 
@@ -1268,7 +2153,7 @@ API_RESULT appl_gatt_cb
 #ifdef ATT_SUPPORT_128_BIT_UUID
                     if (ATT_16_BIT_UUID_FORMAT == service->uuid_type)
                     {
-                        LOG_DEBUG(
+                        CONSOLE_OUT(
                         "(%s)\nHandle: 0x%04X, UUID: 0x%04X\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
                         appl_display_uuid_label(service->uuid.uuid_16),
                         inc_service->handle, service->uuid.uuid_16,
@@ -1284,16 +2169,16 @@ API_RESULT appl_gatt_cb
                             BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                         }
 
-                        LOG_DEBUG("(%s)\nHandle: 0x%04X,",
+                        CONSOLE_OUT("(%s)\nHandle: 0x%04X,",
                         appl_display_uuid_label(uuid_16), inc_service->handle);
-                        LOG_DEBUG("UUID: ");
+                        CONSOLE_OUT("UUID: ");
                         appl_print_128_bit_uuid(&service->uuid.uuid_128);
-                        LOG_DEBUG(
+                        CONSOLE_OUT(
                         "\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
                         service->range.start_handle, service->range.end_handle);
                     }
 #else /* ATT_SUPPORT_128_BIT_UUID */
-                    LOG_DEBUG("(%s)\nHandle: 0x%04X, UUID: 0x%04X\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
+                    CONSOLE_OUT("(%s)\nHandle: 0x%04X, UUID: 0x%04X\nStart Hdl: 0x%04X, End Hdl: 0x%04X\n\n",
                     appl_display_uuid_label(service->uuid),
                     inc_service->handle, service->uuid, service->range.start_handle,
                     service->range.end_handle);
@@ -1310,8 +2195,37 @@ API_RESULT appl_gatt_cb
                             1U
                         );
                     }
+
+                    /**
+                     * NOTE:
+                     * This is temporary. Will be cleaned-up with better interfaces
+                     * soon!
+                     */
+                    ga_gatt_cb_pl
+                    (
+                        handle,
+                        GATT_IS_DISCOVERY_RSP,
+                        API_SUCCESS,
+                        inc_service,
+                        sizeof(GATT_INC_SERVICE_PARAM)
+                    );
+
                     inc_service++;
                 }
+
+                /**
+                 * NOTE:
+                 * This is temporary. Will be cleaned-up with better interfaces
+                 * soon!
+                 */
+                ga_gatt_cb_pl
+                (
+                    handle,
+                    GATT_IS_DISCOVERY_RSP,
+                    ((0U == i) ? API_FAILURE : API_SUCCESS),
+                    NULL,
+                    0U
+                );
 
 #ifdef APPL_AUTO_DISCOVERY_ON_CONNECTION
                 if (0x01U == auto_discovery)
@@ -1323,8 +2237,8 @@ API_RESULT appl_gatt_cb
             break;
 
         case GATT_CHAR_DISCOVERY_RSP:
-            LOG_DEBUG ("Received GATT_CHAR_DISCOVERY_RSP\n");
-            LOG_DEBUG ("No. Characteristics - %d\n\n", event_datalen);
+            CONSOLE_OUT ("Received GATT_CHAR_DISCOVERY_RSP\n");
+            CONSOLE_OUT ("No. Characteristics - %d\n\n", event_datalen);
 
             characteristic = (GATT_CHARACTERISTIC_PARAM *) eventdata;
 
@@ -1335,7 +2249,7 @@ API_RESULT appl_gatt_cb
 #ifdef ATT_SUPPORT_128_BIT_UUID
                     if (ATT_16_BIT_UUID_FORMAT == characteristic->uuid_type)
                     {
-                        LOG_DEBUG(
+                        CONSOLE_OUT(
                         "(%s)\nChar Handle: 0x%04X, UUID: 0x%04X\n"
                         "Property: 0x%02X, Value Handle: 0x%04X\n",
                         appl_display_uuid_label(characteristic->uuid.uuid_16),
@@ -1352,17 +2266,30 @@ API_RESULT appl_gatt_cb
                             BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                         }
 
-                        LOG_DEBUG("(%s)\nChar Handle: 0x%04X,",
+                        CONSOLE_OUT("(%s)\nChar Handle: 0x%04X,",
                         appl_display_uuid_label(uuid_16),
                         characteristic->range.start_handle);
-                        LOG_DEBUG("UUID: ");
+                        CONSOLE_OUT("UUID: ");
                         appl_print_128_bit_uuid(&characteristic->uuid.uuid_128);
-                        LOG_DEBUG(
+                        CONSOLE_OUT(
                         "\nProperty: 0x%02X, Value Handle: 0x%04X\n",
                         characteristic->cproperty, characteristic->value_handle);
                     }
+                    /**
+                     * NOTE:
+                     * This is temporary. Will be cleaned-up with better interfaces
+                     * soon!
+                     */
+                    ga_gatt_cb_pl
+                    (
+                        handle,
+                        GATT_CHAR_DISCOVERY_RSP,
+                        API_SUCCESS,
+                        characteristic,
+                        sizeof(GATT_CHARACTERISTIC_PARAM)
+                    );
 #else
-                    LOG_DEBUG("(%s)\nChar Handle: 0x%04X, UUID: 0x%04X\n"
+                    CONSOLE_OUT("(%s)\nChar Handle: 0x%04X, UUID: 0x%04X\n"
                     "Property: 0x%02X, Value Handle: 0x%04X\n",
                     appl_display_uuid_label(characteristic->uuid),
                     characteristic->range.start_handle, characteristic->uuid,
@@ -1371,7 +2298,7 @@ API_RESULT appl_gatt_cb
 
                     if (0U != characteristic->desc_index)
                     {
-                        LOG_DEBUG("No. Characteristic Descriptors: %d\n",
+                        CONSOLE_OUT("No. Characteristic Descriptors: %d\n",
                         characteristic->desc_index);
 
                         for (j = 0U; j < characteristic->desc_index; j++)
@@ -1379,7 +2306,7 @@ API_RESULT appl_gatt_cb
 #ifdef ATT_SUPPORT_128_BIT_UUID
                             if (ATT_16_BIT_UUID_FORMAT == characteristic->descriptor[j].uuid_type)
                             {
-                                LOG_DEBUG(
+                                CONSOLE_OUT(
                                 "Desc Handle: 0x%04X, Desc UUID: 0x%04X (%s)\n",
                                 characteristic->descriptor[j].handle,
                                 characteristic->descriptor[j].uuid.uuid_16,
@@ -1395,26 +2322,40 @@ API_RESULT appl_gatt_cb
                                     BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                                 }
 
-                                LOG_DEBUG(
+                                CONSOLE_OUT(
                                 "Desc Handle: 0x%04X, ",
                                 characteristic->descriptor[j].handle);
-                                LOG_DEBUG("Desc UUID: ");
+                                CONSOLE_OUT("Desc UUID: ");
                                 appl_print_128_bit_uuid(&characteristic->descriptor[j].uuid.uuid_128);
-                                LOG_DEBUG(" (%s)\n", appl_display_uuid_label(uuid_16));
+                                CONSOLE_OUT(" (%s)\n", appl_display_uuid_label(uuid_16));
                             }
 #else /* ATT_SUPPORT_128_BIT_UUID */
-                            LOG_DEBUG("Desc Handle: 0x%04X, Desc UUID: 0x%04X (%s)\n",
+                            CONSOLE_OUT("Desc Handle: 0x%04X, Desc UUID: 0x%04X (%s)\n",
                             characteristic->descriptor[j].handle,
                             characteristic->descriptor[j].uuid,
                             appl_display_uuid_label(characteristic->descriptor[j].uuid));
 #endif /* ATT_SUPPORT_128_BIT_UUID */
                         }
                     }
-                    LOG_DEBUG("\n");
+                    CONSOLE_OUT("\n");
                     characteristic++;
                 }
 
-                appl_notify_gatt_chardata((GATT_CHARACTERISTIC_PARAM *)eventdata, event_datalen);
+                /**
+                 * NOTE:
+                 * This is temporary. Will be cleaned-up with better interfaces
+                 * soon!
+                 */
+                ga_gatt_cb_pl
+                (
+                    handle,
+                    GATT_CHAR_DISCOVERY_RSP,
+                    ((0U == i) ? API_FAILURE : API_SUCCESS),
+                    NULL,
+                    0U
+                );
+
+                appl_notify_gatt_chardata ((GATT_CHARACTERISTIC_PARAM *) eventdata, event_datalen);
 
 #ifdef APPL_AUTO_DISCOVERY_ON_CONNECTION
                 if (0x01U == auto_discovery)
@@ -1426,8 +2367,8 @@ API_RESULT appl_gatt_cb
             break;
 
         case GATT_CHAR_DESC_DISCOVERY_RSP:
-            LOG_DEBUG ("Received GATT_CHAR_DESC_DISCOVERY_RSP\n");
-            LOG_DEBUG ("No. Descriptors - %d\n\n", event_datalen);
+            CONSOLE_OUT ("Received GATT_CHAR_DESC_DISCOVERY_RSP\n");
+            CONSOLE_OUT ("No. Descriptors - %d\n\n", event_datalen);
 
             descriptor = (GATT_CHAR_DESC_PARAM *) eventdata;
 
@@ -1438,27 +2379,57 @@ API_RESULT appl_gatt_cb
 #ifdef ATT_SUPPORT_128_BIT_UUID
                     if (ATT_16_BIT_UUID_FORMAT == descriptor->uuid_type)
                     {
-                        LOG_DEBUG("Desc Handle: 0x%04X, Desc UUID: 0x%04X\n",
+                        CONSOLE_OUT("Desc Handle: 0x%04X, Desc UUID: 0x%04X\n",
                         descriptor->handle,
                         descriptor->uuid.uuid_16);
                     }
                     else
                     {
-                        LOG_DEBUG(
+                        CONSOLE_OUT(
                         "Desc Handle: 0x%04X, ",
                         descriptor->handle);
-                        LOG_DEBUG("Desc UUID: ");
+                        CONSOLE_OUT("Desc UUID: ");
                         appl_print_128_bit_uuid(&descriptor->uuid.uuid_128);
-                        LOG_DEBUG("\n");
+                        CONSOLE_OUT("\n");
                     }
+
+                    /**
+                     * NOTE:
+                     * This is temporary. Will be cleaned-up with better interfaces
+                     * soon!
+                     */
+                    ga_gatt_cb_pl
+                    (
+                        handle,
+                        GATT_CHAR_DESC_DISCOVERY_RSP,
+                        API_SUCCESS,
+                        descriptor,
+                        sizeof(GATT_CHAR_DESC_PARAM)
+                    );
+
 #else /* ATT_SUPPORT_128_BIT_UUID */
-                    LOG_DEBUG("Desc Handle: 0x%04X, Desc UUID: 0x%04X\n",
+                    CONSOLE_OUT("Desc Handle: 0x%04X, Desc UUID: 0x%04X\n",
                     descriptor->handle,
                     descriptor->uuid);
 #endif /* ATT_SUPPORT_128_BIT_UUID */
 
                     descriptor++;
                 }
+
+                /**
+                 * NOTE:
+                 * This is temporary. Will be cleaned-up with better interfaces
+                 * soon!
+                 */
+                ga_gatt_cb_pl
+                (
+                    handle,
+                    GATT_CHAR_DESC_DISCOVERY_RSP,
+                    ((0U == i) ? API_FAILURE : API_SUCCESS),
+                    NULL,
+                    0U
+                );
+
             }
             break;
 
@@ -1489,10 +2460,10 @@ API_RESULT appl_gatt_cb
 #define APPL_TRC printf
 #endif /* APPL_TRC */
 
-#ifdef LOG_DEBUG
-#undef LOG_DEBUG
-#define LOG_DEBUG printf
-#endif /* LOG_DEBUG */
+#ifdef CONSOLE_OUT
+#undef CONSOLE_OUT
+#define CONSOLE_OUT printf
+#endif /* CONSOLE_OUT */
 #endif /* APPL_LIMIT_LOGS */
 
 void main_gatt_client_operations(void)
@@ -1515,11 +2486,19 @@ void main_gatt_client_operations(void)
 
     general_service_discovery = 0x01U;
 
+    /* Init */
+    BT_mem_set(&appl_req_param, 0, sizeof(GATT_PREPARE_WRITE_REQ_PARAM));
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    for (index = 0; index < GATT_PREPARE_WRITE_REQ_Q_SIZE; index++)
+    {
+        appl_req_param.req_param[index].handle_value.value.val = NULL;
+    }
+
     BT_LOOP_FOREVER()
     {
         CONSOLE_OUT ("%s \n", gatt_client_menu);
-        BT_IGNORE_UNUSED_PARAM(gatt_client_menu); /*fix build warning: set but never used.*/
-        LOG_DEBUG ("Enter you choice : ");
+        CONSOLE_OUT ("Enter you choice : ");
         CONSOLE_IN ("%d", &choice);
         menu_choice = choice;
 
@@ -1534,30 +2513,34 @@ void main_gatt_client_operations(void)
 
         case 2:
             appl_display_all_connected_devices();
-            LOG_DEBUG ("Enter Device ID: ");
+            CONSOLE_OUT ("Enter Device ID: [in HEX]");
             CONSOLE_IN ("%x", &choice);
             appl_gatt_client_handle.device_id = (DEVICE_HANDLE)choice;
-            LOG_DEBUG ("Enter ATT ID: ");
+            CONSOLE_OUT ("Enter ATT ID: [in HEX]");
             CONSOLE_IN ("%x", &choice);
             appl_gatt_client_handle.att_id = (ATT_CON_ID)choice;
             break;
 
         case 3:
-            LOG_DEBUG("Enter the Peer BD Address to be updated and used...\n");
-            LOG_DEBUG("Enter BD_ADDR : ");
-            appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
-
-            LOG_DEBUG("Enter bd_addr_type : ");
-            CONSOLE_IN("%X", &choice);
-            BT_BD_ADDR_TYPE(&bd_addr) = (UCHAR)choice;
-
-            /* Update the Global Config Peer Address */
-            appl_update_config_peer_addr(&bd_addr);
+            CONSOLE_OUT("Enter the Peer BD Address to be updated and used...\n");
+            CONSOLE_OUT("Enter BD_ADDR : ");
+            retval = appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
+            if (API_SUCCESS == retval)
+            {
+                CONSOLE_OUT("Enter bd_addr_type : ");
+                retval = appl_validate_params(&choice,2U,0U,1U);
+                if (API_SUCCESS == retval)
+                {
+                    BT_BD_ADDR_TYPE(&bd_addr) = (UCHAR)choice;
+                    /* Update the Global Config Peer Address */
+                    appl_update_config_peer_addr(&bd_addr);
+                }
+            }
             break;
 
         case 4:
             /* Set/Update the GAP role */
-            LOG_DEBUG("Set Current GAP Role \n0.GAP Central \n1.GAP Peripheral\n");
+            CONSOLE_OUT("Set Current GAP Role \n0.GAP Central \n1.GAP Peripheral\n");
             CONSOLE_IN("%d", &choice);
 
             flag = (UCHAR)choice;
@@ -1568,17 +2551,27 @@ void main_gatt_client_operations(void)
             /* Role Selected and Current Role both are Central */
             if ((BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE()) && (BT_TRUE == flag))
             {
-                /* Do Nothing */
+                CONSOLE_OUT("Role Selected and Current Role, both are Central\n");
+
+                /* No need to update the current role */
+
+                /* Start Scanning */
+                (BT_IGNORE_RETURN_VALUE)BT_hci_le_set_scan_enable(0x01U, 0x01U);
             }
             /* Role Selected and Current Role both are Peripheral */
             else if ((BT_FALSE == APPL_IS_GAP_CENTRAL_ROLE()) && (BT_FALSE == flag))
             {
-                /* Do Nothing */
+                CONSOLE_OUT("Role Selected and Current Role both are Peripheral\n");
+
+                /* No need to update the current role  */
+
+                /* Start Advertisements */
+                (BT_IGNORE_RETURN_VALUE)BT_hci_le_set_advertising_enable(0x01U);
             }
             /* Role Selected is Peripheral and Current Role is Central */
             else if ((BT_TRUE == APPL_IS_GAP_CENTRAL_ROLE()) && (BT_FALSE == flag))
             {
-                /* Update the current role */
+                /* Update the current role to PERIPHERAL */
                 APPL_SET_GAP_PERIPHERAL_ROLE();
 
                 /* Stop Scanning */
@@ -1595,7 +2588,7 @@ void main_gatt_client_operations(void)
             /* Role Selected is Central and Current Role is Peripheral */
             else if ((BT_FALSE == APPL_IS_GAP_CENTRAL_ROLE()) && (BT_TRUE == flag))
             {
-                /* Update the current role */
+                /* Update the current role to CENTRAL */
                 APPL_SET_GAP_CENTRAL_ROLE();
 
                 /* Stop Advertisements */
@@ -1622,7 +2615,7 @@ void main_gatt_client_operations(void)
 
                 ATT_INIT_HANDLE (att_handle);
 
-                LOG_DEBUG ("Enter Peer BD Address: ");
+                CONSOLE_OUT ("Enter Peer BD Address: ");
                 appl_get_bd_addr(bd_addr.addr);
                 BT_BD_ADDR_TYPE (&bd_addr) = 0x00U;
 
@@ -1631,7 +2624,7 @@ void main_gatt_client_operations(void)
                              &att_handle.device_id,
                              &bd_addr
                          );
-                LOG_DEBUG("Device Queue search result 0x%04X\n",retval);
+                CONSOLE_OUT("Device Queue search result 0x%04X\n",retval);
 
                 if (API_SUCCESS == retval)
                 {
@@ -1639,7 +2632,7 @@ void main_gatt_client_operations(void)
                              (
                                   &att_handle
                              );
-                    LOG_DEBUG(
+                    CONSOLE_OUT(
                     "Initiated ATT Connect Request with Result 0x%04X\n",retval);
                 }
             }
@@ -1653,18 +2646,18 @@ void main_gatt_client_operations(void)
                          (
                               &appl_gatt_client_handle
                          );
-                LOG_DEBUG(
+                CONSOLE_OUT(
                 "Initiated ATT Disconnect Request with Result 0x%04X\n",retval);
             }
 #endif /* ATT_ON_BR_EDR_SUPPORT */
             break;
 
         case 7:
-            LOG_DEBUG ("Initiating LE ATT transport connection (HCI LE)...\n");
-            LOG_DEBUG("Enter peer_address_type : \n");
+            CONSOLE_OUT ("Initiating LE ATT transport connection (HCI LE)...\n");
+            CONSOLE_OUT("Enter peer_address_type : \n");
             CONSOLE_IN("%d",&choice);
             bd_addr.type = (UCHAR) choice;
-            LOG_DEBUG("Enter peer_address : \n");
+            CONSOLE_OUT("Enter peer_address : \n");
             appl_get_bd_addr(bd_addr.addr);
 
             /* Update the Global Config Peer Address */
@@ -1688,19 +2681,19 @@ void main_gatt_client_operations(void)
 
             if(API_SUCCESS != retval)
             {
-                LOG_DEBUG("FAILED !!! Error code = %04X\n", retval);
+                CONSOLE_OUT("FAILED !!! Error code = %04X\n", retval);
             }
             else
             {
-                LOG_DEBUG("API returned success...\n");
+                CONSOLE_OUT("API returned success...\n");
             }
 
             break;
 
         case 8:
-            LOG_DEBUG ("Initiating LE ATT transport disconnection (HCI LE)...\n");
+            CONSOLE_OUT ("Initiating LE ATT transport disconnection (HCI LE)...\n");
 
-            /* Get the remote bd address */
+            /* Get the remote BD address */
             retval = device_queue_get_remote_addr(&appl_gatt_client_handle.device_id, &bd_addr);
 
             /* Get Connection Handle */
@@ -1722,9 +2715,9 @@ void main_gatt_client_operations(void)
                      );
             break;
         case 11: /* Discover Services By Service UUID */
-            LOG_DEBUG ("Enter UUID Format 1 - 16Bit and 2 - 128Bit: ");
+            CONSOLE_OUT ("Enter UUID Format 1 - 16Bit and 2 - 128Bit: ");
             CONSOLE_IN ("%x", &data);
-            LOG_DEBUG ("Enter the Service UUID[HEX] : ");
+            CONSOLE_OUT ("Enter the Service UUID[HEX] : ");
             if (ATT_16_BIT_UUID_FORMAT == data)
             {
 #ifdef ATT_SUPPORT_128_BIT_UUID
@@ -1740,27 +2733,39 @@ void main_gatt_client_operations(void)
 #ifdef ATT_SUPPORT_128_BIT_UUID
                 for (index = 0U; index < ATT_128_BIT_UUID_SIZE; index++)
                 {
+                    LOG_DEBUG("Enter the Byte %d of %d:",index + 1,ATT_128_BIT_UUID_SIZE);
                     CONSOLE_IN ("%x", &indx);
                     uuid.uuid_128.value[index] = (UCHAR) indx;
                 }
 #else /* ATT_SUPPORT_128_BIT_UUID */
-                LOG_DEBUG ("Enable ATT_SUPPORT_128_BIT_UUID support\n");
+                CONSOLE_OUT ("Enable ATT_SUPPORT_128_BIT_UUID support\n");
 #endif /* ATT_SUPPORT_128_BIT_UUID */
             }
             else
             {
-                LOG_DEBUG("Unsupported UUID Format!\n");
+                CONSOLE_OUT("Unsupported UUID Format!\n");
                 break;
             }
 
             retval = gatt_discover_ps (&appl_gatt_client_handle, uuid, (UCHAR) data);
             break;
+
+        case 12:
+            uuid.uuid_16 = 0x0000U;
+            retval = gatt_discover_ss
+                     (
+                         &appl_gatt_client_handle,
+                         uuid,
+                         ATT_16_BIT_UUID_FORMAT
+                     );
+            break;
+
         case 20: /* Find Included Services */
-            LOG_DEBUG ("Enter the Start Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Start Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.start_handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the End Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the End Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.end_handle = (UINT16) data;
 
@@ -1772,11 +2777,11 @@ void main_gatt_client_operations(void)
                      );
             break;
         case 30: /* Discover all Characteristic of a Service */
-            LOG_DEBUG ("Enter the Start Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Start Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.start_handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the End Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the End Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.end_handle = (UINT16) data;
 
@@ -1790,15 +2795,15 @@ void main_gatt_client_operations(void)
                      );
             break;
         case 31: /* Discover Characteristic by UUID */
-            LOG_DEBUG ("Enter the Start Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Start Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.start_handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the End Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the End Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.end_handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the Characteristic UUID[HEX] : ");
+            CONSOLE_OUT ("Enter the Characteristic UUID[HEX] : ");
             CONSOLE_IN ("%x", &data);
 
             retval = gatt_discover_char
@@ -1811,11 +2816,11 @@ void main_gatt_client_operations(void)
                      );
             break;
         case 40: /* Discover All Characteristic Descriptors */
-            LOG_DEBUG ("Enter the Start Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Start Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.start_handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the End Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the End Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.end_handle = (UINT16) data;
 
@@ -1828,7 +2833,7 @@ void main_gatt_client_operations(void)
             break;
         case 50: /* Read Characteristic Value */
         case 70: /* Read Characteristic Descriptors */
-            LOG_DEBUG ("Enter the Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
 #ifdef ATT_SUPPORT_128_BIT_UUID
             uuid.uuid_16 = 0x0000U;
@@ -1845,17 +2850,17 @@ void main_gatt_client_operations(void)
                      );
             break;
         case 51: /* Read Characteristic Using UUID */
-            LOG_DEBUG ("Enter the Start handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Start handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.start_handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the End handle[HEX] : ");
+            CONSOLE_OUT ("Enter the End handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             range.end_handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter UUID Format 1 - 16Bit and 2 - 128Bit: ");
+            CONSOLE_OUT ("Enter UUID Format 1 - 16Bit and 2 - 128Bit: ");
             CONSOLE_IN ("%x", &data);
-            LOG_DEBUG ("Enter the UUID[HEX] : ");
+            CONSOLE_OUT ("Enter the UUID[HEX] : ");
             if (ATT_16_BIT_UUID_FORMAT == data)
             {
 #ifdef ATT_SUPPORT_128_BIT_UUID
@@ -1871,11 +2876,12 @@ void main_gatt_client_operations(void)
 #ifdef ATT_SUPPORT_128_BIT_UUID
                 for (index = 0U; index < ATT_128_BIT_UUID_SIZE; index++)
                 {
+                    LOG_DEBUG("Enter the Byte %d of %d:",index + 1,ATT_128_BIT_UUID_SIZE);
                     CONSOLE_IN ("%x", &indx);
                     uuid.uuid_128.value[index] = (UCHAR) indx;
                 }
 #else /* ATT_SUPPORT_128_BIT_UUID */
-                LOG_DEBUG ("Enable ATT_SUPPORT_128_BIT_UUID support\n");
+                CONSOLE_OUT ("Enable ATT_SUPPORT_128_BIT_UUID support\n");
 #endif /* ATT_SUPPORT_128_BIT_UUID */
             }
 
@@ -1890,11 +2896,11 @@ void main_gatt_client_operations(void)
             break;
         case 52: /* Read Long Characteristic Values */
         case 71: /* Read Long Characteristic Descriptors */
-            LOG_DEBUG ("Enter the handle[HEX] : ");
+            CONSOLE_OUT ("Enter the handle[HEX] : ");
             CONSOLE_IN ("%x", &data);
             read_blob_req_param.handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the Offset[DEC] : ");
+            CONSOLE_OUT ("Enter the Offset[DEC] : ");
             CONSOLE_IN ("%d", &data);
             read_blob_req_param.offset = (UINT16) data;
 
@@ -1906,7 +2912,7 @@ void main_gatt_client_operations(void)
                      );
             break;
         case 53: /* Read Multiple Characteristic Values */
-            LOG_DEBUG ("Enter the number of Handles[DEC] : ");
+            CONSOLE_OUT ("Enter the number of Handles[DEC] : ");
             CONSOLE_IN ("%x",&data);
 
             if (0U != data)
@@ -1921,7 +2927,7 @@ void main_gatt_client_operations(void)
                 for (index = 0U; index < read_multiple_param.list_count;
                     index++)
                 {
-                    LOG_DEBUG ("[0x%04X]:Enter the Handle[HEX] : ",index);
+                    CONSOLE_OUT ("[0x%04X]:Enter the Handle[HEX] : ",index);
                     CONSOLE_IN ("%x",&data);
                     read_multiple_param.handle_list[index] = (UINT16)data;
                 }
@@ -1934,16 +2940,16 @@ void main_gatt_client_operations(void)
             }
             else
             {
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "[APPL]: Invalid Entry, try again!");
             }
             break;
         case 60: /* Write Without Response */
-            LOG_DEBUG ("Enter the Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Handle[HEX] : ");
             CONSOLE_IN("%x", &data);
             write_req_param.handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the value len[HEX] : ");
+            CONSOLE_OUT ("Enter the value len[HEX] : ");
             CONSOLE_IN("%x", &data);
             write_req_param.value.len = (UINT16)data;
 
@@ -1953,7 +2959,7 @@ void main_gatt_client_operations(void)
                                    write_req_param.value.len
                                ))
             {
-                LOG_DEBUG("\nOperation Failed due to MTU size!\n");
+                CONSOLE_OUT("\nOperation Failed due to MTU size!\n");
                 break;
             }
 
@@ -1961,16 +2967,17 @@ void main_gatt_client_operations(void)
             write_req_param.value.val = BT_alloc_mem(write_req_param.value.len);
             if (NULL == write_req_param.value.val)
             {
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "[APPL]: Failed to allocate memory of size 0x%04X\n",
                 write_req_param.value.len);
 
                 break;
             }
 
-            LOG_DEBUG ("Enter the value[HEX] : ");
+            CONSOLE_OUT ("Enter the value[HEX] : ");
             for(index = 0U; index < write_req_param.value.len; index++)
             {
+                LOG_DEBUG("The Byte %d of %d:",index + 1,write_req_param.value.len);
                 CONSOLE_IN("%x", &data);
                 write_req_param.value.val[index] = (UCHAR)data;
             }
@@ -1983,23 +2990,24 @@ void main_gatt_client_operations(void)
                          write_req_param.value.len,
                          0x00U
                      );
-            LOG_DEBUG("Write Command for Handle 0x%04X returned with 0x%04X\n",
+            CONSOLE_OUT("Write Command for Handle 0x%04X returned with 0x%04X\n",
             write_req_param.handle, retval);
             BT_free_mem (write_req_param.value.val);
             break;
         case 61: /* Signed Write Without Response */
 #ifdef SMP_DATA_SIGNING
-            LOG_DEBUG ("Enter the Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Handle[HEX] : ");
             CONSOLE_IN("%x", &data);
             sign_write_req_param.handle_value.handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the value len[HEX] (Max 10 bytes) : ");
+            CONSOLE_OUT ("Enter the value len[HEX] (Max 10 bytes) : ");
             CONSOLE_IN("%x", &data);
             sign_write_req_param.handle_value.value.len = (UINT16)data;
 
-            LOG_DEBUG ("Enter the value[HEX] : ");
+            CONSOLE_OUT ("Enter the value[HEX] : ");
             for(index = 0U; index < sign_write_req_param.handle_value.value.len; index++)
             {
+                LOG_DEBUG("The Byte %d of %d:",index + 1,sign_write_req_param.handle_value.value.len);
                 CONSOLE_IN("%x", &data);
                 sign_value [3U + index] = (UCHAR)data;
             }
@@ -2012,16 +3020,16 @@ void main_gatt_client_operations(void)
             BT_PACK_LE_2_BYTE(&s_data[1U], &(sign_write_req_param.handle_value.handle));
             appl_smp_generate_sign_data(s_data, s_datalen);
 #else /* SMP_DATA_SIGNING */
-            LOG_DEBUG ("Data Signing NOT enabled\n");
+            CONSOLE_OUT ("Data Signing NOT enabled\n");
 #endif /* SMP_DATA_SIGNING */
             break;
         case 62: /* Write Characteristic Values */
         case 80: /* Write Characteristic Descriptors */
-            LOG_DEBUG ("Enter the Handle[HEX] : ");
+            CONSOLE_OUT ("Enter the Handle[HEX] : ");
             CONSOLE_IN("%x", &data);
             write_req_param.handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the value len[HEX] : ");
+            CONSOLE_OUT ("Enter the value len[HEX] : ");
             CONSOLE_IN("%x", &data);
             write_req_param.value.len = (UINT16)data;
 
@@ -2031,7 +3039,7 @@ void main_gatt_client_operations(void)
                                    write_req_param.value.len
                                ))
             {
-                LOG_DEBUG("\nOperation Failed due to MTU size!\n");
+                CONSOLE_OUT("\nOperation Failed due to MTU size!\n");
                 break;
             }
 
@@ -2039,16 +3047,17 @@ void main_gatt_client_operations(void)
             write_req_param.value.val = BT_alloc_mem(write_req_param.value.len);
             if (NULL == write_req_param.value.val)
             {
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "[APPL]: Failed to allocate memory of size 0x%04X\n",
                 write_req_param.value.len);
 
                 break;
             }
 
-            LOG_DEBUG ("Enter the value[HEX] : ");
+            CONSOLE_OUT ("Enter the value[HEX] : ");
             for(index = 0U; index < write_req_param.value.len; index++)
             {
+                LOG_DEBUG("The Byte %d of %d:",index + 1,write_req_param.value.len);
                 CONSOLE_IN("%x", &data);
                 write_req_param.value.val[index] = (UCHAR)data;
             }
@@ -2061,27 +3070,27 @@ void main_gatt_client_operations(void)
                          write_req_param.value.len,
                          0x01U
                      );
-            LOG_DEBUG("Write Request for Handle 0x%04X returned with 0x%04X\n",
+            CONSOLE_OUT("Write Request for Handle 0x%04X returned with 0x%04X\n",
             write_req_param.handle, retval);
             BT_free_mem (write_req_param.value.val);
             break;
         case 63: /* Write Long Characteristic Values */
         case 81: /* Write Long Characteristic Descriptors */
-            LOG_DEBUG ("Enter the Handle[Hex] : ");
+            CONSOLE_OUT ("Enter the Handle[Hex] : ");
             CONSOLE_IN ("%x",&data);
             prepare_write_param.handle_value.handle = (UINT16) data;
 
-            LOG_DEBUG ("Enter the Value Offset[DEC] : ");
+            CONSOLE_OUT ("Enter the Value Offset[DEC] : ");
             CONSOLE_IN ("%d",&data);
             prepare_write_param.offset = (UINT16) data;
 
-            LOG_DEBUG ("Enter the Value length[DEC] : ");
+            CONSOLE_OUT ("Enter the Value length[DEC] : ");
             CONSOLE_IN ("%d",&data);
             prepare_write_param.handle_value.value.len = (UINT16) data;
 
             if (0U == prepare_write_param.handle_value.value.len)
             {
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "[APPL]: Invalid Zero Length, cannot process request!\n");
                 break;
             }
@@ -2091,17 +3100,18 @@ void main_gatt_client_operations(void)
 
             if (NULL == prepare_write_param.handle_value.value.val)
             {
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "[APPL]: Failed to allocate memory of size 0x%04X\n",
                 prepare_write_param.handle_value.value.len);
 
                 break;
             }
 
-            LOG_DEBUG ("Enter the Value[HEX] : ");
+            CONSOLE_OUT ("Enter the Value[HEX] : ");
             for (index = 0U;
                 index < prepare_write_param.handle_value.value.len; index ++)
             {
+                LOG_DEBUG("The Byte %d of %d:",index + 1,prepare_write_param.handle_value.value.len);
                 CONSOLE_IN ("%x",&data);
                 prepare_write_param.handle_value.value.val[index] = (UCHAR) data;
             }
@@ -2115,29 +3125,29 @@ void main_gatt_client_operations(void)
             BT_free_mem (prepare_write_param.handle_value.value.val);
             break;
         case 64: /* Characteristic Value Reliable Writes */
-            LOG_DEBUG ("Enter the number of Reliable Writes[DEC] : ");
-            CONSOLE_IN ("%x",&data);
+            CONSOLE_OUT ("Enter the number of Reliable Writes[DEC] : ");
+            CONSOLE_IN ("%d",&data);
 
             if ((0U < data) && (GATT_PREPARE_WRITE_REQ_Q_SIZE > data))
             {
                 appl_req_param.count = (UINT16)data;
                 for (index = 0U; index < appl_req_param.count ; index++)
                 {
-                    LOG_DEBUG ("[0x%04X]:Enter the Handle[HEX] : ",index);
+                    CONSOLE_OUT ("[0x%04X]:Enter the Handle[HEX] : ",index);
                     CONSOLE_IN ("%x",&data);
                     appl_req_param.req_param[index].handle_value.handle = (ATT_ATTR_HANDLE)data;
 
-                    LOG_DEBUG ("[0x%04X]:Enter the Value Offset[DEC] : ",index);
+                    CONSOLE_OUT ("[0x%04X]:Enter the Value Offset[DEC] : ",index);
                     CONSOLE_IN ("%d",&data);
                     appl_req_param.req_param[index].offset = (UINT16)data;
 
-                    LOG_DEBUG ("[0x%04X]:Enter the Value length[DEC] : ",index);
+                    CONSOLE_OUT ("[0x%04X]:Enter the Value length[DEC] : ",index);
                     CONSOLE_IN ("%d",&data);
                     appl_req_param.req_param[index].handle_value.value.len = (UINT16)data;
 
                     if (0U == appl_req_param.req_param[index].handle_value.value.len)
                     {
-                        LOG_DEBUG (
+                        CONSOLE_OUT (
                         "[APPL]: Invalid Zero Length, cannot process request!\n");
                         break;
                     }
@@ -2147,17 +3157,18 @@ void main_gatt_client_operations(void)
 
                     if (NULL == appl_req_param.req_param[index].handle_value.value.val)
                     {
-                        LOG_DEBUG (
+                        CONSOLE_OUT (
                         "[APPL]: Failed to allocate memory of size 0x%04X\n",
                         appl_req_param.req_param[index].handle_value.value.len);
                         break;
                     }
 
-                    LOG_DEBUG ("Enter the Value[HEX] : ");
+                    CONSOLE_OUT ("Enter the Value[HEX] : ");
 
                     for (indx = 0U;
                     indx < appl_req_param.req_param[index].handle_value.value.len; indx ++)
                     {
+                        LOG_DEBUG("The Byte %d of %d:",indx + 1,appl_req_param.req_param[index].handle_value.value.len);
                         CONSOLE_IN ("%x",&data);
                         appl_req_param.req_param[index].handle_value.value.val[indx] = (UCHAR)data;
                     }
@@ -2190,13 +3201,13 @@ void main_gatt_client_operations(void)
             }
             else
             {
-                LOG_DEBUG (
+                CONSOLE_OUT (
                 "[APPL]: Invalid Entry, try again!");
             }
             break;
 
         case 90: /* Exchange MTU Request */
-            LOG_DEBUG ("Enter the MTU for the ATT connection\n");
+            CONSOLE_OUT ("Enter the MTU for the ATT connection\n");
             CONSOLE_IN ("%d", &data);
 
             retval = gatt_xchg_mtu
@@ -2206,7 +3217,148 @@ void main_gatt_client_operations(void)
                          0U
                      );
 
-            LOG_DEBUG ("Exchange MTU REQ with MTU Size %d, retval - 0x%04X\n", (UINT16)data, retval);
+            CONSOLE_OUT ("Exchange MTU REQ with MTU Size %d, retval - 0x%04X\n", (UINT16)data, retval);
+            break;
+
+        case 95:
+#ifdef ATT_ON_ECBFC_SUPPORT
+            {
+                ATT_HANDLE                att_handle;
+                L2CAP_ECBFC_CONNECT_PARAM appl_l2cap_ecbfc_connect_param;
+                UCHAR                     link_type;
+
+                ATT_INIT_HANDLE (att_handle);
+
+                CONSOLE_OUT("Enter BD_ADDR : ");
+                (BT_IGNORE_RETURN_VALUE)appl_get_bd_addr(BT_BD_ADDR(&bd_addr));
+
+                CONSOLE_OUT("Enter Link Type (0: BR/EDR, 1: LE): ");
+                CONSOLE_IN("%x", &data);
+                link_type = (UCHAR)data;
+
+                if (0U == link_type)
+                {
+                    /* Initialize address-type to Public Address for BREDR Link */
+                    BT_BD_ADDR_TYPE(&bd_addr) = BT_BD_PUBLIC_ADDRESS_TYPE;
+                    retval = device_queue_search_br_edr_remote_addr(&att_handle.device_id, &bd_addr);
+                }
+                else
+                {
+                    CONSOLE_OUT("Enter bd_addr_type : ");
+                    CONSOLE_IN("%x", &data);
+                    BT_BD_ADDR_TYPE(&bd_addr) = (UCHAR) data;
+
+                    retval = device_queue_search_le_remote_addr(&att_handle.device_id, &bd_addr);
+                }
+
+                if (API_SUCCESS != retval)
+                {
+                    CONSOLE_OUT("ERROR: Invalid BD_ADDR!!! retval = 0x%04X", retval);
+                }
+                else
+                {
+                    CONSOLE_OUT("Enter Number of Channels to be created (in range [1,5])\n");
+                    CONSOLE_IN("%x", &data);
+                    appl_l2cap_ecbfc_connect_param.num_cids = (UINT8)data;
+
+                    /* TODO: Define limits or take input from application */
+                    appl_l2cap_ecbfc_connect_param.mtu    = L2CAP_MIN_ECBFC_MTU;
+                    appl_l2cap_ecbfc_connect_param.mps    = L2CAP_MIN_ECBFC_MTU;
+                    appl_l2cap_ecbfc_connect_param.credit = 0x01;
+
+                    retval = BT_att_ecbfc_connect_req
+                             (
+                                 &att_handle,
+                                 &appl_l2cap_ecbfc_connect_param
+                             );
+                    CONSOLE_OUT(
+                    "Initiated ATT Connect Request with Result 0x%04X\n",retval);
+                }
+            }
+#endif /* ATT_ON_ECBFC_SUPPORT */
+
+            break;
+
+        case 96:
+#ifdef ATT_ON_ECBFC_SUPPORT
+            {
+                retval = BT_att_ecbfc_disconnect_req
+                         (
+                              &appl_gatt_client_handle
+                         );
+                CONSOLE_OUT(
+                "Initiated ATT Disconnect Request with Result 0x%04X\n",retval);
+            }
+#endif /* ATT_ON_ECBFC_SUPPORT */
+            break;
+
+        case 97:
+#ifdef ATT_ON_ECBFC_SUPPORT
+            {
+                ATT_ECBFC_INFO appl_eatt_info;
+
+                retval = BT_att_ecbfc_get_info
+                         (
+                             &appl_gatt_client_handle,
+                             &appl_eatt_info
+                         );
+
+                CONSOLE_OUT(
+                "[ATT]:[0x%02X: 0x%02X]: BT_att_get_eatt_info returned with "\
+                "result 0x%04X\n", appl_gatt_client_handle.device_id,
+                appl_gatt_client_handle.att_id, retval);
+                if (API_SUCCESS == retval)
+                {
+                    CONSOLE_OUT(
+                    "EATT Instance  = 0x%02X: 0x%02X\n"
+                    "EATT MTU       = 0x%04X\n"
+                    "EATT Local MPS = 0x%04X\n"
+                    "EATT Peer MPS  = 0x%04X\n",
+                    appl_gatt_client_handle.device_id,
+                    appl_gatt_client_handle.att_id,
+                    appl_eatt_info.mtu,
+                    appl_eatt_info.l_mps,
+                    appl_eatt_info.r_mps
+                    );
+                }
+            }
+#endif /* ATT_ON_ECBFC_SUPPORT */
+            break;
+
+        case 99:
+            {
+                BT_DEVICE_ADDR t_addr;
+                UINT16         conn_handle;
+
+                /* get the BD address from the Current ATT Handle */
+                retval = device_queue_get_remote_addr
+                         (
+                             &appl_gatt_client_handle.device_id,
+                             &t_addr
+                         );
+
+                CONSOLE_OUT ("Initiating HCI Disconnection...\n");
+                retval = BT_hci_get_le_connection_handle
+                         (
+                             &t_addr,
+                             &conn_handle
+                         );
+
+                if ((API_SUCCESS == retval) &&
+                    (HCI_INVALID_CONNECTION_HANDLE != conn_handle))
+                {
+                    retval = BT_hci_disconnect(conn_handle, 0x13);
+
+                    if (API_SUCCESS != retval)
+                    {
+                        CONSOLE_OUT(
+                        "Failed to Disconnect connection with %02X:%02X:%02X:%02X::%02X"
+                        ":%02X, reason 0x%04X\n", t_addr.addr[5],
+                        t_addr.addr[4], t_addr.addr[3], t_addr.addr[2],
+                        t_addr.addr[1], t_addr.addr[0], retval);
+                    }
+                }
+            }
             break;
 
         case 100:
@@ -2217,21 +3369,21 @@ void main_gatt_client_operations(void)
 
         case 200:
 #ifdef APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION
-            LOG_DEBUG("\nEnable/Disable Application Event Trace\n");
-            LOG_DEBUG("1 - Enable Evt Prints\n");
-            LOG_DEBUG("0 - Disable Evt Prints\n");
-            LOG_DEBUG("Enter the desired value:\n");
+            CONSOLE_OUT("\nEnable/Disable Application Event Trace\n");
+            CONSOLE_OUT("1 - Enable Evt Prints\n");
+            CONSOLE_OUT("0 - Disable Evt Prints\n");
+            CONSOLE_OUT("Enter the desired value:\n");
             CONSOLE_IN("%u", &data);
             flag = (UCHAR) data;
 
             appl_set_gatt_client_evt_trc(flag);
 #else /* APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION */
-            LOG_DEBUG("\n APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION is Disabled!\n");
+            CONSOLE_OUT("\n APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION is Disabled!\n");
 #endif /* APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION */
             break;
 
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 
@@ -2253,8 +3405,7 @@ void appl_profile_operations (void)
     BT_LOOP_FOREVER()
     {
         CONSOLE_OUT ("%s \n", profile_client_menu);
-        BT_IGNORE_UNUSED_PARAM(profile_client_menu); /*fix build warning: set but never used.*/
-        LOG_DEBUG ("Enter you choice : ");
+        CONSOLE_OUT ("Enter you choice : ");
         CONSOLE_IN ("%d", &choice);
         switch(choice)
         {
@@ -2366,7 +3517,7 @@ void appl_profile_operations (void)
 #endif /* HPC */
             break;
         default:
-            LOG_DEBUG("Invalid Choice\n");
+            CONSOLE_OUT("Invalid Choice\n");
             break;
         }
 
@@ -2412,14 +3563,14 @@ UCHAR * appl_display_uuid_label(UINT16 uuid)
 void appl_print_128_bit_uuid (ATT_UUID128 * uuid)
 {
     INT32 index;
-    LOG_DEBUG ("0x");
+    CONSOLE_OUT ("0x");
 
     index = ATT_128_BIT_UUID_SIZE ;
 
     do
     {
         index--;
-        LOG_DEBUG ("%02X",uuid->value[index]);
+        CONSOLE_OUT ("%02X",uuid->value[index]);
 
     } while (index > 0U);
 }
@@ -2442,6 +3593,14 @@ void appl_print_128_bit_uuid_no_limit (ATT_UUID128 * uuid)
 
 void appl_gatt_init (void)
 {
+    UINT32 index;
+
+    /* Initialize the ATT Handle List */
+    for (index = 0; index < (sizeof(appl_gatt_client_handle_list) / sizeof(ATT_HANDLE)); index++)
+    {
+        ATT_INIT_HANDLE(appl_gatt_client_handle_list[index]);
+    }
+
     (BT_IGNORE_RETURN_VALUE) gatt_init (appl_gatt_cb);
 
 #ifdef APPL_GATT_CLIENT_HAVE_EVT_TRC_SELECTION
@@ -2477,6 +3636,10 @@ void appl_notify_gatt_conn(void)
 #ifdef IPSPR
     APPL_NOTIFY_GATT_CONN_TO_PROFILE(ipspr);
 #endif /* IPSPR */
+
+#ifdef CPMC
+    APPL_NOTIFY_GATT_CONN_TO_PROFILE(cpmc);
+#endif /* CPMC */
 }
 
 void appl_notify_gatt_disconn(void)
@@ -2488,6 +3651,10 @@ void appl_notify_gatt_disconn(void)
 #ifdef IPSPR
     APPL_NOTIFY_GATT_DISCONN_TO_PROFILE(ipspr);
 #endif /* IPSPR */
+
+#ifdef CPMC
+    APPL_NOTIFY_GATT_DISCONN_TO_PROFILE(cpmc);
+#endif /* CPMC */
 }
 
 void appl_notify_gatt_servdata (GATT_SERVICE_PARAM * service, UINT16 size)
@@ -2608,6 +3775,9 @@ void appl_parse_notification_data(UINT16 handle, UCHAR * data, UINT16 datalen)
 #ifdef HPC
     APPL_PARSE_NOTIFICATION_DATA_OF_PROFILE(hpc, handle, data, datalen);
 #endif /* HPC */
+#ifdef PXM
+    APPL_PARSE_NOTIFICATION_DATA_OF_PROFILE(pxm, handle, data, datalen);
+#endif /* HPC */
 }
 
 void appl_parse_indication_data(UINT16 handle, UCHAR * data, UINT16 datalen)
@@ -2619,6 +3789,9 @@ void appl_parse_indication_data(UINT16 handle, UCHAR * data, UINT16 datalen)
 #ifdef OTC
     APPL_PARSE_INDICATION_DATA_OF_PROFILE(otc, handle, data, datalen);
 #endif /* OTC */
+#ifdef CPMC
+    APPL_PARSE_INDICATION_DATA_OF_PROFILE(cpmc, handle, data, datalen);
+#endif /* CPMC */
 }
 
 void appl_parse_read_data (UCHAR * data, UINT16 datalen)
@@ -2630,6 +3803,13 @@ void appl_parse_read_data (UCHAR * data, UINT16 datalen)
     APPL_PARSE_READ_DATA_OF_PROFILE(hpc, data, datalen);
 #endif /* HPC */
 
+#ifdef HIDH
+    APPL_PARSE_READ_DATA_OF_PROFILE(hidh, data, datalen);
+#endif /* HPC */
+
+#ifdef PXM
+    APPL_PARSE_READ_DATA_OF_PROFILE(pxm, data, datalen);
+#endif /* HPC */
     return;
 }
 
@@ -2638,7 +3818,9 @@ void appl_notify_write_rsp(void)
 #ifdef HPC
     APPL_NOTIFY_WRITE_RSP_TO_PROFILE(hpc);
 #endif /* HPC */
-
+#ifdef CPMC
+    APPL_NOTIFY_WRITE_RSP_TO_PROFILE(cpmc);
+#endif /* CPMC */
     return;
 }
 
@@ -2649,6 +3831,19 @@ void appl_notify_execute_write_rsp(void)
 #endif /* HPC */
 
     return;
+}
+
+void appl_notify_adv_report
+     (
+         UCHAR          adv_type,
+         BT_DEVICE_ADDR * bd,
+         UCHAR          * data,
+         UINT16         data_len
+     )
+{
+#ifdef CPMC
+    APPL_NOTIFY_ADV_REPORT(cpmc, adv_type, bd, data, data_len);
+#endif /* CPMC */
 }
 
 #endif /* ATT */

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: USB Device Configuration</title>
+<title>MCUXpresso SDK API Reference Manual: SWO</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,9 +99,75 @@ $(document).ready(function(){initNavTree('a00237.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">USB Device Configuration<div class="ingroups"><a class="el" href="a00054.html">Serial Port USB</a></div></div>  </div>
+<div class="title">SWO<div class="ingroups"><a class="el" href="a00234.html">Debug Console</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+<p>Serial wire output is a mechanism for ARM targets to output signal from core through a single pin. Some IDEs also support SWO, such IAR and KEIL, both input and output are supported, see below for details.</p>
+<h1><a class="anchor" id="SWOSDKGrps"></a>
+Guide SWO for SDK</h1>
+<p><b>NOTE:</b> After the setting both "printf" and "PRINTF" are available for debugging, JlinkSWOViewer can be used to capture the output log.</p>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>Define SERIAL_PORT_TYPE_SWO in your project settings.</li>
+<li>Prepare code, the port and baudrate can be decided by application, clkSrcFreq should be mcu core clock frequency: <div class="fragment"><div class="line"><a class="code" href="a00234.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(instance, baudRate, <a class="code" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>, clkSrcFreq);</div>
+</div><!-- fragment --></li>
+<li>Use PRINTF or printf to print some thing in application. <h2>Step 2: Building the project</h2>
+</li>
+</ol>
+<h2>Step 3: Download and run project</h2>
+<h1><a class="anchor" id="SWOIARGrps"></a>
+Guide SWO for IAR</h1>
+<p><b>NOTE:</b> After the setting both "printf" and "scanf" are available for debugging.</p>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>Choose project -&gt; "Options" -&gt; "Debugger" -&gt; "J-Link/J-Trace".</li>
+<li>Choose tab "J-Link/J-Trace" -&gt; "Connection" tab -&gt; "SWD".</li>
+<li>Choose tab "General Options" -&gt; "Library Configurations", select Semihosted, select Via SWO.</li>
+<li>To configure the hardware’s generation of trace data, click the SWO Configuration button available in the SWO Configuration dialog box. ●The value of the CPU clock option must reflect the frequency of the CPU clock speed at which the application executes. Note also that the settings you make are preserved between debug sessions. ●To decrease the amount of transmissions on the communication channel, you can disable the Timestamp option. Alternatively, set a lower rate for PC Sampling or use a higher SWO clock frequency.</li>
+<li>Open the SWO Trace window from J-LINK,and click the Activate button to enable trace data collection.</li>
+<li>There are three cases for this SDK_DEBUGCONSOLE_UART whether or not defined. a: if use uppercase PRINTF to output log,The SDK_DEBUGCONSOLE_UART defined or not defined will not effect debug function. b: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to zero,then debug function ok. c: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to one,then debug function ok.</li>
+</ol>
+<p><b>NOTE:</b> Case a or c only apply at example which enable swo function,the SDK_DEBUGCONSOLE_UART definition in fsl_debug_console.h. For case a and c, Do and not do the above third step will be not affect function.</p>
+<ol type="1">
+<li>Start the project by choosing Project&gt;Download and Debug. <h2>Step 2: Building the project</h2>
+</li>
+</ol>
+<h2>Step 3: Starting swo</h2>
+<ol type="1">
+<li>Download and debug application.</li>
+<li>Choose View -&gt; Terminal I/O to display the output from the I/O operations.</li>
+<li>Run application.</li>
+</ol>
+<h1><a class="anchor" id="SWOKeilGrps"></a>
+Guide SWO for Keil µVision</h1>
+<p><b>NOTE:</b> After the setting both "printf" and "scanf" are available for debugging.</p>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>There are three cases for this SDK_DEBUGCONSOLE_UART whether or not defined. a: if use uppercase PRINTF to output log,the SDK_DEBUGCONSOLE_UART definition does not affect the functionality and skip the second step directly. b: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to zero,then start the second step. c: if use lowercase printf to output log and defined SDK_DEBUGCONSOLE_UART to one,then skip the second step directly.</li>
+</ol>
+<p><b>NOTE:</b> Case a or c only apply at example which enable swo function,the SDK_DEBUGCONSOLE_UART definition in fsl_debug_console.h.</p>
+<ol type="1">
+<li>In menu bar, click Management Run-Time Environment icon, select Compiler, unfold I/O, enable STDERR/STDIN/STDOUT and set the variant to ITM.</li>
+<li>Open Project&gt;Options for target or using Alt+F7 or click.</li>
+<li>Select “Debug” tab, select “J-Link/J-Trace Cortex” and click “Setting button”.</li>
+<li>Select “Debug” tab and choose Port:SW, then select "Trace" tab, choose "Enable" and click OK, please make sure the Core clock is set correctly, enable autodetect max SWO clk, enable ITM Stimulus Ports 0.</li>
+</ol>
+<h2>Step 3: Building the project</h2>
+<ol type="1">
+<li>Compile and link the project by choosing Project&gt;Build Target or using F7.</li>
+</ol>
+<h2>Step 4: Run the project</h2>
+<ol type="1">
+<li>Choose “Debug” on menu bar or Ctrl F5.</li>
+<li>In menu bar, choose "Serial Window" and click to "Debug (printf) Viewer".</li>
+<li>Run line by line to see result in Console Window.</li>
+</ol>
+<h1><a class="anchor" id="SWOMCUXGrps"></a>
+Guide SWO for MCUXpresso IDE</h1>
+<p><b>NOTE:</b> MCUX support SWO for LPC-Link2 debug probe only.</p>
+<h1><a class="anchor" id="SWOARMGCCGrps"></a>
+Guide SWO for ARMGCC</h1>
+<p><b>NOTE:</b> ARMGCC has no library support SWO. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

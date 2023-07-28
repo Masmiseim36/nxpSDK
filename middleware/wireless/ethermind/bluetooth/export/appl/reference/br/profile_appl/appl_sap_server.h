@@ -15,7 +15,7 @@
 
 /* ----------------------------------------- Header File Inclusion */
 #include "BT_sap_api.h"
-#include "appl_utils.h"
+
 /* ----------------------------------------- Global Definitions */
 
 /* ----------------------------------------- Macros */
@@ -25,7 +25,7 @@
 /* ----------------------------------------- Function Declarations */
 void main_sap_server_operations(void);
 
-API_RESULT sap_server_appl_cb
+API_RESULT appl_sap_server_appl_cb
            (
                UCHAR    event_type,
                UINT16   event_result,

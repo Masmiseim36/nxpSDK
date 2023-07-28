@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP.
+ * Copyright 2019-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -26,6 +26,13 @@
 #include "hal_utils.h"
 
 #define PXP_DEV PXP
+
+/* PXP build gray operation is disabled by default since implementation
+ * requires rework.
+ */
+#ifndef PXP_BUILD_GRAY
+#define PXP_BUILD_GRAY 0
+#endif
 
 /*
  * Notice: enable the lock will introduce 1 ms time cost for each PXP operation
@@ -55,7 +62,9 @@ typedef struct _gfx_pxp_handle
 } gfx_pxp_handle_t;
 
 static gfx_pxp_handle_t s_GfxPxpHandle;
+#if (PXP_BUILD_GRAY == 1)
 static gfx_surface_t s_SurfGray888x;
+#endif
 
 static int HAL_GfxDev_Pxp_ComposeSurfaceAdaptForScaleAndPsRotate(const gfx_dev_t *dev,
                                                                  const gfx_surface_t *pSrc,
@@ -216,7 +225,12 @@ static int set_input_buffer_format(pxp_ps_buffer_config_t *pPsBufferConfig, gfx_
     {
         case MPP_PIXEL_ARGB:
         {
+#if (!(defined(FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT) && FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT)) || \
+		(!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3))
+            pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatARGB8888;
+#else
             pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatRGB888;
+#endif
         }
         break;
 
@@ -240,7 +254,12 @@ static int set_input_buffer_format(pxp_ps_buffer_config_t *pPsBufferConfig, gfx_
 
         case MPP_PIXEL_GRAY888X:
         {
+#if (!(defined(FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT) && FSL_FEATURE_PXP_HAS_NO_EXTEND_PIXEL_FORMAT)) || \
+		(!(defined(FSL_FEATURE_PXP_V3) && FSL_FEATURE_PXP_V3))
+            pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatARGB8888;
+#else
             pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatRGB888;
+#endif
         }
         break;
 
@@ -523,6 +542,7 @@ static int HAL_GfxDev_Pxp_BuildGray888XFromGray16(gfx_surface_t *pSrc, gfx_surfa
 {
     int error = -1;
 
+#if (PXP_BUILD_GRAY == 1)
     if ((s_SurfGray888x.height * s_SurfGray888x.pitch) < (pSrc->height * pSrc->width * 4))
     {
         /* need to re-allocate the buffer */
@@ -559,10 +579,11 @@ static int HAL_GfxDev_Pxp_BuildGray888XFromGray16(gfx_surface_t *pSrc, gfx_surfa
     }
 
     *ppDst = &s_SurfGray888x;
-
-    return 0;
+#endif
+    return error;
 }
 
+#if (PXP_BUILD_GRAY == 1)
 static int HAL_GfxDev_Pxp_Depth16_2_gray888x(gfx_surface_t *pSrc, gfx_surface_t *pDst)
 {
     int error = -1;
@@ -605,11 +626,13 @@ static int HAL_GfxDev_Pxp_Depth16_2_gray888x(gfx_surface_t *pSrc, gfx_surface_t 
 
     return error;
 }
+#endif
 
 static int HAL_GfxDev_Pxp_BuildGray888XFromDepth16(gfx_surface_t *pSrc, gfx_surface_t **ppDst)
 {
     int error = -1;
 
+#if (PXP_BUILD_GRAY == 1)
     if ((s_SurfGray888x.height * s_SurfGray888x.pitch) < (pSrc->height * pSrc->width * 4))
     {
         /* need to re-allocate the buffer */
@@ -646,8 +669,8 @@ static int HAL_GfxDev_Pxp_BuildGray888XFromDepth16(gfx_surface_t *pSrc, gfx_surf
     }
 
     *ppDst = &s_SurfGray888x;
-
-    return 0;
+#endif
+    return error;
 }
 
 static int HAL_GfxDev_Pxp_YUYV1P422ToYUV420P(gfx_surface_t *pSrc, gfx_surface_t *pDst)
@@ -717,18 +740,20 @@ static int convertCPU_BGR2RGB(uint8_t *buffer, int pitch, int width, int height)
  *
  * @param *dev [in] Pointer to pxp device.
  * @param *pSrc [in] Pointer to source surface.
- * @param *pDst [out] Pointer to destination surface.
+ * @param *pDst [in] Pointer to destination surface.
  * @param *pRotate [in] Pointer to the rotation config.
  * @param flip [in] Flip mode.
  *
  * @returns 0 for the success.
  */
 int HAL_GfxDev_Pxp_Blit(
-    const gfx_dev_t *dev, gfx_surface_t *pSrc, gfx_surface_t *pDst, gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip)
+    const gfx_dev_t *dev, const gfx_surface_t *pSrc, const gfx_surface_t *pDst, const gfx_rotate_config_t *pRotate, mpp_flip_mode_t flip)
 {
     int error                                       = 0;
     pxp_ps_buffer_config_t *pPsBufferConfig         = &s_GfxPxpHandle.psBufferConfig;
     pxp_output_buffer_config_t *pOutputBufferConfig = &s_GfxPxpHandle.outputBufferConfig;
+    gfx_surface_t src, dst;
+    gfx_rotate_config_t rotate;
 
     HAL_LOGD("Input buffer addr=0x%x\n", (unsigned int)pSrc->buf);
     HAL_LOGD("Output buffer addr=0x%x\n", (unsigned int)pDst->buf);
@@ -739,42 +764,42 @@ int HAL_GfxDev_Pxp_Blit(
         return -1;
     }
 
-    if (pDst->format == MPP_PIXEL_YUV420P)
+    memcpy(&src, pSrc, sizeof(gfx_surface_t));
+    memcpy(&dst, pDst, sizeof(gfx_surface_t));
+    memcpy(&rotate, pRotate, sizeof(gfx_rotate_config_t));
+
+    if (dst.format == MPP_PIXEL_YUV420P)
     {
         // tmp swap back for testing
         if ((pRotate->target == kGFXRotate_SRCSurface) &&
             ((pRotate->degree == ROTATE_90) || (pRotate->degree == ROTATE_270)))
         {
-            pRotate->target = kGFXRotate_DSTSurface;
+            rotate.target = kGFXRotate_DSTSurface;
             //
             // need to swap the width and height as we force the rotate on DST surface
             // src
-            int tmp      = pSrc->height;
-            pSrc->height = pSrc->width;
-            pSrc->width  = tmp;
-            tmp          = pSrc->left;
-            pSrc->left   = pSrc->top;
-            pSrc->top    = tmp;
-            tmp          = pSrc->right;
-            pSrc->right  = pSrc->bottom;
-            pSrc->bottom = tmp;
+            src.height = pSrc->width;
+            src.width  = pSrc->height;
+            src.left   = pSrc->top;
+            src.top    = pSrc->left;
+            src.right  = pSrc->bottom;
+            src.bottom = pSrc->right;
         }
 
-        error = HAL_GfxDev_Pxp_YUYV1P422ToYUV420P(pSrc, pDst);
-        _HAL_GfxDev_Pxp_Unlock();
+        error = HAL_GfxDev_Pxp_YUYV1P422ToYUV420P(&src, &dst);
         return error;
     }
 
     // WR for PXP limitation: PXP can not do PS rotate and scale at the same time
     // which would cause several vertical garbage lines on the left
     // will do the rotate on the DST surface
-    if (((pSrc->height != pDst->width) || (pSrc->width != pDst->height)) &&
+    if (((src.height != dst.width) || (src.width != dst.height)) &&
         ((pRotate->degree == ROTATE_90) || (pRotate->degree == ROTATE_270)))
     {
 
         if (pRotate->target == kGFXRotate_SRCSurface)
         {
-            pRotate->target = kGFXRotate_DSTSurface;
+            rotate.target = kGFXRotate_DSTSurface;
         }
     }
 
@@ -783,9 +808,8 @@ int HAL_GfxDev_Pxp_Blit(
     {
         // need to swap the width and height as we force the rotate on DST surface
         // dst
-        int tmp      = pDst->height;
-        pDst->height = pDst->width;
-        pDst->width  = tmp;
+        dst.height = pDst->width;
+        dst.width  = pDst->height;
     }
 
     error = _HAL_GfxDev_Pxp_Lock();
@@ -795,12 +819,12 @@ int HAL_GfxDev_Pxp_Blit(
         return error;
     }
 
-    if (((pSrc->format == MPP_PIXEL_DEPTH16) && (pDst->format == MPP_PIXEL_DEPTH16)) ||
-        ((pSrc->format == MPP_PIXEL_DEPTH8) && (pDst->format == MPP_PIXEL_DEPTH8)))
+    if (((src.format == MPP_PIXEL_DEPTH16) && (dst.format == MPP_PIXEL_DEPTH16)) ||
+        ((src.format == MPP_PIXEL_DEPTH8) && (dst.format == MPP_PIXEL_DEPTH8)))
     {
-        if ((pSrc->pitch == pDst->pitch) && (pSrc->height == pDst->height))
+        if ((src.pitch == dst.pitch) && (src.height == dst.height))
         {
-            memcpy(pDst->buf, pSrc->buf, pDst->pitch * pDst->height);
+            memcpy(dst.buf, src.buf, dst.pitch * dst.height);
         }
         else
         {
@@ -811,19 +835,19 @@ int HAL_GfxDev_Pxp_Blit(
         return error;
     }
 
-    if (pSrc->format == MPP_PIXEL_GRAY16)
+    if (src.format == MPP_PIXEL_GRAY16)
     {
-        if (pDst->format == MPP_PIXEL_GRAY888X)
+        if (dst.format == MPP_PIXEL_GRAY888X)
         {
-            error = HAL_GfxDev_Pxp_Gray16_2_gray888x(pSrc, pDst);
+            error = HAL_GfxDev_Pxp_Gray16_2_gray888x(&src, &dst);
             _HAL_GfxDev_Pxp_Unlock();
             return error;
         }
-        else if (pDst->format == MPP_PIXEL_GRAY16)
+        else if (dst.format == MPP_PIXEL_GRAY16)
         {
-            if ((pSrc->pitch == pDst->pitch) && (pSrc->height == pDst->height))
+            if ((src.pitch == dst.pitch) && (src.height == dst.height))
             {
-                memcpy(pDst->buf, pSrc->buf, pDst->pitch * pDst->height);
+                memcpy(dst.buf, src.buf, dst.pitch * dst.height);
             }
             else
             {
@@ -835,7 +859,7 @@ int HAL_GfxDev_Pxp_Blit(
         }
         else
         {
-            error = HAL_GfxDev_Pxp_BuildGray888XFromGray16(pSrc, &pSrc);
+            error = HAL_GfxDev_Pxp_BuildGray888XFromGray16(&src, NULL);
             if (error)
             {
                 HAL_LOGE("Failed to build GRAY888X surface from GRAY16 image\n");
@@ -845,12 +869,13 @@ int HAL_GfxDev_Pxp_Blit(
         }
     }
 
-    if (pSrc->format == MPP_PIXEL_DEPTH16 && (pDst->format == MPP_PIXEL_RGB565))
+    if (src.format == MPP_PIXEL_DEPTH16 && (dst.format == MPP_PIXEL_RGB565))
     {
-        error = HAL_GfxDev_Pxp_BuildGray888XFromDepth16(pSrc, &pSrc);
+        error = HAL_GfxDev_Pxp_BuildGray888XFromDepth16(&src, NULL);
         if (error)
         {
             HAL_LOGE("Failed to build GRAY888X surface from GRAY16 image\n");
+            _HAL_GfxDev_Pxp_Unlock();
             return error;
         }
     }
@@ -859,17 +884,17 @@ int HAL_GfxDev_Pxp_Blit(
     PXP_SetAlphaSurfacePosition(PXP_DEV, 0xFFFFU, 0xFFFFU, 0U, 0U);
 
     // setup input buffer configuration
-    if (init_input_buffer(pPsBufferConfig, pSrc) == -1)
+    if (init_input_buffer(pPsBufferConfig, &src) == -1)
     {
         _HAL_GfxDev_Pxp_Unlock();
         return -1;
     }
 
     // setup flip/rotation/position/scaler configuration
-    init_surface(flip, pRotate, pSrc, pDst);
+    init_surface(flip, &rotate, &src, &dst);
 
     // setup the output buffer configuration
-    if (init_output_buffer(pOutputBufferConfig, pDst) == -1)
+    if (init_output_buffer(pOutputBufferConfig, &dst) == -1)
     {
         _HAL_GfxDev_Pxp_Unlock();
         return -1;
@@ -898,8 +923,8 @@ int HAL_GfxDev_Pxp_Blit(
      * For the output format kPXP_OutputPixelFormatRGB888P, a software conversion
      * applies to invert blue and red pixels.
      */
-    if (pDst->format == MPP_PIXEL_RGB)
-        convertCPU_BGR2RGB(pDst->buf, pDst->pitch, pDst->width, pDst->height);
+    if (dst.format == MPP_PIXEL_RGB)
+        convertCPU_BGR2RGB(dst.buf, dst.pitch, dst.width, dst.height);
 #endif
 
     return error;
@@ -1278,7 +1303,7 @@ const static gfx_dev_operator_t s_GfxDevPxpOps = {
     .get_buf_desc = HAL_GfxDev_Pxp_Getbufdesc,
 };
 
-int hal_pxp_setup(gfx_dev_t *dev)
+int HAL_GfxDev_PXP_Register(gfx_dev_t *dev)
 {
     dev->id = 0;    /* TODO set unique id */
     dev->ops = &s_GfxDevPxpOps;
@@ -1286,7 +1311,7 @@ int hal_pxp_setup(gfx_dev_t *dev)
     return 0;
 }
 #else  /* (defined HAL_ENABLE_2D_IMGPROC) && (HAL_ENABLE_GFX_DEV_Pxp == 1) */
-int hal_pxp_setup(gfx_dev_t *dev)
+int HAL_GfxDev_PXP_Register(gfx_dev_t *dev)
 {
     HAL_LOGE("PXP not enabled\n");
     return -1;

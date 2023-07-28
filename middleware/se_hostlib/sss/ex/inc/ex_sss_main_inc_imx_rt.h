@@ -30,13 +30,13 @@
 #include "ksdk_mbedtls.h"
 #endif
 
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 #include "fsl_dcp.h"
 #include "fsl_trng.h"
 #endif
 #include "fsl_iomuxc.h"
 
-#ifdef CPU_MIMXRT1062DVL6A
+#if defined (CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 #define TRNG0 TRNG
 /* Clock divider for master lpi2c clock source */
 #define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
@@ -56,7 +56,7 @@ void IOMUXC_SelectENETClock(void)
 
 void BOARD_InitModuleClock(void)
 {
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A)  || defined (CPU_MIMXRT1062DVL6B)
     const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
 #elif defined(CPU_MIMXRT1176DVMAA_cm7)
@@ -78,7 +78,7 @@ void BOARD_InitModuleClock(void)
     rootCfg.mux = 7;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg); /* Generate 198M bus clock. */
-#endif // CPU_MIMXRT1062DVL6A
+#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
 }
 
 void ex_sss_main_ksdk_bm()
@@ -87,10 +87,10 @@ void ex_sss_main_ksdk_bm()
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
     dcp_config_t dcpConfig;
     trng_config_t trngConfig;
-#endif // CPU_MIMXRT1062DVL6A
+#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
@@ -130,7 +130,7 @@ void ex_sss_main_ksdk_bm()
     /* Data cache must be temporarily disabled to be able to use sdram */
     SCB_DisableDCache();
 
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
 
@@ -146,7 +146,7 @@ void ex_sss_main_ksdk_bm()
 
     /* Initialize TRNG */
     TRNG_Init(TRNG0, &trngConfig);
-#endif // CPU_MIMXRT1062DVL6A
+#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
 
     axReset_HostConfigure();
     axReset_PowerUp();
@@ -163,7 +163,7 @@ void ex_sss_main_ksdk_bm()
 
 void ex_sss_main_ksdk_boot_rtos_task()
 {
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 #if defined(MBEDTLS)
     CRYPTO_InitHardware();
 #endif /* defined(MBEDTLS) */
@@ -176,7 +176,7 @@ void ex_sss_main_ksdk_boot_rtos_task()
     GPIO_WritePinOutput(GPIO1, 9, 0);
     sm_sleep(2);
     GPIO_WritePinOutput(GPIO1, 9, 1);
-#endif // CPU_MIMXRT1062DVL6A
+#endif // CPU_MIMXRT1062DVL6A || CPU_MIMXRT1062DVL6B
 }
 
 void ex_sss_main_ksdk_success()

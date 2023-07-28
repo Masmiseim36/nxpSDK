@@ -14,6 +14,7 @@
 #include "appl_avrcp_ct.h"
 #include "appl_avrcp_tg_virtual_media_player.h"
 #include "appl_avrcp.h"
+#include "appl_utils.h"
 
 #ifdef AVRCP_CT
 /* ----------------------------------------- External Global Variables */
@@ -74,21 +75,20 @@ static UCHAR   ct_additional_protocol_descriptor_list[] =
                                             0x01U, 0x03U
                                         };
 /* for scope in rsp */
-AVRCP_AL_GET_FOLDER_ITEMS_PARAM       get_folder_items_param;
-UCHAR                                 get_total_num_items_scope;
+AVRCP_AL_GET_FOLDER_ITEMS_PARAM              get_folder_items_param;
+static UCHAR                                 get_total_num_items_scope;
 
-APPL_AVRCP_MEDIA_PLAYER_LIST_INFO     ct_mp_list_info [APPL_AVRCP_MAX_NUM_PLAYERS];
-UINT16                                ct_num_players;
-UINT16                                ct_player_list_uid_counter;
+static APPL_AVRCP_MEDIA_PLAYER_LIST_INFO     ct_mp_list_info [APPL_AVRCP_MAX_NUM_PLAYERS];
+static UINT16                                ct_num_players;
+static UINT16                                ct_player_list_uid_counter;
 
-APPL_AVRCP_VIRTUAL_FOLDER_LIST_INFO   ct_vf_info[APPL_AVRCP_MAX_FOLDER_ITEMS];
-UINT16                                ct_folder_item_count;
-UCHAR                                 ct_cur_folder_depth;
-UINT16                                ct_folder_uid_counter;
+static APPL_AVRCP_VIRTUAL_FOLDER_LIST_INFO   ct_vf_info[APPL_AVRCP_MAX_FOLDER_ITEMS];
+static UINT16                                ct_folder_item_count;
+static UINT16                                ct_folder_uid_counter;
 
-APPL_AVRCP_MEDIA_LIST_INFO            ct_media_list_info [APPL_AVRCP_MAX_MEDIA_LIST_COUNT];
-UINT16                                ct_media_list_count;
-UINT16                                ct_media_list_uid_counter;
+static APPL_AVRCP_MEDIA_LIST_INFO            ct_media_list_info [APPL_AVRCP_MAX_MEDIA_LIST_COUNT];
+static UINT16                                ct_media_list_count;
+static UINT16                                ct_media_list_uid_counter;
 
 #ifdef AVRCP_COVER_ART_INITIATOR
 
@@ -1220,7 +1220,6 @@ void appl_avrcp_ct_send_browsing_cmd (UCHAR index)
             if (NULL == folder_uid)
             {
                 LOG_DEBUG (" Memory Allocation failed\n");
-                retval = API_FAILURE; /* return; */
             }
             else
             {
@@ -2179,6 +2178,8 @@ void appl_avrcp_ct_display_notify_rsp
      )
 {
     UCHAR   play_status;
+    UCHAR   ct_system_status;
+    UCHAR   volume;
 
     switch (event_id)
     {
@@ -2246,7 +2247,27 @@ void appl_avrcp_ct_display_notify_rsp
         break;
 
     case AVRCP_EVENT_SYSTEM_STATUS_CHANGED:
-        LOG_DEBUG ("\n    Event-ID -> AVRCP_EVENT_SYSTEM_STATUS_CHANGED<0x%x>.\n", event_id);
+	    ct_system_status = notify_param[0U];
+        printf ("\n    Event-ID -> AVRCP_EVENT_SYSTEM_STATUS_CHANGED<0x%x>.\n", event_id);
+        printf ("     - System Status:  ");
+        switch(ct_system_status)
+        {
+           case 0x00U:
+               printf ("0x00(POWER_ON)\n");
+               break;
+
+           case 0x01U:
+               printf ("0x01(POWER_OFF)\n");
+               break;
+
+           case 0x02U:
+               printf ("0x02(STATUS_UNPLUGED)\n");
+               break;
+
+           default:
+               printf("???\n");
+               break;
+        }
         break;
 
     case AVRCP_EVENT_PLAYER_APP_SETTING_CHANGED:
@@ -2271,7 +2292,15 @@ void appl_avrcp_ct_display_notify_rsp
         break;
 
     case AVRCP_EVENT_VOLUME_CHANGED:
+
         LOG_DEBUG("\n    Event-ID -> AVRCP_EVENT_VOLUME_CHANGED<0x%x>.\n", event_id);
+        if ((NULL != notify_param) &&
+            (1U == notify_param_len))
+        {
+            volume = notify_param[0U] & 0x7FU;
+            printf("    Volume: 0x%02x\n", volume);
+        }
+
         break;
 
 #endif /* AVRCP_1_4 */
@@ -3807,6 +3836,7 @@ void appl_avrcp_cai_operation(void)
                 appl_avrcp_choose_handle(&index);
 
                 BT_mem_set(&ca_req_info, 0, sizeof(AVRCP_CA_REQUEST_STRUCT));
+                BT_mem_set(image_descriptor_data, 0, sizeof(image_descriptor_data));
 
                 /* Update headers in the request */
                 ca_req_info.img_handle     = &ca_img_handle_info;
@@ -3903,7 +3933,7 @@ void appl_avrcp_cai_operation(void)
                     }
                     else
                     {
-                        EM_str_copy
+                        BT_str_copy
                         (
                             image_descriptor_data,
                             IMAGE_DESCRIPTOR_DEFAULT
@@ -3913,7 +3943,7 @@ void appl_avrcp_cai_operation(void)
 
                 /* Initialze the image descriptor handle */
                 ca_img_descriptor_info.value = image_descriptor_data;
-                ca_img_descriptor_info.length = (UINT16)BT_str_len(image_descriptor_data);;
+                ca_img_descriptor_info.length = (UINT16)BT_str_n_len(image_descriptor_data, sizeof(image_descriptor_data)-1);
 
                 LOG_DEBUG ("Sending AVRCP_CT Cover Art Get Image..\n");
 
@@ -4312,19 +4342,11 @@ API_RESULT appl_avrcp_cai_callback
         }
         else
         {
-            UINT16 length, i;
+            UINT16 length;
             UCHAR * data;
 
             data = ca_event_headers->ca_rsp_info->body->value;
             length = ca_event_headers->ca_rsp_info->body->length;
-
-             /* Print the stream */
-            LOG_DEBUG ("\n========== Cover Art Get Image ==========\n");
-            for (i = 0U; i < length; i++)
-            {
-                LOG_DEBUG ("%c", data[i]);
-            }
-            LOG_DEBUG ("\n======================================\n");
 
 #ifdef HAVE_OBJECT_DUMP
 
@@ -4419,20 +4441,12 @@ API_RESULT appl_avrcp_cai_callback
         }
         else
         {
-            UINT16 length, i;
+            UINT16 length;
             UCHAR * data;
 
 
             data = ca_event_headers->ca_rsp_info->body->value;
             length = ca_event_headers->ca_rsp_info->body->length;
-
-             /* Print the stream */
-            LOG_DEBUG ("\n========== Cover Art Get LinkedThumbNail ==========\n");
-            for (i = 0U; i < length; i++)
-            {
-                LOG_DEBUG ("%c", data[i]);
-            }
-            LOG_DEBUG ("\n======================================\n\n");
 
 #ifdef HAVE_OBJECT_DUMP
 

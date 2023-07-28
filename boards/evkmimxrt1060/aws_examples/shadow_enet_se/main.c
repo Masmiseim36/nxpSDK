@@ -43,18 +43,14 @@
 #include "mflash_file.h"
 #include "kvstore.h"
 
-#include "fsl_phyksz8081.h"
-#include "fsl_iomuxc.h"
-#include "fsl_enet.h"
 #include "fsl_silicon_id.h"
-#include "fsl_phy.h"
+
 /* lwIP Includes */
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "netif/ethernet.h"
 #include "ethernetif.h"
 #include "lwip/netifapi.h"
+#include "fsl_iomuxc.h"
+#include "fsl_enet.h"
+#include "fsl_phyksz8081.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -67,28 +63,22 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #define EXAMPLE_PHY_OPS      &phyksz8081_ops
 #define EXAMPLE_PHY_RESOURCE &g_phy_resource
 #define EXAMPLE_CLOCK_FREQ   CLOCK_GetFreq(kCLOCK_IpgClk)
+
+
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #endif /* EXAMPLE_NETIF_INIT_FN */
-
-#define INIT_SUCCESS 0
-#define INIT_FAIL    1
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-extern int initNetwork(void);
-
+int init_network(void);
 int app_main(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 phy_ksz8081_resource_t g_phy_resource;
-static phy_handle_t phyHandle;
-
-struct netif netif;
 
 /*******************************************************************************
  * Secure element contexts
@@ -102,6 +92,9 @@ ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx = &gex_sss_demo_tls_ctx;
 const char *g_port_name = NULL;
 
 static mflash_file_t dir_template[] = {{.path = KVSTORE_FILE_PATH, .max_size = (MFLASH_SECTOR_SIZE * 2U)}, {0}};
+
+static phy_handle_t s_phyHandle;
+static struct netif s_netif;
 
 /*******************************************************************************
  * Code
@@ -129,71 +122,6 @@ static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
 }
 
 
-int initNetwork(void)
-{
-    ethernetif_config_t enet_config = {
-        .phyHandle   = &phyHandle,
-        .phyAddr     = EXAMPLE_PHY_ADDRESS,
-        .phyOps      = EXAMPLE_PHY_OPS,
-        .phyResource = EXAMPLE_PHY_RESOURCE,
-        .srcClockHz  = EXAMPLE_CLOCK_FREQ,
-    };
-
-    /* Set MAC address. */
-#ifdef configMAC_ADDR
-    enet_config.macAddress = configMAC_ADDR,
-#else
-    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
-#endif
-
-    tcpip_init(NULL, NULL);
-
-    err_t ret;
-    ret = netifapi_netif_add(&netif, NULL, NULL, NULL, &enet_config, EXAMPLE_NETIF_INIT_FN, tcpip_input);
-    if (ret != (err_t)ERR_OK)
-    {
-        (void)PRINTF("netifapi_netif_add: %d\r\n", ret);
-        while (true)
-        {
-        }
-    }
-    ret = netifapi_netif_set_default(&netif);
-    if (ret != (err_t)ERR_OK)
-    {
-        (void)PRINTF("netifapi_netif_set_default: %d\r\n", ret);
-        while (true)
-        {
-        }
-    }
-    ret = netifapi_netif_set_up(&netif);
-    if (ret != (err_t)ERR_OK)
-    {
-        (void)PRINTF("netifapi_netif_set_up: %d\r\n", ret);
-        while (true)
-        {
-        }
-    }
-
-    while (ethernetif_wait_linkup(&netif, 5000) != ERR_OK)
-    {
-        (void)PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
-    }
-
-    configPRINTF(("Getting IP address from DHCP ...\r\n"));
-    ret = netifapi_dhcp_start(&netif);
-    if (ret != (err_t)ERR_OK)
-    {
-        (void)PRINTF("netifapi_dhcp_start: %d\r\n", ret);
-        while (true)
-        {
-        }
-    }
-    (void)ethernetif_wait_ipv4_valid(&netif, ETHERNETIF_WAIT_FOREVER);
-    configPRINTF(("IPv4 Address: %s\r\n", ipaddr_ntoa(&netif.ip_addr)));
-    configPRINTF(("DHCP OK\r\n"));
-
-    return INIT_SUCCESS;
-}
 
 /*!
  * @brief Application entry point.
@@ -266,7 +194,7 @@ void vApplicationDaemonTaskStartupHook(void)
     }
 
     /* Initialize network. */
-    initNetwork();
+    init_network();
 
     /* Initialize Logging locks */
     if (nLog_Init() != 0)
@@ -398,3 +326,69 @@ void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
     *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
 }
 /*-----------------------------------------------------------*/
+
+int init_network(void)
+{
+    ethernetif_config_t enet_config = {
+        .phyHandle   = &s_phyHandle,
+        .phyAddr     = EXAMPLE_PHY_ADDRESS,
+        .phyOps      = EXAMPLE_PHY_OPS,
+        .phyResource = EXAMPLE_PHY_RESOURCE,
+        .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+    };
+
+    /* Set MAC address. */
+#ifdef configMAC_ADDR
+    enet_config.macAddress = configMAC_ADDR,
+#else
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
+
+    tcpip_init(NULL, NULL);
+
+    err_t ret;
+    ret = netifapi_netif_add(&s_netif, NULL, NULL, NULL, &enet_config, EXAMPLE_NETIF_INIT_FN, tcpip_input);
+    if (ret != (err_t)ERR_OK)
+    {
+        (void)PRINTF("netifapi_netif_add: %d\r\n", ret);
+        while (true)
+        {
+        }
+    }
+    ret = netifapi_netif_set_default(&s_netif);
+    if (ret != (err_t)ERR_OK)
+    {
+        (void)PRINTF("netifapi_netif_set_default: %d\r\n", ret);
+        while (true)
+        {
+        }
+    }
+    ret = netifapi_netif_set_up(&s_netif);
+    if (ret != (err_t)ERR_OK)
+    {
+        (void)PRINTF("netifapi_netif_set_up: %d\r\n", ret);
+        while (true)
+        {
+        }
+    }
+
+    while (ethernetif_wait_linkup(&s_netif, 5000) != ERR_OK)
+    {
+        (void)PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
+    }
+
+    configPRINTF(("Getting IP address from DHCP ...\r\n"));
+    ret = netifapi_dhcp_start(&s_netif);
+    if (ret != (err_t)ERR_OK)
+    {
+        (void)PRINTF("netifapi_dhcp_start: %d\r\n", ret);
+        while (true)
+        {
+        }
+    }
+    (void)ethernetif_wait_ipv4_valid(&s_netif, ETHERNETIF_WAIT_FOREVER);
+    configPRINTF(("IPv4 Address: %s\r\n", ipaddr_ntoa(&s_netif.ip_addr)));
+    configPRINTF(("DHCP OK\r\n"));
+
+    return kStatus_Success;
+}

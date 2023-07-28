@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -232,8 +232,8 @@
           <state>EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565</state>
           <state>EW_SURFACE_ROTATION=0</state>
           <state>EW_USE_FREE_RTOS=0</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -355,13 +355,13 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../GeneratedCode</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../GeneratedCode</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RGB565</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RTE</state>
@@ -492,7 +492,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -697,7 +697,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1108,7 +1108,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1195,7 +1195,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1212,7 +1212,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1235,7 +1235,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1314,7 +1314,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1329,8 +1329,8 @@
           <state>EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565</state>
           <state>EW_SURFACE_ROTATION=0</state>
           <state>EW_USE_FREE_RTOS=0</state>
-          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1452,13 +1452,13 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../GeneratedCode</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../GeneratedCode</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RGB565</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RTE</state>
@@ -1589,7 +1589,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1794,7 +1794,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2253,114 +2253,6 @@
     </file>
   </group>
   <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_elcdif.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_elcdif.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_snvs_hp.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_snvs_hp.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_pxp.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_pxp.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
-    </file>
-  </group>
-  <group>
-    <name>touchpanel</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/gt911/fsl_gt911.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/gt911/fsl_gt911.c</name>
-    </file>
-  </group>
-  <group>
-    <name>video</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.c</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
     <name>EmbeddedWizard</name>
     <group>
       <name>GeneratedCode</name>
@@ -2630,6 +2522,66 @@
       </file>
     </group>
     <group>
+      <name>Project</name>
+      <file>
+        <name>$PROJ_DIR$/../EmbeddedWizard/Application.ewu</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../EmbeddedWizard/SmartThermostat.ewp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../EmbeddedWizard/SmartThermostat.ews</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../EmbeddedWizard/Thermostat.ewu</name>
+      </file>
+      <group>
+        <name>Res</name>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/BackgroundDay.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/BackgroundDefault.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/BackgroundNight.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/ButtonDay.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/ButtonNight.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/ButtonVacation.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/Controller.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/Ergosign.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/Needle.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/SwingSwitch.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/SymbolFan.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/SymbolHeadCool.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/VertBar.png</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../EmbeddedWizard/Res/Wheels.png</name>
+        </file>
+      </group>
+    </group>
+    <group>
       <name>TargetSpecific</name>
       <group>
         <name>evkmimxrt1064</name>
@@ -2740,6 +2692,114 @@
         </group>
       </group>
     </group>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_elcdif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_elcdif.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_snvs_hp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_snvs_hp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_pxp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_pxp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
+    </file>
+  </group>
+  <group>
+    <name>touchpanel</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/gt911/fsl_gt911.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/gt911/fsl_gt911.c</name>
+    </file>
+  </group>
+  <group>
+    <name>video</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.c</name>
+    </file>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
   </group>
   <group>
     <name>device</name>

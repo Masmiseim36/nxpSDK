@@ -13,8 +13,8 @@
 #define _H_APPL_CPMS_MOPS_
 
 /* ----------------------------------------- Header File Inclusion */
+#include "appl_cpms.h"
 
 /* ----------------------------------------- Function Prototypes */
-void appl_cpms_menu_handler (void);
 
 #endif /* _H_APPL_CPMS_MOPS_ */

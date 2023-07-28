@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP.
+ * Copyright 2022-2023 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -48,7 +48,7 @@ status_t BOARD_Camera_I2C_Receive(uint8_t deviceAddress, uint32_t subAddress,
 #define CAMERA_DEV_CsiMt9m114_BUFFER_COUNT 3
 #define CAMERA_DEV_CsiMt9m114_MAX_HEIGHT 272    /* set camera max resolution equal to display max */
 #define CAMERA_DEV_CsiMt9m114_MAX_WIDTH 480    /* set camera max resolution equal to display max */
-#define CAMERA_DEV_CsiMt9m114_MAX_BPP 4             /* max value for YUYV */
+#define CAMERA_DEV_CsiMt9m114_MAX_BPP 2             /* max value for YUV422/RGB565 */
 #define CAMERA_DEV_CsiMt9m114_ROTATE ROTATE_0
 #define CAMERA_DEV_CsiMt9m114_FLIP FLIP_NONE
 #define CAMERA_DEV_CsiMt9m114_SWAPBYTE 0
@@ -91,6 +91,7 @@ hal_camera_status_t HAL_CameraDev_CsiMt9m114_Init(
     dev->config.width = config->width;
     dev->config.height = config->height;
     dev->config.framerate = config->fps;
+    dev->config.format = config->format;
     dev->cap.callback = callback;
     dev->cap.param    = param;
 
@@ -101,13 +102,15 @@ hal_camera_status_t HAL_CameraDev_CsiMt9m114_Init(
     BOARD_InitCameraResource();
 
     switch(config->format) {
-    case MPP_PIXEL_YUV1P444:
-    /* NOT TESTED */
-        cameraConfig.pixelFormat   = dev->config.format = kVIDEO_PixelFormatYUYV;
-        cameraConfig.bytesPerPixel = 4;
+    /* Only support RGB565 and YUV422 */
+    case MPP_PIXEL_UYVY1P422:
+        /* YUV422 format */
+        cameraConfig.pixelFormat   = kVIDEO_PixelFormatYUYV;
+        cameraConfig.bytesPerPixel = 2;
         break;
     case MPP_PIXEL_RGB565:
-        cameraConfig.pixelFormat   = dev->config.format = kVIDEO_PixelFormatRGB565;
+        /* RGB565 format */
+        cameraConfig.pixelFormat   = kVIDEO_PixelFormatRGB565;
         cameraConfig.bytesPerPixel = 2;
         break;
     default:
@@ -227,7 +230,7 @@ hal_camera_status_t HAL_CameraDev_CsiMt9m114_Dequeue(const camera_dev_t *dev, vo
     }
 
     *data   = (void *)gCurrentBufferAddr;
-    *format = hal_fsl_to_mpp_pixeltype(dev->config.format);
+    *format = dev->config.format;
     HAL_LOGD("--HAL_CameraDev_CsiMt9m114_Dequeue\n");
     return ret;
 }

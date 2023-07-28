@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -396,10 +396,6 @@ void ethernetif_plat_init(struct netif *netif,
     config.rxBuffAlloc = ethernetif_rx_alloc;
     config.rxBuffFree  = ethernetif_rx_free;
     config.userData    = netif;
-#ifdef LWIP_ENET_FLEXIBLE_CONFIGURATION
-    extern void BOARD_ENETFlexibleConfigure(enet_config_t * config);
-    BOARD_ENETFlexibleConfigure(&config);
-#endif
 
     /* Used for detection of change.
        Initilize to value different than any possible enum value. */
@@ -408,6 +404,11 @@ void ethernetif_plat_init(struct netif *netif,
     ethernetif->last_link_up = false;
 
     ethernetif_phy_init(ethernetif, ethernetifConfig);
+
+#ifdef LWIP_ENET_FLEXIBLE_CONFIGURATION
+    extern void BOARD_ENETFlexibleConfigure(enet_config_t * config);
+    BOARD_ENETFlexibleConfigure(&config);
+#endif
 
 #if USE_RTOS && defined(SDK_OS_FREE_RTOS)
     uint32_t instance;

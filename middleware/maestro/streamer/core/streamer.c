@@ -126,7 +126,7 @@ STREAMER_T *streamer_create(STREAMER_CREATE_PARAM *task_param)
                 {
                     /* create pipeline */
                     ret = streamer_create_pipeline(streamer, 0, task_param->pipeline_type, task_param->in_dev_name,
-                                                   task_param->out_dev_name, false);
+                                                    task_param->out_dev_name, false);
                     if (ERRCODE_NO_ERROR == ret)
                     {
                         STREAMER_FUNC_EXIT(DBG_CORE);
@@ -174,7 +174,12 @@ int32_t streamer_destroy(STREAMER_T *streamer)
 
     /* Send a state-changing to STATE_NULL event to close resources allocated by elements down. */
     for (size_t i = 0; i < MAX_PIPELINES; i++)
-        ret |= streamer_set_state(streamer, i, STATE_NULL, true);
+    {
+        if (streamer->pipes[i] != (uintptr_t)NULL)
+        {
+            ret |= streamer_set_state(streamer, i, STATE_NULL, true);
+        }
+    }
 
     /* send an task close event to streamer to exit streamer task */
     STREAMER_MSG_T msg;
@@ -188,8 +193,13 @@ int32_t streamer_destroy(STREAMER_T *streamer)
     if (streamer->is_active)
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_THREAD_FAILURE, "Failed to exit streamer task!\n");
 
-    ret |= streamer_destroy_pipeline(streamer, 0, false);
-
+    for (size_t i = 0; i < MAX_PIPELINES; i++)
+    {
+        if (streamer->pipes[i] != (uintptr_t)NULL)
+        {
+            ret |= streamer_destroy_pipeline(streamer, i, false);
+        }
+    }
     if (streamer->mq_out != 0)
     {
         OSA_MsgQPut(&streamer->mq_out, (void *)&msg);
@@ -345,10 +355,13 @@ void streamer_task(void *args)
 
             streamer_process_pipelines(streamer);
 
-            if (streamer->pipeline_type == STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE)
+            for (loop_count = 0; loop_count < MAX_PIPELINES; loop_count++)
             {
-                // Due to forcing a context switch
-                OSA_TimeDelay(1);
+                if (streamer->pipeline_type[loop_count] == STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE)
+                {
+                    // Due to forcing a context switch
+                    OSA_TimeDelay(1);
+                }
             }
         }
     }
@@ -364,8 +377,8 @@ void streamer_task(void *args)
 
 int32_t streamer_deinit(STREAMER_T *streamer)
 {
-    unsigned int x = 0;
-    int32_t ret    = ERRCODE_NO_ERROR;
+    unsigned int x, y = 0;
+    int32_t ret = ERRCODE_NO_ERROR;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -374,15 +387,15 @@ int32_t streamer_deinit(STREAMER_T *streamer)
         if (streamer->pipes[x])
         {
             ret |= set_state_pipeline(streamer->pipes[x], STATE_NULL);
-        }
-    }
 
-    for (x = 0; x < MAX_ELEMENTS; x++)
-    {
-        if (streamer->elems[x])
-        {
-            ret |= destroy_element(streamer->elems[x]);
-            streamer->elems[x] = (ElementHandle)NULL;
+            for (y = 0; y < MAX_ELEMENTS; y++)
+            {
+                if (streamer->elems[x][y])
+                {
+                    ret |= destroy_element(streamer->elems[x][y]);
+                    streamer->elems[x][y] = (ElementHandle)NULL;
+                }
+            }
         }
     }
 
@@ -402,18 +415,18 @@ int32_t streamer_deinit(STREAMER_T *streamer)
 
 void streamer_init(STREAMER_T *streamer)
 {
-    unsigned int x;
+    unsigned int x, y = 0;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
     for (x = 0; x < MAX_PIPELINES; x++)
     {
         streamer->pipes[x] = 0;
-    }
 
-    for (x = 0; x < MAX_ELEMENTS; x++)
-    {
-        streamer->elems[x] = 0;
+        for (y = 0; y < MAX_ELEMENTS; y++)
+        {
+            streamer->elems[x][y] = 0;
+        }
     }
 
     STREAMER_FUNC_EXIT(DBG_CORE);
@@ -756,7 +769,7 @@ int32_t streamer_seek_pipeline(STREAMER_T *streamer, int32_t pipeline_id, int32_
     return streamer_handle_msg(streamer, &msg, block);
 }
 
-int32_t streamer_set_property(STREAMER_T *streamer, ELEMENT_PROPERTY_T prop, bool block)
+int32_t streamer_set_property(STREAMER_T *streamer, int8_t pipeline_id, ELEMENT_PROPERTY_T prop, bool block)
 {
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -770,12 +783,13 @@ int32_t streamer_set_property(STREAMER_T *streamer, ELEMENT_PROPERTY_T prop, boo
     msg.id                    = STREAM_MSG_SET_PROPERTY;
     msg.element_property.val  = prop.val;
     msg.element_property.prop = prop.prop;
+    msg.pipeline_index        = pipeline_id;
 
     STREAMER_FUNC_EXIT(DBG_CORE);
     return streamer_handle_msg(streamer, &msg, block);
 }
 
-int32_t streamer_get_property(STREAMER_T *streamer, uint16_t prop, uint32_t *val_ptr, bool block)
+int32_t streamer_get_property(STREAMER_T *streamer, int8_t pipeline_id, uint16_t prop, uint32_t *val_ptr, bool block)
 {
     int32_t ret        = ERRCODE_NO_ERROR;
     STREAMER_MSG_T msg = {0};
@@ -791,6 +805,7 @@ int32_t streamer_get_property(STREAMER_T *streamer, uint16_t prop, uint32_t *val
     msg.id                    = STREAM_MSG_GET_PROPERTY;
     msg.element_property.prop = prop;
     msg.get_value             = val_ptr;
+    msg.pipeline_index        = pipeline_id;
 
     if (block)
     {

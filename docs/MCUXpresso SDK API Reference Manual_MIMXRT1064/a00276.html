@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPSPI FreeRTOS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: DMAMUX: Direct Memory Access Multiplexer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,36 +99,60 @@ $(document).ready(function(){initNavTree('a00276.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LPSPI FreeRTOS Driver<div class="ingroups"><a class="el" href="a00275.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
+<div class="title">DMAMUX: Direct Memory Access Multiplexer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Direct Memory Access Multiplexer (DMAMUX) of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="DMAMUXTypicalUseCase"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="DMAMUXOper"></a>
+DMAMUX Operation</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmamux </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaf5602bf29f89af865ebea200ff535f98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gaf5602bf29f89af865ebea200ff535f98">FSL_LPSPI_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
-<tr class="memdesc:gaf5602bf29f89af865ebea200ff535f98"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI FreeRTOS driver version 2.3.1.  <a href="#gaf5602bf29f89af865ebea200ff535f98">More...</a><br/></td></tr>
-<tr class="separator:gaf5602bf29f89af865ebea200ff535f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga52b927e4f978ddf42faf0acf6de3df57">FSL_DMAMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
+<tr class="memdesc:ga52b927e4f978ddf42faf0acf6de3df57"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMAMUX driver version 2.1.0.  <a href="#ga52b927e4f978ddf42faf0acf6de3df57">More...</a><br/></td></tr>
+<tr class="separator:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-LPSPI RTOS Operation</h2></td></tr>
-<tr class="memitem:ga17e5f827d714b4bba86af6ce5b9e8119"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga17e5f827d714b4bba86af6ce5b9e8119">LPSPI_RTOS_Init</a> (lpspi_rtos_handle_t *handle, LPSPI_Type *base, const <a class="el" href="a00047.html#a00433">lpspi_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
-<tr class="memdesc:ga17e5f827d714b4bba86af6ce5b9e8119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes LPSPI.  <a href="#ga17e5f827d714b4bba86af6ce5b9e8119">More...</a><br/></td></tr>
-<tr class="separator:ga17e5f827d714b4bba86af6ce5b9e8119"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadac220234f10116e78dd6ce341c4377c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gadac220234f10116e78dd6ce341c4377c">LPSPI_RTOS_Deinit</a> (lpspi_rtos_handle_t *handle)</td></tr>
-<tr class="memdesc:gadac220234f10116e78dd6ce341c4377c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the LPSPI.  <a href="#gadac220234f10116e78dd6ce341c4377c">More...</a><br/></td></tr>
-<tr class="separator:gadac220234f10116e78dd6ce341c4377c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1bc18b3a105852cfcea1f5fc97ef0d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gad1bc18b3a105852cfcea1f5fc97ef0d8">LPSPI_RTOS_Transfer</a> (lpspi_rtos_handle_t *handle, <a class="el" href="a00047.html#a00435">lpspi_transfer_t</a> *transfer)</td></tr>
-<tr class="memdesc:gad1bc18b3a105852cfcea1f5fc97ef0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs SPI transfer.  <a href="#gad1bc18b3a105852cfcea1f5fc97ef0d8">More...</a><br/></td></tr>
-<tr class="separator:gad1bc18b3a105852cfcea1f5fc97ef0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+DMAMUX Initialization and de-initialization</h2></td></tr>
+<tr class="memitem:ga850545ac61a004df8ca312db2ca9db73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a> (DMAMUX_Type *base)</td></tr>
+<tr class="memdesc:ga850545ac61a004df8ca312db2ca9db73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DMAMUX peripheral.  <a href="#ga850545ac61a004df8ca312db2ca9db73">More...</a><br/></td></tr>
+<tr class="separator:ga850545ac61a004df8ca312db2ca9db73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gab663257d094b9b7b6fa1b894fbf8000b">DMAMUX_Deinit</a> (DMAMUX_Type *base)</td></tr>
+<tr class="memdesc:gab663257d094b9b7b6fa1b894fbf8000b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the DMAMUX peripheral.  <a href="#gab663257d094b9b7b6fa1b894fbf8000b">More...</a><br/></td></tr>
+<tr class="separator:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+DMAMUX Channel Operation</h2></td></tr>
+<tr class="memitem:gaecac68802d961c31a06389caa97387f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:gaecac68802d961c31a06389caa97387f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX channel.  <a href="#gaecac68802d961c31a06389caa97387f5">More...</a><br/></td></tr>
+<tr class="separator:gaecac68802d961c31a06389caa97387f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga4d68cf7796e4a6a9cd0c4289712ca120">DMAMUX_DisableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX channel.  <a href="#ga4d68cf7796e4a6a9cd0c4289712ca120">More...</a><br/></td></tr>
+<tr class="separator:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4cfa329d636dc52dffb7fedef84367e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#gab4cfa329d636dc52dffb7fedef84367e">DMAMUX_SetSource</a> (DMAMUX_Type *base, uint32_t channel, int32_t source)</td></tr>
+<tr class="memdesc:gab4cfa329d636dc52dffb7fedef84367e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the DMAMUX channel source.  <a href="#gab4cfa329d636dc52dffb7fedef84367e">More...</a><br/></td></tr>
+<tr class="separator:gab4cfa329d636dc52dffb7fedef84367e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b873510e45bcc998b5cede12ed359d0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga9b873510e45bcc998b5cede12ed359d0">DMAMUX_EnablePeriodTrigger</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:ga9b873510e45bcc998b5cede12ed359d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX period trigger.  <a href="#ga9b873510e45bcc998b5cede12ed359d0">More...</a><br/></td></tr>
+<tr class="separator:ga9b873510e45bcc998b5cede12ed359d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga7a632ca1a6bd05a936a4f4ba1295e158">DMAMUX_DisablePeriodTrigger</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX period trigger.  <a href="#ga7a632ca1a6bd05a936a4f4ba1295e158">More...</a><br/></td></tr>
+<tr class="separator:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70912895b0619dcfb911663501cb03f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html#ga70912895b0619dcfb911663501cb03f5">DMAMUX_EnableAlwaysOn</a> (DMAMUX_Type *base, uint32_t channel, bool enable)</td></tr>
+<tr class="memdesc:ga70912895b0619dcfb911663501cb03f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMA channel to be always ON.  <a href="#ga70912895b0619dcfb911663501cb03f5">More...</a><br/></td></tr>
+<tr class="separator:ga70912895b0619dcfb911663501cb03f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaf5602bf29f89af865ebea200ff535f98"></a>
+<a class="anchor" id="ga52b927e4f978ddf42faf0acf6de3df57"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPSPI_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00263.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
+          <td class="memname">#define FSL_DMAMUX_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -136,33 +160,112 @@ LPSPI RTOS Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga17e5f827d714b4bba86af6ce5b9e8119"></a>
+<a class="anchor" id="ga850545ac61a004df8ca312db2ca9db73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_RTOS_Init </td>
+          <td class="memname">void DMAMUX_Init </td>
           <td>(</td>
-          <td class="paramtype">lpspi_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">LPSPI_Type *&#160;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function ungates the DMAMUX clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab663257d094b9b7b6fa1b894fbf8000b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMAMUX_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gates the DMAMUX clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaecac68802d961c31a06389caa97387f5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMAMUX_EnableChannel </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00047.html#a00433">lpspi_master_config_t</a> *&#160;</td>
-          <td class="paramname"><em>masterConfig</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function enables the DMAMUX channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4d68cf7796e4a6a9cd0c4289712ca120"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMAMUX_DisableChannel </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -170,59 +273,48 @@ LPSPI RTOS Operation</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function initializes the LPSPI module and related RTOS context.</p>
+<p>This function disables the DMAMUX channel.</p>
+<dl class="section note"><dt>Note</dt><dd>The user must disable the DMAMUX channel before configuring it. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPSPI handle, the pointer to an allocated space for RTOS context. </td></tr>
-    <tr><td class="paramname">base</td><td>The pointer base address of the LPSPI instance to initialize. </td></tr>
-    <tr><td class="paramname">masterConfig</td><td>Configuration structure to set-up LPSPI in master mode. </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>Frequency of input clock of the LPSPI module. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gadac220234f10116e78dd6ce341c4377c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_RTOS_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">lpspi_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the LPSPI module and related RTOS context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPSPI handle. </td></tr>
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gad1bc18b3a105852cfcea1f5fc97ef0d8"></a>
+<a class="anchor" id="gab4cfa329d636dc52dffb7fedef84367e"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00263.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_RTOS_Transfer </td>
+          <td class="memname">static void DMAMUX_SetSource </td>
           <td>(</td>
-          <td class="paramtype">lpspi_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00047.html#a00435">lpspi_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>transfer</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -230,16 +322,153 @@ LPSPI RTOS Operation</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function performs an SPI transfer according to data given in the transfer structure.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPSPI handle. </td></tr>
-    <tr><td class="paramname">transfer</td><td>Structure specifying the transfer parameters. </td></tr>
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+    <tr><td class="paramname">source</td><td>Channel source, which is used to trigger the DMA transfer.User need to use the dma_request_source_t type as the input parameter. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9b873510e45bcc998b5cede12ed359d0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMAMUX_EnablePeriodTrigger </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function enables the DMAMUX period trigger feature.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7a632ca1a6bd05a936a4f4ba1295e158"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMAMUX_DisablePeriodTrigger </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function disables the DMAMUX period trigger.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga70912895b0619dcfb911663501cb03f5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMAMUX_EnableAlwaysOn </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function enables the DMAMUX channel always ON feature.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+    <tr><td class="paramname">enable</td><td>Switcher of the always ON feature. "true" means enabled, "false" means disabled. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

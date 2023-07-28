@@ -424,6 +424,12 @@ void hci_uart_bt_init(void)
 {
     hal_uart_config_t config;
     hal_uart_status_t ret;
+#if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
+    hal_uart_dma_status_t status;
+#else
+    hal_uart_status_t status;
+#endif /*defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)*/
+
 #if HCI_UART_TX_NONBLOCKING || ((defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)))
     INT32 retVal;
 #endif
@@ -508,12 +514,12 @@ void hci_uart_bt_init(void)
 #endif
 
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
-    ret = (hal_uart_status_t)HAL_UartDMATransferInstallCallback( (hal_uart_handle_t)hci_uart_handle,
+    status = HAL_UartDMATransferInstallCallback( (hal_uart_handle_t)hci_uart_handle,
                                                      hci_uartdma_transmit_cb,
                                                      NULL);
 #else
     /* Install the UART TX-RX Callback */
-    ret = HAL_UartInstallCallback
+    status = HAL_UartInstallCallback
           (
               (hal_uart_handle_t)hci_uart_handle,
               hci_uart_transmit_cb,
@@ -521,7 +527,11 @@ void hci_uart_bt_init(void)
           );
 #endif
     /* Check if Assert or Log and return? */
-    if (ret != kStatus_HAL_UartSuccess)
+#if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
+    if (status != kStatus_HAL_UartDmaSuccess)
+#else
+    if (status != kStatus_HAL_UartSuccess)
+#endif /*defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)*/
     {
         HCI_UART_ERR("Failed to Register UART Rx-Tx Callback!\r\n");
 
@@ -546,22 +556,28 @@ void hci_uart_bt_init(void)
     /* Initialize the UART RX DS to be used in the Platform API */
     hci_uart_rx.data     = &hci_uart_rx_data_buff[hci_uart_rx_bytes];
     hci_uart_rx.dataSize = ht.packet_expected_len;
+
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
-        ret = (hal_uart_status_t)HAL_UartDMATransferReceive
+    status = HAL_UartDMATransferReceive
           (
               (hal_uart_handle_t)hci_uart_handle,
               hci_uart_rx.data,
               hci_uart_rx.dataSize, true
           );
 #else
-    ret = HAL_UartReceiveNonBlocking
+    status = HAL_UartReceiveNonBlocking
           (
               (hal_uart_handle_t)hci_uart_handle,
               hci_uart_rx.data,
               hci_uart_rx.dataSize
           );
 #endif
-    if (ret != kStatus_HAL_UartSuccess)
+
+#if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
+    if (status != kStatus_HAL_UartDmaSuccess)
+#else
+    if (status != kStatus_HAL_UartSuccess)
+#endif /*defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)*/
     {
         HCI_UART_ERR(
         "[HCI-UART] First UART Receive Non-Blocking Failed for Inst: %d\n",
@@ -608,6 +624,11 @@ void hci_uart_bt_init(void)
 void hci_uart_bt_shutdown (void)
 {
     hal_uart_status_t ret;
+#if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
+    hal_uart_dma_status_t status;
+#else
+    hal_uart_status_t status;
+#endif /*defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)*/
 
 #if HCI_UART_TX_NONBLOCKING || ((defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)))
     /* Lock */
@@ -618,8 +639,16 @@ void hci_uart_bt_shutdown (void)
 
     hci_uart_state = 0x0U;
 
-    ret = HAL_UartAbortReceive((hal_uart_handle_t)hci_uart_handle);
-    if (ret != kStatus_HAL_UartSuccess)
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    status = HAL_UartDMAAbortReceive((hal_uart_handle_t)hci_uart_handle);
+#else
+    status = HAL_UartAbortReceive((hal_uart_handle_t)hci_uart_handle);
+#endif
+#if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
+    if (status != kStatus_HAL_UartDmaSuccess)
+#else
+    if (status != kStatus_HAL_UartSuccess)
+#endif /*defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)*/
     {
         HCI_UART_ERR(
         "[HCI-UART] UART Abort Receive Failed for UART Instance: %d\n",
@@ -631,8 +660,16 @@ void hci_uart_bt_shutdown (void)
         }
     }
 
-    ret = HAL_UartAbortSend((hal_uart_handle_t)hci_uart_handle);
-    if (ret != kStatus_HAL_UartSuccess)
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    status = HAL_UartDMAAbortSend((hal_uart_handle_t)hci_uart_handle);
+#else
+    status = HAL_UartAbortSend((hal_uart_handle_t)hci_uart_handle);
+#endif
+#if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
+    if (status != kStatus_HAL_UartDmaSuccess)
+#else
+    if (status != kStatus_HAL_UartSuccess)
+#endif /*defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)*/
     {
         HCI_UART_ERR(
         "[HCI-UART] UART Abort Send Failed for UART Instance: %d\n",
@@ -643,6 +680,22 @@ void hci_uart_bt_shutdown (void)
         {
         }
     }
+
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    status = HAL_UartDMADeinit((hal_uart_handle_t)hci_uart_handle);
+    if (status != kStatus_HAL_UartDmaSuccess)
+    {
+        HCI_UART_ERR(
+        "[HCI-UART] UART De-Init Failed for UART Instance: %d\n",
+        hci_uart_instance);
+
+        /* TODO: To Be Removed! */
+        while (true)
+        {
+        }
+    }
+#else
+#endif
 
     ret = HAL_UartDeinit((hal_uart_handle_t)hci_uart_handle);
     if (ret != kStatus_HAL_UartSuccess)

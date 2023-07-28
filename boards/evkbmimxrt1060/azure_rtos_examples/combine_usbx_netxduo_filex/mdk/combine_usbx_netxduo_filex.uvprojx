@@ -10,7 +10,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6B, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>../usbx_device_controllers;..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -347,7 +347,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -365,93 +365,13 @@
             <ScatterFile>MIMXRT1062xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_dcd_nxp_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_function.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
@@ -548,32 +468,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
-          <Files>
-            <File>
-              <FileName>nx_driver_imxrt_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt_irq.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../nx_driver_imxrt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/ports</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_driver_imxrt_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -671,16 +591,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_threadx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
@@ -699,6 +609,31 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source/ehci</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -738,21 +673,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/ehci</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb/phy</GroupName>
           <Files>
             <File>
@@ -764,6 +684,86 @@
               <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
+          <Files>
+            <File>
+              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_function.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -851,6 +851,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -864,16 +874,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1159,21 +1159,6 @@
               <FileName>ux_host_class_video.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/usbx/common/usbx_host_controllers/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_hcd_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1654,6 +1639,21 @@
               <FileName>nx_web_http_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/websocket</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_websocket_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_websocket_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2203,6 +2203,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2242,26 +2262,6 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
       </Groups>
     </Target>
     <Target>
@@ -2271,7 +2271,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -2590,9 +2590,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6B, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>../usbx_device_controllers;..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2608,7 +2608,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -2626,93 +2626,13 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_dcd_nxp_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_function.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
@@ -2809,32 +2729,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
-          <Files>
-            <File>
-              <FileName>nx_driver_imxrt_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt_irq.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../nx_driver_imxrt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/ports</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_driver_imxrt_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2932,16 +2852,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_threadx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
@@ -2960,6 +2870,31 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source/ehci</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2999,21 +2934,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/ehci</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb/phy</GroupName>
           <Files>
             <File>
@@ -3025,6 +2945,86 @@
               <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
+          <Files>
+            <File>
+              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_function.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3112,6 +3112,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3125,16 +3135,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3420,21 +3420,6 @@
               <FileName>ux_host_class_video.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/usbx/common/usbx_host_controllers/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_hcd_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3915,6 +3900,21 @@
               <FileName>nx_web_http_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/websocket</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_websocket_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_websocket_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4464,6 +4464,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -4503,26 +4523,6 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
       </Groups>
     </Target>
     <Target>
@@ -4532,7 +4532,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -4851,9 +4851,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6B, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>../usbx_device_controllers;..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4869,7 +4869,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -4887,93 +4887,13 @@
             <ScatterFile>MIMXRT1062xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_dcd_nxp_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_function.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
@@ -5070,32 +4990,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
-          <Files>
-            <File>
-              <FileName>nx_driver_imxrt_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt_irq.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../nx_driver_imxrt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/ports</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_driver_imxrt_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5193,16 +5113,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_threadx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
@@ -5221,6 +5131,31 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source/ehci</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5260,21 +5195,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/ehci</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb/phy</GroupName>
           <Files>
             <File>
@@ -5286,6 +5206,86 @@
               <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
+          <Files>
+            <File>
+              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_function.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5373,6 +5373,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -5386,16 +5396,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5681,21 +5681,6 @@
               <FileName>ux_host_class_video.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/usbx/common/usbx_host_controllers/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_hcd_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6176,6 +6161,21 @@
               <FileName>nx_web_http_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/websocket</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_websocket_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_websocket_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6725,6 +6725,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -6764,26 +6784,6 @@
             </File>
           </Files>
         </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
       </Groups>
     </Target>
     <Target>
@@ -6793,7 +6793,7 @@
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>MIMXRT1062DVL6A</Device>
+          <Device>MIMXRT1062DVL6B</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1062_DFP.2.3.1</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
@@ -7112,9 +7112,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6B, MIMXRT, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, DATA_SECTION_IS_CACHEABLE=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>../usbx_device_controllers;..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../components/phy</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7130,7 +7130,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -7148,93 +7148,13 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/usbx/cortex_m7/mdk/libusbx.lib ../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/mdk/libnetxduo.lib ../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_dcd_nxp_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_function.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>board</GroupName>
           <Files>
@@ -7331,32 +7251,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
-          <Files>
-            <File>
-              <FileName>nx_driver_imxrt_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt_irq.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../nx_driver_imxrt.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_driver_imxrt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../nx_driver_imxrt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/ports</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_driver_imxrt_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_driver_imxrt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/ports/netxduo/nx_driver_imxrt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7454,16 +7374,6 @@
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_threadx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
@@ -7482,6 +7392,31 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source/ehci</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7521,21 +7456,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/ehci</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb/phy</GroupName>
           <Files>
             <File>
@@ -7547,6 +7467,86 @@
               <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/usbx/usbx_device_controllers</GroupName>
+          <Files>
+            <File>
+              <FileName>ux_dcd_nxp_dci_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_control_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_stall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_endpoint_status.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_function.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_function.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_initialize_complete.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_callback.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_transfer_request.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci_uninitialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_nxp_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/usbx_device_controllers/ux_dcd_nxp_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7634,6 +7634,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -7647,16 +7657,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7942,21 +7942,6 @@
               <FileName>ux_host_class_video.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/usbx/common/usbx_host_controllers/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_hcd_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8437,6 +8422,21 @@
               <FileName>nx_web_http_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/websocket</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_websocket_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_websocket_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/websocket/nx_websocket_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8986,6 +8986,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -9022,26 +9042,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>

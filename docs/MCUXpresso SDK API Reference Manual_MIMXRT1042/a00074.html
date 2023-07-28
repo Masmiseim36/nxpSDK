@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Secure Non-Volatile Storage Low-Power</title>
+<title>MCUXpresso SDK API Reference Manual: Shell</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,298 +101,229 @@ $(document).ready(function(){initNavTree('a00074.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Secure Non-Volatile Storage Low-Power<div class="ingroups"><a class="el" href="a00283.html">SNVS: Secure Non-Volatile Storage</a></div></div>  </div>
+<div class="title">Shell</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Secure Non-Volatile Storage Low-Power (SNVS-LP) module.<br/>
- <br/>
-The SNVS_LP is a data storage subsystem. Its purpose is to store and protect system data, regardless of the main system power state. The SNVS _LP is in the always-powered-up domain, which is a separate power domain with its own power supply. <br/>
-</p>
-<table class="memberdecls">
+<p>This section describes the programming interface of the Shell middleware.</p>
+<p>Shell controls MCUs by commands via the specified communication peripheral based on the debug console driver.</p>
+<h1><a class="anchor" id="ShellFunGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="ShellInit"></a>
+Initialization</h2>
+<p>To initialize the Shell middleware, call the <span style="color:red"><a class="el" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a></span> function with these parameters. This function automatically enables the middleware.</p>
+<div class="fragment"><div class="line"><a class="code" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> <a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(<a class="code" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <span class="keywordtype">char</span> *prompt);</div>
+</div><!-- fragment --><p>Then, after the initialization was successful, call a command to control MCUs.</p>
+<p>This example shows how to call the <a class="el" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a> given the user configuration structure.</p>
+<div class="fragment"><div class="line"><a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="ShellAdvFeature"></a>
+Advanced Feature</h2>
+<ul>
+<li>Support to get a character from standard input devices. <div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_GetChar(shell_context_handle_t *shellContextHandle, uint8_t *ch);</div>
+</div><!-- fragment --></li>
+</ul>
+<div style="width:800px;"> <table class="doxtable">
+<tr>
+<th>Commands  </th><th>Description  </th></tr>
+<tr>
+<td>help  </td><td>List all the registered commands.   </td></tr>
+<tr>
+<td>exit  </td><td>Exit program.   </td></tr>
+</table>
+</div><h2><a class="anchor" id="SHELLOper"></a>
+Shell Operation</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
+<div class="line"><a class="code" href="a00074.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a>((s_shellHandle);</div>
+</div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00516"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00516">snvs_lp_passive_tamper_t</a></td></tr>
-<tr class="memdesc:a00516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to configure SNVS LP passive tamper pins.  <a href="a00074.html#a00516">More...</a><br/></td></tr>
-<tr class="separator:a00516"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00518"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a></td></tr>
-<tr class="memdesc:a00518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to hold the date and time.  <a href="a00074.html#a00518">More...</a><br/></td></tr>
-<tr class="separator:a00518"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00517"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00517">snvs_lp_srtc_config_t</a></td></tr>
-<tr class="memdesc:a00517"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP config structure.  <a href="a00074.html#a00517">More...</a><br/></td></tr>
-<tr class="separator:a00517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00524"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a00524">shell_command_t</a></td></tr>
+<tr class="memdesc:a00524"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="a00074.html#a00524">More...</a><br/></td></tr>
+<tr class="separator:a00524"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0eb6096d8a29431a527f42d2207df7bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0eb6096d8a29431a527f42d2207df7bd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga0eb6096d8a29431a527f42d2207df7bd">SNVS_ZMK_REG_COUNT</a>&#160;&#160;&#160;8U /* 8 Zeroizable Master Key registers. */</td></tr>
-<tr class="memdesc:ga0eb6096d8a29431a527f42d2207df7bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define of SNVS_LP Zeroizable Master Key registers. <br/></td></tr>
-<tr class="separator:ga0eb6096d8a29431a527f42d2207df7bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e9e92e31bccf270bf2355cc6e80041a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5e9e92e31bccf270bf2355cc6e80041a">SNVS_LP_MAX_TAMPER</a>&#160;&#160;&#160;kSNVS_ExternalTamper1</td></tr>
-<tr class="memdesc:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define of SNVS_LP Max possible tamper. <br/></td></tr>
-<tr class="separator:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">SHELL_NON_BLOCKING_MODE</a>&#160;&#160;&#160;<a class="el" href="a00070.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td></tr>
+<tr class="memdesc:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether use non-blocking mode.  <a href="#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">More...</a><br/></td></tr>
+<tr class="separator:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga30882f4b5fc99cbc21459cc960ef9ffe">SHELL_AUTO_COMPLETE</a>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="memdesc:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set on/off auto-complete feature.  <a href="#ga30882f4b5fc99cbc21459cc960ef9ffe">More...</a><br/></td></tr>
+<tr class="separator:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf98219b0fb886040896b83966903a135"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a>&#160;&#160;&#160;(64U)</td></tr>
+<tr class="memdesc:gaf98219b0fb886040896b83966903a135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set console buffer size.  <a href="#gaf98219b0fb886040896b83966903a135">More...</a><br/></td></tr>
+<tr class="separator:gaf98219b0fb886040896b83966903a135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga0800d9fb741c785d0601f0c3d7125f40">SHELL_MAX_ARGS</a>&#160;&#160;&#160;(8U)</td></tr>
+<tr class="memdesc:ga0800d9fb741c785d0601f0c3d7125f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum arguments in command.  <a href="#ga0800d9fb741c785d0601f0c3d7125f40">More...</a><br/></td></tr>
+<tr class="separator:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4362aa35752c9abf77387a237faaaea5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="memdesc:ga4362aa35752c9abf77387a237faaaea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum count of history commands.  <a href="#ga4362aa35752c9abf77387a237faaaea5">More...</a><br/></td></tr>
+<tr class="separator:ga4362aa35752c9abf77387a237faaaea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c32b818330b7a6b62a5b819703e5e8f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga8c32b818330b7a6b62a5b819703e5e8f">SHELL_IGNORE_PARAMETER_COUNT</a>&#160;&#160;&#160;(0xFF)</td></tr>
+<tr class="memdesc:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to bypass arguments check. <br/></td></tr>
+<tr class="separator:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a></td></tr>
+<tr class="memdesc:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle size of the shell module.  <a href="#gaa4c15d7595f7cf7ee5f837a02cbdf574">More...</a><br/></td></tr>
+<tr class="separator:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga100ef8e4a639c03682d84fb981ba235b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga100ef8e4a639c03682d84fb981ba235b">SHELL_USE_COMMON_TASK</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga100ef8e4a639c03682d84fb981ba235b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to determine whether use common task.  <a href="#ga100ef8e4a639c03682d84fb981ba235b">More...</a><br/></td></tr>
+<tr class="separator:ga100ef8e4a639c03682d84fb981ba235b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5b98f71ea7bd89ef344cac14aa79a1e3">SHELL_TASK_PRIORITY</a>&#160;&#160;&#160;(2U)</td></tr>
+<tr class="memdesc:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task priority.  <a href="#ga5b98f71ea7bd89ef344cac14aa79a1e3">More...</a><br/></td></tr>
+<tr class="separator:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga416667c8e6b960d2c1ec518b41a06d62">SHELL_TASK_STACK_SIZE</a>&#160;&#160;&#160;(1000U)</td></tr>
+<tr class="memdesc:ga416667c8e6b960d2c1ec518b41a06d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task stack size.  <a href="#ga416667c8e6b960d2c1ec518b41a06d62">More...</a><br/></td></tr>
+<tr class="separator:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
+<tr class="memdesc:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell handle.  <a href="#gafdb2c68b2d83d459fc196ab0f58d7ab3">More...</a><br/></td></tr>
+<tr class="separator:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(command, descriptor, callback, paramCount)</td></tr>
+<tr class="memdesc:gacd1f7ee25cd791efee6a45e753ec9824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell command structure.  <a href="#gacd1f7ee25cd791efee6a45e753ec9824">More...</a><br/></td></tr>
+<tr class="separator:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(command)&#160;&#160;&#160;&amp;g_shellCommand##command</td></tr>
+<tr class="memdesc:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the shell command pointer.  <a href="#ga16dd6cfbd9db7dafdaa802eda58564b5">More...</a><br/></td></tr>
+<tr class="separator:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga818c3ca274bd83d1dc870a5618eb21f2"></a>
+typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a></td></tr>
+<tr class="memdesc:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle of the shell module. <br/></td></tr>
+<tr class="separator:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> )(<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td></tr>
+<tr class="memdesc:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command function prototype.  <a href="#ga7ace1ddfb1e83ac1516ac44be90cf822">More...</a><br/></td></tr>
+<tr class="separator:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga806041c275061b615faf70ee97505a00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga806041c275061b615faf70ee97505a00">snvs_lp_srtc_interrupts_t</a> { <a class="el" href="a00074.html#gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515">kSNVS_SRTC_AlarmInterrupt</a> = SNVS_LPCR_LPTA_EN_MASK
- }</td></tr>
-<tr class="memdesc:ga806041c275061b615faf70ee97505a00"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP interrupts.  <a href="a00074.html#ga806041c275061b615faf70ee97505a00">More...</a><br/></td></tr>
-<tr class="separator:ga806041c275061b615faf70ee97505a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gadcecf6b4fd6c8c56133821ebbd2df9de">snvs_lp_srtc_status_flags_t</a> { <a class="el" href="a00074.html#ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1">kSNVS_SRTC_AlarmInterruptFlag</a> = SNVS_LPSR_LPTA_MASK
- }</td></tr>
-<tr class="memdesc:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP flags.  <a href="a00074.html#gadcecf6b4fd6c8c56133821ebbd2df9de">More...</a><br/></td></tr>
-<tr class="separator:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga123f0196672467755ef8b828db230b24"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga123f0196672467755ef8b828db230b24">snvs_lp_external_tamper_status_t</a> </td></tr>
-<tr class="memdesc:ga123f0196672467755ef8b828db230b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP external tampers status. <br/></td></tr>
-<tr class="separator:ga123f0196672467755ef8b828db230b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5f4aea285aec7abf629056ef0eb3163"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gae5f4aea285aec7abf629056ef0eb3163">snvs_lp_external_tamper_polarity_t</a> </td></tr>
-<tr class="memdesc:gae5f4aea285aec7abf629056ef0eb3163"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP external tamper polarity. <br/></td></tr>
-<tr class="separator:gae5f4aea285aec7abf629056ef0eb3163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae44e3f9132afa438f0bfd6233928355f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614">kSNVS_ZMKSoftwareProgram</a>, 
+<tr class="memitem:ga16424f17c6492c580e65adf9a4e1ac61"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e">kStatus_SHELL_Success</a> = kStatus_Success, 
 <br/>
-&#160;&#160;<a class="el" href="a00074.html#ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f">kSNVS_ZMKHardwareProgram</a>
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9">kStatus_SHELL_Error</a> = MAKE_STATUS(kStatusGroup_SHELL, 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b">kStatus_SHELL_OpenWriteHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 2), 
+<br/>
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8">kStatus_SHELL_OpenReadHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 3), 
+<br/>
+&#160;&#160;<a class="el" href="a00074.html#gga16424f17c6492c580e65adf9a4e1ac61ad139f389943f49d948bbff024d6c5a26">kStatus_SHELL_RetUsage</a> = MAKE_STATUS(kStatusGroup_SHELL, 4)
 <br/>
  }</td></tr>
-<tr class="memdesc:gae44e3f9132afa438f0bfd6233928355f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Zeroizable Master Key programming mode.  <a href="a00074.html#gae44e3f9132afa438f0bfd6233928355f">More...</a><br/></td></tr>
-<tr class="separator:gae44e3f9132afa438f0bfd6233928355f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00074.html#gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62">kSNVS_OTPMK</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> = 2, 
-<br/>
-&#160;&#160;<a class="el" href="a00074.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> = 3
-<br/>
- }</td></tr>
-<tr class="memdesc:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Master Key mode.  <a href="a00074.html#ga10b65b574393c82d6b6f3e5033c55d7b">More...</a><br/></td></tr>
-<tr class="separator:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad2bc4630c869c62dcaee50c1bcd0897e">SNVS_LP_SRTC_Init</a> (SNVS_Type *base, const <a class="el" href="a00074.html#a00517">snvs_lp_srtc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the SNVS clock and configures the peripheral for basic operation.  <a href="#gad2bc4630c869c62dcaee50c1bcd0897e">More...</a><br/></td></tr>
-<tr class="separator:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d3d092911324c7436c84516a3cc53ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5d3d092911324c7436c84516a3cc53ab">SNVS_LP_SRTC_Deinit</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga5d3d092911324c7436c84516a3cc53ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the SRTC timer.  <a href="#ga5d3d092911324c7436c84516a3cc53ab">More...</a><br/></td></tr>
-<tr class="separator:ga5d3d092911324c7436c84516a3cc53ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gab52bbf92230eca2bcfc590ad5733d6aa">SNVS_LP_SRTC_GetDefaultConfig</a> (<a class="el" href="a00074.html#a00517">snvs_lp_srtc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SNVS_LP config struct with the default settings.  <a href="#gab52bbf92230eca2bcfc590ad5733d6aa">More...</a><br/></td></tr>
-<tr class="separator:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga16424f17c6492c580e65adf9a4e1ac61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shell status.  <a href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">More...</a><br/></td></tr>
+<tr class="separator:ga16424f17c6492c580e65adf9a4e1ac61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:gac5e0fc5d0c368b596733f3d40b212366"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac5e0fc5d0c368b596733f3d40b212366"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gac5e0fc5d0c368b596733f3d40b212366">FSL_SNVS_LP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 4))</td></tr>
-<tr class="memdesc:gac5e0fc5d0c368b596733f3d40b212366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.4.4. <br/></td></tr>
-<tr class="separator:gac5e0fc5d0c368b596733f3d40b212366"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga742e45feb782fa6b454e20f405d1f3d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga742e45feb782fa6b454e20f405d1f3d9">SNVS_LP_Init</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga742e45feb782fa6b454e20f405d1f3d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the SNVS clock and configures the peripheral for basic operation.  <a href="#ga742e45feb782fa6b454e20f405d1f3d9">More...</a><br/></td></tr>
-<tr class="separator:ga742e45feb782fa6b454e20f405d1f3d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6184db24094f481adb2fa4511fdaa6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaf6184db24094f481adb2fa4511fdaa6a">SNVS_LP_Deinit</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:gaf6184db24094f481adb2fa4511fdaa6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinit the SNVS LP section.  <a href="#gaf6184db24094f481adb2fa4511fdaa6a">More...</a><br/></td></tr>
-<tr class="separator:gaf6184db24094f481adb2fa4511fdaa6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Secure RTC (SRTC) current Time &amp; Alarm</h2></td></tr>
-<tr class="memitem:ga3c35b4b1671c53939c335097411b6e7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga3c35b4b1671c53939c335097411b6e7d">SNVS_LP_SRTC_SetDatetime</a> (SNVS_Type *base, const <a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
-<tr class="memdesc:ga3c35b4b1671c53939c335097411b6e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS SRTC date and time according to the given time structure.  <a href="#ga3c35b4b1671c53939c335097411b6e7d">More...</a><br/></td></tr>
-<tr class="separator:ga3c35b4b1671c53939c335097411b6e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaf65b902de3d06aa9940686ae86b7f8fd">SNVS_LP_SRTC_GetDatetime</a> (SNVS_Type *base, <a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
-<tr class="memdesc:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SNVS SRTC time and stores it in the given time structure.  <a href="#gaf65b902de3d06aa9940686ae86b7f8fd">More...</a><br/></td></tr>
-<tr class="separator:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb419ef8b369945b4858abcb76e36462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gadb419ef8b369945b4858abcb76e36462">SNVS_LP_SRTC_SetAlarm</a> (SNVS_Type *base, const <a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *alarmTime)</td></tr>
-<tr class="memdesc:gadb419ef8b369945b4858abcb76e36462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS SRTC alarm time.  <a href="#gadb419ef8b369945b4858abcb76e36462">More...</a><br/></td></tr>
-<tr class="separator:gadb419ef8b369945b4858abcb76e36462"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9120c6c286567d4144763b875725ac3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gab9120c6c286567d4144763b875725ac3">SNVS_LP_SRTC_GetAlarm</a> (SNVS_Type *base, <a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
-<tr class="memdesc:gab9120c6c286567d4144763b875725ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the SNVS SRTC alarm time.  <a href="#gab9120c6c286567d4144763b875725ac3">More...</a><br/></td></tr>
-<tr class="separator:gab9120c6c286567d4144763b875725ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupt Interface</h2></td></tr>
-<tr class="memitem:gabff8182f0b6daa2a2bbafcaab0caf582"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gabff8182f0b6daa2a2bbafcaab0caf582">SNVS_LP_SRTC_EnableInterrupts</a> (SNVS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gabff8182f0b6daa2a2bbafcaab0caf582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected SNVS interrupts.  <a href="#gabff8182f0b6daa2a2bbafcaab0caf582">More...</a><br/></td></tr>
-<tr class="separator:gabff8182f0b6daa2a2bbafcaab0caf582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecc4336193810a19ed278327f1d9b320"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaecc4336193810a19ed278327f1d9b320">SNVS_LP_SRTC_DisableInterrupts</a> (SNVS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaecc4336193810a19ed278327f1d9b320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected SNVS interrupts.  <a href="#gaecc4336193810a19ed278327f1d9b320">More...</a><br/></td></tr>
-<tr class="separator:gaecc4336193810a19ed278327f1d9b320"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada2c47f87ffb9ff6eaeabe62796627bd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gada2c47f87ffb9ff6eaeabe62796627bd">SNVS_LP_SRTC_GetEnabledInterrupts</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:gada2c47f87ffb9ff6eaeabe62796627bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled SNVS interrupts.  <a href="#gada2c47f87ffb9ff6eaeabe62796627bd">More...</a><br/></td></tr>
-<tr class="separator:gada2c47f87ffb9ff6eaeabe62796627bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status Interface</h2></td></tr>
-<tr class="memitem:ga8d98bd36bcee5f9639346172eba5294b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga8d98bd36bcee5f9639346172eba5294b">SNVS_LP_SRTC_GetStatusFlags</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga8d98bd36bcee5f9639346172eba5294b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SNVS status flags.  <a href="#ga8d98bd36bcee5f9639346172eba5294b">More...</a><br/></td></tr>
-<tr class="separator:ga8d98bd36bcee5f9639346172eba5294b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b35224486431ebc7dd76707e5ab2c84"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga4b35224486431ebc7dd76707e5ab2c84">SNVS_LP_SRTC_ClearStatusFlags</a> (SNVS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga4b35224486431ebc7dd76707e5ab2c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the SNVS status flags.  <a href="#ga4b35224486431ebc7dd76707e5ab2c84">More...</a><br/></td></tr>
-<tr class="separator:ga4b35224486431ebc7dd76707e5ab2c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Timer Start and Stop</h2></td></tr>
-<tr class="memitem:gaa4af8e629107ca2df7b64d11a5afa01e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaa4af8e629107ca2df7b64d11a5afa01e">SNVS_LP_SRTC_StartTimer</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:gaa4af8e629107ca2df7b64d11a5afa01e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the SNVS SRTC time counter.  <a href="#gaa4af8e629107ca2df7b64d11a5afa01e">More...</a><br/></td></tr>
-<tr class="separator:gaa4af8e629107ca2df7b64d11a5afa01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga413bc4eb1389aec4a61e3e54a08ec5f3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga413bc4eb1389aec4a61e3e54a08ec5f3">SNVS_LP_SRTC_StopTimer</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga413bc4eb1389aec4a61e3e54a08ec5f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the SNVS SRTC time counter.  <a href="#ga413bc4eb1389aec4a61e3e54a08ec5f3">More...</a><br/></td></tr>
-<tr class="separator:ga413bc4eb1389aec4a61e3e54a08ec5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-External tampering</h2></td></tr>
-<tr class="memitem:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5b3b4bc95b7ad64a7c37d75f94f57a05">SNVS_LP_PassiveTamperPin_GetDefaultConfig</a> (<a class="el" href="a00074.html#a00516">snvs_lp_passive_tamper_t</a> *config)</td></tr>
-<tr class="memdesc:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SNVS tamper pin config struct with the default settings.  <a href="#ga5b3b4bc95b7ad64a7c37d75f94f57a05">More...</a><br/></td></tr>
-<tr class="separator:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Monotonic Counter (MC)</h2></td></tr>
-<tr class="memitem:gaef92c80f282401b4db14ae4899997f20"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaef92c80f282401b4db14ae4899997f20">SNVS_LP_EnableMonotonicCounter</a> (SNVS_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaef92c80f282401b4db14ae4899997f20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the Monotonic Counter.  <a href="#gaef92c80f282401b4db14ae4899997f20">More...</a><br/></td></tr>
-<tr class="separator:gaef92c80f282401b4db14ae4899997f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a8eacfd2bae28cc0417785f8355f141"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga5a8eacfd2bae28cc0417785f8355f141">SNVS_LP_GetMonotonicCounter</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga5a8eacfd2bae28cc0417785f8355f141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current Monotonic Counter.  <a href="#ga5a8eacfd2bae28cc0417785f8355f141">More...</a><br/></td></tr>
-<tr class="separator:ga5a8eacfd2bae28cc0417785f8355f141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47bb73abadc43aa50a4dfdaa86a78293"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga47bb73abadc43aa50a4dfdaa86a78293">SNVS_LP_IncreaseMonotonicCounter</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga47bb73abadc43aa50a4dfdaa86a78293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the Monotonic Counter.  <a href="#ga47bb73abadc43aa50a4dfdaa86a78293">More...</a><br/></td></tr>
-<tr class="separator:ga47bb73abadc43aa50a4dfdaa86a78293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Zeroizable Master Key (ZMK)</h2></td></tr>
-<tr class="memitem:ga10144a7135dd4a278c541d5e37a27ba1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga10144a7135dd4a278c541d5e37a27ba1">SNVS_LP_WriteZeroizableMasterKey</a> (SNVS_Type *base, uint32_t ZMKey[<a class="el" href="a00074.html#ga0eb6096d8a29431a527f42d2207df7bd">SNVS_ZMK_REG_COUNT</a>])</td></tr>
-<tr class="memdesc:ga10144a7135dd4a278c541d5e37a27ba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write Zeroizable Master Key (ZMK) to the SNVS registers.  <a href="#ga10144a7135dd4a278c541d5e37a27ba1">More...</a><br/></td></tr>
-<tr class="separator:ga10144a7135dd4a278c541d5e37a27ba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f8c7a22bd75612f3ecfcc64b2ca12d9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga4f8c7a22bd75612f3ecfcc64b2ca12d9">SNVS_LP_SetZeroizableMasterKeyValid</a> (SNVS_Type *base, bool valid)</td></tr>
-<tr class="memdesc:ga4f8c7a22bd75612f3ecfcc64b2ca12d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Zeroizable Master Key valid.  <a href="#ga4f8c7a22bd75612f3ecfcc64b2ca12d9">More...</a><br/></td></tr>
-<tr class="separator:ga4f8c7a22bd75612f3ecfcc64b2ca12d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga84aa6371b64d17ad9dd059a32cfcf0ba">SNVS_LP_GetZeroizableMasterKeyValid</a> (SNVS_Type *base)</td></tr>
-<tr class="memdesc:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Zeroizable Master Key valid status.  <a href="#ga84aa6371b64d17ad9dd059a32cfcf0ba">More...</a><br/></td></tr>
-<tr class="separator:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4468c4f948d4529d21d2717f9af21fb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaa4468c4f948d4529d21d2717f9af21fb">SNVS_LP_SetZeroizableMasterKeyProgramMode</a> (SNVS_Type *base, <a class="el" href="a00074.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a> mode)</td></tr>
-<tr class="memdesc:gaa4468c4f948d4529d21d2717f9af21fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Zeroizable Master Key programming mode.  <a href="#gaa4468c4f948d4529d21d2717f9af21fb">More...</a><br/></td></tr>
-<tr class="separator:gaa4468c4f948d4529d21d2717f9af21fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f0c2c01a10193906563254794af6f2b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga9f0c2c01a10193906563254794af6f2b">SNVS_LP_EnableZeroizableMasterKeyECC</a> (SNVS_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga9f0c2c01a10193906563254794af6f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable Zeroizable Master Key ECC.  <a href="#ga9f0c2c01a10193906563254794af6f2b">More...</a><br/></td></tr>
-<tr class="separator:ga9f0c2c01a10193906563254794af6f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf546c45ff65189f400d757cf5f35223f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaf546c45ff65189f400d757cf5f35223f">SNVS_LP_SetMasterKeyMode</a> (SNVS_Type *base, <a class="el" href="a00074.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a> mode)</td></tr>
-<tr class="memdesc:gaf546c45ff65189f400d757cf5f35223f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set SNVS Master Key mode.  <a href="#gaf546c45ff65189f400d757cf5f35223f">More...</a><br/></td></tr>
-<tr class="separator:gaf546c45ff65189f400d757cf5f35223f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Shell functional operation</h2></td></tr>
+<tr class="memitem:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, char *prompt)</td></tr>
+<tr class="memdesc:ga7961e946400cd244c315cfbbd36ae5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the shell module.  <a href="#ga7961e946400cd244c315cfbbd36ae5d1">More...</a><br/></td></tr>
+<tr class="separator:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00074.html#a00524">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memdesc:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the shell command.  <a href="#gab5f85f3ba2cc7dd58bc85076c19c5177">More...</a><br/></td></tr>
+<tr class="separator:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53355638d856258b0bcb76e308803dab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga53355638d856258b0bcb76e308803dab">SHELL_UnregisterCommand</a> (<a class="el" href="a00074.html#a00524">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memdesc:ga53355638d856258b0bcb76e308803dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the shell command.  <a href="#ga53355638d856258b0bcb76e308803dab">More...</a><br/></td></tr>
+<tr class="separator:ga53355638d856258b0bcb76e308803dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga9f182608b5a6107757be5bb8a90ad74c">SHELL_Write</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:ga9f182608b5a6107757be5bb8a90ad74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream.  <a href="#ga9f182608b5a6107757be5bb8a90ad74c">More...</a><br/></td></tr>
+<tr class="separator:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaade5449d8cbfc3cd026667b40c35d29f">SHELL_Printf</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
+<tr class="memdesc:gaade5449d8cbfc3cd026667b40c35d29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream.  <a href="#gaade5449d8cbfc3cd026667b40c35d29f">More...</a><br/></td></tr>
+<tr class="separator:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6466b141fd4f94e78636e4a15c302dda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga6466b141fd4f94e78636e4a15c302dda">SHELL_WriteSynchronization</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:ga6466b141fd4f94e78636e4a15c302dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream with OS synchronization.  <a href="#ga6466b141fd4f94e78636e4a15c302dda">More...</a><br/></td></tr>
+<tr class="separator:ga6466b141fd4f94e78636e4a15c302dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56c78f6217a822015a9369bf3e52e92a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga56c78f6217a822015a9369bf3e52e92a">SHELL_PrintfSynchronization</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
+<tr class="memdesc:ga56c78f6217a822015a9369bf3e52e92a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream with OS synchronization.  <a href="#ga56c78f6217a822015a9369bf3e52e92a">More...</a><br/></td></tr>
+<tr class="separator:ga56c78f6217a822015a9369bf3e52e92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca4540dc42f8892cb276691644a247e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gaca4540dc42f8892cb276691644a247e2">SHELL_ChangePrompt</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, char *prompt)</td></tr>
+<tr class="memdesc:gaca4540dc42f8892cb276691644a247e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change shell prompt.  <a href="#gaca4540dc42f8892cb276691644a247e2">More...</a><br/></td></tr>
+<tr class="separator:gaca4540dc42f8892cb276691644a247e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2a840776dee8490d482a0692fbf2d7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#gad2a840776dee8490d482a0692fbf2d7e">SHELL_PrintPrompt</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
+<tr class="memdesc:gad2a840776dee8490d482a0692fbf2d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print shell prompt.  <a href="#gad2a840776dee8490d482a0692fbf2d7e">More...</a><br/></td></tr>
+<tr class="separator:gad2a840776dee8490d482a0692fbf2d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a> (<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
+<tr class="memdesc:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task function for Shell.  <a href="#ga44e3087a3cdea9b62f159e2585dfcd8d">More...</a><br/></td></tr>
+<tr class="separator:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eeb17b16773359c132f1d40478938ec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#ga4eeb17b16773359c132f1d40478938ec">SHELL_checkRunningInIsr</a> (void)</td></tr>
+<tr class="memdesc:ga4eeb17b16773359c132f1d40478938ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if code is running in ISR.  <a href="#ga4eeb17b16773359c132f1d40478938ec">More...</a><br/></td></tr>
+<tr class="separator:ga4eeb17b16773359c132f1d40478938ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00516" id="a00516"></a>
+<a name="a00524" id="a00524"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct snvs_lp_passive_tamper_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<a name="a00518" id="a00518"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct snvs_lp_srtc_datetime_t</td>
+          <td class="memname">struct shell_command_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a03a4361ff2481ab7ed890c60f3ac68b7">year</a></td></tr>
-<tr class="memdesc:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1970 to 2099.  <a href="#a03a4361ff2481ab7ed890c60f3ac68b7">More...</a><br/></td></tr>
-<tr class="separator:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#afeeab32d19b15b5dd7ebbcd3c1322e28">month</a></td></tr>
-<tr class="memdesc:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 12.  <a href="#afeeab32d19b15b5dd7ebbcd3c1322e28">More...</a><br/></td></tr>
-<tr class="separator:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8325ab17dc714294c88414f24d03320d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a8325ab17dc714294c88414f24d03320d">day</a></td></tr>
-<tr class="memdesc:a8325ab17dc714294c88414f24d03320d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 31 (depending on month).  <a href="#a8325ab17dc714294c88414f24d03320d">More...</a><br/></td></tr>
-<tr class="separator:a8325ab17dc714294c88414f24d03320d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a4a70a512ba988adb1fb1e4e62ba11f29">hour</a></td></tr>
-<tr class="memdesc:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 23.  <a href="#a4a70a512ba988adb1fb1e4e62ba11f29">More...</a><br/></td></tr>
-<tr class="separator:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a266253051fa3ee775a27bffb92d9be5b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a266253051fa3ee775a27bffb92d9be5b">minute</a></td></tr>
-<tr class="memdesc:a266253051fa3ee775a27bffb92d9be5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a266253051fa3ee775a27bffb92d9be5b">More...</a><br/></td></tr>
-<tr class="separator:a266253051fa3ee775a27bffb92d9be5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24f3ad7303d4b70ca927c385490a3448"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a24f3ad7303d4b70ca927c385490a3448">second</a></td></tr>
-<tr class="memdesc:a24f3ad7303d4b70ca927c385490a3448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a24f3ad7303d4b70ca927c385490a3448">More...</a><br/></td></tr>
-<tr class="separator:a24f3ad7303d4b70ca927c385490a3448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a9bcf2ff85f63adcaa4c03f4ef85e8df9">pcCommand</a></td></tr>
+<tr class="memdesc:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command that is executed.  <a href="#a9bcf2ff85f63adcaa4c03f4ef85e8df9">More...</a><br/></td></tr>
+<tr class="separator:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#af6bfe76160c7aeeb3c32cc2fe117541b">pcHelpString</a></td></tr>
+<tr class="memdesc:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="mdescLeft">&#160;</td><td class="mdescRight">String that describes how to use the command.  <a href="#af6bfe76160c7aeeb3c32cc2fe117541b">More...</a><br/></td></tr>
+<tr class="separator:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00074.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#aa5d55bf1f33b397949eb926c9ee48e6d">pFuncCallBack</a></td></tr>
+<tr class="memdesc:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the callback function that returns the output generated by the command.  <a href="#aa5d55bf1f33b397949eb926c9ee48e6d">More...</a><br/></td></tr>
+<tr class="separator:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a72da17de3b4a0af7b4072d726449c6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a4a72da17de3b4a0af7b4072d726449c6">cExpectedNumberOfParameters</a></td></tr>
+<tr class="memdesc:a4a72da17de3b4a0af7b4072d726449c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commands expect a fixed number of parameters, which may be zero.  <a href="#a4a72da17de3b4a0af7b4072d726449c6">More...</a><br/></td></tr>
+<tr class="separator:a4a72da17de3b4a0af7b4072d726449c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8178558fd61934e49498c79f2e47792e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8178558fd61934e49498c79f2e47792e"></a>
+list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a8178558fd61934e49498c79f2e47792e">link</a></td></tr>
+<tr class="memdesc:a8178558fd61934e49498c79f2e47792e"><td class="mdescLeft">&#160;</td><td class="mdescRight">link of the element <br/></td></tr>
+<tr class="separator:a8178558fd61934e49498c79f2e47792e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a03a4361ff2481ab7ed890c60f3ac68b7"></a>
+<a class="anchor" id="a9bcf2ff85f63adcaa4c03f4ef85e8df9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t snvs_lp_srtc_datetime_t::year</td>
+          <td class="memname">const char* shell_command_t::pcCommand</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For example "help". It must be all lower case. </p>
+
+</div>
+</div>
+<a class="anchor" id="af6bfe76160c7aeeb3c32cc2fe117541b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* shell_command_t::pcHelpString</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>It should start with the command itself, and end with "\r\n". For example "help: Returns a list of all the commands\r\n". </p>
+
+</div>
+</div>
+<a class="anchor" id="aa5d55bf1f33b397949eb926c9ee48e6d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a00074.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> shell_command_t::pFuncCallBack</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afeeab32d19b15b5dd7ebbcd3c1322e28"></a>
+<a class="anchor" id="a4a72da17de3b4a0af7b4072d726449c6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::month</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8325ab17dc714294c88414f24d03320d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::day</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4a70a512ba988adb1fb1e4e62ba11f29"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::hour</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a266253051fa3ee775a27bffb92d9be5b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::minute</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a24f3ad7303d4b70ca927c385490a3448"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::second</td>
+          <td class="memname">uint8_t shell_command_t::cExpectedNumberOfParameters</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -402,170 +333,292 @@ Zeroizable Master Key (ZMK)</h2></td></tr>
 
 </div>
 </div>
-<a name="a00517" id="a00517"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct snvs_lp_srtc_config_t</td>
+          <td class="memname">#define SHELL_NON_BLOCKING_MODE&#160;&#160;&#160;<a class="el" href="a00070.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration settings for the SNVS_LP peripheral. To initialize this structure to reasonable defaults, call the SNVS_LP_GetDefaultConfig() function and pass a pointer to your config structure instance.</p>
-<p>The config struct can be made const so it resides in flash </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a876e4c24fd02f7b939354f625e81b0a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a876e4c24fd02f7b939354f625e81b0a3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a876e4c24fd02f7b939354f625e81b0a3">srtcCalEnable</a></td></tr>
-<tr class="memdesc:a876e4c24fd02f7b939354f625e81b0a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: SRTC calibration mechanism is enabled; false: No calibration is used <br/></td></tr>
-<tr class="separator:a876e4c24fd02f7b939354f625e81b0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86c9d09f47c6c6fa4dd60c24088f2d4f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00074.html#a86c9d09f47c6c6fa4dd60c24088f2d4f">srtcCalValue</a></td></tr>
-<tr class="memdesc:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines signed calibration value for SRTC; This is a 5-bit 2's complement value, range from -16 to +15. <br/></td></tr>
-<tr class="separator:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+
+</div>
+</div>
+<a class="anchor" id="ga30882f4b5fc99cbc21459cc960ef9ffe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_AUTO_COMPLETE&#160;&#160;&#160;(1U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf98219b0fb886040896b83966903a135"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_BUFFER_SIZE&#160;&#160;&#160;(64U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga0800d9fb741c785d0601f0c3d7125f40"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_MAX_ARGS&#160;&#160;&#160;(8U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga4362aa35752c9abf77387a237faaaea5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HISTORY_COUNT&#160;&#160;&#160;(3U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaa4c15d7595f7cf7ee5f837a02cbdf574"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HANDLE_SIZE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(160U + <a class="code" href="a00074.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a> * <a class="code" href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + <a class="code" href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + SERIAL_MANAGER_READ_HANDLE_SIZE + <a class="code" href="a00070.html#gac278be51c3508495c1be1a4cff566f3f">\</a></div>
+<div class="line"><a class="code" href="a00070.html#gac278be51c3508495c1be1a4cff566f3f">     SERIAL_MANAGER_WRITE_HANDLE_SIZE</a>)</div>
+<div class="ttc" id="a00074_html_ga4362aa35752c9abf77387a237faaaea5"><div class="ttname"><a href="a00074.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a></div><div class="ttdeci">#define SHELL_HISTORY_COUNT</div><div class="ttdoc">Macro to set maximum count of history commands. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:43</div></div>
+<div class="ttc" id="a00074_html_gaf98219b0fb886040896b83966903a135"><div class="ttname"><a href="a00074.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a></div><div class="ttdeci">#define SHELL_BUFFER_SIZE</div><div class="ttdoc">Macro to set console buffer size. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:35</div></div>
+<div class="ttc" id="a00070_html_gac278be51c3508495c1be1a4cff566f3f"><div class="ttname"><a href="a00070.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a></div><div class="ttdeci">#define SERIAL_MANAGER_WRITE_HANDLE_SIZE</div><div class="ttdoc">Set serial manager write handle size. </div><div class="ttdef"><b>Definition:</b> fsl_component_serial_manager.h:124</div></div>
+</div><!-- fragment --><p>It is the sum of the SHELL_HISTORY_COUNT * SHELL_BUFFER_SIZE + SHELL_BUFFER_SIZE + SERIAL_MANAGER_READ_HANDLE_SIZE + SERIAL_MANAGER_WRITE_HANDLE_SIZE </p>
+
+</div>
+</div>
+<a class="anchor" id="ga100ef8e4a639c03682d84fb981ba235b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_USE_COMMON_TASK&#160;&#160;&#160;(0U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5b98f71ea7bd89ef344cac14aa79a1e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_TASK_PRIORITY&#160;&#160;&#160;(2U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga416667c8e6b960d2c1ec518b41a06d62"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_TASK_STACK_SIZE&#160;&#160;&#160;(1000U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gafdb2c68b2d83d459fc196ab0f58d7ab3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_HANDLE_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name</td><td>)</td>
+          <td>&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This macro is used to define a 4 byte aligned shell handle. Then use "(shell_handle_t)name" to get the shell handle.</p>
+<p>The macro should be global and could be optional. You could also define shell handle by yourself.</p>
+<p>This is an example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(shellHandle);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name string of the shell handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacd1f7ee25cd791efee6a45e753ec9824"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_COMMAND_DEFINE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">command, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">descriptor, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">callback, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">paramCount&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">\</div>
+<div class="line">    shell_command_t g_shellCommand##command = {                         \</div>
+<div class="line">        (#command), (descriptor), (callback), (paramCount), {0},        \</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p>This macro is used to define the shell command structure <a class="el" href="a00074.html#a00524" title="User command data configuration structure. ">shell_command_t</a>. And then uses the macro SHELL_COMMAND to get the command structure pointer. The macro should not be used in any function.</p>
+<p>This is a example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00074.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
+<div class="line">* <a class="code" href="a00074.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00074.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
+    <tr><td class="paramname">descriptor</td><td>The description of the command is used for showing the command usage when "help" is typing. </td></tr>
+    <tr><td class="paramname">callback</td><td>The callback of the command is used to handle the command line when the input command is matched. </td></tr>
+    <tr><td class="paramname">paramCount</td><td>The max parameter count of the current command. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga16dd6cfbd9db7dafdaa802eda58564b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SHELL_COMMAND</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">command</td><td>)</td>
+          <td>&#160;&#160;&#160;&amp;g_shellCommand##command</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This macro is used to get the shell command pointer. The macro should not be used before the macro SHELL_COMMAND_DEFINE is used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga7ace1ddfb1e83ac1516ac44be90cf822"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>(* cmd_function_t)(<a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga806041c275061b615faf70ee97505a00"></a>
+<a class="anchor" id="ga16424f17c6492c580e65adf9a4e1ac61"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#ga806041c275061b615faf70ee97505a00">snvs_lp_srtc_interrupts_t</a></td>
+          <td class="memname">enum <a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515"></a>kSNVS_SRTC_AlarmInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>SRTC time alarm. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e"></a>kStatus_SHELL_Success</em>&nbsp;</td><td class="fielddoc">
+<p>Success. </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gadcecf6b4fd6c8c56133821ebbd2df9de"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#gadcecf6b4fd6c8c56133821ebbd2df9de">snvs_lp_srtc_status_flags_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1"></a>kSNVS_SRTC_AlarmInterruptFlag</em>&nbsp;</td><td class="fielddoc">
-<p>SRTC time alarm flag. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9"></a>kStatus_SHELL_Error</em>&nbsp;</td><td class="fielddoc">
+<p>Failed. </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gae44e3f9132afa438f0bfd6233928355f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614"></a>kSNVS_ZMKSoftwareProgram</em>&nbsp;</td><td class="fielddoc">
-<p>Software programming mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b"></a>kStatus_SHELL_OpenWriteHandleFailed</em>&nbsp;</td><td class="fielddoc">
+<p>Open write handle failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f"></a>kSNVS_ZMKHardwareProgram</em>&nbsp;</td><td class="fielddoc">
-<p>Hardware programming mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8"></a>kStatus_SHELL_OpenReadHandleFailed</em>&nbsp;</td><td class="fielddoc">
+<p>Open read handle failed. </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga10b65b574393c82d6b6f3e5033c55d7b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00074.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62"></a>kSNVS_OTPMK</em>&nbsp;</td><td class="fielddoc">
-<p>One Time Programmable Master Key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe"></a>kSNVS_ZMK</em>&nbsp;</td><td class="fielddoc">
-<p>Zeroizable Master Key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e"></a>kSNVS_CMK</em>&nbsp;</td><td class="fielddoc">
-<p>Combined Master Key, it is XOR of OPTMK and ZMK. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61ad139f389943f49d948bbff024d6c5a26"></a>kStatus_SHELL_RetUsage</em>&nbsp;</td><td class="fielddoc">
+<p>RetUsage for print cmd usage. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga742e45feb782fa6b454e20f405d1f3d9"></a>
+<a class="anchor" id="ga7961e946400cd244c315cfbbd36ae5d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SNVS_LP_Init </td>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_Init </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the SNVS driver.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf6184db24094f481adb2fa4511fdaa6a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad2bc4630c869c62dcaee50c1bcd0897e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_Init </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00074.html#a00517">snvs_lp_srtc_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
+          <td class="paramname"><em>serialHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>prompt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -574,80 +627,45 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the SNVS driver.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5d3d092911324c7436c84516a3cc53ab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab52bbf92230eca2bcfc590ad5733d6aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_GetDefaultConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00074.html#a00517">snvs_lp_srtc_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default values are as follows. </p>
-<div class="fragment"><div class="line">*    config-&gt;srtccalenable = <span class="keyword">false</span>;</div>
-<div class="line">*    config-&gt;srtccalvalue = 0U;</div>
+<p>This function must be called before calling all other Shell functions. Call operation the Shell commands with user-defined settings. The example below shows how to set up the Shell and how to call the SHELL_Init function by passing in these parameters. This is an example. </p>
+<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(s_shellHandle);</div>
+<div class="line">*   <a class="code" href="a00074.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>((<a class="code" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>)s_shellHandle, (<a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
 <div class="line">* </div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00074.html#gaa4c15d7595f7cf7ee5f837a02cbdf574" title="The handle size of the shell module. ">SHELL_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00074.html#gafdb2c68b2d83d459fc196ab0f58d7ab3" title="Defines the shell handle. ">SHELL_HANDLE_DEFINE(shellHandle)</a>; or uint32_t shellHandle[((SHELL_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
+    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
+    <tr><td class="paramname">prompt</td><td>The string prompt pointer of Shell. Only the global variable can be passed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>The shell initialization succeed. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred when the shell is initialized. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_OpenWriteHandleFailed</td><td>Open the write handle failed. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_OpenReadHandleFailed</td><td>Open the read handle failed. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3c35b4b1671c53939c335097411b6e7d"></a>
+<a class="anchor" id="gab5f85f3ba2cc7dd58bc85076c19c5177"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetDatetime </td>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_RegisterCommand </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>datetime</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00074.html#a00524">shell_command_t</a> *&#160;</td>
+          <td class="paramname"><em>shellCommand</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -656,136 +674,77 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function is used to register the shell command by using the command configuration shell_command_config_t. This is a example, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00074.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
+<div class="line">* <a class="code" href="a00074.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00074.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the date and time details are stored.</td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success: Success in setting the time and starting the SNVS SRTC kStatus_InvalidArgument: Error because the datetime format is incorrect </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully register the command. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf65b902de3d06aa9940686ae86b7f8fd"></a>
+<a class="anchor" id="ga53355638d856258b0bcb76e308803dab"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SNVS_LP_SRTC_GetDatetime </td>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_UnregisterCommand </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#a00524">shell_command_t</a> *&#160;</td>
+          <td class="paramname"><em>shellCommand</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to unregister the shell command.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully unregister the command. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9f182608b5a6107757be5bb8a90ad74c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_Write </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>datetime</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the date and time details are stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gadb419ef8b369945b4858abcb76e36462"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetAlarm </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>alarmTime</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The function sets the SRTC alarm. It also checks whether the specified alarm time is greater than the present time. If not, the function does not set the alarm and returns an error. Please note, that SRTC alarm has limited resolution because only 32 most significant bits of SRTC counter are compared to SRTC Alarm register. If the alarm time is beyond SRTC resolution, the function does not set the alarm and returns an error.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">alarmTime</td><td>Pointer to the structure where the alarm time is stored.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>kStatus_Success: success in setting the SNVS SRTC alarm kStatus_InvalidArgument: Error because the alarm datetime format is incorrect kStatus_Fail: Error because the alarm time has already passed or is beyond resolution </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab9120c6c286567d4144763b875725ac3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_SRTC_GetAlarm </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#a00518">snvs_lp_srtc_datetime_t</a> *&#160;</td>
-          <td class="paramname"><em>datetime</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">datetime</td><td>Pointer to the structure where the alarm date and time details are stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabff8182f0b6daa2a2bbafcaab0caf582"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -793,40 +752,88 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>This function is used to send data to the shell output stream.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration :: _snvs_lp_srtc_interrupts </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaecc4336193810a19ed278327f1d9b320"></a>
+<a class="anchor" id="gaade5449d8cbfc3cd026667b40c35d29f"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SNVS_LP_SRTC_DisableInterrupts </td>
+          <td class="memname">int SHELL_Printf </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>formatString</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call this function to write a formatted output to the shell output stream.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6466b141fd4f94e78636e4a15c302dda"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00074.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_WriteSynchronization </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -834,210 +841,47 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>This function is used to send data to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration :: _snvs_lp_srtc_interrupts </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
+    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
+    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gada2c47f87ffb9ff6eaeabe62796627bd"></a>
+<a class="anchor" id="ga56c78f6217a822015a9369bf3e52e92a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t SNVS_LP_SRTC_GetEnabledInterrupts </td>
+          <td class="memname">int SHELL_PrintfSynchronization </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration :: _snvs_lp_srtc_interrupts </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8d98bd36bcee5f9639346172eba5294b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SNVS_LP_SRTC_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration :: _snvs_lp_srtc_status_flags </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4b35224486431ebc7dd76707e5ab2c84"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration :: _snvs_lp_srtc_status_flags </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa4af8e629107ca2df7b64d11a5afa01e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_StartTimer </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga413bc4eb1389aec4a61e3e54a08ec5f3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SRTC_StopTimer </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5b3b4bc95b7ad64a7c37d75f94f57a05"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_PassiveTamperPin_GetDefaultConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00074.html#a00516">snvs_lp_passive_tamper_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The default values are as follows. code config-&gt;polarity = 0U; config-&gt;filterenable = 0U; if available on SoC config-&gt;filter = 0U; if available on SoC endcode </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the user's SNVS configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaef92c80f282401b4db14ae4899997f20"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_EnableMonotonicCounter </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>formatString</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1045,91 +889,34 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Call this function to write a formatted output to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">enable</td><td>Pass true to enable, false to disable. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5a8eacfd2bae28cc0417785f8355f141"></a>
+<a class="anchor" id="gaca4540dc42f8892cb276691644a247e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t SNVS_LP_GetMonotonicCounter </td>
+          <td class="memname">void SHELL_ChangePrompt </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Current Monotonic Counter value. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga47bb73abadc43aa50a4dfdaa86a78293"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_IncreaseMonotonicCounter </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Increase the Monotonic Counter by 1.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga10144a7135dd4a278c541d5e37a27ba1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SNVS_LP_WriteZeroizableMasterKey </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>ZMKey</em>[SNVS_ZMK_REG_COUNT]&#160;</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>prompt</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1138,17 +925,66 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Call this function to change shell prompt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">ZMKey</td><td>The ZMK write to the SNVS register. </td></tr>
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+    <tr><td class="paramname">prompt</td><td>The string which will be used for command prompt </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad2a840776dee8490d482a0692fbf2d7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SHELL_PrintPrompt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call this function to print shell prompt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga44e3087a3cdea9b62f159e2585dfcd8d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SHELL_Task </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00074.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
+          <td class="paramname"><em>shellHandle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The task function for Shell; The function should be polled by upper layer. This function does not return until Shell command exit was called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4f8c7a22bd75612f3ecfcc64b2ca12d9"></a>
+<a class="anchor" id="ga4eeb17b16773359c132f1d40478938ec"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1156,21 +992,11 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SNVS_LP_SetZeroizableMasterKeyValid </td>
+          <td class="memname">static bool SHELL_checkRunningInIsr </td>
           <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>valid</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -1179,170 +1005,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This API could only be called when using software programming mode. After writing ZMK using <a class="el" href="a00074.html#ga10144a7135dd4a278c541d5e37a27ba1">SNVS_LP_WriteZeroizableMasterKey</a>, call this API to make the ZMK valid.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">valid</td><td>Pass true to set valid, false to set invalid. </td></tr>
+<p>This function is used to check if code running in ISR.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">TRUE</td><td>if code runing in ISR. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga84aa6371b64d17ad9dd059a32cfcf0ba"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool SNVS_LP_GetZeroizableMasterKeyValid </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>In hardware programming mode, call this API to check whether the ZMK is valid.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if valid, false if invalid. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa4468c4f948d4529d21d2717f9af21fb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SetZeroizableMasterKeyProgramMode </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mode</td><td>ZMK programming mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9f0c2c01a10193906563254794af6f2b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_EnableZeroizableMasterKeyECC </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">enable</td><td>Pass true to enable, false to disable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf546c45ff65189f400d757cf5f35223f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void SNVS_LP_SetMasterKeyMode </td>
-          <td>(</td>
-          <td class="paramtype">SNVS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00074.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SNVS peripheral base address </td></tr>
-    <tr><td class="paramname">mode</td><td>Master Key mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>When <a class="el" href="a00074.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> or <a class="el" href="a00074.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> used, the SNVS_HP must be configured to enable the master key selection. </dd></dl>
 
 </div>
 </div>

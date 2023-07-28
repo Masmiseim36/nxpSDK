@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2022 NXP
+ * Copyright 2020, 2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,6 +12,7 @@
 
 #include "fsl_common.h"
 #include "hal_valgo_dev.h"
+#include "hal.h"
 
 #if defined(__cplusplus)
 extern "C" {

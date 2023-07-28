@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -72,7 +80,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/label_image
     ${SdkRootDirPath}/middleware/eiq/common
     ${SdkRootDirPath}/middleware/eiq/common/image
@@ -81,113 +89,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/label_image/pcq
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/video/camera/device
-    ${SdkRootDirPath}/components/video/camera/receiver
-    ${SdkRootDirPath}/components/video/camera/device/sccb
-    ${SdkRootDirPath}/components/video/camera/device/ov7725
-    ${SdkRootDirPath}/components/video/camera/device/mt9m114
-    ${SdkRootDirPath}/components/video/camera
-    ${SdkRootDirPath}/components/video/camera/receiver/csi
-    ${SdkRootDirPath}/devices/MIMXRT1064/drivers
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/components/video/i2c
-    ${SdkRootDirPath}/components/video/display/dc
-    ${SdkRootDirPath}/components/video/display/dc/elcdif
-    ${SdkRootDirPath}/devices/MIMXRT1064/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1064/utilities/debug_console_lite
-    ${SdkRootDirPath}/middleware/eiq
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/devices/MIMXRT1064
-    ${SdkRootDirPath}/devices/MIMXRT1064/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1064/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/third_party/cmsis
-)
 
-# include modules
-include(driver_camera-device-common_MIMXRT1064)
-
-include(driver_camera-receiver-common_MIMXRT1064)
-
-include(driver_camera-device-sccb_MIMXRT1064)
-
-include(driver_camera-device-ov7725_MIMXRT1064)
-
-include(driver_camera-device-mt9m114_MIMXRT1064)
-
-include(driver_camera-common_MIMXRT1064)
-
-include(driver_camera-receiver-csi_MIMXRT1064)
-
-include(driver_csi_MIMXRT1064)
-
-include(driver_video-common_MIMXRT1064)
-
-include(driver_video-i2c_MIMXRT1064)
-
-include(driver_elcdif_MIMXRT1064)
-
-include(driver_pxp_MIMXRT1064)
-
-include(driver_dc-fb-common_MIMXRT1064)
-
-include(driver_dc-fb-elcdif_MIMXRT1064)
-
-include(driver_igpio_MIMXRT1064)
-
-include(utility_debug_console_lite_MIMXRT1064)
-
-include(utility_assert_lite_MIMXRT1064)
-
-include(middleware_eiq_worker_video_MIMXRT1064)
-
-include(middleware_eiq_gui_printf_MIMXRT1064)
-
-include(middleware_eiq_tensorflow_lite_micro_MIMXRT1064)
-
-include(component_lists_MIMXRT1064)
-
-include(component_lpuart_adapter_MIMXRT1064)
-
-include(driver_common_MIMXRT1064)
-
-include(driver_lpuart_MIMXRT1064)
-
-include(device_MIMXRT1064_CMSIS_MIMXRT1064)
-
-include(device_MIMXRT1064_startup_MIMXRT1064)
-
-include(driver_clock_MIMXRT1064)
-
-include(driver_iomuxc_MIMXRT1064)
-
-include(driver_lpi2c_MIMXRT1064)
-
-include(driver_xip_device_MIMXRT1064)
-
-include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
-
-include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1064)
-
-include(CMSIS_Include_core_cm_MIMXRT1064)
-
-include(middleware_eiq_worker_MIMXRT1064)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT1064)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT1064)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT1064)
-
-include(utilities_misc_utilities_MIMXRT1064)
-
-include(device_MIMXRT1064_system_MIMXRT1064)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1064)
-
+include(${SdkRootDirPath}/devices/MIMXRT1064/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -199,4 +102,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

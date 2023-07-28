@@ -93,7 +93,7 @@ static void app_task(void *params) {
     int ret;
     args_t *args = (args_t *) params;
 
-    PRINTF("[%s]\n", mpp_get_version());
+    PRINTF("[%s]\r\n", mpp_get_version());
 
     /* init API */
     ret = mpp_api_init(NULL);
@@ -116,7 +116,7 @@ static void app_task(void *params) {
     cam_params.width  = APP_CAMERA_WIDTH;
     cam_params.format = args->src_format;
     cam_params.fps    = 30;
-    ret = mpp_camera_add(mp, args->camera_name, &cam_params, false);
+    ret = mpp_camera_add(mp, args->camera_name, &cam_params);
     if (ret) {
         PRINTF("Failed to add camera %s\n", args->camera_name);
         goto err;
@@ -126,7 +126,12 @@ static void app_task(void *params) {
        as required by the display */
     mpp_element_params_t elem_params;
     memset(&elem_params, 0, sizeof(elem_params));
-    elem_params.convert.angle = APP_CAMERA_DISPLAY_ROTATE;
+    /* pick default device from the first listed and supported by Hw */
+    elem_params.convert.dev_name = NULL;
+    /* set output buffer dims */
+    elem_params.convert.out_buf.width = APP_DISPLAY_WIDTH;
+    elem_params.convert.out_buf.height = APP_DISPLAY_HEIGHT;
+    elem_params.convert.angle = APP_DISPLAY_LANDSCAPE_ROTATE;
     elem_params.convert.flip = FLIP_HORIZONTAL;
     elem_params.convert.pixel_format = args->display_format;
     elem_params.convert.ops = MPP_CONVERT_COLOR | MPP_CONVERT_ROTATE;

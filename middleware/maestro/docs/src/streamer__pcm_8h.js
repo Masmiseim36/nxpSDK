@@ -2,8 +2,8 @@ var streamer__pcm_8h =
 [
     [ "pcm_rtos_t", "streamer__pcm_8h.html#a956751a220ca3c5aae2895c75c13af70", null ],
     [ "streamer_pcm_init", "streamer__pcm_8h.html#ab13936ae2f577fcc6287b61600e250d1", null ],
-    [ "streamer_pcm_open", "streamer__pcm_8h.html#ac80179ee96ecc23ef12010ebf0f9777f", null ],
-    [ "streamer_pcm_rx_open", "streamer__pcm_8h.html#a8f3b223764e24ea39b7100e92a089934", null ],
+    [ "streamer_pcm_open", "streamer__pcm_8h.html#a3680c68ea756bc4022da550b2b116cc7", null ],
+    [ "streamer_pcm_rx_open", "streamer__pcm_8h.html#aa2317c93652e85418e15c47361ec0395", null ],
     [ "streamer_pcm_close", "streamer__pcm_8h.html#a2ac14511877c8aed888ad341d2d7e3d1", null ],
     [ "streamer_pcm_rx_close", "streamer__pcm_8h.html#a0ddce3e5d887acc417cca0b336489429", null ],
     [ "streamer_pcm_start", "streamer__pcm_8h.html#a3a5cf9823f48e014f944afd4c4469a77", null ],

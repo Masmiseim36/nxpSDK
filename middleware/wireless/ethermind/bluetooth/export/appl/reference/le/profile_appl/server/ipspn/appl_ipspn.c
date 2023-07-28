@@ -79,7 +79,7 @@ DECL_STATIC API_RESULT appl_ipspn_data_tx
                            UINT16        edatalen
                        );
 
-#define APPL_L2CAP_LE_PSM LE_PSM_IPSP
+#define APPL_L2CAP_LE_PSM IPSP_LE_PSM
 #define APPL_BUFFER_SIZE  0x0062U
 
 #define APPL_LE_CO_MTU    1500U
@@ -223,8 +223,6 @@ void appl_ipspn_init(void)
 
     APPL_TRC(
     "[IPSPN]: GATT Database Registration Status: 0x%04X\n", retval);
-
-    GATT_DB_MAX_ATTRIBUTES = BT_gatt_db_get_attribute_count();
 #else
     appl_ipspn_gatt_db_register();
 #endif /* GATT_DB_DYNAMIC */
@@ -316,7 +314,7 @@ DECL_STATIC API_RESULT ipsp_l2ca_connect_ind_cb
              );
 
 #ifdef IPSP_HAVE_6LO_NIFACE
-    if (LE_PSM_IPSP == appl_l2cap_psm.psm)
+    if (IPSP_LE_PSM == appl_l2cap_psm.psm)
     {
         /* Get the remote bd address */
         device_queue_get_remote_addr(handle, &bdaddr);
@@ -368,7 +366,7 @@ DECL_STATIC API_RESULT ipsp_l2ca_disconnect_ind_cb(UINT16 lcid)
     appl_le_co_peer_mtu = 0x0000U;
 
 #ifdef IPSP_HAVE_6LO_NIFACE
-    if (LE_PSM_IPSP == appl_l2cap_psm.psm)
+    if (IPSP_LE_PSM == appl_l2cap_psm.psm)
     {
         /* Stop the network interface */
         ipsp_stop_pl();
@@ -386,7 +384,7 @@ DECL_STATIC API_RESULT ipsp_l2ca_disconnect_cnf_cb(UINT16 lcid, UINT16 reason)
     appl_le_co_peer_mtu = 0x0000U;
 
 #ifdef IPSP_HAVE_6LO_NIFACE
-    if (LE_PSM_IPSP == appl_l2cap_psm.psm)
+    if (IPSP_LE_PSM == appl_l2cap_psm.psm)
     {
         /* Stop the network interface */
         ipsp_stop_pl();

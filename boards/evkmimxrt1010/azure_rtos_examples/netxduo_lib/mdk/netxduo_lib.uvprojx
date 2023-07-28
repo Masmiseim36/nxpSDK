@@ -24,7 +24,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>debug\</OutputDirectory>
-          <OutputName>libnetxduo.lib</OutputName>
+          <OutputName>netxduo_lib.out</OutputName>
           <CreateExecutable>0</CreateExecutable>
           <CreateLib>1</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -348,7 +348,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1011DAE5A, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1011DAE5A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
@@ -421,8 +421,28 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/netxduo/common</GroupName>
+          <Files>
+            <File>
+              <FileName>netxduo_common_source.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/netxduo_common_source.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/netxduo/common/src</GroupName>
           <Files>
+            <File>
+              <FileName>nx_ip_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_ip_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_packet_pool_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_packet_pool_initialize.c</FilePath>
+            </File>
             <File>
               <FileName>nx_ram_network_driver.c</FileName>
               <FileType>1</FileType>
@@ -434,29 +454,9 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_system_initialize.c</FilePath>
             </File>
             <File>
-              <FileName>nx_ip_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_ip_initialize.c</FilePath>
-            </File>
-            <File>
               <FileName>nx_tcp_initialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_tcp_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_packet_pool_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_packet_pool_initialize.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/netxduo/common</GroupName>
-          <Files>
-            <File>
-              <FileName>netxduo_common_source.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/netxduo_common_source.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2783,7 +2783,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>release\</OutputDirectory>
-          <OutputName>libnetxduo.lib</OutputName>
+          <OutputName>netxduo_lib.out</OutputName>
           <CreateExecutable>0</CreateExecutable>
           <CreateLib>1</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -3083,7 +3083,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -3107,7 +3107,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1011DAE5A, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1011DAE5A, MCUXPRESSO_SDK, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE</Define>
               <Undefine/>
               <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
@@ -3180,8 +3180,28 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/netxduo/common</GroupName>
+          <Files>
+            <File>
+              <FileName>netxduo_common_source.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/netxduo_common_source.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/netxduo/common/src</GroupName>
           <Files>
+            <File>
+              <FileName>nx_ip_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_ip_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_packet_pool_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_packet_pool_initialize.c</FilePath>
+            </File>
             <File>
               <FileName>nx_ram_network_driver.c</FileName>
               <FileType>1</FileType>
@@ -3193,29 +3213,9 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_system_initialize.c</FilePath>
             </File>
             <File>
-              <FileName>nx_ip_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_ip_initialize.c</FilePath>
-            </File>
-            <File>
               <FileName>nx_tcp_initialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_tcp_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>nx_packet_pool_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/src/nx_packet_pool_initialize.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/netxduo/common</GroupName>
-          <Files>
-            <File>
-              <FileName>netxduo_common_source.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/netxduo_common_source.c</FilePath>
             </File>
           </Files>
         </Group>

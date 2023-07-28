@@ -14,6 +14,8 @@
 #include "appl_service.h"
 #include "appl_utils.h"
 
+#include "appl_gatt_server.h"
+
 #ifdef BT_LE
 
 /* --------------------------------------------- External Global Variables */
@@ -40,21 +42,26 @@ extern const APPL_GAP_CONN_PARAM appl_gap_conn_param;
 /* --------------------------------------------- Exported Global Variables */
 
 /* --------------------------------------------- Static Global Variables */
-
 /* Timer related Globals */
 static BT_timer_handle timer_handle;
+unsigned char appl_manufacturer_name_ext[] = APPL_MANUFACTURER_NAME;
 
 #ifdef APPL_ENABLE_AUTHORIZATION
+/**
+ * This flag holds the current authorization state as informed by User.
+ * If BT_TRUE, Authorization Permission is Granted by User.
+ * Else, Authorization Permission is On-Hold.
+ */
 DECL_STATIC UINT16 appl_gatt_server_authorization_flag = BT_FALSE;
 #endif /* APPL_ENABLE_AUTHORIZATION */
 
 #ifdef APPL_SERVICE_CONFIG_GAP_STARTUP
 /** Global to have Auto Start GAP Procedures in Profiles */
-UCHAR appl_service_config_gap_auto_start = BT_TRUE;
+DECL_STATIC UCHAR appl_service_config_gap_auto_start = BT_TRUE;
 #endif /* APPL_SERVICE_CONFIG_GAP_STARTUP */
 
 /* --------------------------------------------- Functions */
-
+/* Routine to set the GAP Auto Procedure State */
 void appl_service_set_gap_proc_state(UCHAR flag)
 {
 #ifdef APPL_SERVICE_CONFIG_GAP_STARTUP
@@ -64,6 +71,7 @@ void appl_service_set_gap_proc_state(UCHAR flag)
 #endif /* APPL_SERVICE_CONFIG_GAP_STARTUP */
 }
 
+/* Routine to fetch the GAP Auto Procedure State */
 UCHAR appl_service_get_gap_proc_state(void)
 {
 #ifdef APPL_SERVICE_CONFIG_GAP_STARTUP
@@ -184,40 +192,58 @@ void appl_service_configure_adv
          UCHAR   filter_policy
      )
 {
-#if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
-    /* Set Advertising Data */
-    (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_advertising_data(appl_gap_adv_data.datalen, appl_gap_adv_data.data);
-
-    /* Update the Globals, if required */
-    advertising_type = adv_type;
-    own_addr_type = l_addr_type;
-    peer_addr_type = p_addr_type;
-
-    if (NULL != p_addr)
+    /* Proceede only when the GAP Auto Procedure state is True */
+    if (BT_TRUE == appl_service_get_gap_proc_state())
     {
-        BT_COPY_BD_ADDR(peer_addr, p_addr);
-    }
+#ifndef BT_GAM
+#if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
+        /* Set Advertising Data */
+        (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_advertising_data(appl_gap_adv_data.datalen, appl_gap_adv_data.data);
 
-    /* Set Normal Advertising Parameters */
-    (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_advertising_parameters
-    (
-        appl_gap_adv_param[proc].min_interval,
-        appl_gap_adv_param[proc].max_interval,
-        adv_type,
-        l_addr_type,
-        p_addr_type,
-        p_addr,
-        appl_gap_adv_param[proc].channel_map,
-        filter_policy
-    );
+        /* Update the Globals, if required */
+        advertising_type = adv_type;
+        own_addr_type = l_addr_type;
+        peer_addr_type = p_addr_type;
+
+        if (NULL != p_addr)
+        {
+            BT_COPY_BD_ADDR(peer_addr, p_addr);
+        }
+
+        /* Set Normal Advertising Parameters */
+        (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_advertising_parameters
+        (
+            appl_gap_adv_param[proc].min_interval,
+            appl_gap_adv_param[proc].max_interval,
+            adv_type,
+            l_addr_type,
+            p_addr_type,
+            p_addr,
+            appl_gap_adv_param[proc].channel_map,
+            filter_policy
+        );
 #endif /* ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL)) */
+#endif /* BT_GAM */
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 }
 
 void appl_service_enable_adv (UCHAR enable)
 {
+    /* Proceede only when the GAP Auto Procedure state is True */
+    if (BT_TRUE == appl_service_get_gap_proc_state())
+    {
 #if ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL))
-    (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_advertising_enable(enable);
+        (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_advertising_enable(enable);
 #endif /* ((defined APPL_GAP_BROACASTER) || defined (APPL_GAP_PERIPHERAL)) */
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 }
 
 void appl_service_configure_scan
@@ -228,24 +254,40 @@ void appl_service_configure_scan
          UCHAR filter_policy
      )
 {
+    /* Proceede only when the GAP Auto Procedure state is True */
+    if (BT_TRUE == appl_service_get_gap_proc_state())
+    {
 #if ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL))
-    /* Set Scan Parameters */
-    (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_scan_parameters
-    (
-        scan_type,
-        appl_gap_scan_param[proc].scan_interval,
-        appl_gap_scan_param[proc].scan_window,
-        l_addr_type,
-        filter_policy
-    );
+        /* Set Scan Parameters */
+        (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_scan_parameters
+        (
+            scan_type,
+            appl_gap_scan_param[proc].scan_interval,
+            appl_gap_scan_param[proc].scan_window,
+            l_addr_type,
+            filter_policy
+        );
 #endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 }
 
 void appl_service_enable_scan (UCHAR enable)
 {
+    /* Proceede only when the GAP Auto Procedure state is True */
+    if (BT_TRUE == appl_service_get_gap_proc_state())
+    {
 #if ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL))
-    (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_scan_enable(enable, 0x01U);
+        (BT_IGNORE_RETURN_VALUE) BT_hci_le_set_scan_enable(enable, 0x01U);
 #endif /* ((defined APPL_GAP_OBSERVER) || (defined APPL_GAP_CENTRAL)) */
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 }
 
 API_RESULT appl_service_initiate_conn
@@ -393,7 +435,8 @@ void appl_batt_timer_expiry_handler(void * data, UINT16 datalen)
 
     BT_IGNORE_UNUSED_PARAM(datalen);
 
-    retval = API_FAILURE;
+    /* Initialize */
+    retval       = API_FAILURE;
     timer_handle = BT_TIMER_HANDLE_INIT_VAL;
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
@@ -407,24 +450,22 @@ void appl_batt_timer_expiry_handler(void * data, UINT16 datalen)
 
     if (HCI_INVALID_CONNECTION_HANDLE != APPL_GET_CONNECTION_HANDLE(appl_handle))
     {
+        /* Validate the Characteristic ID */
         if (GET_GATT_CHARACTERISTIC_COUNT() > db_hndl->char_id)
         {
             /* Get Battery Level Attribute Handle */
-            retval = BT_gatt_db_get_char_val_hndl
-                     (
-                         db_hndl,
-                         &appl_bat_lvl_hndl
-                     );
-        }
+            BT_gatt_db_get_char_val_hndl
+            (
+                db_hndl,
+                &appl_bat_lvl_hndl
+            );
 
-        if (API_SUCCESS == retval)
-        {
             BT_mem_set(&value, 0x00, sizeof(ATT_VALUE));
             retval = BT_gatt_db_get_char_val(db_hndl, &value);
 
             if (API_SUCCESS == retval)
             {
-                hndl_val_param.handle    = appl_bat_lvl_hndl;
+                hndl_val_param.handle = appl_bat_lvl_hndl;
                 hndl_val_param.value.val = value.val;
                 hndl_val_param.value.len = 1U;
 
@@ -498,10 +539,14 @@ API_RESULT appl_send_serv_changed_ind(GATT_DB_HANDLE * serv_change_handle)
         hvi_param.value.len = 4U;
 
         retval = BT_att_send_hndl_val_ind
-                    (
-                        &APPL_GET_ATT_INSTANCE(appl_handle),
-                        &hvi_param
-                    );
+                 (
+                     &APPL_GET_ATT_INSTANCE(appl_handle),
+                     &hvi_param
+                 );
+
+        APPL_TRC(
+        "\nSending Service Changed Indication for DevID 0x%02X with result "
+        "0x%04X\n", serv_change_handle->device_id, retval);
     }
 
     return retval;
@@ -650,6 +695,13 @@ void  appl_set_gatt_server_authorization_state
     appl_gatt_server_authorization_flag = state;
 }
 
+/**
+ * This API checks the authorization required for the requested
+ * handle/handles corresponding to the incoming ATT Event.
+ * If authorization is required, sends the error response with reason
+ * set to ATT_INSUFFICIENT_AUTHORIZATION and returns API_FAILURE
+ * If there is no authorization required this returns API_SUCCESS.
+ */
 API_RESULT appl_check_attr_dev_authorization
            (
                ATT_HANDLE    * handle,
@@ -659,62 +711,196 @@ API_RESULT appl_check_attr_dev_authorization
                UINT16        event_datalen
            )
 {
-    ATT_ATTR_HANDLE  attr_handle;
-    API_RESULT       retval;
-    UCHAR            status_flag;
+    ATT_HANDLE_VALUE_PAIR handle_value_list[APPL_MAX_HNDL_VALUE_SIZE];
+    UINT32                index;
+    ATT_ATTR_HANDLE       attr_handle;
+    API_RESULT            retval;
+    ATT_HANDLE_RANGE      range;
+    ATT_UUID              t_uuid;
+    ATT_VALUE             uuid;
+    UCHAR                 status_flag, uuid_format, no_of_attr_handles;
 
     BT_IGNORE_UNUSED_PARAM(event_result);
 
-    retval = API_SUCCESS;
-    status_flag = BT_FALSE;
+    retval             = API_SUCCESS;
+    status_flag        = BT_FALSE;
+    index              = 0U;
+    no_of_attr_handles = 0U;
+    uuid_format        = 0x00U;
+    BT_mem_set(handle_value_list, 0x0U, sizeof(handle_value_list));
 
-    if (event_datalen < 2U)
+    if ((event_datalen < 2U) ||
+        (NULL == event_data))
     {
-        /* Return Failure as length is less */
+        /* Return Failure as length is less or Event data is NULL */
         retval = API_FAILURE;
     }
 
     if (API_SUCCESS == retval)
     {
-        /* Extract the Attribute Handle being requested */
-        BT_UNPACK_LE_2_BYTE
-        (
-            &attr_handle,
-            event_data
-        );
-
         if (
                ((att_event != ATT_CONNECTION_IND) &&
                (att_event != ATT_DISCONNECTION_IND)) &&
                ((att_event == ATT_READ_REQ ) ||
                (att_event == ATT_READ_BLOB_REQ) ||
                (att_event == ATT_READ_MULTIPLE_REQ ) ||
+               (att_event == ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ) ||
                (att_event == ATT_WRITE_REQ ) ||
                (att_event == ATT_WRITE_CMD ) ||
                (att_event == ATT_SIGNED_WRITE_CMD ) ||
                (att_event == ATT_PREPARE_WRITE_REQ ) ||
-               (att_event == ATT_READ_BY_TYPE_REQ ) ||
-               (att_event == ATT_READ_BY_GROUP_REQ ) ||
-               (att_event == ATT_EXECUTE_WRITE_REQ ))
+               (att_event == ATT_READ_BY_TYPE_REQ ))
            )
         {
-            if ((event_datalen >= 4U) && (att_event == ATT_READ_BY_TYPE_REQ ))
+            if ((event_datalen >= 6U) && (att_event == ATT_READ_BY_TYPE_REQ ))
             {
-                UINT16 start_hndl;
-                UINT16 end_hndl;
-
                 /* Extract Start and End Handles */
-                BT_UNPACK_LE_2_BYTE(&start_hndl, event_data);
-                BT_UNPACK_LE_2_BYTE(&end_hndl, &event_data[2U]);
+                BT_UNPACK_LE_2_BYTE(&range.start_handle, event_data);
+                BT_UNPACK_LE_2_BYTE(&range.end_handle, &event_data[2U]);
 
-                if (0xFFFFU == end_hndl)
+                APPL_TRC(
+                "[APPL]: Handle Value Pair in Range 0x%04X-0x%04X\n",
+                range.start_handle, range.end_handle);
+
+                /**
+                 * Extract the UUID requested here and check if
+                 * the Read By Type Request is during Characteristic
+                 * Discovery.
+                 */
+
+                if (event_datalen == 6U)
+                {
+                    /* Set the format */
+                    uuid_format = ATT_16_BIT_UUID_FORMAT;
+
+                    /* Copy UUID */
+                    BT_UNPACK_LE_2_BYTE(&t_uuid.uuid_16, &event_data[4U]);
+
+                    uuid.val = &event_data[4U];
+                    uuid.len = ATT_16_BIT_UUID_SIZE;
+
+                    /**
+                     * Based on "BT Spec V5.3, Vol 3 Part G Section 3.3.1,
+                     * Section 4.6.1 and Section 4.6.2", If Characteristic Discovery
+                     * is being attempted, then bypass Authorization check as
+                     * Characteristic Declaration is Readable and does not have
+                     * Authentication or Authorization Requirement.
+                     *
+                     * Similarly, Characteristics such as
+                     * GATT Database Hash value, Client Supported Features do not have
+                     * Authentication or Authorization Requirement.
+                     */
+                    if (ATT_16_BIT_UUID_FORMAT == uuid_format)
+                    {
+                        if ((GATT_CHARACTERISTIC == t_uuid.uuid_16) ||
+                            (GATT_CLIENT_SUPP_FEATURES_CHARACTERISTIC == t_uuid.uuid_16) ||
+                            (GATT_DATABASE_HASH_CHARACTERISTIC == t_uuid.uuid_16))
+                        {
+                            /* Do Nothing */
+                            retval = API_FAILURE;
+                        }
+                    }
+                }
+                else if (event_datalen == 20U)
+                {
+                    /* Set the format */
+                    uuid_format = ATT_128_BIT_UUID_FORMAT;
+
+                    uuid.val = &event_data[4U];
+                    uuid.len = ATT_128_BIT_UUID_SIZE;
+                }
+                else
                 {
                     /* Do Nothing */
                     retval = API_FAILURE;
                 }
-            }
 
-            if ((event_datalen >= 4U) && (att_event == ATT_READ_MULTIPLE_REQ ))
+                if (API_SUCCESS == retval)
+                {
+                    if ((ATT_16_BIT_UUID_FORMAT == uuid_format) ||
+                        (ATT_128_BIT_UUID_FORMAT == uuid_format))
+                    {
+                        /**
+                         * Fetch the attribute handles for the UUID received
+                         * in Read By Type Request.
+                         *
+                         * NOTE: Read By Type request with UUID is used if client
+                         * only knows the characteristic UUID and does not know the handle of
+                         * the characteristic.
+                         */
+                        do
+                        {
+                            retval = BT_gatt_db_fetch_handle_value_pair
+                                     (
+                                         handle,
+                                         &range,
+                                         &uuid,
+                                         &handle_value_list[index],
+                                         (GATT_DB_READ_BY_TYPE | GATT_DB_LOCALLY_INITIATED)
+                                     );
+
+                            APPL_TRC(
+                            "[APPL]: Fetch Handle Value Pair, Result 0x%04X\n", retval);
+
+                            if ((API_SUCCESS == retval) || (GATT_DB_MORE_MATCHING_RESULT_FOUND == retval))
+                            {
+                                /**
+                                 * Two possibilities
+                                 * API_SUCCESS: Search successful and no more matching found
+                                 * GATT_DB_MORE_MATCHING_RESULT_FOUND: Search success and more
+                                 * matching found
+                                 */
+                                index++;
+
+                                /* Increment number of attribute handle count */
+                                no_of_attr_handles++;
+                            }
+
+                            /* When there are no more matching found stop searching */
+                            if (GATT_DB_MORE_MATCHING_RESULT_FOUND != retval)
+                            {
+                                break;
+                            }
+                        } while (index < APPL_MAX_HNDL_VALUE_SIZE);
+
+                        /* When search completed */
+                        if (0 != no_of_attr_handles)
+                        {
+                            for (index = 0; index < no_of_attr_handles; index++)
+                            {
+                                /* Fetch the attribute handle from Handle value pair */
+                                attr_handle = handle_value_list[index].handle;
+
+                                /* Check Authorization for each attribute handle */
+                                retval = appl_service_chk_attr_hndl_auth(att_event, handle, attr_handle);
+
+                                if (API_FAILURE == retval)
+                                {
+                                    /**
+                                     * Indicates sent the error response for the
+                                     * corresponding handle. And Do not validate Authorization
+                                     * check for other handles.
+                                     */
+
+                                     /**
+                                      * Assign Failure retval to avoid further
+                                      * processing in parent function
+                                      */
+                                    status_flag = BT_TRUE;
+                                    break;
+                                }
+                                else if (API_SUCCESS == retval)
+                                {
+                                    /* MISRA C - 2012 Rule 2.2 */
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if ( (event_datalen >= 4U) &&
+                     ((att_event == ATT_READ_MULTIPLE_REQ) ||
+                      (att_event == ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ)) )
             {
                 UCHAR hndl_count;
 
@@ -729,46 +915,51 @@ API_RESULT appl_check_attr_dev_authorization
 
                     hndl_count++;
 
-                    retval = (BT_TRUE != GATT_CHK_ATTR_HNDL_AUTHORIZATION(attr_handle)) ?
-                             API_FAILURE : API_SUCCESS;
+                    retval = appl_service_chk_attr_hndl_auth(att_event, handle, attr_handle);
 
+                    if (API_FAILURE == retval)
+                    {
+                        /**
+                         * Indicates sent the error response for the
+                         * corresponding handle. And Do not validate Authorization
+                         * check for other handles.
+                         *
+                         * Assign Failure retval to avoid further
+                         * processing in parent function
+                         */
+                        status_flag = BT_TRUE;
+                        break;
+                    }
+                    else if (API_SUCCESS == retval)
+                    {
+                        /* MISRA C - 2012 Rule 2.2 */
+                    }
                 }while (event_datalen > (hndl_count * 2U));
             }
-
-            if ((GATT_DB_MAX_ATTRIBUTES) <= attr_handle)
+            else
             {
-                /* Do Nothing */
-                retval = API_FAILURE;
-            }
+                /**
+                 * Hits here for Read, Read Blob, Write Request, Write Command,
+                 * Prepare write, signed write requests
+                 */
 
-            if (API_SUCCESS == retval)
-            {
-                /* Check the Authorization for the handle based on type of event */
-                if (BT_TRUE == GATT_CHK_ATTR_HNDL_AUTHORIZATION(attr_handle))
+                 /* Extract the Attribute Handle being requested */
+                 BT_UNPACK_LE_2_BYTE
+                 (
+                     &attr_handle,
+                     event_data
+                 );
+
+                retval = appl_service_chk_attr_hndl_auth(att_event, handle, attr_handle);
+
+                if (API_FAILURE == retval)
                 {
-                    /* check if the application authorization flag is set */
-                    if (BT_TRUE != APPL_GET_AUTHORIZATION(handle->device_id))
-                    {
-                        /* Send Authorization error */
-                        retval = appl_handl_authorization_err
-                                 (
-                                     handle,
-                                     att_event,
-                                     attr_handle
-                                 );
-
-                        if (API_SUCCESS == retval)
-                        {
-                            /*
-                             * Assign Failure retval to avoid further
-                             * processing in parent function
-                             */
-                            status_flag = BT_TRUE;
-
-                            /* MISRA C - 2012 Rule 2.2 */
-                            /* retval = API_FAILURE; */
-                        }
-                    }
+                    /* Indicate Error response is sent */
+                    status_flag = BT_TRUE;
+                }
+                else if (API_SUCCESS == retval)
+                {
+                    /* MISRA C - 2012 Rule 2.2 */
                 }
             }
         }
@@ -776,6 +967,56 @@ API_RESULT appl_check_attr_dev_authorization
 
     /* Return based on the value of the Status Flag set above */
     return (status_flag == BT_TRUE) ? API_FAILURE : API_SUCCESS;
+}
+
+API_RESULT appl_service_chk_attr_hndl_auth
+           (
+               UCHAR             att_event,
+               ATT_HANDLE      * handle,
+               ATT_ATTR_HANDLE   attr_handle
+           )
+{
+    API_RESULT       retval;
+
+    retval = API_SUCCESS;
+
+#ifdef GATT_DB_DYNAMIC
+    if (BT_gatt_db_get_attribute_count() <= attr_handle)
+#else /* GATT_DB_DYNAMIC */
+    if ((GATT_DB_MAX_ATTRIBUTES) <= attr_handle)
+#endif /* GATT_DB_DYNAMIC */
+    {
+        APPL_TRC("Invalid Attribute Handle\n");
+        /**
+         * Returning Invalid Attribute Handle and not API_FAILURE.
+         */
+        retval = GATT_DB_INVALID_ATTR_HANDLE;
+    }
+    else
+    {
+        /* Check the Authorization for the handle based on type of event */
+        if (BT_TRUE == GATT_CHK_ATTR_HNDL_AUTHORIZATION(attr_handle))
+        {
+            /* check if the application authorization flag is set */
+            if (BT_TRUE != APPL_GET_AUTHORIZATION(handle->device_id))
+            {
+                /* Send Authorization error */
+                retval = appl_handl_authorization_err
+                         (
+                             handle,
+                             att_event,
+                             attr_handle
+                         );
+                if (API_SUCCESS == retval)
+                {
+                    /* Assign API_FAILURE to indicate Error response is sent */
+                    retval = API_FAILURE;
+                }
+            }
+        }
+    }
+
+    return retval;
 }
 
 API_RESULT appl_handl_authorization_err

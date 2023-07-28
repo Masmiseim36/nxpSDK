@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -86,85 +86,38 @@
 #define BOARD_USB_PHY_TXCAL45DP (0x06U)
 #define BOARD_USB_PHY_TXCAL45DM (0x06U)
 
-#define BOARD_ARDUINO_INT_IRQ           (GPIO1_Combined_16_31_IRQn)
-#define BOARD_ARDUINO_I2C_IRQ           (LPI2C4_IRQn)
-#define BOARD_ARDUINO_I2C_INDEX         (4)
-#define BOARD_USDHC1_BASEADDR           USDHC1
-#define BOARD_USDHC2_BASEADDR           USDHC2
-#define BOARD_USDHC_CD_GPIO_BASE        GPIO3
-#define BOARD_USDHC_CD_GPIO_PIN         19
-#define BOARD_USDHC_CD_PORT_IRQ         GPIO3_Combined_16_31_IRQn
-#define BOARD_USDHC_CD_PORT_IRQ_HANDLER GPIO3_Combined_16_31_IRQHandler
+#define BOARD_ARDUINO_INT_IRQ   (GPIO1_Combined_16_31_IRQn)
+#define BOARD_ARDUINO_I2C_IRQ   (LPI2C4_IRQn)
+#define BOARD_ARDUINO_I2C_INDEX (4)
+/*! @brief The WIFI-QCA shield pin. */
+#define BOARD_INITGT202SHIELD_PWRON_GPIO      GPIO1               /*!< GPIO device name: GPIO */
+#define BOARD_INITGT202SHIELD_PWRON_PORT      1U                  /*!< PORT device index: 1 */
+#define BOARD_INITGT202SHIELD_PWRON_GPIO_PIN  23U                 /*!< PIO4 pin index: 23 */
+#define BOARD_INITGT202SHIELD_PWRON_PIN_NAME  GPIO1_23            /*!< Pin name */
+#define BOARD_INITGT202SHIELD_PWRON_LABEL     "PWRON"             /*!< Label */
+#define BOARD_INITGT202SHIELD_PWRON_NAME      "PWRON"             /*!< Identifier name */
+#define BOARD_INITGT202SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
 
-#define BOARD_USDHC_CD_STATUS() (GPIO_PinRead(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN))
+#define BOARD_INITGT202SHIELD_IRQ_GPIO      GPIO1              /*!< GPIO device name: GPIO */
+#define BOARD_INITGT202SHIELD_IRQ_PORT      1U                 /*!< PORT device index: 1 */
+#define BOARD_INITGT202SHIELD_IRQ_GPIO_PIN  22U                /*!< PIO1 pin index: 22 */
+#define BOARD_INITGT202SHIELD_IRQ_PIN_NAME  GPIO1_22           /*!< Pin name */
+#define BOARD_INITGT202SHIELD_IRQ_LABEL     "IRQ"              /*!< Label */
+#define BOARD_INITGT202SHIELD_IRQ_NAME      "IRQ"              /*!< Identifier name */
+#define BOARD_INITGT202SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
 
-#define BOARD_USDHC_CD_INTERRUPT_STATUS()    (GPIO_PortGetInterruptFlags(BOARD_USDHC_CD_GPIO_BASE))
-#define BOARD_USDHC_CD_CLEAR_INTERRUPT(flag) (GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, flag))
+/* Display. */
+#define BOARD_LCD_DC_GPIO     GPIO1 /*! LCD data/command port */
+#define BOARD_LCD_DC_GPIO_PIN 15U   /*! LCD data/command pin */
 
-#define BOARD_USDHC_CD_GPIO_INIT()                                                          \
-    {                                                                                       \
-        gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalInput,                                                             \
-            0,                                                                              \
-            kGPIO_IntRisingOrFallingEdge,                                                   \
-        };                                                                                  \
-        GPIO_PinInit(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN, &sw_config);        \
-        GPIO_PortEnableInterrupts(BOARD_USDHC_CD_GPIO_BASE, 1U << BOARD_USDHC_CD_GPIO_PIN); \
-        GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, ~0);                         \
-    }
+/* @Brief Board Bluetooth HCI UART configuration */
+#define BOARD_BT_UART_BASEADDR    LPUART3
+#define BOARD_BT_UART_CLK_FREQ    BOARD_DebugConsoleSrcFreq()
+#define BOARD_BT_UART_IRQ         LPUART3_IRQn
+#define BOARD_BT_UART_IRQ_HANDLER LPUART3_IRQHandler
 
-#define BOARD_HAS_SDCARD              (1U)
-#define BOARD_SD_POWER_RESET_GPIO     (GPIO3)
-#define BOARD_SD_POWER_RESET_GPIO_PIN (24U)
-
-#define BOARD_USDHC_CARD_INSERT_CD_LEVEL (0U)
-
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL(state)
-
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL_INIT()                                            \
-    {                                                                                       \
-        gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput,                                                            \
-            0,                                                                              \
-            kGPIO_NoIntmode,                                                                \
-        };                                                                                  \
-        GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
-        GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, true);      \
-    }
-
-#define BOARD_USDHC_SDCARD_POWER_CONTROL_INIT()                                             \
-    {                                                                                       \
-        gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput,                                                            \
-            0,                                                                              \
-            kGPIO_NoIntmode,                                                                \
-        };                                                                                  \
-        GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
-    }
-
-#define BOARD_USDHC_SDCARD_POWER_CONTROL(state) \
-    (GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, state))
-
-#define BOARD_USDHC1_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd0) / (CLOCK_GetDiv(kCLOCK_Usdhc1Div) + 1U))
-#define BOARD_USDHC2_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd0) / (CLOCK_GetDiv(kCLOCK_Usdhc2Div) + 1U))
-
-#define BOARD_SD_HOST_BASEADDR BOARD_USDHC1_BASEADDR
-#define BOARD_SD_HOST_CLK_FREQ BOARD_USDHC1_CLK_FREQ
-#define BOARD_SD_HOST_IRQ      USDHC1_IRQn
-
-#define BOARD_MMC_HOST_BASEADDR BOARD_USDHC2_BASEADDR
-#define BOARD_MMC_HOST_CLK_FREQ BOARD_USDHC2_CLK_FREQ
-#define BOARD_MMC_HOST_IRQ      USDHC2_IRQn
-#define BOARD_MMC_VCCQ_SUPPLY   kMMC_VoltageWindow170to195
-#define BOARD_MMC_VCC_SUPPLY    kMMC_VoltageWindows270to360
-/* we are using the BB SD socket to DEMO the MMC example,but the
- * SD socket provide 4bit bus only, so we define this macro to avoid
- * 8bit data bus test
- */
-#define BOARD_MMC_SUPPORT_8BIT_BUS (1U)
-
-#define BOARD_SD_HOST_SUPPORT_SDR104_FREQ (100000000U)
-#define BOARD_SD_HOST_SUPPORT_HS200_FREQ  (180000000U)
+/*! @brief board has sdcard */
+#define BOARD_HAS_SDCARD (1U)
 
 #if defined(__cplusplus)
 extern "C" {

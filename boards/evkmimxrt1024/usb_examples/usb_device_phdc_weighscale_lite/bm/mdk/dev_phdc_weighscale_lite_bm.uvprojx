@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=1, DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, DEBUG, _DEBUG=1, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1024;../../../../xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1024xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -373,12 +373,47 @@
       <uAC6>1</uAC6>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -473,767 +508,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/device/source/ehci</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/phy</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1024.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/arm/startup_MIMXRT1024.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/device/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/device/source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-      </Groups>
-    </Target>
-    <Target>
-      <TargetName>dev_phdc_weighscale_lite_bm flexspi_nor_debug</TargetName>
-      <ToolsetNumber>0x4</ToolsetNumber>
-      <ToolsetName>ARM-ADS</ToolsetName>
-      <TargetOption>
-        <TargetCommonOption>
-          <Device>MIMXRT1024DAG5A</Device>
-          <Vendor>NXP</Vendor>
-          <PackID>NXP.MIMXRT1024_DFP.2.3.0</PackID>
-          <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
-          <FlashUtilSpec/>
-          <StartupFile/>
-          <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:MIMXRT1024DAG5A$Device\Include\fsl_device_registers.h</RegisterFile>
-          <MemoryEnv/>
-          <Cmp/>
-          <Asm/>
-          <Linker/>
-          <OHString/>
-          <InfinionOptionDll/>
-          <SLE66CMisc/>
-          <SLE66AMisc/>
-          <SLE66LinkerMisc/>
-          <SFDFile>$$Device:MIMXRT1024DAG5A$SVD\MIMXRT1024.svd</SFDFile>
-          <bCustSvd>0</bCustSvd>
-          <UseEnv>0</UseEnv>
-          <BinPath/>
-          <IncludePath/>
-          <LibPath/>
-          <RegisterFilePath/>
-          <DBRegisterFilePath/>
-          <TargetStatus>
-            <Error>0</Error>
-            <ExitCodeStop>0</ExitCodeStop>
-            <ButtonStop>0</ButtonStop>
-            <NotGenerated>0</NotGenerated>
-            <InvalidFlash>1</InvalidFlash>
-          </TargetStatus>
-          <OutputDirectory>flexspi_nor_debug\</OutputDirectory>
-          <OutputName>dev_phdc_weighscale_lite_bm.out</OutputName>
-          <CreateExecutable>1</CreateExecutable>
-          <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
-          <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\output\</ListingPath>
-          <HexFormatSelection>1</HexFormatSelection>
-          <Merge32K>0</Merge32K>
-          <CreateBatchFile>0</CreateBatchFile>
-          <BeforeCompile>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name/>
-            <UserProg2Name/>
-            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
-            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopU1X>0</nStopU1X>
-            <nStopU2X>0</nStopU2X>
-          </BeforeCompile>
-          <BeforeMake>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name/>
-            <UserProg2Name/>
-            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
-            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopB1X>0</nStopB1X>
-            <nStopB2X>0</nStopB2X>
-          </BeforeMake>
-          <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name/>
-            <UserProg2Name/>
-            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
-            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopA1X>0</nStopA1X>
-            <nStopA2X>0</nStopA2X>
-          </AfterMake>
-          <SelectedForBatchBuild>1</SelectedForBatchBuild>
-          <SVCSIdString/>
-        </TargetCommonOption>
-        <CommonProperty>
-          <UseCPPCompiler>0</UseCPPCompiler>
-          <RVCTCodeConst>0</RVCTCodeConst>
-          <RVCTZI>0</RVCTZI>
-          <RVCTOtherData>0</RVCTOtherData>
-          <ModuleSelection>0</ModuleSelection>
-          <IncludeInBuild>1</IncludeInBuild>
-          <AlwaysBuild>0</AlwaysBuild>
-          <GenerateAssemblyFile>0</GenerateAssemblyFile>
-          <AssembleAssemblyFile>0</AssembleAssemblyFile>
-          <PublicsOnly>0</PublicsOnly>
-          <StopOnExitCode>3</StopOnExitCode>
-          <CustomArgument/>
-          <IncludeLibraryModules/>
-          <ComprImg>1</ComprImg>
-        </CommonProperty>
-        <DllOption>
-          <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments> -REMAP -MPU</SimDllArguments>
-          <SimDlgDll>DCM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM7</SimDlgDllArguments>
-          <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments> -MPU</TargetDllArguments>
-          <TargetDlgDll>TCM.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCM7</TargetDlgDllArguments>
-        </DllOption>
-        <DebugOption>
-          <OPTHX>
-            <HexSelection>1</HexSelection>
-            <HexRangeLowAddress>0</HexRangeLowAddress>
-            <HexRangeHighAddress>0</HexRangeHighAddress>
-            <HexOffset>0</HexOffset>
-            <Oh166RecLen>16</Oh166RecLen>
-          </OPTHX>
-        </DebugOption>
-        <Utilities>
-          <Flash1>
-            <UseTargetDll>1</UseTargetDll>
-            <UseExternalTool>0</UseExternalTool>
-            <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
-          </Flash1>
-          <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3/>
-          <Flash4/>
-          <pFcarmOut/>
-          <pFcarmGrp/>
-          <pFcArmRoot/>
-          <FcArmLst>0</FcArmLst>
-        </Utilities>
-        <TargetArmAds>
-          <ArmAdsMisc>
-            <GenerateListings>0</GenerateListings>
-            <asHll>1</asHll>
-            <asAsm>1</asAsm>
-            <asMacX>1</asMacX>
-            <asSyms>1</asSyms>
-            <asFals>1</asFals>
-            <asDbgD>1</asDbgD>
-            <asForm>1</asForm>
-            <ldLst>0</ldLst>
-            <ldmm>1</ldmm>
-            <ldXref>1</ldXref>
-            <BigEnd>0</BigEnd>
-            <AdsALst>1</AdsALst>
-            <AdsACrf>0</AdsACrf>
-            <AdsANop>0</AdsANop>
-            <AdsANot>0</AdsANot>
-            <AdsLLst>1</AdsLLst>
-            <AdsLmap>1</AdsLmap>
-            <AdsLcgr>1</AdsLcgr>
-            <AdsLsym>1</AdsLsym>
-            <AdsLszi>1</AdsLszi>
-            <AdsLtoi>1</AdsLtoi>
-            <AdsLsun>1</AdsLsun>
-            <AdsLven>1</AdsLven>
-            <AdsLsxf>1</AdsLsxf>
-            <RvctClst>0</RvctClst>
-            <GenPPlst>0</GenPPlst>
-            <AdsCpuType>"Cortex-M7"</AdsCpuType>
-            <RvctDeviceName/>
-            <mOS>0</mOS>
-            <uocRom>0</uocRom>
-            <uocRam>0</uocRam>
-            <hadIROM>1</hadIROM>
-            <hadIRAM>1</hadIRAM>
-            <hadXRAM>1</hadXRAM>
-            <uocXRam>0</uocXRam>
-            <RvdsVP>3</RvdsVP>
-            <hadIRAM2>1</hadIRAM2>
-            <hadIROM2>0</hadIROM2>
-            <StupSel>1</StupSel>
-            <useUlib>1</useUlib>
-            <EndSel>0</EndSel>
-            <uLtcg>0</uLtcg>
-            <nSecure>0</nSecure>
-            <RoSelD>3</RoSelD>
-            <RwSelD>4</RwSelD>
-            <CodeSel>0</CodeSel>
-            <OptFeed>0</OptFeed>
-            <NoZi1>0</NoZi1>
-            <NoZi2>0</NoZi2>
-            <NoZi3>0</NoZi3>
-            <NoZi4>0</NoZi4>
-            <NoZi5>0</NoZi5>
-            <Ro1Chk>1</Ro1Chk>
-            <Ro2Chk>0</Ro2Chk>
-            <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
-            <Ir2Chk>0</Ir2Chk>
-            <Ra1Chk>0</Ra1Chk>
-            <Ra2Chk>0</Ra2Chk>
-            <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>0</Im1Chk>
-            <Im2Chk>1</Im2Chk>
-            <OnChipMemories>
-              <Ocm1>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm1>
-              <Ocm2>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm2>
-              <Ocm3>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm3>
-              <Ocm4>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm4>
-              <Ocm5>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm5>
-              <Ocm6>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm6>
-              <IRAM>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
-              </IRAM>
-              <IROM>
-                <Type>1</Type>
-                <StartAddress>0x60000000</StartAddress>
-                <Size>0x800000</Size>
-              </IROM>
-              <XRAM>
-                <Type>1</Type>
-                <StartAddress>0x20200000</StartAddress>
-                <Size>0x20000</Size>
-              </XRAM>
-              <OCR_RVCT1>
-                <Type>1</Type>
-                <StartAddress>0x60000000</StartAddress>
-                <Size>0x800000</Size>
-              </OCR_RVCT1>
-              <OCR_RVCT2>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT2>
-              <OCR_RVCT3>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT3>
-              <OCR_RVCT4>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT4>
-              <OCR_RVCT5>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT5>
-              <OCR_RVCT6>
-                <Type>0</Type>
-                <StartAddress>0x20200000</StartAddress>
-                <Size>0x20000</Size>
-              </OCR_RVCT6>
-              <OCR_RVCT7>
-                <Type>0</Type>
-                <StartAddress>0x80000000</StartAddress>
-                <Size>0x2000000</Size>
-              </OCR_RVCT7>
-              <OCR_RVCT8>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT8>
-              <OCR_RVCT9>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
-              </OCR_RVCT9>
-              <OCR_RVCT10>
-                <Type>0</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x10000</Size>
-              </OCR_RVCT10>
-            </OnChipMemories>
-            <RvctStartVector/>
-          </ArmAdsMisc>
-          <Cads>
-            <interw>0</interw>
-            <Optim>2</Optim>
-            <oTime>0</oTime>
-            <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
-            <Strict>0</Strict>
-            <EnumInt>0</EnumInt>
-            <PlainCh>0</PlainCh>
-            <Ropi>0</Ropi>
-            <Rwpi>0</Rwpi>
-            <wLevel>3</wLevel>
-            <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
-            <useXO>0</useXO>
-            <v6Lang>3</v6Lang>
-            <v6LangP>3</v6LangP>
-            <vShortEn>1</vShortEn>
-            <vShortWch>1</vShortWch>
-            <v6Lto>0</v6Lto>
-            <v6WtE>0</v6WtE>
-            <v6Rtti>0</v6Rtti>
-            <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
-              <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
-            </VariousControls>
-          </Cads>
-          <Aads>
-            <interw>0</interw>
-            <Ropi>0</Ropi>
-            <Rwpi>0</Rwpi>
-            <thumb>0</thumb>
-            <SplitLS>0</SplitLS>
-            <SwStkChk>0</SwStkChk>
-            <NoWarn>0</NoWarn>
-            <uSurpInc>0</uSurpInc>
-            <useXO>0</useXO>
-            <uClangAs>1</uClangAs>
-            <VariousControls>
-              <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
-              <Undefine/>
-              <IncludePath/>
-            </VariousControls>
-          </Aads>
-          <LDads>
-            <umfTarg>0</umfTarg>
-            <Ropi>0</Ropi>
-            <Rwpi>0</Rwpi>
-            <noStLib>0</noStLib>
-            <RepFail>1</RepFail>
-            <useFile>0</useFile>
-            <TextAddressRange>0x00000000</TextAddressRange>
-            <DataAddressRange>0x20000000</DataAddressRange>
-            <pXoBase/>
-            <ScatterFile>MIMXRT1024xxxxx_flexspi_nor.scf</ScatterFile>
-            <IncludeLibs/>
-            <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
-            <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
-          </LDads>
-        </TargetArmAds>
-      </TargetOption>
-      <uAC6>1</uAC6>
-      <Groups>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1244,137 +518,72 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/ieee11073_agent</GroupName>
+          <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>ieee11073_agent.c</FileName>
+              <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../ieee11073_agent.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_agent.h</FileName>
+              <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../ieee11073_agent.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_types.h</FileName>
+              <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../ieee11073_types.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_timer.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../ieee11073_timer.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_timer.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../ieee11073_timer.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source</GroupName>
-          <Files>
             <File>
-              <FileName>usb_device_descriptor.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../usb_device_descriptor.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>usb_device_descriptor.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../usb_device_descriptor.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>usb_shim_agent.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../usb_shim_agent.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>usb_shim_agent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_shim_agent.h</FilePath>
-            </File>
-            <File>
-              <FileName>weighscale.c</FileName>
+              <FileName>fsl_common_arm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../weighscale.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
             </File>
             <File>
-              <FileName>weighscale.h</FileName>
+              <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../weighscale.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>usb_device_phdc.c</FileName>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../usb_device_phdc.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>usb_device_phdc.h</FileName>
+              <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../usb_device_phdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1409,78 +618,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -1501,10 +645,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1552,16 +721,6 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
@@ -1571,35 +730,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2050,9 +1189,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1024;../../../../xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2086,7 +1225,7 @@
             <ScatterFile>MIMXRT1024xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2095,12 +1234,47 @@
       <uAC6>1</uAC6>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2195,47 +1369,82 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
-              <FileName>clock_config.c</FileName>
+              <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
             </File>
             <File>
-              <FileName>clock_config.h</FileName>
+              <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.c</FileName>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>dcd.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>dcd.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2270,78 +1479,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -2362,10 +1506,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2413,6 +1582,16 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
@@ -2422,15 +1601,786 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/include</GroupName>
+          <Files>
             <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
             </File>
             <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
+              <FileName>usb_device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+      </Groups>
+    </Target>
+    <Target>
+      <TargetName>dev_phdc_weighscale_lite_bm flexspi_nor_debug</TargetName>
+      <ToolsetNumber>0x4</ToolsetNumber>
+      <ToolsetName>ARM-ADS</ToolsetName>
+      <TargetOption>
+        <TargetCommonOption>
+          <Device>MIMXRT1024DAG5A</Device>
+          <Vendor>NXP</Vendor>
+          <PackID>NXP.MIMXRT1024_DFP.2.3.0</PackID>
+          <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
+          <FlashUtilSpec/>
+          <StartupFile/>
+          <DeviceId>0</DeviceId>
+          <RegisterFile>$$Device:MIMXRT1024DAG5A$Device\Include\fsl_device_registers.h</RegisterFile>
+          <MemoryEnv/>
+          <Cmp/>
+          <Asm/>
+          <Linker/>
+          <OHString/>
+          <InfinionOptionDll/>
+          <SLE66CMisc/>
+          <SLE66AMisc/>
+          <SLE66LinkerMisc/>
+          <SFDFile>$$Device:MIMXRT1024DAG5A$SVD\MIMXRT1024.svd</SFDFile>
+          <bCustSvd>0</bCustSvd>
+          <UseEnv>0</UseEnv>
+          <BinPath/>
+          <IncludePath/>
+          <LibPath/>
+          <RegisterFilePath/>
+          <DBRegisterFilePath/>
+          <TargetStatus>
+            <Error>0</Error>
+            <ExitCodeStop>0</ExitCodeStop>
+            <ButtonStop>0</ButtonStop>
+            <NotGenerated>0</NotGenerated>
+            <InvalidFlash>1</InvalidFlash>
+          </TargetStatus>
+          <OutputDirectory>flexspi_nor_debug\</OutputDirectory>
+          <OutputName>dev_phdc_weighscale_lite_bm.out</OutputName>
+          <CreateExecutable>1</CreateExecutable>
+          <CreateLib>0</CreateLib>
+          <CreateHexFile>0</CreateHexFile>
+          <DebugInformation>1</DebugInformation>
+          <BrowseInformation>1</BrowseInformation>
+          <ListingPath>.\output\</ListingPath>
+          <HexFormatSelection>1</HexFormatSelection>
+          <Merge32K>0</Merge32K>
+          <CreateBatchFile>0</CreateBatchFile>
+          <BeforeCompile>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name/>
+            <UserProg2Name/>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
+          </BeforeCompile>
+          <BeforeMake>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name/>
+            <UserProg2Name/>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
+          </BeforeMake>
+          <AfterMake>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name/>
+            <UserProg2Name/>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
+          </AfterMake>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
+          <SVCSIdString/>
+        </TargetCommonOption>
+        <CommonProperty>
+          <UseCPPCompiler>0</UseCPPCompiler>
+          <RVCTCodeConst>0</RVCTCodeConst>
+          <RVCTZI>0</RVCTZI>
+          <RVCTOtherData>0</RVCTOtherData>
+          <ModuleSelection>0</ModuleSelection>
+          <IncludeInBuild>1</IncludeInBuild>
+          <AlwaysBuild>0</AlwaysBuild>
+          <GenerateAssemblyFile>0</GenerateAssemblyFile>
+          <AssembleAssemblyFile>0</AssembleAssemblyFile>
+          <PublicsOnly>0</PublicsOnly>
+          <StopOnExitCode>3</StopOnExitCode>
+          <CustomArgument/>
+          <IncludeLibraryModules/>
+          <ComprImg>1</ComprImg>
+        </CommonProperty>
+        <DllOption>
+          <SimDllName>SARMCM3.DLL</SimDllName>
+          <SimDllArguments> -REMAP -MPU</SimDllArguments>
+          <SimDlgDll>DCM.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM7</SimDlgDllArguments>
+          <TargetDllName>SARMCM3.DLL</TargetDllName>
+          <TargetDllArguments> -MPU</TargetDllArguments>
+          <TargetDlgDll>TCM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pCM7</TargetDlgDllArguments>
+        </DllOption>
+        <DebugOption>
+          <OPTHX>
+            <HexSelection>1</HexSelection>
+            <HexRangeLowAddress>0</HexRangeLowAddress>
+            <HexRangeHighAddress>0</HexRangeHighAddress>
+            <HexOffset>0</HexOffset>
+            <Oh166RecLen>16</Oh166RecLen>
+          </OPTHX>
+        </DebugOption>
+        <Utilities>
+          <Flash1>
+            <UseTargetDll>1</UseTargetDll>
+            <UseExternalTool>0</UseExternalTool>
+            <RunIndependent>0</RunIndependent>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <Capability>1</Capability>
+            <DriverSelection>4096</DriverSelection>
+          </Flash1>
+          <bUseTDR>1</bUseTDR>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash3/>
+          <Flash4/>
+          <pFcarmOut/>
+          <pFcarmGrp/>
+          <pFcArmRoot/>
+          <FcArmLst>0</FcArmLst>
+        </Utilities>
+        <TargetArmAds>
+          <ArmAdsMisc>
+            <GenerateListings>0</GenerateListings>
+            <asHll>1</asHll>
+            <asAsm>1</asAsm>
+            <asMacX>1</asMacX>
+            <asSyms>1</asSyms>
+            <asFals>1</asFals>
+            <asDbgD>1</asDbgD>
+            <asForm>1</asForm>
+            <ldLst>0</ldLst>
+            <ldmm>1</ldmm>
+            <ldXref>1</ldXref>
+            <BigEnd>0</BigEnd>
+            <AdsALst>1</AdsALst>
+            <AdsACrf>0</AdsACrf>
+            <AdsANop>0</AdsANop>
+            <AdsANot>0</AdsANot>
+            <AdsLLst>1</AdsLLst>
+            <AdsLmap>1</AdsLmap>
+            <AdsLcgr>1</AdsLcgr>
+            <AdsLsym>1</AdsLsym>
+            <AdsLszi>1</AdsLszi>
+            <AdsLtoi>1</AdsLtoi>
+            <AdsLsun>1</AdsLsun>
+            <AdsLven>1</AdsLven>
+            <AdsLsxf>1</AdsLsxf>
+            <RvctClst>0</RvctClst>
+            <GenPPlst>0</GenPPlst>
+            <AdsCpuType>"Cortex-M7"</AdsCpuType>
+            <RvctDeviceName/>
+            <mOS>0</mOS>
+            <uocRom>0</uocRom>
+            <uocRam>0</uocRam>
+            <hadIROM>1</hadIROM>
+            <hadIRAM>1</hadIRAM>
+            <hadXRAM>1</hadXRAM>
+            <uocXRam>0</uocXRam>
+            <RvdsVP>3</RvdsVP>
+            <hadIRAM2>1</hadIRAM2>
+            <hadIROM2>0</hadIROM2>
+            <StupSel>1</StupSel>
+            <useUlib>1</useUlib>
+            <EndSel>0</EndSel>
+            <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
+            <RoSelD>3</RoSelD>
+            <RwSelD>4</RwSelD>
+            <CodeSel>0</CodeSel>
+            <OptFeed>0</OptFeed>
+            <NoZi1>0</NoZi1>
+            <NoZi2>0</NoZi2>
+            <NoZi3>0</NoZi3>
+            <NoZi4>0</NoZi4>
+            <NoZi5>0</NoZi5>
+            <Ro1Chk>1</Ro1Chk>
+            <Ro2Chk>0</Ro2Chk>
+            <Ro3Chk>0</Ro3Chk>
+            <Ir1Chk>0</Ir1Chk>
+            <Ir2Chk>0</Ir2Chk>
+            <Ra1Chk>0</Ra1Chk>
+            <Ra2Chk>0</Ra2Chk>
+            <Ra3Chk>0</Ra3Chk>
+            <Im1Chk>0</Im1Chk>
+            <Im2Chk>1</Im2Chk>
+            <OnChipMemories>
+              <Ocm1>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm1>
+              <Ocm2>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm2>
+              <Ocm3>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm3>
+              <Ocm4>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm4>
+              <Ocm5>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm5>
+              <Ocm6>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm6>
+              <IRAM>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x10000</Size>
+              </IRAM>
+              <IROM>
+                <Type>1</Type>
+                <StartAddress>0x60000000</StartAddress>
+                <Size>0x800000</Size>
+              </IROM>
+              <XRAM>
+                <Type>1</Type>
+                <StartAddress>0x20200000</StartAddress>
+                <Size>0x20000</Size>
+              </XRAM>
+              <OCR_RVCT1>
+                <Type>1</Type>
+                <StartAddress>0x60000000</StartAddress>
+                <Size>0x800000</Size>
+              </OCR_RVCT1>
+              <OCR_RVCT2>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT2>
+              <OCR_RVCT3>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT3>
+              <OCR_RVCT4>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT4>
+              <OCR_RVCT5>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT5>
+              <OCR_RVCT6>
+                <Type>0</Type>
+                <StartAddress>0x20200000</StartAddress>
+                <Size>0x20000</Size>
+              </OCR_RVCT6>
+              <OCR_RVCT7>
+                <Type>0</Type>
+                <StartAddress>0x80000000</StartAddress>
+                <Size>0x2000000</Size>
+              </OCR_RVCT7>
+              <OCR_RVCT8>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT8>
+              <OCR_RVCT9>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x10000</Size>
+              </OCR_RVCT9>
+              <OCR_RVCT10>
+                <Type>0</Type>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x10000</Size>
+              </OCR_RVCT10>
+            </OnChipMemories>
+            <RvctStartVector/>
+          </ArmAdsMisc>
+          <Cads>
+            <interw>0</interw>
+            <Optim>2</Optim>
+            <oTime>0</oTime>
+            <SplitLS>0</SplitLS>
+            <OneElfS>1</OneElfS>
+            <Strict>0</Strict>
+            <EnumInt>0</EnumInt>
+            <PlainCh>0</PlainCh>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <wLevel>3</wLevel>
+            <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
+            <VariousControls>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
+              <Undefine/>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1024;../../../../xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+            </VariousControls>
+          </Cads>
+          <Aads>
+            <interw>0</interw>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <thumb>0</thumb>
+            <SplitLS>0</SplitLS>
+            <SwStkChk>0</SwStkChk>
+            <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
+            <uClangAs>1</uClangAs>
+            <VariousControls>
+              <MiscControls/>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Undefine/>
+              <IncludePath/>
+            </VariousControls>
+          </Aads>
+          <LDads>
+            <umfTarg>0</umfTarg>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <noStLib>0</noStLib>
+            <RepFail>1</RepFail>
+            <useFile>0</useFile>
+            <TextAddressRange>0x00000000</TextAddressRange>
+            <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase/>
+            <ScatterFile>MIMXRT1024xxxxx_flexspi_nor.scf</ScatterFile>
+            <IncludeLibs/>
+            <IncludeLibsPath/>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <LinkerInputFile/>
+            <DisabledWarnings>6314</DisabledWarnings>
+          </LDads>
+        </TargetArmAds>
+      </TargetOption>
+      <uAC6>1</uAC6>
+      <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/ieee11073_agent</GroupName>
+          <Files>
+            <File>
+              <FileName>ieee11073_agent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../ieee11073_agent.c</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_agent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ieee11073_agent.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ieee11073_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../ieee11073_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ieee11073_timer.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_shim_agent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_shim_agent.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_shim_agent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_shim_agent.h</FilePath>
+            </File>
+            <File>
+              <FileName>weighscale.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../weighscale.c</FilePath>
+            </File>
+            <File>
+              <FileName>weighscale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../weighscale.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_phdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_phdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_phdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_phdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source/ehci</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2450,17 +2400,67 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_component_generic_list.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_generic_list.c</FileName>
+              <FileName>MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1024_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1024.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/arm/startup_MIMXRT1024.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2911,9 +2911,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=0, NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, NDEBUG, _DEBUG=0, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1024;../../../../xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2947,7 +2947,7 @@
             <ScatterFile>MIMXRT1024xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2956,12 +2956,47 @@
       <uAC6>1</uAC6>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3056,767 +3091,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/device/source/ehci</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_ehci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ehci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/phy</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1024.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/arm/startup_MIMXRT1024.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/device/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/device/source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-      </Groups>
-    </Target>
-    <Target>
-      <TargetName>dev_phdc_weighscale_lite_bm flexspi_nor_release</TargetName>
-      <ToolsetNumber>0x4</ToolsetNumber>
-      <ToolsetName>ARM-ADS</ToolsetName>
-      <TargetOption>
-        <TargetCommonOption>
-          <Device>MIMXRT1024DAG5A</Device>
-          <Vendor>NXP</Vendor>
-          <PackID>NXP.MIMXRT1024_DFP.2.3.0</PackID>
-          <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
-          <FlashUtilSpec/>
-          <StartupFile/>
-          <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:MIMXRT1024DAG5A$Device\Include\fsl_device_registers.h</RegisterFile>
-          <MemoryEnv/>
-          <Cmp/>
-          <Asm/>
-          <Linker/>
-          <OHString/>
-          <InfinionOptionDll/>
-          <SLE66CMisc/>
-          <SLE66AMisc/>
-          <SLE66LinkerMisc/>
-          <SFDFile>$$Device:MIMXRT1024DAG5A$SVD\MIMXRT1024.svd</SFDFile>
-          <bCustSvd>0</bCustSvd>
-          <UseEnv>0</UseEnv>
-          <BinPath/>
-          <IncludePath/>
-          <LibPath/>
-          <RegisterFilePath/>
-          <DBRegisterFilePath/>
-          <TargetStatus>
-            <Error>0</Error>
-            <ExitCodeStop>0</ExitCodeStop>
-            <ButtonStop>0</ButtonStop>
-            <NotGenerated>0</NotGenerated>
-            <InvalidFlash>1</InvalidFlash>
-          </TargetStatus>
-          <OutputDirectory>flexspi_nor_release\</OutputDirectory>
-          <OutputName>dev_phdc_weighscale_lite_bm.out</OutputName>
-          <CreateExecutable>1</CreateExecutable>
-          <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
-          <DebugInformation>0</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\output\</ListingPath>
-          <HexFormatSelection>1</HexFormatSelection>
-          <Merge32K>0</Merge32K>
-          <CreateBatchFile>0</CreateBatchFile>
-          <BeforeCompile>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name/>
-            <UserProg2Name/>
-            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
-            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopU1X>0</nStopU1X>
-            <nStopU2X>0</nStopU2X>
-          </BeforeCompile>
-          <BeforeMake>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name/>
-            <UserProg2Name/>
-            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
-            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopB1X>0</nStopB1X>
-            <nStopB2X>0</nStopB2X>
-          </BeforeMake>
-          <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name/>
-            <UserProg2Name/>
-            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
-            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopA1X>0</nStopA1X>
-            <nStopA2X>0</nStopA2X>
-          </AfterMake>
-          <SelectedForBatchBuild>1</SelectedForBatchBuild>
-          <SVCSIdString/>
-        </TargetCommonOption>
-        <CommonProperty>
-          <UseCPPCompiler>0</UseCPPCompiler>
-          <RVCTCodeConst>0</RVCTCodeConst>
-          <RVCTZI>0</RVCTZI>
-          <RVCTOtherData>0</RVCTOtherData>
-          <ModuleSelection>0</ModuleSelection>
-          <IncludeInBuild>1</IncludeInBuild>
-          <AlwaysBuild>0</AlwaysBuild>
-          <GenerateAssemblyFile>0</GenerateAssemblyFile>
-          <AssembleAssemblyFile>0</AssembleAssemblyFile>
-          <PublicsOnly>0</PublicsOnly>
-          <StopOnExitCode>3</StopOnExitCode>
-          <CustomArgument/>
-          <IncludeLibraryModules/>
-          <ComprImg>1</ComprImg>
-        </CommonProperty>
-        <DllOption>
-          <SimDllName>SARMCM3.DLL</SimDllName>
-          <SimDllArguments> -REMAP -MPU</SimDllArguments>
-          <SimDlgDll>DCM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM7</SimDlgDllArguments>
-          <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments> -MPU</TargetDllArguments>
-          <TargetDlgDll>TCM.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCM7</TargetDlgDllArguments>
-        </DllOption>
-        <DebugOption>
-          <OPTHX>
-            <HexSelection>1</HexSelection>
-            <HexRangeLowAddress>0</HexRangeLowAddress>
-            <HexRangeHighAddress>0</HexRangeHighAddress>
-            <HexOffset>0</HexOffset>
-            <Oh166RecLen>16</Oh166RecLen>
-          </OPTHX>
-        </DebugOption>
-        <Utilities>
-          <Flash1>
-            <UseTargetDll>1</UseTargetDll>
-            <UseExternalTool>0</UseExternalTool>
-            <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
-            <DriverSelection>4096</DriverSelection>
-          </Flash1>
-          <bUseTDR>1</bUseTDR>
-          <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3/>
-          <Flash4/>
-          <pFcarmOut/>
-          <pFcarmGrp/>
-          <pFcArmRoot/>
-          <FcArmLst>0</FcArmLst>
-        </Utilities>
-        <TargetArmAds>
-          <ArmAdsMisc>
-            <GenerateListings>0</GenerateListings>
-            <asHll>1</asHll>
-            <asAsm>1</asAsm>
-            <asMacX>1</asMacX>
-            <asSyms>1</asSyms>
-            <asFals>1</asFals>
-            <asDbgD>1</asDbgD>
-            <asForm>1</asForm>
-            <ldLst>0</ldLst>
-            <ldmm>1</ldmm>
-            <ldXref>1</ldXref>
-            <BigEnd>0</BigEnd>
-            <AdsALst>1</AdsALst>
-            <AdsACrf>0</AdsACrf>
-            <AdsANop>0</AdsANop>
-            <AdsANot>0</AdsANot>
-            <AdsLLst>1</AdsLLst>
-            <AdsLmap>1</AdsLmap>
-            <AdsLcgr>1</AdsLcgr>
-            <AdsLsym>1</AdsLsym>
-            <AdsLszi>1</AdsLszi>
-            <AdsLtoi>1</AdsLtoi>
-            <AdsLsun>1</AdsLsun>
-            <AdsLven>1</AdsLven>
-            <AdsLsxf>1</AdsLsxf>
-            <RvctClst>0</RvctClst>
-            <GenPPlst>0</GenPPlst>
-            <AdsCpuType>"Cortex-M7"</AdsCpuType>
-            <RvctDeviceName/>
-            <mOS>0</mOS>
-            <uocRom>0</uocRom>
-            <uocRam>0</uocRam>
-            <hadIROM>1</hadIROM>
-            <hadIRAM>1</hadIRAM>
-            <hadXRAM>1</hadXRAM>
-            <uocXRam>0</uocXRam>
-            <RvdsVP>3</RvdsVP>
-            <hadIRAM2>1</hadIRAM2>
-            <hadIROM2>0</hadIROM2>
-            <StupSel>1</StupSel>
-            <useUlib>1</useUlib>
-            <EndSel>0</EndSel>
-            <uLtcg>0</uLtcg>
-            <nSecure>0</nSecure>
-            <RoSelD>3</RoSelD>
-            <RwSelD>4</RwSelD>
-            <CodeSel>0</CodeSel>
-            <OptFeed>0</OptFeed>
-            <NoZi1>0</NoZi1>
-            <NoZi2>0</NoZi2>
-            <NoZi3>0</NoZi3>
-            <NoZi4>0</NoZi4>
-            <NoZi5>0</NoZi5>
-            <Ro1Chk>1</Ro1Chk>
-            <Ro2Chk>0</Ro2Chk>
-            <Ro3Chk>0</Ro3Chk>
-            <Ir1Chk>0</Ir1Chk>
-            <Ir2Chk>0</Ir2Chk>
-            <Ra1Chk>0</Ra1Chk>
-            <Ra2Chk>0</Ra2Chk>
-            <Ra3Chk>0</Ra3Chk>
-            <Im1Chk>0</Im1Chk>
-            <Im2Chk>1</Im2Chk>
-            <OnChipMemories>
-              <Ocm1>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm1>
-              <Ocm2>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm2>
-              <Ocm3>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm3>
-              <Ocm4>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm4>
-              <Ocm5>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm5>
-              <Ocm6>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </Ocm6>
-              <IRAM>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
-              </IRAM>
-              <IROM>
-                <Type>1</Type>
-                <StartAddress>0x60000000</StartAddress>
-                <Size>0x800000</Size>
-              </IROM>
-              <XRAM>
-                <Type>1</Type>
-                <StartAddress>0x20200000</StartAddress>
-                <Size>0x20000</Size>
-              </XRAM>
-              <OCR_RVCT1>
-                <Type>1</Type>
-                <StartAddress>0x60000000</StartAddress>
-                <Size>0x800000</Size>
-              </OCR_RVCT1>
-              <OCR_RVCT2>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT2>
-              <OCR_RVCT3>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT3>
-              <OCR_RVCT4>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT4>
-              <OCR_RVCT5>
-                <Type>1</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT5>
-              <OCR_RVCT6>
-                <Type>0</Type>
-                <StartAddress>0x20200000</StartAddress>
-                <Size>0x20000</Size>
-              </OCR_RVCT6>
-              <OCR_RVCT7>
-                <Type>0</Type>
-                <StartAddress>0x80000000</StartAddress>
-                <Size>0x2000000</Size>
-              </OCR_RVCT7>
-              <OCR_RVCT8>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </OCR_RVCT8>
-              <OCR_RVCT9>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
-              </OCR_RVCT9>
-              <OCR_RVCT10>
-                <Type>0</Type>
-                <StartAddress>0x20000000</StartAddress>
-                <Size>0x10000</Size>
-              </OCR_RVCT10>
-            </OnChipMemories>
-            <RvctStartVector/>
-          </ArmAdsMisc>
-          <Cads>
-            <interw>0</interw>
-            <Optim>7</Optim>
-            <oTime>0</oTime>
-            <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
-            <Strict>0</Strict>
-            <EnumInt>0</EnumInt>
-            <PlainCh>0</PlainCh>
-            <Ropi>0</Ropi>
-            <Rwpi>0</Rwpi>
-            <wLevel>3</wLevel>
-            <uThumb>0</uThumb>
-            <uSurpInc>0</uSurpInc>
-            <uC99>0</uC99>
-            <useXO>0</useXO>
-            <v6Lang>3</v6Lang>
-            <v6LangP>3</v6LangP>
-            <vShortEn>1</vShortEn>
-            <vShortWch>1</vShortWch>
-            <v6Lto>0</v6Lto>
-            <v6WtE>0</v6WtE>
-            <v6Rtti>0</v6Rtti>
-            <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
-              <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
-            </VariousControls>
-          </Cads>
-          <Aads>
-            <interw>0</interw>
-            <Ropi>0</Ropi>
-            <Rwpi>0</Rwpi>
-            <thumb>0</thumb>
-            <SplitLS>0</SplitLS>
-            <SwStkChk>0</SwStkChk>
-            <NoWarn>0</NoWarn>
-            <uSurpInc>0</uSurpInc>
-            <useXO>0</useXO>
-            <uClangAs>1</uClangAs>
-            <VariousControls>
-              <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
-              <Undefine/>
-              <IncludePath/>
-            </VariousControls>
-          </Aads>
-          <LDads>
-            <umfTarg>0</umfTarg>
-            <Ropi>0</Ropi>
-            <Rwpi>0</Rwpi>
-            <noStLib>0</noStLib>
-            <RepFail>1</RepFail>
-            <useFile>0</useFile>
-            <TextAddressRange>0x00000000</TextAddressRange>
-            <DataAddressRange>0x20000000</DataAddressRange>
-            <pXoBase/>
-            <ScatterFile>MIMXRT1024xxxxx_flexspi_nor.scf</ScatterFile>
-            <IncludeLibs/>
-            <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
-            <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
-          </LDads>
-        </TargetArmAds>
-      </TargetOption>
-      <uAC6>1</uAC6>
-      <Groups>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -3827,137 +3101,72 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/ieee11073_agent</GroupName>
+          <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>ieee11073_agent.c</FileName>
+              <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../ieee11073_agent.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_agent.h</FileName>
+              <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../ieee11073_agent.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_types.h</FileName>
+              <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../ieee11073_types.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_timer.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../ieee11073_timer.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>ieee11073_timer.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../ieee11073_timer.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source</GroupName>
-          <Files>
             <File>
-              <FileName>usb_device_descriptor.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../usb_device_descriptor.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>usb_device_descriptor.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../usb_device_descriptor.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>usb_shim_agent.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../usb_shim_agent.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>usb_shim_agent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_shim_agent.h</FilePath>
-            </File>
-            <File>
-              <FileName>weighscale.c</FileName>
+              <FileName>fsl_common_arm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../weighscale.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
             </File>
             <File>
-              <FileName>weighscale.h</FileName>
+              <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../weighscale.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>usb_device_phdc.c</FileName>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../usb_device_phdc.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>usb_device_phdc.h</FileName>
+              <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../usb_device_phdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3992,78 +3201,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -4084,10 +3228,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4135,16 +3304,6 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
@@ -4154,35 +3313,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/uart</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4633,9 +3772,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../components/uart;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1024;../../../../xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4669,7 +3808,7 @@
             <ScatterFile>MIMXRT1024xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4678,12 +3817,47 @@
       <uAC6>1</uAC6>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
+          <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4778,47 +3952,82 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
+          <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
-              <FileName>clock_config.c</FileName>
+              <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
             </File>
             <File>
-              <FileName>clock_config.h</FileName>
+              <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.c</FileName>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>pin_mux.h</FileName>
+              <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>dcd.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
-              <FileName>dcd.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4853,78 +4062,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -4945,10 +4089,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4996,6 +4165,16 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
@@ -5005,15 +4184,786 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/include</GroupName>
+          <Files>
             <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
             </File>
             <File>
-              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
+              <FileName>usb_device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+      </Groups>
+    </Target>
+    <Target>
+      <TargetName>dev_phdc_weighscale_lite_bm flexspi_nor_release</TargetName>
+      <ToolsetNumber>0x4</ToolsetNumber>
+      <ToolsetName>ARM-ADS</ToolsetName>
+      <TargetOption>
+        <TargetCommonOption>
+          <Device>MIMXRT1024DAG5A</Device>
+          <Vendor>NXP</Vendor>
+          <PackID>NXP.MIMXRT1024_DFP.2.3.0</PackID>
+          <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
+          <FlashUtilSpec/>
+          <StartupFile/>
+          <DeviceId>0</DeviceId>
+          <RegisterFile>$$Device:MIMXRT1024DAG5A$Device\Include\fsl_device_registers.h</RegisterFile>
+          <MemoryEnv/>
+          <Cmp/>
+          <Asm/>
+          <Linker/>
+          <OHString/>
+          <InfinionOptionDll/>
+          <SLE66CMisc/>
+          <SLE66AMisc/>
+          <SLE66LinkerMisc/>
+          <SFDFile>$$Device:MIMXRT1024DAG5A$SVD\MIMXRT1024.svd</SFDFile>
+          <bCustSvd>0</bCustSvd>
+          <UseEnv>0</UseEnv>
+          <BinPath/>
+          <IncludePath/>
+          <LibPath/>
+          <RegisterFilePath/>
+          <DBRegisterFilePath/>
+          <TargetStatus>
+            <Error>0</Error>
+            <ExitCodeStop>0</ExitCodeStop>
+            <ButtonStop>0</ButtonStop>
+            <NotGenerated>0</NotGenerated>
+            <InvalidFlash>1</InvalidFlash>
+          </TargetStatus>
+          <OutputDirectory>flexspi_nor_release\</OutputDirectory>
+          <OutputName>dev_phdc_weighscale_lite_bm.out</OutputName>
+          <CreateExecutable>1</CreateExecutable>
+          <CreateLib>0</CreateLib>
+          <CreateHexFile>0</CreateHexFile>
+          <DebugInformation>0</DebugInformation>
+          <BrowseInformation>1</BrowseInformation>
+          <ListingPath>.\output\</ListingPath>
+          <HexFormatSelection>1</HexFormatSelection>
+          <Merge32K>0</Merge32K>
+          <CreateBatchFile>0</CreateBatchFile>
+          <BeforeCompile>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name/>
+            <UserProg2Name/>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopU1X>0</nStopU1X>
+            <nStopU2X>0</nStopU2X>
+          </BeforeCompile>
+          <BeforeMake>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name/>
+            <UserProg2Name/>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
+          </BeforeMake>
+          <AfterMake>
+            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg2>0</RunUserProg2>
+            <UserProg1Name/>
+            <UserProg2Name/>
+            <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
+            <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
+          </AfterMake>
+          <SelectedForBatchBuild>1</SelectedForBatchBuild>
+          <SVCSIdString/>
+        </TargetCommonOption>
+        <CommonProperty>
+          <UseCPPCompiler>0</UseCPPCompiler>
+          <RVCTCodeConst>0</RVCTCodeConst>
+          <RVCTZI>0</RVCTZI>
+          <RVCTOtherData>0</RVCTOtherData>
+          <ModuleSelection>0</ModuleSelection>
+          <IncludeInBuild>1</IncludeInBuild>
+          <AlwaysBuild>0</AlwaysBuild>
+          <GenerateAssemblyFile>0</GenerateAssemblyFile>
+          <AssembleAssemblyFile>0</AssembleAssemblyFile>
+          <PublicsOnly>0</PublicsOnly>
+          <StopOnExitCode>3</StopOnExitCode>
+          <CustomArgument/>
+          <IncludeLibraryModules/>
+          <ComprImg>1</ComprImg>
+        </CommonProperty>
+        <DllOption>
+          <SimDllName>SARMCM3.DLL</SimDllName>
+          <SimDllArguments> -REMAP -MPU</SimDllArguments>
+          <SimDlgDll>DCM.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM7</SimDlgDllArguments>
+          <TargetDllName>SARMCM3.DLL</TargetDllName>
+          <TargetDllArguments> -MPU</TargetDllArguments>
+          <TargetDlgDll>TCM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pCM7</TargetDlgDllArguments>
+        </DllOption>
+        <DebugOption>
+          <OPTHX>
+            <HexSelection>1</HexSelection>
+            <HexRangeLowAddress>0</HexRangeLowAddress>
+            <HexRangeHighAddress>0</HexRangeHighAddress>
+            <HexOffset>0</HexOffset>
+            <Oh166RecLen>16</Oh166RecLen>
+          </OPTHX>
+        </DebugOption>
+        <Utilities>
+          <Flash1>
+            <UseTargetDll>1</UseTargetDll>
+            <UseExternalTool>0</UseExternalTool>
+            <RunIndependent>0</RunIndependent>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <Capability>1</Capability>
+            <DriverSelection>4096</DriverSelection>
+          </Flash1>
+          <bUseTDR>1</bUseTDR>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash3/>
+          <Flash4/>
+          <pFcarmOut/>
+          <pFcarmGrp/>
+          <pFcArmRoot/>
+          <FcArmLst>0</FcArmLst>
+        </Utilities>
+        <TargetArmAds>
+          <ArmAdsMisc>
+            <GenerateListings>0</GenerateListings>
+            <asHll>1</asHll>
+            <asAsm>1</asAsm>
+            <asMacX>1</asMacX>
+            <asSyms>1</asSyms>
+            <asFals>1</asFals>
+            <asDbgD>1</asDbgD>
+            <asForm>1</asForm>
+            <ldLst>0</ldLst>
+            <ldmm>1</ldmm>
+            <ldXref>1</ldXref>
+            <BigEnd>0</BigEnd>
+            <AdsALst>1</AdsALst>
+            <AdsACrf>0</AdsACrf>
+            <AdsANop>0</AdsANop>
+            <AdsANot>0</AdsANot>
+            <AdsLLst>1</AdsLLst>
+            <AdsLmap>1</AdsLmap>
+            <AdsLcgr>1</AdsLcgr>
+            <AdsLsym>1</AdsLsym>
+            <AdsLszi>1</AdsLszi>
+            <AdsLtoi>1</AdsLtoi>
+            <AdsLsun>1</AdsLsun>
+            <AdsLven>1</AdsLven>
+            <AdsLsxf>1</AdsLsxf>
+            <RvctClst>0</RvctClst>
+            <GenPPlst>0</GenPPlst>
+            <AdsCpuType>"Cortex-M7"</AdsCpuType>
+            <RvctDeviceName/>
+            <mOS>0</mOS>
+            <uocRom>0</uocRom>
+            <uocRam>0</uocRam>
+            <hadIROM>1</hadIROM>
+            <hadIRAM>1</hadIRAM>
+            <hadXRAM>1</hadXRAM>
+            <uocXRam>0</uocXRam>
+            <RvdsVP>3</RvdsVP>
+            <hadIRAM2>1</hadIRAM2>
+            <hadIROM2>0</hadIROM2>
+            <StupSel>1</StupSel>
+            <useUlib>1</useUlib>
+            <EndSel>0</EndSel>
+            <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
+            <RoSelD>3</RoSelD>
+            <RwSelD>4</RwSelD>
+            <CodeSel>0</CodeSel>
+            <OptFeed>0</OptFeed>
+            <NoZi1>0</NoZi1>
+            <NoZi2>0</NoZi2>
+            <NoZi3>0</NoZi3>
+            <NoZi4>0</NoZi4>
+            <NoZi5>0</NoZi5>
+            <Ro1Chk>1</Ro1Chk>
+            <Ro2Chk>0</Ro2Chk>
+            <Ro3Chk>0</Ro3Chk>
+            <Ir1Chk>0</Ir1Chk>
+            <Ir2Chk>0</Ir2Chk>
+            <Ra1Chk>0</Ra1Chk>
+            <Ra2Chk>0</Ra2Chk>
+            <Ra3Chk>0</Ra3Chk>
+            <Im1Chk>0</Im1Chk>
+            <Im2Chk>1</Im2Chk>
+            <OnChipMemories>
+              <Ocm1>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm1>
+              <Ocm2>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm2>
+              <Ocm3>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm3>
+              <Ocm4>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm4>
+              <Ocm5>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm5>
+              <Ocm6>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </Ocm6>
+              <IRAM>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x10000</Size>
+              </IRAM>
+              <IROM>
+                <Type>1</Type>
+                <StartAddress>0x60000000</StartAddress>
+                <Size>0x800000</Size>
+              </IROM>
+              <XRAM>
+                <Type>1</Type>
+                <StartAddress>0x20200000</StartAddress>
+                <Size>0x20000</Size>
+              </XRAM>
+              <OCR_RVCT1>
+                <Type>1</Type>
+                <StartAddress>0x60000000</StartAddress>
+                <Size>0x800000</Size>
+              </OCR_RVCT1>
+              <OCR_RVCT2>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT2>
+              <OCR_RVCT3>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT3>
+              <OCR_RVCT4>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT4>
+              <OCR_RVCT5>
+                <Type>1</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT5>
+              <OCR_RVCT6>
+                <Type>0</Type>
+                <StartAddress>0x20200000</StartAddress>
+                <Size>0x20000</Size>
+              </OCR_RVCT6>
+              <OCR_RVCT7>
+                <Type>0</Type>
+                <StartAddress>0x80000000</StartAddress>
+                <Size>0x2000000</Size>
+              </OCR_RVCT7>
+              <OCR_RVCT8>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </OCR_RVCT8>
+              <OCR_RVCT9>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x10000</Size>
+              </OCR_RVCT9>
+              <OCR_RVCT10>
+                <Type>0</Type>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x10000</Size>
+              </OCR_RVCT10>
+            </OnChipMemories>
+            <RvctStartVector/>
+          </ArmAdsMisc>
+          <Cads>
+            <interw>0</interw>
+            <Optim>7</Optim>
+            <oTime>0</oTime>
+            <SplitLS>0</SplitLS>
+            <OneElfS>1</OneElfS>
+            <Strict>0</Strict>
+            <EnumInt>0</EnumInt>
+            <PlainCh>0</PlainCh>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <wLevel>3</wLevel>
+            <uThumb>0</uThumb>
+            <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
+            <VariousControls>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
+              <Undefine/>
+              <IncludePath>..;../../../../../../devices/MIMXRT1024/drivers;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1024;../../../../xip;../../../../../../devices/MIMXRT1024/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+            </VariousControls>
+          </Cads>
+          <Aads>
+            <interw>0</interw>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <thumb>0</thumb>
+            <SplitLS>0</SplitLS>
+            <SwStkChk>0</SwStkChk>
+            <NoWarn>0</NoWarn>
+            <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
+            <uClangAs>1</uClangAs>
+            <VariousControls>
+              <MiscControls/>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Undefine/>
+              <IncludePath/>
+            </VariousControls>
+          </Aads>
+          <LDads>
+            <umfTarg>0</umfTarg>
+            <Ropi>0</Ropi>
+            <Rwpi>0</Rwpi>
+            <noStLib>0</noStLib>
+            <RepFail>1</RepFail>
+            <useFile>0</useFile>
+            <TextAddressRange>0x00000000</TextAddressRange>
+            <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase/>
+            <ScatterFile>MIMXRT1024xxxxx_flexspi_nor.scf</ScatterFile>
+            <IncludeLibs/>
+            <IncludeLibsPath/>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <LinkerInputFile/>
+            <DisabledWarnings>6314</DisabledWarnings>
+          </LDads>
+        </TargetArmAds>
+      </TargetOption>
+      <uAC6>1</uAC6>
+      <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/ieee11073_agent</GroupName>
+          <Files>
+            <File>
+              <FileName>ieee11073_agent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../ieee11073_agent.c</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_agent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ieee11073_agent.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ieee11073_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../ieee11073_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ieee11073_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ieee11073_timer.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_shim_agent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_shim_agent.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_shim_agent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_shim_agent.h</FilePath>
+            </File>
+            <File>
+              <FileName>weighscale.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../weighscale.c</FilePath>
+            </File>
+            <File>
+              <FileName>weighscale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../weighscale.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_phdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_phdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_phdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_phdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/source/ehci</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ehci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ehci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5033,17 +4983,67 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/lists</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>fsl_component_generic_list.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_generic_list.c</FileName>
+              <FileName>MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1024_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1024.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/arm/startup_MIMXRT1024.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1024_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1024_flexspi_nor_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1024/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
           </Files>
         </Group>

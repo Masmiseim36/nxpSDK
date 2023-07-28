@@ -1,14 +1,25 @@
 var a00298 =
 [
-    [ "SERIAL_PORT_UART_DMA_RECEIVE_DATA_LENGTH", "a00298.html#gaff6176ea2af7001a012172a47622e204", null ],
-    [ "SERIAL_USE_CONFIGURE_STRUCTURE", "a00298.html#ga29c0fa5c543615a75f63bdcb7e086b16", null ],
-    [ "serial_port_uart_parity_mode_t", "a00298.html#ga89a4bbed0c24cfe5e085194add680ccc", [
-      [ "kSerialManager_UartParityDisabled", "a00298.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1", null ],
-      [ "kSerialManager_UartParityEven", "a00298.html#gga89a4bbed0c24cfe5e085194add680ccca7d9d6f05fb6e1099fdfbf1f79a699356", null ],
-      [ "kSerialManager_UartParityOdd", "a00298.html#gga89a4bbed0c24cfe5e085194add680ccca15bc11791c1f07fac71c808d083515db", null ]
-    ] ],
-    [ "serial_port_uart_stop_bit_count_t", "a00298.html#ga8bdf0213026f54fd54c21971e07f2d56", [
-      [ "kSerialManager_UartOneStopBit", "a00298.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039", null ],
-      [ "kSerialManager_UartTwoStopBit", "a00298.html#gga8bdf0213026f54fd54c21971e07f2d56a83eb7aee91f3fd8964d283c0057880dc", null ]
-    ] ]
+    [ "SWO", "a00301.html", null ],
+    [ "Semihosting", "a00300.html", null ],
+    [ "debug console configuration", "a00299.html", "a00299" ],
+    [ "DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN", "a00298.html#gabb8f0adbec02f143b4f84d2eb42126df", null ],
+    [ "DEBUGCONSOLE_REDIRECT_TO_SDK", "a00298.html#gac33031f28afa29dc8fe1718bbc86ee23", null ],
+    [ "DEBUGCONSOLE_DISABLE", "a00298.html#gaf8f85fd102e4aedcee3d061dc2d3e0c2", null ],
+    [ "SDK_DEBUGCONSOLE", "a00298.html#ga7fdd594efdc8374ecd8684ed758d6cec", null ],
+    [ "PRINTF", "a00298.html#gae1649fc947ca37a86917a08354f48d1a", null ],
+    [ "DbgConsole_Init", "a00298.html#ga12e50ee0450679fd8ca950a89338d366", null ],
+    [ "DbgConsole_Deinit", "a00298.html#gad80e7aa70bbb3fce1a9168621372833e", null ],
+    [ "DbgConsole_EnterLowpower", "a00298.html#ga9ce272e795c2b235265d3dfb50669bee", null ],
+    [ "DbgConsole_ExitLowpower", "a00298.html#ga21831f5ee970f3a1f13ff375405f3592", null ],
+    [ "DbgConsole_Printf", "a00298.html#ga7f9e0678f4c708ed5640b0823c07dc35", null ],
+    [ "DbgConsole_Vprintf", "a00298.html#ga48560c409b88fbe195e140aa20c5307b", null ],
+    [ "DbgConsole_Putchar", "a00298.html#gada572d86a06f028b5b1a5d0440f683e3", null ],
+    [ "DbgConsole_Scanf", "a00298.html#ga53b115907016172dcf58fcffab144a6d", null ],
+    [ "DbgConsole_Getchar", "a00298.html#ga11898c5015274863741c4f3f4d9edc08", null ],
+    [ "DbgConsole_BlockingPrintf", "a00298.html#ga23e7c243b07d594a0a1016dcab28d3a3", null ],
+    [ "DbgConsole_BlockingVprintf", "a00298.html#gaed722925a966ae462d5d44cd33f836c3", null ],
+    [ "DbgConsole_Flush", "a00298.html#ga3194467c3dae6c5015b8b29c3cc1db1e", null ],
+    [ "DbgConsole_TryGetchar", "a00298.html#ga867a9778cd1401d3336ae5599851c1fd", null ],
+    [ "g_serialHandle", "a00298.html#gaad3c4240a1364156a239471ccdb9aa0b", null ]
 ];

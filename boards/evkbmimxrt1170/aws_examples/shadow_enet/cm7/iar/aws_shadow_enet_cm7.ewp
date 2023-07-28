@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -232,6 +232,7 @@
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
@@ -239,7 +240,7 @@
           <state>MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
+          <state>LWIP_DNS=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -279,7 +280,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -320,7 +321,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -372,12 +373,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
+          <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/logging</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent</state>
@@ -399,12 +399,12 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/backoffalgorithm/source/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/device-shadow/source/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/device-shadow/source/interface</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corejson/source/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -526,7 +526,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -732,7 +732,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1144,7 +1144,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1231,7 +1231,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1248,7 +1248,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1271,7 +1271,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1350,7 +1350,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1365,6 +1365,7 @@
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
@@ -1372,7 +1373,7 @@
           <state>MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
+          <state>LWIP_DNS=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1412,7 +1413,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1453,7 +1454,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1505,12 +1506,11 @@
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb</state>
+          <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/logging</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent</state>
@@ -1532,12 +1532,12 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/backoffalgorithm/source/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/device-shadow/source/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/device-shadow/source/interface</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/corejson/source/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1659,7 +1659,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1865,7 +1865,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2270,13 +2270,19 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../config_files/aws_mbedtls_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../main_enet.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../lwipopts.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../aws_clientcredential.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../aws_clientcredential_keys.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../freertos_tasks_c_additions.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../aws_dev_mode_key_provisioning.h</name>
@@ -2285,28 +2291,7 @@
       <name>$PROJ_DIR$/../aws_dev_mode_key_provisioning.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../core_mqtt_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../core_pkcs11_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../demo_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../freertos_tasks_c_additions.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../kvstore_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../shadow_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../aws_clientcredential.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../aws_clientcredential_keys.h</name>
+      <name>$PROJ_DIR$/../iot_pkcs11_pal.c</name>
     </file>
   </group>
   <group>
@@ -2334,6 +2319,27 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>config_files</name>
+    <file>
+      <name>$PROJ_DIR$/../config_files/aws_mbedtls_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/core_mqtt_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/core_pkcs11_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/demo_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/kvstore_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/shadow_config.h</name>
     </file>
   </group>
   <group>
@@ -2647,16 +2653,16 @@
     <group>
       <name>silicon_id</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
       </file>
     </group>
     <group>
@@ -2671,6 +2677,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -2678,12 +2690,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -2723,6 +2729,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
     </file>
     <file>
@@ -2733,12 +2745,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
@@ -3488,6 +3494,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</name>
+        </file>
       </group>
     </group>
   </group>
@@ -4221,12 +4230,6 @@
     <name>flash</name>
     <group>
       <name>mflash</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_file.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_file.c</name>
-      </file>
       <group>
         <name>mimxrt1170evkb</name>
         <file>
@@ -4236,6 +4239,12 @@
           <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170evkb/mflash_drv.c</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_file.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_file.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_common.h</name>
       </file>
@@ -4321,45 +4330,6 @@
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls/using_mbedtls.h</name>
           </file>
-        </group>
-      </group>
-    </group>
-    <group>
-      <name>amazon-freertos</name>
-      <group>
-        <name>vendors</name>
-        <group>
-          <name>nxp</name>
-          <group>
-            <name>pkcs11</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/aws_iot/amazon-freertos/vendors/nxp/pkcs11/iot_pkcs11_pal.c</name>
-            </file>
-          </group>
-        </group>
-      </group>
-      <group>
-        <name>libraries</name>
-        <group>
-          <name>freertos_plus</name>
-          <group>
-            <name>standard</name>
-            <group>
-              <name>crypto</name>
-              <group>
-                <name>include</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</name>
-                </file>
-              </group>
-              <group>
-                <name>src</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</name>
-                </file>
-              </group>
-            </group>
-          </group>
         </group>
       </group>
     </group>

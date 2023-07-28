@@ -18,6 +18,7 @@ export class PcmObject {
     onSocketConnected = () => {
         this.connected = true;
         console.log("Connected to freeMASTER");
+        this.pcm.EnableEvents(true);
     }
 
     onSocketClose = () => {
@@ -46,8 +47,6 @@ export class PcmObject {
             this.pcm = new PCM(this.rpcs_addr, this.onSocketConnected, this.onSocketClose, this.onSocketError);
             this.pcm.OnServerError = this.onServerError;
             this.pcm.OnSocketError = this.onSocketError;
-            this.pcm.EnableExtraFeatures(true);
-            this.pcm.EnableEvents(true);
         } else {
             console.log("Already connected to freeMASTER");
         }
@@ -191,7 +190,7 @@ export class PcmObject {
         this.waitUntil(0, () => {
             this.pcm.IsCommPortOpen().then((response) => {
                 if (response.data) {
-                    this.pcm.SubscribeVariable(varName, 2000).then(() => {
+                    this.pcm.SubscribeVariable(varName).then(() => {
                         // console.log("Variable ", varName + " was successfully subscribed");
                     }).catch((error) => {
                         console.log("Error: ", error);

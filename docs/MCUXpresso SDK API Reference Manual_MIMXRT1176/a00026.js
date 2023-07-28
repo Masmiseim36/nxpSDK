@@ -1,10 +1,10 @@
 var a00026 =
 [
-    [ "elcdif_pixel_format_reg_t", "a00026.html#a00475", [
+    [ "elcdif_pixel_format_reg_t", "a00026.html#a00482", [
       [ "regCtrl", "a00026.html#a243f7bcead2cd9765740179f868418a9", null ],
       [ "regCtrl1", "a00026.html#ad31198998ee25bf96a29ba270ba0841d", null ]
     ] ],
-    [ "elcdif_rgb_mode_config_t", "a00026.html#a00476", [
+    [ "elcdif_rgb_mode_config_t", "a00026.html#a00483", [
       [ "panelWidth", "a00026.html#a6019faab572a2ca590379f05c6e46c51", null ],
       [ "panelHeight", "a00026.html#a1a4d5e151baba11eb7ce004ae1348b7b", null ],
       [ "hsw", "a00026.html#ac780ae2b80426ec933a490f824b08b5b", null ],
@@ -18,11 +18,11 @@ var a00026 =
       [ "pixelFormat", "a00026.html#ae3a7b3acf215c33febaf5c52cec9ea2c", null ],
       [ "dataBus", "a00026.html#a7a9bf62b63fba18f0cb9f4fb390b8217", null ]
     ] ],
-    [ "elcdif_as_buffer_config_t", "a00026.html#a00474", [
+    [ "elcdif_as_buffer_config_t", "a00026.html#a00481", [
       [ "bufferAddr", "a00026.html#af166d7fd726cc4bc90abf3fa5140c15d", null ],
       [ "pixelFormat", "a00026.html#a03873f7e13d6a3a2a549ba2a337bce8a", null ]
     ] ],
-    [ "elcdif_as_blend_config_t", "a00026.html#a00473", [
+    [ "elcdif_as_blend_config_t", "a00026.html#a00480", [
       [ "alpha", "a00026.html#a7259ea82353b9bdf03fd1a6fbbcde0be", null ],
       [ "invertAlpha", "a00026.html#a5be27ea072fae0fc346b4a26f89c1431", null ],
       [ "alphaMode", "a00026.html#a84b9c9865f5f08218e977b3102a47cbf", null ],
@@ -113,6 +113,7 @@ var a00026 =
     [ "ELCDIF_RgbModeStop", "a00026.html#ga4355b92ba05040a3ae13f64c754f887e", null ],
     [ "ELCDIF_SetNextBufferAddr", "a00026.html#ga2c1bfce1634eefed0d6273f912a13aed", null ],
     [ "ELCDIF_Reset", "a00026.html#gafab5b66f91b28d6ed9ec105bbd3dcc02", null ],
+    [ "ELCDIF_PullUpResetPin", "a00026.html#ga3e65dd8f029486667840ea491858f5f5", null ],
     [ "ELCDIF_GetCrcValue", "a00026.html#ga69e40acb7efed878dd12d94864824e85", null ],
     [ "ELCDIF_GetBusMasterErrorAddr", "a00026.html#ga20f19cbba38e3e5aa9dc42290964fd1a", null ],
     [ "ELCDIF_GetStatus", "a00026.html#ga4d3d365b858d7cd0f0bde11771b87e56", null ],
@@ -121,6 +122,11 @@ var a00026 =
     [ "ELCDIF_DisableInterrupts", "a00026.html#ga9f94b5554a448d894f154ca3500a7f6d", null ],
     [ "ELCDIF_GetInterruptStatus", "a00026.html#gadbe604a8461fce683e757068b35adac0", null ],
     [ "ELCDIF_ClearInterruptStatus", "a00026.html#ga0cd233c0aaa9dfd2155096c1a24393ed", null ],
-    [ "ELCDIF_EnableLut", "a00026.html#gaa0d05f9dd30f7e1428c7280bc9e08943", null ],
-    [ "ELCDIF_UpdateLut", "a00026.html#ga5149785af8e02f82283f585f0818167e", null ]
+    [ "ELCDIF_SetAlphaSurfaceBufferConfig", "a00026.html#ga6bf7fcf630c3533609bdd85e128e2962", null ],
+    [ "ELCDIF_SetAlphaSurfaceBlendConfig", "a00026.html#gacc5018ced1b21a54a18adb82ca7acf62", null ],
+    [ "ELCDIF_SetNextAlphaSurfaceBufferAddr", "a00026.html#gaf19a883eed2b32128ab4a2379986ce07", null ],
+    [ "ELCDIF_SetOverlayColorKey", "a00026.html#gaddff9bfdd06bc7db2bad0c48673fc7f0", null ],
+    [ "ELCDIF_EnableOverlayColorKey", "a00026.html#gac0d1c319ba31dbb7d055ed18ba752cf5", null ],
+    [ "ELCDIF_EnableAlphaSurface", "a00026.html#gadd8cf14eaaa082b2da0254e1f44e6a5c", null ],
+    [ "ELCDIF_EnableProcessSurface", "a00026.html#gab80f21f70157493525009066b8248bbd", null ]
 ];

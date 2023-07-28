@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -401,12 +401,12 @@
             <File>
               <FileName>lcdifv2_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../lcdifv2_support.c</FilePath>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>lcdifv2_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../lcdifv2_support.h</FilePath>
+              <FilePath>../lcdifv2_support.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -544,26 +544,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_src.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
@@ -602,6 +582,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -649,16 +649,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -672,6 +662,16 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1207,7 +1207,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1240,12 +1240,12 @@
             <File>
               <FileName>lcdifv2_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../lcdifv2_support.c</FilePath>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>lcdifv2_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../lcdifv2_support.h</FilePath>
+              <FilePath>../lcdifv2_support.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -1383,26 +1383,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_src.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
@@ -1441,6 +1421,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1488,16 +1488,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -1511,6 +1501,16 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2046,7 +2046,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2079,12 +2079,12 @@
             <File>
               <FileName>lcdifv2_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../lcdifv2_support.c</FilePath>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>lcdifv2_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../lcdifv2_support.h</FilePath>
+              <FilePath>../lcdifv2_support.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2222,26 +2222,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_src.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
@@ -2280,6 +2260,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2327,16 +2327,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -2350,6 +2340,16 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2885,7 +2885,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2918,12 +2918,12 @@
             <File>
               <FileName>lcdifv2_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../lcdifv2_support.c</FilePath>
+              <FilePath>../lcdifv2_support.c</FilePath>
             </File>
             <File>
               <FileName>lcdifv2_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../lcdifv2_support.h</FilePath>
+              <FilePath>../lcdifv2_support.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -3061,26 +3061,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_src.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
@@ -3119,6 +3099,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3166,16 +3166,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -3189,6 +3179,16 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>

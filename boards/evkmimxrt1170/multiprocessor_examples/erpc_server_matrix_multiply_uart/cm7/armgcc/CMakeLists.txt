@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -57,97 +65,15 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkmimxrt1170/multiprocessor_examples/erpc_common
     ${SdkRootDirPath}/boards/evkmimxrt1170/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1176/cmsis_drivers
-    ${SdkRootDirPath}/middleware/multicore
-    ${SdkRootDirPath}/devices/MIMXRT1176
-    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1176/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1170/xip
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm7
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/CMSIS/Driver/Include
-)
+set_source_files_properties("${ProjDirPath}/../RTE_Device.h" PROPERTIES COMPONENT_CONFIG_FILE "RTE_Device.MIMXRT1176")
 
-# include modules
-include(driver_lpuart_MIMXRT1176_cm7)
-
-include(driver_lpuart_edma_MIMXRT1176_cm7)
-
-include(driver_cmsis_lpuart_MIMXRT1176_cm7)
-
-include(driver_edma_MIMXRT1176_cm7)
-
-include(driver_dmamux_MIMXRT1176_cm7)
-
-include(middleware_multicore_erpc_eRPC_server_MIMXRT1176_cm7)
-
-include(middleware_multicore_erpc_eRPC_uart_cmsis_transport_MIMXRT1176_cm7)
-
-include(middleware_multicore_erpc_eRPC_port_stdlib_MIMXRT1176_cm7)
-
-include(middleware_multicore_erpc_doc_MIMXRT1176_cm7)
-
-include(driver_clock_MIMXRT1176_cm7)
-
-include(driver_common_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
-
-include(utility_debug_console_MIMXRT1176_cm7)
-
-include(component_lpuart_adapter_MIMXRT1176_cm7)
-
-include(component_serial_manager_MIMXRT1176_cm7)
-
-include(component_lists_MIMXRT1176_cm7)
-
-include(component_serial_manager_uart_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_startup_MIMXRT1176_cm7)
-
-include(driver_iomuxc_MIMXRT1176_cm7)
-
-include(utility_assert_MIMXRT1176_cm7)
-
-include(driver_igpio_MIMXRT1176_cm7)
-
-include(driver_xip_device_MIMXRT1176_cm7)
-
-include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
-
-include(driver_pmu_1_MIMXRT1176_cm7)
-
-include(driver_dcdc_soc_MIMXRT1176_cm7)
-
-include(driver_cache_armv7_m7_MIMXRT1176_cm7)
-
-include(driver_anatop_ai_MIMXRT1176_cm7)
-
-include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
-
-include(driver_memory_MIMXRT1176_cm7)
-
-include(CMSIS_Driver_Include_USART_MIMXRT1176_cm7)
-
-include(CMSIS_Driver_Include_Common_MIMXRT1176_cm7)
-
-include(middleware_multicore_erpc_common_MIMXRT1176_cm7)
-
-include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_system_MIMXRT1176_cm7)
-
+include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lstdc++ -lm -lc -lgcc -lnosys")  
@@ -161,4 +87,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

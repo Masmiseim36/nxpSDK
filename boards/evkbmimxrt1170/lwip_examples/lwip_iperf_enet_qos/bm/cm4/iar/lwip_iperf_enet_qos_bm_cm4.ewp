@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -230,9 +230,11 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>ENET_RXBUFF_NUM=14</state>
           <state>ENET_RXBD_NUM=9</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SO_REUSE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -355,14 +357,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
@@ -372,6 +373,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -494,7 +496,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -698,7 +700,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1109,7 +1111,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1196,7 +1198,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1213,7 +1215,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1236,7 +1238,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1315,7 +1317,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1330,9 +1332,11 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>ENET_RXBUFF_NUM=14</state>
           <state>ENET_RXBD_NUM=9</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SO_REUSE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1455,14 +1459,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
@@ -1472,6 +1475,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1594,7 +1598,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1798,7 +1802,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2210,7 +2214,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2297,7 +2301,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -2314,7 +2318,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -2337,7 +2341,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -2416,7 +2420,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2431,9 +2435,11 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>ENET_RXBUFF_NUM=14</state>
           <state>ENET_RXBD_NUM=9</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SO_REUSE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2556,14 +2562,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
@@ -2573,6 +2578,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2695,7 +2701,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2899,7 +2905,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3310,7 +3316,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3397,7 +3403,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -3414,7 +3420,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -3437,7 +3443,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -3516,7 +3522,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3529,9 +3535,11 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>ENET_RXBUFF_NUM=14</state>
           <state>ENET_RXBD_NUM=9</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SO_REUSE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3654,14 +3662,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
@@ -3671,6 +3678,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3793,7 +3801,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3997,7 +4005,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4408,7 +4416,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4495,7 +4503,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -4512,7 +4520,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -4535,7 +4543,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -4614,7 +4622,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4629,9 +4637,11 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>ENET_RXBUFF_NUM=14</state>
           <state>ENET_RXBD_NUM=9</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SO_REUSE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4754,14 +4764,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
@@ -4771,6 +4780,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4893,7 +4903,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5097,7 +5107,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5509,7 +5519,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5596,7 +5606,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -5613,7 +5623,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -5636,7 +5646,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -5715,7 +5725,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5730,9 +5740,11 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>ENET_RXBUFF_NUM=14</state>
           <state>ENET_RXBD_NUM=9</state>
+          <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SO_REUSE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5855,14 +5867,13 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
@@ -5872,6 +5883,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5994,7 +6006,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6198,7 +6210,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6667,16 +6679,16 @@
     <group>
       <name>silicon_id</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
       </file>
     </group>
     <group>
@@ -6691,6 +6703,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -6698,12 +6716,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -6715,75 +6727,6 @@
         <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_enet_qos.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_enet_qos.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
-    </file>
   </group>
   <group>
     <name>lwip</name>
@@ -7486,21 +7429,6 @@
     <group>
       <name>port</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/sys_arch.c</name>
-      </file>
-      <group>
-        <name>arch</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/arch/cc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/arch/perf.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/arch/sys_arch.h</name>
-        </file>
-      </group>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
       </file>
       <file>
@@ -7524,7 +7452,91 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/enet_ethernetif_qos.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/sys_arch.c</name>
+      </file>
+      <group>
+        <name>arch</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/arch/cc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/arch/perf.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/lwip/port/arch/sys_arch.h</name>
+        </file>
+      </group>
     </group>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_enet_qos.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_enet_qos.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
+    </file>
   </group>
   <group>
     <name>device</name>

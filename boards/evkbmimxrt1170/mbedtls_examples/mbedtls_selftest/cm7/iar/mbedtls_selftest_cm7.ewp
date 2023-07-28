@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -226,10 +226,10 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -269,7 +269,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -310,7 +310,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -486,7 +486,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -690,7 +690,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1101,7 +1101,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1188,7 +1188,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1205,7 +1205,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1228,7 +1228,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1307,7 +1307,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1318,10 +1318,10 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1361,7 +1361,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1402,7 +1402,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1578,7 +1578,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1782,7 +1782,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2194,7 +2194,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2281,7 +2281,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2298,7 +2298,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2321,7 +2321,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2400,7 +2400,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2411,10 +2411,10 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2454,7 +2454,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2495,7 +2495,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2671,7 +2671,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2875,7 +2875,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3286,7 +3286,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3373,7 +3373,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3390,7 +3390,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3413,7 +3413,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3492,7 +3492,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3501,10 +3501,10 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3544,7 +3544,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3585,7 +3585,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3761,7 +3761,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3965,7 +3965,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4376,7 +4376,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4463,7 +4463,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4480,7 +4480,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4503,7 +4503,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4582,7 +4582,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4593,10 +4593,10 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4636,7 +4636,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -4677,7 +4677,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -4853,7 +4853,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5057,7 +5057,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5469,7 +5469,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5556,7 +5556,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5573,7 +5573,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5596,7 +5596,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5675,7 +5675,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5686,10 +5686,10 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5729,7 +5729,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -5770,7 +5770,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -5946,7 +5946,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6150,7 +6150,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -7376,6 +7376,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</name>
+        </file>
       </group>
     </group>
   </group>
@@ -7432,6 +7435,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -7439,12 +7448,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -233,9 +233,10 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -359,23 +360,23 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -497,7 +498,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -701,7 +702,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1110,7 +1111,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1197,7 +1198,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1214,7 +1215,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1237,7 +1238,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1316,7 +1317,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1334,9 +1335,10 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1460,23 +1462,23 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1598,7 +1600,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1802,7 +1804,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2211,7 +2213,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2298,7 +2300,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2315,7 +2317,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2338,7 +2340,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2417,7 +2419,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2435,9 +2437,10 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2561,23 +2564,23 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2699,7 +2702,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2903,7 +2906,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3312,7 +3315,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3399,7 +3402,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3416,7 +3419,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3439,7 +3442,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3518,7 +3521,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3534,9 +3537,10 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3660,23 +3664,23 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3798,7 +3802,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4002,7 +4006,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4411,7 +4415,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4498,7 +4502,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4515,7 +4519,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4538,7 +4542,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4617,7 +4621,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4635,9 +4639,10 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4761,23 +4766,23 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4899,7 +4904,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5103,7 +5108,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5512,7 +5517,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5599,7 +5604,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5616,7 +5621,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5639,7 +5644,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5718,7 +5723,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5736,9 +5741,10 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5862,23 +5868,23 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6000,7 +6006,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6204,7 +6210,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6646,6 +6652,24 @@
     <name>component</name>
     <group>
       <name>serial_manager</name>
+      <group>
+        <name>usb_cdc_adapter</name>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_usb.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
@@ -6656,28 +6680,19 @@
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_usb.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_usb.c</name>
-      </file>
-      <group>
-        <name>usb_cdc_adapter</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_config.h</name>
-        </file>
-      </group>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
@@ -6704,18 +6719,96 @@
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>usb</name>
     <group>
-      <name>uart</name>
+      <name>phy</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
+    </group>
+    <group>
+      <name>device</name>
+      <group>
+        <name>source</name>
+        <group>
+          <name>ehci</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/usb_device_ch9.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
+      </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+      </group>
+      <group>
+        <name>class</name>
+        <group>
+          <name>cdc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_class.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_class.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
       </file>
     </group>
   </group>
   <group>
     <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</name>
     </file>
@@ -6727,12 +6820,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</name>
@@ -6768,95 +6855,14 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</name>
-    </file>
-  </group>
-  <group>
-    <name>usb</name>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
-      </file>
-    </group>
-    <group>
-      <name>device</name>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-      </group>
-      <group>
-        <name>source</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-        <group>
-          <name>ehci</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/usb_device_ch9.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-      </group>
-      <group>
-        <name>class</name>
-        <group>
-          <name>cdc</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_class.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/output/source/device/class/usb_device_class.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>device</name>

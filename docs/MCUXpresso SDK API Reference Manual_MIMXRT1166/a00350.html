@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Smart Card UART Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPUART CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,10 +99,32 @@ $(document).ready(function(){initNavTree('a00350.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Smart Card UART Driver<div class="ingroups"><a class="el" href="a00087.html">Smart Card</a></div></div>  </div>
+<div class="title">LPUART CMSIS Driver<div class="ingroups"><a class="el" href="a00349.html">LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>The Smart Card UART driver uses a standard UART peripheral which supports the ISO-7816 standard. The driver supports transmission functionality in the CPU mode. The driver also supports non-blocking (asynchronous) type of data transfers. The blocking (synchronous) transfer is supported only by the RTOS adaptation layer. </p>
+<p>This section describes the programming interface of the LPUART Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<p>The LPUART driver includes transactional APIs.</p>
+<p>Transactional APIs can be used to enable the peripheral quickly and in the application if the code size and performance of transactional APIs can satisfy the requirements. If the code size and performance are critical requirements please write custom code.</p>
+<h1><a class="anchor" id="LPUARTFunGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="LPUARTGetVersionOps"></a>
+LPUART CMSIS GetVersion Operation</h2>
+<p>This function group will return the LPUART CMSIS Driver version to user.</p>
+<h2><a class="anchor" id="LPUARTGetCapOps"></a>
+LPUART CMSIS GetCapabilities Operation</h2>
+<p>This function group will return the capabilities of this driver.</p>
+<h2><a class="anchor" id="LPUARTInitResetOps"></a>
+LPUART CMSIS Initialize and Uninitialize Operation</h2>
+<p>This function will initialize and uninitialize the lpuart instance . And this API must be called before you configure a lpuart instance or after you Deinit a lpuart instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
+<h2><a class="anchor" id="LPUARTTransOps"></a>
+LPUART CMSIS Transfer Operation</h2>
+<p>This function group controls the transfer, send/receive data.</p>
+<h2><a class="anchor" id="LPUARTStatusOps"></a>
+LPUART CMSIS Status Operation</h2>
+<p>This function group gets the LPUART transfer status.</p>
+<h2><a class="anchor" id="LPUARTControlOps"></a>
+LPUART CMSIS Control Operation</h2>
+<p>This function can configure an instance ,set baudrate for lpuart, get current baudrate ,set transfer data bits and other control command. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

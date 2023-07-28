@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Notification Framework</title>
+<title>MCUXpresso SDK API Reference Manual: MECC: internal error correction code</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,278 +100,307 @@ $(document).ready(function(){initNavTree('a00065.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Notification Framework</div>  </div>
+<div class="title">MECC: internal error correction code</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the Notifier driver.</p>
-<h1><a class="anchor" id="NotifierOv"></a>
-Notifier Overview</h1>
-<p>The Notifier provides a configuration dynamic change service. Based on this service, applications can switch between pre-defined configurations. The Notifier enables drivers and applications to register callback functions to this framework. Each time that the configuration is changed, drivers and applications receive a notification and change their settings. To simplify, the Notifier only supports the static callback registration. This means that, for applications, all callback functions are collected into a static table and passed to the Notifier.</p>
-<p>These are the steps for the configuration transition.</p>
-<ol type="1">
-<li>Before configuration transition, the Notifier sends a "BEFORE" message to the callback table. When this message is received, IP drivers should check whether any current processes can be stopped and stop them. If the processes cannot be stopped, the callback function returns an error.<br/>
- The Notifier supports two types of transition policies, a graceful policy and a forceful policy. When the graceful policy is used, if some callbacks return an error while sending a "BEFORE" message, the configuration transition stops and the Notifier sends a "RECOVER" message to all drivers that have stopped. Then, these drivers can recover the previous status and continue to work. When the forceful policy is used, drivers are stopped forcefully.</li>
-<li>After the "BEFORE" message is processed successfully, the system switches to the new configuration.</li>
-<li>After the configuration changes, the Notifier sends an "AFTER" message to the callback table to notify drivers that the configuration transition is finished.</li>
-</ol>
-<p>This example shows how to use the Notifier in the Power Manager application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;fsl_notifier.h&quot;</span></div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Definition of the Power Manager callback.</span></div>
-<div class="line"><a class="code" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00065.html#a00589">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
-<div class="line">{</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00331.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
-<div class="line"></div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">return</span> ret;</div>
-<div class="line">}</div>
-<div class="line"><span class="comment">// Definition of the Power Manager user function.</span></div>
-<div class="line"><a class="code" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
-<div class="line">{</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">}</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line"><span class="comment">// Main function.</span></div>
-<div class="line">int main(<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">// Define a notifier handle.</span></div>
-<div class="line">    <a class="code" href="a00065.html#a00588">notifier_handle_t</a> powerModeHandle;</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Callback configuration.</span></div>
-<div class="line">    user_callback_data_t callbackData0;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00065.html#a00587">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
-<div class="line">                <a class="code" href="a00065.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a>,</div>
-<div class="line">                (<span class="keywordtype">void</span> *)&amp;callbackData0};</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00065.html#a00587">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Power mode configurations.</span></div>
-<div class="line">    power_user_config_t vlprConfig;</div>
-<div class="line">    power_user_config_t stopConfig;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *powerConfigs[] = {&amp;vlprConfig, &amp;stopConfig};</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Definition of a transition to and out the power modes.</span></div>
-<div class="line">    vlprConfig.mode = kAPP_PowerModeVlpr;</div>
-<div class="line">    vlprConfig.enableLowPowerWakeUpOnInterrupt = <span class="keyword">false</span>;</div>
-<div class="line"></div>
-<div class="line">    stopConfig = vlprConfig;</div>
-<div class="line">    stopConfig.mode = kAPP_PowerModeStop;</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Create Notifier handle.</span></div>
-<div class="line">    <a class="code" href="a00065.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a>(&amp;powerModeHandle, powerConfigs, 2U, callbacks, 1U, APP_PowerModeSwitch, NULL);</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    <span class="comment">// Power mode switch.</span></div>
-<div class="line">    NOTIFIER_switchConfig(&amp;powerModeHandle, targetConfigIndex, <a class="code" href="a00065.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>);</div>
-<div class="line">}</div>
-</div><!-- fragment --> <table class="memberdecls">
+<p>The MCUXpresso SDK provides a driver for the MECC module of MCUXpresso SDK devices.</p>
+<p>The MECC64 module supports Single Error Correction and Double Error Detection(SECDED) ECC function to provide reliability for 4 banks On-Chip RAM(OCRAM) access.</p>
+<p>This example code shows how to correct single error and detect multiple error using the MECC driver.</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/mecc </p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00589"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00589">notifier_notification_block_t</a></td></tr>
-<tr class="memdesc:a00589"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00065.html#a00589">More...</a><br/></td></tr>
-<tr class="separator:a00589"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00587"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00587">notifier_callback_config_t</a></td></tr>
-<tr class="memdesc:a00587"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00065.html#a00587">More...</a><br/></td></tr>
-<tr class="separator:a00587"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00588"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00588">notifier_handle_t</a></td></tr>
-<tr class="memdesc:a00588"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00065.html#a00588">More...</a><br/></td></tr>
+<tr class="memitem:a00586"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00586">mecc_config_t</a></td></tr>
+<tr class="memdesc:a00586"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC user configuration.  <a href="a00065.html#a00586">More...</a><br/></td></tr>
+<tr class="separator:a00586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00588"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00588">mecc_single_error_info_t</a></td></tr>
+<tr class="memdesc:a00588"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram single error information, including single error address, ECC code, error data and error bit position.  <a href="a00065.html#a00588">More...</a><br/></td></tr>
 <tr class="separator:a00588"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td></tr>
-<tr class="memdesc:gad0b6e919f3ff69992b36a2734a650ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user configuration type.  <a href="#gad0b6e919f3ff69992b36a2734a650ec7">More...</a><br/></td></tr>
-<tr class="separator:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
-<tr class="memdesc:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user function prototype Use this function to execute specific operations in configuration switch.  <a href="#gacb6a6d6f99e6ddfbb96dae53382949b2">More...</a><br/></td></tr>
-<tr class="separator:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00065.html#a00589">notifier_notification_block_t</a> *notify, void *data)</td></tr>
-<tr class="memdesc:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback prototype.  <a href="#gafd1d8cc01c496de8b4cd3990ff85415c">More...</a><br/></td></tr>
-<tr class="separator:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00587"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00587">mecc_multi_error_info_t</a></td></tr>
+<tr class="memdesc:a00587"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram multiple error information, including multiple error address, ECC code, error data.  <a href="a00065.html#a00587">More...</a><br/></td></tr>
+<tr class="separator:a00587"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gacac871f1b98f53906b07b2663943c784"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a> { <br/>
-&#160;&#160;<a class="el" href="a00065.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c">kStatus_NOTIFIER_ErrorNotificationBefore</a>, 
+<tr class="memitem:ga550cb4231d535863c55643bbd2d3c6ba"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="a00065.html#gga550cb4231d535863c55643bbd2d3c6baad54935f1c4685bb65ae950b7cd31fb88">kStatus_MECC_BankMiss</a> = MAKE_STATUS(kStatusGroup_MECC, 0)
+ }</td></tr>
+<tr class="memdesc:ga550cb4231d535863c55643bbd2d3c6ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes for the MECC driver.  <a href="a00065.html#ga550cb4231d535863c55643bbd2d3c6ba">More...</a><br/></td></tr>
+<tr class="separator:ga550cb4231d535863c55643bbd2d3c6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga83e8bc15645f9d99ab91a152bb3dc8ce"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea60386e532a4432bdacac6b1b335689fb">kMECC_SingleError0InterruptEnable</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00065.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58">kStatus_NOTIFIER_ErrorNotificationAfter</a>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8ceaee220e9fea566ee845257d397334c6e5">kMECC_SingleError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea65533ce34c9d817cbc7e004f1338998a">kMECC_SingleError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea2e921c7bf7687ed285c3a14841dfa72b">kMECC_SingleError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea33c1cd216a6b6e2d9f2a812597f0eb16">kMECC_MultiError0InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea5b205daa036fa09d53bba5b0dcc90b3e">kMECC_MultiError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea0f1f86c38aec4924ea2718b965eb1b95">kMECC_MultiError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea73fd6dcecc1dcb1949bd06563316d59c">kMECC_MultiError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea0ae1033db8b31de149663cbe8b3d7981">kMECC_StrobeError0InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea65b9c6c2b76c569479c38046c19c2d02">kMECC_StrobeError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea5221708daa8ae1fce221e50fe51e2137">kMECC_StrobeError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8ceadaf078eec4ff8f20c033549eb43c615a">kMECC_StrobeError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea8d8e449f321ddbd300ea205cd4a00ef1">kMECC_AccessError0InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea2f7202fb545ab1461f83bb82861ce829">kMECC_AccessError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8ceadaf61d5a22b9e8f0f9ef158772fd4974">kMECC_AccessError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea37b942d39cafde4c0eee07bd6106e230">kMECC_AccessError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cead36e96df8d16f7ef1c598c86e4b76719">kMECC_AllInterruptsEnable</a> = 0xFFFF
 <br/>
  }</td></tr>
-<tr class="memdesc:gacac871f1b98f53906b07b2663943c784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier error codes.  <a href="a00065.html#gacac871f1b98f53906b07b2663943c784">More...</a><br/></td></tr>
-<tr class="separator:gacac871f1b98f53906b07b2663943c784"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62e961564dc31b8155d128a3f6566409"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00065.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>, 
+<tr class="memdesc:ga83e8bc15645f9d99ab91a152bb3dc8ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC interrupt configuration structure, default settings all disabled.  <a href="a00065.html#ga83e8bc15645f9d99ab91a152bb3dc8ce">More...</a><br/></td></tr>
+<tr class="separator:ga83e8bc15645f9d99ab91a152bb3dc8ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68c01102755fc7d1c810bb0b0635fa90"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90acae2d283f0d93ad8f95a07ffaad4a4c9">kMECC_SingleError0InterruptStatusEnable</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00065.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8">kNOTIFIER_PolicyForcible</a>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a53c64b1d2d26e05615542e35ec7aeece">kMECC_SingleError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a3b0f91ec5c5b7ff20a8316d4cc5938f7">kMECC_SingleError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aa3a7263fd019e2f84439b5987c4e3e1f">kMECC_SingleError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a01b238a7313c76b9f2863d6cbd441a11">kMECC_MultiError0InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aff426d2f793e65e4d3bc482b95d9948b">kMECC_MultiError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aa9b3da1e0b963b62bc07ee5b71a77e97">kMECC_MultiError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90ae9eb43a3ba49a8cb1a4a216c796772c3">kMECC_MultiError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a629e23be3ff3c23a3a07337bd8ecccae">kMECC_StrobeError0InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a715705722e7b0bd1cd67a4d5f3ddcd93">kMECC_StrobeError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a4411b3b02533ada7cfe29e3f284b9b98">kMECC_StrobeError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90abf9fcb24fbdf942895b0e609b3934e62">kMECC_StrobeError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a9866106ad109217f41e9460ae644f0b9">kMECC_AccessError0InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a576e9bfb470b35056c079ef1cd74b27e">kMECC_AccessError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90ae00d10368d03231b9a4b8cc7f473f84f">kMECC_AccessError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aca8726fa8c65753f5c6fa6f0dcd766c5">kMECC_AccessError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga68c01102755fc7d1c810bb0b0635fa90afd3243e9ef2e593117a814cfa36f6750">kMECC_AllInterruptsStatusEnable</a> = 0xFFFF
 <br/>
  }</td></tr>
-<tr class="memdesc:ga62e961564dc31b8155d128a3f6566409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier policies.  <a href="a00065.html#ga62e961564dc31b8155d128a3f6566409">More...</a><br/></td></tr>
-<tr class="separator:ga62e961564dc31b8155d128a3f6566409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00065.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94">kNOTIFIER_NotifyRecover</a> = 0x00U, 
+<tr class="memdesc:ga68c01102755fc7d1c810bb0b0635fa90"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC interrupt status configuration structure, default settings all disabled.  <a href="a00065.html#ga68c01102755fc7d1c810bb0b0635fa90">More...</a><br/></td></tr>
+<tr class="separator:ga68c01102755fc7d1c810bb0b0635fa90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa618c4d8c29ef4efe6f10c741fb1f47a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa86dd1ab8cba24cb2cff9c50156c6597d">kMECC_SingleError0InterruptFlag</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00065.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c">kNOTIFIER_NotifyBefore</a> = 0x01U, 
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aae3ecf474b2785e71ec9987138f1657ca">kMECC_SingleError1InterruptFlag</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00065.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00">kNOTIFIER_NotifyAfter</a> = 0x02U
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aadde8e391ea706c16e3c87150f2599e5c">kMECC_SingleError2InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa11329502b8da5277e17030e5a7875457">kMECC_SingleError3InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaa31b66d286e8c368fd6be5d1a519a777">kMECC_MultiError0InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aac1ca262d428c3580c384f8bc0d6dec03">kMECC_MultiError1InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa706b134e9a2a96f9aae83907cef0e244">kMECC_MultiError2InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa724cfb2fe9e6be717dc122d5fffe727e">kMECC_MultiError3InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa8fc11c23ff0c0f46854567becfec3114">kMECC_StrobeError0InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa9cbbb0c7093be87ed79ea1bf43443510">kMECC_StrobeError1InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa5c2f504d00dfa6b8bbf51b6b5da7d35d">kMECC_StrobeError2InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aabb63acd151ebd2e9e9ce537a746725d1">kMECC_StrobeError3InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa1586a7269a31a523cd8f95cc7e4f9a4b">kMECC_AccessError0InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR0_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa9561369b9ee437c73efd7c953eaa4ee3">kMECC_AccessError1InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa2a14b7b11694d188cc8993e543458db3">kMECC_AccessError2InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR2_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa5943a7e154c3a6cd43cc910de4f2aa2d">kMECC_AccessError3InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR3_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa080bc792af3a79294d9d6df63671e522">kMECC_AllInterruptsFlag</a> = 0xFFFF
 <br/>
  }</td></tr>
-<tr class="memdesc:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification type.  <a href="a00065.html#ga5ee4314c2a52ee0af61985e7163a1be9">More...</a><br/></td></tr>
-<tr class="separator:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad75237e3cea51f8315cf6577b35db91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00065.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1">kNOTIFIER_CallbackBefore</a> = 0x01U, 
+<tr class="memdesc:gaa618c4d8c29ef4efe6f10c741fb1f47a"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC status flags.  <a href="a00065.html#gaa618c4d8c29ef4efe6f10c741fb1f47a">More...</a><br/></td></tr>
+<tr class="separator:gaa618c4d8c29ef4efe6f10c741fb1f47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad63240694c6dc2a28c24bfc2db90ad7a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aa0eb35ef82a6ca87fd3a0ea522645b914">kMECC_OcramBank0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00065.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc">kNOTIFIER_CallbackAfter</a> = 0x02U, 
+&#160;&#160;<a class="el" href="a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aacb88eb77d6365c5f53d8a030d5602231">kMECC_OcramBank1</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00065.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a> = 0x03U
+&#160;&#160;<a class="el" href="a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aa175329c36e59cfe6731efe5d7873ad9e">kMECC_OcramBank2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aa2824bf84711bfa206d4be2104ed37a7a">kMECC_OcramBank3</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:gaad75237e3cea51f8315cf6577b35db91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback type, which indicates kinds of notification the callback handles.  <a href="a00065.html#gaad75237e3cea51f8315cf6577b35db91">More...</a><br/></td></tr>
-<tr class="separator:gaad75237e3cea51f8315cf6577b35db91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gad63240694c6dc2a28c24bfc2db90ad7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram bank number.  <a href="a00065.html#gad63240694c6dc2a28c24bfc2db90ad7a">More...</a><br/></td></tr>
+<tr class="separator:gad63240694c6dc2a28c24bfc2db90ad7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7859c0a3efa8b1c360f5c2376baf051e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00065.html#gga7859c0a3efa8b1c360f5c2376baf051eae00e394ef57da8de557c15db4ee2e818">kMECC_Instance0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00065.html#gga7859c0a3efa8b1c360f5c2376baf051ea8d76be2f588aa57923168b302739a9a9">kMECC_Instance1</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga7859c0a3efa8b1c360f5c2376baf051e"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC instance.  <a href="a00065.html#ga7859c0a3efa8b1c360f5c2376baf051e">More...</a><br/></td></tr>
+<tr class="separator:ga7859c0a3efa8b1c360f5c2376baf051e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00065.html#a00588">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00065.html#a00587">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
-<tr class="memdesc:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Notifier handle.  <a href="#gaa2dfe33b4724d9c1025acdde1b1b3c31">More...</a><br/></td></tr>
-<tr class="separator:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00065.html#a00588">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> policy)</td></tr>
-<tr class="memdesc:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the configuration according to a pre-defined structure.  <a href="#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">More...</a><br/></td></tr>
-<tr class="separator:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00065.html#a00588">notifier_handle_t</a> *notifierHandle)</td></tr>
-<tr class="memdesc:ga9736632c3beca486ec3f8dab504b839c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the last failed notification callback.  <a href="#ga9736632c3beca486ec3f8dab504b839c">More...</a><br/></td></tr>
-<tr class="separator:ga9736632c3beca486ec3f8dab504b839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga6cbe383d929a1d77a9820f5e5a592f98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga6cbe383d929a1d77a9820f5e5a592f98">FSL_MECC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 0U, 2U))</td></tr>
+<tr class="memdesc:ga6cbe383d929a1d77a9820f5e5a592f98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version 2.0.2.  <a href="#ga6cbe383d929a1d77a9820f5e5a592f98">More...</a><br/></td></tr>
+<tr class="separator:ga6cbe383d929a1d77a9820f5e5a592f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga562b7b9f4042b41c7c5afadb7d329dca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga562b7b9f4042b41c7c5afadb7d329dca">MECC_Init</a> (MECC_Type *base, <a class="el" href="a00065.html#a00586">mecc_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga562b7b9f4042b41c7c5afadb7d329dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module initialization function.  <a href="#ga562b7b9f4042b41c7c5afadb7d329dca">More...</a><br/></td></tr>
+<tr class="separator:ga562b7b9f4042b41c7c5afadb7d329dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga759c34dd29609bc871063f6b2c87afe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga759c34dd29609bc871063f6b2c87afe0">MECC_Deinit</a> (MECC_Type *base)</td></tr>
+<tr class="memdesc:ga759c34dd29609bc871063f6b2c87afe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the MECC.  <a href="#ga759c34dd29609bc871063f6b2c87afe0">More...</a><br/></td></tr>
+<tr class="separator:ga759c34dd29609bc871063f6b2c87afe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafa877e4326d0a9ad6b4a8fa6480b2d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaafa877e4326d0a9ad6b4a8fa6480b2d6">MECC_GetDefaultConfig</a> (<a class="el" href="a00065.html#a00586">mecc_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaafa877e4326d0a9ad6b4a8fa6480b2d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the MECC configuration structure to default values.  <a href="#gaafa877e4326d0a9ad6b4a8fa6480b2d6">More...</a><br/></td></tr>
+<tr class="separator:gaafa877e4326d0a9ad6b4a8fa6480b2d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status</h2></td></tr>
+<tr class="memitem:ga973eedfb451e35fb87e0d05557dd0f90"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga973eedfb451e35fb87e0d05557dd0f90">MECC_GetStatusFlags</a> (MECC_Type *base)</td></tr>
+<tr class="memdesc:ga973eedfb451e35fb87e0d05557dd0f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets MECC status flags.  <a href="#ga973eedfb451e35fb87e0d05557dd0f90">More...</a><br/></td></tr>
+<tr class="separator:ga973eedfb451e35fb87e0d05557dd0f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac52bfc1af00491bec9b10320dd1e74cf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gac52bfc1af00491bec9b10320dd1e74cf">MECC_ClearStatusFlags</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gac52bfc1af00491bec9b10320dd1e74cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module clear interrupt status.  <a href="#gac52bfc1af00491bec9b10320dd1e74cf">More...</a><br/></td></tr>
+<tr class="separator:gac52bfc1af00491bec9b10320dd1e74cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4673878c298f67c057ddc2502b7d5c2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaa4673878c298f67c057ddc2502b7d5c2">MECC_EnableInterruptStatus</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa4673878c298f67c057ddc2502b7d5c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module enable interrupt status.  <a href="#gaa4673878c298f67c057ddc2502b7d5c2">More...</a><br/></td></tr>
+<tr class="separator:gaa4673878c298f67c057ddc2502b7d5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53af3f1621fb97420058332d3231b8da"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga53af3f1621fb97420058332d3231b8da">MECC_DisableInterruptStatus</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga53af3f1621fb97420058332d3231b8da"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module disable interrupt status.  <a href="#ga53af3f1621fb97420058332d3231b8da">More...</a><br/></td></tr>
+<tr class="separator:ga53af3f1621fb97420058332d3231b8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Interrupts</h2></td></tr>
+<tr class="memitem:ga617c4b544b93fcfe66a39fb76ef7108e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga617c4b544b93fcfe66a39fb76ef7108e">MECC_EnableInterrupts</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga617c4b544b93fcfe66a39fb76ef7108e"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module enable interrupt.  <a href="#ga617c4b544b93fcfe66a39fb76ef7108e">More...</a><br/></td></tr>
+<tr class="separator:ga617c4b544b93fcfe66a39fb76ef7108e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa51a4489ca6b308f899d7697a2b67a31"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gaa51a4489ca6b308f899d7697a2b67a31">MECC_DisableInterrupts</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa51a4489ca6b308f899d7697a2b67a31"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module disable interrupt.  <a href="#gaa51a4489ca6b308f899d7697a2b67a31">More...</a><br/></td></tr>
+<tr class="separator:gaa51a4489ca6b308f899d7697a2b67a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+functional</h2></td></tr>
+<tr class="memitem:gae044b54f211cfc47f80dd50e8ab61479"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gae044b54f211cfc47f80dd50e8ab61479">MECC_ErrorInjection</a> (MECC_Type *base, uint32_t lowerrordata, uint32_t higherrordata, uint8_t eccdata, uint8_t banknumber)</td></tr>
+<tr class="memdesc:gae044b54f211cfc47f80dd50e8ab61479"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module error injection.  <a href="#gae044b54f211cfc47f80dd50e8ab61479">More...</a><br/></td></tr>
+<tr class="separator:gae044b54f211cfc47f80dd50e8ab61479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b8c6f2bbd7af719f299580eedf1abac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga2b8c6f2bbd7af719f299580eedf1abac">MECC_GetSingleErrorInfo</a> (MECC_Type *base, <a class="el" href="a00065.html#a00588">mecc_single_error_info_t</a> *info, uint8_t banknumber)</td></tr>
+<tr class="memdesc:ga2b8c6f2bbd7af719f299580eedf1abac"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module get single error information.  <a href="#ga2b8c6f2bbd7af719f299580eedf1abac">More...</a><br/></td></tr>
+<tr class="separator:ga2b8c6f2bbd7af719f299580eedf1abac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga139805c09a0024ad023d5b5e1d11a0f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga139805c09a0024ad023d5b5e1d11a0f3">MECC_GetMultiErrorInfo</a> (MECC_Type *base, <a class="el" href="a00065.html#a00587">mecc_multi_error_info_t</a> *info, uint8_t banknumber)</td></tr>
+<tr class="memdesc:ga139805c09a0024ad023d5b5e1d11a0f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module get multiple error information.  <a href="#ga139805c09a0024ad023d5b5e1d11a0f3">More...</a><br/></td></tr>
+<tr class="separator:ga139805c09a0024ad023d5b5e1d11a0f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00589" id="a00589"></a>
+<a name="a00586" id="a00586"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct notifier_notification_block_t</td>
+          <td class="memname">struct mecc_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa">targetConfig</a></td></tr>
-<tr class="memdesc:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to target configuration.  <a href="#a2e0b1d4d7e3ebf8f454b55af953e3ffa">More...</a><br/></td></tr>
-<tr class="separator:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a26aef2519eb2f9990e04f2ce961dfc9b">policy</a></td></tr>
-<tr class="memdesc:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure transition policy.  <a href="#a26aef2519eb2f9990e04f2ce961dfc9b">More...</a><br/></td></tr>
-<tr class="separator:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a2ca3b1a52e315e072a8ab48fcc1dd62a">notifyType</a></td></tr>
-<tr class="memdesc:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure notification type.  <a href="#a2ca3b1a52e315e072a8ab48fcc1dd62a">More...</a><br/></td></tr>
-<tr class="separator:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff19942deb461e4bf01c7360746093ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#aff19942deb461e4bf01c7360746093ca">enableMecc</a></td></tr>
+<tr class="memdesc:aff19942deb461e4bf01c7360746093ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the MECC function.  <a href="#aff19942deb461e4bf01c7360746093ca">More...</a><br/></td></tr>
+<tr class="separator:aff19942deb461e4bf01c7360746093ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4abea7edcd5275195098923b5909b8f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ac4abea7edcd5275195098923b5909b8f">Ocram1StartAddress</a></td></tr>
+<tr class="memdesc:ac4abea7edcd5275195098923b5909b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 1 start address.  <a href="#ac4abea7edcd5275195098923b5909b8f">More...</a><br/></td></tr>
+<tr class="separator:ac4abea7edcd5275195098923b5909b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ce2a65e0f32da27f2d76a9e69fafc2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a46ce2a65e0f32da27f2d76a9e69fafc2">Ocram1EndAddress</a></td></tr>
+<tr class="memdesc:a46ce2a65e0f32da27f2d76a9e69fafc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 1 end address.  <a href="#a46ce2a65e0f32da27f2d76a9e69fafc2">More...</a><br/></td></tr>
+<tr class="separator:a46ce2a65e0f32da27f2d76a9e69fafc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f47e08d3b6d4cd883bd88d2e3c1e197"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a5f47e08d3b6d4cd883bd88d2e3c1e197">Ocram2StartAddress</a></td></tr>
+<tr class="memdesc:a5f47e08d3b6d4cd883bd88d2e3c1e197"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 2 start address.  <a href="#a5f47e08d3b6d4cd883bd88d2e3c1e197">More...</a><br/></td></tr>
+<tr class="separator:a5f47e08d3b6d4cd883bd88d2e3c1e197"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ac404c1c0795e9fc81c2ce616d44067"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a7ac404c1c0795e9fc81c2ce616d44067">Ocram2EndAddress</a></td></tr>
+<tr class="memdesc:a7ac404c1c0795e9fc81c2ce616d44067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 2 end address.  <a href="#a7ac404c1c0795e9fc81c2ce616d44067">More...</a><br/></td></tr>
+<tr class="separator:a7ac404c1c0795e9fc81c2ce616d44067"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a2e0b1d4d7e3ebf8f454b55af953e3ffa"></a>
+<a class="anchor" id="aff19942deb461e4bf01c7360746093ca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>* notifier_notification_block_t::targetConfig</td>
+          <td class="memname">bool mecc_config_t::enableMecc</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a26aef2519eb2f9990e04f2ce961dfc9b"></a>
+<a class="anchor" id="ac4abea7edcd5275195098923b5909b8f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> notifier_notification_block_t::policy</td>
+          <td class="memname">uint32_t mecc_config_t::Ocram1StartAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2ca3b1a52e315e072a8ab48fcc1dd62a"></a>
+<a class="anchor" id="a46ce2a65e0f32da27f2d76a9e69fafc2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00065.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> notifier_notification_block_t::notifyType</td>
+          <td class="memname">uint32_t mecc_config_t::Ocram1EndAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-
-</div>
-</div>
-<a name="a00587" id="a00587"></a>
+<a class="anchor" id="a5f47e08d3b6d4cd883bd88d2e3c1e197"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct notifier_callback_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration of callbacks. Callbacks of this type are expected to be statically allocated. This structure contains the following application-defined data. callback - pointer to the callback function callbackType - specifies when the callback is called callbackData - pointer to the data passed to the callback. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a116c9dd621ffc21178e769edbd9192e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a116c9dd621ffc21178e769edbd9192e4">callback</a></td></tr>
-<tr class="memdesc:a116c9dd621ffc21178e769edbd9192e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the callback function.  <a href="#a116c9dd621ffc21178e769edbd9192e4">More...</a><br/></td></tr>
-<tr class="separator:a116c9dd621ffc21178e769edbd9192e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">callbackType</a></td></tr>
-<tr class="memdesc:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback type.  <a href="#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">More...</a><br/></td></tr>
-<tr class="separator:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a4e7db701bbf36647da1e6d0f0efe2ebf">callbackData</a></td></tr>
-<tr class="memdesc:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data passed to the callback.  <a href="#a4e7db701bbf36647da1e6d0f0efe2ebf">More...</a><br/></td></tr>
-<tr class="separator:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a116c9dd621ffc21178e769edbd9192e4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00065.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> notifier_callback_config_t::callback</td>
+          <td class="memname">uint32_t mecc_config_t::Ocram2StartAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad9e6ec8e23a48ef8d97b2f6d16fb68ec"></a>
+<a class="anchor" id="a7ac404c1c0795e9fc81c2ce616d44067"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00065.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> notifier_callback_config_t::callbackType</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4e7db701bbf36647da1e6d0f0efe2ebf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* notifier_callback_config_t::callbackData</td>
+          <td class="memname">uint32_t mecc_config_t::Ocram2EndAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -386,336 +415,362 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct notifier_handle_t</td>
+          <td class="memname">struct mecc_single_error_info_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Notifier handle structure. Contains data necessary for the Notifier proper function. Stores references to registered configurations, callbacks, information about their numbers, user function, user data, and other internal data. <a class="el" href="a00065.html#gaa2dfe33b4724d9c1025acdde1b1b3c31" title="Creates a Notifier handle. ">NOTIFIER_CreateHandle()</a> must be called to initialize this handle. </p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a8fd95d668f17b8a7705e2a4ff49f2e16">configsTable</a></td></tr>
-<tr class="memdesc:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to configure table.  <a href="#a8fd95d668f17b8a7705e2a4ff49f2e16">More...</a><br/></td></tr>
-<tr class="separator:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a59bdd44c33254cfd4626f5906d3c0a7a">configsNumber</a></td></tr>
-<tr class="memdesc:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of configurations.  <a href="#a59bdd44c33254cfd4626f5906d3c0a7a">More...</a><br/></td></tr>
-<tr class="separator:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423480d080ea2580628222dc6c492735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#a00587">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a423480d080ea2580628222dc6c492735">callbacksTable</a></td></tr>
-<tr class="memdesc:a423480d080ea2580628222dc6c492735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback table.  <a href="#a423480d080ea2580628222dc6c492735">More...</a><br/></td></tr>
-<tr class="separator:a423480d080ea2580628222dc6c492735"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#acd4e9338f2cd47c46fc0c02886daafbb">callbacksNumber</a></td></tr>
-<tr class="memdesc:acd4e9338f2cd47c46fc0c02886daafbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of callback configurations.  <a href="#acd4e9338f2cd47c46fc0c02886daafbb">More...</a><br/></td></tr>
-<tr class="separator:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a8447a4b6045219363883663f40d300"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a6a8447a4b6045219363883663f40d300">errorCallbackIndex</a></td></tr>
-<tr class="memdesc:a6a8447a4b6045219363883663f40d300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of callback returns error.  <a href="#a6a8447a4b6045219363883663f40d300">More...</a><br/></td></tr>
-<tr class="separator:a6a8447a4b6045219363883663f40d300"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae9d6d2cc9c47485863c098c0284a021"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#aae9d6d2cc9c47485863c098c0284a021">currentConfigIndex</a></td></tr>
-<tr class="memdesc:aae9d6d2cc9c47485863c098c0284a021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of current configuration.  <a href="#aae9d6d2cc9c47485863c098c0284a021">More...</a><br/></td></tr>
-<tr class="separator:aae9d6d2cc9c47485863c098c0284a021"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f6589fa386e93c40c52ed292da4f47f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a4f6589fa386e93c40c52ed292da4f47f">userFunction</a></td></tr>
-<tr class="memdesc:a4f6589fa386e93c40c52ed292da4f47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">User function.  <a href="#a4f6589fa386e93c40c52ed292da4f47f">More...</a><br/></td></tr>
-<tr class="separator:a4f6589fa386e93c40c52ed292da4f47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a5e90e1dafbe97f2ea5187530ee04af0a">userData</a></td></tr>
-<tr class="memdesc:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User data passed to user function.  <a href="#a5e90e1dafbe97f2ea5187530ee04af0a">More...</a><br/></td></tr>
-<tr class="separator:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88678fbdae48fccdd9568a3cd1e32a76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88678fbdae48fccdd9568a3cd1e32a76"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a88678fbdae48fccdd9568a3cd1e32a76">singleErrorAddress</a></td></tr>
+<tr class="memdesc:a88678fbdae48fccdd9568a3cd1e32a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error address on Ocram bank n. <br/></td></tr>
+<tr class="separator:a88678fbdae48fccdd9568a3cd1e32a76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aded9fb5de1076b3bc7dde72c8449c77b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aded9fb5de1076b3bc7dde72c8449c77b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#aded9fb5de1076b3bc7dde72c8449c77b">singleErrorDataLow</a></td></tr>
+<tr class="memdesc:aded9fb5de1076b3bc7dde72c8449c77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error low 32 bits uncorrected read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:aded9fb5de1076b3bc7dde72c8449c77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab74a6440d154f8023c3ef922163360ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab74a6440d154f8023c3ef922163360ac"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ab74a6440d154f8023c3ef922163360ac">singleErrorDataHigh</a></td></tr>
+<tr class="memdesc:ab74a6440d154f8023c3ef922163360ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error high 32 bits uncorrected read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:ab74a6440d154f8023c3ef922163360ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a451cb7d7ef100d449041ac132b5f7b34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a451cb7d7ef100d449041ac132b5f7b34"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a451cb7d7ef100d449041ac132b5f7b34">singleErrorPosLow</a></td></tr>
+<tr class="memdesc:a451cb7d7ef100d449041ac132b5f7b34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error bit postion of low 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a451cb7d7ef100d449041ac132b5f7b34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87e8410fd2ab260d275f7895f0175fe4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87e8410fd2ab260d275f7895f0175fe4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a87e8410fd2ab260d275f7895f0175fe4">singleErrorPosHigh</a></td></tr>
+<tr class="memdesc:a87e8410fd2ab260d275f7895f0175fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error bit postion of high 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a87e8410fd2ab260d275f7895f0175fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63ca09ad3b4a6d8af5b3e8a8c544dcb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63ca09ad3b4a6d8af5b3e8a8c544dcb5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a63ca09ad3b4a6d8af5b3e8a8c544dcb5">singleErrorEccCode</a></td></tr>
+<tr class="memdesc:a63ca09ad3b4a6d8af5b3e8a8c544dcb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error ECC code on Ocram bank n. <br/></td></tr>
+<tr class="separator:a63ca09ad3b4a6d8af5b3e8a8c544dcb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a8fd95d668f17b8a7705e2a4ff49f2e16"></a>
+
+</div>
+</div>
+<a name="a00587" id="a00587"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>** notifier_handle_t::configsTable</td>
+          <td class="memname">struct mecc_multi_error_info_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ac9ab573f3d4d6caf2db8670cd731fafc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9ab573f3d4d6caf2db8670cd731fafc"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ac9ab573f3d4d6caf2db8670cd731fafc">multiErrorAddress</a></td></tr>
+<tr class="memdesc:ac9ab573f3d4d6caf2db8670cd731fafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error address on Ocram bank n. <br/></td></tr>
+<tr class="separator:ac9ab573f3d4d6caf2db8670cd731fafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c70c6fc323149df114e676c3a9a41c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9c70c6fc323149df114e676c3a9a41c3"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a9c70c6fc323149df114e676c3a9a41c3">multiErrorDataLow</a></td></tr>
+<tr class="memdesc:a9c70c6fc323149df114e676c3a9a41c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error low 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a9c70c6fc323149df114e676c3a9a41c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac087e46613f98b9647564981ea55a833"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac087e46613f98b9647564981ea55a833"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ac087e46613f98b9647564981ea55a833">multiErrorDataHigh</a></td></tr>
+<tr class="memdesc:ac087e46613f98b9647564981ea55a833"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error high 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:ac087e46613f98b9647564981ea55a833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71df409a45ec7e98e5308c8f6d0cd3d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71df409a45ec7e98e5308c8f6d0cd3d9"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a71df409a45ec7e98e5308c8f6d0cd3d9">multiErrorEccCode</a></td></tr>
+<tr class="memdesc:a71df409a45ec7e98e5308c8f6d0cd3d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error ECC code on Ocram bank n. <br/></td></tr>
+<tr class="separator:a71df409a45ec7e98e5308c8f6d0cd3d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="a59bdd44c33254cfd4626f5906d3c0a7a"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga6cbe383d929a1d77a9820f5e5a592f98"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t notifier_handle_t::configsNumber</td>
+          <td class="memname">#define FSL_MECC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 0U, 2U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a423480d080ea2580628222dc6c492735"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00065.html#a00587">notifier_callback_config_t</a>* notifier_handle_t::callbacksTable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acd4e9338f2cd47c46fc0c02886daafbb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::callbacksNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6a8447a4b6045219363883663f40d300"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::errorCallbackIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aae9d6d2cc9c47485863c098c0284a021"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::currentConfigIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4f6589fa386e93c40c52ed292da4f47f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> notifier_handle_t::userFunction</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5e90e1dafbe97f2ea5187530ee04af0a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* notifier_handle_t::userData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gad0b6e919f3ff69992b36a2734a650ec7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void <a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Reference of the user defined configuration is stored in an array; the notifier switches between these configurations based on this array. </p>
-
-</div>
-</div>
-<a class="anchor" id="gacb6a6d6f99e6ddfbb96dae53382949b2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Before and after this function execution, different notification is sent to registered callbacks. If this function returns any error code, <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">targetConfig</td><td>target Configuration. </td></tr>
-    <tr><td class="paramname">userData</td><td>Refers to other specific data passed to user function. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gafd1d8cc01c496de8b4cd3990ff85415c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00065.html#a00589">notifier_notification_block_t</a> *notify, void *data)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the <a class="el" href="a00065.html#a00587" title="Callback configuration structure. ">notifier_callback_config_t</a> callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see <a class="el" href="a00065.html#a00589" title="notification block passed to the registered callback function. ">notifier_notification_block_t</a>) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">notify</td><td>Notification block. </td></tr>
-    <tr><td class="paramname">data</td><td>Callback data. Refers to the data passed during callback registration. Intended to pass any driver or application data such as internal state information. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gacac871f1b98f53906b07b2663943c784"></a>
+<a class="anchor" id="ga550cb4231d535863c55643bbd2d3c6ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00065.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used as return value of Notifier functions. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c"></a>kStatus_NOTIFIER_ErrorNotificationBefore</em>&nbsp;</td><td class="fielddoc">
-<p>An error occurs during send "BEFORE" notification. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58"></a>kStatus_NOTIFIER_ErrorNotificationAfter</em>&nbsp;</td><td class="fielddoc">
-<p>An error occurs during send "AFTER" notification. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga550cb4231d535863c55643bbd2d3c6baad54935f1c4685bb65ae950b7cd31fb88"></a>kStatus_MECC_BankMiss</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram bank miss. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga62e961564dc31b8155d128a3f6566409"></a>
+<a class="anchor" id="ga83e8bc15645f9d99ab91a152bb3dc8ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Defines whether the user function execution is forced or not. For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results, while kNOTIFIER_PolicyAgreement policy is used to exit <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> when any of the callbacks returns error code. See also <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> description. </p>
+<p>This structure contains the settings for all of the MECC interrupt configurations. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964"></a>kNOTIFIER_PolicyAgreement</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> method is exited when any of the callbacks returns error code. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea60386e532a4432bdacac6b1b335689fb"></a>kMECC_SingleError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank0 interrupt enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8"></a>kNOTIFIER_PolicyForcible</em>&nbsp;</td><td class="fielddoc">
-<p>The user function is executed regardless of the results. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8ceaee220e9fea566ee845257d397334c6e5"></a>kMECC_SingleError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea65533ce34c9d817cbc7e004f1338998a"></a>kMECC_SingleError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea2e921c7bf7687ed285c3a14841dfa72b"></a>kMECC_SingleError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea33c1cd216a6b6e2d9f2a812597f0eb16"></a>kMECC_MultiError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank0 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea5b205daa036fa09d53bba5b0dcc90b3e"></a>kMECC_MultiError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea0f1f86c38aec4924ea2718b965eb1b95"></a>kMECC_MultiError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea73fd6dcecc1dcb1949bd06563316d59c"></a>kMECC_MultiError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea0ae1033db8b31de149663cbe8b3d7981"></a>kMECC_StrobeError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank0 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea65b9c6c2b76c569479c38046c19c2d02"></a>kMECC_StrobeError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea5221708daa8ae1fce221e50fe51e2137"></a>kMECC_StrobeError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8ceadaf078eec4ff8f20c033549eb43c615a"></a>kMECC_StrobeError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea8d8e449f321ddbd300ea205cd4a00ef1"></a>kMECC_AccessError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank0 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea2f7202fb545ab1461f83bb82861ce829"></a>kMECC_AccessError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8ceadaf61d5a22b9e8f0f9ef158772fd4974"></a>kMECC_AccessError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cea37b942d39cafde4c0eee07bd6106e230"></a>kMECC_AccessError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga83e8bc15645f9d99ab91a152bb3dc8cead36e96df8d16f7ef1c598c86e4b76719"></a>kMECC_AllInterruptsEnable</em>&nbsp;</td><td class="fielddoc">
+<p>all interrupts enable </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga5ee4314c2a52ee0af61985e7163a1be9"></a>
+<a class="anchor" id="ga68c01102755fc7d1c810bb0b0635fa90"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00065.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used to notify registered callbacks </p>
+<p>This structure contains the settings for all of the MECC interrupt status configurations. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94"></a>kNOTIFIER_NotifyRecover</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP to recover to previous work state. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90acae2d283f0d93ad8f95a07ffaad4a4c9"></a>kMECC_SingleError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank0 interrupt status enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c"></a>kNOTIFIER_NotifyBefore</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP that configuration setting is going to change. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a53c64b1d2d26e05615542e35ec7aeece"></a>kMECC_SingleError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank1 interrupt status enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00"></a>kNOTIFIER_NotifyAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP that configuration setting has been changed. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a3b0f91ec5c5b7ff20a8316d4cc5938f7"></a>kMECC_SingleError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90aa3a7263fd019e2f84439b5987c4e3e1f"></a>kMECC_SingleError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a01b238a7313c76b9f2863d6cbd441a11"></a>kMECC_MultiError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank0 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90aff426d2f793e65e4d3bc482b95d9948b"></a>kMECC_MultiError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank1 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90aa9b3da1e0b963b62bc07ee5b71a77e97"></a>kMECC_MultiError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90ae9eb43a3ba49a8cb1a4a216c796772c3"></a>kMECC_MultiError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a629e23be3ff3c23a3a07337bd8ecccae"></a>kMECC_StrobeError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank0 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a715705722e7b0bd1cd67a4d5f3ddcd93"></a>kMECC_StrobeError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank1 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a4411b3b02533ada7cfe29e3f284b9b98"></a>kMECC_StrobeError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90abf9fcb24fbdf942895b0e609b3934e62"></a>kMECC_StrobeError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a9866106ad109217f41e9460ae644f0b9"></a>kMECC_AccessError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank0 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90a576e9bfb470b35056c079ef1cd74b27e"></a>kMECC_AccessError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank1 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90ae00d10368d03231b9a4b8cc7f473f84f"></a>kMECC_AccessError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90aca8726fa8c65753f5c6fa6f0dcd766c5"></a>kMECC_AccessError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga68c01102755fc7d1c810bb0b0635fa90afd3243e9ef2e593117a814cfa36f6750"></a>kMECC_AllInterruptsStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>all interrupts enable </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaad75237e3cea51f8315cf6577b35db91"></a>
+<a class="anchor" id="gaa618c4d8c29ef4efe6f10c741fb1f47a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00065.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used in the callback configuration structure (<a class="el" href="a00065.html#a00587" title="Callback configuration structure. ">notifier_callback_config_t</a>) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
-<ul>
-<li>Before the configuration switch (Callback return value can affect <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
-<li>After an unsuccessful attempt to switch configuration</li>
-<li>After a successful configuration switch </li>
-</ul>
+<p>This provides constants for the MECC status flags for use in the MECC functions. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1"></a>kNOTIFIER_CallbackBefore</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles BEFORE notification. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa86dd1ab8cba24cb2cff9c50156c6597d"></a>kMECC_SingleError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank0 interrupt flag. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc"></a>kNOTIFIER_CallbackAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles AFTER notification. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aae3ecf474b2785e71ec9987138f1657ca"></a>kMECC_SingleError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank1 interrupt flag. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005"></a>kNOTIFIER_CallbackBeforeAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles BEFORE and AFTER notification. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aadde8e391ea706c16e3c87150f2599e5c"></a>kMECC_SingleError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa11329502b8da5277e17030e5a7875457"></a>kMECC_SingleError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aaa31b66d286e8c368fd6be5d1a519a777"></a>kMECC_MultiError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank0 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aac1ca262d428c3580c384f8bc0d6dec03"></a>kMECC_MultiError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank1 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa706b134e9a2a96f9aae83907cef0e244"></a>kMECC_MultiError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa724cfb2fe9e6be717dc122d5fffe727e"></a>kMECC_MultiError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa8fc11c23ff0c0f46854567becfec3114"></a>kMECC_StrobeError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank0 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa9cbbb0c7093be87ed79ea1bf43443510"></a>kMECC_StrobeError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank1 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa5c2f504d00dfa6b8bbf51b6b5da7d35d"></a>kMECC_StrobeError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aabb63acd151ebd2e9e9ce537a746725d1"></a>kMECC_StrobeError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa1586a7269a31a523cd8f95cc7e4f9a4b"></a>kMECC_AccessError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank0 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa9561369b9ee437c73efd7c953eaa4ee3"></a>kMECC_AccessError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank1 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa2a14b7b11694d188cc8993e543458db3"></a>kMECC_AccessError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa5943a7e154c3a6cd43cc910de4f2aa2d"></a>kMECC_AccessError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa080bc792af3a79294d9d6df63671e522"></a>kMECC_AllInterruptsFlag</em>&nbsp;</td><td class="fielddoc">
+<p>all interrupts interrupt flag </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gad63240694c6dc2a28c24bfc2db90ad7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad63240694c6dc2a28c24bfc2db90ad7aa0eb35ef82a6ca87fd3a0ea522645b914"></a>kMECC_OcramBank0</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 0: ocram_base_address+0x20*i </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad63240694c6dc2a28c24bfc2db90ad7aacb88eb77d6365c5f53d8a030d5602231"></a>kMECC_OcramBank1</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 1: ocram_base_address+0x20*i+0x8 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad63240694c6dc2a28c24bfc2db90ad7aa175329c36e59cfe6731efe5d7873ad9e"></a>kMECC_OcramBank2</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 2: ocram_base_address+0x20*i+0x10 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad63240694c6dc2a28c24bfc2db90ad7aa2824bf84711bfa206d4be2104ed37a7a"></a>kMECC_OcramBank3</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 3: ocram_base_address+0x20*i+0x18 </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga7859c0a3efa8b1c360f5c2376baf051e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7859c0a3efa8b1c360f5c2376baf051eae00e394ef57da8de557c15db4ee2e818"></a>kMECC_Instance0</em>&nbsp;</td><td class="fielddoc">
+<p>Peripheral MECC1 base. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7859c0a3efa8b1c360f5c2376baf051ea8d76be2f588aa57923168b302739a9a9"></a>kMECC_Instance1</em>&nbsp;</td><td class="fielddoc">
+<p>Peripheral MECC2 base. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa2dfe33b4724d9c1025acdde1b1b3c31"></a>
+<a class="anchor" id="ga562b7b9f4042b41c7c5afadb7d329dca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
+          <td class="memname">void MECC_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00588">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em>, </td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00065.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td>
-          <td class="paramname"><em>configs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>configsNumber</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00587">notifier_callback_config_t</a> *&#160;</td>
-          <td class="paramname"><em>callbacks</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>callbacksNumber</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td>
-          <td class="paramname"><em>userFunction</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00586">mecc_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -726,41 +781,327 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>A pointer to the notifier handle. </td></tr>
-    <tr><td class="paramname">configs</td><td>A pointer to an array with references to all configurations which is handled by the Notifier. </td></tr>
-    <tr><td class="paramname">configsNumber</td><td>Number of configurations. Size of the configuration array. </td></tr>
-    <tr><td class="paramname">callbacks</td><td>A pointer to an array of callback configurations. If there are no callbacks to register during Notifier initialization, use NULL value. </td></tr>
-    <tr><td class="paramname">callbacksNumber</td><td>Number of registered callbacks. Size of the callbacks array. </td></tr>
-    <tr><td class="paramname">userFunction</td><td>User function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data passed to user function. </td></tr>
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">config</td><td>pointer to the MECC configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An error Code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9ca08c8f6fa9a7bafa9ecbe08603cd97"></a>
+<a class="anchor" id="ga759c34dd29609bc871063f6b2c87afe0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
+          <td class="memname">void MECC_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00588">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em>, </td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaafa877e4326d0a9ad6b4a8fa6480b2d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MECC_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00586">mecc_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>pointer to the MECC configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga973eedfb451e35fb87e0d05557dd0f90"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t MECC_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>MECC status flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac52bfc1af00491bec9b10320dd1e74cf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>status to clear. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa4673878c298f67c057ddc2502b7d5c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_EnableInterruptStatus </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>status to enable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga53af3f1621fb97420058332d3231b8da"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_DisableInterruptStatus </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>status to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga617c4b544b93fcfe66a39fb76ef7108e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa51a4489ca6b308f899d7697a2b67a31"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae044b54f211cfc47f80dd50e8ab61479"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MECC_ErrorInjection </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>lowerrordata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>higherrordata</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>configIndex</em>, </td>
+          <td class="paramname"><em>eccdata</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00065.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td>
-          <td class="paramname"><em>policy</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>banknumber</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -769,40 +1110,116 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function sets the system to the target configuration. Before transition, the Notifier sends notifications to all callbacks registered to the callback table. Callbacks are invoked in the following order: All registered callbacks are notified ordered by index in the callbacks array. The same order is used for before and after switch notifications. The notifications before the configuration switch can be used to obtain confirmation about the change from registered callbacks. If any registered callback denies the configuration change, further execution of this function depends on the notifier policy: the configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement). When configuration change is forced, the result of the before switch notifications are ignored. If an agreement is required, if any callback returns an error code, further notifications before switch notifications are cancelled and all already notified callbacks are re-invoked. The index of the callback which returned error code during pre-switch notifications is stored (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it. Regardless of the policies, if any callback returns an error code, an error code indicating in which phase the error occurred is returned when <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>pointer to notifier handle </td></tr>
-    <tr><td class="paramname">configIndex</td><td>Index of the target configuration. </td></tr>
-    <tr><td class="paramname">policy</td><td>Transaction policy, kNOTIFIER_PolicyAgreement or kNOTIFIER_PolicyForcible.</td></tr>
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">lowerrordata</td><td>low 32 bits data. </td></tr>
+    <tr><td class="paramname">higherrordata</td><td>high 32 bits data. </td></tr>
+    <tr><td class="paramname">eccdata</td><td>ecc code. </td></tr>
+    <tr><td class="paramname">banknumber</td><td>ocram bank number. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success.</td><td>Bank0: ocram_base_address+0x20*i Bank1: ocram_base_address+0x20*i+0x8 Bank2: ocram_base_address+0x20*i+0x10 Bank3: ocram_base_address+0x20*i+0x18 i = 0,1,2,3,4..... </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9736632c3beca486ec3f8dab504b839c"></a>
+<a class="anchor" id="ga2b8c6f2bbd7af719f299580eedf1abac"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t NOTIFIER_GetErrorCallbackIndex </td>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MECC_GetSingleErrorInfo </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00588">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em></td><td>)</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00588">mecc_single_error_info_t</a> *&#160;</td>
+          <td class="paramname"><em>info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>banknumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function returns an index of the last callback that failed during the configuration switch while the last <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> was called. If the last <a class="el" href="a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> call ended successfully value equal to callbacks number is returned. The returned value represents an index in the array of static call-backs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>Pointer to the notifier handle </td></tr>
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">info</td><td>single error information. </td></tr>
+    <tr><td class="paramname">banknumber</td><td>ocram bank number. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Callback Index of the last failed callback or value equal to callbacks count. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success.</td><td></td></tr>
+    <tr><td class="paramname">kStatus_MECC_BankMiss.</td><td>Bank0: ocram_base_address+0x20*i Bank1: ocram_base_address+0x20*i+0x8 Bank2: ocram_base_address+0x20*i+0x10 Bank3: ocram_base_address+0x20*i+0x18 i = 0,1,2,3,4..... </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga139805c09a0024ad023d5b5e1d11a0f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MECC_GetMultiErrorInfo </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00587">mecc_multi_error_info_t</a> *&#160;</td>
+          <td class="paramname"><em>info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>banknumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">info</td><td>multiple error information. </td></tr>
+    <tr><td class="paramname">banknumber</td><td>ocram bank number. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success.</td><td></td></tr>
+    <tr><td class="paramname">kStatus_MECC_BankMiss.</td><td>Bank0: ocram_base_address+0x20*i Bank1: ocram_base_address+0x20*i+0x8 Bank2: ocram_base_address+0x20*i+0x10 Bank3: ocram_base_address+0x20*i+0x18 i = 0,1,2,3,4..... </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

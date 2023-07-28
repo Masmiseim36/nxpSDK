@@ -1,6 +1,6 @@
 var a00019 =
 [
-    [ "csi2rx_config_t", "a00019.html#a00445", [
+    [ "csi2rx_config_t", "a00019.html#a00456", [
       [ "laneNum", "a00019.html#a8c48cfe43718cd091e125fc1d0249e34", null ],
       [ "tHsSettle_EscClk", "a00019.html#a7697a6ffdfa3c514e1c6957c139db740", null ]
     ] ],

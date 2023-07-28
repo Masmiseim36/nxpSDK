@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -494,16 +494,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -513,31 +503,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
@@ -557,6 +537,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -614,6 +614,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -622,11 +627,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1929,6 +1929,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1942,16 +1952,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2006,6 +2006,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2037,26 +2057,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2391,9 +2391,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2427,7 +2427,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2553,16 +2553,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -2572,31 +2562,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
@@ -2616,6 +2596,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2673,6 +2673,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -2681,11 +2686,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3988,6 +3988,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4001,16 +4011,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4065,6 +4065,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -4096,26 +4116,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4450,9 +4450,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4486,7 +4486,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4612,16 +4612,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -4631,31 +4621,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
@@ -4675,6 +4655,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4732,6 +4732,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -4740,11 +4745,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6047,6 +6047,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -6060,16 +6070,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6124,6 +6124,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -6155,26 +6175,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6509,9 +6509,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6545,7 +6545,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -6671,16 +6671,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -6690,31 +6680,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
@@ -6734,6 +6714,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -6791,6 +6791,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -6799,11 +6804,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8106,6 +8106,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -8119,16 +8129,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8183,6 +8183,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -8214,26 +8234,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8568,9 +8568,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8604,7 +8604,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -8730,16 +8730,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -8749,31 +8739,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
@@ -8793,6 +8773,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -8850,6 +8850,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -8858,11 +8863,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10165,6 +10165,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -10178,16 +10188,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10242,6 +10242,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -10273,26 +10293,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10627,9 +10627,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../middleware/lwip/src/apps/http;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10663,7 +10663,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -10789,16 +10789,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -10808,31 +10798,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_enet.h</FileName>
               <FileType>5</FileType>
@@ -10852,6 +10832,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -10909,6 +10909,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -10917,11 +10922,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -12224,6 +12224,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -12237,16 +12247,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12301,6 +12301,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lwip/src/include/lwip/apps</GroupName>
+          <Files>
+            <File>
+              <FileName>fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
+            </File>
+            <File>
+              <FileName>httpd_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -12332,26 +12352,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/lwip/apps</GroupName>
-          <Files>
-            <File>
-              <FileName>fs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/fs.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd.h</FilePath>
-            </File>
-            <File>
-              <FileName>httpd_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/apps/httpd_opts.h</FilePath>
             </File>
           </Files>
         </Group>

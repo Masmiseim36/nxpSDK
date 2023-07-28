@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -498,6 +498,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -534,6 +544,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -548,21 +568,101 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/log</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
@@ -582,16 +682,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -657,86 +747,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/log</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -817,46 +827,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1027,6 +997,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1361,9 +1371,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1397,7 +1407,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1527,6 +1537,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1563,6 +1583,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1577,21 +1607,101 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/log</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
@@ -1611,16 +1721,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1686,86 +1786,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/log</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1846,46 +1866,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2056,6 +2036,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2390,9 +2410,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2426,7 +2446,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2556,6 +2576,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2592,6 +2622,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2606,21 +2646,101 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/log</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
@@ -2640,16 +2760,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2715,86 +2825,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/log</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2875,46 +2905,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3085,6 +3075,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3419,9 +3449,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3455,7 +3485,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3585,6 +3615,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3621,6 +3661,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3635,21 +3685,101 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/log</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
@@ -3669,16 +3799,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3744,86 +3864,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/log</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3904,46 +3944,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4114,6 +4114,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4448,9 +4488,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4484,7 +4524,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4614,6 +4654,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4650,6 +4700,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4664,21 +4724,101 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/log</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
@@ -4698,16 +4838,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4773,86 +4903,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/log</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4933,46 +4983,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5143,6 +5153,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5477,9 +5527,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5513,7 +5563,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5643,6 +5693,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5679,6 +5739,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -5693,21 +5763,101 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ReadMe.url</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/log</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
@@ -5727,16 +5877,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -5802,86 +5942,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freertos/freertos-kernel/portable/MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>ReadMe.url</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/log</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_debugconsole.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_log_backend_ringbuffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/log/fsl_component_log_backend_ringbuffer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5962,46 +6022,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6172,6 +6192,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -55,21 +63,6 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci.h"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_callback.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_function.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_initialize.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board_setup.c"
@@ -89,113 +82,20 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../usbx_device_controllers
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/rtos/azure-rtos
-    ${SdkRootDirPath}/components/osa
-    ${SdkRootDirPath}/middleware/usb
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1176
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm7
-    ${SdkRootDirPath}/boards/evkbmimxrt1170/xip
-    ${SdkRootDirPath}/devices/MIMXRT1176/xip
-    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../usb_device_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_device_ehci_config_header")
 
-# include modules
-include(middleware_azure_rtos_ux_MIMXRT1176_cm7)
+include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 
-include(component_osa_thread_MIMXRT1176_cm7)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/usbx ${SdkRootDirPath}/rtos/azure-rtos/build/libusbx)
 
-include(middleware_usb_device_controller_driver_MIMXRT1176_cm7)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ${SdkRootDirPath}/rtos/azure-rtos/build/libnetxduo)
 
-include(component_osa_MIMXRT1176_cm7)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ${SdkRootDirPath}/rtos/azure-rtos/build/libfilex)
 
-include(middleware_usb_device_ehci_MIMXRT1176_cm7)
-
-include(middleware_usb_phy_MIMXRT1176_cm7)
-
-include(component_lists_MIMXRT1176_cm7)
-
-include(component_lpuart_adapter_MIMXRT1176_cm7)
-
-include(component_serial_manager_MIMXRT1176_cm7)
-
-include(driver_common_MIMXRT1176_cm7)
-
-include(component_serial_manager_uart_MIMXRT1176_cm7)
-
-include(driver_lpuart_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_startup_MIMXRT1176_cm7)
-
-include(driver_cache_armv7_m7_MIMXRT1176_cm7)
-
-include(driver_clock_MIMXRT1176_cm7)
-
-include(driver_dcdc_soc_MIMXRT1176_cm7)
-
-include(driver_igpio_MIMXRT1176_cm7)
-
-include(driver_iomuxc_MIMXRT1176_cm7)
-
-include(driver_lpi2c_MIMXRT1176_cm7)
-
-include(driver_pmu_1_MIMXRT1176_cm7)
-
-include(driver_xip_board_evkbmimxrt1170_MIMXRT1176_cm7)
-
-include(driver_xip_device_MIMXRT1176_cm7)
-
-include(utility_assert_MIMXRT1176_cm7)
-
-include(utility_debug_console_MIMXRT1176_cm7)
-
-include(middleware_azure_rtos_ux_template_MIMXRT1176_cm7)
-
-include(middleware_azure_rtos_nxd_MIMXRT1176_cm7)
-
-include(middleware_azure_rtos_nxd_template_MIMXRT1176_cm7)
-
-include(middleware_azure_rtos_fx_MIMXRT1176_cm7)
-
-include(middleware_azure_rtos_fx_template_MIMXRT1176_cm7)
-
-include(middleware_azure_rtos_tx_MIMXRT1176_cm7)
-
-include(middleware_azure_rtos_tx_template_MIMXRT1176_cm7)
-
-include(driver_anatop_ai_MIMXRT1176_cm7)
-
-include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
-
-include(middleware_usb_common_header_MIMXRT1176_cm7)
-
-include(driver_memory_MIMXRT1176_cm7)
-
-include(middleware_usb_device_common_header_MIMXRT1176_cm7)
-
-include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_system_MIMXRT1176_cm7)
-
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ./CMakeFiles/libthreadx)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/filex ./CMakeFiles/libfilex)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/netxduo ./CMakeFiles/libnetxduo)
-
-add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/usbx ./CMakeFiles/libusbx)
+add_subdirectory(${SdkRootDirPath}/rtos/azure-rtos/threadx ${SdkRootDirPath}/rtos/azure-rtos/build/libthreadx)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -212,4 +112,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

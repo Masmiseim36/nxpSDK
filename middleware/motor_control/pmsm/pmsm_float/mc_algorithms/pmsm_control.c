@@ -19,17 +19,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-/* dead-time compensation voltage table */
-float_t pfltUDtComp[DTCOMP_TABLE_SIZE] = DTCOMP_TABLE_DATA;
-
-/* dead-time compensation look-up table */
-GFLIB_LUT1D_T_FLT sLUTUDtComp;
-
-static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
-                       GMCLIB_3COOR_T_FLT *sIABC,
-                       float_t fltUDcBusFilt,
-                       float_t fltPwrStgCharIRange,
-                       float_t fltPwrStgCharLinCoeff);
 
 /*******************************************************************************
  * Code
@@ -133,16 +122,8 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
     /* 2-phase to 2-phase transformation to stationary ref. frame */
     GMCLIB_ParkInv_FLT(&psFocPMSM->sUDQReq, &psFocPMSM->sAnglePosEl, &psFocPMSM->sUAlBeReq);
 
-    /* dead-time compensation */
-    psFocPMSM->sUAlBeDTComp = psFocPMSM->sUAlBeReq;
-    if (psFocPMSM->bFlagDTComp)
-    {
-        MCS_DTComp(&psFocPMSM->sUAlBeDTComp, &psFocPMSM->sIABC, psFocPMSM->fltUDcBusFilt,
-                   psFocPMSM->fltPwrStgCharIRange, psFocPMSM->fltPwrStgCharLinCoeff);
-    }
-
     /* DCBus ripple elimination */
-    GMCLIB_ElimDcBusRipFOC_F16ff(psFocPMSM->fltUDcBusFilt, &psFocPMSM->sUAlBeDTComp, &psFocPMSM->sUAlBeCompFrac);
+    GMCLIB_ElimDcBusRipFOC_F16ff(psFocPMSM->fltUDcBusFilt, &psFocPMSM->sUAlBeReq, &psFocPMSM->sUAlBeCompFrac);
 
     /* space vector modulation */
     psFocPMSM->ui16SectorSVM = GMCLIB_SvmStd_F16(&psFocPMSM->sUAlBeCompFrac, &psFocPMSM->sDutyABC);
@@ -294,68 +275,4 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM)
     /* stator voltage angle , used the same integrator as for the open-loop start up*/
     psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(
         MLIB_ConvSc_F16ff(psScalarPMSM->fltFreqRamp, psScalarPMSM->fltFreqMax), &psScalarPMSM->sFreqIntegrator);
-}
-
-/******************************************************************************
-@brief   Dead-time compensation using LUT wit interpolation
-
-@param   N/A
-
-@return  N/A
-******************************************************************************/
-RAM_FUNC_LIB  
-static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
-                       GMCLIB_3COOR_T_FLT *sIABC,
-                       float_t fltUDcBusFilt,
-                       float_t fltPwrStgCharIRange,
-                       float_t fltPwrStgCharLinCoeff)
-{
-    register GMCLIB_3COOR_T_FLT sUABCErr;
-    register float_t fltUerrMax;
-    register int16_t i16CurrSign;
-
-    /* maximal error voltage */
-    fltUerrMax = *pfltUDtComp;
-
-    /* compensate phase A */
-    i16CurrSign = (int16_t)((sIABC->fltA > fltPwrStgCharIRange) - (sIABC->fltA < -fltPwrStgCharIRange));
-    if (!(bool_t)(i16CurrSign))
-    {
-        sUABCErr.fltA = GFLIB_Lut1D_FLT(sIABC->fltA, pfltUDtComp, &sLUTUDtComp);
-    }
-    else
-    {
-        sUABCErr.fltA =
-            i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltA) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
-    }
-
-    /* compensate phase B */
-    i16CurrSign = (int16_t)((sIABC->fltB > fltPwrStgCharIRange) - (sIABC->fltB < -fltPwrStgCharIRange));
-    if (!(bool_t)(i16CurrSign))
-    {
-        sUABCErr.fltB = GFLIB_Lut1D_FLT(sIABC->fltB, pfltUDtComp, &sLUTUDtComp);
-    }
-    else
-    {
-        sUABCErr.fltB =
-            i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltB) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
-    }
-
-    /* compensate phase C */
-    i16CurrSign = (int16_t)((sIABC->fltC > fltPwrStgCharIRange) - (sIABC->fltC < -fltPwrStgCharIRange));
-    if (!(bool_t)(i16CurrSign))
-    {
-        sUABCErr.fltC = GFLIB_Lut1D_FLT(sIABC->fltC, pfltUDtComp, &sLUTUDtComp);
-    }
-    else
-    {
-        sUABCErr.fltC =
-            i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltC) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
-    }
-
-    /* add compensation voltages */
-    sUAlBeDTComp->fltAlpha +=
-        (0.333333333333F) * fltUDcBusFilt * (sUABCErr.fltA + sUABCErr.fltA - sUABCErr.fltB - sUABCErr.fltC);
-
-    sUAlBeDTComp->fltBeta += (0.5773502691896F) * fltUDcBusFilt * (sUABCErr.fltB - sUABCErr.fltC);
 }

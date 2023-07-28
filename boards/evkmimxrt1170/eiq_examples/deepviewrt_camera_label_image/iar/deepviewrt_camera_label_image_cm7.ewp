@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_sdram_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -236,9 +236,9 @@
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>EIQ_GUI_PRINTF</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -374,7 +374,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
-          <state>$PROJ_DIR$/../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/lcdifv2</state>
@@ -512,7 +511,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -716,7 +715,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -805,7 +804,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/iar/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1130,7 +1129,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1217,7 +1216,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1234,7 +1233,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1257,7 +1256,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1336,7 +1335,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1355,9 +1354,9 @@
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>EIQ_GUI_PRINTF</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1493,7 +1492,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
-          <state>$PROJ_DIR$/../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/lcdifv2</state>
@@ -1631,7 +1629,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1835,7 +1833,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1924,7 +1922,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/iar/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2391,6 +2389,18 @@
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
   </group>
   <group>
     <name>video</name>
@@ -2446,12 +2456,6 @@
       <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/video/i2c/fsl_video_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/video/i2c/fsl_video_i2c.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/fsl_dc_fb.h</name>
     </file>
     <file>
@@ -2495,18 +2499,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_pxp.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.c</name>
@@ -2557,6 +2549,18 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
@@ -2572,12 +2576,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
     </file>
     <file>
@@ -2585,6 +2583,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
     </file>
   </group>
   <group>

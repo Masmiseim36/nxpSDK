@@ -268,6 +268,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -Map=output.map \
     -Wl,--print-memory-usage \
     -Xlinker \
+    --defsym=__use_flash64MB__=1 \
+    -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
     --defsym=__heap_size__=0x8000 \
@@ -297,6 +299,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -Xlinker \
     -Map=output.map \
     -Wl,--print-memory-usage \
+    -Xlinker \
+    --defsym=__use_flash64MB__=1 \
     -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \

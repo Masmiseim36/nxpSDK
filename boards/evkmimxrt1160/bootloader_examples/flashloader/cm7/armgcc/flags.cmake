@@ -26,6 +26,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DBL_TARGET_RAM \
     -DMIMXRT1166 \
     -DUSB_STACK_BM \
+    -DSDK_OS_BAREMETAL \
     -g \
     -Os \
     -mcpu=cortex-m7 \

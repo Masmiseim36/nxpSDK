@@ -41,15 +41,15 @@ Type "help" to see the command list. Similar description will be displayed on se
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - JTAG/SWD debugger
-- EVK-MIMXRT1170 board
+- EVKB-MIMXRT1170 board
 - Personal Computer
 - Headphones with 3.5 mm stereo jack
 - SD card
@@ -63,7 +63,7 @@ R228,R229,R232,R234.
 
 Prepare the Demo
 ================
-1.  Connect a micro USB cable between the PC host and the debug USB port (J11) on the board
+1.  Connect a micro USB cable between the PC host and the debug USB port (J86) on the board
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -71,7 +71,7 @@ Prepare the Demo
     - One stop bit
     - No flow control
 3.  Download the program to the target board.
-4.  Connect the headphones into the headphone jack on EVK-MIMXRT1170 board (J101).
+4.  Connect the headphones into the headphone jack on EVKB-MIMXRT1170 board (J101).
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Note:
@@ -79,6 +79,7 @@ Note:
     1. Define FLAC_DEC=1 in the project settings
     2. Undefine EAP_PROC in the project settings
 - The AAC decoder is only supported in MCUXpresso and ARMGCC.
+
 Running the demo
 ================
 When the example runs successfully, you should see similar output on the serial terminal as below:
@@ -98,3 +99,5 @@ Copyright  2022  NXP
 Known issues
 
 1. MP3 decoder has issues with some of the files. One of the channels can be sometimes distorted or missing parts of the signal.
+2. When using EAP crossover feature together with SSRC, after finishing the playback, it might be necessary to reset
+   the board in order to have correct sound output. Otherwise the sound output may be distorted.

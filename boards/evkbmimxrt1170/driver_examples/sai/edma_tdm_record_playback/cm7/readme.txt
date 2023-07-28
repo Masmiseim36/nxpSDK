@@ -6,10 +6,10 @@ In this example, one sai instance reocrd and playbacks the audio data in TDM for
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- MCUXpresso  11.7.0
-- GCC ARM Embedded  10.3.1
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- MCUXpresso  11.8.0
+- GCC ARM Embedded  12.2
 
 Hardware requirements
 =====================
@@ -57,8 +57,3 @@ The MIC input 1&2 will playback through Line 5&6 output.
 SAI TDM record playback example started!
 Codec Init Done.
 ~~~~~~~~~~~~~~~~~~~
-Known issue: 
-	project: sai_edma_tdm_record_playback@cm4
-	compilers: armgcc 
-	target: sdram_debug, sdram_release.
-	issue: no sound output.

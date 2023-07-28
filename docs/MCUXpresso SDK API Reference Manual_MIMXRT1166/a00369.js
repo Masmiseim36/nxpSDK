@@ -1,23 +1,25 @@
 var a00369 =
 [
-    [ "FSL_IEE_APC_DRIVER_VERSION", "a00369.html#ga8f8e0efca6b2b04874ff994be95ccb36", null ],
-    [ "iee_apc_region_t", "a00369.html#ga43c589f51df60eee06163aec88f77bf6", [
-      [ "kIEE_APC_Region0", "a00369.html#gga43c589f51df60eee06163aec88f77bf6a2c22eaab6d769b29f5a8097917d85fb2", null ],
-      [ "kIEE_APC_Region1", "a00369.html#gga43c589f51df60eee06163aec88f77bf6a275b36df41b142ed3a0b36133af222b9", null ],
-      [ "kIEE_APC_Region2", "a00369.html#gga43c589f51df60eee06163aec88f77bf6abc1e3e871a24cb02fb3f0240138e17a8", null ],
-      [ "kIEE_APC_Region3", "a00369.html#gga43c589f51df60eee06163aec88f77bf6a710f001e7ab7440abfcd79e4feb5a66e", null ],
-      [ "kIEE_APC_Region4", "a00369.html#gga43c589f51df60eee06163aec88f77bf6a75a64fb8523aa7084a7f754486527834", null ],
-      [ "kIEE_APC_Region5", "a00369.html#gga43c589f51df60eee06163aec88f77bf6a42ebebb096a7a86e6cd9c3a9402dc867", null ],
-      [ "kIEE_APC_Region6", "a00369.html#gga43c589f51df60eee06163aec88f77bf6add786f4801db876003b8a3d0cb1a8976", null ],
-      [ "kIEE_APC_Region7", "a00369.html#gga43c589f51df60eee06163aec88f77bf6a6a4dd45e2c0b090de4cc3f849906d020", null ]
-    ] ],
-    [ "iee_apc_domain_t", "a00369.html#ga6c8858dea20b71c984ac122c640742c5", [
-      [ "kIEE_APC_Domain0", "a00369.html#gga6c8858dea20b71c984ac122c640742c5af66cb7c1deb45b4c135355509c5bcfe9", null ],
-      [ "kIEE_APC_Domain1", "a00369.html#gga6c8858dea20b71c984ac122c640742c5a5815ff9d580dc57a1c8ecc47fb6a2cfd", null ]
-    ] ],
-    [ "IEE_APC_GlobalEnable", "a00369.html#gacb93c513e097c8dae46c921f43dd4649", null ],
-    [ "IEE_APC_GlobalDisable", "a00369.html#gac278adaf161565d918abd41f4f4bf103", null ],
-    [ "IEE_APC_SetRegionConfig", "a00369.html#ga96a4a09160e96548e72d96b27e42a405", null ],
-    [ "IEE_APC_LockRegionConfig", "a00369.html#ga8b9b0c0e6ab19657b266bc2b311d175a", null ],
-    [ "IEE_APC_RegionEnable", "a00369.html#ga8f2a69526f52c82f2e02889accb64e74", null ]
+    [ "SWO", "a00372.html", null ],
+    [ "Semihosting", "a00371.html", null ],
+    [ "debug console configuration", "a00370.html", "a00370" ],
+    [ "DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN", "a00369.html#gabb8f0adbec02f143b4f84d2eb42126df", null ],
+    [ "DEBUGCONSOLE_REDIRECT_TO_SDK", "a00369.html#gac33031f28afa29dc8fe1718bbc86ee23", null ],
+    [ "DEBUGCONSOLE_DISABLE", "a00369.html#gaf8f85fd102e4aedcee3d061dc2d3e0c2", null ],
+    [ "SDK_DEBUGCONSOLE", "a00369.html#ga7fdd594efdc8374ecd8684ed758d6cec", null ],
+    [ "PRINTF", "a00369.html#gae1649fc947ca37a86917a08354f48d1a", null ],
+    [ "DbgConsole_Init", "a00369.html#ga12e50ee0450679fd8ca950a89338d366", null ],
+    [ "DbgConsole_Deinit", "a00369.html#gad80e7aa70bbb3fce1a9168621372833e", null ],
+    [ "DbgConsole_EnterLowpower", "a00369.html#ga9ce272e795c2b235265d3dfb50669bee", null ],
+    [ "DbgConsole_ExitLowpower", "a00369.html#ga21831f5ee970f3a1f13ff375405f3592", null ],
+    [ "DbgConsole_Printf", "a00369.html#ga7f9e0678f4c708ed5640b0823c07dc35", null ],
+    [ "DbgConsole_Vprintf", "a00369.html#ga48560c409b88fbe195e140aa20c5307b", null ],
+    [ "DbgConsole_Putchar", "a00369.html#gada572d86a06f028b5b1a5d0440f683e3", null ],
+    [ "DbgConsole_Scanf", "a00369.html#ga53b115907016172dcf58fcffab144a6d", null ],
+    [ "DbgConsole_Getchar", "a00369.html#ga11898c5015274863741c4f3f4d9edc08", null ],
+    [ "DbgConsole_BlockingPrintf", "a00369.html#ga23e7c243b07d594a0a1016dcab28d3a3", null ],
+    [ "DbgConsole_BlockingVprintf", "a00369.html#gaed722925a966ae462d5d44cd33f836c3", null ],
+    [ "DbgConsole_Flush", "a00369.html#ga3194467c3dae6c5015b8b29c3cc1db1e", null ],
+    [ "DbgConsole_TryGetchar", "a00369.html#ga867a9778cd1401d3336ae5599851c1fd", null ],
+    [ "g_serialHandle", "a00369.html#gaad3c4240a1364156a239471ccdb9aa0b", null ]
 ];

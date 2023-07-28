@@ -1,47 +1,96 @@
 var a00065 =
 [
-    [ "notifier_notification_block_t", "a00065.html#a00589", [
-      [ "targetConfig", "a00065.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa", null ],
-      [ "policy", "a00065.html#a26aef2519eb2f9990e04f2ce961dfc9b", null ],
-      [ "notifyType", "a00065.html#a2ca3b1a52e315e072a8ab48fcc1dd62a", null ]
+    [ "mecc_config_t", "a00065.html#a00586", [
+      [ "enableMecc", "a00065.html#aff19942deb461e4bf01c7360746093ca", null ],
+      [ "Ocram1StartAddress", "a00065.html#ac4abea7edcd5275195098923b5909b8f", null ],
+      [ "Ocram1EndAddress", "a00065.html#a46ce2a65e0f32da27f2d76a9e69fafc2", null ],
+      [ "Ocram2StartAddress", "a00065.html#a5f47e08d3b6d4cd883bd88d2e3c1e197", null ],
+      [ "Ocram2EndAddress", "a00065.html#a7ac404c1c0795e9fc81c2ce616d44067", null ]
     ] ],
-    [ "notifier_callback_config_t", "a00065.html#a00587", [
-      [ "callback", "a00065.html#a116c9dd621ffc21178e769edbd9192e4", null ],
-      [ "callbackType", "a00065.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec", null ],
-      [ "callbackData", "a00065.html#a4e7db701bbf36647da1e6d0f0efe2ebf", null ]
+    [ "mecc_single_error_info_t", "a00065.html#a00588", [
+      [ "singleErrorAddress", "a00065.html#a88678fbdae48fccdd9568a3cd1e32a76", null ],
+      [ "singleErrorDataLow", "a00065.html#aded9fb5de1076b3bc7dde72c8449c77b", null ],
+      [ "singleErrorDataHigh", "a00065.html#ab74a6440d154f8023c3ef922163360ac", null ],
+      [ "singleErrorPosLow", "a00065.html#a451cb7d7ef100d449041ac132b5f7b34", null ],
+      [ "singleErrorPosHigh", "a00065.html#a87e8410fd2ab260d275f7895f0175fe4", null ],
+      [ "singleErrorEccCode", "a00065.html#a63ca09ad3b4a6d8af5b3e8a8c544dcb5", null ]
     ] ],
-    [ "notifier_handle_t", "a00065.html#a00588", [
-      [ "configsTable", "a00065.html#a8fd95d668f17b8a7705e2a4ff49f2e16", null ],
-      [ "configsNumber", "a00065.html#a59bdd44c33254cfd4626f5906d3c0a7a", null ],
-      [ "callbacksTable", "a00065.html#a423480d080ea2580628222dc6c492735", null ],
-      [ "callbacksNumber", "a00065.html#acd4e9338f2cd47c46fc0c02886daafbb", null ],
-      [ "errorCallbackIndex", "a00065.html#a6a8447a4b6045219363883663f40d300", null ],
-      [ "currentConfigIndex", "a00065.html#aae9d6d2cc9c47485863c098c0284a021", null ],
-      [ "userFunction", "a00065.html#a4f6589fa386e93c40c52ed292da4f47f", null ],
-      [ "userData", "a00065.html#a5e90e1dafbe97f2ea5187530ee04af0a", null ]
+    [ "mecc_multi_error_info_t", "a00065.html#a00587", [
+      [ "multiErrorAddress", "a00065.html#ac9ab573f3d4d6caf2db8670cd731fafc", null ],
+      [ "multiErrorDataLow", "a00065.html#a9c70c6fc323149df114e676c3a9a41c3", null ],
+      [ "multiErrorDataHigh", "a00065.html#ac087e46613f98b9647564981ea55a833", null ],
+      [ "multiErrorEccCode", "a00065.html#a71df409a45ec7e98e5308c8f6d0cd3d9", null ]
     ] ],
-    [ "notifier_user_config_t", "a00065.html#gad0b6e919f3ff69992b36a2734a650ec7", null ],
-    [ "notifier_user_function_t", "a00065.html#gacb6a6d6f99e6ddfbb96dae53382949b2", null ],
-    [ "notifier_callback_t", "a00065.html#gafd1d8cc01c496de8b4cd3990ff85415c", null ],
-    [ "_notifier_status", "a00065.html#gacac871f1b98f53906b07b2663943c784", [
-      [ "kStatus_NOTIFIER_ErrorNotificationBefore", "a00065.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c", null ],
-      [ "kStatus_NOTIFIER_ErrorNotificationAfter", "a00065.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58", null ]
+    [ "FSL_MECC_DRIVER_VERSION", "a00065.html#ga6cbe383d929a1d77a9820f5e5a592f98", [
+      [ "kStatus_MECC_BankMiss", "a00065.html#gga550cb4231d535863c55643bbd2d3c6baad54935f1c4685bb65ae950b7cd31fb88", null ],
+      [ "kMECC_SingleError0InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea60386e532a4432bdacac6b1b335689fb", null ],
+      [ "kMECC_SingleError1InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8ceaee220e9fea566ee845257d397334c6e5", null ],
+      [ "kMECC_SingleError2InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea65533ce34c9d817cbc7e004f1338998a", null ],
+      [ "kMECC_SingleError3InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea2e921c7bf7687ed285c3a14841dfa72b", null ],
+      [ "kMECC_MultiError0InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea33c1cd216a6b6e2d9f2a812597f0eb16", null ],
+      [ "kMECC_MultiError1InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea5b205daa036fa09d53bba5b0dcc90b3e", null ],
+      [ "kMECC_MultiError2InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea0f1f86c38aec4924ea2718b965eb1b95", null ],
+      [ "kMECC_MultiError3InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea73fd6dcecc1dcb1949bd06563316d59c", null ],
+      [ "kMECC_StrobeError0InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea0ae1033db8b31de149663cbe8b3d7981", null ],
+      [ "kMECC_StrobeError1InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea65b9c6c2b76c569479c38046c19c2d02", null ],
+      [ "kMECC_StrobeError2InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea5221708daa8ae1fce221e50fe51e2137", null ],
+      [ "kMECC_StrobeError3InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8ceadaf078eec4ff8f20c033549eb43c615a", null ],
+      [ "kMECC_AccessError0InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea8d8e449f321ddbd300ea205cd4a00ef1", null ],
+      [ "kMECC_AccessError1InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea2f7202fb545ab1461f83bb82861ce829", null ],
+      [ "kMECC_AccessError2InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8ceadaf61d5a22b9e8f0f9ef158772fd4974", null ],
+      [ "kMECC_AccessError3InterruptEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cea37b942d39cafde4c0eee07bd6106e230", null ],
+      [ "kMECC_AllInterruptsEnable", "a00065.html#gga83e8bc15645f9d99ab91a152bb3dc8cead36e96df8d16f7ef1c598c86e4b76719", null ],
+      [ "kMECC_SingleError0InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90acae2d283f0d93ad8f95a07ffaad4a4c9", null ],
+      [ "kMECC_SingleError1InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a53c64b1d2d26e05615542e35ec7aeece", null ],
+      [ "kMECC_SingleError2InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a3b0f91ec5c5b7ff20a8316d4cc5938f7", null ],
+      [ "kMECC_SingleError3InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aa3a7263fd019e2f84439b5987c4e3e1f", null ],
+      [ "kMECC_MultiError0InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a01b238a7313c76b9f2863d6cbd441a11", null ],
+      [ "kMECC_MultiError1InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aff426d2f793e65e4d3bc482b95d9948b", null ],
+      [ "kMECC_MultiError2InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aa9b3da1e0b963b62bc07ee5b71a77e97", null ],
+      [ "kMECC_MultiError3InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90ae9eb43a3ba49a8cb1a4a216c796772c3", null ],
+      [ "kMECC_StrobeError0InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a629e23be3ff3c23a3a07337bd8ecccae", null ],
+      [ "kMECC_StrobeError1InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a715705722e7b0bd1cd67a4d5f3ddcd93", null ],
+      [ "kMECC_StrobeError2InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a4411b3b02533ada7cfe29e3f284b9b98", null ],
+      [ "kMECC_StrobeError3InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90abf9fcb24fbdf942895b0e609b3934e62", null ],
+      [ "kMECC_AccessError0InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a9866106ad109217f41e9460ae644f0b9", null ],
+      [ "kMECC_AccessError1InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90a576e9bfb470b35056c079ef1cd74b27e", null ],
+      [ "kMECC_AccessError2InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90ae00d10368d03231b9a4b8cc7f473f84f", null ],
+      [ "kMECC_AccessError3InterruptStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90aca8726fa8c65753f5c6fa6f0dcd766c5", null ],
+      [ "kMECC_AllInterruptsStatusEnable", "a00065.html#gga68c01102755fc7d1c810bb0b0635fa90afd3243e9ef2e593117a814cfa36f6750", null ],
+      [ "kMECC_SingleError0InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa86dd1ab8cba24cb2cff9c50156c6597d", null ],
+      [ "kMECC_SingleError1InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aae3ecf474b2785e71ec9987138f1657ca", null ],
+      [ "kMECC_SingleError2InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aadde8e391ea706c16e3c87150f2599e5c", null ],
+      [ "kMECC_SingleError3InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa11329502b8da5277e17030e5a7875457", null ],
+      [ "kMECC_MultiError0InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaa31b66d286e8c368fd6be5d1a519a777", null ],
+      [ "kMECC_MultiError1InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aac1ca262d428c3580c384f8bc0d6dec03", null ],
+      [ "kMECC_MultiError2InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa706b134e9a2a96f9aae83907cef0e244", null ],
+      [ "kMECC_MultiError3InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa724cfb2fe9e6be717dc122d5fffe727e", null ],
+      [ "kMECC_StrobeError0InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa8fc11c23ff0c0f46854567becfec3114", null ],
+      [ "kMECC_StrobeError1InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa9cbbb0c7093be87ed79ea1bf43443510", null ],
+      [ "kMECC_StrobeError2InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa5c2f504d00dfa6b8bbf51b6b5da7d35d", null ],
+      [ "kMECC_StrobeError3InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aabb63acd151ebd2e9e9ce537a746725d1", null ],
+      [ "kMECC_AccessError0InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa1586a7269a31a523cd8f95cc7e4f9a4b", null ],
+      [ "kMECC_AccessError1InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa9561369b9ee437c73efd7c953eaa4ee3", null ],
+      [ "kMECC_AccessError2InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa2a14b7b11694d188cc8993e543458db3", null ],
+      [ "kMECC_AccessError3InterruptFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa5943a7e154c3a6cd43cc910de4f2aa2d", null ],
+      [ "kMECC_AllInterruptsFlag", "a00065.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa080bc792af3a79294d9d6df63671e522", null ],
+      [ "kMECC_OcramBank0", "a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aa0eb35ef82a6ca87fd3a0ea522645b914", null ],
+      [ "kMECC_OcramBank1", "a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aacb88eb77d6365c5f53d8a030d5602231", null ],
+      [ "kMECC_OcramBank2", "a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aa175329c36e59cfe6731efe5d7873ad9e", null ],
+      [ "kMECC_OcramBank3", "a00065.html#ggad63240694c6dc2a28c24bfc2db90ad7aa2824bf84711bfa206d4be2104ed37a7a", null ],
+      [ "kMECC_Instance0", "a00065.html#gga7859c0a3efa8b1c360f5c2376baf051eae00e394ef57da8de557c15db4ee2e818", null ],
+      [ "kMECC_Instance1", "a00065.html#gga7859c0a3efa8b1c360f5c2376baf051ea8d76be2f588aa57923168b302739a9a9", null ]
     ] ],
-    [ "notifier_policy_t", "a00065.html#ga62e961564dc31b8155d128a3f6566409", [
-      [ "kNOTIFIER_PolicyAgreement", "a00065.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964", null ],
-      [ "kNOTIFIER_PolicyForcible", "a00065.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8", null ]
-    ] ],
-    [ "notifier_notification_type_t", "a00065.html#ga5ee4314c2a52ee0af61985e7163a1be9", [
-      [ "kNOTIFIER_NotifyRecover", "a00065.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94", null ],
-      [ "kNOTIFIER_NotifyBefore", "a00065.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c", null ],
-      [ "kNOTIFIER_NotifyAfter", "a00065.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00", null ]
-    ] ],
-    [ "notifier_callback_type_t", "a00065.html#gaad75237e3cea51f8315cf6577b35db91", [
-      [ "kNOTIFIER_CallbackBefore", "a00065.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1", null ],
-      [ "kNOTIFIER_CallbackAfter", "a00065.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc", null ],
-      [ "kNOTIFIER_CallbackBeforeAfter", "a00065.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005", null ]
-    ] ],
-    [ "NOTIFIER_CreateHandle", "a00065.html#gaa2dfe33b4724d9c1025acdde1b1b3c31", null ],
-    [ "NOTIFIER_SwitchConfig", "a00065.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97", null ],
-    [ "NOTIFIER_GetErrorCallbackIndex", "a00065.html#ga9736632c3beca486ec3f8dab504b839c", null ]
+    [ "MECC_Init", "a00065.html#ga562b7b9f4042b41c7c5afadb7d329dca", null ],
+    [ "MECC_Deinit", "a00065.html#ga759c34dd29609bc871063f6b2c87afe0", null ],
+    [ "MECC_GetDefaultConfig", "a00065.html#gaafa877e4326d0a9ad6b4a8fa6480b2d6", null ],
+    [ "MECC_GetStatusFlags", "a00065.html#ga973eedfb451e35fb87e0d05557dd0f90", null ],
+    [ "MECC_ClearStatusFlags", "a00065.html#gac52bfc1af00491bec9b10320dd1e74cf", null ],
+    [ "MECC_EnableInterruptStatus", "a00065.html#gaa4673878c298f67c057ddc2502b7d5c2", null ],
+    [ "MECC_DisableInterruptStatus", "a00065.html#ga53af3f1621fb97420058332d3231b8da", null ],
+    [ "MECC_EnableInterrupts", "a00065.html#ga617c4b544b93fcfe66a39fb76ef7108e", null ],
+    [ "MECC_DisableInterrupts", "a00065.html#gaa51a4489ca6b308f899d7697a2b67a31", null ],
+    [ "MECC_ErrorInjection", "a00065.html#gae044b54f211cfc47f80dd50e8ab61479", null ],
+    [ "MECC_GetSingleErrorInfo", "a00065.html#ga2b8c6f2bbd7af719f299580eedf1abac", null ],
+    [ "MECC_GetMultiErrorInfo", "a00065.html#ga139805c09a0024ad023d5b5e1d11a0f3", null ]
 ];

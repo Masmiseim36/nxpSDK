@@ -1,6 +1,6 @@
 var a00020 =
 [
-    [ "csi_config_t", "a00020.html#a00452", [
+    [ "csi_config_t", "a00020.html#a00459", [
       [ "width", "a00020.html#ac5d64ed31de712862131d8ba0c0acada", null ],
       [ "height", "a00020.html#af353234bdd91adf25b2bfa24cec0288e", null ],
       [ "polarityFlags", "a00020.html#a5715e589bee1f54aac85ab996a59f204", null ],
@@ -10,7 +10,7 @@ var a00020 =
       [ "dataBus", "a00020.html#a0c7630ee5ca46f6cf1a23a83378bdb1f", null ],
       [ "useExtVsync", "a00020.html#a436dcb1c1ed0cd25910b9df57267bd02", null ]
     ] ],
-    [ "csi_handle_t", "a00020.html#a00381", [
+    [ "csi_handle_t", "a00020.html#a00388", [
       [ "frameBufferQueue", "a00020.html#aa1a9c395647713b07bc92e4b89a9a547", null ],
       [ "queueWriteIdx", "a00020.html#a98aac4e50e3a3375e6dd6199e8135527", null ],
       [ "queueReadIdx", "a00020.html#afe1aaca7fbcc6240601eec4106026bf5", null ],
@@ -24,10 +24,10 @@ var a00020 =
     [ "CSI_DRIVER_QUEUE_SIZE", "a00020.html#ga6f3f169f7ba5517e946634a28add89e1", null ],
     [ "CSI_DRIVER_FRAG_MODE", "a00020.html#ga24e366c9c656595ba3258f0e6bc59c74", null ],
     [ "csi_transfer_callback_t", "a00020.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f", [
-      [ "kStatus_CSI_NoEmptyBuffer", "a00020.html#gga39fca1837c5ce7715cbf571669660c13a14ddc6ba82ee752fdfe1f4b0e64d5533", null ],
-      [ "kStatus_CSI_NoFullBuffer", "a00020.html#gga39fca1837c5ce7715cbf571669660c13a4fb022ca8ae559e96d18524e7ea09a5f", null ],
-      [ "kStatus_CSI_QueueFull", "a00020.html#gga39fca1837c5ce7715cbf571669660c13a6517cec370f757b84ba21eb690e51635", null ],
-      [ "kStatus_CSI_FrameDone", "a00020.html#gga39fca1837c5ce7715cbf571669660c13ac9a47e7b267d5ece60e04306d2e245d2", null ]
+      [ "kStatus_CSI_NoEmptyBuffer", "a00020.html#ggaaf8fd5f0e57d456151c951e0f3715fc4a14ddc6ba82ee752fdfe1f4b0e64d5533", null ],
+      [ "kStatus_CSI_NoFullBuffer", "a00020.html#ggaaf8fd5f0e57d456151c951e0f3715fc4a4fb022ca8ae559e96d18524e7ea09a5f", null ],
+      [ "kStatus_CSI_QueueFull", "a00020.html#ggaaf8fd5f0e57d456151c951e0f3715fc4a6517cec370f757b84ba21eb690e51635", null ],
+      [ "kStatus_CSI_FrameDone", "a00020.html#ggaaf8fd5f0e57d456151c951e0f3715fc4ac9a47e7b267d5ece60e04306d2e245d2", null ]
     ] ],
     [ "csi_work_mode_t", "a00020.html#ga5539d9ae21ae84983a8ed9418c83cc5f", [
       [ "kCSI_GatedClockMode", "a00020.html#gga5539d9ae21ae84983a8ed9418c83cc5fab707b88b2c5b3ca70afe6b78f2988571", null ],

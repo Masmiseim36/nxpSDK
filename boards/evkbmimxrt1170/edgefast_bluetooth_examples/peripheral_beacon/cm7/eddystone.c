@@ -1,14 +1,8 @@
 /*
  * Copyright (c) 2015-2016 Intel Corporation
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
  * Copyright 2022 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
+ * 
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #if defined(EDDYSTONE) && (EDDYSTONE == 1)
@@ -736,6 +730,8 @@ static void idle_timeout(void *data, UINT16 datalen)
 void beacon_task(void *pvParameters)
 {
     int err;
+
+    PRINTF("BLE Eddystone demo start...\n");
 
     idle_timeout_sync = xSemaphoreCreateCounting(0xFFu, 0u);
     if (NULL == idle_timeout_sync)

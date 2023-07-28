@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: PGMC</title>
+<title>MCUXpresso SDK API Reference Manual: Notification Framework</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,1903 +100,622 @@ $(document).ready(function(){initNavTree('a00068.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">PGMC</div>  </div>
+<div class="title">Notification Framework</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
+<p>This section describes the programming interface of the Notifier driver.</p>
+<h1><a class="anchor" id="NotifierOv"></a>
+Notifier Overview</h1>
+<p>The Notifier provides a configuration dynamic change service. Based on this service, applications can switch between pre-defined configurations. The Notifier enables drivers and applications to register callback functions to this framework. Each time that the configuration is changed, drivers and applications receive a notification and change their settings. To simplify, the Notifier only supports the static callback registration. This means that, for applications, all callback functions are collected into a static table and passed to the Notifier.</p>
+<p>These are the steps for the configuration transition.</p>
+<ol type="1">
+<li>Before configuration transition, the Notifier sends a "BEFORE" message to the callback table. When this message is received, IP drivers should check whether any current processes can be stopped and stop them. If the processes cannot be stopped, the callback function returns an error.<br/>
+ The Notifier supports two types of transition policies, a graceful policy and a forceful policy. When the graceful policy is used, if some callbacks return an error while sending a "BEFORE" message, the configuration transition stops and the Notifier sends a "RECOVER" message to all drivers that have stopped. Then, these drivers can recover the previous status and continue to work. When the forceful policy is used, drivers are stopped forcefully.</li>
+<li>After the "BEFORE" message is processed successfully, the system switches to the new configuration.</li>
+<li>After the configuration changes, the Notifier sends an "AFTER" message to the callback table to notify drivers that the configuration transition is finished.</li>
+</ol>
+<p>This example shows how to use the Notifier in the Power Manager application.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;fsl_notifier.h&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Definition of the Power Manager callback.</span></div>
+<div class="line"><a class="code" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00068.html#a00599">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
+<div class="line">{</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00338.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line"></div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+<div class="line"><span class="comment">// Definition of the Power Manager user function.</span></div>
+<div class="line"><a class="code" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">}</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line"><span class="comment">// Main function.</span></div>
+<div class="line">int main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Define a notifier handle.</span></div>
+<div class="line">    <a class="code" href="a00068.html#a00598">notifier_handle_t</a> powerModeHandle;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Callback configuration.</span></div>
+<div class="line">    user_callback_data_t callbackData0;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00068.html#a00597">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
+<div class="line">                <a class="code" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a>,</div>
+<div class="line">                (<span class="keywordtype">void</span> *)&amp;callbackData0};</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00068.html#a00597">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Power mode configurations.</span></div>
+<div class="line">    power_user_config_t vlprConfig;</div>
+<div class="line">    power_user_config_t stopConfig;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *powerConfigs[] = {&amp;vlprConfig, &amp;stopConfig};</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Definition of a transition to and out the power modes.</span></div>
+<div class="line">    vlprConfig.mode = kAPP_PowerModeVlpr;</div>
+<div class="line">    vlprConfig.enableLowPowerWakeUpOnInterrupt = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    stopConfig = vlprConfig;</div>
+<div class="line">    stopConfig.mode = kAPP_PowerModeStop;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Create Notifier handle.</span></div>
+<div class="line">    <a class="code" href="a00068.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a>(&amp;powerModeHandle, powerConfigs, 2U, callbacks, 1U, APP_PowerModeSwitch, NULL);</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    <span class="comment">// Power mode switch.</span></div>
+<div class="line">    NOTIFIER_switchConfig(&amp;powerModeHandle, targetConfigIndex, <a class="code" href="a00068.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>);</div>
+<div class="line">}</div>
+</div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00598"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00598">pgmc_bpc_cpu_power_mode_option_t</a></td></tr>
-<tr class="memdesc:a00598"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control option of the power domain controlled by CPU power mode.  <a href="a00068.html#a00598">More...</a><br/></td></tr>
-<tr class="separator:a00598"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00599"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00599">pgmc_bpc_setpoint_mode_option_t</a></td></tr>
-<tr class="memdesc:a00599"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control option of the power domain controlled by setpoint mode.  <a href="a00068.html#a00599">More...</a><br/></td></tr>
+<tr class="memitem:a00599"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00599">notifier_notification_block_t</a></td></tr>
+<tr class="memdesc:a00599"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00068.html#a00599">More...</a><br/></td></tr>
 <tr class="separator:a00599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00597"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a></td></tr>
+<tr class="memdesc:a00597"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00068.html#a00597">More...</a><br/></td></tr>
+<tr class="separator:a00597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00598"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00598">notifier_handle_t</a></td></tr>
+<tr class="memdesc:a00598"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00068.html#a00598">More...</a><br/></td></tr>
+<tr class="separator:a00598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td></tr>
+<tr class="memdesc:gad0b6e919f3ff69992b36a2734a650ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user configuration type.  <a href="#gad0b6e919f3ff69992b36a2734a650ec7">More...</a><br/></td></tr>
+<tr class="separator:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
+<tr class="memdesc:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user function prototype Use this function to execute specific operations in configuration switch.  <a href="#gacb6a6d6f99e6ddfbb96dae53382949b2">More...</a><br/></td></tr>
+<tr class="separator:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00068.html#a00599">notifier_notification_block_t</a> *notify, void *data)</td></tr>
+<tr class="memdesc:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback prototype.  <a href="#gafd1d8cc01c496de8b4cd3990ff85415c">More...</a><br/></td></tr>
+<tr class="separator:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gabc6126af1d45847bc59afa0aa3216b04"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a84d66abc8151d54f2f9d0dc1083ba5cd">kPGMC_SetPoint0</a> = 1UL &lt;&lt; 0UL, 
+<tr class="memitem:gacac871f1b98f53906b07b2663943c784"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a> { <br/>
+&#160;&#160;<a class="el" href="a00068.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c">kStatus_NOTIFIER_ErrorNotificationBefore</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04ae1f132c07eea2ee40fe76add15cef173">kPGMC_SetPoint1</a> = 1UL &lt;&lt; 1UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a3162c6dd9687dbadd75789d313b8b5c2">kPGMC_SetPoint2</a> = 1UL &lt;&lt; 2UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04abbe3ce4a373d19747346889b89faf347">kPGMC_SetPoint3</a> = 1UL &lt;&lt; 3UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a4eb1eab943cda54c9c4a632500559af1">kPGMC_SetPoint4</a> = 1UL &lt;&lt; 4UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04ab5a4c7f49a05aec08bbf4fb5b2755402">kPGMC_SetPoint5</a> = 1UL &lt;&lt; 5UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04ae70be3ec02218f030f8993e2eb98fdd2">kPGMC_SetPoint6</a> = 1UL &lt;&lt; 6UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a438ddddad292d97e7483209ec5432510">kPGMC_SetPoint7</a> = 1UL &lt;&lt; 7UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a50f67af63cbe0987ef071455863900c2">kPGMC_SetPoint8</a> = 1UL &lt;&lt; 8UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a1ad829426e0cb25a85fde23c714644c3">kPGMC_SetPoint9</a> = 1UL &lt;&lt; 9UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a6ef5812549fae26a2680c2cc0d19c5ed">kPGMC_SetPoint10</a> = 1UL &lt;&lt; 10UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a6091218beb0bb5390b079c440c68b3e2">kPGMC_SetPoint11</a> = 1UL &lt;&lt; 11UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04af35b9da2926b363d3ebe862cab69fc21">kPGMC_SetPoint12</a> = 1UL &lt;&lt; 12UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a82667c23f002ed9a2f4c3bcec1d6bcec">kPGMC_SetPoint13</a> = 1UL &lt;&lt; 13UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a9b239456cfa9c2563ac1ebc2f63e6c2e">kPGMC_SetPoint14</a> = 1UL &lt;&lt; 14UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggabc6126af1d45847bc59afa0aa3216b04aba257dfdf57e39ad5ab18daa7319199f">kPGMC_SetPoint15</a> = 1UL &lt;&lt; 15UL
+&#160;&#160;<a class="el" href="a00068.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58">kStatus_NOTIFIER_ErrorNotificationAfter</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gabc6126af1d45847bc59afa0aa3216b04"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enumeration of setpoint.  <a href="a00068.html#gabc6126af1d45847bc59afa0aa3216b04">More...</a><br/></td></tr>
-<tr class="separator:gabc6126af1d45847bc59afa0aa3216b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93d43f8a690924e4461aef147d4ed832"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga93d43f8a690924e4461aef147d4ed832">_pgmc_mif_signal_behaviour</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832aff0527101cdb7ce01e0da81e6fdd593c">kPGMC_AssertSleepSignal</a> = 1U &lt;&lt; 0U, 
+<tr class="memdesc:gacac871f1b98f53906b07b2663943c784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier error codes.  <a href="a00068.html#gacac871f1b98f53906b07b2663943c784">More...</a><br/></td></tr>
+<tr class="separator:gacac871f1b98f53906b07b2663943c784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62e961564dc31b8155d128a3f6566409"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00068.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832ae42e7954a7998cbb3c2edcaf145bf867">kPGMC_AssertInputGateSignal</a> = 1U &lt;&lt; 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832a5735a8757b3af085e0d7c7a0c40bd71e">kPGMC_AssetLowSpeedSignal</a> = 1U &lt;&lt; 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832ad2f9e672d9ff1ffab7ad9896116e4e5b">kPGMC_AssertHighSpeedSignal</a> = 1U &lt;&lt; 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832a3beabad33f8a54a3711601678d7282c3">kPGMC_AssertStandbySignal</a> = 1U &lt;&lt; 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832aeabfa8c69263b622f2f78a81baa9313e">kPGMC_AssertArrayPowerDownSignal</a> = 1U &lt;&lt; 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832ab388cae29434e15a021bab8d00f6849d">kPGMC_AssertPeripheralPowerDownSignal</a> = 1U &lt;&lt; 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832adc420d07a7171067be103782b7da0123">kPGMC_AssertInitnSignal</a> = 1U &lt;&lt; 7U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832ac333d740d9a83e18b03f66636408813b">kPGMC_AssertSwitch1OffSignal</a> = 1U &lt;&lt; 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832a5554cca120644ce0a2236a43ce887712">kPGMC_AssertSwitch2OffSignal</a> = 1U &lt;&lt; 9U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832a76bc3adf04a6c1aee76bf76898f695ba">kPGMC_AssertIsoSignal</a> = 1U &lt;&lt; 10U
+&#160;&#160;<a class="el" href="a00068.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8">kNOTIFIER_PolicyForcible</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga93d43f8a690924e4461aef147d4ed832"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enumeration of MIF signal behaviour(Such as Sleep Signal, Standby Signal, and so on).  <a href="a00068.html#ga93d43f8a690924e4461aef147d4ed832">More...</a><br/></td></tr>
-<tr class="separator:ga93d43f8a690924e4461aef147d4ed832"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e80ba784bb9603d5cf5bfa54dde2bac"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">pgmc_bpc_assign_domain_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga7e80ba784bb9603d5cf5bfa54dde2bacaf93d367010c4a4100d2c380b6705185b">kPGMC_CM7Core</a> = 0U, 
+<tr class="memdesc:ga62e961564dc31b8155d128a3f6566409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier policies.  <a href="a00068.html#ga62e961564dc31b8155d128a3f6566409">More...</a><br/></td></tr>
+<tr class="separator:ga62e961564dc31b8155d128a3f6566409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94">kNOTIFIER_NotifyRecover</a> = 0x00U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga7e80ba784bb9603d5cf5bfa54dde2bacacbfbbfd4639f336ec6f61e4e136ec2dd">kPGMC_CM4Core</a> = 1U
+&#160;&#160;<a class="el" href="a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c">kNOTIFIER_NotifyBefore</a> = 0x01U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga7e80ba784bb9603d5cf5bfa54dde2bac"><td class="mdescLeft">&#160;</td><td class="mdescRight">PGMC BPC assign domain enumeration.  <a href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">More...</a><br/></td></tr>
-<tr class="separator:ga7e80ba784bb9603d5cf5bfa54dde2bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf55621830fc022f5ddd6a96bd6b25990"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990aa1c5d00c2b03a6c61374c36dc208d523">kPGMC_RunMode</a> = 0x0UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990a6797f148160578b04540f15b77721536">kPGMC_WaitMode</a> = 0x1UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990a286e08f2aea4e018e3f8e6f5e19815cc">kPGMC_StopMode</a> = 0x2UL, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990aec0807e9325c350a8e8fe1418e9c8a95">kPGMC_SuspendMode</a> = 0x3UL
+&#160;&#160;<a class="el" href="a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00">kNOTIFIER_NotifyAfter</a> = 0x02U
 <br/>
  }</td></tr>
-<tr class="memdesc:gaf55621830fc022f5ddd6a96bd6b25990"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU mode.  <a href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">More...</a><br/></td></tr>
-<tr class="separator:gaf55621830fc022f5ddd6a96bd6b25990"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7f0888b57b0afede6d4c209900feeb8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gad7f0888b57b0afede6d4c209900feeb8">pgmc_control_mode_t</a> </td></tr>
-<tr class="memdesc:gad7f0888b57b0afede6d4c209900feeb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">PGMC control modes.  <a href="a00068.html#gad7f0888b57b0afede6d4c209900feeb8">More...</a><br/></td></tr>
-<tr class="separator:gad7f0888b57b0afede6d4c209900feeb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3c595aa05aae2ac6f70dac715d65ce14"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14ac69c05fe5afb013ed70591f8f992e050">kPGMC_MLPLHighSpeed</a> = 1U, 
+<tr class="memdesc:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification type.  <a href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">More...</a><br/></td></tr>
+<tr class="separator:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad75237e3cea51f8315cf6577b35db91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1">kNOTIFIER_CallbackBefore</a> = 0x01U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a4a552c6f5d8bd4c80fa3be47746b987f">kPGMC_MLPLNormal</a> = 3U, 
+&#160;&#160;<a class="el" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc">kNOTIFIER_CallbackAfter</a> = 0x02U, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a8ecb180266da860ad019d4825c8bd650">kPGMC_MLPLLowSpeed</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a3287c9193a164f0b5d3e135615b7a1e5">kPGMC_MLPLInputGating</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a9411fb0a5fb89bba23f3e8e03e7a6670">kPGMC_MLPLStandby</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a7025f397e54a9d3c26b7c0890d6bcf86">kPGMC_MLPLSleep</a> = 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a46274a56f35c0fdf532da1c2313e298a">kPGMC_MLPLArrOnPerOff</a> = 9U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a23efb235414b09d694c8a3b8d8a9a2f6">kPGMC_MLPLArrOffPerOn</a> = 10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a41cdf6dc1101f1a26de42564d00c4eae">kPGMC_MLPLArrOffPerOff</a> = 11U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14ae020b194fde7ae1fbd950e54ed0620f4">kPGMC_MLPLSw2</a> = 13U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a609bd76b8fa66d3a6750f8d896b97d1e">kPGMC_MLPLSw2PerOff</a> = 14U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14aa4afb7bc55b2487353a346287e5ee418">kPGMC_MLPLSw1PerOff</a> = 15U
+&#160;&#160;<a class="el" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a> = 0x03U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga3c595aa05aae2ac6f70dac715d65ce14"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enumeration of memory low power level.  <a href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">More...</a><br/></td></tr>
-<tr class="separator:ga3c595aa05aae2ac6f70dac715d65ce14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10af746a10d054bd697b01a3b8eea497"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga10af746a10d054bd697b01a3b8eea497">pgmc_mif_signal_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497afff95595f543261f8ec7af64e7042981">kPGMC_SleepSignal</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497aed0b919ce040456ae339b9c1cabeaff4">kPGMC_InputGateSignal</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497affd53402a7c7fed88c5282a34b093f6e">kPGMC_LowSpeedSignal</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497a9fdc1d94d05f8b4970a515dea4236976">kPGMC_HighSpeedSignal</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497ab7f4ae09133f5359bc71cdb363ff34f1">kPGMC_StandbySignal</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497ab8898b2419c2559079626b0fc589d789">kPGMC_ArrayPowerDownSignal</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497a19c8e41c9fad21bfcf13ae6e251ba3e5">kPGMC_PeripheralPowerDownSignal</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497a947a428d8732685d7d4bb5a43c0f29ee">kPGMC_InitnSignal</a> = 7U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497ae47948430d77817f14913c55804f82b9">kPGMC_Switch1OffSignal</a> = 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497a428b07abac24143580efb29a1161c736">kPGMC_Switch2OffSignal</a> = 9U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga10af746a10d054bd697b01a3b8eea497aed49fe2c7f65728d57117855dde8ba6d">kPGMC_IsoSignal</a> = 10U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga10af746a10d054bd697b01a3b8eea497"><td class="mdescLeft">&#160;</td><td class="mdescRight">The enumeration of MIF signal.  <a href="a00068.html#ga10af746a10d054bd697b01a3b8eea497">More...</a><br/></td></tr>
-<tr class="separator:ga10af746a10d054bd697b01a3b8eea497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaad75237e3cea51f8315cf6577b35db91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback type, which indicates kinds of notification the callback handles.  <a href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">More...</a><br/></td></tr>
+<tr class="separator:gaad75237e3cea51f8315cf6577b35db91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga564cb3ca8ca3794299ab52f7b1c3c246"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga564cb3ca8ca3794299ab52f7b1c3c246">FSL_PGMC_RIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
-<tr class="memdesc:ga564cb3ca8ca3794299ab52f7b1c3c246"><td class="mdescLeft">&#160;</td><td class="mdescRight">PGMC driver version 2.1.1.  <a href="#ga564cb3ca8ca3794299ab52f7b1c3c246">More...</a><br/></td></tr>
-<tr class="separator:ga564cb3ca8ca3794299ab52f7b1c3c246"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Basic Power Controller Related Interfaces</h2></td></tr>
-<tr class="memitem:gac56450b372529ebe5503bb76af1e7a32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac56450b372529ebe5503bb76af1e7a32">PGMC_BPC_ControlPowerDomainByCpuPowerMode</a> (PGMC_BPC_Type *base, <a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> mode, const <a class="el" href="a00068.html#a00598">pgmc_bpc_cpu_power_mode_option_t</a> *option)</td></tr>
-<tr class="memdesc:gac56450b372529ebe5503bb76af1e7a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the BPC module controlled by the target CPU power mode, such as Wait mode.  <a href="#gac56450b372529ebe5503bb76af1e7a32">More...</a><br/></td></tr>
-<tr class="separator:gac56450b372529ebe5503bb76af1e7a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ef18f55a947cf2fd137ecc87caae240"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga0ef18f55a947cf2fd137ecc87caae240">PGMC_BPC_ControlPowerDomainBySetPointMode</a> (PGMC_BPC_Type *base, uint32_t setPointMap, const <a class="el" href="a00068.html#a00599">pgmc_bpc_setpoint_mode_option_t</a> *option)</td></tr>
-<tr class="memdesc:ga0ef18f55a947cf2fd137ecc87caae240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the BPC module controlled by the target set points.  <a href="#ga0ef18f55a947cf2fd137ecc87caae240">More...</a><br/></td></tr>
-<tr class="separator:ga0ef18f55a947cf2fd137ecc87caae240"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f59b649d8706bed19fdcba6d67b5a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9f59b649d8706bed19fdcba6d67b5a1f">PGMC_BPC_ControlPowerDomainBySoftwareMode</a> (PGMC_BPC_Type *base, bool powerOff)</td></tr>
-<tr class="memdesc:ga9f59b649d8706bed19fdcba6d67b5a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the selected power domain by software mode.  <a href="#ga9f59b649d8706bed19fdcba6d67b5a1f">More...</a><br/></td></tr>
-<tr class="separator:ga9f59b649d8706bed19fdcba6d67b5a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc6f8840882a5865a05cad9211768401"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gacc6f8840882a5865a05cad9211768401">PGMC_BPC_DisableLowPower</a> (PGMC_BPC_Type *base)</td></tr>
-<tr class="memdesc:gacc6f8840882a5865a05cad9211768401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables low power mode control.  <a href="#gacc6f8840882a5865a05cad9211768401">More...</a><br/></td></tr>
-<tr class="separator:gacc6f8840882a5865a05cad9211768401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c8408f0d2eab1e76993381828b95047"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga8c8408f0d2eab1e76993381828b95047">PGMC_BPC_RequestStateRestoreAtRunMode</a> (PGMC_BPC_Type *base)</td></tr>
-<tr class="memdesc:ga8c8408f0d2eab1e76993381828b95047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests power domain state restore at run mode.  <a href="#ga8c8408f0d2eab1e76993381828b95047">More...</a><br/></td></tr>
-<tr class="separator:ga8c8408f0d2eab1e76993381828b95047"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafedab5e12ef8ffde907c1ed137262ea5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gafedab5e12ef8ffde907c1ed137262ea5">PGMC_BPC_RequestStateRestoreAtSetPoint</a> (PGMC_BPC_Type *base, uint32_t setPointMap)</td></tr>
-<tr class="memdesc:gafedab5e12ef8ffde907c1ed137262ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests power domain state restore when enters the selected set points.  <a href="#gafedab5e12ef8ffde907c1ed137262ea5">More...</a><br/></td></tr>
-<tr class="separator:gafedab5e12ef8ffde907c1ed137262ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga982caaf14f52d9216c6f9fa4990bc1e8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga982caaf14f52d9216c6f9fa4990bc1e8">PGMC_BPC_AllowUserModeAccess</a> (PGMC_BPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga982caaf14f52d9216c6f9fa4990bc1e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows user mode access or not for the BPC module.  <a href="#ga982caaf14f52d9216c6f9fa4990bc1e8">More...</a><br/></td></tr>
-<tr class="separator:ga982caaf14f52d9216c6f9fa4990bc1e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7adcb9d6c8c00618e349454f427702c8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga7adcb9d6c8c00618e349454f427702c8">PGMC_BPC_AllowNonSecureModeAccess</a> (PGMC_BPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga7adcb9d6c8c00618e349454f427702c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows non-secure mode access or not for the BPC module.  <a href="#ga7adcb9d6c8c00618e349454f427702c8">More...</a><br/></td></tr>
-<tr class="separator:ga7adcb9d6c8c00618e349454f427702c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03a0e5bc099d201e01732dbeee41aaf2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga03a0e5bc099d201e01732dbeee41aaf2">PGMC_BPC_LockAccessSetting</a> (PGMC_BPC_Type *base)</td></tr>
-<tr class="memdesc:ga03a0e5bc099d201e01732dbeee41aaf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks access related settings for the BPC module, including Secure access setting and user access setting.  <a href="#ga03a0e5bc099d201e01732dbeee41aaf2">More...</a><br/></td></tr>
-<tr class="separator:ga03a0e5bc099d201e01732dbeee41aaf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga309eac9a5ed0131c1c9d131e4e7640aa"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga309eac9a5ed0131c1c9d131e4e7640aa">PGMC_BPC_SetDomainIdWhiteList</a> (PGMC_BPC_Type *base, uint8_t domainId)</td></tr>
-<tr class="memdesc:ga309eac9a5ed0131c1c9d131e4e7640aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the corrsponding domain ID that can access CPU mode control registers for the BPC module.  <a href="#ga309eac9a5ed0131c1c9d131e4e7640aa">More...</a><br/></td></tr>
-<tr class="separator:ga309eac9a5ed0131c1c9d131e4e7640aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed770d5c9f498d6e2eadda6f99b40841"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaed770d5c9f498d6e2eadda6f99b40841">PGMC_BPC_LockDomainIDWhiteList</a> (PGMC_BPC_Type *base)</td></tr>
-<tr class="memdesc:gaed770d5c9f498d6e2eadda6f99b40841"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the value of Domain ID white list for the BPC module.  <a href="#gaed770d5c9f498d6e2eadda6f99b40841">More...</a><br/></td></tr>
-<tr class="separator:gaed770d5c9f498d6e2eadda6f99b40841"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07bbd4fe1096302b3865cb6f4962c49f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga07bbd4fe1096302b3865cb6f4962c49f">PGMC_BPC_LockLowPowerConfigurationFields</a> (PGMC_BPC_Type *base)</td></tr>
-<tr class="memdesc:ga07bbd4fe1096302b3865cb6f4962c49f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks low power configuration fields for the BPC module.  <a href="#ga07bbd4fe1096302b3865cb6f4962c49f">More...</a><br/></td></tr>
-<tr class="separator:ga07bbd4fe1096302b3865cb6f4962c49f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-CPU Power Controller Related Interfaces</h2></td></tr>
-<tr class="memitem:gacac54c18b6c7041ced07aacd1d25c384"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gacac54c18b6c7041ced07aacd1d25c384">PGMC_CPC_CORE_PowerOffByCpuPowerMode</a> (PGMC_CPC_Type *base, <a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> mode)</td></tr>
-<tr class="memdesc:gacac54c18b6c7041ced07aacd1d25c384"><td class="mdescLeft">&#160;</td><td class="mdescRight">Powers off the CPC core module by the target CPU power mode, such as Wait mode.  <a href="#gacac54c18b6c7041ced07aacd1d25c384">More...</a><br/></td></tr>
-<tr class="separator:gacac54c18b6c7041ced07aacd1d25c384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43a19c80b35afd79bfad5446239e196f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga43a19c80b35afd79bfad5446239e196f">PGMC_CPC_CORE_PowerOffBySoftwareMode</a> (PGMC_CPC_Type *base, bool powerOff)</td></tr>
-<tr class="memdesc:ga43a19c80b35afd79bfad5446239e196f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Powers off/on the CPC core module by the software.  <a href="#ga43a19c80b35afd79bfad5446239e196f">More...</a><br/></td></tr>
-<tr class="separator:ga43a19c80b35afd79bfad5446239e196f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga933bcbfa37ff6750a2919821e7adee2e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga933bcbfa37ff6750a2919821e7adee2e">PGMC_CPC_CORE_DisableLowPower</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:ga933bcbfa37ff6750a2919821e7adee2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables low power mode control, the CPU core will not be affected by any low power modes.  <a href="#ga933bcbfa37ff6750a2919821e7adee2e">More...</a><br/></td></tr>
-<tr class="separator:ga933bcbfa37ff6750a2919821e7adee2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga42ac8e81b83e521b350cf11050c6dbcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga42ac8e81b83e521b350cf11050c6dbcc">PGMC_CPC_CACHE_ControlByCpuPowerMode</a> (PGMC_CPC_Type *base, <a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> mode, <a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a> memoryLowPowerLevel)</td></tr>
-<tr class="memdesc:ga42ac8e81b83e521b350cf11050c6dbcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the CPC CACHE module controlled by the target CPU power mode, such as Wait mode.  <a href="#ga42ac8e81b83e521b350cf11050c6dbcc">More...</a><br/></td></tr>
-<tr class="separator:ga42ac8e81b83e521b350cf11050c6dbcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga67073dd9cf450e6b1315259f1b40720a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga67073dd9cf450e6b1315259f1b40720a">PGMC_CPC_CACHE_ControlBySetPointMode</a> (PGMC_CPC_Type *base, uint32_t setPointMap, <a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a> memoryLowPowerLevel)</td></tr>
-<tr class="memdesc:ga67073dd9cf450e6b1315259f1b40720a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the CPC CACHE module controlled by the target set points.  <a href="#ga67073dd9cf450e6b1315259f1b40720a">More...</a><br/></td></tr>
-<tr class="separator:ga67073dd9cf450e6b1315259f1b40720a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga089a5dfa9dfd0401d30b4085e9c2f2ad"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga089a5dfa9dfd0401d30b4085e9c2f2ad">PGMC_CPC_CACHE_DisableLowPower</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:ga089a5dfa9dfd0401d30b4085e9c2f2ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables low power mode control, so the cache will not be affected by any low power modes.  <a href="#ga089a5dfa9dfd0401d30b4085e9c2f2ad">More...</a><br/></td></tr>
-<tr class="separator:ga089a5dfa9dfd0401d30b4085e9c2f2ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ce1d1126bf72dbdcf2e808cee8520de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga8ce1d1126bf72dbdcf2e808cee8520de">PGMC_CPC_CACHE_TriggerMLPLSoftwareChange</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:ga8ce1d1126bf72dbdcf2e808cee8520de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests CPC cache module's memory low power level change by software mode.  <a href="#ga8ce1d1126bf72dbdcf2e808cee8520de">More...</a><br/></td></tr>
-<tr class="separator:ga8ce1d1126bf72dbdcf2e808cee8520de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8b58c7069984f36c3f141b36edc35bb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga8b58c7069984f36c3f141b36edc35bb4">PGMC_CPC_LMEM_ControlByCpuPowerMode</a> (PGMC_CPC_Type *base, <a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> mode, <a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a> memoryLowPowerLevel)</td></tr>
-<tr class="memdesc:ga8b58c7069984f36c3f141b36edc35bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the CPC LMEM module controlled by the target CPU power mode, such as Wait mode.  <a href="#ga8b58c7069984f36c3f141b36edc35bb4">More...</a><br/></td></tr>
-<tr class="separator:ga8b58c7069984f36c3f141b36edc35bb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4682823b53dbf069a36709e32404f7c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga4682823b53dbf069a36709e32404f7c3">PGMC_CPC_LMEM_ControlBySetPointMode</a> (PGMC_CPC_Type *base, uint32_t setPointMap, <a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a> memoryLowPowerLevel)</td></tr>
-<tr class="memdesc:ga4682823b53dbf069a36709e32404f7c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the CPC LMEM module controlled by the target set points.  <a href="#ga4682823b53dbf069a36709e32404f7c3">More...</a><br/></td></tr>
-<tr class="separator:ga4682823b53dbf069a36709e32404f7c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0edf0af01cf307cb5402f5e4824be89"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaa0edf0af01cf307cb5402f5e4824be89">PGMC_CPC_LMEM_DisableLowPower</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:gaa0edf0af01cf307cb5402f5e4824be89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables low power mode control, so that the CPC LMEM will not be affected by any low power modes.  <a href="#gaa0edf0af01cf307cb5402f5e4824be89">More...</a><br/></td></tr>
-<tr class="separator:gaa0edf0af01cf307cb5402f5e4824be89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe76cbb54000589b8531e93db2183743"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gafe76cbb54000589b8531e93db2183743">PGMC_CPC_LMEM_TriggerMLPLSoftwareChange</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:gafe76cbb54000589b8531e93db2183743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests CPC LMEM module's memory low power level change in software mode.  <a href="#gafe76cbb54000589b8531e93db2183743">More...</a><br/></td></tr>
-<tr class="separator:gafe76cbb54000589b8531e93db2183743"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f9ef353101d4a08e0411bac9bd49ca4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga3f9ef353101d4a08e0411bac9bd49ca4">PGMC_CPC_AllowUserModeAccess</a> (PGMC_CPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga3f9ef353101d4a08e0411bac9bd49ca4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows user mode access or not for the CPC module.  <a href="#ga3f9ef353101d4a08e0411bac9bd49ca4">More...</a><br/></td></tr>
-<tr class="separator:ga3f9ef353101d4a08e0411bac9bd49ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0e9d91a5bd1ba2cb865d30d6da9f943"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac0e9d91a5bd1ba2cb865d30d6da9f943">PGMC_CPC_AllowNonSecureModeAccess</a> (PGMC_CPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gac0e9d91a5bd1ba2cb865d30d6da9f943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows non-secure mode access or not for the CPC module.  <a href="#gac0e9d91a5bd1ba2cb865d30d6da9f943">More...</a><br/></td></tr>
-<tr class="separator:gac0e9d91a5bd1ba2cb865d30d6da9f943"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2273b1c3f113af41b53aa99ec93d2a0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gab2273b1c3f113af41b53aa99ec93d2a0">PGMC_CPC_LockAccessSetting</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:gab2273b1c3f113af41b53aa99ec93d2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks access related settings, including secure access setting and user access setting, for the CPC module.  <a href="#gab2273b1c3f113af41b53aa99ec93d2a0">More...</a><br/></td></tr>
-<tr class="separator:gab2273b1c3f113af41b53aa99ec93d2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga099c4599067287560a080ebee9683ebb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga099c4599067287560a080ebee9683ebb">PGMC_CPC_SetDomainIdWhiteList</a> (PGMC_CPC_Type *base, uint8_t domainId)</td></tr>
-<tr class="memdesc:ga099c4599067287560a080ebee9683ebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the corrsponding domain ID that can access CPU mode control registers for the CPC module.  <a href="#ga099c4599067287560a080ebee9683ebb">More...</a><br/></td></tr>
-<tr class="separator:ga099c4599067287560a080ebee9683ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64d73d779203f5b881bb04711ae896e0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga64d73d779203f5b881bb04711ae896e0">PGMC_CPC_LockDomainIDWhiteList</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:ga64d73d779203f5b881bb04711ae896e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the value of Domain ID white list for CPC module.  <a href="#ga64d73d779203f5b881bb04711ae896e0">More...</a><br/></td></tr>
-<tr class="separator:ga64d73d779203f5b881bb04711ae896e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99637e2413e2b613d1724854fd16a6a8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga99637e2413e2b613d1724854fd16a6a8">PGMC_CPC_LockLowPowerConfigurationFields</a> (PGMC_CPC_Type *base)</td></tr>
-<tr class="memdesc:ga99637e2413e2b613d1724854fd16a6a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks CPC realted low power configuration fields for CPC module.  <a href="#ga99637e2413e2b613d1724854fd16a6a8">More...</a><br/></td></tr>
-<tr class="separator:ga99637e2413e2b613d1724854fd16a6a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-MIF Module Related APIs</h2></td></tr>
-<tr class="memitem:ga68716a373669123fcd3ee87c41e0e3e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga68716a373669123fcd3ee87c41e0e3e0">PGMC_MIF_SetSignalBehaviour</a> (PGMC_MIF_Type *base, <a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a> memoryLevel, uint32_t mask)</td></tr>
-<tr class="memdesc:ga68716a373669123fcd3ee87c41e0e3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the behaviour of each signal in MIF, such as Sleep signal.  <a href="#ga68716a373669123fcd3ee87c41e0e3e0">More...</a><br/></td></tr>
-<tr class="separator:ga68716a373669123fcd3ee87c41e0e3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56977d22deb38dc898c5b593a26ad9b6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga56977d22deb38dc898c5b593a26ad9b6">PGMC_MIF_LockLowPowerConfigurationFields</a> (PGMC_MIF_Type *base)</td></tr>
-<tr class="memdesc:ga56977d22deb38dc898c5b593a26ad9b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks MIF realted low power configuration fields for MIF module.  <a href="#ga56977d22deb38dc898c5b593a26ad9b6">More...</a><br/></td></tr>
-<tr class="separator:ga56977d22deb38dc898c5b593a26ad9b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-PMIC Power Related Interfaces</h2></td></tr>
-<tr class="memitem:gaeb583aa23b01a0aca58c0297f7644bff"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaeb583aa23b01a0aca58c0297f7644bff">PGMC_PPC_TriggerPMICStandbySoftMode</a> (PGMC_PPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaeb583aa23b01a0aca58c0297f7644bff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger PMIC standby ON/OFF.  <a href="#gaeb583aa23b01a0aca58c0297f7644bff">More...</a><br/></td></tr>
-<tr class="separator:gaeb583aa23b01a0aca58c0297f7644bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43158ecd41c1bed9bcf3d548aa6b8187"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga43158ecd41c1bed9bcf3d548aa6b8187">PGMC_PPC_ControlByCpuPowerMode</a> (PGMC_PPC_Type *base, <a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> mode)</td></tr>
-<tr class="memdesc:ga43158ecd41c1bed9bcf3d548aa6b8187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the PMIC module controlled by the target CPU power mode, such as Wait mode.  <a href="#ga43158ecd41c1bed9bcf3d548aa6b8187">More...</a><br/></td></tr>
-<tr class="separator:ga43158ecd41c1bed9bcf3d548aa6b8187"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98d3ea87c38aa68d247a37c08d0d273b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga98d3ea87c38aa68d247a37c08d0d273b">PGMC_PPC_ControlBySetPointMode</a> (PGMC_PPC_Type *base, uint32_t setPointMap, bool enableStandby)</td></tr>
-<tr class="memdesc:ga98d3ea87c38aa68d247a37c08d0d273b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the PMIC module controlled by the target set points.  <a href="#ga98d3ea87c38aa68d247a37c08d0d273b">More...</a><br/></td></tr>
-<tr class="separator:ga98d3ea87c38aa68d247a37c08d0d273b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55d122ea1a503281b7a484ab6f3a86ff"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga55d122ea1a503281b7a484ab6f3a86ff">PGMC_PPC_DisableLowPower</a> (PGMC_PPC_Type *base)</td></tr>
-<tr class="memdesc:ga55d122ea1a503281b7a484ab6f3a86ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables low power mode control.  <a href="#ga55d122ea1a503281b7a484ab6f3a86ff">More...</a><br/></td></tr>
-<tr class="separator:ga55d122ea1a503281b7a484ab6f3a86ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ae5222e1c5ffd3dff0b87a9ca03f439"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9ae5222e1c5ffd3dff0b87a9ca03f439">PGMC_PPC_AllowUserModeAccess</a> (PGMC_PPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga9ae5222e1c5ffd3dff0b87a9ca03f439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows user mode access or not for PMIC module.  <a href="#ga9ae5222e1c5ffd3dff0b87a9ca03f439">More...</a><br/></td></tr>
-<tr class="separator:ga9ae5222e1c5ffd3dff0b87a9ca03f439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22e285697dd05b409b111fc8907a385e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga22e285697dd05b409b111fc8907a385e">PGMC_PPC_AllowNonSecureModeAccess</a> (PGMC_PPC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga22e285697dd05b409b111fc8907a385e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows non-secure mode access or not for the PMIC module.  <a href="#ga22e285697dd05b409b111fc8907a385e">More...</a><br/></td></tr>
-<tr class="separator:ga22e285697dd05b409b111fc8907a385e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09fde90709711b12f66b71b3e7b7bb27"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga09fde90709711b12f66b71b3e7b7bb27">PGMC_PPC_LockAccessSetting</a> (PGMC_PPC_Type *base)</td></tr>
-<tr class="memdesc:ga09fde90709711b12f66b71b3e7b7bb27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks access related settings, including secure access setting and user access setting, for the PMIC module.  <a href="#ga09fde90709711b12f66b71b3e7b7bb27">More...</a><br/></td></tr>
-<tr class="separator:ga09fde90709711b12f66b71b3e7b7bb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1121a9c7a4461b3ec87901ffd33f620f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga1121a9c7a4461b3ec87901ffd33f620f">PGMC_PPC_SetDomainIdWhiteList</a> (PGMC_PPC_Type *base, uint8_t domainId)</td></tr>
-<tr class="memdesc:ga1121a9c7a4461b3ec87901ffd33f620f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the corrsponding domain ID that can access CPU mode control registers for the PMIC module.  <a href="#ga1121a9c7a4461b3ec87901ffd33f620f">More...</a><br/></td></tr>
-<tr class="separator:ga1121a9c7a4461b3ec87901ffd33f620f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaead3eba73dbdad8ac40f9ebd2388efe0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaead3eba73dbdad8ac40f9ebd2388efe0">PGMC_PPC_LockDomainIDWhiteList</a> (PGMC_PPC_Type *base)</td></tr>
-<tr class="memdesc:gaead3eba73dbdad8ac40f9ebd2388efe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the value of Domain ID white list for the PMIC module.  <a href="#gaead3eba73dbdad8ac40f9ebd2388efe0">More...</a><br/></td></tr>
-<tr class="separator:gaead3eba73dbdad8ac40f9ebd2388efe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeda60b972deb916af8a8ecffd176494e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaeda60b972deb916af8a8ecffd176494e">PGMC_PPC_LockLowPowerConfigurationFields</a> (PGMC_PPC_Type *base)</td></tr>
-<tr class="memdesc:gaeda60b972deb916af8a8ecffd176494e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks low power configuration fields for the PMIC module.  <a href="#gaeda60b972deb916af8a8ecffd176494e">More...</a><br/></td></tr>
-<tr class="separator:gaeda60b972deb916af8a8ecffd176494e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00068.html#a00598">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00068.html#a00597">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
+<tr class="memdesc:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Notifier handle.  <a href="#gaa2dfe33b4724d9c1025acdde1b1b3c31">More...</a><br/></td></tr>
+<tr class="separator:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00068.html#a00598">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> policy)</td></tr>
+<tr class="memdesc:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the configuration according to a pre-defined structure.  <a href="#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">More...</a><br/></td></tr>
+<tr class="separator:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00068.html#a00598">notifier_handle_t</a> *notifierHandle)</td></tr>
+<tr class="memdesc:ga9736632c3beca486ec3f8dab504b839c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the last failed notification callback.  <a href="#ga9736632c3beca486ec3f8dab504b839c">More...</a><br/></td></tr>
+<tr class="separator:ga9736632c3beca486ec3f8dab504b839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00598" id="a00598"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct pgmc_bpc_cpu_power_mode_option_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aeac9fabf33190ab73e3446eb41e24c2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">pgmc_bpc_assign_domain_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#aeac9fabf33190ab73e3446eb41e24c2a">assignDomain</a></td></tr>
-<tr class="memdesc:aeac9fabf33190ab73e3446eb41e24c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Domain assignment of the BPC.  <a href="#aeac9fabf33190ab73e3446eb41e24c2a">More...</a><br/></td></tr>
-<tr class="separator:aeac9fabf33190ab73e3446eb41e24c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6b9843d111682c768b2cee9e8b90e31"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#aa6b9843d111682c768b2cee9e8b90e31">stateSave</a></td></tr>
-<tr class="memdesc:aa6b9843d111682c768b2cee9e8b90e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request save the state of power domain before entering target power mode.  <a href="#aa6b9843d111682c768b2cee9e8b90e31">More...</a><br/></td></tr>
-<tr class="separator:aa6b9843d111682c768b2cee9e8b90e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f211b59ce70e7c28c1d9d0230552c72"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a6f211b59ce70e7c28c1d9d0230552c72">powerOff</a></td></tr>
-<tr class="memdesc:a6f211b59ce70e7c28c1d9d0230552c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request power off the power domain.  <a href="#a6f211b59ce70e7c28c1d9d0230552c72">More...</a><br/></td></tr>
-<tr class="separator:a6f211b59ce70e7c28c1d9d0230552c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aeac9fabf33190ab73e3446eb41e24c2a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">pgmc_bpc_assign_domain_t</a> pgmc_bpc_cpu_power_mode_option_t::assignDomain</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The power mode of the selected core domain will control the selected power domain. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa6b9843d111682c768b2cee9e8b90e31"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool pgmc_bpc_cpu_power_mode_option_t::stateSave</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<ul>
-<li><b>true</b> Save data when domain enter the selected mode.</li>
-<li><b>false</b> Do not save data when domain enter the selected mode. </li>
-</ul>
-
-</div>
-</div>
-<a class="anchor" id="a6f211b59ce70e7c28c1d9d0230552c72"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool pgmc_bpc_cpu_power_mode_option_t::powerOff</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<ul>
-<li><b>true</b> Power off the power domain when enter the selected mode.</li>
-<li><b>false</b> Do not power off the power domain when enter the selected mode. </li>
-</ul>
-
-</div>
-</div>
-
-</div>
-</div>
 <a name="a00599" id="a00599"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct pgmc_bpc_setpoint_mode_option_t</td>
+          <td class="memname">struct notifier_notification_block_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:afc413efe2347382623bbe1f52e76b61c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#afc413efe2347382623bbe1f52e76b61c">stateSave</a></td></tr>
-<tr class="memdesc:afc413efe2347382623bbe1f52e76b61c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request save the state of power domain before entering target setpoint.  <a href="#afc413efe2347382623bbe1f52e76b61c">More...</a><br/></td></tr>
-<tr class="separator:afc413efe2347382623bbe1f52e76b61c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b65a815c350025265ae80c2c141c542"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a9b65a815c350025265ae80c2c141c542">powerOff</a></td></tr>
-<tr class="memdesc:a9b65a815c350025265ae80c2c141c542"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request power off the power domain.  <a href="#a9b65a815c350025265ae80c2c141c542">More...</a><br/></td></tr>
-<tr class="separator:a9b65a815c350025265ae80c2c141c542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa">targetConfig</a></td></tr>
+<tr class="memdesc:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to target configuration.  <a href="#a2e0b1d4d7e3ebf8f454b55af953e3ffa">More...</a><br/></td></tr>
+<tr class="separator:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a26aef2519eb2f9990e04f2ce961dfc9b">policy</a></td></tr>
+<tr class="memdesc:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure transition policy.  <a href="#a26aef2519eb2f9990e04f2ce961dfc9b">More...</a><br/></td></tr>
+<tr class="separator:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a2ca3b1a52e315e072a8ab48fcc1dd62a">notifyType</a></td></tr>
+<tr class="memdesc:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure notification type.  <a href="#a2ca3b1a52e315e072a8ab48fcc1dd62a">More...</a><br/></td></tr>
+<tr class="separator:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="afc413efe2347382623bbe1f52e76b61c"></a>
+<a class="anchor" id="a2e0b1d4d7e3ebf8f454b55af953e3ffa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool pgmc_bpc_setpoint_mode_option_t::stateSave</td>
+          <td class="memname"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>* notifier_notification_block_t::targetConfig</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<ul>
-<li><b>true</b> Save data when domain enter the selected setpoint.</li>
-<li><b>false</b> Do not save data when domain enter the selected setpoint. </li>
-</ul>
 
 </div>
 </div>
-<a class="anchor" id="a9b65a815c350025265ae80c2c141c542"></a>
+<a class="anchor" id="a26aef2519eb2f9990e04f2ce961dfc9b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool pgmc_bpc_setpoint_mode_option_t::powerOff</td>
+          <td class="memname"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> notifier_notification_block_t::policy</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<ul>
-<li><b>true</b> Power off the power domain when enter the selected setpoint.</li>
-<li><b>false</b> Do not power off the power domain when enter the selected setpoint. </li>
-</ul>
 
 </div>
 </div>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga564cb3ca8ca3794299ab52f7b1c3c246"></a>
+<a class="anchor" id="a2ca3b1a52e315e072a8ab48fcc1dd62a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_PGMC_RIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
+          <td class="memname"><a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> notifier_notification_block_t::notifyType</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00597" id="a00597"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct notifier_callback_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>This structure holds the configuration of callbacks. Callbacks of this type are expected to be statically allocated. This structure contains the following application-defined data. callback - pointer to the callback function callbackType - specifies when the callback is called callbackData - pointer to the data passed to the callback. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a116c9dd621ffc21178e769edbd9192e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a116c9dd621ffc21178e769edbd9192e4">callback</a></td></tr>
+<tr class="memdesc:a116c9dd621ffc21178e769edbd9192e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the callback function.  <a href="#a116c9dd621ffc21178e769edbd9192e4">More...</a><br/></td></tr>
+<tr class="separator:a116c9dd621ffc21178e769edbd9192e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">callbackType</a></td></tr>
+<tr class="memdesc:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback type.  <a href="#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">More...</a><br/></td></tr>
+<tr class="separator:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a4e7db701bbf36647da1e6d0f0efe2ebf">callbackData</a></td></tr>
+<tr class="memdesc:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data passed to the callback.  <a href="#a4e7db701bbf36647da1e6d0f0efe2ebf">More...</a><br/></td></tr>
+<tr class="separator:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a116c9dd621ffc21178e769edbd9192e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00068.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> notifier_callback_config_t::callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad9e6ec8e23a48ef8d97b2f6d16fb68ec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> notifier_callback_config_t::callbackType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4e7db701bbf36647da1e6d0f0efe2ebf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* notifier_callback_config_t::callbackData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00598" id="a00598"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct notifier_handle_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Notifier handle structure. Contains data necessary for the Notifier proper function. Stores references to registered configurations, callbacks, information about their numbers, user function, user data, and other internal data. <a class="el" href="a00068.html#gaa2dfe33b4724d9c1025acdde1b1b3c31" title="Creates a Notifier handle. ">NOTIFIER_CreateHandle()</a> must be called to initialize this handle. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a8fd95d668f17b8a7705e2a4ff49f2e16">configsTable</a></td></tr>
+<tr class="memdesc:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to configure table.  <a href="#a8fd95d668f17b8a7705e2a4ff49f2e16">More...</a><br/></td></tr>
+<tr class="separator:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a59bdd44c33254cfd4626f5906d3c0a7a">configsNumber</a></td></tr>
+<tr class="memdesc:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of configurations.  <a href="#a59bdd44c33254cfd4626f5906d3c0a7a">More...</a><br/></td></tr>
+<tr class="separator:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a423480d080ea2580628222dc6c492735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a423480d080ea2580628222dc6c492735">callbacksTable</a></td></tr>
+<tr class="memdesc:a423480d080ea2580628222dc6c492735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback table.  <a href="#a423480d080ea2580628222dc6c492735">More...</a><br/></td></tr>
+<tr class="separator:a423480d080ea2580628222dc6c492735"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#acd4e9338f2cd47c46fc0c02886daafbb">callbacksNumber</a></td></tr>
+<tr class="memdesc:acd4e9338f2cd47c46fc0c02886daafbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of callback configurations.  <a href="#acd4e9338f2cd47c46fc0c02886daafbb">More...</a><br/></td></tr>
+<tr class="separator:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a8447a4b6045219363883663f40d300"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a6a8447a4b6045219363883663f40d300">errorCallbackIndex</a></td></tr>
+<tr class="memdesc:a6a8447a4b6045219363883663f40d300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of callback returns error.  <a href="#a6a8447a4b6045219363883663f40d300">More...</a><br/></td></tr>
+<tr class="separator:a6a8447a4b6045219363883663f40d300"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9d6d2cc9c47485863c098c0284a021"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#aae9d6d2cc9c47485863c098c0284a021">currentConfigIndex</a></td></tr>
+<tr class="memdesc:aae9d6d2cc9c47485863c098c0284a021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of current configuration.  <a href="#aae9d6d2cc9c47485863c098c0284a021">More...</a><br/></td></tr>
+<tr class="separator:aae9d6d2cc9c47485863c098c0284a021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f6589fa386e93c40c52ed292da4f47f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a4f6589fa386e93c40c52ed292da4f47f">userFunction</a></td></tr>
+<tr class="memdesc:a4f6589fa386e93c40c52ed292da4f47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">User function.  <a href="#a4f6589fa386e93c40c52ed292da4f47f">More...</a><br/></td></tr>
+<tr class="separator:a4f6589fa386e93c40c52ed292da4f47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a5e90e1dafbe97f2ea5187530ee04af0a">userData</a></td></tr>
+<tr class="memdesc:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User data passed to user function.  <a href="#a5e90e1dafbe97f2ea5187530ee04af0a">More...</a><br/></td></tr>
+<tr class="separator:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a8fd95d668f17b8a7705e2a4ff49f2e16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>** notifier_handle_t::configsTable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a59bdd44c33254cfd4626f5906d3c0a7a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t notifier_handle_t::configsNumber</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a423480d080ea2580628222dc6c492735"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a>* notifier_handle_t::callbacksTable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acd4e9338f2cd47c46fc0c02886daafbb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t notifier_handle_t::callbacksNumber</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6a8447a4b6045219363883663f40d300"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t notifier_handle_t::errorCallbackIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aae9d6d2cc9c47485863c098c0284a021"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t notifier_handle_t::currentConfigIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4f6589fa386e93c40c52ed292da4f47f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> notifier_handle_t::userFunction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5e90e1dafbe97f2ea5187530ee04af0a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* notifier_handle_t::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gad0b6e919f3ff69992b36a2734a650ec7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reference of the user defined configuration is stored in an array; the notifier switches between these configurations based on this array. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacb6a6d6f99e6ddfbb96dae53382949b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Before and after this function execution, different notification is sent to registered callbacks. If this function returns any error code, <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetConfig</td><td>target Configuration. </td></tr>
+    <tr><td class="paramname">userData</td><td>Refers to other specific data passed to user function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafd1d8cc01c496de8b4cd3990ff85415c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00068.html#a00599">notifier_notification_block_t</a> *notify, void *data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the <a class="el" href="a00068.html#a00597" title="Callback configuration structure. ">notifier_callback_config_t</a> callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see <a class="el" href="a00068.html#a00599" title="notification block passed to the registered callback function. ">notifier_notification_block_t</a>) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notify</td><td>Notification block. </td></tr>
+    <tr><td class="paramname">data</td><td>Callback data. Refers to the data passed during callback registration. Intended to pass any driver or application data such as internal state information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gabc6126af1d45847bc59afa0aa3216b04"></a>
+<a class="anchor" id="gacac871f1b98f53906b07b2663943c784"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00068.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="anchor" id="_pgmc_setpoint_map"></a></p>
+<p>Used as return value of Notifier functions. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a84d66abc8151d54f2f9d0dc1083ba5cd"></a>kPGMC_SetPoint0</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c"></a>kStatus_NOTIFIER_ErrorNotificationBefore</em>&nbsp;</td><td class="fielddoc">
+<p>An error occurs during send "BEFORE" notification. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04ae1f132c07eea2ee40fe76add15cef173"></a>kPGMC_SetPoint1</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a3162c6dd9687dbadd75789d313b8b5c2"></a>kPGMC_SetPoint2</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04abbe3ce4a373d19747346889b89faf347"></a>kPGMC_SetPoint3</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point3. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a4eb1eab943cda54c9c4a632500559af1"></a>kPGMC_SetPoint4</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point4. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04ab5a4c7f49a05aec08bbf4fb5b2755402"></a>kPGMC_SetPoint5</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point5. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04ae70be3ec02218f030f8993e2eb98fdd2"></a>kPGMC_SetPoint6</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point6. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a438ddddad292d97e7483209ec5432510"></a>kPGMC_SetPoint7</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point7. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a50f67af63cbe0987ef071455863900c2"></a>kPGMC_SetPoint8</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point8. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a1ad829426e0cb25a85fde23c714644c3"></a>kPGMC_SetPoint9</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point9. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a6ef5812549fae26a2680c2cc0d19c5ed"></a>kPGMC_SetPoint10</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point10. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a6091218beb0bb5390b079c440c68b3e2"></a>kPGMC_SetPoint11</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point11. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04af35b9da2926b363d3ebe862cab69fc21"></a>kPGMC_SetPoint12</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point12. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a82667c23f002ed9a2f4c3bcec1d6bcec"></a>kPGMC_SetPoint13</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point13. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a9b239456cfa9c2563ac1ebc2f63e6c2e"></a>kPGMC_SetPoint14</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point14. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04aba257dfdf57e39ad5ab18daa7319199f"></a>kPGMC_SetPoint15</em>&nbsp;</td><td class="fielddoc">
-<p>The mask of set point15. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58"></a>kStatus_NOTIFIER_ErrorNotificationAfter</em>&nbsp;</td><td class="fielddoc">
+<p>An error occurs during send "AFTER" notification. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga93d43f8a690924e4461aef147d4ed832"></a>
+<a class="anchor" id="ga62e961564dc31b8155d128a3f6566409"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga93d43f8a690924e4461aef147d4ed832">_pgmc_mif_signal_behaviour</a></td>
+          <td class="memname">enum <a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines whether the user function execution is forced or not. For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results, while kNOTIFIER_PolicyAgreement policy is used to exit <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> when any of the callbacks returns error code. See also <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> description. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832aff0527101cdb7ce01e0da81e6fdd593c"></a>kPGMC_AssertSleepSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert Sleep signal. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964"></a>kNOTIFIER_PolicyAgreement</em>&nbsp;</td><td class="fielddoc">
+<p><a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> method is exited when any of the callbacks returns error code. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832ae42e7954a7998cbb3c2edcaf145bf867"></a>kPGMC_AssertInputGateSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert InputGate signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832a5735a8757b3af085e0d7c7a0c40bd71e"></a>kPGMC_AssetLowSpeedSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert LowSpeed signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832ad2f9e672d9ff1ffab7ad9896116e4e5b"></a>kPGMC_AssertHighSpeedSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert HighSpeed signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832a3beabad33f8a54a3711601678d7282c3"></a>kPGMC_AssertStandbySignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert Standby signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832aeabfa8c69263b622f2f78a81baa9313e"></a>kPGMC_AssertArrayPowerDownSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert ArrayPowerDown signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832ab388cae29434e15a021bab8d00f6849d"></a>kPGMC_AssertPeripheralPowerDownSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert PeripheralPowerDown signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832adc420d07a7171067be103782b7da0123"></a>kPGMC_AssertInitnSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert Initn signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832ac333d740d9a83e18b03f66636408813b"></a>kPGMC_AssertSwitch1OffSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert Switch1Off signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832a5554cca120644ce0a2236a43ce887712"></a>kPGMC_AssertSwitch2OffSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert Switch2Off signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93d43f8a690924e4461aef147d4ed832a76bc3adf04a6c1aee76bf76898f695ba"></a>kPGMC_AssertIsoSignal</em>&nbsp;</td><td class="fielddoc">
-<p>Assert Iso_en signal. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8"></a>kNOTIFIER_PolicyForcible</em>&nbsp;</td><td class="fielddoc">
+<p>The user function is executed regardless of the results. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga7e80ba784bb9603d5cf5bfa54dde2bac"></a>
+<a class="anchor" id="ga5ee4314c2a52ee0af61985e7163a1be9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">pgmc_bpc_assign_domain_t</a></td>
+          <td class="memname">enum <a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Used to notify registered callbacks </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7e80ba784bb9603d5cf5bfa54dde2bacaf93d367010c4a4100d2c380b6705185b"></a>kPGMC_CM7Core</em>&nbsp;</td><td class="fielddoc">
-<p>CM7 Core domain. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94"></a>kNOTIFIER_NotifyRecover</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP to recover to previous work state. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7e80ba784bb9603d5cf5bfa54dde2bacacbfbbfd4639f336ec6f61e4e136ec2dd"></a>kPGMC_CM4Core</em>&nbsp;</td><td class="fielddoc">
-<p>CM4 Core domain. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c"></a>kNOTIFIER_NotifyBefore</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP that configuration setting is going to change. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00"></a>kNOTIFIER_NotifyAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP that configuration setting has been changed. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaf55621830fc022f5ddd6a96bd6b25990"></a>
+<a class="anchor" id="gaad75237e3cea51f8315cf6577b35db91"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Used in the callback configuration structure (<a class="el" href="a00068.html#a00597" title="Callback configuration structure. ">notifier_callback_config_t</a>) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
+<ul>
+<li>Before the configuration switch (Callback return value can affect <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
+<li>After an unsuccessful attempt to switch configuration</li>
+<li>After a successful configuration switch </li>
+</ul>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf55621830fc022f5ddd6a96bd6b25990aa1c5d00c2b03a6c61374c36dc208d523"></a>kPGMC_RunMode</em>&nbsp;</td><td class="fielddoc">
-<p>RUN mode. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1"></a>kNOTIFIER_CallbackBefore</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles BEFORE notification. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf55621830fc022f5ddd6a96bd6b25990a6797f148160578b04540f15b77721536"></a>kPGMC_WaitMode</em>&nbsp;</td><td class="fielddoc">
-<p>WAIT mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc"></a>kNOTIFIER_CallbackAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles AFTER notification. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf55621830fc022f5ddd6a96bd6b25990a286e08f2aea4e018e3f8e6f5e19815cc"></a>kPGMC_StopMode</em>&nbsp;</td><td class="fielddoc">
-<p>STOP mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf55621830fc022f5ddd6a96bd6b25990aec0807e9325c350a8e8fe1418e9c8a95"></a>kPGMC_SuspendMode</em>&nbsp;</td><td class="fielddoc">
-<p>SUSPEND mode. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad7f0888b57b0afede6d4c209900feeb8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#gad7f0888b57b0afede6d4c209900feeb8">pgmc_control_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga3c595aa05aae2ac6f70dac715d65ce14"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14ac69c05fe5afb013ed70591f8f992e050"></a>kPGMC_MLPLHighSpeed</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: High speed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a4a552c6f5d8bd4c80fa3be47746b987f"></a>kPGMC_MLPLNormal</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Normal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a8ecb180266da860ad019d4825c8bd650"></a>kPGMC_MLPLLowSpeed</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Low Speed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a3287c9193a164f0b5d3e135615b7a1e5"></a>kPGMC_MLPLInputGating</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Input Gating. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a9411fb0a5fb89bba23f3e8e03e7a6670"></a>kPGMC_MLPLStandby</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Standby. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a7025f397e54a9d3c26b7c0890d6bcf86"></a>kPGMC_MLPLSleep</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Sleep. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a46274a56f35c0fdf532da1c2313e298a"></a>kPGMC_MLPLArrOnPerOff</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Arr on per off. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a23efb235414b09d694c8a3b8d8a9a2f6"></a>kPGMC_MLPLArrOffPerOn</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Arr off per on. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a41cdf6dc1101f1a26de42564d00c4eae"></a>kPGMC_MLPLArrOffPerOff</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: Arr off per off. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14ae020b194fde7ae1fbd950e54ed0620f4"></a>kPGMC_MLPLSw2</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: SW2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14a609bd76b8fa66d3a6750f8d896b97d1e"></a>kPGMC_MLPLSw2PerOff</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: SW2 Per off. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c595aa05aae2ac6f70dac715d65ce14aa4afb7bc55b2487353a346287e5ee418"></a>kPGMC_MLPLSw1PerOff</em>&nbsp;</td><td class="fielddoc">
-<p>Memory low power level: SW1 Per off. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga10af746a10d054bd697b01a3b8eea497"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga10af746a10d054bd697b01a3b8eea497">pgmc_mif_signal_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497afff95595f543261f8ec7af64e7042981"></a>kPGMC_SleepSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF Sleep signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497aed0b919ce040456ae339b9c1cabeaff4"></a>kPGMC_InputGateSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF InputGate signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497affd53402a7c7fed88c5282a34b093f6e"></a>kPGMC_LowSpeedSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF LowSpeed signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497a9fdc1d94d05f8b4970a515dea4236976"></a>kPGMC_HighSpeedSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF HighSpeed signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497ab7f4ae09133f5359bc71cdb363ff34f1"></a>kPGMC_StandbySignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF Standby signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497ab8898b2419c2559079626b0fc589d789"></a>kPGMC_ArrayPowerDownSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF ArrayPowerDown signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497a19c8e41c9fad21bfcf13ae6e251ba3e5"></a>kPGMC_PeripheralPowerDownSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF PeripheralPowerDown signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497a947a428d8732685d7d4bb5a43c0f29ee"></a>kPGMC_InitnSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF Initn signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497ae47948430d77817f14913c55804f82b9"></a>kPGMC_Switch1OffSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF Switch1Off signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497a428b07abac24143580efb29a1161c736"></a>kPGMC_Switch2OffSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF Switch2Off signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10af746a10d054bd697b01a3b8eea497aed49fe2c7f65728d57117855dde8ba6d"></a>kPGMC_IsoSignal</em>&nbsp;</td><td class="fielddoc">
-<p>MIF Iso_en signal. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005"></a>kNOTIFIER_CallbackBeforeAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles BEFORE and AFTER notification. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac56450b372529ebe5503bb76af1e7a32"></a>
+<a class="anchor" id="gaa2dfe33b4724d9c1025acdde1b1b3c31"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PGMC_BPC_ControlPowerDomainByCpuPowerMode </td>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
           <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00598">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00068.html#a00598">pgmc_bpc_cpu_power_mode_option_t</a> *&#160;</td>
-          <td class="paramname"><em>option</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function makes the module controlled by four typical CPU power modes, It also configs the resource domain and set memory low power level.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Target CPU power mode. </td></tr>
-    <tr><td class="paramname">option</td><td>The pointer of <a class="el" href="a00068.html#a00598">pgmc_bpc_cpu_power_mode_option_t</a> structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0ef18f55a947cf2fd137ecc87caae240"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_BPC_ControlPowerDomainBySetPointMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>setPointMap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00068.html#a00599">pgmc_bpc_setpoint_mode_option_t</a> *&#160;</td>
-          <td class="paramname"><em>option</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function makes the module controlled by specific set point, It also supports set memory lowe power level.</p>
-<dl class="section note"><dt>Note</dt><dd>When setting more than one set point, use "|" between the map values in <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-    <tr><td class="paramname">setPointMap</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>. </td></tr>
-    <tr><td class="paramname">option</td><td>The pointer of <a class="el" href="a00068.html#a00599">pgmc_bpc_setpoint_mode_option_t</a> structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9f59b649d8706bed19fdcba6d67b5a1f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_BPC_ControlPowerDomainBySoftwareMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>powerOff</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>The function is used to control power domain when the CPU is in RUN mode.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-    <tr><td class="paramname">powerOff</td><td>Power On/Off power domain in software mode.<ul>
-<li><b>true</b> Power off the power domain in software mode.</li>
-<li><b>false</b> Power on the power domain in software mode. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacc6f8840882a5865a05cad9211768401"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_DisableLowPower </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8c8408f0d2eab1e76993381828b95047"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_RequestStateRestoreAtRunMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafedab5e12ef8ffde907c1ed137262ea5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_RequestStateRestoreAtSetPoint </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>setPointMap</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>When setting more than one set point, use "|" between the map values in <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>. </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-    <tr><td class="paramname">setPointMap</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga982caaf14f52d9216c6f9fa4990bc1e8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_AllowUserModeAccess </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If locked access related settings, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Used to control whether allow user mode access.<ul>
-<li><b>true</b> Allow both privilege and user mode to access CPU mode control registers.</li>
-<li><b>false</b> Allow only privilege mode to access CPU mode control registers. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7adcb9d6c8c00618e349454f427702c8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_AllowNonSecureModeAccess </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If locked access related settings, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Used to control whether allow non-secure mode to access CPU mode control registers.<ul>
-<li><b>true</b> Allow both secure and non-secure mode to access CPU mode control registers.</li>
-<li><b>false</b> Allow only secure mode to access CPU mode control registers. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga03a0e5bc099d201e01732dbeee41aaf2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_LockAccessSetting </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function used to lock access related settings. After locked the related bit field can not be written unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga309eac9a5ed0131c1c9d131e4e7640aa"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_SetDomainIdWhiteList </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td>
+          <td class="paramname"><em>configs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>domainId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If locked the domain ID white list, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-    <tr><td class="paramname">domainId</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">pgmc_bpc_assign_domain_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaed770d5c9f498d6e2eadda6f99b40841"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_LockDomainIDWhiteList </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>After locked the domain ID white list can not be written again unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga07bbd4fe1096302b3865cb6f4962c49f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_BPC_LockLowPowerConfigurationFields </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_BPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>After locked the low power configurations fields can not be updated unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacac54c18b6c7041ced07aacd1d25c384"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_CPC_CORE_PowerOffByCpuPowerMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramname"><em>configsNumber</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC CORE module base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Target CPU power mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga43a19c80b35afd79bfad5446239e196f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_CORE_PowerOffBySoftwareMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>powerOff</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC CORE module base address. </td></tr>
-    <tr><td class="paramname">powerOff</td><td>Used to power off/on the CPC core module.<ul>
-<li><b>true</b> Power off the CPC core module.</li>
-<li><b>false</b> Power on the CPC core module. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga933bcbfa37ff6750a2919821e7adee2e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_CORE_DisableLowPower </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC CORE module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga42ac8e81b83e521b350cf11050c6dbcc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_CPC_CACHE_ControlByCpuPowerMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a>&#160;</td>
-          <td class="paramname"><em>memoryLowPowerLevel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function makes the module controlled by four typical CPU power modes, it also can set memory low power level.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC CACHE module base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Target CPU power mode. </td></tr>
-    <tr><td class="paramname">memoryLowPowerLevel</td><td>Memory low power level. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga67073dd9cf450e6b1315259f1b40720a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_CPC_CACHE_ControlBySetPointMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>setPointMap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a>&#160;</td>
-          <td class="paramname"><em>memoryLowPowerLevel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function makes the module controlled by specific set point, It also supports set memory lowe power level.</p>
-<dl class="section note"><dt>Note</dt><dd>When setting more than one set point, use "|" between the map values in <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC CACHE module base address. </td></tr>
-    <tr><td class="paramname">setPointMap</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>. </td></tr>
-    <tr><td class="paramname">memoryLowPowerLevel</td><td>Memory low power level. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga089a5dfa9dfd0401d30b4085e9c2f2ad"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_CACHE_DisableLowPower </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC CACHE module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8ce1d1126bf72dbdcf2e808cee8520de"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_CPC_CACHE_TriggerMLPLSoftwareChange </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If request memory low power level change, must wait the MLPL transition complete.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8b58c7069984f36c3f141b36edc35bb4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_CPC_LMEM_ControlByCpuPowerMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a>&#160;</td>
-          <td class="paramname"><em>memoryLowPowerLevel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function makes the module controlled by four typical CPU power modes, it also can set memory low power level.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Target CPU power mode. </td></tr>
-    <tr><td class="paramname">memoryLowPowerLevel</td><td>Memory low power level. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4682823b53dbf069a36709e32404f7c3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_CPC_LMEM_ControlBySetPointMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>setPointMap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a>&#160;</td>
-          <td class="paramname"><em>memoryLowPowerLevel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function makes the module controlled by specific set point, It also supports set memory lowe power level.</p>
-<dl class="section note"><dt>Note</dt><dd>When setting more than one set point, use "|" between the map values in <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-    <tr><td class="paramname">setPointMap</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>. </td></tr>
-    <tr><td class="paramname">memoryLowPowerLevel</td><td>Memory low power level. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa0edf0af01cf307cb5402f5e4824be89"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_LMEM_DisableLowPower </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafe76cbb54000589b8531e93db2183743"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_CPC_LMEM_TriggerMLPLSoftwareChange </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If request memory low power level change, must wait the MLPL transition complete.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3f9ef353101d4a08e0411bac9bd49ca4"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_AllowUserModeAccess </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If locked access related settings, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Used to control whether allow user mode access.<ul>
-<li><b>true</b> Allow both privilege and user mode to access CPU mode control registers.</li>
-<li><b>false</b> Allow only privilege mode to access CPU mode control registers. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac0e9d91a5bd1ba2cb865d30d6da9f943"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_AllowNonSecureModeAccess </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If locked access related settings, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Used to control whether allow non-secure mode to access CPU mode control registers.<ul>
-<li><b>true</b> Allow both secure and non-secure mode to access CPU mode control registers.</li>
-<li><b>false</b> Allow only secure mode to access CPU mode control registers. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab2273b1c3f113af41b53aa99ec93d2a0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_LockAccessSetting </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function used to lock access related settings. After locked the related bit field can not be written unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga099c4599067287560a080ebee9683ebb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_SetDomainIdWhiteList </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a> *&#160;</td>
+          <td class="paramname"><em>callbacks</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>domainId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If the domain ID whitelist is locked, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-    <tr><td class="paramname">domainId</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">pgmc_bpc_assign_domain_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga64d73d779203f5b881bb04711ae896e0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_LockDomainIDWhiteList </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>After locked the domain ID white list can not be written again unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga99637e2413e2b613d1724854fd16a6a8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_CPC_LockLowPowerConfigurationFields </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_CPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>After locked the low power configurations fields can not be updated unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>CPC LMEM module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga68716a373669123fcd3ee87c41e0e3e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_MIF_SetSignalBehaviour </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_MIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramname"><em>callbacksNumber</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a>&#160;</td>
-          <td class="paramname"><em>memoryLevel</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td>
+          <td class="paramname"><em>userFunction</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>To control the memory low power operation, this function must be invoked after selecting the memory low power level. Use case: <div class="fragment"><div class="line">*              <a class="code" href="a00068.html#gac56450b372529ebe5503bb76af1e7a32">PGMC_BPC_ControlPowerDomainByCpuPowerMode</a>(PGMC_BPC0_BASE, <a class="code" href="a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990a6797f148160578b04540f15b77721536">kPGMC_WaitMode</a>, <a class="code" href="a00068.html#gga7e80ba784bb9603d5cf5bfa54dde2bacaf93d367010c4a4100d2c380b6705185b">kPGMC_CM7Core</a>,</div>
-<div class="line">*                  <a class="code" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a7025f397e54a9d3c26b7c0890d6bcf86">kPGMC_MLPLSleep</a>, <span class="keyword">false</span>);</div>
-<div class="line">*              <a class="code" href="a00068.html#ga68716a373669123fcd3ee87c41e0e3e0">PGMC_MIF_SetSignalBehaviour</a>(PGMC_BPC0_MIF_BASE, <a class="code" href="a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a7025f397e54a9d3c26b7c0890d6bcf86">kPGMC_MLPLSleep</a>, <a class="code" href="a00068.html#gga93d43f8a690924e4461aef147d4ed832aff0527101cdb7ce01e0da81e6fdd593c">kPGMC_AssertSleepSignal</a>);</div>
-<div class="line">*        </div>
-</div><!-- fragment --></dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC MIF peripheral base address. </td></tr>
-    <tr><td class="paramname">memoryLevel</td><td>The selected memory low power level. For details please refer to <a class="el" href="a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14">pgmc_memory_low_power_level_t</a>. </td></tr>
-    <tr><td class="paramname">mask</td><td>The mask of MIF signal behaviour. Should be the OR'ed value of <a class="el" href="a00068.html#ga93d43f8a690924e4461aef147d4ed832">_pgmc_mif_signal_behaviour</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga56977d22deb38dc898c5b593a26ad9b6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_MIF_LockLowPowerConfigurationFields </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_MIF_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>After locked the low power configurations fields can not be updated unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PGMC MIF peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaeb583aa23b01a0aca58c0297f7644bff"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_PPC_TriggerPMICStandbySoftMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Trigger on/off PMIC standby.<ul>
-<li><b>true</b> Trigger PMIC standby ON.</li>
-<li><b>false</b> Trigger PMIC standby OFF. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga43158ecd41c1bed9bcf3d548aa6b8187"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PGMC_PPC_ControlByCpuPowerMode </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a>&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2007,227 +726,41 @@ PMIC Power Related Interfaces</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Target CPU power mode. </td></tr>
+    <tr><td class="paramname">notifierHandle</td><td>A pointer to the notifier handle. </td></tr>
+    <tr><td class="paramname">configs</td><td>A pointer to an array with references to all configurations which is handled by the Notifier. </td></tr>
+    <tr><td class="paramname">configsNumber</td><td>Number of configurations. Size of the configuration array. </td></tr>
+    <tr><td class="paramname">callbacks</td><td>A pointer to an array of callback configurations. If there are no callbacks to register during Notifier initialization, use NULL value. </td></tr>
+    <tr><td class="paramname">callbacksNumber</td><td>Number of registered callbacks. Size of the callbacks array. </td></tr>
+    <tr><td class="paramname">userFunction</td><td>User function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User data passed to user function. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>An error Code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga98d3ea87c38aa68d247a37c08d0d273b"></a>
+<a class="anchor" id="ga9ca08c8f6fa9a7bafa9ecbe08603cd97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PGMC_PPC_ControlBySetPointMode </td>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
           <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>setPointMap</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enableStandby</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function makes the module controlled by specific set point, It also supports PMIC standby on.</p>
-<dl class="section note"><dt>Note</dt><dd>When setting more than one set point, use "|" between the map values in <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-    <tr><td class="paramname">setPointMap</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>. </td></tr>
-    <tr><td class="paramname">enableStandby</td><td>true: PMIC standby on when system enters set point number and system is in standby mode. false: PMIC standby on when system enters set point number </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga55d122ea1a503281b7a484ab6f3a86ff"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_PPC_DisableLowPower </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module bsase address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9ae5222e1c5ffd3dff0b87a9ca03f439"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_PPC_AllowUserModeAccess </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If locked access related settings, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Used to control whether allow user mode access.<ul>
-<li><b>true</b> Allow both privilege and user mode to access CPU mode control registers.</li>
-<li><b>false</b> Allow only privilege mode to access CPU mode control registers. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga22e285697dd05b409b111fc8907a385e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_PPC_AllowNonSecureModeAccess </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If locked access related settings, the setting via this function is useless.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Used to control whether allow non-secure mode to access CPU mode control registers.<ul>
-<li><b>true</b> Allow both secure and non-secure mode to access CPU mode control registers.</li>
-<li><b>false</b> Allow only secure mode to access CPU mode control registers. </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga09fde90709711b12f66b71b3e7b7bb27"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_PPC_LockAccessSetting </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function used to lock access related settings. After locked the related bit field can not be written unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1121a9c7a4461b3ec87901ffd33f620f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_PPC_SetDomainIdWhiteList </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00598">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>domainId</em>&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td>
+          <td class="paramname"><em>policy</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2235,82 +768,41 @@ PMIC Power Related Interfaces</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>If the domain ID whitelist is locked, the setting via this function is useless.</dd></dl>
+<p>This function sets the system to the target configuration. Before transition, the Notifier sends notifications to all callbacks registered to the callback table. Callbacks are invoked in the following order: All registered callbacks are notified ordered by index in the callbacks array. The same order is used for before and after switch notifications. The notifications before the configuration switch can be used to obtain confirmation about the change from registered callbacks. If any registered callback denies the configuration change, further execution of this function depends on the notifier policy: the configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement). When configuration change is forced, the result of the before switch notifications are ignored. If an agreement is required, if any callback returns an error code, further notifications before switch notifications are cancelled and all already notified callbacks are re-invoked. The index of the callback which returned error code during pre-switch notifications is stored (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it. Regardless of the policies, if any callback returns an error code, an error code indicating in which phase the error occurred is returned when <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-    <tr><td class="paramname">domainId</td><td>Should be the OR'ed value of <a class="el" href="a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac">pgmc_bpc_assign_domain_t</a>. </td></tr>
+    <tr><td class="paramname">notifierHandle</td><td>pointer to notifier handle </td></tr>
+    <tr><td class="paramname">configIndex</td><td>Index of the target configuration. </td></tr>
+    <tr><td class="paramname">policy</td><td>Transaction policy, kNOTIFIER_PolicyAgreement or kNOTIFIER_PolicyForcible.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaead3eba73dbdad8ac40f9ebd2388efe0"></a>
+<a class="anchor" id="ga9736632c3beca486ec3f8dab504b839c"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PGMC_PPC_LockDomainIDWhiteList </td>
+          <td class="memname">uint8_t NOTIFIER_GetErrorCallbackIndex </td>
           <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00068.html#a00598">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>After locked the domain ID white list can not be written again unless POR.</dd></dl>
+<p>This function returns an index of the last callback that failed during the configuration switch while the last <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> was called. If the last <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> call ended successfully value equal to callbacks number is returned. The returned value represents an index in the array of static call-backs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
+    <tr><td class="paramname">notifierHandle</td><td>Pointer to the notifier handle </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="gaeda60b972deb916af8a8ecffd176494e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PGMC_PPC_LockLowPowerConfigurationFields </td>
-          <td>(</td>
-          <td class="paramtype">PGMC_PPC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>After locked the low power configurations fields can not be updated unless POR.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PMIC module base address. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>Callback Index of the last failed callback or value equal to callbacks count. </dd></dl>
 
 </div>
 </div>

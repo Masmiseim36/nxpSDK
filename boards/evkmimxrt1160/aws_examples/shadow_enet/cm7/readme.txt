@@ -5,10 +5,10 @@ Demo for showing how to use the Device Shadow library's API.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================
@@ -27,19 +27,17 @@ Before running the demo it is need to configure AWS IoT Console and update some 
 
 1.  Create AWS Account: https://console.aws.amazon.com/console/home
 
-2.  Configure device in the AWS IoT Console base on this guide:
+2.  Configure device in the AWS IoT Console base on this guide: https://docs.aws.amazon.com/iot/latest/developerguide/create-iot-resources.html
 
     Make note of example's "Thing name" and "REST API endpoint". These strings need to be set in the "aws_clientcredential.h".
-
     Example:
-        static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
+        #define clientcredentialMQTT_BROKER_ENDPOINT "abcdefgh123456.iot.us-west-2.amazonaws.com"
         #define clientcredentialIOT_THING_NAME "MyExample"
 
-    In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the PEM-to-C-string.py (mcu-sdk-2.0\middleware\aws_iot\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
-
+    Device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
+    Note: be sure to add " at the beginning of a line and \n"\ on every line break.
     Example:
-        #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
+        #define keyCLIENT_CERTIFICATE_PEM NULL
 
         Needs to be changed to:
 
@@ -51,9 +49,9 @@ Before running the demo it is need to configure AWS IoT Console and update some 
         "mepuT3lKmD0jZupsQ9vLQOA09rMjVMd0YPmI9ozvvWqLpjVvNTKVhsf/3slM\n"\
         "-----END CERTIFICATE-----\n"
 
-    In the same way update the private key array.
+    In the same way update "keyCLIENT_PRIVATE_KEY_PEM" with content of private key file.
 
-    Files "aws_clientcredential.h" and "aws_clientcredential_keys.h" are placed in project folder.
+    Files "aws_clientcredential.h" and "aws_clientcredential_keys.h" are located in project folder.
 
 3.  This demo doesn't need Wi-Fi network, you can leave the following macros from "aws_clientcredential.h" unmodified.
         #define clientcredentialWIFI_SSID       "Paste Wi-Fi SSID here."

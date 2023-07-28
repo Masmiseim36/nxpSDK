@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -634,6 +634,11 @@
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -642,11 +647,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1147,7 +1147,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1413,6 +1413,11 @@
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -1421,11 +1426,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1926,7 +1926,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2192,6 +2192,11 @@
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -2200,11 +2205,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2705,7 +2705,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2971,6 +2971,11 @@
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -2979,11 +2984,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3484,7 +3484,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3750,6 +3750,11 @@
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -3758,11 +3763,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4263,7 +4263,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4529,6 +4529,11 @@
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -4537,11 +4542,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>

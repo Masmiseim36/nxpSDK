@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(*core1_code) --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --keep=*(*core1_code) --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -396,7 +396,7 @@
             <File>
               <FileName>tee_fault_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../tee_fault_common.h</FilePath>
+              <FilePath>../tee_fault_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1134,7 +1134,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(*core1_code) --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --keep=*(*core1_code) --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1162,7 +1162,7 @@
             <File>
               <FileName>tee_fault_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../tee_fault_common.h</FilePath>
+              <FilePath>../tee_fault_common.h</FilePath>
             </File>
           </Files>
         </Group>

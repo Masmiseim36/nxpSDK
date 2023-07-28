@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>aws_shadow_enet_cm7 flexspi_nor_debug</TargetName>
+      <TargetName>aws_shadow_enet_cm7 flexspi_nor_sdram_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <uAC6>1</uAC6>
@@ -43,7 +43,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>flexspi_nor_debug\</OutputDirectory>
+          <OutputDirectory>flexspi_nor_sdram_debug\</OutputDirectory>
           <OutputName>aws_shadow_enet_cm7.out</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, MFLASH_FILE_BASEADDR=14221312, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, MFLASH_FILE_BASEADDR=14221312, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1</Define>
               <Undefine/>
-              <IncludePath>..;../config_files;../../../..;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../../rtos/freertos/coremqtt/source/include;../../../../../../rtos/freertos/coremqtt/source/interface;../../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../../middleware/pkcs11;../../../../../../rtos/freertos/corepkcs11/source/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../../rtos/freertos/corejson/source/include;../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</IncludePath>
+              <IncludePath>..;../config_files;../../../..;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../../rtos/freertos/coremqtt/source/include;../../../../../../rtos/freertos/coremqtt/source/interface;../../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../../middleware/pkcs11;../../../../../../rtos/freertos/corepkcs11/source/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../xmcd;../../../../../../components/phy;../../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../../rtos/freertos/corejson/source/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -379,11 +379,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
               <FileName>main_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_enet.c</FilePath>
@@ -392,6 +387,21 @@
               <FileName>lwipopts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>aws_dev_mode_key_provisioning.h</FileName>
@@ -404,44 +414,9 @@
               <FilePath>../aws_dev_mode_key_provisioning.c</FilePath>
             </File>
             <File>
-              <FileName>core_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>kvstore_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../kvstore_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>shadow_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../shadow_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential_keys.h</FilePath>
+              <FileName>iot_pkcs11_pal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../iot_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -487,6 +462,51 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>config_files</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_pkcs11_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>kvstore_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/kvstore_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>shadow_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/shadow_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -594,6 +614,16 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
@@ -612,16 +642,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1858,6 +1878,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3051,6 +3076,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>flash/mflash/mimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>flash/mflash</GroupName>
           <Files>
             <File>
@@ -3071,33 +3111,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flash/mflash/mimxrt1160</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/silicon_id</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
@@ -3107,6 +3122,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3426,16 +3451,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/vendors/nxp/pkcs11</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_pkcs11_pal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/aws_iot/amazon-freertos/vendors/nxp/pkcs11/iot_pkcs11_pal.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
@@ -3704,6 +3719,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3717,16 +3742,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3777,46 +3792,6 @@
               <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3886,29 +3861,49 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>iot_crypto.h</FileName>
+              <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src</GroupName>
-          <Files>
             <File>
-              <FileName>iot_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
       </Groups>
     </Target>
     <Target>
-      <TargetName>aws_shadow_enet_cm7 flexspi_nor_release</TargetName>
+      <TargetName>aws_shadow_enet_cm7 flexspi_nor_sdram_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <uAC6>1</uAC6>
@@ -3947,7 +3942,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>flexspi_nor_release\</OutputDirectory>
+          <OutputDirectory>flexspi_nor_sdram_release\</OutputDirectory>
           <OutputName>aws_shadow_enet_cm7.out</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -4212,7 +4207,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>7</Optim>
+            <Optim>6</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -4236,9 +4231,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, MFLASH_FILE_BASEADDR=14221312, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, MFLASH_FILE_BASEADDR=14221312, MQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1</Define>
               <Undefine/>
-              <IncludePath>..;../config_files;../../../..;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../components/flash/mflash;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../components/silicon_id;../../../../../../components/silicon_id/socs;../../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../../rtos/freertos/coremqtt/source/include;../../../../../../rtos/freertos/coremqtt/source/interface;../../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../../middleware/pkcs11;../../../../../../rtos/freertos/corepkcs11/source/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../../rtos/freertos/corejson/source/include;../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</IncludePath>
+              <IncludePath>..;../config_files;../../../..;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../components/silicon_id/socs;../../../../../../components/silicon_id;../../../../../../middleware/aws_iot/iot-reference/examples/common/kvstore;../../../../../../middleware/aws_iot/iot-reference/examples/common/logging;../../../../../../middleware/aws_iot/iot-reference/examples/common/mqtt_agent;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/mqtt-agent-interface/include;../../../../../../middleware/aws_iot/iot-reference/Middleware/FreeRTOS/transport_mbedtls;../../../../../../rtos/freertos/coremqtt/source/include;../../../../../../rtos/freertos/coremqtt/source/interface;../../../../../../rtos/freertos/coremqtt-agent/source/include;../../../../../../rtos/freertos/corepkcs11/source/dependency/3rdparty/mbedtls_utils;../../../../../../middleware/pkcs11;../../../../../../rtos/freertos/corepkcs11/source/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../xmcd;../../../../../../components/phy;../../../../../../rtos/freertos/backoffalgorithm/source/include;../../../../../../middleware/aws_iot/device-shadow/source/include;../../../../../../middleware/aws_iot/device-shadow/source/interface;../../../../../../rtos/freertos/corejson/source/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4272,7 +4267,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4283,11 +4278,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
               <FileName>main_enet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_enet.c</FilePath>
@@ -4296,6 +4286,21 @@
               <FileName>lwipopts.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_clientcredential_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aws_clientcredential_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>freertos_tasks_c_additions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../freertos_tasks_c_additions.h</FilePath>
             </File>
             <File>
               <FileName>aws_dev_mode_key_provisioning.h</FileName>
@@ -4308,44 +4313,9 @@
               <FilePath>../aws_dev_mode_key_provisioning.c</FilePath>
             </File>
             <File>
-              <FileName>core_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>freertos_tasks_c_additions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freertos_tasks_c_additions.h</FilePath>
-            </File>
-            <File>
-              <FileName>kvstore_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../kvstore_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>shadow_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../shadow_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_clientcredential_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aws_clientcredential_keys.h</FilePath>
+              <FileName>iot_pkcs11_pal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../iot_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4391,6 +4361,51 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>config_files</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/core_pkcs11_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>kvstore_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/kvstore_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>shadow_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/shadow_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4498,6 +4513,16 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
@@ -4516,16 +4541,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -5762,6 +5777,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6955,6 +6975,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>flash/mflash/mimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>flash/mflash</GroupName>
           <Files>
             <File>
@@ -6975,33 +7010,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flash/mflash/mimxrt1160</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/silicon_id</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
@@ -7011,6 +7021,16 @@
               <FileName>fsl_silicon_id_soc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7330,16 +7350,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/vendors/nxp/pkcs11</GroupName>
-          <Files>
-            <File>
-              <FileName>iot_pkcs11_pal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/aws_iot/amazon-freertos/vendors/nxp/pkcs11/iot_pkcs11_pal.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos-kernel</GroupName>
           <Files>
             <File>
@@ -7608,6 +7618,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -7621,16 +7641,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7681,46 +7691,6 @@
               <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7790,22 +7760,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>iot_crypto.h</FileName>
+              <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src</GroupName>
-          <Files>
             <File>
-              <FileName>iot_crypto.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/aws_iot/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

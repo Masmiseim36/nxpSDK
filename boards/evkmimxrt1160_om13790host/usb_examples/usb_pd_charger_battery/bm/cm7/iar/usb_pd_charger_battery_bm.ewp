@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,20 +217,21 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=1</state>
           <state>DEBUG</state>
+          <state>_DEBUG=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>I2C_RETRY_TIMES=40000</state>
           <state>DEBUG_CONSOLE_ASSERT_DISABLE=1</state>
+          <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -354,17 +355,17 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
+          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
@@ -490,7 +491,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -694,7 +695,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1105,7 +1106,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1192,7 +1193,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1209,7 +1210,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1232,7 +1233,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1311,7 +1312,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1322,10 +1323,11 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>I2C_RETRY_TIMES=40000</state>
           <state>DEBUG_CONSOLE_ASSERT_DISABLE=1</state>
+          <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1449,17 +1451,17 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
+          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
@@ -1585,7 +1587,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1789,7 +1791,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2200,7 +2202,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2287,7 +2289,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2304,7 +2306,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2327,7 +2329,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2406,7 +2408,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2417,10 +2419,11 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>I2C_RETRY_TIMES=40000</state>
           <state>DEBUG_CONSOLE_ASSERT_DISABLE=1</state>
+          <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2544,17 +2547,17 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
+          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
@@ -2680,7 +2683,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2884,7 +2887,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3295,7 +3298,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3382,7 +3385,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3399,7 +3402,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3422,7 +3425,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3501,20 +3504,21 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=0</state>
           <state>NDEBUG</state>
+          <state>_DEBUG=0</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>I2C_RETRY_TIMES=40000</state>
           <state>DEBUG_CONSOLE_ASSERT_DISABLE=1</state>
+          <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3638,17 +3642,17 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
+          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
@@ -3774,7 +3778,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3978,7 +3982,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4389,7 +4393,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4476,7 +4480,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4493,7 +4497,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4516,7 +4520,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4595,7 +4599,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4606,10 +4610,11 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>I2C_RETRY_TIMES=40000</state>
           <state>DEBUG_CONSOLE_ASSERT_DISABLE=1</state>
+          <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4733,17 +4738,17 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
+          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
@@ -4869,7 +4874,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5073,7 +5078,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5484,7 +5489,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5571,7 +5576,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5588,7 +5593,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5611,7 +5616,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5690,7 +5695,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5701,10 +5706,11 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
-          <state>I2C_RETRY_TIMES=40000</state>
           <state>DEBUG_CONSOLE_ASSERT_DISABLE=1</state>
+          <state>I2C_RETRY_TIMES=40000</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5828,17 +5834,17 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd</state>
+          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip</state>
-          <state>$PROJ_DIR$/../../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
@@ -5964,7 +5970,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6168,7 +6174,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6570,6 +6576,33 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
@@ -6618,34 +6651,10 @@
     </file>
   </group>
   <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
-    </file>
-  </group>
-  <group>
     <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
     </file>
@@ -6658,9 +6667,81 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_debug_console.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</name>
-    </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+    </group>
+    <group>
+      <name>timer</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/timer/fsl_adapter_timer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/timer/fsl_adapter_gpt.c</name>
+      </file>
+    </group>
+    <group>
+      <name>gpio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/gpio/fsl_adapter_gpio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/gpio/fsl_adapter_igpio.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>i2c</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/i2c/fsl_adapter_i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/i2c/fsl_adapter_lpi2c.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>usb</name>
@@ -6762,82 +6843,13 @@
     </group>
   </group>
   <group>
-    <name>component</name>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>gpio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/gpio/fsl_adapter_gpio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/gpio/fsl_adapter_igpio.c</name>
-      </file>
-    </group>
-    <group>
-      <name>timer</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/timer/fsl_adapter_timer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/timer/fsl_adapter_gpt.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>i2c</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/i2c/fsl_adapter_i2c.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/i2c/fsl_adapter_lpi2c.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</name>
     </file>
@@ -6857,10 +6869,10 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</name>
@@ -6872,16 +6884,10 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_gpt.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_gpt.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_gpio.h</name>
@@ -6896,10 +6902,10 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_gpt.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_gpt.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</name>
     </file>
   </group>
   <group>
@@ -6929,16 +6935,16 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip/fsl_flexspi_nor_boot.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip/evkmimxrt1160_flexspi_nor_config.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../evkmimxrt1160/xip/evkmimxrt1160_flexspi_nor_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip/fsl_flexspi_nor_boot.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip/fsl_flexspi_nor_boot.c</name>
     </file>
   </group>
   <group>

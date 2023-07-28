@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Caam_driver_blob</title>
+<title>MCUXpresso SDK API Reference Manual: Semihosting</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,411 +98,128 @@ $(document).ready(function(){initNavTree('a00372.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Caam_driver_blob</div>  </div>
+<div class="title">Semihosting<div class="ingroups"><a class="el" href="a00370.html">Debug Console</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga602819941d280cfabed261781e0cbf07"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#ga602819941d280cfabed261781e0cbf07">caam_fifost_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00372.html#gga602819941d280cfabed261781e0cbf07a84e122bbbd2e66d5569a2d75be1f3b11">kCAAM_FIFOST_Type_Kek_Kek</a> = 0x24, 
-<br/>
-&#160;&#160;<a class="el" href="a00372.html#gga602819941d280cfabed261781e0cbf07ae5e276ab814d1be88c32d7de249ffa59">kCAAM_FIFOST_Type_Kek_TKek</a> = 0x25, 
-<br/>
-&#160;&#160;<a class="el" href="a00372.html#gga602819941d280cfabed261781e0cbf07a273bdfc76eae63ebc6c47f82e95d5fff">kCAAM_FIFOST_Type_Kek_Cmm_Jkek</a> = 0x14, 
-<br/>
-&#160;&#160;<a class="el" href="a00372.html#gga602819941d280cfabed261781e0cbf07aeb6eccc10120f32f24ae92cd974a3127">kCAAM_FIFOST_Type_Kek_Cmm_Tkek</a> = 0x15
-<br/>
- }</td></tr>
-<tr class="separator:ga602819941d280cfabed261781e0cbf07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f0424862725d8c59389179bdb6c7a34"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#ga2f0424862725d8c59389179bdb6c7a34">caam_desc_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00372.html#gga2f0424862725d8c59389179bdb6c7a34a52b626477007f1366c4f1745fc4c70e6">kCAAM_Descriptor_Type_Kek_Kek</a> = 0x0, 
-<br/>
-&#160;&#160;<a class="el" href="a00372.html#gga2f0424862725d8c59389179bdb6c7a34adf40e9dddb88fac261056714bf51ae82">kCAAM_Descriptor_Type_Kek_TKek</a> = 0x2, 
-<br/>
-&#160;&#160;<a class="el" href="a00372.html#gga2f0424862725d8c59389179bdb6c7a34ac94c8c5849ea6eeed5f949b791da16e8">kCAAM_Descriptor_Type_Kek_Ccm_Jkek</a> = 0x1, 
-<br/>
-&#160;&#160;<a class="el" href="a00372.html#gga2f0424862725d8c59389179bdb6c7a34a36e0bff142e85c9a663862ecc9de6323">kCAAM_Descriptor_Type_Kek_Ccm_Tkek</a> = 0x3
-<br/>
- }</td></tr>
-<tr class="separator:ga2f0424862725d8c59389179bdb6c7a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga4582fee721c9b8c35f17beac855bac1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#ga4582fee721c9b8c35f17beac855bac1f">CAAM_RedBlob_Encapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *data, size_t dataSize, uint8_t *blob_data)</td></tr>
-<tr class="memdesc:ga4582fee721c9b8c35f17beac855bac1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a encrypted Red Blob.  <a href="#ga4582fee721c9b8c35f17beac855bac1f">More...</a><br/></td></tr>
-<tr class="separator:ga4582fee721c9b8c35f17beac855bac1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga122fea38a73ae8e20e4bf23911554d72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#ga122fea38a73ae8e20e4bf23911554d72">CAAM_RedBlob_Decapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *blob_data, uint8_t *data, size_t dataSize)</td></tr>
-<tr class="memdesc:ga122fea38a73ae8e20e4bf23911554d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt red blob.  <a href="#ga122fea38a73ae8e20e4bf23911554d72">More...</a><br/></td></tr>
-<tr class="separator:ga122fea38a73ae8e20e4bf23911554d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga614684d41dc08a72f94d250484606d91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#ga614684d41dc08a72f94d250484606d91">CAAM_BlackBlob_Encapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *data, size_t dataSize, uint8_t *blob_data, <a class="el" href="a00372.html#ga2f0424862725d8c59389179bdb6c7a34">caam_desc_type_t</a> blackKeyType)</td></tr>
-<tr class="memdesc:ga614684d41dc08a72f94d250484606d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a encrypted Black Blob.  <a href="#ga614684d41dc08a72f94d250484606d91">More...</a><br/></td></tr>
-<tr class="separator:ga614684d41dc08a72f94d250484606d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac20153a2d54d89fa2c05d1764a9dc658"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#gac20153a2d54d89fa2c05d1764a9dc658">CAAM_BlackBlob_Decapsule</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *keyModifier, size_t keyModifierSize, const uint8_t *blob_data, uint8_t *data, size_t dataSize, <a class="el" href="a00372.html#ga2f0424862725d8c59389179bdb6c7a34">caam_desc_type_t</a> blackKeyType)</td></tr>
-<tr class="memdesc:gac20153a2d54d89fa2c05d1764a9dc658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a decrypted black blob.  <a href="#gac20153a2d54d89fa2c05d1764a9dc658">More...</a><br/></td></tr>
-<tr class="separator:gac20153a2d54d89fa2c05d1764a9dc658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga602819941d280cfabed261781e0cbf07"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00372.html#ga602819941d280cfabed261781e0cbf07">caam_fifost_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga602819941d280cfabed261781e0cbf07a84e122bbbd2e66d5569a2d75be1f3b11"></a>kCAAM_FIFOST_Type_Kek_Kek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key Register, encrypted using AES-ECB with the job
-</pre><p> descriptor key encryption key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga602819941d280cfabed261781e0cbf07ae5e276ab814d1be88c32d7de249ffa59"></a>kCAAM_FIFOST_Type_Kek_TKek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key Register, encrypted using AES-ECB with the
-</pre><p> trusted descriptor key encryption key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga602819941d280cfabed261781e0cbf07a273bdfc76eae63ebc6c47f82e95d5fff"></a>kCAAM_FIFOST_Type_Kek_Cmm_Jkek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key Register, encrypted using AES-CCM with the
-</pre><p> job descriptor key encryption key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga602819941d280cfabed261781e0cbf07aeb6eccc10120f32f24ae92cd974a3127"></a>kCAAM_FIFOST_Type_Kek_Cmm_Tkek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key register, encrypted using AES-CCM with the
-</pre><p> trusted descriptor key encryption key. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga2f0424862725d8c59389179bdb6c7a34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00372.html#ga2f0424862725d8c59389179bdb6c7a34">caam_desc_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2f0424862725d8c59389179bdb6c7a34a52b626477007f1366c4f1745fc4c70e6"></a>kCAAM_Descriptor_Type_Kek_Kek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key Register, encrypted using AES-ECB with the job
-</pre><p> descriptor key encryption key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f0424862725d8c59389179bdb6c7a34adf40e9dddb88fac261056714bf51ae82"></a>kCAAM_Descriptor_Type_Kek_TKek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key Register, encrypted using AES-ECB with the
-</pre><p> trusted descriptor key encryption key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f0424862725d8c59389179bdb6c7a34ac94c8c5849ea6eeed5f949b791da16e8"></a>kCAAM_Descriptor_Type_Kek_Ccm_Jkek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key Register, encrypted using AES-CCM with the
-</pre><p> job descriptor key encryption key. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f0424862725d8c59389179bdb6c7a34a36e0bff142e85c9a663862ecc9de6323"></a>kCAAM_Descriptor_Type_Kek_Ccm_Tkek</em>&nbsp;</td><td class="fielddoc">
-<pre class="fragment">   Key register, encrypted using AES-CCM with the
-</pre><p> trusted descriptor key encryption key. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga4582fee721c9b8c35f17beac855bac1f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_RedBlob_Encapsule </td>
-          <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>keyModifier</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keyModifierSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dataSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>blob_data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function constructs a job descriptor capable of performing a encrypted blob operation on a plaintext object.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">data</td><td>Data adress </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">blob_data</td><td>Output blob data adress </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga122fea38a73ae8e20e4bf23911554d72"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_RedBlob_Decapsule </td>
-          <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>keyModifier</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keyModifierSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>blob_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dataSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function constructs a job descriptor capable of performing decrypting red blob .</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">blob_data</td><td>Address of blob data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Output data adress. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga614684d41dc08a72f94d250484606d91"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_BlackBlob_Encapsule </td>
-          <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>keyModifier</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keyModifierSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dataSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>blob_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00372.html#ga2f0424862725d8c59389179bdb6c7a34">caam_desc_type_t</a>&#160;</td>
-          <td class="paramname"><em>blackKeyType</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function constructs a job descriptor capable of performing a encrypted blob operation on a plaintext object.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">data</td><td>Data adress </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">blob_data</td><td>Output blob data adress </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">blackKeyType</td><td>Type of black key see enum caam_desc_type_t for more info </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac20153a2d54d89fa2c05d1764a9dc658"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_BlackBlob_Decapsule </td>
-          <td>(</td>
-          <td class="paramtype">CAAM_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>keyModifier</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keyModifierSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>blob_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>dataSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00372.html#ga2f0424862725d8c59389179bdb6c7a34">caam_desc_type_t</a>&#160;</td>
-          <td class="paramname"><em>blackKeyType</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function constructs a job descriptor capable of performing decrypting black blob.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifier</td><td>Address of the random key modifier generated by RNG </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keyModifierSize</td><td>Size of keyModifier buffer in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">blob_data</td><td>Address of blob data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Output data adress. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">blackKeyType</td><td>Type of black key see enum caam_desc_type_t for more info </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
-
-</div>
-</div>
+<p>Semihosting is a mechanism for ARM targets to communicate input/output requests from application code to a host computer running a debugger. This mechanism can be used, for example, to enable functions in the C library, such as printf() and scanf(), to use the screen and keyboard of the host rather than having a screen and keyboard on the target system.</p>
+<h1><a class="anchor" id="SemihostingGrps"></a>
+Guide Semihosting for IAR</h1>
+<p><b>NOTE:</b> After the setting both "printf" and "scanf" are available for debugging, if you want use PRINTF with semihosting, please make sure the SDK_DEBUGCONSOLE is DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN.</p>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>To set debugger options, choose Project&gt;Options. In the Debugger category, click the Setup tab.</li>
+<li>Select Run to main and click OK. This ensures that the debug session starts by running the main function.</li>
+<li>The project is now ready to be built.</li>
+</ol>
+<h2>Step 2: Building the project</h2>
+<ol type="1">
+<li>Compile and link the project by choosing Project&gt;Make or F7.</li>
+<li>Alternatively, click the Make button on the tool bar. The Make command compiles and links those files that have been modified.</li>
+</ol>
+<h2>Step 3: Starting semihosting</h2>
+<ol type="1">
+<li>Choose "Semihosting_IAR" project -&gt; "Options" -&gt; "Debugger" -&gt; "J-Link/J-Trace".</li>
+<li>Choose tab "J-Link/J-Trace" -&gt; "Connection" tab -&gt; "SWD".</li>
+<li>Choose tab "General Options" -&gt; "Library Configurations", select Semihosted, select Via semihosting. Please Make sure the SDK_DEBUGCONSOLE_UART is not defined in project settings.</li>
+<li>Start the project by choosing Project&gt;Download and Debug.</li>
+<li>Choose View&gt;Terminal I/O to display the output from the I/O operations.</li>
+</ol>
+<h1><a class="anchor" id="SemihostingKeilGrps"></a>
+Guide Semihosting for Keil µVision</h1>
+<p><b>NOTE:</b> Semihosting is not support by MDK-ARM, use the retargeting functionality of MDK-ARM instead.</p>
+<h1><a class="anchor" id="SemihostingGrps9"></a>
+Guide Semihosting for MCUXpresso IDE</h1>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>To set debugger options, choose Project&gt;Properties. select the setting category.</li>
+<li>Select Tool Settings, unfold MCU C Compile.</li>
+<li>Select Preprocessor item.</li>
+<li>Set SDK_DEBUGCONSOLE=0, if set SDK_DEBUGCONSOLE=1, the log will be redirect to the UART.</li>
+</ol>
+<h2>Step 2: Building the project</h2>
+<ol type="1">
+<li>Compile and link the project.</li>
+</ol>
+<h2>Step 3: Starting semihosting</h2>
+<ol type="1">
+<li>Download and debug the project.</li>
+<li>When the project runs successfully, the result can be seen in the Console window.</li>
+</ol>
+<p>Semihosting can also be selected through the "Quick settings" menu in the left bottom window, Quick settings-&gt;SDK Debug Console-&gt;Semihost console.</p>
+<h1><a class="anchor" id="SemihostingGrps11"></a>
+Guide Semihosting for ARMGCC</h1>
+<h2>Step 1: Setting up the environment</h2>
+<ol type="1">
+<li>Turn on "J-LINK GDB Server" -&gt; Select suitable "Target device" -&gt; "OK".</li>
+<li>Turn on "PuTTY". Set up as follows.<ul>
+<li>"Host Name (or IP address)" : localhost</li>
+<li>"Port" :2333</li>
+<li>"Connection type" : Telet.</li>
+<li>Click "Open".</li>
+</ul>
+</li>
+<li>Increase "Heap/Stack" for GCC to 0x2000: </li>
+</ol>
+<p><b> Add to "CMakeLists.txt" </b></p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__stack_size__=0x2000")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__stack_size__=0x2000")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__heap_size__=0x2000")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__heap_size__=0x2000") </p>
+<h2>Step 2: Building the project</h2>
+<ol>
+<li>
+<p class="startli">Change "CMakeLists.txt": </p>
+<p><b> Change </b> "SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} &ndash;specs=nano.specs")" </p>
+<p><b>to </b> "SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} &ndash;specs=rdimon.specs")"</p>
+<p></p>
+<p><b> Replace paragraph </b> </p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-common")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffunction-sections")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fdata-sections")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffreestanding")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-builtin")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mthumb")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mapcs")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --gc-sections")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -static")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -z")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")</p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")</p>
+<p></p>
+<p><b> To </b></p>
+<p></p>
+<p>SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=rdimon.specs ") </p>
+<p></p>
+<p></p>
+<p><b> Remove </b> </p>
+<p>target_link_libraries(semihosting_ARMGCC.elf debug nosys)</p>
+<p class="endli"></p>
+</li>
+<li>
+Run "build_debug.bat" to build project </li>
+</ol>
+<h2>Step 3: Starting semihosting</h2>
+<ol type="1">
+<li>Download the image and set as follows. <div class="fragment"><div class="line">cd D:\mcu-sdk-2.0-origin\boards\twrk64f120m\driver_examples\semihosting\armgcc\debug</div>
+<div class="line">d:</div>
+<div class="line">C:\PROGRA~2\GNUTOO~1\4BD65~1.920\bin\arm-none-eabi-gdb.exe</div>
+<div class="line">target remote localhost:2331</div>
+<div class="line">monitor reset</div>
+<div class="line">monitor semihosting enable</div>
+<div class="line">monitor semihosting thumbSWI 0xAB</div>
+<div class="line">monitor semihosting IOClient 1</div>
+<div class="line">monitor flash device = MK64FN1M0xxx12</div>
+<div class="line">load semihosting_ARMGCC.elf</div>
+<div class="line">monitor reg pc = (0x00000004)</div>
+<div class="line">monitor reg sp = (0x00000000)</div>
+<div class="line"><span class="keywordflow">continue</span></div>
+</div><!-- fragment --></li>
+<li>After the setting, press "enter". The PuTTY window now shows the printf() output. </li>
+</ol>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

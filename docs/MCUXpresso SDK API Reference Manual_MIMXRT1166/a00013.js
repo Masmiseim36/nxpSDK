@@ -1,15 +1,18 @@
 var a00013 =
 [
-    [ "CAAM Blocking APIs", "a00313.html", "a00313" ],
-    [ "CAAM Non-blocking APIs", "a00317.html", "a00317" ],
-    [ "caam_job_callback_t", "a00013.html#a00428", [
+    [ "CAAM Blocking APIs", "a00322.html", "a00322" ],
+    [ "CAAM Non-blocking APIs", "a00326.html", "a00326" ],
+    [ "Caam_driver_black", "a00331.html", "a00331" ],
+    [ "Caam_driver_blob", "a00332.html", "a00332" ],
+    [ "Caam_driver_crc", "a00333.html", "a00333" ],
+    [ "caam_job_callback_t", "a00013.html#a00439", [
       [ "JobCompleted", "a00013.html#a51d80a64c0717c6e48006080394f4487", null ]
     ] ],
-    [ "caam_handle_t", "a00013.html#a00427", [
+    [ "caam_handle_t", "a00013.html#a00438", [
       [ "callback", "a00013.html#a961166a009ff62d3190738acf21d5a18", null ],
       [ "userData", "a00013.html#a5ce553aa4a2ea5e2a9bc50c30ffa9b5f", null ]
     ] ],
-    [ "caam_config_t", "a00013.html#a00426", [
+    [ "caam_config_t", "a00013.html#a00437", [
       [ "rngSampleMode", "a00013.html#a085d73f1fb46aa55c1709675d770b107", null ],
       [ "rngRingOscDiv", "a00013.html#af56ff16dd89c70393278b9de08d9f8ce", null ],
       [ "scfgrLockTrngProgramMode", "a00013.html#a23ec544167197e50fd4305f383bfc89d", null ],
@@ -31,8 +34,8 @@ var a00013 =
     [ "caam_desc_pkha_ecc_t", "a00013.html#ga7e2d3f370529eea30d276f5d0c9b79bc", null ],
     [ "caam_desc_key_black_t", "a00013.html#ga46e0febc25742a8ca3aff3f6cba43449", null ],
     [ "caam_desc_gen_enc_blob_t", "a00013.html#ga45f570f5700a360fddccd0fd900ddbee", [
-      [ "kStatus_CAAM_Again", "a00013.html#ggadb49720dc49f7d4e4cf9adbf2948e409a508b71b439a39bc7196b756a74cf6c5c", null ],
-      [ "kStatus_CAAM_DataOverflow", "a00013.html#ggadb49720dc49f7d4e4cf9adbf2948e409a07c3670d0758345a3aed91a190be4f3d", null ]
+      [ "kStatus_CAAM_Again", "a00013.html#ggaae05225933a42f81e7c4a9fb286596f9a508b71b439a39bc7196b756a74cf6c5c", null ],
+      [ "kStatus_CAAM_DataOverflow", "a00013.html#ggaae05225933a42f81e7c4a9fb286596f9a07c3670d0758345a3aed91a190be4f3d", null ]
     ] ],
     [ "caam_job_ring_t", "a00013.html#gadd785b4d42fe75b8feb63a5a1ffd8c38", [
       [ "kCAAM_JobRing0", "a00013.html#ggadd785b4d42fe75b8feb63a5a1ffd8c38a4984d833f9d983d48aa06af6395e6214", null ],

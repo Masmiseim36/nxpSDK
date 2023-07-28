@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  *
@@ -116,7 +116,7 @@ typedef void (*mcmgr_event_callback_t)(uint16_t data, void *context);
  */
 enum mcmgr_version_enum
 {
-    kMCMGR_Version = 0x00040103
+    kMCMGR_Version = 0x00040104
 };
 
 #if defined(__cplusplus)

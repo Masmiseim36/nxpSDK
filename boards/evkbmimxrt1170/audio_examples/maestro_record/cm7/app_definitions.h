@@ -17,7 +17,7 @@
  ******************************************************************************/
 /*${macro:start}*/
 /* SAI instance and clock */
-#define DEMO_CODEC_WM8962
+#define DEMO_CODEC_WM8962             1
 #define DEMO_PDM                      PDM
 #define DEMO_SAI                      SAI1
 #define DEMO_SAI_MASTER_SLAVE         kSAI_Master

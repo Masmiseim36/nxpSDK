@@ -336,10 +336,6 @@ void eap_att_process(void)
             {
                 att_control.lastError = set_volume_wrapper(att_control.volume);
             }
-            else
-            {
-                att_control.logme("[EAP_ATT] First, play an audio file.\r\n");
-            }
             break;
         }
         default:

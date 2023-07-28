@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CR_INTEGER_PRINTF, CMSIS_NN, ARM_MATH_CM7, __FPU_PRESENT=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, SDK_I2C_BASED_COMPONENT_USED=1, DISABLEFLOAT16, EIQ_GUI_PRINTF, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CR_INTEGER_PRINTF, CMSIS_NN, ARM_MATH_CM7, __FPU_PRESENT=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, DISABLEFLOAT16, EIQ_GUI_PRINTF</Define>
               <Undefine/>
-              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkbmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/i2c;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../xmcd</IncludePath>
+              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkbmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../xmcd;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,10 +365,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../devices/MIMXRT1176/arm/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6242</DisabledWarnings>
           </LDads>
@@ -716,168 +716,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>video</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_mipi_dsi_cmd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mipi_dsi_cmd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68191.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68191.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68200.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68200.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hx8394.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hx8394.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/fsl_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_camera_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/device/fsl_camera_device.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_camera.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/fsl_camera.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_camera_receiver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sccb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sccb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ov5640.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ov5640.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_csi_camera_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_csi_camera_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_elcdif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_elcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_lcdifv2.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_lcdifv2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_mipi_dsi.c</FileName>
               <FileType>1</FileType>
@@ -979,6 +819,26 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</FilePath>
@@ -1014,16 +874,6 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
@@ -1037,6 +887,146 @@
               <FileName>fsl_lcdifv2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>video</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_mipi_dsi_cmd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mipi_dsi_cmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68191.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68191.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68200.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68200.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/fsl_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_camera_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/device/fsl_camera_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/fsl_camera.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_video_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_video_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_camera_receiver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sccb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sccb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ov5640.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ov5640.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_csi_camera_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_csi_camera_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_lcdifv2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_lcdifv2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2071,9 +2061,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CR_INTEGER_PRINTF, CMSIS_NN, ARM_MATH_CM7, __FPU_PRESENT=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, SDK_I2C_BASED_COMPONENT_USED=1, DISABLEFLOAT16, EIQ_GUI_PRINTF, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, CR_INTEGER_PRINTF, CMSIS_NN, ARM_MATH_CM7, __FPU_PRESENT=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, DISABLEFLOAT16, EIQ_GUI_PRINTF</Define>
               <Undefine/>
-              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkbmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/i2c;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../xmcd</IncludePath>
+              <IncludePath>../source/image;../source/video;../eiq/cmsis_nn/Include;../source;../board;../../../../../middleware/eiq/glow/examples/cifar10_camera/evkbmimxrt1170;..;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/display;../../../../../components/video/camera/device;../../../../../components/video/camera;../../../../../components/video;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/camera/receiver/csi;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/DSP/PrivateInclude;../../../../../CMSIS/DSP/Source/DistanceFunctions;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/glow/bundle_utils;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../xmcd;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2104,10 +2094,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../devices/MIMXRT1176/arm/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6242</DisabledWarnings>
           </LDads>
@@ -2455,168 +2445,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>video</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_mipi_dsi_cmd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mipi_dsi_cmd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68191.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68191.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68200.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_rm68200.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hx8394.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_hx8394.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/fsl_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_camera_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/device/fsl_camera_device.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_camera.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/fsl_camera.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_camera_receiver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sccb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sccb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ov5640.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_ov5640.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_csi_camera_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_csi_camera_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_elcdif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_elcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_lcdifv2.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dc_fb_lcdifv2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_mipi_dsi.c</FileName>
               <FileType>1</FileType>
@@ -2718,6 +2548,26 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</FilePath>
@@ -2753,16 +2603,6 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
@@ -2776,6 +2616,146 @@
               <FileName>fsl_lcdifv2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>video</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_mipi_dsi_cmd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mipi_dsi_cmd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/mipi_dsi_cmd/fsl_mipi_dsi_cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68191.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68191.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/rm68191/fsl_rm68191.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68200.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_rm68200.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/fsl_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_camera_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/device/fsl_camera_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/fsl_camera.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_video_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_video_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_camera_receiver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sccb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sccb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ov5640.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ov5640.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/device/ov5640/fsl_ov5640.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_csi_camera_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_csi_camera_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_lcdifv2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_lcdifv2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.c</FilePath>
             </File>
           </Files>
         </Group>

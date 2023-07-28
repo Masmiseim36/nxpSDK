@@ -1,15 +1,20 @@
 var a00022 =
 [
-    [ "dcdc_config_t", "a00022.html#a00449", [
+    [ "dcdc_config_t", "a00022.html#a00460", [
       [ "controlMode", "a00022.html#a57fad28f2ce8adadf869ab25dd4d7bf7", null ],
       [ "trimInputMode", "a00022.html#abea97833ac17f3964ff8f245a844e33e", null ],
       [ "enableDcdcTimeout", "a00022.html#add92b30b4a7c9682a9bd8a28d33becfe", null ],
       [ "enableSwitchingConverterOutput", "a00022.html#a406625c69f9e88d285b55bd62b36c182", null ]
     ] ],
-    [ "dcdc_min_power_config_t", "a00022.html#a00454", [
-      [ "enableUseHalfFreqForContinuous", "a00022.html#adbe01c99b380a3d872f7fd6f787ab7cc", null ]
+    [ "dcdc_min_power_config_t", "a00022.html#a00465", [
+      [ "enableUseHalfFreqForContinuous", "a00022.html#adbe01c99b380a3d872f7fd6f787ab7cc", null ],
+      [ "enableUseHalfFetForContinuous", "a00022.html#a39ebff4d52873db9b397394cff644b80", null ],
+      [ "enableUseDoubleFetForContinuous", "a00022.html#a5bf717a17978c6451fba890b79ba98c5", null ],
+      [ "enableUseHalfFetForPulsed", "a00022.html#aae1519c4541d4255c5b207f252b107b9", null ],
+      [ "enableUseDoubleFetForPulsed", "a00022.html#a18362837de807697f46a5988efbf2492", null ],
+      [ "enableUseHalfFreqForPulsed", "a00022.html#aa3b64d51b3ff33ed73c1cc7160f27351", null ]
     ] ],
-    [ "dcdc_detection_config_t", "a00022.html#a00450", [
+    [ "dcdc_detection_config_t", "a00022.html#a00461", [
       [ "enableXtalokDetection", "a00022.html#a26388a555904c467f343d5cee515f268", null ],
       [ "powerDownOverVoltageVdd1P8Detection", "a00022.html#a2a9b0a8787655203b68e8de03f6631bc", null ],
       [ "powerDownOverVoltageVdd1P0Detection", "a00022.html#a8c04b2503cf750c6c29169ca8853e3a7", null ],
@@ -19,7 +24,7 @@ var a00022 =
       [ "powerDownZeroCrossDetection", "a00022.html#ab101a2301403aa70d194c5180e18ca3a", null ],
       [ "PeakCurrentThreshold", "a00022.html#a918a386c698955495c5ae942f8c9d728", null ]
     ] ],
-    [ "dcdc_loop_control_config_t", "a00022.html#a00452", [
+    [ "dcdc_loop_control_config_t", "a00022.html#a00463", [
       [ "enableCommonHysteresis", "a00022.html#aa585f6efdba3cb2bc66b4c658c0b0e80", null ],
       [ "enableCommonThresholdDetection", "a00022.html#ad5a97673aa667b4aeb7549173d4e8516", null ],
       [ "enableDifferentialHysteresis", "a00022.html#a67568ebe798a99683fb8ea5b02e53abf", null ],
@@ -29,15 +34,27 @@ var a00022 =
       [ "enableRCScaleCircuit", "a00022.html#a858dc72ad7c5c7d9222a88e38000aeaf", null ],
       [ "complementFeedForwardStep", "a00022.html#a82a1dd02ed11c6788782084e2645a388", null ],
       [ "controlParameterMagnitude", "a00022.html#a741144ac35c33c5ab3060a22b0614ee2", null ],
-      [ "integralProportionalRatio", "a00022.html#a0925787c658e4643d658fa91fd344b32", null ]
+      [ "integralProportionalRatio", "a00022.html#a0925787c658e4643d658fa91fd344b32", null ],
+      [ "enableDiffHysteresis", "a00022.html#a7f4aed589aa7e3a00c187a515da6d257", null ],
+      [ "enableDiffHysteresisThresh", "a00022.html#ab348aefa38ba7b0d037f8bcf8dfef913", null ],
+      [ "enableCommonHysteresisThresh", "a00022.html#af8f08555038791a2efc82c6a91532f1d", null ]
     ] ],
-    [ "dcdc_internal_regulator_config_t", "a00022.html#a00451", [
+    [ "dcdc_internal_regulator_config_t", "a00022.html#a00462", [
       [ "feedbackPoint", "a00022.html#a7494dc737ae93a739c944037610372b2", null ]
     ] ],
-    [ "dcdc_low_power_config_t", "a00022.html#a00453", [
-      [ "enableAdjustHystereticValue", "a00022.html#a5ba90c8ec3b353714b1db3e3951b5013", null ]
+    [ "dcdc_low_power_config_t", "a00022.html#a00464", [
+      [ "enableAdjustHystereticValue", "a00022.html#a5ba90c8ec3b353714b1db3e3951b5013", null ],
+      [ "workModeInVLPRW", "a00022.html#aaea7dce93c81745f11a38642df470fe6", null ],
+      [ "workModeInVLPS", "a00022.html#a7104f65423c6ccec781c2f9ecae0f1ad", null ],
+      [ "enableHysteresisVoltageSense", "a00022.html#a690aafc622c67c4dcd909ea403e5857b", null ],
+      [ "enableAdjustHystereticValueSense", "a00022.html#a01e0a27407950ccb4e3b5faf2ddbfd11", null ],
+      [ "enableHystersisComparator", "a00022.html#a06d6c7b0e3f5167e1207a7790eaf7c92", null ],
+      [ "enableAdjustHystereticValueComparator", "a00022.html#a0a8926606bf0d131fc45612d86acbff4", null ],
+      [ "hystereticUpperThresholdValue", "a00022.html#aae3c1384585229cfb2e21691de1ea40e", null ],
+      [ "hystereticLowerThresholdValue", "a00022.html#adfc5d35e29a2d53526d830d60af6a336", null ],
+      [ "enableDiffComparators", "a00022.html#ad8dbf4c51048e669b6033fb76c380f51", null ]
     ] ],
-    [ "dcdc_setpoint_config_t", "a00022.html#a00455", [
+    [ "dcdc_setpoint_config_t", "a00022.html#a00467", [
       [ "enableDCDCMap", "a00022.html#a22cb536566581b8d3a09201c1bbf126f", null ],
       [ "enableDigLogicMap", "a00022.html#a0686fe0f8a0c10e12f68bbad5a49632c", null ],
       [ "lowpowerMap", "a00022.html#a8fd1d597d6398bc45a564e1b6475414e", null ],
@@ -231,9 +248,10 @@ var a00022 =
       [ "kDCDC_PeakCurrentRunMode200mALPMode2A", "a00022.html#ggacea8ce1454590ef280751fc9ae4660e4ac20eb2819bc0b1e9f5e76459c6a05ab4", null ]
     ] ],
     [ "dcdc_clock_source_t", "a00022.html#ga8035a76b241261c80ef27c1c2baf614b", [
-      [ "kDCDC_ClockAutoSwitch", "a00022.html#gga8035a76b241261c80ef27c1c2baf614ba598ff7757e17e93192bb02060b9e17f7", null ],
-      [ "kDCDC_ClockInternalOsc", "a00022.html#gga8035a76b241261c80ef27c1c2baf614ba9a9fba153517ab7aa481929ab112c7ce", null ],
-      [ "kDCDC_ClockExternalOsc", "a00022.html#gga8035a76b241261c80ef27c1c2baf614baa626d594c9a911bd6d8f36852ae535fd", null ]
+      [ "kDCDC_ClockAutoSwitch", "a00023.html#gga8035a76b241261c80ef27c1c2baf614ba598ff7757e17e93192bb02060b9e17f7", null ],
+      [ "kDCDC_ClockInternalOsc", "a00023.html#gga8035a76b241261c80ef27c1c2baf614ba9a9fba153517ab7aa481929ab112c7ce", null ],
+      [ "kDCDC_ClockExternalOsc", "a00023.html#gga8035a76b241261c80ef27c1c2baf614baa626d594c9a911bd6d8f36852ae535fd", null ],
+      [ "kDCDC_ClockAutoSwitch", "a00023.html#gga8035a76b241261c80ef27c1c2baf614ba598ff7757e17e93192bb02060b9e17f7", null ]
     ] ],
     [ "dcdc_voltage_output_sel_t", "a00022.html#gabff0560bbc2b1699690a6e37a0cbe487", [
       [ "kDCDC_VoltageOutput1P8", "a00022.html#ggabff0560bbc2b1699690a6e37a0cbe487a36aa2c7bf5aedd100155259ceb5d8ce7", null ],

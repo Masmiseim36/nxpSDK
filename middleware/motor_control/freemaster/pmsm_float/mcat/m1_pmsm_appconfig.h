@@ -6,7 +6,7 @@
 
 /*
     * FILE NAME: ../boards/lpcxpresso55s36/mc_pmsm/pmsm_enc/m1_pmsm_appconfig.h
-    * DATE: Wed Oct 12 2022, 12:08:34
+    * DATE: Tue Apr 25 2023, 08:21:46
 */
 
 /*
@@ -37,7 +37,7 @@
         "parametersFreewheelDuration": 1.5,
         "parametersScalarUqMin": 1,
         "parametersAlignVoltage": 1.2,
-        "parametersAlignDuration": 0.4
+        "parametersAlignDuration": 1
     },
     "currentLoop": {
         "currentLoopSampleTime": 0.0001,
@@ -110,7 +110,7 @@
 #define M1_FREEWHEEL_DURATION (1500)
 #define M1_SCALAR_UQ_MIN (1.0F)
 #define M1_ALIGN_VOLTAGE (1.2F)
-#define M1_ALIGN_DURATION (4000)
+#define M1_ALIGN_DURATION (10000)
 #define M1_U_MAX (35.1029F)
 #define M1_FREQ_MAX (293.333F)
 #define M1_N_ANGULAR_MAX (2.38732F)
@@ -143,14 +143,14 @@
 #define M1_POSPE_ENC_N_MIN (0.0F)
 #define M1_POSPE_MECH_POS_GAIN ACC32(16.384)
 #define M1_POS_P_PROP_GAIN FRAC16(0.12)
-#define M1_POSPE_KP_GAIN (1256.64F)
-#define M1_POSPE_KI_GAIN (39.4784F)
-#define M1_POSPE_INTEG_GAIN (0.0000318310F)
+#define M1_POSPE_TO_KP_GAIN (1256.64F)
+#define M1_POSPE_TO_KI_GAIN (39.4784F)
+#define M1_POSPE_TO_THETA_GAIN (0.0000318310F)
 /* SENSORLESS*/
 #define M1_OL_START_RAMP_INC (0.125664F)
 #define M1_OL_START_I (0.65F)
 #define M1_MERG_SPEED_TRH (209.440F)
-#define M1_MERG_COEFF FRAC16(0.00457764)
+#define M1_MERG_COEFF FRAC16(0.00333333)
 #define M1_I_SCALE (0.819095F)
 #define M1_U_SCALE (0.251256F)
 #define M1_E_SCALE (0.251256F)

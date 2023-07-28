@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2023 NXP
  * All rights reserved.
  *
  *
@@ -43,8 +43,8 @@ __attribute__((weak)) void MU_GenInt2FlagISR(void){};
 __attribute__((weak)) void MU_GenInt1FlagISR(void){};
 __attribute__((weak)) void MU_GenInt0FlagISR(void){};
 
-#if (defined(CPU_MIMXRT1189AVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || \
-     defined(CPU_MIMXRT1189AVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33))
+#if (defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES) || \
+     defined(MIMXRT1189_cm33_SERIES))
 /* MU ISR table */
 static void (*const MU_interrupts[MU_ISR_COUNT])(void) = {
     MU_Tx0EmptyFlagISR, MU_Tx1EmptyFlagISR, MU_Tx2EmptyFlagISR, MU_Tx3EmptyFlagISR,
@@ -81,7 +81,33 @@ static void mu_isr(MU_Type *base)
     }
 #endif
 
-    for (i = MU_ISR_FLAG_BASE; i < (MU_ISR_FLAG_BASE + MU_ISR_COUNT); i++)
+    /* Traverse all TE/RF/GIP status flags and call respective callbacks for pending flags */
+
+    /* Start with Transmit Empty status flags, these are all set after the reset so do not call callback unless
+       the respective Transmit Interrupt Enable flag in the CR/TCR register is set. */
+#if (defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES) || \
+     defined(MIMXRT1189_cm33_SERIES))
+    uint32_t tcr_tie_idx = 0;
+    for (i = MU_ISR_FLAG_BASE; i < (MU_ISR_FLAG_BASE + MU_TR_COUNT); i++)
+    {
+        if ((0UL != (flags & (1UL << i))) && (0UL != (base->TCR & (1UL << tcr_tie_idx))))
+        {
+            MU_interrupts[i - MU_ISR_FLAG_BASE]();
+        }
+        tcr_tie_idx++;
+    }
+#else
+    for (i = MU_ISR_FLAG_BASE; i < (MU_ISR_FLAG_BASE + MU_TR_COUNT); i++)
+    {
+        if ((0UL != (flags & (1UL << i))) && (0UL != (base->CR & (1UL << i))))
+        {
+            MU_interrupts[i - MU_ISR_FLAG_BASE]();
+        }
+    }
+#endif
+
+    /* Continue with RF and GIP status flags. */
+    for (i = MU_ISR_FLAG_BASE + MU_TR_COUNT; i < (MU_ISR_FLAG_BASE + MU_ISR_COUNT); i++)
     {
         if (0UL != (flags & (1UL << i)))
         {
@@ -91,8 +117,8 @@ static void mu_isr(MU_Type *base)
     }
 }
 
-#if (defined(CPU_MIMXRT1189AVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || \
-     defined(CPU_MIMXRT1189AVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33))
+#if (defined(MIMXRT1187_cm7_SERIES) || defined(MIMXRT1187_cm33_SERIES) || defined(MIMXRT1189_cm7_SERIES) || \
+     defined(MIMXRT1189_cm33_SERIES))
 
 #if defined(FSL_FEATURE_MU_SIDE_A)
 int MU1_IRQHandler(void)

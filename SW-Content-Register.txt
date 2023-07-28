@@ -646,6 +646,26 @@ mcuboot                    Name: MCUBoot
                            Origin: MCUBoot https://www.mcuboot.com/          
                            Url: https://github.com/mcu-tools/mcuboot         
 
+mmcau                      Name: mmCAU S/W Library                           
+                           Version: 2.0.4                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: middleware/mmcau/LICENSE            
+                           Format: source code                               
+                           Description: S/W library that works with the      
+                           memory-mapped cryptographic acceleration unit     
+                           present on some MCUXpresso SoCs                   
+                           Location: middleware/mmcau                        
+                           Origin: NXP (BSD-3-Clause)                        
+
+multicore_mcmgr            Name: MCMGR                                       
+                           Version: 4.1.4                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: Multicore manager                    
+                           Location: middleware/multicore/mcmgr              
+                           Origin: NXP (BSD-3-Clause)                        
+
 multicore                  Name: Multicore SDK                               
                            Version: 2.14.0                                   
                            Outgoing License: BSD-3-Clause                    
@@ -970,6 +990,32 @@ wifi_tx_pwr_limits         Name: Wi-Fi module Tx power limits
                            Origin: Murata Manufacturing Co., Ltd.            
                            (BSD-3-Clause)                                    
 
+vglite                     Name: vglite                                      
+                           Version: 3.0.15_rev7                              
+                           Outgoing License: MIT                             
+                           License File: middleware/vglite/LICENSE.txt       
+                           Format: source code                               
+                           Description: VeriSilicon's platform independent   
+                           VGLite Graphics library                           
+                           Location: middleware/vglite                       
+                           Origin: VeriSilicon (MIT), Raph Levien, Nicolas   
+                           Silva (Apache-2.0)                                
+                           Url: http://www.verisilicon.com/,                 
+                           https://github.com/linebender/kurbo               
+
+vglite_mcufont             Name: mcufont                                     
+                           Version: 1.0                                      
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           middleware/vglite/font/mcufont/LICENSE            
+                           Format: source code                               
+                           Description: Font rendering library for           
+                           microcontrollers                                  
+                           Location: middleware/vglite/font/mcufont          
+                           Origin: Petteri Aimonen                           
+                           (https://github.com/PetteriAimonen)               
+                           Url: https://github.com/mcufont/mcufont           
+
 lvgl                       Name: LVGL                                        
                            Version: 8.3.5                                    
                            Outgoing License: MIT                             
@@ -981,14 +1027,17 @@ lvgl                       Name: LVGL
                            Origin: Gabor Kiss-Vamosi                         
                            Url: https://github.com/lvgl/lvgl                 
 
-se_hostlib                 Name: se_hostlib                                  
-                           Version: 2.12.0                                   
-                           Outgoing License: Plug & Trust Middleware License 
-                           License File: middleware/se_hostlib/EULA.pdf      
-                           Format: source code                               
-                           Description: Secure element host library          
-                           Location: middleware/se_hostlib                   
-                           Origin: NXP (Proprietary)                         
+edgefast_bluetooth         Name: EdgeFast Protocol Abstraction Layer         
+                           Version: 0.1.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code, header files                 
+                           Description: EdgeFast Bluetooth PAL               
+                           Location: middleware/edgefast_bluetooth           
+                           Origin: NXP (BSD-3-Clause) Zephyr BT/BLE Host     
+                           stack (Apache-2.0) -                              
+                           https://github.com/zephyrproject-rtos/zephyr/tree/
+                           v2.6-branch/subsys/bluetooth                      
 
 mcu-boot                   Name: Bootloader Source                           
                            Version: 2.7.0                                    
@@ -1173,6 +1222,95 @@ DeepviewRT_Sample          Name: DeepviewRT Sample
                            Origin: NXP (Proprietary)/Au-Zone (proprietary)   
                            Url: https://embeddedml.com                       
 
+mpp                        Name: Multimedia Processing Pipelines (MPP)       
+                           Version: 2.0.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           v45 May 2023- Additional Distribution License     
+                           granted, license in Section 2.3 applies           
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: source code, header files                 
+                           Description: Library to build vision pipelines    
+                           Location: middleware/eiq/mpp                      
+                           Origin: NXP                                       
+
+se_hostlib                 Name: se_hostlib                                  
+                           Version: 2.12.0                                   
+                           Outgoing License: Plug & Trust Middleware License 
+                           License File: middleware/se_hostlib/EULA.pdf      
+                           Format: source code                               
+                           Description: Secure element host library          
+                           Location: middleware/se_hostlib                   
+                           Origin: NXP (Proprietary)                         
+
+motor_control_rtcesl       Name: rtcesl                                      
+                           Version: 4.7 (CM0,CM4,CM7,CM33) + 4.5 (DSC)       
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: object code & header files                
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
+                           Location: middleware/rtcesl                       
+                           Origin: NXP (BSD-3-Clause)                        
+
+motor_control              Name: motor_control                               
+                           Version: 2.11.0                                   
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: Motor control examples for PMSM BLDC,
+                           ACIM motors.                                      
+                           Location: middleware/motor_control                
+                           Origin: NXP (BSD-3-Clause)                        
+
+motor_control_freemaster   Name: motor_control                               
+                           Version: v3.7.1 (2015-Feb)                        
+                           Outgoing License: Commercial                      
+                           License File: http://www.jqwidgets.com/license/   
+                           Format: library                                   
+                           Description: Advanced jQuery and HTML5 UI         
+                           framework.                                        
+                           Location: middleware/motor_control/freemaster     
+                           Origin: jQWidgets                                 
+
+motor_control_JavaScript   Name: motor_control                               
+                           Version: v1.11.1                                  
+                           Outgoing License: Open Source - MIT               
+                           (jquery.org/license)                              
+                           License File: jquery.org/license                  
+                           Format: source code                               
+                           Description: Cross-platform JavaScript library.   
+                           Location: middleware/motor_control/freemaster     
+                           Origin: jQuery Foundation, Inc.                   
+
+motor_control_mcaa_float   Name: MCAA float                                  
+                           Version: 1.0.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: object code & header files                
+                           Description: Motor Control Advanced Algorithms    
+                           library                                           
+                           Location:                                         
+                           middleware/motor_control/pmsm/pmsm_float/mc_algori
+                           thms/mcaa_lib                                     
+                           Origin: NXP (BSD-3-Clause)                        
+
+motor_control_mcat_float   Name: MCAT float                                  
+                           Version: 1.0.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           v45 May 2023- Additional Distribution License     
+                           granted, license in Section 2.3 applies           
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: link, source code                         
+                           Description: Motor Control Application Tuning     
+                           Location:                                         
+                           middleware/motor_control/freemaster/pmsm_float/mca
+                           t                                                 
+                           Origin: NXP(Proprietary) Bootstrap(MIT)           
+                           FontAwesome(CC BY 4.0)                            
+                           Url: https://getbootstrap.com                     
+                           https://fontawesome.com/                          
+                           https://www.npmjs.org/package/simple-jsonrpc-js   
+
 CRC32-GS                   Name: CRC32 code                                  
                            Version: NA                                       
                            Outgoing License: Public domain                   
@@ -1288,6 +1426,15 @@ SDK_Examples               Name: SDK examples
                            Location: boards/<board>/                         
                            Origin: NXP (BSD-3-Clause)                        
 
+fmstr-examples             Name: FreeMASTER                                  
+                           Version: 3.0.7                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code & header files                
+                           Description: FreeMASTER example applications      
+                           Location: boards/<board>/freemaster_examples      
+                           Origin: NXP                                       
+
 RangeHTTPServer            Name: RangeHTTPServer                             
                            Version: 1.2.0                                    
                            Outgoing License: Apache-2.0                      
@@ -1303,26 +1450,6 @@ RangeHTTPServer            Name: RangeHTTPServer
                            i/<core>/https_server,                            
                            Url: https://github.com/danvk/RangeHTTPServer     
                            Origin: https://github.com/danvk/RangeHTTPServer  
-
-fmstr-examples             Name: FreeMASTER                                  
-                           Version: 3.0.7                                    
-                           Outgoing License: BSD-3-Clause                    
-                           License File: COPYING-BSD-3                       
-                           Format: source code & header files                
-                           Description: FreeMASTER example applications      
-                           Location: boards/<board>/freemaster_examples      
-                           Origin: NXP                                       
-
-mmcau                      Name: mmCAU S/W Library                           
-                           Version: 2.0.1                                    
-                           Outgoing License: BSD-3-Clause                    
-                           License File: COPYING-BSD-3                       
-                           Format: source code                               
-                           Description: S/W library that works with the      
-                           memory-mapped cryptographic acceleration unit     
-                           present on some MCUXpresso SoCs                   
-                           Location: middleware/mmcau                        
-                           Origin: NXP (BSD-3-Clause)                        
 
 MCMGR                      Name: MCMGR                                       
                            Version: 4.1.3                                    
@@ -1344,32 +1471,6 @@ rpmsg_lite                 Name: RPMsg-Lite
                            Origin: Mentor Graphics Corporation & community   
                            contributors                                      
                            Url: https://github.com/NXPmicro/rpmsg-lite       
-
-vglite                     Name: vglite                                      
-                           Version: 3.0.15_rev7                              
-                           Outgoing License: MIT                             
-                           License File: middleware/vglite/LICENSE.txt       
-                           Format: source code                               
-                           Description: VeriSilicon's platform independent   
-                           VGLite Graphics library                           
-                           Location: middleware/vglite                       
-                           Origin: VeriSilicon (MIT), Raph Levien, Nicolas   
-                           Silva (Apache-2.0)                                
-                           Url: http://www.verisilicon.com/,                 
-                           https://github.com/linebender/kurbo               
-
-mcufont                    Name: mcufont                                     
-                           Version: 1.0                                      
-                           Outgoing License: MIT                             
-                           License File:                                     
-                           middleware/vglite/font/mcufont/LICENSE            
-                           Format: source code                               
-                           Description: Font rendering library for           
-                           microcontrollers                                  
-                           Location: middleware/vglite/font/mcufont          
-                           Origin: Petteri Aimonen                           
-                           (https://github.com/PetteriAimonen)               
-                           Url: https://github.com/mcufont/mcufont           
 
 safety_iec60730b           Name: safety iec60730b                            
                            Version: 4.2                                      
@@ -1425,26 +1526,3 @@ bt_ble_hoststack           Name: Bluetooth and Bluetooth Low Energy Host
                            Host Stack.                                       
                            Location: middleware/wireless/ethermind           
                            Origin: Mindtree                                  
-
-EdgeFast_PAL               name: EdgeFast Protocol Abstraction Layer         
-                           version: 0.1.0                                    
-                           Outgoing License: BSD-3-Clause                    
-                           License File: COPYING-BSD-3                       
-                           Format: source code, header files                 
-                           Description: EdgeFast Bluetooth PAL               
-                           Location: middleware/edgefast_bluetooth           
-                           Origin: NXP (BSD-3-Clause) Zephyr BT/BLE Host     
-                           stack (Apache-2.0) -                              
-                           https://github.com/zephyrproject-rtos/zephyr/tree/
-                           v2.6-branch/subsys/bluetooth                      
-
-mpp                        Name: Multimedia Processing Pipelines (MPP)       
-                           Version: 1.0.0                                    
-                           Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v39 August 2022 - Additional distribution license 
-                           granted - License in Section 2.3 applies          
-                           License File: LA_OPT_NXP_Software_License.txt     
-                           Format: source code, header files                 
-                           Description: Library to build vision pipelines    
-                           Location: middleware/eiq/mpp                      
-                           Origin: NXP                                       

@@ -1,15 +1,16 @@
 var a00021 =
 [
-    [ "dac12_hardware_info_t", "a00021.html#a00454", [
+    [ "dac12_hardware_info_t", "a00021.html#a00461", [
       [ "fifoSizeInfo", "a00021.html#af3db65b89991c8f55d77463fd63e200d", null ]
     ] ],
-    [ "dac12_config_t", "a00021.html#a00453", [
+    [ "dac12_config_t", "a00021.html#a00460", [
       [ "fifoWatermarkLevel", "a00021.html#ad322ec3e28469a481c1f8a1a25c1de37", null ],
       [ "fifoWorkMode", "a00021.html#accf3a2a8368437c7972f585072c5d7dd", null ],
       [ "referenceVoltageSource", "a00021.html#a6693bae76733313e207aca983379b09a", null ],
       [ "referenceCurrentSource", "a00021.html#a4fc9ad203020a4b8abcc89fb7786a8d8", null ],
       [ "speedMode", "a00021.html#ac15c50701ca38ae4298189bcd9f7df23", null ],
-      [ "enableAnalogBuffer", "a00021.html#ac51855a0d59a440c384bbbf990b71723", null ]
+      [ "enableAnalogBuffer", "a00021.html#ac51855a0d59a440c384bbbf990b71723", null ],
+      [ "currentReferenceInternalTrimValue", "a00021.html#ac1e50fd5c10e9f3ed0c707f50bf16dca", null ]
     ] ],
     [ "FSL_DAC12_DRIVER_VERSION", "a00021.html#ga31990a08b7c5a4777ede6185641aa382", null ],
     [ "DAC12_CR_W1C_FLAGS_MASK", "a00021.html#ga3458622518d81ecf24012f9a2088cefb", null ],

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C FreeRTOS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: DMAMUX: Direct Memory Access Multiplexer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,36 +99,51 @@ $(document).ready(function(){initNavTree('a00339.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">LPI2C FreeRTOS Driver<div class="ingroups"><a class="el" href="a00338.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">DMAMUX: Direct Memory Access Multiplexer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Direct Memory Access Multiplexer (DMAMUX) of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="DMAMUXTypicalUseCase"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="DMAMUXOper"></a>
+DMAMUX Operation</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmamux </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gabe1b685d26560cdb8a3eccf81d013a3f">FSL_LPI2C_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
-<tr class="memdesc:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C FreeRTOS driver version.  <a href="#gabe1b685d26560cdb8a3eccf81d013a3f">More...</a><br/></td></tr>
-<tr class="separator:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga52b927e4f978ddf42faf0acf6de3df57">FSL_DMAMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
+<tr class="memdesc:ga52b927e4f978ddf42faf0acf6de3df57"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMAMUX driver version 2.1.0.  <a href="#ga52b927e4f978ddf42faf0acf6de3df57">More...</a><br/></td></tr>
+<tr class="separator:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-LPI2C RTOS Operation</h2></td></tr>
-<tr class="memitem:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c">LPI2C_RTOS_Init</a> (lpi2c_rtos_handle_t *handle, LPI2C_Type *base, const <a class="el" href="a00054.html#a00567">lpi2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
-<tr class="memdesc:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes LPI2C.  <a href="#ga537a8859c9c83c8a8ccf6e0188cc8b5c">More...</a><br/></td></tr>
-<tr class="separator:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gacacb0612bfdcd7913be1cef8ad19fb9c">LPI2C_RTOS_Deinit</a> (lpi2c_rtos_handle_t *handle)</td></tr>
-<tr class="memdesc:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the LPI2C.  <a href="#gacacb0612bfdcd7913be1cef8ad19fb9c">More...</a><br/></td></tr>
-<tr class="separator:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5359e4f864d7f21eebcab8d3229e963"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gab5359e4f864d7f21eebcab8d3229e963">LPI2C_RTOS_Transfer</a> (lpi2c_rtos_handle_t *handle, lpi2c_master_transfer_t *transfer)</td></tr>
-<tr class="memdesc:gab5359e4f864d7f21eebcab8d3229e963"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs I2C transfer.  <a href="#gab5359e4f864d7f21eebcab8d3229e963">More...</a><br/></td></tr>
-<tr class="separator:gab5359e4f864d7f21eebcab8d3229e963"><td class="memSeparator" colspan="2">&#160;</td></tr>
+DMAMUX Initialization and de-initialization</h2></td></tr>
+<tr class="memitem:ga850545ac61a004df8ca312db2ca9db73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a> (DMAMUX_Type *base)</td></tr>
+<tr class="memdesc:ga850545ac61a004df8ca312db2ca9db73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DMAMUX peripheral.  <a href="#ga850545ac61a004df8ca312db2ca9db73">More...</a><br/></td></tr>
+<tr class="separator:ga850545ac61a004df8ca312db2ca9db73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gab663257d094b9b7b6fa1b894fbf8000b">DMAMUX_Deinit</a> (DMAMUX_Type *base)</td></tr>
+<tr class="memdesc:gab663257d094b9b7b6fa1b894fbf8000b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the DMAMUX peripheral.  <a href="#gab663257d094b9b7b6fa1b894fbf8000b">More...</a><br/></td></tr>
+<tr class="separator:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+DMAMUX Channel Operation</h2></td></tr>
+<tr class="memitem:gaecac68802d961c31a06389caa97387f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:gaecac68802d961c31a06389caa97387f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX channel.  <a href="#gaecac68802d961c31a06389caa97387f5">More...</a><br/></td></tr>
+<tr class="separator:gaecac68802d961c31a06389caa97387f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga4d68cf7796e4a6a9cd0c4289712ca120">DMAMUX_DisableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX channel.  <a href="#ga4d68cf7796e4a6a9cd0c4289712ca120">More...</a><br/></td></tr>
+<tr class="separator:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4cfa329d636dc52dffb7fedef84367e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gab4cfa329d636dc52dffb7fedef84367e">DMAMUX_SetSource</a> (DMAMUX_Type *base, uint32_t channel, int32_t source)</td></tr>
+<tr class="memdesc:gab4cfa329d636dc52dffb7fedef84367e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the DMAMUX channel source.  <a href="#gab4cfa329d636dc52dffb7fedef84367e">More...</a><br/></td></tr>
+<tr class="separator:gab4cfa329d636dc52dffb7fedef84367e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gabe1b685d26560cdb8a3eccf81d013a3f"></a>
+<a class="anchor" id="ga52b927e4f978ddf42faf0acf6de3df57"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPI2C_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
+          <td class="memname">#define FSL_DMAMUX_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -136,33 +151,112 @@ LPI2C RTOS Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga537a8859c9c83c8a8ccf6e0188cc8b5c"></a>
+<a class="anchor" id="ga850545ac61a004df8ca312db2ca9db73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Init </td>
+          <td class="memname">void DMAMUX_Init </td>
           <td>(</td>
-          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function ungates the DMAMUX clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab663257d094b9b7b6fa1b894fbf8000b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMAMUX_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gates the DMAMUX clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaecac68802d961c31a06389caa97387f5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMAMUX_EnableChannel </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00054.html#a00567">lpi2c_master_config_t</a> *&#160;</td>
-          <td class="paramname"><em>masterConfig</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function enables the DMAMUX channel.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4d68cf7796e4a6a9cd0c4289712ca120"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMAMUX_DisableChannel </td>
+          <td>(</td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -170,59 +264,48 @@ LPI2C RTOS Operation</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function initializes the LPI2C module and related RTOS context.</p>
+<p>This function disables the DMAMUX channel.</p>
+<dl class="section note"><dt>Note</dt><dd>The user must disable the DMAMUX channel before configuring it. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle, the pointer to an allocated space for RTOS context. </td></tr>
-    <tr><td class="paramname">base</td><td>The pointer base address of the LPI2C instance to initialize. </td></tr>
-    <tr><td class="paramname">masterConfig</td><td>Configuration structure to set-up LPI2C in master mode. </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>Frequency of input clock of the LPI2C module. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gacacb0612bfdcd7913be1cef8ad19fb9c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the LPI2C module and related RTOS context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle. </td></tr>
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gab5359e4f864d7f21eebcab8d3229e963"></a>
+<a class="anchor" id="gab4cfa329d636dc52dffb7fedef84367e"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Transfer </td>
+          <td class="memname">static void DMAMUX_SetSource </td>
           <td>(</td>
-          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_master_transfer_t *&#160;</td>
-          <td class="paramname"><em>transfer</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -230,16 +313,20 @@ LPI2C RTOS Operation</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function performs an I2C transfer using LPI2C module according to data given in the transfer structure.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle. </td></tr>
-    <tr><td class="paramname">transfer</td><td>Structure specifying the transfer parameters. </td></tr>
+    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+    <tr><td class="paramname">source</td><td>Channel source, which is used to trigger the DMA transfer.User need to use the dma_request_source_t type as the input parameter. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
 
 </div>
 </div>

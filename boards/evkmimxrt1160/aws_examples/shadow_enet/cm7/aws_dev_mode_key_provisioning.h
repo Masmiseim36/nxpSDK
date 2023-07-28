@@ -253,4 +253,14 @@ CK_RV xDestroyProvidedObjects(CK_SESSION_HANDLE xSession,
                               CK_OBJECT_CLASS *pxClass,
                               CK_ULONG ulCount);
 
+
+ /** \brief Provisions device with public key.
+ *
+ * Imports the public key for code signature verification to device NVM.
+ *
+ * \return CKR_OK upon successful credential setup.
+ * Otherwise, a positive PKCS #11 error code.
+ */
+CK_RV vCodeVerifyPubKeyProvisioning();
+ 
 #endif /* _AWS_DEV_MODE_KEY_PROVISIONING_H_ */

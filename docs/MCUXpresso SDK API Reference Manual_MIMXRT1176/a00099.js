@@ -1,56 +1,43 @@
 var a00099 =
 [
-    [ "xecc_config_t", "a00099.html#a00711", [
-      [ "enableXECC", "a00099.html#af5cdb3d7afa8ddd6134f94329cd07407", null ],
-      [ "enableWriteECC", "a00099.html#a730b714840994ca6bff7647585b75384", null ],
-      [ "enableReadECC", "a00099.html#af6798bd6d4bbf37a0e9b82de53a4ef9c", null ],
-      [ "enableSwap", "a00099.html#a048224519924d20bb14760353eaa34c2", null ],
-      [ "Region0BaseAddress", "a00099.html#a4805c558252beb3166355711a13e2d44", null ],
-      [ "Region0EndAddress", "a00099.html#a904be0b55cf3f57cada41b8aff548b73", null ],
-      [ "Region1BaseAddress", "a00099.html#a37f88b23fc0f23e752796cb76c1de779", null ],
-      [ "Region1EndAddress", "a00099.html#ae85858af091bf4e6e914c30e8c8b4972", null ],
-      [ "Region2BaseAddress", "a00099.html#a9d15fe83561d1ff5fa65e3dea269d6b6", null ],
-      [ "Region2EndAddress", "a00099.html#a2e569f03bfae6064079c04d9fab26807", null ],
-      [ "Region3BaseAddress", "a00099.html#aacec9aa3efca391b25bcb60dbebc5d9a", null ],
-      [ "Region3EndAddress", "a00099.html#a7955903ef689e62300fc01157492d466", null ]
+    [ "wdog_work_mode_t", "a00099.html#a00716", [
+      [ "enableWait", "a00099.html#ac4c03e680f6c2070c50e9cbb7eae64fc", null ],
+      [ "enableStop", "a00099.html#a26f09db30cdfe918931fb6e2ea0545ad", null ],
+      [ "enableDebug", "a00099.html#ac46160e5425428c3f6b2bd7a9103539e", null ]
     ] ],
-    [ "xecc_single_error_info_t", "a00099.html#a00713", [
-      [ "singleErrorAddress", "a00099.html#a7b41aa06671c0bca43a1db5980276ea6", null ],
-      [ "singleErrorData", "a00099.html#a02b8cb0f493cb7d96921ea2085fdf2b4", null ],
-      [ "singleErrorEccCode", "a00099.html#ac442e263d4069ee1f8aeeb1c33641c24", null ],
-      [ "singleErrorBitPos", "a00099.html#a0079773797fc7c63daf5e43634d81ba6", null ],
-      [ "singleErrorBitField", "a00099.html#a4330d9b53375d5174bade0ce32ab0a69", null ]
+    [ "wdog_config_t", "a00099.html#a00715", [
+      [ "enableWdog", "a00099.html#a871dc017463d6cc5d31121b40affa1a4", null ],
+      [ "workMode", "a00099.html#a52dd1d98958c48e0a342e3ffe9a1c351", null ],
+      [ "enableInterrupt", "a00099.html#aa749ba919bb8ddf9b52fda7781afa6b5", null ],
+      [ "timeoutValue", "a00099.html#a867555736162830ec456cb98b37431bf", null ],
+      [ "interruptTimeValue", "a00099.html#aac4e0165a8a5674bbd4ac8e7c32d7217", null ],
+      [ "softwareResetExtension", "a00099.html#aa698ca620c05feee0946ee91e1b3374f", null ],
+      [ "enablePowerDown", "a00099.html#a8596d41dfdb0d29a55dfee5e9d707d68", null ],
+      [ "enableTimeOutAssert", "a00099.html#a5e3f1a4dd09bde15aac1ca0e9ad16640", null ]
     ] ],
-    [ "xecc_multi_error_info_t", "a00099.html#a00712", [
-      [ "multiErrorAddress", "a00099.html#a83d0d9d720b7dbb036fe7fc5435f882c", null ],
-      [ "multiErrorData", "a00099.html#a6e45cb1653531f4c19b09d5087f829a1", null ],
-      [ "multiErrorEccCode", "a00099.html#a72c34a2de807dcf83cb9dde85fb189d8", null ],
-      [ "multiErrorBitField", "a00099.html#a49e6022e276f12b457c13dbeb39dfc43", null ]
+    [ "FSL_WDOG_DRIVER_VERSION", "a00099.html#ga5baa4ad349ae3c543938d4ee773df43e", null ],
+    [ "_wdog_interrupt_enable", "a00099.html#ga568a59a02c40c87ed791f569c68e3617", [
+      [ "kWDOG_InterruptEnable", "a00099.html#gga568a59a02c40c87ed791f569c68e3617a8c358d55c0101eaa0a580d867572ec8d", null ]
     ] ],
-    [ "FSL_XECC_DRIVER_VERSION", "a00099.html#gad325431773b07bfed2a6b1c530529e9c", [
-      [ "kXECC_SingleErrorInterruptEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca53650da26c6dc6b6837c57d45625502f", null ],
-      [ "kXECC_MultiErrorInterruptEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca4f80bb192d6ccff4d622e708ab045e8a", null ],
-      [ "kXECC_AllInterruptsEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca65218ab45b840660134ca314debffd8a", null ],
-      [ "kXECC_SingleErrorInterruptStatusEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a46b0747d6fc3d389c94e3d32c24ba1d7", null ],
-      [ "kXECC_MultiErrorInterruptStatusEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a8af35a7daddd2d506a855f448f336ce9", null ],
-      [ "kXECC_AllInterruptsStatusEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a98c732cf181522f6c578b31df6ab8445", null ],
-      [ "kXECC_SingleErrorInterruptFlag", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5dab611d76edf0b80e66e477265b193fd8a", null ],
-      [ "kXECC_MultiErrorInterruptFlag", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5da4e1a8eb52be75ce67b346467020d2b29", null ],
-      [ "kXECC_AllInterruptsFlag", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5da5cacabdbef71596e4b2608092bf52d45", null ]
+    [ "_wdog_status_flags", "a00099.html#ga0b88468681d9540ae2932b8863df21da", [
+      [ "kWDOG_RunningFlag", "a00099.html#gga0b88468681d9540ae2932b8863df21daa36d15132390c05315cadcd7531d16235", null ],
+      [ "kWDOG_PowerOnResetFlag", "a00099.html#gga0b88468681d9540ae2932b8863df21daac5e2f745cea700526fddf869bead3e7f", null ],
+      [ "kWDOG_TimeoutResetFlag", "a00099.html#gga0b88468681d9540ae2932b8863df21daa3e7218cabdb8b98afb859e5e5bb10c2b", null ],
+      [ "kWDOG_SoftwareResetFlag", "a00099.html#gga0b88468681d9540ae2932b8863df21daab8d3e9351b38a6c2070e168e794cbe04", null ],
+      [ "kWDOG_InterruptFlag", "a00099.html#gga0b88468681d9540ae2932b8863df21daac1277a2936555249acf7a516e6af1f78", null ]
     ] ],
-    [ "XECC_Init", "a00099.html#ga97311aae29bfc510fbb42c624df1031c", null ],
-    [ "XECC_Deinit", "a00099.html#ga242c4cc1dcde4ba11079b7d035d043b4", null ],
-    [ "XECC_GetDefaultConfig", "a00099.html#gacb10ed003d22ffce8a40a2b162fd8892", null ],
-    [ "XECC_GetStatusFlags", "a00099.html#ga170796336e05241a2f249d743070b848", null ],
-    [ "XECC_ClearStatusFlags", "a00099.html#gaee625e46485dfc88311d562833a61c8d", null ],
-    [ "XECC_EnableInterruptStatus", "a00099.html#ga90aae71b41bc645a4e58e6cd9023328d", null ],
-    [ "XECC_DisableInterruptStatus", "a00099.html#ga5f1dcc0c540a8c035033eec3da8af225", null ],
-    [ "XECC_EnableInterrupts", "a00099.html#ga971955f3ef901c91df7f944c8ccee2df", null ],
-    [ "XECC_DisableInterrupts", "a00099.html#ga726e40ce8cfdf46f6d5add0ebceacd1a", null ],
-    [ "XECC_WriteECCEnable", "a00099.html#ga9d885d27b94053bfc27cc6e326e1161c", null ],
-    [ "XECC_ReadECCEnable", "a00099.html#ga46d062c8b186031c0fda12b9c73855ec", null ],
-    [ "XECC_SwapECCEnable", "a00099.html#gafed7d786907690c7dc6d71f97a8d061e", null ],
-    [ "XECC_ErrorInjection", "a00099.html#gaaca758e6d607ea7d598a46e74c429710", null ],
-    [ "XECC_GetSingleErrorInfo", "a00099.html#ga37e71e730b2513d22704ed9bca718a36", null ],
-    [ "XECC_GetMultiErrorInfo", "a00099.html#ga33588746ea450cf41f40ba94a0e6990a", null ]
+    [ "WDOG_GetDefaultConfig", "a00099.html#gaad5ad72d4eaf90ade6be3c976e8bc3f7", null ],
+    [ "WDOG_Init", "a00099.html#ga50d46daf10ab46c6c696e8807c8e913b", null ],
+    [ "WDOG_Deinit", "a00099.html#gaa6667780dc3dcd9579f0689178c3b0d9", null ],
+    [ "WDOG_Enable", "a00099.html#gab4deee569751728b2bd3a74f3c51e51e", null ],
+    [ "WDOG_Disable", "a00099.html#gac50451a963f16a891a365df27305dcca", null ],
+    [ "WDOG_TriggerSystemSoftwareReset", "a00099.html#ga148420ea7de00bc3c60c40abffcdf1cb", null ],
+    [ "WDOG_TriggerSoftwareSignal", "a00099.html#gaedd7386f165e4750bc1aa72544122995", null ],
+    [ "WDOG_EnableInterrupts", "a00099.html#gac10aa3550c0824493f112a02ffd955b1", null ],
+    [ "WDOG_GetStatusFlags", "a00099.html#ga420a7d120956521faf8a40993014d6fa", null ],
+    [ "WDOG_ClearInterruptStatus", "a00099.html#ga45d1ddf1d8f4aeb8a87657f275050594", null ],
+    [ "WDOG_SetTimeoutValue", "a00099.html#ga7744339b66fc64cf4088f0a413e53b08", null ],
+    [ "WDOG_SetInterrputTimeoutValue", "a00099.html#ga18bcb8843c59834b6ae275c58fcf2cd3", null ],
+    [ "WDOG_DisablePowerDownEnable", "a00099.html#ga9c50304e7d819199df178ae26e12f1a8", null ],
+    [ "WDOG_Refresh", "a00099.html#ga1d307a7df8f2b926c306dc8714dda3f5", null ]
 ];

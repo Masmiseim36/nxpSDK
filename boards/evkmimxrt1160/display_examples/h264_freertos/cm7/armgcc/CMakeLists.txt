@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -89,154 +97,19 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../freertos_libraries/abstractions/posix/include
     ${ProjDirPath}/../freertos_libraries/freertos_plus/standard/freertos_plus_posix/include
     ${ProjDirPath}/../freertos_libraries/c_sdk/standard/common/include/private
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/components/video/display
-    ${SdkRootDirPath}/components/video/display/rm68191
-    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
-    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
-    ${SdkRootDirPath}/components/video/display/rm68200
-    ${SdkRootDirPath}/components/video/display/dc/lcdifv2
-    ${SdkRootDirPath}/components/gt911
-    ${SdkRootDirPath}/components/video/display/dc/elcdif
-    ${SdkRootDirPath}/middleware/sdmmc
-    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1166/utilities/debug_console_lite
-    ${SdkRootDirPath}/components/video/display/hx8394
-    ${SdkRootDirPath}/components/gpio
-    ${SdkRootDirPath}/middleware/fatfs
-    ${SdkRootDirPath}/components/video/display/fbdev
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/middleware/openh264
-    ${SdkRootDirPath}/devices/MIMXRT1166
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1166/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
-    ${SdkRootDirPath}/devices/MIMXRT1166/drivers/cm7
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/components/video/display/dc
-    ${SdkRootDirPath}/components/osa
-)
+set_source_files_properties("${ProjDirPath}/../ffconf.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_sd")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(driver_video-common_MIMXRT1166_cm7)
-
-include(driver_display-common_MIMXRT1166_cm7)
-
-include(driver_display-rm68191_MIMXRT1166_cm7)
-
-include(driver_mipi_dsi_split_MIMXRT1166_cm7)
-
-include(driver_display-mipi-dsi-cmd_MIMXRT1166_cm7)
-
-include(driver_common_MIMXRT1166_cm7)
-
-include(driver_display-rm68200_MIMXRT1166_cm7)
-
-include(driver_dc-fb-lcdifv2_MIMXRT1166_cm7)
-
-include(driver_gt911_MIMXRT1166_cm7)
-
-include(driver_lpi2c_MIMXRT1166_cm7)
-
-include(driver_soc_src_MIMXRT1166_cm7)
-
-include(driver_pxp_MIMXRT1166_cm7)
-
-include(driver_elcdif_MIMXRT1166_cm7)
-
-include(driver_dc-fb-elcdif_MIMXRT1166_cm7)
-
-include(driver_usdhc_MIMXRT1166_cm7)
-
-include(middleware_sdmmc_sd_MIMXRT1166_cm7)
-
-include(middleware_sdmmc_common_MIMXRT1166_cm7)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT1166_cm7)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1166_cm7)
-
-include(utility_debug_console_lite_MIMXRT1166_cm7)
-
-include(utility_assert_lite_MIMXRT1166_cm7)
-
-include(driver_display-hx8394_MIMXRT1166_cm7)
-
-include(component_igpio_adapter_MIMXRT1166_cm7)
-
-include(middleware_fatfs_MIMXRT1166_cm7)
-
-include(middleware_fatfs_sd_MIMXRT1166_cm7)
-
-include(driver_fbdev_MIMXRT1166_cm7)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT1166_cm7)
-
-include(middleware_openh264_decoder_MIMXRT1166_cm7)
-
-include(driver_clock_MIMXRT1166_cm7)
-
-include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
-
-include(component_lpuart_adapter_MIMXRT1166_cm7)
-
-include(component_lists_MIMXRT1166_cm7)
-
-include(driver_lpuart_MIMXRT1166_cm7)
-
-include(device_MIMXRT1166_startup_MIMXRT1166_cm7)
-
-include(driver_iomuxc_MIMXRT1166_cm7)
-
-include(driver_igpio_MIMXRT1166_cm7)
-
-include(driver_xip_device_MIMXRT1166_cm7)
-
-include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
-
-include(driver_pmu_1_MIMXRT1166_cm7)
-
-include(driver_dcdc_soc_MIMXRT1166_cm7)
-
-include(driver_cache_armv7_m7_MIMXRT1166_cm7)
-
-include(driver_anatop_ai_MIMXRT1166_cm7)
-
-include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
-
-include(driver_soc_mipi_csi2rx_MIMXRT1166_cm7)
-
-include(driver_dc-fb-common_MIMXRT1166_cm7)
-
-include(driver_lcdifv2_MIMXRT1166_cm7)
-
-include(driver_memory_MIMXRT1166_cm7)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT1166_cm7)
-
-include(component_osa_free_rtos_MIMXRT1166_cm7)
-
-include(middleware_freertos-kernel_MIMXRT1166_cm7)
-
-include(middleware_freertos-kernel_extension_MIMXRT1166_cm7)
-
-include(middleware_openh264_api_MIMXRT1166_cm7)
-
-include(middleware_openh264_common_MIMXRT1166_cm7)
-
-include(utilities_misc_utilities_MIMXRT1166_cm7)
-
-include(device_MIMXRT1166_system_MIMXRT1166_cm7)
-
+include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -248,4 +121,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

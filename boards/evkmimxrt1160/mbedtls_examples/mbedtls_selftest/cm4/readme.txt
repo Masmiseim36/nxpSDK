@@ -6,9 +6,9 @@ terminal.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- GCC ARM Embedded  10.3.1
-- Keil MDK  5.37
+- IAR embedded Workbench  9.40.1
+- GCC ARM Embedded  12.2
+- Keil MDK  5.38.1
 
 Hardware requirements
 =====================

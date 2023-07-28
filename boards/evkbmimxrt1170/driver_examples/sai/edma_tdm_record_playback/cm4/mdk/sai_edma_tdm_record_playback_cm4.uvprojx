@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/codec;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/i2c;../../../../../../../components/codec/i2c;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/codec/cs42448;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -469,26 +469,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
@@ -537,6 +517,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -611,6 +611,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -642,21 +657,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1176,9 +1176,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/codec;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/i2c;../../../../../../../components/codec/i2c;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/codec/cs42448;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1212,7 +1212,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1313,26 +1313,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
@@ -1381,6 +1361,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1455,6 +1455,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -1486,21 +1501,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2020,9 +2020,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/codec;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/i2c;../../../../../../../components/codec/i2c;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/codec/cs42448;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2056,7 +2056,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2157,26 +2157,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
@@ -2225,6 +2205,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2299,6 +2299,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -2330,21 +2345,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2864,9 +2864,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/codec;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/i2c;../../../../../../../components/codec/i2c;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/codec/cs42448;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2900,7 +2900,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3001,26 +3001,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
@@ -3069,6 +3049,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3143,6 +3143,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -3174,21 +3189,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3708,9 +3708,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/codec;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/i2c;../../../../../../../components/codec/i2c;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/codec/cs42448;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3744,7 +3744,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3845,26 +3845,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
@@ -3913,6 +3893,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3987,6 +3987,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -4018,21 +4033,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4552,9 +4552,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, CODEC_CS42448_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/codec;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../components/codec/cs42448</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/i2c;../../../../../../../components/codec/i2c;../../../../../../../components/codec/port/cs42448;../../../../../../../components/codec/port;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/codec/cs42448;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4588,7 +4588,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4689,26 +4689,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</FilePath>
@@ -4757,6 +4737,26 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4831,6 +4831,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpi2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -4862,21 +4877,6 @@
               <FileName>fsl_cs42448.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_lpi2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
             </File>
           </Files>
         </Group>

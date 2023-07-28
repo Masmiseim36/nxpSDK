@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  *
@@ -44,14 +44,29 @@ const mcmgr_system_info_t g_mcmgrSystem = {
 
 mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
 {
+    uint32_t flags;
+    __attribute__((unused)) uint32_t data;
 /* MUA clk enable */
 #if defined(FSL_FEATURE_MU_SIDE_A)
     MU_Init(MUA);
+    /* Clear all RX registers and status flags */
+    for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
+    {
+        data = MU_ReceiveMsgNonBlocking(MUA, idx);
+    }
+    flags = MU_GetStatusFlags(MUA);
+    MU_ClearStatusFlags(MUA, flags);
     /* Do not perform MU reset to avoid issues when debugging both CM4 and CM7 */
 #endif
 /* MUB clk enable */
 #if defined(FSL_FEATURE_MU_SIDE_B)
     MU_Init(MUB);
+    for (uint32_t idx = 0U; idx < MU_RR_COUNT; idx++)
+    {
+        data = MU_ReceiveMsgNonBlocking(MUB, idx);
+    }
+    flags = MU_GetStatusFlags(MUB);
+    MU_ClearStatusFlags(MUB, flags);
 #endif
 
     /* Trigger core up event here, core is starting! */

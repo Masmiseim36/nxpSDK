@@ -1,28 +1,12 @@
-/*******************************************************************************
+/*
+ * Copyright 2018-2022 NXP
  *
- * NXP Confidential Proprietary
+ * SPDX-License-Identifier: BSD-3-Clause
  *
- * Copyright 2018-2020 NXP
- * All Rights Reserved
- *
- * @file           freemaster-client.js
- *
- *******************************************************************************
- *
- * THIS SOFTWARE IS PROVIDED BY NXP "AS IS" AND ANY EXPRESSED OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL NXP OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
- * THE POSSIBILITY OF SUCH DAMAGE.
- *
- ******************************************************************************/
-/* eslint-disable */
+ * Project: FreeMASTER JSON-RPC Client
+ * freemaster-client.js: FreeMASTER client library
+ */
+
 /**
  * @typedef {Object} CommPortInfo
  *
@@ -46,7 +30,7 @@
  * @property {number} globVerMinor Minor version
  * @property {number} cmdBuffSize  Command buffer size
  * @property {number} recBuffSize  Receive buffer size
- * @property {number} recTimeBase  Recirder time base
+ * @property {number} recTimeBase  Recorder time base
  * @property {string} descr        Description
  */
 
@@ -83,8 +67,8 @@
  *
  * @property {number} baseRate_ns   Base time at which recorder operates in nanoseconds (0 when unknown or not deterministic)
  * @property {number} buffSize      Total recorder memory size
- * @property {number} recStructSize Overhead structure size (protcol version > 4.0)
- * @property {number} varStructSize Per-variable overhead structure size (protcol version > 4.0)
+ * @property {number} recStructSize Overhead structure size (protocol version > 4.0)
+ * @property {number} varStructSize Per-variable overhead structure size (protocol version > 4.0)
  */
 
 /**
@@ -98,7 +82,7 @@
  */
 
 /**
- * @typedef {Object} TriggerVariable
+ * @typedef {Object} RecorderVariable
  *
  * Recorder variable information.
  *
@@ -106,16 +90,19 @@
  * @property {number} trgType Trigger type (if missing variable is not used as trigger)
  *
  * | Mask | Description                            |
- * | :--- | :--------------------------------------|
+ * | ---- | -------------------------------------- |
+ * | 0x01 | reserved                               |
+ * | 0x02 | reserved                               |
  * | 0x04 | trigger-only                           |
+ * | 0x08 | reserved                               |
  * | 0x10 | trigger on rising edge _/              |
  * | 0x20 | trigger on falling edge \_             |
  * | 0x40 | 0=normal edge trigger, 1=level trigger |
  * | 0x80 | use variable threshold                 |
- * @property {number} trgThr Trigger trashold (if missing variable is not used as trigger)
+ * @property {number} trgThr Trigger threshold (if missing variable is not used as trigger)
  */
 
-(function (root) {
+(function(root) {
   'use strict';
 
   if (typeof require !== 'undefined') {
@@ -125,7 +112,7 @@
 
   /**
    * @constructs PCM
-   * @classdesc PCM is an adapter class for FreeMASTER Lite API that handles the websocket connections to the service and command conversion to JSON-RPC format. It runs both on front-end (web browsers) and back-end (NodeJS).
+   * @classdesc PCM is an adapter class for FreeMASTER Lite API that handles the websocket connections to the service and command conversion to JSON-RPC format. It can be used both on front-end (web browsers) and back-end (NodeJS).
    * @description Creates an instance of PCM object.
    *
    * @example
@@ -204,14 +191,43 @@
               reject(response.error);
           })
           .catch((error) => {
+            reject(error);
             this.OnServerError(error);
           });
       });
     };
+
+    /* Install default FreeMASTER event handlers. Don't forget to call EnableEvents(true) for the server to generate the JSON-RPC events. */
+    this.OnBoardDetected = function() {
+      console.log('FreeMASTER Event received: OnBoardDetected()');
+    };
+
+    this.OnCommPortStateChanged = function(state) {
+      console.log('FreeMASTER Event received: OnCommPortStateChanged(' + state + ')');
+    };
+
+    this.OnVariableChanged = function(name, id, value) {
+      console.log('FreeMASTER Event received: OnVariableChanged("' + name + '", ' + id + ', ' + value + ')');
+    };
+
+    this.OnRecorderDone = function() {
+      console.log('FreeMASTER Event received: OnRecorderDone()');
+    };
+
+    this.OnCustomEvent = function(arg1) {
+      console.log('FreeMASTER Event received: OnCustomEvent(' + JSON.stringify(arg1) + ')');
+    };
+
+    /* Register event handlers in JSON-RPC */
+    this._jrpc.dispatch('OnBoardDetected', 'pass', (params_array) => this.DispatchEvent(this.OnBoardDetected, params_array));
+    this._jrpc.dispatch('OnCommPortStateChanged', 'pass', (params_array) => this.DispatchEvent(this.OnCommPortStateChanged, params_array));
+    this._jrpc.dispatch('OnVariableChanged', 'pass', (params_array) => this.DispatchEvent(this.OnVariableChanged, params_array));
+    this._jrpc.dispatch('OnRecorderDone', 'pass', (params_array) => this.DispatchEvent(this.OnRecorderDone, params_array));
+    this._jrpc.dispatch('OnCustomEvent', 'pass', (params_array) => this.DispatchEvent(this.OnCustomEvent, params_array));
   };
 
   /**
-   * Closes WebSocket instantlly disconnecting PCM instance from the server.
+   * Closes WebSocket instantly disconnecting PCM instance from the server.
    *
    * @example
    * pcm.Shutdown();
@@ -221,7 +237,21 @@
   };
 
   /**
-   * Requests Freemaster Lite service version.
+   * Dispatches a JSON-RPC notification event
+   */
+   PCM.prototype.DispatchEvent = function(func, params_array) {
+    try {
+      func.apply(null, params_array);
+    }
+    catch(e) {
+      // error in dispatched callback (possibly a syntax error in user code)
+      var errMsg = (e instanceof Error) ? (e.name + ": " + e.message) : JSON.stringify(e);
+      console.error("Error in " + func.name + " event handler: " + errMsg);
+    }
+  }
+
+  /**
+   * Requests FreeMASTER/FreeMASTER Lite version.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -271,7 +301,7 @@
    *     });
    * });
    *
-   * @param   {string} name Communiation port friendly name returned by {@link PCM#EnumCommPorts EnumCommPorts}
+   * @param   {string} name Communication port friendly name returned by {@link PCM#EnumCommPorts EnumCommPorts}
    * @returns {Promise} In case of success, resolved promise will contain data property of type {@link CommPortInfo CommPortInfo}.
    */
   PCM.prototype.GetCommPortInfo = function(name) {
@@ -279,13 +309,13 @@
   };
 
   /**
-   * Starts communication using connection friendly name.
+   * Starts communication using connection friendly name  (defined in project file) or connection string.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
    * pcm.StartComm("PortX").then(() => console.log("Communication port open."));
    *
-   * @param   {string} name Connection friendly name (defined in project file).
+   * @param   {string} name Connection friendly name or connection string.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.StartComm = function(name) {
@@ -391,7 +421,7 @@
   };
 
   /**
-   * Requests confiugration parameter of type string.
+   * Requests configuration parameter of type string.
    *
    * | Name | Description             |
    * | :--- | :-----------------------|
@@ -412,6 +442,21 @@
    */
   PCM.prototype.GetConfigParamString = function(name, len) {
     return this.SendRequest.call(this, 'GetConfigParamString', [name, len]);
+  };
+
+  /**
+   * Requests specific access level to the target board functionalities using a password.
+   *
+   * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
+   * @example
+   * pcm.Authenticate("my_pass", 2).then(response => console.log(response.data));
+   *
+   * @param   {string} pass   Password corresponding to requested access level.
+   * @param   {number} access Access level 1 - read, 2 - read & write, 3 - read, write & flash.
+   * @returns {Promise} In case of success, resolved promise will contain granted access level.
+   */
+  PCM.prototype.Authenticate = function(pass, access) {
+    return this.SendRequest.call(this, 'Authenticate', [pass, access]);
   };
 
   /**
@@ -445,7 +490,7 @@
   };
 
   /**
-   * Reads a float value from a memory location.
+   * Reads a floating-point value from a memory location.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -481,7 +526,7 @@
    *
    * @param   {number|string} addr   Address value or symbol name.
    * @param   {number}        size   Integer size, can be 1, 2, 4, or 8.
-   * @param   {Array<number>} data   Integer value to be written.
+   * @param   {number}        data   Integer value to be written.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.WriteIntVariable = function(addr, size, data) {
@@ -497,7 +542,7 @@
    *
    * @param   {number|string} addr   Address value or symbol name.
    * @param   {number}        size   Integer size, can be 1, 2, 4, or 8.
-   * @param   {Array<number>} data   Integer value to be written.
+   * @param   {number}        data   Integer value to be written.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.WriteUIntVariable = function(addr, size, data) {
@@ -505,14 +550,14 @@
   };
 
   /**
-   * Writes a float value to a memory location.
+   * Writes a floating-point value to a memory location.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
    * pcm.WriteFloatVariable("varFLT", 10.0).then(() => console.log('Value written.'));
    *
    * @param   {number|string} addr Address value or symbol name.
-   * @param   {Array<number>} data Float value to be written.
+   * @param   {number}        data Floating-point value to be written.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.WriteFloatVariable = function(addr, data) {
@@ -527,7 +572,7 @@
    * pcm.WriteDoubleVariable("varDBL", 100.0).then(() => console.log('Value written.'));
    *
    * @param   {number|string} addr   Address value or symbol name.
-   * @param   {Array<number>} data   Double value to be written.
+   * @param   {number}        data   Double value to be written.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.WriteDoubleVariable = function(addr, data) {
@@ -535,7 +580,7 @@
   };
 
   /**
-   * Returs an array of bytes of the requested size from a memory location.
+   * Returns an array of bytes of the requested size from a memory location.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -556,7 +601,7 @@
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
    * // read 20, 2 byte long, signed integers from address 0x20050080
-   * pcm.ReadUIntArray(0x20050080, 20, 2).then(response => console.log(response.data));
+   * pcm.ReadIntArray(0x20050080, 20, 2).then(response => console.log(response.data));
    *
    * @param   {number|string} addr   Address value or symbol name.
    * @param   {number}        size   Number of elements.
@@ -573,7 +618,7 @@
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
    * // read 10, 4 byte long, unsigned integers from the address given by the symbol 'arr16'
-   * pcm.ReadIntArray('arr16', 10, 4).then(response => console.log(response.data));
+   * pcm.ReadUIntArray('arr16', 10, 4).then(response => console.log(response.data));
    *
    * @param   {number|string} addr   Address value or symbol name.
    * @param   {number}        size   Number of elements.
@@ -585,7 +630,7 @@
   };
 
   /**
-   * Reads an array of floats from a memory location.
+   * Reads an array of floating-point numbers from a memory location.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -601,11 +646,11 @@
   };
 
   /**
-   * Reads an array of doubles from a memory location.
+   * Reads an array of double-precision numbers from a memory location.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
-   * // read 5 doubles from the address given by the symbol 'arrDBL'
+   * // read 5 double-precision numbers from the address given by the symbol 'arrDBL'
    * pcm.ReadDoubleArray('arrDBL', 5).then(response => console.log(response.data));
    *
    * @param   {number|string} addr   Address value or symbol name.
@@ -625,7 +670,7 @@
    *
    * @param   {number}        addr   Address value.
    * @param   {Array<number>} data   Array of bytes to be written.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.WriteMemory = function(addr, data) {
     return this.SendRequest.call(this, 'WriteMemory', [addr, data]);
@@ -641,7 +686,7 @@
    * @param   {number|string} addr   Address value or symbol name.
    * @param   {number}        elSize Element size, can be 1, 2, 4, or 8.
    * @param   {Array<number>} data   Array of integers to be written.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.WriteIntArray = function(addr, elSize, data) {
     return this.SendRequest.call(this, 'WriteIntArray', [addr, elSize, data]);
@@ -657,37 +702,37 @@
    * @param   {number|string} addr   Address value or symbol name.
    * @param   {number}        elSize Element size, can be 1, 2, 4, or 8.
    * @param   {Array<number>} data   Array of integers to be written.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.WriteUIntArray = function(addr, elSize, data) {
     return this.SendRequest.call(this, 'WriteUIntArray', [addr, elSize, data]);
   };
 
   /**
-   * Writes an array of floats to a memory location.
+   * Writes an array of floating-point numbers to a memory location.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
    * pcm.ReadFloatArray('arrFLT', [1.0, 2.0, 3.0, 4.0, 5.0]).then(response => console.log(response.data));
    *
    * @param   {number|string} addr   Address value or symbol name.
-   * @param   {number}        data   Array of floats to be written.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @param   {Array<number>} data   Array of floating-point numbers to be written.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.WriteFloatArray = function(addr, data) {
     return this.SendRequest.call(this, 'WriteFloatArray', [addr, data]);
   };
 
   /**
-   * Writes an array of doubles to a memory location.
+   * Writes an array of double-precision numbers to a memory location.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
    * pcm.WriteDoubleArray('arrDBL', [1.0, 2.0, 3.0, 4.0, 5.0]).then(response => console.log(response.data));
    *
    * @param   {number|string} addr   Address value or symbol name.
-   * @param   {number}        size   Array of doubles to be written.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @param   {Array<number>} data   Array of double-precision numbers to be written.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.WriteDoubleArray = function(addr, data) {
     return this.SendRequest.call(this, 'WriteDoubleArray', [addr, data]);
@@ -698,6 +743,8 @@
    *
    * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
    * @see {@link PCM#EnumSymbols EnumSymbols}
+   *
+   * @param {string} [elfFile] Optional path to the elf file.
    *
    * @example
    * pcm.ReadELF().then(response => console.log(response.data.count + " symbols extracted from ELF file."));
@@ -799,7 +846,7 @@
   /**
    * Requests variable information.
    *
-   * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @see {@link PCM#DefineVariable DefineVariable}
    *
    * @example
@@ -836,7 +883,7 @@
    *
    * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
    * @example
-   * pcm.DeleteVariable("var16").then(() => console.log("Variale deleted."));
+   * pcm.DeleteVariable("var16").then(() => console.log("Variable deleted."));
    *
    * @param   {string} name Variable name.
    * @returns {Promise} The result does not carry any relevant data.
@@ -850,7 +897,7 @@
    *
    * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
    * @example
-   * pcm.DeleteAllScriptVariables().then(() => console.log("Script variales deleted."));
+   * pcm.DeleteAllScriptVariables().then(() => console.log("Script variables deleted."));
    *
    * @returns {Promise} The result does not carry any relevant data.
    */
@@ -883,7 +930,8 @@
    * @example
    * pcm.WriteVariable("var16", 255).then(() => console.log("Value successfully written."));
    *
-   * @param   {string} name Variable name.
+   * @param   {string} name  Variable name.
+   * @param   {number} value Value to be written.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.WriteVariable = function(name, value) {
@@ -891,11 +939,45 @@
   };
 
   /**
+   * Reads multiple variables values according to the predefined variable information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
+   * @see {@link PCM#DefineVariable DefineVariable}
+   *
+   * @example
+   * pcm.ReadMultipleVariables(["var8", "var16", "var32"]).then(response => console.log(response.data));
+   *
+   * @param   {Array<string>} names Variables names.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type array.
+   * Each array element will include variable `name` and operation `status` and `value` in case status is `true`.
+   */
+  PCM.prototype.ReadMultipleVariables = function(names) {
+    return this.SendRequest.call(this, 'ReadMultipleVariables', [names]);
+  };
+
+  /**
+   * Writes multiple variables values according to the predefined variable information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
+   * @see {@link PCM#DefineVariable DefineVariable}
+   *
+   * @example
+   * pcm.WriteMultipleVariables([{ name: "var8", value: 255 }, { name: "varFLT", value: 3.14 }]).then((data) => console.log(data));
+   *
+   * @param   {Array<object>} values Array of objects containing variable `name` and `value`.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type array.
+   * Each array element will include variable `name` and operation `status`.
+   */
+  PCM.prototype.WriteMultipleVariables = function(values) {
+    return this.SendRequest.call(this, 'WriteMultipleVariables', [values]);
+  };
+
+  /**
    * Setups an oscilloscope with a specific ID.
    *
    * Notes:
    * * Scope ID should be in the target supported range (defined in the embedded application).
-   * * All the variables should be defiend prior to scope definition.
+   * * All the variables should be defined prior to scope definition.
    * * Older protocol version (< 4.0) support only one scope instance.
    *
    * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
@@ -956,7 +1038,7 @@
    *
    * Notes:
    * * Recorder ID should be in the target supported range (defined in the embedded application).
-   * * All the variables should be defiend prior to recorder definitions.
+   * * All the variables should be defined prior to recorder definitions.
    * * Older protocol version (< 4.0) support only one recorder instance.
    *
    * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
@@ -967,13 +1049,14 @@
    *     pointsPreTrigger: 50,
    *     timeDiv: 1
    * };
-   * let recVars = ['myVAr1', 'myVar2', 'myVar3'];
-   * let trgVars = [{ name: 'myVar2', trgType: 0x11, trgThr: 2000 }];
-   * pcm.SetupRecorder(id, config, recVars, trgVars).then(() => console.log("Recorder was setup successfully."));
+   * // myVar1 & myVar3 will be recorded (only 'name' property is required)
+   * // myVar2 will be used as trigger on rising edge (0x04 | 0x10) with 2000 threshold value
+   * let vars = [{ name: 'myVar1'}, { name: 'myVar2', trgType: 0x14, trgThr: 2000 }, { name: 'myVar3'}];
+   * pcm.SetupRecorder(id, config, vars).then(() => console.log("Recorder was setup successfully."));
    *
    * @param   {number}                 id      Recorder ID.
-   * @param   {RecorderConfig}         config  Recorder configuartion.
-   * @param   {Array<TriggerVariable>} vars    Trigger variables.
+   * @param   {RecorderConfig}         config  Recorder configuration.
+   * @param   {Array<RecorderVariable>} vars    Trigger variables.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.SetupRecorder = function(id, config, vars) {
@@ -1004,7 +1087,7 @@
    * @see {@link PCM#StartRecorder StartRecorder}
    *
    * @example
-   * pcm.StopRecorder(id).then(() => console.log("Recorder stoped"));
+   * pcm.StopRecorder(id).then(() => console.log("Recorder stopped"));
    *
    * @param   {number} id Recorder ID.
    * @returns {Promise} The result does not carry any relevant data.
@@ -1029,10 +1112,10 @@
    * | Code | Status                           |
    * | :--- | :------------------------------- |
    * | 0x00 | not configured                   |
-   * | 0x01 | configured, stoped, no data      |
+   * | 0x01 | configured, stopped, no data     |
    * | 0x02 | running                          |
-   * | 0x04 | stopped, not enough data sampled |
-   * | 0x05 | stopped, data ready              |
+   * | 0x03 | stopped, not enough data sampled |
+   * | 0x04 | stopped, data ready              |
    */
   PCM.prototype.GetRecorderStatus = function(id) {
     return this.SendRequest.call(this, 'GetRecorderStatus', [id]);
@@ -1097,7 +1180,7 @@
   };
 
   /**
-   * Sets pipes default receive mode.
+   * Sets Pipe default receive mode.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -1112,7 +1195,22 @@
   };
 
   /**
-   * Sets pipes default string mode.
+   * Sets Pipe default transmit mode.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
+   *
+   * @example
+   * pcm.PipeSetDefaultTxMode(false).then(() => console.log("Default TX mode updated."));
+   *
+   * @param   {boolean} txAllOrNothing Flag specifying whether the data should be sent all at once.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.PipeSetDefaultTxMode = function(txAllOrNothing) {
+    return this.SendRequest.call(this, 'PipeSetDefaultTxMode', [txAllOrNothing]);
+  };
+
+  /**
+   * Sets Pipe default string mode.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -1206,7 +1304,7 @@
    * @param   {string}  str          String to be written to the pipe.
    * @param   {boolean} allOrNothing Flag specifying whether the string should be sent all at once.
    * @param   {boolean} unicode      Flag specifying whether the string is unicode encoded.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen characters.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written characters.
    */
   PCM.prototype.PipeWriteString = function(port, str, allOrNothing, unicode) {
     return this.SendRequest.call(this, 'PipeWriteString', [port, str, allOrNothing, unicode]);
@@ -1223,7 +1321,7 @@
    * @param   {number}        elSize       Element size, can be 1, 2, 4, or 8.
    * @param   {Array<number>} data         Array of integers to be written.
    * @param   {boolean}       allOrNothing Flag specifying whether the string should be sent all at once.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.PipeWriteIntArray = function(port, elSize, data, allOrNothing) {
     return this.SendRequest.call(this, 'PipeWriteIntArray', [port, elSize, data, allOrNothing]);
@@ -1240,30 +1338,30 @@
    * @param   {number}        elSize       Element size, can be 1, 2, 4, or 8.
    * @param   {Array<number>} data         Array of integers to be written.
    * @param   {boolean}       allOrNothing Flag specifying whether the string should be sent all at once.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.PipeWriteUIntArray = function(port, elSize, data, allOrNothing) {
     return this.SendRequest.call(this, 'PipeWriteUIntArray', [port, elSize, data, allOrNothing]);
   };
 
   /**
-   * Writes an array of floats to a pipe.
+   * Writes an array of floating-point numbers to a pipe.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
    * pcm.PipeWriteFloatArray(0, [1.0, 2.0, 3.0, 4.0, 5.0], false).then(response => console.log(response.data));
    *
    * @param   {number}        port         Pipe ID.
-   * @param   {Array<number>} data         Array of integers to be written.
+   * @param   {Array<number>} data         Array of floating-point numbers to be written.
    * @param   {boolean}       allOrNothing Flag specifying whether the string should be sent all at once.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.PipeWriteFloatArray = function(port, data, allOrNothing) {
     return this.SendRequest.call(this, 'PipeWriteFloatArray', [port, data, allOrNothing]);
   };
 
   /**
-   * Writes an array of doubles to a pipe.
+   * Writes an array of double-precision numbers to a pipe.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -1272,7 +1370,7 @@
    * @param   {number}        port         Pipe ID.
    * @param   {Array<number>} data         Array of integers to be written.
    * @param   {boolean}       allOrNothing Flag specifying whether the string should be sent all at once.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully writen array elements.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of successfully written array elements.
    */
   PCM.prototype.PipeWriteDoubleArray = function(port, data, allOrNothing) {
     return this.SendRequest.call(this, 'PipeWriteDoubleArray', [port, data, allOrNothing]);
@@ -1290,14 +1388,14 @@
    * @param   {number}  charsToRead  Number of characters to read.
    * @param   {boolean} allOrNothing Flag specifying whether the string should be read all at once.
    * @param   {boolean} unicode      Flag specifying whether the string is unicode encoded.
-   * @returns {Promise} In case of success, resolved promise will contain data property of type number string.
+   * @returns {Promise} In case of success, resolved promise will contain data property of type string.
    */
   PCM.prototype.PipeReadString = function(port, rxTimeout_ms, charsToRead, allOrNothing, unicode) {
     return this.SendRequest.call(this, 'PipeReadString', [port, rxTimeout_ms, charsToRead, allOrNothing, unicode]);
   };
 
   /**
-   * Reads an array of signed integers from a piep.
+   * Reads an array of signed integers from a pipe.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -1315,7 +1413,7 @@
   };
 
   /**
-   * Reads an array of unsigned integers from a piep.
+   * Reads an array of unsigned integers from a pipe.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -1333,7 +1431,7 @@
   };
 
   /**
-   * Reads an array of floats from a piep.
+   * Reads an array of floating-point numbers from a pipe.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -1342,7 +1440,7 @@
    * @param   {number}  port         Pipe ID.
    * @param   {number}  rxTimeout_ms Read timeout in milliseconds.
    * @param   {number}  size         The size of the array (number of elements).
-   * @param   {boolean}  allOrNothing Flag specifying whether the array should be read all at once.
+   * @param   {boolean} allOrNothing Flag specifying whether the array should be read all at once.
    * @returns {Promise} In case of success, resolved promise will contain data property of type Array<number>.
    */
   PCM.prototype.PipeReadFloatArray = function(port, rxTimeout_ms, size, allOrNothing) {
@@ -1350,7 +1448,7 @@
   };
 
   /**
-   * Reads an array of doubles from a piep.
+   * Reads an array of double-precision numbers from a pipe.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @example
@@ -1367,7 +1465,7 @@
   };
 
   /**
-   * Opens a file on the mashine the servce is running one.
+   * Opens a file on the machine the service is running one.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &check;
    * @see {@link PCM#LocalFileClose LocalFileClose}
@@ -1392,7 +1490,7 @@
    * @example
    * let result = await pcm.LocalFileClose(3).then(() => console.log("File closed."));
    *
-   * @param   {number} handle File descriptor.
+   * @param   {number} handle File descriptor returned by {@link PCM#LocalFileOpen LocalFileOpen}.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.LocalFileClose = function(handle) {
@@ -1427,9 +1525,9 @@
    * pcm.LocalFileWriteString(3, "Hello world!", false).then(response => console.log(response.data));
    *
    * @param   {number}  handle      File descriptor.
-   * @param   {number}  str         String to write.
+   * @param   {string}  str         String to write.
    * @param   {boolean} unicode     Flag specifying whether the string is unicode encoded.
-   * @param   {boolean} size        Length of the string to write, optional, writes the full 'str' length if undefined.
+   * @param   {number}  [size]      Optional length of the string to write. Writes the full 'str' length if undefined.
    * @returns {Promise} In case of success, resolved promise will contain data property of type number representing the number of written characters.
    */
   PCM.prototype.LocalFileWriteString = function(handle, str, unicode, size) {
@@ -1446,7 +1544,7 @@
    * pcm.LogEnable("Test logger", "Test logger.log").then(() => console.log("Logger enabled."));
    *
    * @param   {string}  name  Logger name.
-   * @param   {string}  file  Logger file, if empty all the loggs will be printed in standard output.
+   * @param   {string}  file  Logger file, if empty all the logs will be printed in standard output.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.LogEnable = function(name, file) {
@@ -1469,13 +1567,13 @@
   };
 
   /**
-   * Sets logging pattern. Refer to [spdlog wiki]{@link https://github.com/gabime/spdlog/wiki/3.-Custom-formatting#pattern-flags} for the list of available flags.
+   * Sets logging pattern.
    *
    * **Compatibility:** FreeMASTER &cross;, FreeMASTER Lite &check;
    * @example
    * pcm.LogSetPattern("[%Y-%m-%d %T.%f]: %v").then(() => console.log("Logger pattern updated."));
    *
-   * @param   {string}  pattern  Logging pattern.
+   * @param   {string}  pattern  Logging pattern. Refer to [spdlog wiki]{@link https://github.com/gabime/spdlog/wiki/3.-Custom-formatting#pattern-flags} for the list of available flags.
    * @returns {Promise} The result does not carry any relevant data.
    */
   PCM.prototype.LogSetPattern = function(pattern) {
@@ -1514,7 +1612,7 @@
    * // 0x0002 | 0x0004 - enables read and write filtering
    * pcm.LogSetServices(0xFFFF, 0x0002 | 0x0004).then(() => console.log("Filtering read and write services."));
    *
-   * @param   {number}  mask      Mask that will disable current filterred services.
+   * @param   {number}  mask      Mask that will disable current filtered services.
    * @param   {number}  services  Mask of services flags to be added to the filter.
    *
    * | Mask   | Service     |
@@ -1528,7 +1626,7 @@
    * | 0x0040 | SFIO        |
    * | 0x0080 | TSA         |
    * | 0x0100 | PIPE        |
-   * | 0x0200 | Poolling    |
+   * | 0x0200 | Polling     |
    * | 0xFFFF | All         |
    * @returns {Promise} The result does not carry any relevant data.
    */
@@ -1542,546 +1640,658 @@
    * the extra features will NOT work with FreeMASTER Lite service.
    *
    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-   * @example
-   * pcm.EnableExtraFeatures(true);
-   * pcm.EnableEvents(true);
-   * pcm.OnBoardDetected = function() { console.log("Board connection has been established."); }
+   *
+   * @deprecated this is a "dummy" method kept for backward compatibility
    */
-  PCM.prototype.EnableExtraFeatures = function(enable) {
+  PCM.prototype.EnableExtraFeatures = function() {};
 
-    if (enable) {
-      /* TODO: throw an exception if this file has been retrieved from the Lite service. */
-    } else {
-      /* Don't allow to disable the features once enabled. This behavior is subject to change in future versions. */
-      if (this.EnableEvents) {
-        throw 'Can\'t disable ExtraFeatures after enabled once';
-      }
+  /**
+   * Start or stop the communication. This call is provided for backward compatibility with ActiveX
+   * interface only. Use the StartComm and StopComm methods in new designs.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.StartStopComm(true).then(console.log("Communication port is open"));
+   *
+   * @param   {boolean} start    Start or stop communication.
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.StartStopComm = function(start) {
+    return this.SendRequest.call(this, 'StartStopComm', [start]);
+  };
 
-      /* Nothing to do, extra features remain disabled. */
-      return;
-    }
+  /**
+   * Enable or disable events to be generated by the server side for this JSON-RPC session.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * function MyBoardDetectionHandler(name, id, value) {
+   *   console.log("Board is detected");
+   * }
+   * pcm.OnBoardDetected = MyBoardDetectionHandler;
+   * pcm.EnableEvents(true).then(console.log("Events are enabled"));
+   *
+   * @param   {boolean} enable      Enable or disable events.
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.EnableEvents = function(enable) {
+    return this.SendRequest.call(this, 'EnableEvents', [enable]);
+  };
 
-    /* Install default FreeMASTER event handlers. Don't forget to call EnableEvents(true) for the server to generate the JSON-RPC events. */
-    if (!this.OnBoardDetected) {
-      this.OnBoardDetected = function() {
-        console.log('FreeMASTER Event received: OnBoardDetected()');
-      };
-    }
+  /**
+   * Subscribe to variable changes at given testing period. When a variable is subscribed, FreeMASTER reads
+   * the variable periodically and raises 'OnVariableChanged' event when a value change is detected. The events
+   * need to be enabled by calling EnableEvents(true).
+   * Event handler should have three parameters: 'name', 'id' and 'value'.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * function MyVariableChangedHandler(name, id, value) {
+   *   console.log("Variable " + name + " has changed to value " + value);
+   * }
+   * pcm.OnVariableChanged = MyVariableChangedHandler;
+   * pcm.SubscribeVariable(name).then(console.log("Variable is subscribed"));
+   *
+   * @param   {string}  name      Variable name.
+   * @param   {number}  interval  Testing interval in milliseconds.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.subscriptionId' member which identifies the subscription.
+   */
+  PCM.prototype.SubscribeVariable = function(name, interval) {
+    return this.SendRequest.call(this, 'SubscribeVariable', [name, interval]);
+  };
 
-    if (!this.OnCommPortStateChanged) {
-      this.OnCommPortStateChanged = function(state) {
-        console.log('FreeMASTER Event received: OnCommPortStateChanged(' + state + ')');
-      };
-    }
+  /**
+    * Unsubscribe from variable changes subscribed previously with SubscribeVariable.
+    *
+    * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+    *
+    * @example
+    * pcm.UnsubscribeVariable(name).then(console.log("Variable is un-subscribed"));
+    *
+    * @param   {string}  name_or_id   Variable name or subscription identifier returned by previous SubscribeVariable call.
+    * @returns {Promise} In case of success, resolved promise does not contain any data.
+    */
+  PCM.prototype.UnSubscribeVariable = function(name_or_id) {
+    return this.SendRequest.call(this, 'UnSubscribeVariable', [name_or_id]);
+  };
 
-    if (!this.OnVariableChanged) {
-      this.OnVariableChanged = function(name, id, value) {
-        console.log('FreeMASTER Event received: OnVariableChanged("' + name + '", ' + id + ', ' + value + ')');
-      };
-    }
+  /**
+   * Define symbol.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefineSymbol(name, address, type, size).then(() => console.log("Symbol defined"));
+   *
+   * @param   {string}  name     Symbol name.
+   * @param   {string}  address  Address.
+   * @param   {string}  type     User type name (e.g. structure type name). Optional, leave empty for generic numeric types.
+   * @param   {string}  [size]   Symbol size. Optional, leave empty to determine automatically when user type is specified.
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.DefineSymbol = function(name, address, type, size) {
+    return this.SendRequest.call(this, 'DefineSymbol', [name, address, type, size]);
+  };
 
-    if (!this.OnRecorderDone) {
-      this.OnRecorderDone = function() {
-        console.log('FreeMASTER Event received: OnRecorderDone()');
-      };
-    }
+  /**
+   * Retrieve address and size of give symbol.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.GetSymbolInfo(name).then((response) => console.log("Symbol address=" + response.xtra.addr + " size=" + response.xtra.size));
+   *
+   * @param   {string}  name   Symbol name.
+   * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'addr' and 'size' members.
+   */
+  PCM.prototype.GetSymbolInfo = function(name) {
+    return this.SendRequest.call(this, 'GetSymbolInfo', [name]);
+  };
 
-    /* Register event handlers in JSON-RPC */
-    this._jrpc.dispatch('OnBoardDetected', 'pass', (params_array) => this.OnBoardDetected.apply(null, params_array) );
-    this._jrpc.dispatch('OnCommPortStateChanged', 'pass', (params_array) => this.OnCommPortStateChanged.apply(null, params_array) );
-    this._jrpc.dispatch('OnVariableChanged', 'pass', (params_array) => this.OnVariableChanged.apply(null, params_array) );
-    this._jrpc.dispatch('OnRecorderDone', 'pass', (params_array) => this.OnRecorderDone.apply(null, params_array) );
+  /**
+   * Get structure or union member information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.GetStructMemberInfo(type, member).then((response) => console.log("Structure type " + type + " member " + member +
+   *             " is at offset " + response.xtra.offset + ", size=" + response.xtra.size));
+   *
+   * @param   {string}  type    User type name.
+   * @param   {string}  member  Structure member name.
+   * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'offset' and 'size' members.
+   */
+  PCM.prototype.GetStructMemberInfo = function(type, member) {
+    return this.SendRequest.call(this, 'GetStructMemberInfo', [type, member]);
+  };
 
-    /**
-     * Start or stop the communication. This call is provided for backward compatibility with ActiveX
-     * interface only. Use the StartComm and StopComm methods in new designs.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.StartStopComm(true).then(console.log("Communication port is open"));
-     *
-     * @param   {boolean} start    Start or stop communication.
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.StartStopComm = function(start) {
-      return this.SendRequest.call(this, 'StartStopComm', [start]);
-    };
+  /**
+   * Delete all script-defined symbols.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DeleteAllScriptSymbols().then(() => console.log("All script-defined symbols deleted."));
+   *
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.DeleteAllScriptSymbols = function() {
+    return this.SendRequest.call(this, 'DeleteAllScriptSymbols');
+  };
 
-    /**
-     * Enable or disable events to be generated by the server side for this JSON-RPC session.
-     *
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * function MyBoardDetectionHandler(name, id, value) {
-     *   console.log("Board is detected");
-     * }
-     * pcm.OnBoardDetected = MyBoardDetectionHandler;
-     * pcm.EnableEvents(true).then(console.log("Events are enabled"));
-     *
-     * @param   {boolean} enable      Enable or disable events.
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.EnableEvents = function(enable) {
-      return this.SendRequest.call(this, 'EnableEvents', [enable]);
-    };
+  /**
+   * Run variable stimulators.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.RunStimulators(name).then(() => console.log("Stimulator " + name + " is now running"));
+   *
+   * @param   {string}  name  Name of the variable stimulator to start (or more comma-separated names)
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.RunStimulators = function(name) {
+    return this.SendRequest.call(this, 'RunStimulators', [name]);
+  };
 
-    /**
-     * Subscribe to variable changes at given testing period. When a variable is subscribed, FreeMASTER reads
-     * the variable periodically and raises 'OnVariableChanged' event when a value change is detected. The events
-     * need to be enabled by calling EnableEvents(true).
-     * Event handler should have three parameters: 'name', 'id' and 'value'.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * function MyVariableChangedHandler(name, id, value) {
-     *   console.log("Variable " + name + " has changed to value " + value);
-     * }
-     * pcm.OnVariableChanged = MyVariableChangedHandler;
-     * pcm.SubscribeVariable(name).then(console.log("Variable is subscribed"));
-     *
-     * @param   {string}  name      Variable name.
-     * @param   {number}  interval  Testing interval in milliseconds.
-     * @returns {Promise} In case of success, resolved promise will contain 'xtra.subscriptionId' member which identifies the subscription.
-     */
-    this.SubscribeVariable = function(name, interval) {
-      return this.SendRequest.call(this, 'SubscribeVariable', [name, interval]);
-    };
+  /**
+   * Stop variable stimulators.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.StopStimulators(name).then(() => console.log("Stimulator " + name + " is now stopped"));
+   *
+   * @param   {string}  name  Name of the variable stimulator to stop (or more comma-separated names)
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.StopStimulators = function(name) {
+    return this.SendRequest.call(this, 'StopStimulators', [name]);
+  };
 
-    /**
-      * Unsubscribe from variable changes subscribed previously with SubscribeVariable.
-      *
-      *
-      * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-      * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-      *
-      * @example
-      * pcm.UnsubscribeVariable(name).then(console.log("Variable is un-subscribed"));
-      *
-      * @param   {string}  name_or_id   Variable name or subscription identifier returned by previous SubscribeVariable call.
-      * @returns {Promise} In case of success, resolved promise does not contain any data.
-      */
-    this.UnSubscribeVariable = function(name_or_id) {
-      return this.SendRequest.call(this, 'UnSubscribeVariable', [name_or_id]);
-    };
+  /**
+   * Exit application.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.Exit();
+   *
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.Exit = function() {
+    return this.SendRequest.call(this, 'Exit');
+  };
 
-    /**
-     * Define symbol.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.DefineSymbol(name, address, type, size).then((result) => console.log("Symbol defined"));
-     *
-     * @param   {string}  name     Symbol name.
-     * @param   {string}  address  Address.
-     * @param   {string}  type     User type name (e.g. structure type name). Optional, leave empty for generic numeric types.
-     * @param   {string}  size     Symbol size. Optional, leave empty to determine automatically when user type is specified.
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.DefineSymbol = function(name, address, type, size) {
-      return this.SendRequest.call(this, 'DefineSymbol', [name, address, type, size]);
-    };
+  /**
+   * Activate FreeMASTER application window.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.ActivateWindow();
+   *
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.ActivateWindow = function() {
+    return this.SendRequest.call(this, 'ActivateWindow');
+  };
 
-    /**
-     * Retrieve address and size of give symbol.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.GetSymbolInfo(name).then((result) => console.log("Symbol address=" + result.xtra.addr + " size=" + result.xtra.size));
-     *
-     * @param   {string}  name   Symbol name.
-     * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'addr' and 'size' members.
-     */
-    this.GetSymbolInfo = function(name) {
-      return this.SendRequest.call(this, 'GetSymbolInfo', [name]);
-    };
+  /**
+   * Select item in FreeMASTER project tree and activate related view.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.SelectItem("My Oscilloscope", "osc");
+   *
+   * @param   {string}  name  Name of the item to activate
+   * @param   {string}  tab   Tab to activate. Optional, one of the following values: "ctl", "blk", "info", "osc", "rec", "pipe"
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.SelectItem = function(name, tab) {
+    return this.SendRequest.call(this, 'SelectItem', [name, tab]);
+  };
 
-    /**
-     * Get structure or union member information.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.GetStructMemberInfo(type, member).then((result) => console.log("Structure type " + type + " member " + member +
-     *             " is at offset " + result.xtra.offset + ", size=" + result.xtra.size));
-     *
-     * @param   {string}  type    User type name.
-     * @param   {string}  member  Structure member name.
-     * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'offset' and 'size' members.
-     */
-    this.GetStructMemberInfo = function(type, member) {
-      return this.SendRequest.call(this, 'GetStructMemberInfo', [type, member]);
-    };
+  /**
+   * Delete item in FreeMASTER project tree.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * {@link PCM#SelectItem SelectItem}
+   *
+   * @example
+   * pcm.DeleteItem("My Oscilloscope");
+   *
+   * @param   {string}  name  Name or path of the item to delete.
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.DeleteItem = function(name) {
+    return this.SendRequest.call(this, 'DeleteItem', [name]);
+  };
 
-    /**
-     * Delete all script-defined symbols.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.DeleteAllScriptSymbols().then((result) => console.log("All script-defined symbols deleted."));
-     *
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.DeleteAllScriptSymbols = function() {
-      return this.SendRequest.call(this, 'DeleteAllScriptSymbols');
-    };
+  /**
+   * Open specific FreeMASTER project.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.OpenProject("C:/projects/my_project.pmpx");
+   *
+   * @param   {string}  name  Name of the project file to open; use fully qualified name.
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.OpenProject = function(name) {
+    return this.SendRequest.call(this, 'OpenProject', [name]);
+  };
 
-    /**
-     * Run variable stimulators.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.RunStimulators(name).then((result) => console.log("Stimulator " + name + " is now running"));
-     *
-     * @param   {string}  name  Name of the variable stimulator to start (or more comma-separated names)
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.RunStimulators = function(name) {
-      return this.SendRequest.call(this, 'RunStimulators', [name]);
-    };
+  /**
+   * Save current FreeMASTER project.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.SaveProject(true);
+   *
+   * @param   {boolean|string} saveAs  When false, project is silently saved to last known path.
+   *                            When true or when project is new a SaveAs dialog will open.
+   *                            When a filename string is passed, the project is saved to the given file.
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.SaveProject = function(saveAs) {
+    return this.SendRequest.call(this, 'SaveProject', [saveAs]);
+  };
 
-    /**
-     * Stop variable stimulators.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.StopStimulators(name).then((result) => console.log("Stimulator " + name + " is now stopped"));
-     *
-     * @param   {string}  name  Name of the variable stimulator to stop (or more comma-separated names)
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.StopStimulators = function(name) {
-      return this.SendRequest.call(this, 'StopStimulators', [name]);
-    };
+  /**
+   * Determine if board has an active content defined in TSA table.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.IsBoardWithActiveContent().then((response) => console.log("Board active content " + (response.data ? "is" : "is NOT") + "present"));
+   *
+   * @returns {Promise} In case of success, resolved promise contains boolean 'data' member with return value.
+   */
+  PCM.prototype.IsBoardWithActiveContent = function() {
+    return this.SendRequest.call(this, 'IsBoardWithActiveContent');
+  };
 
-    /**
-     * Exit application.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.Exit();
-     *
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.Exit = function() {
-      return this.SendRequest.call(this, 'Exit');
-    };
+  /**
+   * Enumerate hyperlinks defined by active content.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * for(let index=0; true; index++) {
+   *     try {
+   *         let response = await pcm.EnumHrefLinks(index);
+   *         console.log(response.xtra.name + " " +  response.xtra.retval + "\n");
+   *     } catch (err) {
+   *         break;
+   *     }
+   * }
+   *
+   * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'name' and 'retval' properties.
+   */
+  PCM.prototype.EnumHrefLinks = function(index) {
+    return this.SendRequest.call(this, 'EnumHrefLinks', [index]);
+  };
 
-    /**
-     * Activate FreeMASTER application window.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.ActivateWindow();
-     *
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.ActivateWindow = function() {
-      return this.SendRequest.call(this, 'ActivateWindow');
-    };
+  /**
+   * Enumerate project files defined by active content.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * for(let index=0; true; index++) {
+   *     try {
+   *         let response = await pcm.EnumProjectFiles(index);
+   *         console.log(response.xtra.name + " " +  response.xtra.retval + "\n");
+   *     } catch (err) {
+   *         break;
+   *     }
+   * }
+   *
+   * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'name' and 'retval' properties.
+   */
+  PCM.prototype.EnumProjectFiles = function(index) {
+    return this.SendRequest.call(this, 'EnumProjectFiles', [index]);
+  };
 
-    /**
-     * Select item in FreeMASTER project tree and activate related view.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.SelectItem("My Oscilloscope", "osc");
-     *
-     * @param   {string}  name  Name of the item to activate
-     * @param   {string}  tab   Tab to activate. Optional, one of the following values: "ctl", "blk", "info", "osc", "rec", "pipe"
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.SelectItem = function(name, tab) {
-      return this.SendRequest.call(this, 'SelectItem', [name, tab]);
-    };
+  /**
+   * Set global flag which affects Control Page reloading after opening port. By default, the page reloads when port is open.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.SetPageReloadOnPortOpen(false);
+   *
+   * @returns {Promise} In case of success, resolved promise does not contain any data.
+   */
+  PCM.prototype.SetPageReloadOnPortOpen = function(value) {
+    return this.SendRequest.call(this, 'SetPageReloadOnPortOpen', [value]);
+  };
 
-    /**
-     * Open specific FreeMASTER project.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.OpenProject("C:/projects/my_project.pmpx");
-     *
-     * @param   {string}  name  Name of the project file to open; use fully qualified name.
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.OpenProject = function(name) {
-      return this.SendRequest.call(this, 'OpenProject', [name]);
-    };
+  /**
+   * Get global flag which affects Control Page reloading while opening port.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.GetPageReloadOnPortOpen().then(result => console.log("PageReloadOnPortOpen flag is " + result.data))
+   *
+   * @returns {Promise} In case of success, resolved promise contains boolean 'data' member with return value.
+   */
+  PCM.prototype.GetPageReloadOnPortOpen = function() {
+    return this.SendRequest.call(this, 'GetPageReloadOnPortOpen');
+  };
 
-    /**
-     * Determine if board has an active content defined in TSA table.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.IsBoardWithActiveContent().then((result) => console.log("Board active content " + (result.data ? "is" : "is NOT") + "present"));
-     *
-     * @returns {Promise} In case of success, resolved promise contains boolean 'data' member with return value.
-     */
-    this.IsBoardWithActiveContent = function() {
-      return this.SendRequest.call(this, 'IsBoardWithActiveContent');
-    };
+  /**
+   * Get info about target memory address. Return name of symbol mapped to the address.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.GetAddressInfo(addr, size).then((response) => console.log("Symbol name is " + response.xtra.symbolName));
+   *
+   * @param   {number} addr Address of the variable.
+   * @param   {number} size Size of the variable.
+   * @returns {Promise} In case of success, resolved promise contains 'xtra.symbolName' and 'xtra.isExactMatch' values.
+   */
+  PCM.prototype.GetAddressInfo = function(addr, size) {
+    return this.SendRequest.call(this, 'GetAddressInfo', [addr, size]);
+  };
 
-    /**
-     * Enumerate hyperlinks defined by active content.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * for(let index=0; true; index++) {
-     *     try {
-     *         let response = await pcm.EnumHrefLinks(index);
-     *         console.log(response.xtra.name + " " +  response.xtra.retval + "\n");
-     *     } catch (err) {
-     *         break;
-     *     }
-     * }
-     *
-     * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'name' and 'retval' properties.
-     */
-    this.EnumHrefLinks = function(index) {
-      return this.SendRequest.call(this, 'EnumHrefLinks', [index]);
-    };
+  /**
+   * Create an Oscilloscope object in the project tree.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefineOscilloscope(name, defStr).then(() => console.log("Item created"));
+   *
+   * @param   {string} name Name of item.
+   * @param   {string} defStr Stringified JSON definition record. Refer to FreeMASTER Desktop app. documentation for more details.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.DefineOscilloscope = function(name, defStr) {
+    return this.SendRequest.call(this, 'DefineOscilloscope', [name, defStr]);
+  };
 
-    /**
-     * Enumerate project files defined by active content.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * for(let index=0; true; index++) {
-     *     try {
-     *         let response = await pcm.EnumProjectFiles(index);
-     *         console.log(response.xtra.name + " " +  response.xtra.retval + "\n");
-     *     } catch (err) {
-     *         break;
-     *     }
-     * }
-     *
-     * @returns {Promise} In case of success, resolved promise contains 'xtra' object with 'name' and 'retval' properties.
-     */
-    this.EnumProjectFiles = function(index) {
-      return this.SendRequest.call(this, 'EnumProjectFiles', [index]);
-    };
+  /**
+   * Request Oscilloscope object information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#DefineOscilloscope DefineOscilloscope}
+   *
+   * @example
+   *     pcm.GetOscilloscopeDefinition(name).then(response => {
+   *         console.log(response.data);
+   *     });
+   *
+   * @param   {string} name Scope name or path with name.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.def' property with definition object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetOscilloscopeDefinition = function(name) {
+    return this.SendRequest.call(this, 'GetOscilloscopeDefinition', [name]);
+  };
 
-    /**
-     * Set global flag which affects Control Page reloading after opening port. By default, the page reloads when port is open.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.SetPageReloadOnPortOpen(false);
-     *
-     * @returns {Promise} In case of success, resolved promise does not contain any data.
-     */
-    this.SetPageReloadOnPortOpen = function(value) {
-      return this.SendRequest.call(this, 'SetPageReloadOnPortOpen', [value]);
-    };
+  /**
+   * Create a Recorder object in the project tree.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefineRecorder(name, defStr).then(() => console.log("Recorder project item created"));
+   *
+   * @param   {string} name Name of item.
+   * @param   {string} defStr Stringified JSON definition record. Refer to FreeMASTER Desktop app. documentation for more details.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.DefineRecorder = function(name, defStr) {
+    return this.SendRequest.call(this, 'DefineRecorder', [name, defStr]);
+  };
 
-    /**
-     * Get global flag which affects Control Page reloading while opening port.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.GetPageReloadOnPortOpen().then(result => console.log("PageReloadOnPortOpen flag is " + result.data))
-     *
-     * @returns {Promise} In case of success, resolved promise contains boolean 'data' member with return value.
-     */
-    this.GetPageReloadOnPortOpen = function() {
-      return this.SendRequest.call(this, 'GetPageReloadOnPortOpen');
-    };
+  /**
+   * Request Recorder object information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#DefineRecorder DefineRecorder}
+   *
+   * @example
+   *     pcm.GetRecorderDefinition(name).then(response => {
+   *         console.log(response.data);
+   *     });
+   *
+   * @param   {string} name Recorder name or path with name.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.def' property with definition object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetRecorderDefinition = function(name) {
+    return this.SendRequest.call(this, 'GetRecorderDefinition', [name]);
+  };
 
-    /**
-     * Sets pipes default transmit mode.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.PipeSetDefaultTxMode(false).then(() => console.log("Default TX mode updated."));
-     *
-     * @param   {boolean} txAllOrNothing Flag specifying whether the data should be sent all at once.
-     * @returns {Promise} The result does not carry any relevant data.
-     */
-    this.PipeSetDefaultTxMode = function(txAllOrNothing) {
-      return this.SendRequest.call(this, 'PipeSetDefaultTxMode', [txAllOrNothing]);
-    };
+  /**
+   * Create an Array Viewer object in the project tree.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefineArrayViewer(name, defStr).then(() => console.log("ArrayViewer project item created"));
+   *
+   * @param   {string} name Name of item.
+   * @param   {string} defStr Stringified JSON definition record. Refer to FreeMASTER Desktop app. documentation for more details.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.DefineArrayViewer = function(name, defStr) {
+    return this.SendRequest.call(this, 'DefineArrayViewer', [name, defStr]);
+  };
 
-    /**
-     * Get info about variable with address.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.GetAddressInfo(addr, size).then(() => console.log("Info is " + result.data));
-     *
-     * @param   {addr} Address of the variable.
-     * @param   {size} Size of the variable.
-     * @returns {Promise} In case of success, resolved promise contains string 'data' member with return value.
-     */
-    this.GetAddressInfo = function(addr, size) {
-      return this.SendRequest.call(this, 'GetAddressInfo', [addr, size]);
-    };
+  /**
+   * Request Array Viewer object information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#DefineArrayViewer DefineArrayViewer}
+   *
+   * @example
+   *     pcm.GetArrayViewerDefinition(name).then(response => {
+   *         console.log(response.data);
+   *     });
+   *
+   * @param   {string} name Array Viewer name or path with name.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.def' property with definition object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetArrayViewerDefinition = function(name) {
+    return this.SendRequest.call(this, 'GetArrayViewerDefinition', [name]);
+  };
 
-    /**
-     * Define oscilloscope in project.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.DefineOscilloscope(name, defStr).then(() => console.log("Info is " + result.data));
-     *
-     * @param   {name} Name of item.
-     * @param   {defStr} Stringified JSON definition record. Refer to FreeMASTER documentation for more details.
-     * @returns {Promise} The result does not carry any relevant data.
-     */
-    this.DefineOscilloscope = function(name, defStr) {
-      return this.SendRequest.call(this, 'DefineOscilloscope', [name, defStr]);
-    };
+  /**
+   * Create a Pipe object in the project tree.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefinePipe(name, defStr).then(() => console.log("Pipe project item created"));
+   *
+   * @param   {string} name Name of item.
+   * @param   {string} defStr Stringified JSON definition record. Refer to FreeMASTER Desktop app. documentation for more details.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.DefinePipe = function(name, defStr) {
+    return this.SendRequest.call(this, 'DefinePipe', [name, defStr]);
+  };
 
-    /**
-     * Define recorder in project.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.DefineRecorder(name, defStr).then(() => console.log("Info is " + result.data));
-     *
-     * @param   {name} Name of item.
-     * @param   {defStr} Stringified JSON definition record. Refer to FreeMASTER documentation for more details.
-     * @returns {Promise} The result does not carry any relevant data.
-     */
-    this.DefineRecorder = function(name, defStr) {
-      return this.SendRequest.call(this, 'DefineRecorder', [name, defStr]);
-    };
+  /**
+   * Request Pipe object information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#DefinePipe DefinePipe}
+   *
+   * @example
+   *     pcm.GetPipeDefinition(name).then(response => {
+   *         console.log(response.data);
+   *     });
+   *
+   * @param   {string} name Array Viewer name or path with name.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.def' property with definition object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetPipeDefinition = function(name) {
+    return this.SendRequest.call(this, 'GetPipeDefinition', [name]);
+  };
 
-    /**
-     * Send application command.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.SendCommand(send).then(() => console.log("Return is " + result.data));
-     *
-     * @param   {send} Application command.
-     * @param   {wait} Set true to wait for the command processing to finish.
-     * @returns {Promise} In case of success, resolved promise contains string 'xtra.message' member with return message and 'xtra.retCode' member with return .
-     */
-    this.SendCommand = function(send, wait) {
-      return this.SendRequest.call(this, 'SendCommand', [send, wait]);
-    };
+  /**
+   * Define Watch Block item in project.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefineWatchBlock(name, defStr).then(() => console.log("WatchBlock project item created"));
+   *
+   * @param   {string} name Name of item.
+   * @param   {string} defStr Stringified JSON definition record. Refer to FreeMASTER documentation for more details.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.DefineWatchBlock = function(name, defStr) {
+    return this.SendRequest.call(this, 'DefineWatchBlock', [name, defStr]);
+  };
 
-    /**
-     * Get current recorder state.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.GetCurrentRecorderState().then(() => console.log("Return is " + result.data));
-     *
-     * @returns {Promise} In case of success, resolved promise contains string 'xtra.data' member with return state.
-     */
-    this.GetCurrentRecorderState = function() {
-      return this.SendRequest.call(this, 'GetCurrentRecorderState');
-    };
+  /**
+   * Requests Watch Block information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#DefineWatchBlock DefineWatchBlock}
+   *
+   * @example
+   *     pcm.GetWatchBlockDefinition(name).then(response => {
+   *         console.log(response.data);
+   *     });
+   *
+   * @param   {string} name Watch Block name or path with name.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.def' property with definition object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetWatchBlockDefinition = function(name) {
+    return this.SendRequest.call(this, 'GetWatchBlockDefinition', [name]);
+  };
 
-    /**
-     * Get current recorder data.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.GetCurrentRecorderData().then(() => console.log("Return is " + result.data));
-     *
-     * @returns {Promise} In case of success, resolved promise contains string 'xtra.data' member with return data array-of-arrays.
-     */
-    this.GetCurrentRecorderData = function() {
-      return this.SendRequest.call(this, 'GetCurrentRecorderData');
-    };
+  /**
+   * Send application command.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.SendCommand(send).then((response) => console.log("Command response code " + response.xtra.retCode));
+   *
+   * @param   {string}  send Application command.
+   * @param   {boolean} wait Set true to wait for the command processing to finish.
+   * @returns {Promise} In case of success, resolved promise contains string 'xtra.message' member with return message and 'xtra.retCode' member with command result code.
+   */
+  PCM.prototype.SendCommand = function(send, wait) {
+    return this.SendRequest.call(this, 'SendCommand', [send, wait]);
+  };
 
-    /**
-     * Get current recorder series.
-     *
-     *
-     * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
-     * @see {@link PCM#EnableExtraFeatures EnableExtraFeatures}
-     *
-     * @example
-     * pcm.GetCurrentRecorderSeries(name).then(() => console.log("Return is " + result.data));
-     *
-     * @param   {name} Variable name.
-     * @returns {Promise} In case of success, resolved promise contains string 'xtra.data' member with return data array.
-     */
-    this.GetCurrentRecorderSeries = function(name) {
-      return this.SendRequest.call(this, 'GetCurrentRecorderSeries', [name]);
-    };
+  /**
+   * Get current recorder state.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.GetCurrentRecorderState().then((response) => console.log("Return is " + response.xtra.state));
+   *
+   * @returns {Promise} In case of success, resolved promise contains string 'xtra.state' member with return state.
+   */
+  PCM.prototype.GetCurrentRecorderState = function() {
+    return this.SendRequest.call(this, 'GetCurrentRecorderState');
+  };
+
+  /**
+   * Get current recorder data.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.GetCurrentRecorderData().then((response) => console.log("Recorder data: " + JSON.stringify(response.xtra.data)));
+   *
+   * @returns {Promise} In case of success, resolved promise contains string 'xtra.data' member with return data array-of-arrays.
+   */
+  PCM.prototype.GetCurrentRecorderData = function() {
+    return this.SendRequest.call(this, 'GetCurrentRecorderData');
+  };
+
+  /**
+   * Get current recorder series.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.GetCurrentRecorderSeries(name).then((response) => console.log("Recorder series data: " + JSON.stringify(response.xtra.data)));
+   *
+   * @param   {string} name Variable name.
+   * @returns {Promise} In case of success, resolved promise contains string 'xtra.data' member with return data array.
+   */
+  PCM.prototype.GetCurrentRecorderSeries = function(name) {
+    return this.SendRequest.call(this, 'GetCurrentRecorderSeries', [name]);
+  };
+
+  /**
+   * Set global project options.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.SetProjectOptions(defStr, refreshViews).then(() => console.log("Project options set"));
+   *
+   * @param   {string} defStr Stringified JSON ProjectOptions record. Refer to FreeMASTER Desktop app. documentation for more details.
+   * @param   {boolean} refreshViews When true, all views are fully refreshed after options are set (default false).
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.SetProjectOptions = function(defStr, refreshViews) {
+    return this.SendRequest.call(this, 'SetProjectOptions', [defStr, refreshViews]);
+  };
+
+  /**
+   * Get global project options.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#SetProjectOptions SetProjectOptions}
+   *
+   * @example
+   *     pcm.GetProjectOptions().then(response => {
+   *         console.log("Project options: " + response.xtra.retval);
+   *     });
+   *
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.retval' property with a stringified ProjectOptions object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetProjectOptions = function() {
+    return this.SendRequest.call(this, 'GetProjectOptions', []);
+  };
+
+  /**
+   * Fire an event to all attached clients.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#EnableEvents EnableEvents}
+   *
+   * @example
+   * pcm.EnableEvents(true);
+   * pcm.OnCustomEvent = function(arg) { console.log("Custom event received with argument " + JSON.stringify(arg)); }
+   * pcm.FireCustomEvent("text message");
+   *
+   * @param   {string} arg String argument which will be passed back to an event handler
+   * @returns {Promise} In case of success, resolved promise contains string 'xtra.data' member with return state.
+   */
+  PCM.prototype.FireCustomEvent = function(arg) {
+    return this.SendRequest.call(this, 'FireCustomEvent', [arg]);
   };
 
   if (typeof define == 'function' && define.amd) {
-    define('PCM', [], function () {
+    define('PCM', [], function() {
       return PCM;
     });
   } else if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
@@ -2092,5 +2302,74 @@
     return PCM;
   }
 
+  /**
+   * Create a Stimulator object in the project tree.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefineStimulator(name, defStr).then(() => console.log("Stimulator project item created"));
+   *
+   * @param   {string} name Name of stimulator.
+   * @param   {string} defStr Stringified JSON definition record. Refer to FreeMASTER Desktop app. documentation for more details.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.DefineStimulator = function(name, defStr) {
+    return this.SendRequest.call(this, 'DefineStimulator', [name, defStr]);
+  };
+
+  /**
+   * Request Stimulator object information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#DefineStimulator DefineStimulator}
+   *
+   * @example
+   *     pcm.GetStimulatorDefinition(name).then(response => {
+   *         console.log(response.data);
+   *     });
+   *
+   * @param   {string} name Name of stimulator.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.def' property with definition object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetStimulatorDefinition = function(name) {
+    return this.SendRequest.call(this, 'GetStimulatorDefinition', [name]);
+  };
+
+  /**
+   * Create an Enum object in the project.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   *
+   * @example
+   * pcm.DefineEnum(name, defStr).then(() => console.log("Enum item created"));
+   *
+   * @param   {string} name Name of Enum.
+   * @param   {string} defStr Stringified JSON definition record. Refer to FreeMASTER Desktop app. documentation for more details.
+   * @returns {Promise} The result does not carry any relevant data.
+   */
+  PCM.prototype.DefineEnum = function(name, defStr) {
+    return this.SendRequest.call(this, 'DefineEnum', [name, defStr]);
+  };
+
+  /**
+   * Request Enum object information.
+   *
+   * **Compatibility:** FreeMASTER &check;, FreeMASTER Lite &cross;
+   * @see {@link PCM#DefineEnum DefineEnum}
+   *
+   * @example
+   *     pcm.GetEnumDefinition(name).then(response => {
+   *         console.log(JSON.stringify(response.xtra.def));
+   *     });
+   *
+   * @param   {string} name Name of Enum.
+   * @returns {Promise} In case of success, resolved promise will contain 'xtra.def' property with definition object.
+   *                    Refer to FreeMASTER Desktop app. documentation for more details.
+   */
+  PCM.prototype.GetEnumDefinition = function(name) {
+    return this.SendRequest.call(this, 'GetEnumDefinition', [name]);
+  };
+
 })(this);
-/* eslint-enable */

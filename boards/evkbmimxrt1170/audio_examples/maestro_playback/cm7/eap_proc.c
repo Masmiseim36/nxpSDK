@@ -595,10 +595,10 @@ eap_att_code_t register_post_process(void *streamer)
 
     EXT_PROCESS_DESC_T eap_proc = {EAP_Init, EAP_Execute, EAP_Deinit, &get_app_data()->eap_args};
 
-    prop.prop = PROP_AUDIO_PROC_FUNCPTR;
+    prop.prop = PROP_EAP_PROC_FUNCPTR;
     prop.val  = (uintptr_t)&eap_proc;
 
-    if (streamer_set_property(streamer, prop, true) == 0)
+    if (streamer_set_property(streamer, 0, prop, true) == 0)
     {
         return kEapAttCodeOk;
     }

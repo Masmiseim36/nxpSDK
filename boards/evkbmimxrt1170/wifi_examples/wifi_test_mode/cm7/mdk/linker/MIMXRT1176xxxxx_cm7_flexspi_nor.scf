@@ -155,7 +155,10 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     memmove.o (+RO)
     memseta.o (+RO)
   }
-  RW_m_ncache m_data2_start EMPTY 0 {
+  RW_m_data2 m_data2_start m_data2_size { ; RW data2
+    .ANY (+RW +ZI)
+  }
+  RW_m_ncache +0 EMPTY 0 {
   }
   RW_m_ncache_unused +0 EMPTY m_data2_size-ImageLength(RW_m_ncache) { ; Empty region added for MPU configuration
   }

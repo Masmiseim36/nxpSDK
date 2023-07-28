@@ -17,7 +17,7 @@
 /* Application info */
 typedef struct _app_ver
 {
-    char cBoardID[15];
+    char cBoardID[20];
     char cExampleID[30];
     char cAppVer[5];
     uint16_t ui16FeatureSet;

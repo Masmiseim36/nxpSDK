@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, LV_CONF_INCLUDE_SIMPLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_COMMAND_CALL=1, VG_TARGET_FAST_CLEAR=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, LV_CONF_INCLUDE_SIMPLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, VG_COMMAND_CALL=1, VG_TARGET_FAST_CLEAR=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../generated;../../custom;../../generated/guider_customer_fonts;../../generated/guider_fonts;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../generated;../../custom;../../generated/guider_customer_fonts;../../generated/guider_fonts;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=0"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=0"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -431,12 +431,12 @@
             <File>
               <FileName>lvgl_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../lvgl_support.h</FilePath>
+              <FilePath>../lvgl_support.h</FilePath>
             </File>
             <File>
               <FileName>lvgl_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../lvgl_support.c</FilePath>
+              <FilePath>../lvgl_support.c</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -689,26 +689,6 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</FilePath>
@@ -747,6 +727,26 @@
               <FileName>fsl_elcdif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_elcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -814,16 +814,6 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -847,6 +837,16 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1496,23 +1496,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
           <Files>
+            <File>
+              <FileName>lv_draw_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_draw_pxp_blend.c</FileName>
               <FileType>1</FileType>
@@ -1549,6 +1544,16 @@
           <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
           <Files>
             <File>
+              <FileName>lv_draw_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_vglite_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
@@ -1579,16 +1584,6 @@
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_draw_vglite_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
@@ -1597,6 +1592,26 @@
               <FileName>lv_draw_vglite_arc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1707,6 +1722,21 @@
               <FileName>lv_draw_sdl_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2753,6 +2783,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_fragment_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3224,6 +3259,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3237,16 +3282,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3297,41 +3332,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3502,6 +3502,41 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3836,9 +3871,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, LV_CONF_INCLUDE_SIMPLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_COMMAND_CALL=1, VG_TARGET_FAST_CLEAR=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, LV_CONF_INCLUDE_SIMPLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, VG_COMMAND_CALL=1, VG_TARGET_FAST_CLEAR=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../generated;../../custom;../../generated/guider_customer_fonts;../../generated/guider_fonts;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../generated;../../custom;../../generated/guider_customer_fonts;../../generated/guider_fonts;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3872,7 +3907,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=0"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=0"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3935,12 +3970,12 @@
             <File>
               <FileName>lvgl_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../lvgl_support.h</FilePath>
+              <FilePath>../lvgl_support.h</FilePath>
             </File>
             <File>
               <FileName>lvgl_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../lvgl_support.c</FilePath>
+              <FilePath>../lvgl_support.c</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
@@ -4193,26 +4228,6 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</FilePath>
@@ -4251,6 +4266,26 @@
               <FileName>fsl_elcdif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_elcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -4318,16 +4353,6 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -4351,6 +4376,16 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5000,23 +5035,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
           <Files>
+            <File>
+              <FileName>lv_draw_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_draw_pxp_blend.c</FileName>
               <FileType>1</FileType>
@@ -5053,6 +5083,16 @@
           <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
           <Files>
             <File>
+              <FileName>lv_draw_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_draw_vglite_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
@@ -5083,16 +5123,6 @@
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_draw_vglite_arc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
@@ -5101,6 +5131,26 @@
               <FileName>lv_draw_vglite_arc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_buf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_vglite_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5211,6 +5261,21 @@
               <FileName>lv_draw_sdl_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_layer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6257,6 +6322,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_fragment_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6728,6 +6798,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -6741,16 +6821,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6801,41 +6871,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7006,6 +7041,41 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

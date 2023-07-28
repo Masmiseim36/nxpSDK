@@ -317,7 +317,7 @@ void M1_InitPWM(void)
     PWMBase->SM[2].VAL5 = PWM_VAL5_VAL5((uint16_t)(0));
 
     /* PWM0 module 0 trigger on VAL4 enabled for ADC synchronization */
-    PWMBase->SM[0].TCTRL |= PWM_TCTRL_OUT_TRIG_EN(1 << 4);
+    PWMBase->SM[0].TCTRL |= PWM_TCTRL_OUT_TRIG_EN(1 << 4) | PWM_TCTRL_TRGFRQ(1);
 
     /* Set dead-time register */
     PWMBase->SM[0].DTCNT0 = PWM_DTCNT0_DTCNT0(g_sClockSetup.ui16M1PwmDeadTime);
@@ -491,9 +491,9 @@ void M1_InitQD(void)
     /* Pass initialization data into encoder driver structure */
     /* encoder position and speed measurement */
     g_sM1Enc.pui32QdBase   = (ENC_Type *)ENC1;
-    g_sM1Enc.sTo.fltPGain  = M1_POSPE_KP_GAIN;
-    g_sM1Enc.sTo.fltIGain  = M1_POSPE_KI_GAIN;
-    g_sM1Enc.sTo.fltThGain = M1_POSPE_INTEG_GAIN;
+    g_sM1Enc.sTo.fltPGain  = M1_POSPE_TO_KP_GAIN;
+    g_sM1Enc.sTo.fltIGain  = M1_POSPE_TO_KI_GAIN;
+    g_sM1Enc.sTo.fltThGain = M1_POSPE_TO_THETA_GAIN;
     g_sM1Enc.a32PosMeGain  = M1_POSPE_MECH_POS_GAIN;
     g_sM1Enc.ui16Pp        = M1_MOTOR_PP;
     g_sM1Enc.bDirection    = M1_POSPE_ENC_DIRECTION;

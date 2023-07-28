@@ -1,7 +1,8 @@
 var a00333 =
 [
-    [ "FSL_LPI2C_FREERTOS_DRIVER_VERSION", "a00333.html#gabe1b685d26560cdb8a3eccf81d013a3f", null ],
-    [ "LPI2C_RTOS_Init", "a00333.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c", null ],
-    [ "LPI2C_RTOS_Deinit", "a00333.html#gacacb0612bfdcd7913be1cef8ad19fb9c", null ],
-    [ "LPI2C_RTOS_Transfer", "a00333.html#gab5359e4f864d7f21eebcab8d3229e963", null ]
+    [ "CAAM_CRC_Init", "a00333.html#ga289e6d38c9dc301da643e37e12782338", null ],
+    [ "CAAM_CRC_Update", "a00333.html#ga427a357fbbf2992f01577f1ce9e5dd96", null ],
+    [ "CAAM_CRC_Finish", "a00333.html#ga2525667037e39d0acf81c73f00bdca2b", null ],
+    [ "CAAM_CRC", "a00333.html#gadcd62c2e6792d7ec5c3f3261bf75c587", null ],
+    [ "CAAM_CRC_NonBlocking", "a00333.html#ga148c19a9d9cd036b7690f9b711d46a55", null ]
 ];

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -229,23 +229,17 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>OSA_USED</state>
           <state>SHELL_TASK_STACK_SIZE=4000</state>
+          <state>SAI_XFER_QUEUE_SIZE=2</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>SD_ENABLED</state>
-          <state>DISABLEFLOAT16</state>
-          <state>SAI_XFER_QUEUE_SIZE=2</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>CASCFG_PLATFORM_FREERTOS</state>
           <state>FSL_OS_SELECTED=SDK_OS_FREERTOS</state>
           <state>FSL_OSA_TASK_ENABLE=1</state>
-          <state>STREAMER_ENABLE_FILESRC</state>
-          <state>STREAMER_ENABLE_FILE_SINK</state>
-          <state>STREAMER_ENABLE_MEM_SRC</state>
-          <state>STREAMER_ENABLE_MEM_SINK</state>
-          <state>MCUXPRESSO_SDK</state>
+          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -285,7 +279,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa050,Pa082,Pe186,Pe815</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -370,39 +364,17 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
@@ -411,6 +383,21 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -532,7 +519,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -737,7 +724,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -873,9 +860,6 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libflac.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1152,7 +1136,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1239,7 +1223,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1256,7 +1240,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1279,7 +1263,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1358,7 +1342,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1370,23 +1354,17 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>OSA_USED</state>
           <state>SHELL_TASK_STACK_SIZE=4000</state>
+          <state>SAI_XFER_QUEUE_SIZE=2</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8962_ENABLE</state>
-          <state>SD_ENABLED</state>
-          <state>DISABLEFLOAT16</state>
-          <state>SAI_XFER_QUEUE_SIZE=2</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>CASCFG_PLATFORM_FREERTOS</state>
           <state>FSL_OS_SELECTED=SDK_OS_FREERTOS</state>
           <state>FSL_OSA_TASK_ENABLE=1</state>
-          <state>STREAMER_ENABLE_FILESRC</state>
-          <state>STREAMER_ENABLE_FILE_SINK</state>
-          <state>STREAMER_ENABLE_MEM_SRC</state>
-          <state>STREAMER_ENABLE_MEM_SINK</state>
-          <state>MCUXPRESSO_SDK</state>
+          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1426,7 +1404,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa050,Pa082,Pe186,Pe815</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1511,39 +1489,17 @@
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8962</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
@@ -1552,6 +1508,21 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1673,7 +1644,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1878,7 +1849,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2014,9 +1985,6 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libflac.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2374,6 +2342,87 @@
     </file>
   </group>
   <group>
+    <name>usb</name>
+    <group>
+      <name>device</name>
+      <group>
+        <name>source</name>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
+        </file>
+        <group>
+          <name>ehci</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
+      </group>
+      <group>
+        <name>class</name>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_class.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_class.h</name>
+        </file>
+        <group>
+          <name>audio</name>
+          <file>
+            <name>$PROJ_DIR$/../usb_device_audio.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../usb_device_audio.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
+    </group>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</name>
@@ -2386,18 +2435,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_sai.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_sai_edma.h</name>
@@ -2430,6 +2467,18 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
     </file>
     <file>
@@ -2457,19 +2506,13 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_usdhc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_usdhc.h</name>
     </file>
   </group>
   <group>
@@ -2479,12 +2522,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/wm8962/fsl_wm8962.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <group>
       <name>port</name>
@@ -2501,6 +2538,12 @@
         <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
     </file>
@@ -2520,33 +2563,6 @@
       </file>
     </group>
     <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-    </group>
-    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -2558,6 +2574,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -2565,12 +2587,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -2582,451 +2598,19 @@
         <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>sdmmc</name>
-    <group>
-      <name>src</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd/fsl_sd.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c</name>
-      </file>
-    </group>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd/fsl_sd.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h</name>
-      </file>
-    </group>
-    <group>
-      <name>sd</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</name>
-      </file>
-    </group>
-    <group>
-      <name>host</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-    </group>
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <group>
-      <name>DSP</name>
-      <group>
-        <name>Include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_common_tables.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_helium_utils.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_f16.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_memory.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_types.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_types_f16.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_mve_tables.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_mve_tables_f16.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_vec_math.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_vec_math_f16.h</name>
-        </file>
-        <group>
-          <name>dsp</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/bayes_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/bayes_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/controller_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/distance_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/filtering_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/filtering_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/matrix_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/none.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/quaternion_math_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/statistics_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/statistics_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/support_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/support_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/svm_defines.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/svm_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/svm_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/transform_functions.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/transform_functions_f16.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/utils.h</name>
-          </file>
-        </group>
-      </group>
-      <group>
-        <name>PrivateInclude</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude/arm_sorting.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_fft.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</name>
-        </file>
-      </group>
-      <group>
-        <name>Source</name>
-        <group>
-          <name>BasicMathFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>BayesFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BayesFunctions/BayesFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>CommonTables</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/CommonTables/CommonTables.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/CommonTables/CommonTablesF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>ComplexMathFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>ControllerFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c</name>
-          </file>
-        </group>
-        <group>
-          <name>DistanceFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions/DistanceFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions/arm_boolean_distance_template.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions/DistanceFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>FastMathFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FastMathFunctions/FastMathFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>FilteringFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FilteringFunctions/FilteringFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>InterpolationFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>MatrixFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/MatrixFunctions/MatrixFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>QuaternionMathFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/QuaternionMathFunctions/QuaternionMathFunctions.c</name>
-          </file>
-        </group>
-        <group>
-          <name>SVMFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SVMFunctions/SVMFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>StatisticsFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>SupportFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SupportFunctions/SupportFunctionsF16.c</name>
-          </file>
-        </group>
-        <group>
-          <name>TransformFunctions</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</name>
-          </file>
-        </group>
-      </group>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
-    </file>
-  </group>
-  <group>
-    <name>usb</name>
-    <group>
-      <name>device</name>
-      <group>
-        <name>source</name>
-        <group>
-          <name>ehci</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_ehci.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-      </group>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-      </group>
-      <group>
-        <name>class</name>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.h</name>
-        </file>
-        <group>
-          <name>audio</name>
-          <file>
-            <name>$PROJ_DIR$/../usb_device_audio.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../usb_device_audio.h</name>
-          </file>
-        </group>
-      </group>
-    </group>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
-      </file>
-    </group>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
       </file>
     </group>
   </group>
@@ -3195,6 +2779,9 @@
         <group>
           <name>include</name>
           <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/LVC_Types.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/cci_metadata.h</name>
           </file>
           <file>
@@ -3205,6 +2792,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/errordefs.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/ssrc_head.h</name>
           </file>
         </group>
         <group>
@@ -3427,10 +3017,16 @@
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker_mem.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit_filesink.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_audiosrc.c</name>
@@ -3448,10 +3044,16 @@
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker_mem.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit_filesink.c</name>
         </file>
       </group>
       <group>
@@ -3530,11 +3132,26 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</name>
+    </file>
   </group>
   <group>
     <name>fatfs</name>
     <group>
       <name>source</name>
+      <group>
+        <name>fsl_ram_disk</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk/fsl_ram_disk.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk/fsl_ram_disk.h</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
@@ -3553,15 +3170,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
-      <group>
-        <name>fsl_ram_disk</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk/fsl_ram_disk.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_ram_disk/fsl_ram_disk.h</name>
-        </file>
-      </group>
     </group>
   </group>
   <group>
@@ -3601,6 +3209,27 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkbmimxrt1170_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

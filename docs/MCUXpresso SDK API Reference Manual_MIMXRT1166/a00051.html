@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: KPP: KeyPad Port Driver</title>
+<title>MCUXpresso SDK API Reference Manual: GPIO: General-Purpose Input/Output Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,137 +102,179 @@ $(document).ready(function(){initNavTree('a00051.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">KPP: KeyPad Port Driver</div>  </div>
+<div class="title">GPIO: General-Purpose Input/Output Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the KeyPad Port block of MCUXpresso SDK devices.</p>
-<h1>KPP: KeyPad Port Driver</h1>
-<h2>KPP Initialization Operation</h2>
-<p>The KPP Initialize is to initialize for common configure: gate the KPP clock, configure columns, and rows features. The KPP Deinitialize is to ungate the clock.</p>
-<h2>KPP Basic Operation</h2>
-<p>The KPP provide the function to enable/disable interrupts. The KPP provide key press scanning function KPP_keyPressScanning. This API should be called by the Interrupt handler in application. KPP still provides functions to get and clear status flags.</p>
-<h1><a class="anchor" id="KPPTpyUC"></a>
+<p>The MCUXpresso SDK provides a peripheral driver for the General-Purpose Input/Output (GPIO) module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="GPIOTpyUC"></a>
 Typical use case</h1>
+<h2><a class="anchor" id="GPIOInOps"></a>
+Input Operation</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/gpio </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00552"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00552">kpp_config_t</a></td></tr>
-<tr class="memdesc:a00552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP status.  <a href="a00051.html#a00552">More...</a><br/></td></tr>
-<tr class="separator:a00552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00561"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00561">gpio_pin_config_t</a></td></tr>
+<tr class="memdesc:a00561"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Init structure definition.  <a href="a00051.html#a00561">More...</a><br/></td></tr>
+<tr class="separator:a00561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2">kKPP_keyDepressInterrupt</a> = KPP_KPSR_KDIE_MASK, 
+<tr class="memitem:gada41ca0a2ce239fe125ee96833e715c0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00051.html#ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4">kGPIO_DigitalInput</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df">kKPP_keyReleaseInterrupt</a> = KPP_KPSR_KRIE_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of interrupts supported by the peripheral.  <a href="a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">More...</a><br/></td></tr>
-<tr class="separator:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b">kKPP_ClearKeyDepressSyncChain</a> = KPP_KPSR_KDSC_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5">kKPP_SetKeyReleasesSyncChain</a> = KPP_KPSR_KRSS_MASK
+&#160;&#160;<a class="el" href="a00051.html#ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9">kGPIO_DigitalOutput</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0c44e479c6d310cf4d9a701c09f73485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP synchronize chain operation.  <a href="a00051.html#ga0c44e479c6d310cf4d9a701c09f73485">More...</a><br/></td></tr>
-<tr class="separator:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gada41ca0a2ce239fe125ee96833e715c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO direction definition.  <a href="a00051.html#gada41ca0a2ce239fe125ee96833e715c0">More...</a><br/></td></tr>
+<tr class="separator:gada41ca0a2ce239fe125ee96833e715c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d">kGPIO_NoIntmode</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da">kGPIO_IntLowLevel</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3">kGPIO_IntHighLevel</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4">kGPIO_IntRisingEdge</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887">kGPIO_IntFallingEdge</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50">kGPIO_IntRisingOrFallingEdge</a> = 5U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO interrupt mode definition.  <a href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">More...</a><br/></td></tr>
+<tr class="separator:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga35c20878a9d0b578ca2bbf50d98666a8">FSL_KPP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td></tr>
-<tr class="memdesc:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP driver version 2.0.0.  <a href="#ga35c20878a9d0b578ca2bbf50d98666a8">More...</a><br/></td></tr>
-<tr class="separator:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga5aa5229cbd041b11bcf8417ba12896b2">FSL_GPIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
+<tr class="memdesc:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO driver version.  <a href="#ga5aa5229cbd041b11bcf8417ba12896b2">More...</a><br/></td></tr>
+<tr class="separator:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and De-initialization</h2></td></tr>
-<tr class="memitem:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga773203cef9b50a6c5864f78c05cb0c83">KPP_Init</a> (KPP_Type *base, <a class="el" href="a00051.html#a00552">kpp_config_t</a> *configure)</td></tr>
-<tr class="memdesc:ga773203cef9b50a6c5864f78c05cb0c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP initialize.  <a href="#ga773203cef9b50a6c5864f78c05cb0c83">More...</a><br/></td></tr>
-<tr class="separator:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga910f3aec15296a1d993f9b4963a152fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga910f3aec15296a1d993f9b4963a152fd">KPP_Deinit</a> (KPP_Type *base)</td></tr>
-<tr class="memdesc:ga910f3aec15296a1d993f9b4963a152fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the KPP module and gates the clock.  <a href="#ga910f3aec15296a1d993f9b4963a152fd">More...</a><br/></td></tr>
-<tr class="separator:ga910f3aec15296a1d993f9b4963a152fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+GPIO Initialization and Configuration functions</h2></td></tr>
+<tr class="memitem:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga8d3aa26ad7e88ef1427e51242a70c259">GPIO_PinInit</a> (GPIO_Type *base, uint32_t pin, const <a class="el" href="a00051.html#a00561">gpio_pin_config_t</a> *Config)</td></tr>
+<tr class="memdesc:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the GPIO peripheral according to the specified parameters in the initConfig.  <a href="#ga8d3aa26ad7e88ef1427e51242a70c259">More...</a><br/></td></tr>
+<tr class="separator:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-KPP Basic Operation</h2></td></tr>
-<tr class="memitem:ga4d8bc3929af0678c182047884c50f7db"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga4d8bc3929af0678c182047884c50f7db">KPP_EnableInterrupts</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:ga4d8bc3929af0678c182047884c50f7db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the interrupt.  <a href="#ga4d8bc3929af0678c182047884c50f7db">More...</a><br/></td></tr>
-<tr class="separator:ga4d8bc3929af0678c182047884c50f7db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7de1f02a42c4176605cf7053f78baab"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa7de1f02a42c4176605cf7053f78baab">KPP_DisableInterrupts</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:gaa7de1f02a42c4176605cf7053f78baab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the interrupt.  <a href="#gaa7de1f02a42c4176605cf7053f78baab">More...</a><br/></td></tr>
-<tr class="separator:gaa7de1f02a42c4176605cf7053f78baab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7e0b699fd3ac19ce1bbb95418871ab3e">KPP_GetStatusFlag</a> (KPP_Type *base)</td></tr>
-<tr class="memdesc:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the KPP interrupt event status.  <a href="#ga7e0b699fd3ac19ce1bbb95418871ab3e">More...</a><br/></td></tr>
-<tr class="separator:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gad5f48c3a6027700e16a3f9bf477fa7e6">KPP_ClearStatusFlag</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears KPP status flag.  <a href="#gad5f48c3a6027700e16a3f9bf477fa7e6">More...</a><br/></td></tr>
-<tr class="separator:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7a240001a7a2b5fb84754a9a75afcb86">KPP_SetSynchronizeChain</a> (KPP_Type *base, uint16_t mask)</td></tr>
-<tr class="memdesc:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set KPP synchronization chain.  <a href="#ga7a240001a7a2b5fb84754a9a75afcb86">More...</a><br/></td></tr>
-<tr class="separator:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga636803e3b1c99ec6dc9756548d9ef7b9">KPP_keyPressScanning</a> (KPP_Type *base, uint8_t *data, uint32_t clockSrc_Hz)</td></tr>
-<tr class="memdesc:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keypad press scanning.  <a href="#ga636803e3b1c99ec6dc9756548d9ef7b9">More...</a><br/></td></tr>
-<tr class="separator:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+GPIO Reads and Write Functions</h2></td></tr>
+<tr class="memitem:ga41c1b70e3ee7825359e0891812c88e85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga41c1b70e3ee7825359e0891812c88e85">GPIO_PinWrite</a> (GPIO_Type *base, uint32_t pin, uint8_t output)</td></tr>
+<tr class="memdesc:ga41c1b70e3ee7825359e0891812c88e85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the individual GPIO pin to logic 1 or 0.  <a href="#ga41c1b70e3ee7825359e0891812c88e85">More...</a><br/></td></tr>
+<tr class="separator:ga41c1b70e3ee7825359e0891812c88e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5677a2c3b14f5e9f034edbbd5b429c1d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga5677a2c3b14f5e9f034edbbd5b429c1d">GPIO_WritePinOutput</a> (GPIO_Type *base, uint32_t pin, uint8_t output)</td></tr>
+<tr class="memdesc:ga5677a2c3b14f5e9f034edbbd5b429c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the individual GPIO pin to logic 1 or 0.  <a href="#ga5677a2c3b14f5e9f034edbbd5b429c1d">More...</a><br/></td></tr>
+<tr class="separator:ga5677a2c3b14f5e9f034edbbd5b429c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2de9f41517bfde0920a5dea5db6e56d6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga2de9f41517bfde0920a5dea5db6e56d6">GPIO_PortSet</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga2de9f41517bfde0920a5dea5db6e56d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 1.  <a href="#ga2de9f41517bfde0920a5dea5db6e56d6">More...</a><br/></td></tr>
+<tr class="separator:ga2de9f41517bfde0920a5dea5db6e56d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f8a8be69355039abd8b1ddf2a236f4c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga2f8a8be69355039abd8b1ddf2a236f4c">GPIO_SetPinsOutput</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga2f8a8be69355039abd8b1ddf2a236f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 1.  <a href="#ga2f8a8be69355039abd8b1ddf2a236f4c">More...</a><br/></td></tr>
+<tr class="separator:ga2f8a8be69355039abd8b1ddf2a236f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff8a89d83ce5fdaea9db88317eece33c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaff8a89d83ce5fdaea9db88317eece33c">GPIO_PortClear</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaff8a89d83ce5fdaea9db88317eece33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 0.  <a href="#gaff8a89d83ce5fdaea9db88317eece33c">More...</a><br/></td></tr>
+<tr class="separator:gaff8a89d83ce5fdaea9db88317eece33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ac4a7dccb5285b2926f152c3ff12af9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga3ac4a7dccb5285b2926f152c3ff12af9">GPIO_ClearPinsOutput</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga3ac4a7dccb5285b2926f152c3ff12af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 0.  <a href="#ga3ac4a7dccb5285b2926f152c3ff12af9">More...</a><br/></td></tr>
+<tr class="separator:ga3ac4a7dccb5285b2926f152c3ff12af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedff8c598cb084323f2aa6c324c2c0cb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaedff8c598cb084323f2aa6c324c2c0cb">GPIO_PortToggle</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaedff8c598cb084323f2aa6c324c2c0cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the current output logic of the multiple GPIO pins.  <a href="#gaedff8c598cb084323f2aa6c324c2c0cb">More...</a><br/></td></tr>
+<tr class="separator:gaedff8c598cb084323f2aa6c324c2c0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac999c0dd229595fe2b651e796da560be"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac999c0dd229595fe2b651e796da560be">GPIO_PinRead</a> (GPIO_Type *base, uint32_t pin)</td></tr>
+<tr class="memdesc:gac999c0dd229595fe2b651e796da560be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current input value of the GPIO port.  <a href="#gac999c0dd229595fe2b651e796da560be">More...</a><br/></td></tr>
+<tr class="separator:gac999c0dd229595fe2b651e796da560be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8d77b6a1daf18087dbc6c0814b2ed97"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaf8d77b6a1daf18087dbc6c0814b2ed97">GPIO_ReadPinInput</a> (GPIO_Type *base, uint32_t pin)</td></tr>
+<tr class="memdesc:gaf8d77b6a1daf18087dbc6c0814b2ed97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current input value of the GPIO port.  <a href="#gaf8d77b6a1daf18087dbc6c0814b2ed97">More...</a><br/></td></tr>
+<tr class="separator:gaf8d77b6a1daf18087dbc6c0814b2ed97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+GPIO Reads Pad Status Functions</h2></td></tr>
+<tr class="memitem:ga1841e0c18fa0792e1fa1b5f812dcdbfa"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa">GPIO_PinReadPadStatus</a> (GPIO_Type *base, uint32_t pin)</td></tr>
+<tr class="memdesc:ga1841e0c18fa0792e1fa1b5f812dcdbfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current GPIO pin pad status.  <a href="#ga1841e0c18fa0792e1fa1b5f812dcdbfa">More...</a><br/></td></tr>
+<tr class="separator:ga1841e0c18fa0792e1fa1b5f812dcdbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga064aa69c0dbb70a4a7344124df9943b1"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga064aa69c0dbb70a4a7344124df9943b1">GPIO_ReadPadStatus</a> (GPIO_Type *base, uint32_t pin)</td></tr>
+<tr class="memdesc:ga064aa69c0dbb70a4a7344124df9943b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current GPIO pin pad status.  <a href="#ga064aa69c0dbb70a4a7344124df9943b1">More...</a><br/></td></tr>
+<tr class="separator:ga064aa69c0dbb70a4a7344124df9943b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Interrupts and flags management functions</h2></td></tr>
+<tr class="memitem:gac704735fb3cf3a56676f2fb90e67b10f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
+<tr class="memdesc:gac704735fb3cf3a56676f2fb90e67b10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current pin interrupt mode.  <a href="#gac704735fb3cf3a56676f2fb90e67b10f">More...</a><br/></td></tr>
+<tr class="separator:gac704735fb3cf3a56676f2fb90e67b10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga364fe6d19b98557e44282f95ccc5e63d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga364fe6d19b98557e44282f95ccc5e63d">GPIO_SetPinInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
+<tr class="memdesc:ga364fe6d19b98557e44282f95ccc5e63d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current pin interrupt mode.  <a href="#ga364fe6d19b98557e44282f95ccc5e63d">More...</a><br/></td></tr>
+<tr class="separator:ga364fe6d19b98557e44282f95ccc5e63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga2a62aa9cd2aeacf2a81dc4d644f9b0b1">GPIO_PortEnableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the specific pin interrupt.  <a href="#ga2a62aa9cd2aeacf2a81dc4d644f9b0b1">More...</a><br/></td></tr>
+<tr class="separator:ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7c45f4ed2a5ec769e0e4cd2e32f62ad5">GPIO_EnableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the specific pin interrupt.  <a href="#ga7c45f4ed2a5ec769e0e4cd2e32f62ad5">More...</a><br/></td></tr>
+<tr class="separator:ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9613d5714d047051b09f86592d9cdc4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaf9613d5714d047051b09f86592d9cdc4">GPIO_PortDisableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaf9613d5714d047051b09f86592d9cdc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the specific pin interrupt.  <a href="#gaf9613d5714d047051b09f86592d9cdc4">More...</a><br/></td></tr>
+<tr class="separator:gaf9613d5714d047051b09f86592d9cdc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1deaff6764df2649453fa5502ee0fcc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa1deaff6764df2649453fa5502ee0fcc">GPIO_DisableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa1deaff6764df2649453fa5502ee0fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the specific pin interrupt.  <a href="#gaa1deaff6764df2649453fa5502ee0fcc">More...</a><br/></td></tr>
+<tr class="separator:gaa1deaff6764df2649453fa5502ee0fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee4bc796792470cf80e8f0aa6d8c0d32"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaee4bc796792470cf80e8f0aa6d8c0d32">GPIO_PortGetInterruptFlags</a> (GPIO_Type *base)</td></tr>
+<tr class="memdesc:gaee4bc796792470cf80e8f0aa6d8c0d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads individual pin interrupt status.  <a href="#gaee4bc796792470cf80e8f0aa6d8c0d32">More...</a><br/></td></tr>
+<tr class="separator:gaee4bc796792470cf80e8f0aa6d8c0d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6efe712710a08ee6e9f89a47a507339f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga6efe712710a08ee6e9f89a47a507339f">GPIO_GetPinsInterruptFlags</a> (GPIO_Type *base)</td></tr>
+<tr class="memdesc:ga6efe712710a08ee6e9f89a47a507339f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads individual pin interrupt status.  <a href="#ga6efe712710a08ee6e9f89a47a507339f">More...</a><br/></td></tr>
+<tr class="separator:ga6efe712710a08ee6e9f89a47a507339f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc9cd5e2b520359406cf4b45c5761011"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gabc9cd5e2b520359406cf4b45c5761011">GPIO_PortClearInterruptFlags</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gabc9cd5e2b520359406cf4b45c5761011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears pin interrupt flag.  <a href="#gabc9cd5e2b520359406cf4b45c5761011">More...</a><br/></td></tr>
+<tr class="separator:gabc9cd5e2b520359406cf4b45c5761011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b1ad50f4212dfb839fd059503f03bed"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga0b1ad50f4212dfb839fd059503f03bed">GPIO_ClearPinsInterruptFlags</a> (GPIO_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga0b1ad50f4212dfb839fd059503f03bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears pin interrupt flag.  <a href="#ga0b1ad50f4212dfb839fd059503f03bed">More...</a><br/></td></tr>
+<tr class="separator:ga0b1ad50f4212dfb839fd059503f03bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00552" id="a00552"></a>
+<a name="a00561" id="a00561"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct kpp_config_t</td>
+          <td class="memname">struct gpio_pin_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#affe1c0fe7c98a7bbd90e5da557a77029">activeRow</a></td></tr>
-<tr class="memdesc:affe1c0fe7c98a7bbd90e5da557a77029"><td class="mdescLeft">&#160;</td><td class="mdescRight">The row number: bit 7 ~ 0 represents the row 7 ~ 0.  <a href="#affe1c0fe7c98a7bbd90e5da557a77029">More...</a><br/></td></tr>
-<tr class="separator:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17262e678dbf479fc6fea48e685e94be"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a17262e678dbf479fc6fea48e685e94be">activeColumn</a></td></tr>
-<tr class="memdesc:a17262e678dbf479fc6fea48e685e94be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The column number: bit 7 ~ 0 represents the column 7 ~ 0.  <a href="#a17262e678dbf479fc6fea48e685e94be">More...</a><br/></td></tr>
-<tr class="separator:a17262e678dbf479fc6fea48e685e94be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a3f6f88fe9bcaf13690da0506e52f8bd9">interrupt</a></td></tr>
-<tr class="memdesc:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP interrupt source.  <a href="#a3f6f88fe9bcaf13690da0506e52f8bd9">More...</a><br/></td></tr>
-<tr class="separator:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eae83ead0519707b896cfa9082c4e82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a5eae83ead0519707b896cfa9082c4e82">direction</a></td></tr>
+<tr class="memdesc:a5eae83ead0519707b896cfa9082c4e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin direction.  <a href="#a5eae83ead0519707b896cfa9082c4e82">More...</a><br/></td></tr>
+<tr class="separator:a5eae83ead0519707b896cfa9082c4e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d37ffd9a2943f10a91095759bd52da5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d37ffd9a2943f10a91095759bd52da5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a9d37ffd9a2943f10a91095759bd52da5">outputLogic</a></td></tr>
+<tr class="memdesc:a9d37ffd9a2943f10a91095759bd52da5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a default output logic, which has no use in input. <br/></td></tr>
+<tr class="separator:a9d37ffd9a2943f10a91095759bd52da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2aaf4ec1e85d3fcea653b422c673441e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a2aaf4ec1e85d3fcea653b422c673441e">interruptMode</a></td></tr>
+<tr class="memdesc:a2aaf4ec1e85d3fcea653b422c673441e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin interrupt mode, a value of <a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>.  <a href="#a2aaf4ec1e85d3fcea653b422c673441e">More...</a><br/></td></tr>
+<tr class="separator:a2aaf4ec1e85d3fcea653b422c673441e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="affe1c0fe7c98a7bbd90e5da557a77029"></a>
+<a class="anchor" id="a5eae83ead0519707b896cfa9082c4e82"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t kpp_config_t::activeRow</td>
+          <td class="memname"><a class="el" href="a00051.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a> gpio_pin_config_t::direction</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a17262e678dbf479fc6fea48e685e94be"></a>
+<a class="anchor" id="a2aaf4ec1e85d3fcea653b422c673441e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t kpp_config_t::activeColumn</td>
+          <td class="memname"><a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> gpio_pin_config_t::interruptMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a3f6f88fe9bcaf13690da0506e52f8bd9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t kpp_config_t::interrupt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>A logical OR of "kpp_interrupt_enable_t". </p>
 
 </div>
 </div>
@@ -240,12 +282,12 @@ KPP Basic Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga35c20878a9d0b578ca2bbf50d98666a8"></a>
+<a class="anchor" id="ga5aa5229cbd041b11bcf8417ba12896b2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_KPP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td>
+          <td class="memname">#define FSL_GPIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -253,321 +295,80 @@ KPP Basic Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga405aea9bdb57ab7a5a7d0aecdc0edc72"></a>
+<a class="anchor" id="gada41ca0a2ce239fe125ee96833e715c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a></td>
+          <td class="memname">enum <a class="el" href="a00051.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This enumeration uses one-bot encoding to allow a logical OR of multiple members. Members usually map to interrupt enable bits in one or more peripheral registers. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2"></a>kKPP_keyDepressInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad depress interrupt source. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4"></a>kGPIO_DigitalInput</em>&nbsp;</td><td class="fielddoc">
+<p>Set current pin as digital input. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df"></a>kKPP_keyReleaseInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad release interrupt source. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9"></a>kGPIO_DigitalOutput</em>&nbsp;</td><td class="fielddoc">
+<p>Set current pin as digital output. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga0c44e479c6d310cf4d9a701c09f73485"></a>
+<a class="anchor" id="ga1b9ad57f43a7be04e31c2e43e92aca39"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a></td>
+          <td class="memname">enum <a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b"></a>kKPP_ClearKeyDepressSyncChain</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad depress interrupt status. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d"></a>kGPIO_NoIntmode</em>&nbsp;</td><td class="fielddoc">
+<p>Set current pin general IO functionality. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5"></a>kKPP_SetKeyReleasesSyncChain</em>&nbsp;</td><td class="fielddoc">
-<p>Keypad release interrupt status. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da"></a>kGPIO_IntLowLevel</em>&nbsp;</td><td class="fielddoc">
+<p>Set current pin interrupt is low-level sensitive. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3"></a>kGPIO_IntHighLevel</em>&nbsp;</td><td class="fielddoc">
+<p>Set current pin interrupt is high-level sensitive. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4"></a>kGPIO_IntRisingEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Set current pin interrupt is rising-edge sensitive. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887"></a>kGPIO_IntFallingEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Set current pin interrupt is falling-edge sensitive. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50"></a>kGPIO_IntRisingOrFallingEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Enable the edge select bit to override the ICR register's configuration. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga773203cef9b50a6c5864f78c05cb0c83"></a>
+<a class="anchor" id="ga8d3aa26ad7e88ef1427e51242a70c259"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void KPP_Init </td>
+          <td class="memname">void GPIO_PinInit </td>
           <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#a00552">kpp_config_t</a> *&#160;</td>
-          <td class="paramname"><em>configure</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function ungates the KPP clock and initializes KPP. This function must be called before calling any other KPP driver functions.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">configure</td><td>The KPP configuration structure pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga910f3aec15296a1d993f9b4963a152fd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void KPP_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the KPP clock. As a result, the KPP module doesn't work after calling this function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4d8bc3929af0678c182047884c50f7db"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP interrupts to enable. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa7de1f02a42c4176605cf7053f78baab"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP interrupts to disable. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7e0b699fd3ac19ce1bbb95418871ab3e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint16_t KPP_GetStatusFlag </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status of the KPP. Application can use the enum type in the "kpp_interrupt_enable_t" to get the right status of the related event. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad5f48c3a6027700e16a3f9bf477fa7e6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_ClearStatusFlag </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP mask to be cleared. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7a240001a7a2b5fb84754a9a75afcb86"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void KPP_SetSynchronizeChain </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>KPP mask to be cleared. This is a logical OR of the enumeration :: kpp_sync_operation_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga636803e3b1c99ec6dc9756548d9ef7b9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void KPP_keyPressScanning </td>
-          <td>(</td>
-          <td class="paramtype">KPP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>clockSrc_Hz</em>&#160;</td>
+          <td class="paramname"><em>pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00051.html#a00561">gpio_pin_config_t</a> *&#160;</td>
+          <td class="paramname"><em>Config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -576,12 +377,848 @@ KPP Basic Operation</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function will scanning all columns and rows. so all scanning data will be stored in the data pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
-    <tr><td class="paramname">data</td><td>KPP key press scanning data. The data buffer should be prepared with length at least equal to KPP_KEYPAD_COLUMNNUM_MAX * KPP_KEYPAD_ROWNUM_MAX. the data pointer is recommended to be a array like uint8_t data[KPP_KEYPAD_COLUMNNUM_MAX]. for example the data[2] = 4, that means in column 1 row 2 has a key press event. </td></tr>
-    <tr><td class="paramname">clockSrc_Hz</td><td>Source clock. </td></tr>
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">pin</td><td>Specifies the pin number </td></tr>
+    <tr><td class="paramname">Config</td><td>pointer to a <a class="el" href="a00051.html#a00561">gpio_pin_config_t</a> structure that contains the configuration information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga41c1b70e3ee7825359e0891812c88e85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GPIO_PinWrite </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
+    <tr><td class="paramname">output</td><td>GPIOpin output logic level.<ul>
+<li>0: corresponding pin output low-logic level.</li>
+<li>1: corresponding pin output high-logic level. </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5677a2c3b14f5e9f034edbbd5b429c1d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_WritePinOutput </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000004">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00051.html#ga41c1b70e3ee7825359e0891812c88e85">GPIO_PinWrite</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2de9f41517bfde0920a5dea5db6e56d6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_PortSet </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO peripheral base pointer (GPIO1, GPIO2, GPIO3, and so on.) </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2f8a8be69355039abd8b1ddf2a236f4c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_SetPinsOutput </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000005">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00051.html#ga2de9f41517bfde0920a5dea5db6e56d6">GPIO_PortSet</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaff8a89d83ce5fdaea9db88317eece33c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_PortClear </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO peripheral base pointer (GPIO1, GPIO2, GPIO3, and so on.) </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3ac4a7dccb5285b2926f152c3ff12af9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_ClearPinsOutput </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000006">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00051.html#gaff8a89d83ce5fdaea9db88317eece33c">GPIO_PortClear</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaedff8c598cb084323f2aa6c324c2c0cb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_PortToggle </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO peripheral base pointer (GPIO1, GPIO2, GPIO3, and so on.) </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac999c0dd229595fe2b651e796da560be"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPIO_PinRead </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">GPIO</td><td>port input value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf8d77b6a1daf18087dbc6c0814b2ed97"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPIO_ReadPinInput </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000007">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00051.html#gac999c0dd229595fe2b651e796da560be">GPIO_PinRead</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1841e0c18fa0792e1fa1b5f812dcdbfa"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint8_t GPIO_PinReadPadStatus </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">GPIO</td><td>pin pad status value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga064aa69c0dbb70a4a7344124df9943b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint8_t GPIO_ReadPadStatus </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000008">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00051.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa">GPIO_PinReadPadStatus</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac704735fb3cf3a56676f2fb90e67b10f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GPIO_PinSetInterruptConfig </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td>
+          <td class="paramname"><em>pinInterruptMode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
+    <tr><td class="paramname">pinInterruptMode</td><td>pointer to a <a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> structure that contains the interrupt mode information. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga364fe6d19b98557e44282f95ccc5e63d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_SetPinInterruptConfig </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td>
+          <td class="paramname"><em>pinInterruptMode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000009">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00051.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_PortEnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf9613d5714d047051b09f86592d9cdc4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_PortDisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa1deaff6764df2649453fa5502ee0fcc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000010">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00051.html#gaf9613d5714d047051b09f86592d9cdc4">GPIO_PortDisableInterrupts</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaee4bc796792470cf80e8f0aa6d8c0d32"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPIO_PortGetInterruptFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">current</td><td>pin interrupt status flag. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6efe712710a08ee6e9f89a47a507339f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPIO_GetPinsInterruptFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">current</td><td>pin interrupt status flag. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gabc9cd5e2b520359406cf4b45c5761011"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_PortClearInterruptFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Status flags are cleared by writing a 1 to the corresponding bit position.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0b1ad50f4212dfb839fd059503f03bed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPIO_ClearPinsInterruptFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Status flags are cleared by writing a 1 to the corresponding bit position.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
   </table>
   </dd>
 </dl>

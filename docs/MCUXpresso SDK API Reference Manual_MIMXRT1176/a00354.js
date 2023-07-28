@@ -1,19 +1,21 @@
 var a00354 =
 [
-    [ "FSL_SEMA4_DRIVER_VERSION", "a00354.html#ga1bb7148a101cd7925e5271374862802e", null ],
-    [ "SEMA4_GATE_NUM_RESET_ALL", "a00354.html#gacb7a70c49148b0186f0eaa3fe910ba79", null ],
-    [ "SEMA4_GATEn", "a00354.html#gaf1811869c70952983fa9cbd5aef3e933", null ],
-    [ "SEMA4_Init", "a00354.html#gac6380ed053744f451c5175db29f9f3d9", null ],
-    [ "SEMA4_Deinit", "a00354.html#gafc7188cb89c7522813d6be66f97c7e35", null ],
-    [ "SEMA4_TryLock", "a00354.html#ga30d848a2ce959c29af0f13bf8f0ee1dc", null ],
-    [ "SEMA4_Lock", "a00354.html#gae5ca0fa4f34ac84b2c3df0abeeadd9c0", null ],
-    [ "SEMA4_Unlock", "a00354.html#ga1c34c4b2eca52767539b73647e866e7f", null ],
-    [ "SEMA4_GetLockProc", "a00354.html#ga9869fbc634dce9bd292f85bd09661d37", null ],
-    [ "SEMA4_ResetGate", "a00354.html#gae5c7bc935b02303f51a8254886acff76", null ],
-    [ "SEMA4_ResetAllGates", "a00354.html#ga4d466ad087825369aeaa611140dccf55", null ],
-    [ "SEMA4_EnableGateNotifyInterrupt", "a00354.html#ga06ad2e8a81e220aefac8c9a2b49ce1cb", null ],
-    [ "SEMA4_DisableGateNotifyInterrupt", "a00354.html#gac3168fbde7570fc0ce56a92a8eb335fb", null ],
-    [ "SEMA4_GetGateNotifyStatus", "a00354.html#ga0ed4770fa9e88d5abb4b94a775e7db2b", null ],
-    [ "SEMA4_ResetGateNotify", "a00354.html#gab648c6d8479df0890ba2d654f0193f7a", null ],
-    [ "SEMA4_ResetAllGateNotify", "a00354.html#gaef68d23981bfc1c2fbbb823b28976353", null ]
+    [ "FSL_OCOTP_DRIVER_VERSION", "a00354.html#ga211ad512cb6afc3a8649a61c4f887dd5", [
+      [ "kStatus_OCOTP_AccessError", "a00354.html#gga3babbf89cae9b856a12864a41506efbda6133e2fb03bd09bc490982251048c8de", null ],
+      [ "kStatus_OCOTP_CrcFail", "a00354.html#gga3babbf89cae9b856a12864a41506efbda6c5aa99c2965029cf80feaf36cd0763a", null ],
+      [ "kStatus_OCOTP_ReloadError", "a00354.html#gga3babbf89cae9b856a12864a41506efbdaa1a3a69603c6973128021852a03cf9ce", null ],
+      [ "kStatus_OCOTP_ProgramFail", "a00354.html#gga3babbf89cae9b856a12864a41506efbdae3aafd3ae27db94a954965038445d240", null ],
+      [ "kStatus_OCOTP_Locked", "a00354.html#gga3babbf89cae9b856a12864a41506efbda3a38a5c2c3c0f0146c9b773e855812a6", null ]
+    ] ],
+    [ "OCOTP_Init", "a00354.html#ga54480b3c489116b8cb76053b16f02c89", null ],
+    [ "OCOTP_Deinit", "a00354.html#gaafffa3b5fe3f1f69f077e88ba5a7e107", null ],
+    [ "OCOTP_CheckBusyStatus", "a00354.html#gaa3040092099624ec476dd81bd022712c", null ],
+    [ "OCOTP_CheckErrorStatus", "a00354.html#gaf0ee0166ccd35b0273d468b7eb72c954", null ],
+    [ "OCOTP_ClearErrorStatus", "a00354.html#gad9294be0c39be4dfaa1eea436ac85171", null ],
+    [ "OCOTP_ReloadShadowRegister", "a00354.html#ga7a7b1cd03383fafde15157a06fdda557", null ],
+    [ "OCOTP_ReadFuseShadowRegister", "a00354.html#gaecc991ccf4be0c49286fb13cba97e389", null ],
+    [ "OCOTP_ReadFuseShadowRegisterExt", "a00354.html#gaa1b0f813fa5ca43225d71d9218c48a28", null ],
+    [ "OCOTP_WriteFuseShadowRegister", "a00354.html#ga43636ab96125958c9a14fe82c176e33e", null ],
+    [ "OCOTP_WriteFuseShadowRegisterWithLock", "a00354.html#ga4f837c7b4a66ffe3153f2975fd5c6388", null ],
+    [ "OCOTP_GetVersion", "a00354.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5", null ]
 ];

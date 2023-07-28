@@ -7,7 +7,6 @@
 
 #include "m1_sm_snsless_enc.h"
 #include "mc_periph_init.h"
-#include "mid_sm_states.h"
 
 /*******************************************************************************
  * Definitions
@@ -40,7 +39,7 @@ static void M1_StateRunSlow(void);
 
 RAM_FUNC_LIB
 static void M1_TransFaultStop(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransInitFault(void);
 RAM_FUNC_LIB
 static void M1_TransInitStop(void);
@@ -53,57 +52,57 @@ static void M1_TransRunFault(void);
 RAM_FUNC_LIB
 static void M1_TransRunStop(void);
 
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunCalibFast(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunReadyFast(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunAlignFast(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunStartupFast(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunSpinFast(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunFreewheelFast(void);
 
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunCalibSlow(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunReadySlow(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunAlignSlow(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunStartupSlow(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunSpinSlow(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_StateRunFreewheelSlow(void);
 
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunCalibReady(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunReadyAlign(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunReadySpin(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunAlignStartup(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunAlignReady(void);
 RAM_FUNC_LIB
 static void M1_TransRunAlignSpin(void);
 RAM_FUNC_LIB
 static void M1_TransRunStartupSpin(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunStartupFreewheel(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunSpinFreewheel(void);
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_TransRunFreewheelReady(void);
 
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_ClearFOCVariables(void);
 
-RAM_FUNC_LIB 
+RAM_FUNC_LIB
 static void M1_FaultDetection(void);
 
 /*******************************************************************************
@@ -179,7 +178,6 @@ sm_app_ctrl_t g_sM1Ctrl = {
 RAM_FUNC_LIB
 static void M1_StateFaultFast(void)
 {
-    /* read ADC results (ADC triggered by HW trigger from PDB) */
     /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
     M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
 
@@ -240,9 +238,6 @@ static void M1_StateInitFast(void)
 
     g_sM1Drive.sFocPMSM.ui16SectorSVM     = M1_SVM_SECTOR_DEFAULT;
     g_sM1Drive.sFocPMSM.fltDutyCycleLimit = M1_CLOOP_LIMIT;
-
-    /* Enable dead-time compensation */
-    g_sM1Drive.sFocPMSM.bFlagDTComp = FALSE;
 
     g_sM1Drive.sFocPMSM.fltUDcBus                     = 0.0F;
     g_sM1Drive.sFocPMSM.fltUDcBusFilt                 = 0.0F;
@@ -373,13 +368,6 @@ static void M1_StateInitFast(void)
     g_sM1Drive.ui16SlowCtrlLoopFreq = g_sClockSetup.ui16M1SpeedLoopFreq;
     g_sM1Drive.ui32CpuFrequency = g_sClockSetup.ui32CpuFrequency;
 
-    /* Power Stage characteristic data */
-    g_sM1Drive.sFocPMSM.fltPwrStgCharIRange   = DTCOMP_I_RANGE;
-    g_sM1Drive.sFocPMSM.fltPwrStgCharLinCoeff = DTCOMP_LINCOEFF;
-
-    /* Initialize dead time LUT */
-    GFLIB_Lut1DInit_FLT(-DTCOMP_I_RANGE, DTCOMP_I_RANGE, DTCOMP_TABLE_SIZE, &sLUTUDtComp);
-    
     /* Clear rest of variables  */
     M1_ClearFOCVariables();
 
@@ -398,7 +386,7 @@ static void M1_StateInitFast(void)
 
     /* INIT_DONE command */
     g_sM1Ctrl.uiCtrl |= SM_CTRL_INIT_DONE;
-    
+
     /* Enable all MC faults */
     FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_I_DCBUS_OVER);
     FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_U_DCBUS_UNDER);
@@ -418,7 +406,6 @@ static void M1_StateInitFast(void)
 RAM_FUNC_LIB
 static void M1_StateStopFast(void)
 {
-    /* read ADC results (ADC triggered by HW trigger from PDB) */
     /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
     M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
 
@@ -532,7 +519,7 @@ static void M1_StateRunFast(void)
     /* PWM peripheral update */
     M1_MCDRV_PWM3PH_SET(&g_sM1Pwm3ph);
 
-    /* set current sensor for  sampling */
+    /* Set current sensor for sampling - applies only to some devices. */
     M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1AdcSensor);
 }
 
@@ -692,7 +679,7 @@ static void M1_TransStopRun(void)
 
     /* pass calibration routine duration to state counter*/
     g_sM1Drive.ui16CounterState = g_sM1Drive.ui16TimeCalibration;
-    
+
     /* Update modulo counter */
     MCDRV_QdEncSetPulses(&g_sM1Enc);
 
@@ -1186,7 +1173,7 @@ static void M1_StateRunCalibSlow(void)
 {
     /* Write calibrated offset values */
     M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
-    
+
     if (--g_sM1Drive.ui16CounterState == 0U)
     {
       /* To switch to the RUN READY sub-state */
@@ -1774,14 +1761,14 @@ static void M1_FaultDetection(void)
         {
         	FAULT_SET(g_sM1Drive.sFaultIdPending, FAULT_SPEED_OVER);
         }
-		
+
         /* Fault: Blocked rotor detection */
         if(g_sM1Drive.sMCATctrl.ui16PospeSensor == 0U)
         {
             /* Filter of bemf Uq voltage */
             g_sM1Drive.fltBemfUqAvg =
                 MLIB_Abs_FLT(GDFLIB_FilterMA_FLT(g_sM1Drive.sFocPMSM.sBemfObsrv.sEObsrv.fltQ, &g_sM1Drive.msM1BlockedRotorUqFilt));
-          
+
             /* Check the bemf Uq voltage threshold only in kRunState_Spin - RUN state */
             if ((g_sM1Drive.fltBemfUqAvg < g_sM1Drive.sFaultThresholds.fltUqBemf) && (g_eM1StateRun == kRunState_Spin))
             {
@@ -1792,7 +1779,7 @@ static void M1_FaultDetection(void)
                     g_sM1Drive.ui16BlockRotorCnt = 0U;
             }
         }
-               
+
         /* For bemf voltage detected above limit longer than defined period number set blocked rotor fault*/
         if (g_sM1Drive.ui16BlockRotorCnt > g_sM1Drive.sFaultThresholds.ui16BlockedPerNum)
         {
@@ -1800,10 +1787,10 @@ static void M1_FaultDetection(void)
             g_sM1Drive.ui16BlockRotorCnt = 0U;
         }
     }
-    
+
     /* Mask pending faults by enable structure */
     g_sM1Drive.sFaultIdPending &= g_sM1Drive.sFaultIdEnable;
-    
+
     /* Pass fault to Fault ID Captured */
     g_sM1Drive.sFaultIdCaptured |= g_sM1Drive.sFaultIdPending;
 }

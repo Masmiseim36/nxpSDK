@@ -6,7 +6,7 @@
 
 /*
     * FILE NAME: ../boards/evkbmimxrt1170/mc_pmsm/pmsm_enc/m2_pmsm_appconfig.h
-    * DATE: Mon Oct 17 2022, 07:56:50
+    * DATE: Tue Apr 25 2023, 08:04:40
 */
 
 /*
@@ -143,14 +143,14 @@
 #define M1_POSPE_ENC_N_MIN (0.0F)
 #define M1_POSPE_MECH_POS_GAIN ACC32(16.384)
 #define M1_POS_P_PROP_GAIN FRAC16(0.12)
-#define M1_POSPE_KP_GAIN (1256.64F)
-#define M1_POSPE_KI_GAIN (24.6740F)
-#define M1_POSPE_INTEG_GAIN (0.0000198944F)
+#define M1_POSPE_TO_KP_GAIN (1256.64F)
+#define M1_POSPE_TO_KI_GAIN (24.6740F)
+#define M1_POSPE_TO_THETA_GAIN (0.0000198944F)
 /* SENSORLESS*/
 #define M1_OL_START_RAMP_INC (0.0785398F)
 #define M1_OL_START_I (0.65F)
 #define M1_MERG_SPEED_TRH (209.440F)
-#define M1_MERG_COEFF FRAC16(0.00732422)
+#define M1_MERG_COEFF FRAC16(0.00208333)
 #define M1_I_SCALE (0.878706F)
 #define M1_U_SCALE (0.168464F)
 #define M1_E_SCALE (0.168464F)

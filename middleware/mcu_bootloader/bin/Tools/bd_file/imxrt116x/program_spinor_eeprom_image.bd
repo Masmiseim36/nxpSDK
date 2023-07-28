@@ -1,0 +1,37 @@
+
+# The source block assign file name to identifiers
+sources {
+ myBootImageFile = extern (0);
+}
+
+# The section block specifies the sequence of boot commands to be written to the SB file
+section (0) {
+
+    #1. Prepare SPI NOR/EEPROM option block
+    # bit [31:28] tag, fixed to 0x0c
+    # bit [27:24] Size, (bytes/4) - 1
+    # bit [23:20] SPI instance
+    # bit [19:16] PCS index
+    # bit [15:12] Flash type, 0-SPI NOR, 1-SPI EEPROM
+    # bit [11:08] Flash size(Bytes) 0 - 512K, 1-1M, 2-2M, 3-4M, 4-8M
+    #             13-64K, 14-128K, 15-256K, etc.
+    # bit [07:04] Sector size (Bytes), 0-4K, 1-8K, 2-32K, 3-64K, 
+    #             4-128K, 5-256K
+    # bit [03:00] Page size (Bytes) 0-256, 1-512 
+    load 0xC0100300 > 0x100;
+    
+    #2. Configure SPI NOR/EEPROM
+    enable spieeprom 0x100;
+
+    #3. Erase blocks as needed.
+    erase spieeprom 0x400..0x14000;
+
+    #4. Program SPI NOR/EEPROM Image
+    load spieeprom myBootImageFile > 0x400;
+    
+    #5. Enable Recovery boot 
+    # Note: this fuse field is SoC specific, need to be updated
+    #       according to fusemap.
+    #load fuse 0x01000000 > 0x2d;
+
+}

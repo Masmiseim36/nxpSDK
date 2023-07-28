@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021, 2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,7 +24,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief FlexIO MCULCD driver version. */
-#define FSL_FLEXIO_MCULCD_DRIVER_VERSION (MAKE_VERSION(2, 0, 7))
+#define FSL_FLEXIO_MCULCD_DRIVER_VERSION (MAKE_VERSION(2, 0, 8))
 /*@}*/
 
 #ifndef FLEXIO_MCULCD_WAIT_COMPLETE_TIME
@@ -129,7 +129,7 @@ typedef struct _flexio_mculcd_config
     bool enableFastAccess; /*!< Enable/disable fast access to FlexIO registers,
                            fast access requires the FlexIO clock to be at least
                            twice the frequency of the bus clock. */
-    uint32_t baudRate_Bps; /*!< Baud rate in Bps. */
+    uint32_t baudRate_Bps; /*!< Baud rate in bit-per-second for all data lines combined. */
 } flexio_mculcd_config_t;
 
 /*! @brief Transfer mode.*/
@@ -354,7 +354,7 @@ static inline uint32_t FLEXIO_MCULCD_GetRxDataRegisterAddress(FLEXIO_MCULCD_Type
  * @brief Set desired baud rate.
  *
  * @param base Pointer to the FLEXIO_MCULCD_Type structure.
- * @param baudRate_Bps Desired baud rate.
+ * @param baudRate_Bps Desired baud rate in bit-per-second for all data lines combined.
  * @param srcClock_Hz FLEXIO clock frequency in Hz.
  * @retval kStatus_Success Set successfully.
  * @retval kStatus_InvalidArgument Could not set the baud rate.

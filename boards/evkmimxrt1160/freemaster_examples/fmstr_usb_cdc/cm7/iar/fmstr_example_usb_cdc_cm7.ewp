@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -226,8 +226,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -352,7 +353,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -366,8 +366,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -489,7 +491,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -693,7 +695,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1102,7 +1104,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1189,7 +1191,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1206,7 +1208,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1229,7 +1231,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1308,7 +1310,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1316,14 +1318,16 @@
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>XIP_BOOT_HEADER_DCD_ENABLE=0</state>
+          <state>XIP_BOOT_HEADER_XMCD_ENABLE=1</state>
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1448,7 +1452,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -1462,8 +1465,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1585,7 +1590,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1789,7 +1794,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2198,7 +2203,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2285,7 +2290,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2302,7 +2307,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2325,7 +2330,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -2404,7 +2409,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2415,8 +2420,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2541,7 +2547,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -2555,8 +2560,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2678,7 +2685,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2882,7 +2889,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3291,7 +3298,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3378,7 +3385,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3395,7 +3402,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3418,7 +3425,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -3497,7 +3504,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3508,8 +3515,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3634,7 +3642,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -3648,8 +3655,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3771,7 +3780,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3975,7 +3984,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4384,7 +4393,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4471,7 +4480,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4488,7 +4497,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4511,7 +4520,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -4590,7 +4599,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4599,8 +4608,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4725,7 +4735,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -4739,8 +4748,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4862,7 +4873,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5066,7 +5077,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5475,7 +5486,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5562,7 +5573,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5579,7 +5590,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5602,7 +5613,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -5681,22 +5692,24 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>XIP_BOOT_HEADER_DCD_ENABLE=0</state>
+          <state>XIP_BOOT_HEADER_XMCD_ENABLE=1</state>
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5821,7 +5834,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -5835,8 +5847,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5958,7 +5972,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6162,7 +6176,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6571,7 +6585,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6658,7 +6672,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -6675,7 +6689,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -6698,7 +6712,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -6777,7 +6791,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6788,8 +6802,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6914,7 +6929,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -6928,8 +6942,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -7051,7 +7067,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -7255,7 +7271,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -7664,7 +7680,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -7751,7 +7767,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -7768,7 +7784,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -7791,7 +7807,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -7870,7 +7886,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -7881,8 +7897,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -8007,7 +8024,6 @@
           <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -8021,8 +8037,10 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../xmcd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -8144,7 +8162,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -8348,7 +8366,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -8830,6 +8848,12 @@
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../xmcd/xmcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../xmcd/xmcd.h</name>
+    </file>
   </group>
   <group>
     <name>doc</name>
@@ -8842,21 +8866,12 @@
     <group>
       <name>device</name>
       <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-      </group>
-      <group>
         <name>source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
+          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
         </file>
         <group>
           <name>ehci</name>
@@ -8868,10 +8883,10 @@
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
@@ -8895,6 +8910,15 @@
           </file>
         </group>
       </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+      </group>
     </group>
     <group>
       <name>phy</name>
@@ -8915,42 +8939,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -9202,6 +9190,42 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/system_MIMXRT1166_cm7.h</name>
     </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>startup</name>

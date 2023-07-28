@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>azure_iot_mqtt sdram_debug</TargetName>
+    <TargetName>azure_iot_mqtt sdram_txt_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_sdram_init.ini</tIfile>
+        <tIfile/>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -277,7 +277,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_flexspi_nor.ini</tIfile>
+        <tIfile/>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -355,7 +355,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>azure_iot_mqtt sdram_release</TargetName>
+    <TargetName>azure_iot_mqtt sdram_txt_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -446,7 +446,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_sdram_init.ini</tIfile>
+        <tIfile/>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -610,7 +610,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkbmimxrt1170_flexspi_nor.ini</tIfile>
+        <tIfile/>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

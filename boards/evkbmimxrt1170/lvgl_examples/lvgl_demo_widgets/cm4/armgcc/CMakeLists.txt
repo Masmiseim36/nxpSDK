@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -45,20 +53,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c"
-"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h"
-"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c"
-"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c"
-"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c"
-"${SdkRootDirPath}/middleware/lvgl/lvgl/demos/lv_demos.h"
 "${SdkRootDirPath}/boards/evkbmimxrt1170/lvgl_examples/lvgl_freertos.h"
 "${SdkRootDirPath}/boards/evkbmimxrt1170/lvgl_examples/lvgl_freertos.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1170/lvgl_examples/lvgl_support.h"
-"${SdkRootDirPath}/boards/evkbmimxrt1170/lvgl_examples/lvgl_support.c"
+"${ProjDirPath}/../lvgl_support.h"
+"${ProjDirPath}/../lvgl_support.c"
 "${SdkRootDirPath}/boards/evkbmimxrt1170/lvgl_examples/lvgl_demo_utils.h"
 "${SdkRootDirPath}/boards/evkbmimxrt1170/lvgl_examples/lvgl_demo_utils.c"
 "${ProjDirPath}/../dcd.c"
@@ -71,132 +73,15 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkbmimxrt1170
     ${SdkRootDirPath}/boards/evkbmimxrt1170/vglite_examples/vglite_support
-    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets
-    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos/widgets/assets
-    ${SdkRootDirPath}/middleware/lvgl/lvgl/demos
     ${SdkRootDirPath}/boards/evkbmimxrt1170/lvgl_examples
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/components/video/display
-    ${SdkRootDirPath}/components/video/display/rm68191
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
-    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
-    ${SdkRootDirPath}/components/video/display/rm68200
-    ${SdkRootDirPath}/components/video/display/dc/lcdifv2
-    ${SdkRootDirPath}/components/gt911
-    ${SdkRootDirPath}/components/video/display/dc/elcdif
-    ${SdkRootDirPath}/middleware/vglite
-    ${SdkRootDirPath}/components/video/display/hx8394
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/middleware/lvgl
-    ${SdkRootDirPath}/devices/MIMXRT1176
-    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1176/xip
-    ${SdkRootDirPath}/boards/evkbmimxrt1170/xip
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm4
-    ${SdkRootDirPath}/boards/evkbmimxrt1170/xmcd
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/components/video/display/dc
-)
+set_source_files_properties("${ProjDirPath}/../lv_conf.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lvgl_template")
+set_source_files_properties("${ProjDirPath}/../lvgl_support.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lvgl_template")
+set_source_files_properties("${ProjDirPath}/../lvgl_support.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lvgl_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(driver_video-common_MIMXRT1176_cm4)
-
-include(driver_display-common_MIMXRT1176_cm4)
-
-include(driver_display-rm68191_MIMXRT1176_cm4)
-
-include(driver_mipi_dsi_split_MIMXRT1176_cm4)
-
-include(driver_display-mipi-dsi-cmd_MIMXRT1176_cm4)
-
-include(driver_common_MIMXRT1176_cm4)
-
-include(driver_display-rm68200_MIMXRT1176_cm4)
-
-include(driver_dc-fb-lcdifv2_MIMXRT1176_cm4)
-
-include(driver_gt911_MIMXRT1176_cm4)
-
-include(driver_lpi2c_MIMXRT1176_cm4)
-
-include(driver_soc_src_MIMXRT1176_cm4)
-
-include(driver_pxp_MIMXRT1176_cm4)
-
-include(driver_elcdif_MIMXRT1176_cm4)
-
-include(driver_dc-fb-elcdif_MIMXRT1176_cm4)
-
-include(middleware_vglite_MIMXRT1176_cm4)
-
-include(driver_display-hx8394_MIMXRT1176_cm4)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT1176_cm4)
-
-include(driver_clock_MIMXRT1176_cm4)
-
-include(middleware_lvgl_MIMXRT1176_cm4)
-
-include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm4)
-
-include(utility_debug_console_MIMXRT1176_cm4)
-
-include(component_lpuart_adapter_MIMXRT1176_cm4)
-
-include(component_serial_manager_MIMXRT1176_cm4)
-
-include(component_lists_MIMXRT1176_cm4)
-
-include(component_serial_manager_uart_MIMXRT1176_cm4)
-
-include(driver_lpuart_MIMXRT1176_cm4)
-
-include(device_MIMXRT1176_startup_MIMXRT1176_cm4)
-
-include(driver_iomuxc_MIMXRT1176_cm4)
-
-include(utility_assert_MIMXRT1176_cm4)
-
-include(driver_igpio_MIMXRT1176_cm4)
-
-include(driver_xip_device_MIMXRT1176_cm4)
-
-include(driver_xip_board_evkbmimxrt1170_MIMXRT1176_cm4)
-
-include(driver_pmu_1_MIMXRT1176_cm4)
-
-include(driver_dcdc_soc_MIMXRT1176_cm4)
-
-include(driver_cache_lmem_MIMXRT1176_cm4)
-
-include(driver_xmcd_evkbmimxrt1170_MIMXRT1176_cm4)
-
-include(driver_anatop_ai_MIMXRT1176_cm4)
-
-include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
-
-include(driver_soc_mipi_csi2rx_MIMXRT1176_cm4)
-
-include(driver_dc-fb-common_MIMXRT1176_cm4)
-
-include(driver_lcdifv2_MIMXRT1176_cm4)
-
-include(driver_memory_MIMXRT1176_cm4)
-
-include(middleware_freertos-kernel_MIMXRT1176_cm4)
-
-include(middleware_freertos-kernel_extension_MIMXRT1176_cm4)
-
-include(utilities_misc_utilities_MIMXRT1176_cm4)
-
-include(device_MIMXRT1176_system_MIMXRT1176_cm4)
-
+include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -208,4 +93,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

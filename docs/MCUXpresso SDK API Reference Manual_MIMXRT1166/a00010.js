@@ -1,6 +1,6 @@
 var a00010 =
 [
-    [ "aoi_event_config_t", "a00010.html#a00418", [
+    [ "aoi_event_config_t", "a00010.html#a00429", [
       [ "PT0AC", "a00010.html#aea14fc46a854e63c9a6318c42835de05", null ],
       [ "PT0BC", "a00010.html#ac226aa1e1e3154dd87372d81a11fed42", null ],
       [ "PT0CC", "a00010.html#a1b4d001eaf4862c0ef0acc826f9728bb", null ],

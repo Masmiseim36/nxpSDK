@@ -1,12 +1,13 @@
 var a00328 =
 [
-    [ "CAAM_AES_EncryptEcbNonBlocking", "a00328.html#gaf17615d04159c190c4b5dbe849cd60fb", null ],
-    [ "CAAM_AES_DecryptEcbNonBlocking", "a00328.html#ga95932998da1e1e6f8acf8b07425920c5", null ],
-    [ "CAAM_AES_EncryptCbcNonBlocking", "a00328.html#gabb70bd768fda571c83dae0f19ae47960", null ],
-    [ "CAAM_AES_DecryptCbcNonBlocking", "a00328.html#ga8af780abeaba467ebeae110822bac7f4", null ],
-    [ "CAAM_AES_CryptCtrNonBlocking", "a00328.html#gaf8111bdbb0f0477dce2ee307ecea487c", null ],
-    [ "CAAM_AES_EncryptTagCcmNonBlocking", "a00328.html#ga8ba9f0a2d82d4a5e9219d221fb8452b3", null ],
-    [ "CAAM_AES_DecryptTagCcmNonBlocking", "a00328.html#ga33528456ae5c03460e6f6e2e404a29d6", null ],
-    [ "CAAM_AES_EncryptTagGcmNonBlocking", "a00328.html#ga1f256cafc754c9884fbfb6016a87ad5e", null ],
-    [ "CAAM_AES_DecryptTagGcmNonBlocking", "a00328.html#gac1080871a66e816b659c333449423f34", null ]
+    [ "CAAM_AES_BLOCK_SIZE", "a00328.html#gafa336bd271e1dfd0b1f01b71becf36b2", null ],
+    [ "CAAM_AES_EncryptEcb", "a00328.html#ga7e1764cc6554569ea72a8da1d2b4735d", null ],
+    [ "CAAM_AES_DecryptEcb", "a00328.html#ga31c77b10b05c35744cc28dd4e53a9fbb", null ],
+    [ "CAAM_AES_EncryptCbc", "a00328.html#gae41ac7ae54b88d74fb7f46e191929619", null ],
+    [ "CAAM_AES_DecryptCbc", "a00328.html#gab273ce9685be1a0ab0c583967b5d9121", null ],
+    [ "CAAM_AES_CryptCtr", "a00328.html#ga80a221a9a5b6561168ec6d591f9dd9bc", null ],
+    [ "CAAM_AES_EncryptTagCcm", "a00328.html#ga4cab7164d66c52d807e98228cdc8f971", null ],
+    [ "CAAM_AES_DecryptTagCcm", "a00328.html#ga744c4c00bec9db73b9d5ccd39ac72378", null ],
+    [ "CAAM_AES_EncryptTagGcm", "a00328.html#gaf9e28403c0834e0b25aa46cadc48e2ec", null ],
+    [ "CAAM_AES_DecryptTagGcm", "a00328.html#gae0c115dac16bbec838c087bdeda4e1a4", null ]
 ];

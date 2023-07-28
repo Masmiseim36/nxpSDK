@@ -17,7 +17,7 @@
  ******************************************************************************/
 /*${macro:start}*/
 /* SAI instance and clock */
-#define DEMO_CODEC_WM8962
+#define DEMO_CODEC_WM8962     1
 #define DEMO_SAI              SAI1
 #define DEMO_SAI_CHANNEL      (0)
 #define DEMO_SAI_BITWIDTH     (kSAI_WordWidth16bits)
@@ -35,10 +35,10 @@
 #define DEMO_SAI_TX_IRQ SAI1_IRQn
 
 /* DMA */
-#define DEMO_DMA           DMA0
-#define DEMO_DMAMUX        DMAMUX0
-#define DEMO_TX_CHANNEL    (0U)
-#define DEMO_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
+#define DEMO_DMA             DMA0
+#define DEMO_DMAMUX          DMAMUX0
+#define DEMO_TX_EDMA_CHANNEL (0U)
+#define DEMO_SAI_TX_SOURCE   kDmaRequestMuxSai1Tx
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)

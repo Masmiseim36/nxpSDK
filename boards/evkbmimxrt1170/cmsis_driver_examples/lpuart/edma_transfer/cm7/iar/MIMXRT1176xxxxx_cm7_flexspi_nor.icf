@@ -114,7 +114,7 @@ define block QACCESS_DATA  { section DataQuickAccess };
 define region core1_region = mem:[from core1_image_start to core1_image_end];
 define block CORE1_IMAGE_BLOCK          { section  __core1_image };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, object fsl_edma.o, object fsl_dmamux.o , object fsl_lpuart_edma.o , section DataQuickAccess };
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
   do not initialize  { section rpmsg_sh_mem_section };

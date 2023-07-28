@@ -35,17 +35,18 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
     -DXIP_BOOT_HEADER_DCD_ENABLE=0 \
+    -DXIP_BOOT_HEADER_XMCD_ENABLE=0 \
     -DUSE_SDRAM \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m4 \
     -Wall \
     -mthumb \
@@ -58,6 +59,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -66,16 +68,17 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=0 \
     -DXIP_BOOT_HEADER_DCD_ENABLE=0 \
+    -DXIP_BOOT_HEADER_XMCD_ENABLE=0 \
     -DUSE_SDRAM \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DLV_CONF_INCLUDE_SIMPLE \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m4 \
     -Wall \
     -mthumb \
@@ -88,6 +91,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -98,7 +102,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m4 \
     -Wall \
     -mthumb \
@@ -112,6 +115,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -121,7 +125,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DMCUXPRESSO_SDK \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m4 \
     -Wall \
     -mthumb \
@@ -135,6 +138,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")

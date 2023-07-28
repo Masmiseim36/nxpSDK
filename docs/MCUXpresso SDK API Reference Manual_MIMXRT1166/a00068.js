@@ -1,122 +1,47 @@
 var a00068 =
 [
-    [ "pgmc_bpc_cpu_power_mode_option_t", "a00068.html#a00592", [
-      [ "assignDomain", "a00068.html#aeac9fabf33190ab73e3446eb41e24c2a", null ],
-      [ "stateSave", "a00068.html#aa6b9843d111682c768b2cee9e8b90e31", null ],
-      [ "powerOff", "a00068.html#a6f211b59ce70e7c28c1d9d0230552c72", null ]
+    [ "notifier_notification_block_t", "a00068.html#a00595", [
+      [ "targetConfig", "a00068.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa", null ],
+      [ "policy", "a00068.html#a26aef2519eb2f9990e04f2ce961dfc9b", null ],
+      [ "notifyType", "a00068.html#a2ca3b1a52e315e072a8ab48fcc1dd62a", null ]
     ] ],
-    [ "pgmc_bpc_setpoint_mode_option_t", "a00068.html#a00593", [
-      [ "stateSave", "a00068.html#afc413efe2347382623bbe1f52e76b61c", null ],
-      [ "powerOff", "a00068.html#a9b65a815c350025265ae80c2c141c542", null ]
+    [ "notifier_callback_config_t", "a00068.html#a00593", [
+      [ "callback", "a00068.html#a116c9dd621ffc21178e769edbd9192e4", null ],
+      [ "callbackType", "a00068.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec", null ],
+      [ "callbackData", "a00068.html#a4e7db701bbf36647da1e6d0f0efe2ebf", null ]
     ] ],
-    [ "FSL_PGMC_RIVER_VERSION", "a00068.html#ga564cb3ca8ca3794299ab52f7b1c3c246", [
-      [ "kPGMC_SetPoint0", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a84d66abc8151d54f2f9d0dc1083ba5cd", null ],
-      [ "kPGMC_SetPoint1", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04ae1f132c07eea2ee40fe76add15cef173", null ],
-      [ "kPGMC_SetPoint2", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a3162c6dd9687dbadd75789d313b8b5c2", null ],
-      [ "kPGMC_SetPoint3", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04abbe3ce4a373d19747346889b89faf347", null ],
-      [ "kPGMC_SetPoint4", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a4eb1eab943cda54c9c4a632500559af1", null ],
-      [ "kPGMC_SetPoint5", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04ab5a4c7f49a05aec08bbf4fb5b2755402", null ],
-      [ "kPGMC_SetPoint6", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04ae70be3ec02218f030f8993e2eb98fdd2", null ],
-      [ "kPGMC_SetPoint7", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a438ddddad292d97e7483209ec5432510", null ],
-      [ "kPGMC_SetPoint8", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a50f67af63cbe0987ef071455863900c2", null ],
-      [ "kPGMC_SetPoint9", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a1ad829426e0cb25a85fde23c714644c3", null ],
-      [ "kPGMC_SetPoint10", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a6ef5812549fae26a2680c2cc0d19c5ed", null ],
-      [ "kPGMC_SetPoint11", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a6091218beb0bb5390b079c440c68b3e2", null ],
-      [ "kPGMC_SetPoint12", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04af35b9da2926b363d3ebe862cab69fc21", null ],
-      [ "kPGMC_SetPoint13", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a82667c23f002ed9a2f4c3bcec1d6bcec", null ],
-      [ "kPGMC_SetPoint14", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04a9b239456cfa9c2563ac1ebc2f63e6c2e", null ],
-      [ "kPGMC_SetPoint15", "a00068.html#ggabc6126af1d45847bc59afa0aa3216b04aba257dfdf57e39ad5ab18daa7319199f", null ]
+    [ "notifier_handle_t", "a00068.html#a00594", [
+      [ "configsTable", "a00068.html#a8fd95d668f17b8a7705e2a4ff49f2e16", null ],
+      [ "configsNumber", "a00068.html#a59bdd44c33254cfd4626f5906d3c0a7a", null ],
+      [ "callbacksTable", "a00068.html#a423480d080ea2580628222dc6c492735", null ],
+      [ "callbacksNumber", "a00068.html#acd4e9338f2cd47c46fc0c02886daafbb", null ],
+      [ "errorCallbackIndex", "a00068.html#a6a8447a4b6045219363883663f40d300", null ],
+      [ "currentConfigIndex", "a00068.html#aae9d6d2cc9c47485863c098c0284a021", null ],
+      [ "userFunction", "a00068.html#a4f6589fa386e93c40c52ed292da4f47f", null ],
+      [ "userData", "a00068.html#a5e90e1dafbe97f2ea5187530ee04af0a", null ]
     ] ],
-    [ "_pgmc_mif_signal_behaviour", "a00068.html#ga93d43f8a690924e4461aef147d4ed832", [
-      [ "kPGMC_AssertSleepSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832aff0527101cdb7ce01e0da81e6fdd593c", null ],
-      [ "kPGMC_AssertInputGateSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832ae42e7954a7998cbb3c2edcaf145bf867", null ],
-      [ "kPGMC_AssetLowSpeedSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832a5735a8757b3af085e0d7c7a0c40bd71e", null ],
-      [ "kPGMC_AssertHighSpeedSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832ad2f9e672d9ff1ffab7ad9896116e4e5b", null ],
-      [ "kPGMC_AssertStandbySignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832a3beabad33f8a54a3711601678d7282c3", null ],
-      [ "kPGMC_AssertArrayPowerDownSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832aeabfa8c69263b622f2f78a81baa9313e", null ],
-      [ "kPGMC_AssertPeripheralPowerDownSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832ab388cae29434e15a021bab8d00f6849d", null ],
-      [ "kPGMC_AssertInitnSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832adc420d07a7171067be103782b7da0123", null ],
-      [ "kPGMC_AssertSwitch1OffSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832ac333d740d9a83e18b03f66636408813b", null ],
-      [ "kPGMC_AssertSwitch2OffSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832a5554cca120644ce0a2236a43ce887712", null ],
-      [ "kPGMC_AssertIsoSignal", "a00068.html#gga93d43f8a690924e4461aef147d4ed832a76bc3adf04a6c1aee76bf76898f695ba", null ]
+    [ "notifier_user_config_t", "a00068.html#gad0b6e919f3ff69992b36a2734a650ec7", null ],
+    [ "notifier_user_function_t", "a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2", null ],
+    [ "notifier_callback_t", "a00068.html#gafd1d8cc01c496de8b4cd3990ff85415c", null ],
+    [ "_notifier_status", "a00068.html#gacac871f1b98f53906b07b2663943c784", [
+      [ "kStatus_NOTIFIER_ErrorNotificationBefore", "a00068.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c", null ],
+      [ "kStatus_NOTIFIER_ErrorNotificationAfter", "a00068.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58", null ]
     ] ],
-    [ "pgmc_bpc_assign_domain_t", "a00068.html#ga7e80ba784bb9603d5cf5bfa54dde2bac", [
-      [ "kPGMC_CM7Core", "a00068.html#gga7e80ba784bb9603d5cf5bfa54dde2bacaf93d367010c4a4100d2c380b6705185b", null ],
-      [ "kPGMC_CM4Core", "a00068.html#gga7e80ba784bb9603d5cf5bfa54dde2bacacbfbbfd4639f336ec6f61e4e136ec2dd", null ]
+    [ "notifier_policy_t", "a00068.html#ga62e961564dc31b8155d128a3f6566409", [
+      [ "kNOTIFIER_PolicyAgreement", "a00068.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964", null ],
+      [ "kNOTIFIER_PolicyForcible", "a00068.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8", null ]
     ] ],
-    [ "pgmc_cpu_mode_t", "a00068.html#gaf55621830fc022f5ddd6a96bd6b25990", [
-      [ "kPGMC_RunMode", "a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990aa1c5d00c2b03a6c61374c36dc208d523", null ],
-      [ "kPGMC_WaitMode", "a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990a6797f148160578b04540f15b77721536", null ],
-      [ "kPGMC_StopMode", "a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990a286e08f2aea4e018e3f8e6f5e19815cc", null ],
-      [ "kPGMC_SuspendMode", "a00068.html#ggaf55621830fc022f5ddd6a96bd6b25990aec0807e9325c350a8e8fe1418e9c8a95", null ]
+    [ "notifier_notification_type_t", "a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9", [
+      [ "kNOTIFIER_NotifyRecover", "a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94", null ],
+      [ "kNOTIFIER_NotifyBefore", "a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c", null ],
+      [ "kNOTIFIER_NotifyAfter", "a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00", null ]
     ] ],
-    [ "pgmc_control_mode_t", "a00068.html#gad7f0888b57b0afede6d4c209900feeb8", null ],
-    [ "pgmc_memory_low_power_level_t", "a00068.html#ga3c595aa05aae2ac6f70dac715d65ce14", [
-      [ "kPGMC_MLPLHighSpeed", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14ac69c05fe5afb013ed70591f8f992e050", null ],
-      [ "kPGMC_MLPLNormal", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a4a552c6f5d8bd4c80fa3be47746b987f", null ],
-      [ "kPGMC_MLPLLowSpeed", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a8ecb180266da860ad019d4825c8bd650", null ],
-      [ "kPGMC_MLPLInputGating", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a3287c9193a164f0b5d3e135615b7a1e5", null ],
-      [ "kPGMC_MLPLStandby", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a9411fb0a5fb89bba23f3e8e03e7a6670", null ],
-      [ "kPGMC_MLPLSleep", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a7025f397e54a9d3c26b7c0890d6bcf86", null ],
-      [ "kPGMC_MLPLArrOnPerOff", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a46274a56f35c0fdf532da1c2313e298a", null ],
-      [ "kPGMC_MLPLArrOffPerOn", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a23efb235414b09d694c8a3b8d8a9a2f6", null ],
-      [ "kPGMC_MLPLArrOffPerOff", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a41cdf6dc1101f1a26de42564d00c4eae", null ],
-      [ "kPGMC_MLPLSw2", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14ae020b194fde7ae1fbd950e54ed0620f4", null ],
-      [ "kPGMC_MLPLSw2PerOff", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14a609bd76b8fa66d3a6750f8d896b97d1e", null ],
-      [ "kPGMC_MLPLSw1PerOff", "a00068.html#gga3c595aa05aae2ac6f70dac715d65ce14aa4afb7bc55b2487353a346287e5ee418", null ]
+    [ "notifier_callback_type_t", "a00068.html#gaad75237e3cea51f8315cf6577b35db91", [
+      [ "kNOTIFIER_CallbackBefore", "a00068.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1", null ],
+      [ "kNOTIFIER_CallbackAfter", "a00068.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc", null ],
+      [ "kNOTIFIER_CallbackBeforeAfter", "a00068.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005", null ]
     ] ],
-    [ "pgmc_mif_signal_t", "a00068.html#ga10af746a10d054bd697b01a3b8eea497", [
-      [ "kPGMC_SleepSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497afff95595f543261f8ec7af64e7042981", null ],
-      [ "kPGMC_InputGateSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497aed0b919ce040456ae339b9c1cabeaff4", null ],
-      [ "kPGMC_LowSpeedSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497affd53402a7c7fed88c5282a34b093f6e", null ],
-      [ "kPGMC_HighSpeedSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497a9fdc1d94d05f8b4970a515dea4236976", null ],
-      [ "kPGMC_StandbySignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497ab7f4ae09133f5359bc71cdb363ff34f1", null ],
-      [ "kPGMC_ArrayPowerDownSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497ab8898b2419c2559079626b0fc589d789", null ],
-      [ "kPGMC_PeripheralPowerDownSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497a19c8e41c9fad21bfcf13ae6e251ba3e5", null ],
-      [ "kPGMC_InitnSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497a947a428d8732685d7d4bb5a43c0f29ee", null ],
-      [ "kPGMC_Switch1OffSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497ae47948430d77817f14913c55804f82b9", null ],
-      [ "kPGMC_Switch2OffSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497a428b07abac24143580efb29a1161c736", null ],
-      [ "kPGMC_IsoSignal", "a00068.html#gga10af746a10d054bd697b01a3b8eea497aed49fe2c7f65728d57117855dde8ba6d", null ]
-    ] ],
-    [ "PGMC_BPC_ControlPowerDomainByCpuPowerMode", "a00068.html#gac56450b372529ebe5503bb76af1e7a32", null ],
-    [ "PGMC_BPC_ControlPowerDomainBySetPointMode", "a00068.html#ga0ef18f55a947cf2fd137ecc87caae240", null ],
-    [ "PGMC_BPC_ControlPowerDomainBySoftwareMode", "a00068.html#ga9f59b649d8706bed19fdcba6d67b5a1f", null ],
-    [ "PGMC_BPC_DisableLowPower", "a00068.html#gacc6f8840882a5865a05cad9211768401", null ],
-    [ "PGMC_BPC_RequestStateRestoreAtRunMode", "a00068.html#ga8c8408f0d2eab1e76993381828b95047", null ],
-    [ "PGMC_BPC_RequestStateRestoreAtSetPoint", "a00068.html#gafedab5e12ef8ffde907c1ed137262ea5", null ],
-    [ "PGMC_BPC_AllowUserModeAccess", "a00068.html#ga982caaf14f52d9216c6f9fa4990bc1e8", null ],
-    [ "PGMC_BPC_AllowNonSecureModeAccess", "a00068.html#ga7adcb9d6c8c00618e349454f427702c8", null ],
-    [ "PGMC_BPC_LockAccessSetting", "a00068.html#ga03a0e5bc099d201e01732dbeee41aaf2", null ],
-    [ "PGMC_BPC_SetDomainIdWhiteList", "a00068.html#ga309eac9a5ed0131c1c9d131e4e7640aa", null ],
-    [ "PGMC_BPC_LockDomainIDWhiteList", "a00068.html#gaed770d5c9f498d6e2eadda6f99b40841", null ],
-    [ "PGMC_BPC_LockLowPowerConfigurationFields", "a00068.html#ga07bbd4fe1096302b3865cb6f4962c49f", null ],
-    [ "PGMC_CPC_CORE_PowerOffByCpuPowerMode", "a00068.html#gacac54c18b6c7041ced07aacd1d25c384", null ],
-    [ "PGMC_CPC_CORE_PowerOffBySoftwareMode", "a00068.html#ga43a19c80b35afd79bfad5446239e196f", null ],
-    [ "PGMC_CPC_CORE_DisableLowPower", "a00068.html#ga933bcbfa37ff6750a2919821e7adee2e", null ],
-    [ "PGMC_CPC_CACHE_ControlByCpuPowerMode", "a00068.html#ga42ac8e81b83e521b350cf11050c6dbcc", null ],
-    [ "PGMC_CPC_CACHE_ControlBySetPointMode", "a00068.html#ga67073dd9cf450e6b1315259f1b40720a", null ],
-    [ "PGMC_CPC_CACHE_DisableLowPower", "a00068.html#ga089a5dfa9dfd0401d30b4085e9c2f2ad", null ],
-    [ "PGMC_CPC_CACHE_TriggerMLPLSoftwareChange", "a00068.html#ga8ce1d1126bf72dbdcf2e808cee8520de", null ],
-    [ "PGMC_CPC_LMEM_ControlByCpuPowerMode", "a00068.html#ga8b58c7069984f36c3f141b36edc35bb4", null ],
-    [ "PGMC_CPC_LMEM_ControlBySetPointMode", "a00068.html#ga4682823b53dbf069a36709e32404f7c3", null ],
-    [ "PGMC_CPC_LMEM_DisableLowPower", "a00068.html#gaa0edf0af01cf307cb5402f5e4824be89", null ],
-    [ "PGMC_CPC_LMEM_TriggerMLPLSoftwareChange", "a00068.html#gafe76cbb54000589b8531e93db2183743", null ],
-    [ "PGMC_CPC_AllowUserModeAccess", "a00068.html#ga3f9ef353101d4a08e0411bac9bd49ca4", null ],
-    [ "PGMC_CPC_AllowNonSecureModeAccess", "a00068.html#gac0e9d91a5bd1ba2cb865d30d6da9f943", null ],
-    [ "PGMC_CPC_LockAccessSetting", "a00068.html#gab2273b1c3f113af41b53aa99ec93d2a0", null ],
-    [ "PGMC_CPC_SetDomainIdWhiteList", "a00068.html#ga099c4599067287560a080ebee9683ebb", null ],
-    [ "PGMC_CPC_LockDomainIDWhiteList", "a00068.html#ga64d73d779203f5b881bb04711ae896e0", null ],
-    [ "PGMC_CPC_LockLowPowerConfigurationFields", "a00068.html#ga99637e2413e2b613d1724854fd16a6a8", null ],
-    [ "PGMC_MIF_SetSignalBehaviour", "a00068.html#ga68716a373669123fcd3ee87c41e0e3e0", null ],
-    [ "PGMC_MIF_LockLowPowerConfigurationFields", "a00068.html#ga56977d22deb38dc898c5b593a26ad9b6", null ],
-    [ "PGMC_PPC_TriggerPMICStandbySoftMode", "a00068.html#gaeb583aa23b01a0aca58c0297f7644bff", null ],
-    [ "PGMC_PPC_ControlByCpuPowerMode", "a00068.html#ga43158ecd41c1bed9bcf3d548aa6b8187", null ],
-    [ "PGMC_PPC_ControlBySetPointMode", "a00068.html#ga98d3ea87c38aa68d247a37c08d0d273b", null ],
-    [ "PGMC_PPC_DisableLowPower", "a00068.html#ga55d122ea1a503281b7a484ab6f3a86ff", null ],
-    [ "PGMC_PPC_AllowUserModeAccess", "a00068.html#ga9ae5222e1c5ffd3dff0b87a9ca03f439", null ],
-    [ "PGMC_PPC_AllowNonSecureModeAccess", "a00068.html#ga22e285697dd05b409b111fc8907a385e", null ],
-    [ "PGMC_PPC_LockAccessSetting", "a00068.html#ga09fde90709711b12f66b71b3e7b7bb27", null ],
-    [ "PGMC_PPC_SetDomainIdWhiteList", "a00068.html#ga1121a9c7a4461b3ec87901ffd33f620f", null ],
-    [ "PGMC_PPC_LockDomainIDWhiteList", "a00068.html#gaead3eba73dbdad8ac40f9ebd2388efe0", null ],
-    [ "PGMC_PPC_LockLowPowerConfigurationFields", "a00068.html#gaeda60b972deb916af8a8ecffd176494e", null ]
+    [ "NOTIFIER_CreateHandle", "a00068.html#gaa2dfe33b4724d9c1025acdde1b1b3c31", null ],
+    [ "NOTIFIER_SwitchConfig", "a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97", null ],
+    [ "NOTIFIER_GetErrorCallbackIndex", "a00068.html#ga9736632c3beca486ec3f8dab504b839c", null ]
 ];

@@ -9,7 +9,6 @@
 #ifndef _PMSM_CONTROL_H_
 #define _PMSM_CONTROL_H_
 
-#include "char_pwrstg.h"
 #include "gflib_FP.h"
 #include "gmclib_FP.h"
 #include "gdflib_FP.h"
@@ -63,14 +62,11 @@ typedef struct _mcs_pmsm_foc_a1
     float_t fltUDcBus;                        /* DC bus voltage */
     frac16_t f16UDcBus;                       /* DC bus voltage */
     float_t fltUDcBusFilt;                    /* Filtered DC bus voltage */
-    float_t fltPwrStgCharIRange;              /* Power Stage characteristic current range */
-    float_t fltPwrStgCharLinCoeff;            /* Power Stage characteristic linear coefficient */
     bool_t bCurrentLoopOn;                    /* Flag enabling calculation of current control loop */
     bool_t bPosExtOn;                         /* Flag enabling use of electrical position passed from other functions */
     bool_t bOpenLoop;                         /* Position estimation loop is open */
     bool_t bIdPiStopInteg;                    /* Id PI controller manual stop integration */
     bool_t bIqPiStopInteg;                    /* Iq PI controller manual stop integration */
-    bool_t bFlagDTComp;                       /* Enable/disable dead-time compensation flag */
 } mcs_pmsm_foc_t;
 
 /*! @brief mcs scalar structure */
@@ -153,9 +149,6 @@ typedef struct _mcs_pmsm_startup_a1
     uint16_t ui16TimeStartUpFreeWheel; /* Free-wheel duration if start-up aborted by user input (required zero speed) */
     bool_t bOpenLoop;                  /* Position estimation loop is open */
 } mcs_pmsm_startup_t;
-
-/* dead-time compensation voltage table */
-extern float_t pfltUDtComp[DTCOMP_TABLE_SIZE];
 
 /* dead-time compensation look-up table */
 extern GFLIB_LUT1D_T_FLT sLUTUDtComp;

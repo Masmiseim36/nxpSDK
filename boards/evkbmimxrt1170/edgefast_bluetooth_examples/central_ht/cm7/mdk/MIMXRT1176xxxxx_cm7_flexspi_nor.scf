@@ -13,7 +13,8 @@
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
-**     Copyright 2022 NXP
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2023 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -30,15 +31,7 @@
   #define __ram_vector_table_size__    0x00000000
 #endif
 
-#if (defined(__use_flash64MB__))
-#define m_flash_start                  0x30000000
-#define m_flash_end                    0x33FBFFFF
-#define m_text_size                    0x03FBDC00
-#else
-#define m_flash_start                  0x30000000
-#define m_flash_end                    0x30FBFFFF
-#define m_text_size                    0x00FBDC00
-#endif
+#define LITTLEFS_REGION_SIZE           0x00200000
 
 #define m_flash_config_start           0x30000400
 #define m_flash_config_size            0x00000C00
@@ -51,9 +44,9 @@
 
 #define m_text_start                   0x30002400
 #if (defined(__use_flash64MB__))
-#define _ROM_END_                      0x33DBFFFF
+#define m_text_size                    0x03FBDC00 - LITTLEFS_REGION_SIZE
 #else
-#define _ROM_END_                      0x30DBFFFF
+#define m_text_size                    0x00FBDC00 - LITTLEFS_REGION_SIZE
 #endif
 
 #define m_qacode_start                 0x00000000
@@ -84,12 +77,12 @@
 #define m_core1_image_size             0x00040000
 #endif
 
+/* NOTE: The last LITTLEFS_REGION_SIZE Flash( in range (m_text_start + m_text_size) ~ (m_text_start + m_text_size + LITTLEFS_REGION_SIZE -1)) is reserved for litteFS data */
 
 /*** littleFS configuration Start ***/
-#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (_ROM_END_ + 1)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS    (m_flash_end + 1)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    ((EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (m_text_start + m_text_size)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)    /* 4k flash sector size */
+#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    (LITTLEFS_REGION_SIZE / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
 /*** littleFS configuration End ***/
 
 /* Sizes */
@@ -106,7 +99,7 @@
 #endif
 
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
-LR_m_text m_flash_start m_flash_end-m_flash_start+1 {   ; load region size_region
+LR_m_text m_flash_config_start m_text_start+m_text_size-m_flash_config_start {   ; load region size_region
   RW_m_config_text m_flash_config_start FIXED m_flash_config_size { ; load address = execution address
     * (.boot_hdr.conf, +FIRST)
   }
@@ -122,8 +115,6 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
     * (.isr_vector,+FIRST)
   }
-
-
   ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
     * (InRoot$$Sections)
     .ANY (+RO)
@@ -149,7 +140,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (._bt_l2cap_br_fixed_chan*)
   }
 
-  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) { ; load address = execution address
+  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (LITTLEFS_REGION_SIZE) { ; load address = execution address
   }
 
 #if (defined(__ram_vector_table__))

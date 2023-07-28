@@ -1,6 +1,6 @@
 var a00036 =
 [
-    [ "FLEXIO_I2C_Type", "a00036.html#a00529", [
+    [ "FLEXIO_I2C_Type", "a00036.html#a00535", [
       [ "flexioBase", "a00036.html#a85065e51da3c0158d4b1d9254d691d26", null ],
       [ "SDAPinIndex", "a00036.html#acf0bab2399a7d7013f3708feb4d74ff6", null ],
       [ "SCLPinIndex", "a00036.html#a8ffb4cb7eac22b561f34ebcf4c309db9", null ],
@@ -8,14 +8,14 @@ var a00036 =
       [ "timerIndex", "a00036.html#ab468253ce0595401dac6cbe2ede4c82a", null ],
       [ "baudrate", "a00036.html#a34f7664f9c39134c78a668c718040c54", null ]
     ] ],
-    [ "flexio_i2c_master_config_t", "a00036.html#a00527", [
+    [ "flexio_i2c_master_config_t", "a00036.html#a00533", [
       [ "enableMaster", "a00036.html#a4dcbed2930b467df1978f9bf2b71c128", null ],
       [ "enableInDoze", "a00036.html#ad73b88c0700d82721ccbf0744d1b6780", null ],
       [ "enableInDebug", "a00036.html#acf98ed2c52a014d2ed825a38293001d4", null ],
       [ "enableFastAccess", "a00036.html#a89a0daa456c7d99a7144d5245f422bbe", null ],
       [ "baudRate_Bps", "a00036.html#a446dee2e270776aa6d462710e85b7454", null ]
     ] ],
-    [ "flexio_i2c_master_transfer_t", "a00036.html#a00528", [
+    [ "flexio_i2c_master_transfer_t", "a00036.html#a00534", [
       [ "flags", "a00036.html#a2695cc7566c8a4cbbcf837d1f7209b6a", null ],
       [ "slaveAddress", "a00036.html#ad9a4b7694d338eaa4d7b6b2e8ebcf6c5", null ],
       [ "direction", "a00036.html#a756cb7ae9db1832fcffcd736a7039369", null ],
@@ -24,7 +24,7 @@ var a00036 =
       [ "data", "a00036.html#a94b0a6518c96392dd0497350af675ada", null ],
       [ "dataSize", "a00036.html#a5bd368a720ef8ed7df1601d7cac19ae2", null ]
     ] ],
-    [ "flexio_i2c_master_handle_t", "a00036.html#a00388", [
+    [ "flexio_i2c_master_handle_t", "a00036.html#a00395", [
       [ "transfer", "a00036.html#a60bd61f7bad1102b8ae17c147ebe7562", null ],
       [ "transferSize", "a00036.html#a48d8d3dd2b37359e54ee1ac10d68bfa5", null ],
       [ "state", "a00036.html#abdeb9df90f61127f95734a9ad2226de8", null ],
@@ -34,10 +34,10 @@ var a00036 =
     ] ],
     [ "I2C_RETRY_TIMES", "a00036.html#gaac288786aaa7d0cb947c91591baf42d7", null ],
     [ "flexio_i2c_master_transfer_callback_t", "a00036.html#ga4a92b2aafd0ea1e7746dc23a7b0f0691", [
-      [ "kStatus_FLEXIO_I2C_Busy", "a00036.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a8ab8145bc386f3630f13b87c38496331", null ],
-      [ "kStatus_FLEXIO_I2C_Idle", "a00036.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a2f105638fc06422cc54cf5337d507873", null ],
-      [ "kStatus_FLEXIO_I2C_Nak", "a00036.html#ggae6dceca96ec2c7a1b4aa211264a87ef6af5e4a932f6f9e6ae30a42dc31fab8bd5", null ],
-      [ "kStatus_FLEXIO_I2C_Timeout", "a00036.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a3d8bcc4ffd332948cb8b28f7982ac4d1", null ]
+      [ "kStatus_FLEXIO_I2C_Busy", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a8ab8145bc386f3630f13b87c38496331", null ],
+      [ "kStatus_FLEXIO_I2C_Idle", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a2f105638fc06422cc54cf5337d507873", null ],
+      [ "kStatus_FLEXIO_I2C_Nak", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0af5e4a932f6f9e6ae30a42dc31fab8bd5", null ],
+      [ "kStatus_FLEXIO_I2C_Timeout", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a3d8bcc4ffd332948cb8b28f7982ac4d1", null ]
     ] ],
     [ "_flexio_i2c_master_interrupt", "a00036.html#gaa4597b532bb2a564c329076dc5da8155", [
       [ "kFLEXIO_I2C_TxEmptyInterruptEnable", "a00036.html#ggaa4597b532bb2a564c329076dc5da8155ac34fefcbb2d45dd7bfd385586439923b", null ],
@@ -52,7 +52,6 @@ var a00036 =
       [ "kFLEXIO_I2C_Write", "a00036.html#ggad7cd7cc57788188d0f804b5e3a549303a666a4c181486b773264ce1e038e14850", null ],
       [ "kFLEXIO_I2C_Read", "a00036.html#ggad7cd7cc57788188d0f804b5e3a549303aeac2a6bd710680e5f644763dea0c89c4", null ]
     ] ],
-    [ "FLEXIO_I2C_CheckForBusyBus", "a00036.html#ga2ded19f42c2b7e09764e6e926c501b67", null ],
     [ "FLEXIO_I2C_MasterInit", "a00036.html#gaaacd8cca7de1ff3a8c33c86d4f7f88fd", null ],
     [ "FLEXIO_I2C_MasterDeinit", "a00036.html#ga2da731bfa4e1e36b5d6d0235898b26dd", null ],
     [ "FLEXIO_I2C_MasterGetDefaultConfig", "a00036.html#gaa85599771e53091102f0823217ad0bcc", null ],

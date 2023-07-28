@@ -8,7 +8,7 @@
 #define _BOARD_CONFIG_H
 
 /*
- * This is the evkmimxrt1170 board configuration for:
+ * This is the evkbmimxrt1170 board configuration for:
  * - the HAL
  * - the application parameters
  */
@@ -39,11 +39,13 @@
  * This section provides a template for the application parameters.
  * These application parameters can be configured to other supported values
 */
-/* camera params */
+/* camera params (default values) */
 #define APP_CAMERA_NAME "MipiOv5640"
 #define APP_CAMERA_WIDTH  1280
 #define APP_CAMERA_HEIGHT 720
 #define APP_CAMERA_FORMAT MPP_PIXEL_YUV1P444
+/* camera params (other supported values) */
+#define APP_CAMERA_FORMAT1 MPP_PIXEL_ARGB
 
 /* display params */
 #define APP_DISPLAY_NAME "Lcdifv2Rk055ah"
@@ -52,7 +54,11 @@
 #define APP_DISPLAY_FORMAT MPP_PIXEL_RGB565
 
 /* other params */
-/* rotation is needed because camera is landscape, display RK055 is portrait */
-#define APP_CAMERA_DISPLAY_ROTATE ROTATE_90
+/* rotation is needed to display in landscape because display RK055 is portrait */
+#define APP_DISPLAY_LANDSCAPE_ROTATE ROTATE_90
+
+/* detection boxes params */
+/* maximum number of boxes stored in RAM by APP (1box ~= 16B) */
+#define APP_MAX_BOXES 10000
 
 #endif /* _BOARD_CONFIG_H */

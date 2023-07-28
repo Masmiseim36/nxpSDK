@@ -132,13 +132,13 @@ void MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
 RAM_FUNC_LIB
 bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this)
 {
-    /* read over-current flags */
-    s_statusPass = (((this->pui32PwmBaseAddress->FSTS & PWM_FSTS_FFPIN_MASK) >> 8) &
-                    (1 << this->ui16FaultFixNum | 1 << this->ui16FaultAdjNum));
+   /* read over-current flags */
+   s_statusPass = (((this->pui32PwmBaseAddress->FSTS & PWM_FSTS_FFPIN_MASK) >> 8) &
+                   (1 << this->ui16FaultFixNum | 1 << this->ui16FaultAdjNum));
 
-    /* clear faults flag */
-    this->pui32PwmBaseAddress->FSTS = ((this->pui32PwmBaseAddress->FSTS & ~(uint16_t)(PWM_FSTS_FFLAG_MASK)) |
-                                       (1 << this->ui16FaultFixNum | 1 << this->ui16FaultAdjNum));
+   /* clear faults flag */
+   this->pui32PwmBaseAddress->FSTS = ((this->pui32PwmBaseAddress->FSTS & ~(uint16_t)(PWM_FSTS_FFLAG_MASK)) |
+                                      (1 << this->ui16FaultFixNum | 1 << this->ui16FaultAdjNum));
 
     return ((s_statusPass > 0));
 }

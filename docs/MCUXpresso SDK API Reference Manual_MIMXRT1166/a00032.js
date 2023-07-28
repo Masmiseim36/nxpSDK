@@ -1,18 +1,25 @@
 var a00032 =
 [
-    [ "flexcan_edma_handle_t", "a00032.html#a00379", [
-      [ "callback", "a00032.html#a63bbb14985ea667bb86d933782244ebe", null ],
-      [ "userData", "a00032.html#a8408c788bc9497c7a74811940a28bce7", null ],
-      [ "rxFifoEdmaHandle", "a00032.html#a923894ca8505812ac61ad5632677a7d2", null ],
-      [ "rxFifoState", "a00032.html#af08257e6fde0f8f49d152ab07264dfd3", null ],
-      [ "frameNum", "a00032.html#a846a4f4d7f079f5e9ef36b2ba77afa4d", null ]
+    [ "ewm_config_t", "a00032.html#a00520", [
+      [ "enableEwm", "a00032.html#a9fc625647ba94efff761a19ea25dedae", null ],
+      [ "enableEwmInput", "a00032.html#a48b7c11c26b8b3a1843bd78e9bd3124c", null ],
+      [ "setInputAssertLogic", "a00032.html#a824557f8134c17a6cfea99f510704127", null ],
+      [ "enableInterrupt", "a00032.html#a59ced8270a61599dc2087649a0881403", null ],
+      [ "compareLowValue", "a00032.html#ab0c9acea46f2d29c2a64b024dcbff24e", null ],
+      [ "compareHighValue", "a00032.html#aecf428ef0d0ada1bb492fea9e8edbfc4", null ]
     ] ],
-    [ "FSL_FLEXCAN_EDMA_DRIVER_VERSION", "a00032.html#ga3a725e7f5fd30ef8458220269fbea29f", null ],
-    [ "flexcan_edma_transfer_callback_t", "a00032.html#ga200b7c77f4d5b5495193e58772e12c68", null ],
-    [ "FLEXCAN_TransferCreateHandleEDMA", "a00032.html#ga1ca334397a0902a09b8b7ddd4a73d87b", null ],
-    [ "FLEXCAN_PrepareTransfConfiguration", "a00032.html#ga5cedfaa95e88853c01d3d8d5b3161e3b", null ],
-    [ "FLEXCAN_StartTransferDatafromRxFIFO", "a00032.html#ga7a883dbd4d8b2e57e9e04f69a281a8e1", null ],
-    [ "FLEXCAN_TransferReceiveFifoEDMA", "a00032.html#gaf38af081946e9543788f45d3b85611b8", null ],
-    [ "FLEXCAN_TransferGetReceiveFifoCountEMDA", "a00032.html#ga36a7f4ab5fb2dd0ceee749d0422b6a8c", null ],
-    [ "FLEXCAN_TransferAbortReceiveFifoEDMA", "a00032.html#ga518cce21e8dde19dc32b21a68c549b1b", null ]
+    [ "FSL_EWM_DRIVER_VERSION", "a00032.html#ga13413f9927ed720755dc3e98f77ecba2", null ],
+    [ "_ewm_interrupt_enable_t", "a00032.html#gaf1f0321cab3227a897b2e2475ceaec5f", [
+      [ "kEWM_InterruptEnable", "a00032.html#ggaf1f0321cab3227a897b2e2475ceaec5fa5bd5d6fb4ae17d0173bda608f54fa0e7", null ]
+    ] ],
+    [ "_ewm_status_flags_t", "a00032.html#ga8713ae33b98d07c7a0aeae8bf78432d1", [
+      [ "kEWM_RunningFlag", "a00032.html#gga8713ae33b98d07c7a0aeae8bf78432d1a4d8e2380358f82522dc60a6ca08a55d3", null ]
+    ] ],
+    [ "EWM_Init", "a00032.html#gafe731b0ab2d0c9f566784a1d6ee722cc", null ],
+    [ "EWM_Deinit", "a00032.html#ga4e3101bd8ccb2c11b563819e21058b28", null ],
+    [ "EWM_GetDefaultConfig", "a00032.html#gac87adab8a628260058e8bee7b849ec67", null ],
+    [ "EWM_EnableInterrupts", "a00032.html#ga01dcefd3eeaf15ba50ab43b95bb3ef5a", null ],
+    [ "EWM_DisableInterrupts", "a00032.html#gacb4ba8a7f7e0bedd5d8acf2e5e185f46", null ],
+    [ "EWM_GetStatusFlags", "a00032.html#gacfb200abe644ca56e7be42fac09d6f6a", null ],
+    [ "EWM_Refresh", "a00032.html#gaf12c54c9b4bab2c1fa19eb1e81e501a0", null ]
 ];

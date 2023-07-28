@@ -1,14 +1,13 @@
 var a00009 =
 [
-    [ "adc_etc_config_t", "a00009.html#a00421", null ],
-    [ "adc_etc_trigger_chain_config_t", "a00009.html#a00422", null ],
-    [ "adc_etc_trigger_config_t", "a00009.html#a00423", null ],
+    [ "adc_etc_config_t", "a00009.html#a00428", null ],
+    [ "adc_etc_trigger_chain_config_t", "a00009.html#a00429", null ],
+    [ "adc_etc_trigger_config_t", "a00009.html#a00430", null ],
     [ "FSL_ADC_ETC_DRIVER_VERSION", "a00009.html#gabb13030471759f06c35f462ed2674023", null ],
     [ "ADC_ETC_DMA_CTRL_TRGn_REQ_MASK", "a00009.html#gafcf58ac176e14d5434d45f3999f46a5c", null ],
     [ "_adc_etc_status_flag_mask", "a00009.html#gaecc628cacd5a30243e25b0fd21cddeaa", null ],
     [ "adc_etc_external_trigger_source_t", "a00009.html#ga46af1d713f9fda57d1a8976df9954a53", null ],
     [ "adc_etc_interrupt_enable_t", "a00009.html#ga23ca13fe73d35024cd8aca272722b9ff", null ],
-    [ "adc_etc_dma_mode_selection_t", "a00009.html#gacff8041ab38ca08dce9972e00363ca1a", null ],
     [ "ADC_ETC_Init", "a00009.html#gac035c4e4918763d2a3c161bfc967c672", null ],
     [ "ADC_ETC_Deinit", "a00009.html#gafd8e32731410e71c6f25bac9a30bdb73", null ],
     [ "ADC_ETC_GetDefaultConfig", "a00009.html#gadbcb45c28030d9a31d33f7686fa36dc5", null ],

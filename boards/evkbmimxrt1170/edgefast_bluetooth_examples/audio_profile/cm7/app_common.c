@@ -503,6 +503,8 @@ int app_main (int argc, char **argv)
         }
     }
 
+    PRINTF("Bluetooth Audio Profile demo start...\n");
+
     /* Initializate BT Host stack */
     err = bt_enable(bt_ready);
     if (err)

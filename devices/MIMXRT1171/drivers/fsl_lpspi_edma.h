@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief LPSPI EDMA driver version. */
-#define FSL_LPSPI_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+#define FSL_LPSPI_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
 /*@}*/
 
 /*!
@@ -163,11 +163,11 @@ extern "C" {
  * This function initializes the LPSPI eDMA handle which can be used for other LPSPI transactional APIs.  Usually, for a
  * specified LPSPI instance, call this API once to get the initialized handle.
  *
- * Note that the LPSPI eDMA has a separated (Rx and Rx as two sources) or shared (Rx  and Tx are the same source) DMA
+ * Note that the LPSPI eDMA has a separated (Rx and Tx as two sources) or shared (Rx  and Tx are the same source) DMA
  * request source.
  * (1) For a separated DMA request source, enable and set the Rx DMAMUX source for edmaRxRegToRxDataHandle and
- * Tx DMAMUX source for edmaIntermediaryToTxRegHandle.
- * (2) For a shared DMA request source, enable and set the Rx/Rx DMAMUX source for edmaRxRegToRxDataHandle.
+ * Tx DMAMUX source for edmaTxDataToTxRegHandle.
+ * (2) For a shared DMA request source, enable and set the Rx/Tx DMAMUX source for edmaRxRegToRxDataHandle.
  *
  * @param base LPSPI peripheral base address.
  * @param handle LPSPI handle pointer to lpspi_master_edma_handle_t.
@@ -201,6 +201,44 @@ void LPSPI_MasterTransferCreateHandleEDMA(LPSPI_Type *base,
  * @return status of status_t.
  */
 status_t LPSPI_MasterTransferEDMA(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, lpspi_transfer_t *transfer);
+
+/*!
+ * @brief LPSPI master config transfer parameter while using eDMA.
+ *
+ * This function is preparing to transfer data using eDMA, work with LPSPI_MasterTransferEDMALite. 
+ *
+ * @param base LPSPI peripheral base address.
+ * @param handle pointer to lpspi_master_edma_handle_t structure which stores the transfer state.
+ * @param configFlags transfer configuration flags. @ref _lpspi_transfer_config_flag_for_master.
+ * @return Indicates whether LPSPI master transfer was successful or not.
+ * @retval kStatus_Success          Execution successfully.
+ * @retval kStatus_LPSPI_Busy       The LPSPI device is busy.
+ */
+status_t LPSPI_MasterTransferPrepareEDMALite(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, uint32_t configFlags);
+
+/*!
+ * @brief LPSPI master transfer data using eDMA without configs.
+ *
+ * This function transfers data using eDMA. This is a non-blocking function, which returns right away. When all data
+ * is transferred, the callback function is called.
+ *
+ * Note:
+ * This API is only for transfer through DMA without configuration. 
+ * Before calling this API, you must call LPSPI_MasterTransferPrepareEDMALite to configure it once.
+ * The transfer data size should be an integer multiple of bytesPerFrame if bytesPerFrame is less than or equal to 4.
+ * For bytesPerFrame greater than 4:
+ * The transfer data size should be equal to bytesPerFrame if the bytesPerFrame is not an integer multiple of 4.
+ * Otherwise, the transfer data size can be an integer multiple of bytesPerFrame.
+ *
+ * @param base LPSPI peripheral base address.
+ * @param handle pointer to lpspi_master_edma_handle_t structure which stores the transfer state.
+ * @param transfer pointer to lpspi_transfer_t structure, config field is not uesed.
+ * @return Indicates whether LPSPI master transfer was successful or not.
+ * @retval kStatus_Success          Execution successfully.
+ * @retval kStatus_LPSPI_Busy       The LPSPI device is busy.
+ * @retval kStatus_InvalidArgument  The transfer structure is invalid.
+ */
+status_t LPSPI_MasterTransferEDMALite(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, lpspi_transfer_t *transfer);
 
 /*!
  * @brief LPSPI master aborts a transfer which is using eDMA.

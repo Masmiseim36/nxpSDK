@@ -1,6 +1,7 @@
 /*
  * FreeRTOS V202203.00
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2023 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -65,6 +66,8 @@
 
 /* For writing log lines without a prefix. */
 extern void vLoggingPrint(const char *pcFormat);
+
+#define keyprovisioningDESTROY_OBJECT_SUPPORTED 0
 
 /* Developer convenience override, for lab testing purposes, for generating
  * a new default key pair, regardless of whether an existing key pair is present. */
@@ -644,11 +647,13 @@ CK_RV xProvisionCertificate(CK_SESSION_HANDLE xSession,
         xCertificateTemplate.xValue.ulValueLen = xDerLen;
     }
 
+#if (keyprovisioningDESTROY_OBJECT_SUPPORTED == 1)
     /* Best effort clean-up of the existing object, if it exists. */
     if (xResult == CKR_OK)
     {
         xDestroyProvidedObjects(xSession, &pucLabel, &xCertificateClass, 1);
     }
+#endif
 
     /* Create an object using the encoded client certificate. */
     if (xResult == CKR_OK)
@@ -971,7 +976,7 @@ CK_RV xProvisionDevice(CK_SESSION_HANDLE xSession, ProvisioningParams_t *pxParam
 
     xResult = C_GetFunctionList(&pxFunctionList);
 
-#if (pkcs11configIMPORT_PRIVATE_KEYS_SUPPORTED == 1)
+#if (pkcs11configIMPORT_PRIVATE_KEYS_SUPPORTED == 1) && (keyprovisioningDESTROY_OBJECT_SUPPORTED == 1)
 
     /* Attempt to clean-up old crypto objects, but only if private key import is
      * supported by this application, and only if the caller has provided new
@@ -1234,6 +1239,45 @@ CK_RV vDevModeKeyProvisioning(void)
     }
 
     return vAlternateKeyProvisioning(&xParams);
+}
+
+/*-----------------------------------------------------------*/
+
+/* Perform device provisioning using public key for code signature verification. */
+CK_RV vCodeVerifyPubKeyProvisioning()
+{
+    CK_RV xResult                       = CKR_OK;
+    CK_FUNCTION_LIST_PTR pxFunctionList = NULL;
+    CK_SESSION_HANDLE xSession          = 0;
+    CK_OBJECT_HANDLE xObject            = 0;
+
+    xResult = C_GetFunctionList(&pxFunctionList);
+
+    /* Initialize the PKCS Module */
+    if (xResult == CKR_OK)
+    {
+        xResult = xInitializePkcs11Token();
+    }
+
+    if (xResult == CKR_OK)
+    {
+        xResult = xInitializePkcs11Session(&xSession);
+    }
+
+    if (xResult == CKR_OK)
+    {
+        xResult = xProvisionPublicKey(xSession, keyCODE_VERIFY_PUB_KEY_PEM, sizeof(keyCODE_VERIFY_PUB_KEY_PEM), CKK_EC,
+                               (uint8_t *)pkcs11configLABEL_CODE_VERIFICATION_KEY, &xObject);
+
+        if ((xResult != CKR_OK) || (xObject == CK_INVALID_HANDLE))
+        {
+            configPRINTF(("ERROR: Failed to provision public key for code signature verification with status %d.\r\n", xResult));
+        }
+
+        pxFunctionList->C_CloseSession(xSession);
+    }
+
+    return xResult;
 }
 
 /*-----------------------------------------------------------*/

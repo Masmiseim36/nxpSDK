@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2020 SixOctets Systems
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -282,6 +282,7 @@ static bool device_scanned(struct bt_data *data, void *user_data)
     uint16_t u16;
     int err;
     int i;
+    char dev[BT_ADDR_LE_STR_LEN];
     bool continueParse = true;
 
     /* return true to continue parsing or false to stop parsing */
@@ -311,7 +312,8 @@ static bool device_scanned(struct bt_data *data, void *user_data)
                         PRINTF("Stop LE scan failed (err %d)\n", err);
                         break;
                     }
-                    PRINTF("Found device: %s", addr);
+                    bt_addr_le_to_str(addr, dev, sizeof(dev));
+                    PRINTF("Found device: %s", dev);
 
                     /* Send connection request */
                     err = bt_conn_le_create(addr, BT_CONN_LE_CREATE_CONN,
@@ -508,14 +510,15 @@ static void bt_ready(int err)
         return;
     }
 
-    if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
-    {
-        settings_load();
-    }
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
+    settings_load();
+#endif /* CONFIG_BT_SETTINGS */
+
     PRINTF("Bluetooth initialized\n");
 
     /* Register connection callback */
     bt_conn_cb_register(&conn_callbacks);
+
 #if CONFIG_BT_SMP
     bt_conn_auth_cb_register(&auth_cb_display);
 #endif
@@ -534,6 +537,8 @@ static void bt_ready(int err)
 void central_pxm_task(void *pvParameters)
 {
     int err;
+
+    PRINTF("BLE Central PXM demo start...\n");
 
     err = bt_enable(bt_ready);
     if (err)

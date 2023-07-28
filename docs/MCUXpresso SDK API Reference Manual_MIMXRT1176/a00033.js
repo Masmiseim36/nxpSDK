@@ -1,7 +1,7 @@
 var a00033 =
 [
     [ "FlexIO eDMA Camera Driver", "a00034.html", "a00034" ],
-    [ "FLEXIO_CAMERA_Type", "a00033.html#a00525", [
+    [ "FLEXIO_CAMERA_Type", "a00033.html#a00531", [
       [ "flexioBase", "a00033.html#ae0f8a4522f24e49f4b07d817cd83bc9d", null ],
       [ "datPinStartIdx", "a00033.html#a01fbe9a10d4c76d7fc3ee2ed4aeee7ef", null ],
       [ "pclkPinIdx", "a00033.html#a392cffe8bdb5aa02a9336246a8f8edad", null ],
@@ -10,20 +10,20 @@ var a00033 =
       [ "shifterCount", "a00033.html#a474b38582173a400d05349a7495d3a6a", null ],
       [ "timerIdx", "a00033.html#a4c3f2809f05818a51665af4771c9a3d4", null ]
     ] ],
-    [ "flexio_camera_config_t", "a00033.html#a00523", [
+    [ "flexio_camera_config_t", "a00033.html#a00529", [
       [ "enablecamera", "a00033.html#adfc897a69a82f2a3d2cb2593d8839b3a", null ],
       [ "enableInDoze", "a00033.html#a2fad1c192bdc859ff5b756e15355edb7", null ],
       [ "enableInDebug", "a00033.html#ad860db4158c051e40378d4cec5089dea", null ],
       [ "enableFastAccess", "a00033.html#a40a32e7ea5ac2898f67d7648fbef7453", null ]
     ] ],
-    [ "flexio_camera_transfer_t", "a00033.html#a00524", [
+    [ "flexio_camera_transfer_t", "a00033.html#a00530", [
       [ "dataAddress", "a00033.html#a40d378cf97ac2c5340da1d4322816c19", null ],
       [ "dataNum", "a00033.html#a9c1d2aa1341117602a1f9c72dd1449bc", null ]
     ] ],
     [ "FSL_FLEXIO_CAMERA_DRIVER_VERSION", "a00033.html#gaf67f7409d83d5806e8dee459e28ea116", null ],
     [ "FLEXIO_CAMERA_PARALLEL_DATA_WIDTH", "a00033.html#ga353a8218bf5dd22032b9055285e2bb49", [
-      [ "kStatus_FLEXIO_CAMERA_RxBusy", "a00033.html#ggafa9be5679ab03d785820f2474c5ccc6ea68a8386d9dc811f20b4955edc9e456ae", null ],
-      [ "kStatus_FLEXIO_CAMERA_RxIdle", "a00033.html#ggafa9be5679ab03d785820f2474c5ccc6ea1350eedcb89f16d93727f570b63a79b4", null ]
+      [ "kStatus_FLEXIO_CAMERA_RxBusy", "a00033.html#ggaf3520ff6d43011872bab77edd27d4de3a68a8386d9dc811f20b4955edc9e456ae", null ],
+      [ "kStatus_FLEXIO_CAMERA_RxIdle", "a00033.html#ggaf3520ff6d43011872bab77edd27d4de3a1350eedcb89f16d93727f570b63a79b4", null ]
     ] ],
     [ "_flexio_camera_status_flags", "a00033.html#ga19fc70fddf16fa061eff3de0f46ee888", [
       [ "kFLEXIO_CAMERA_RxDataRegFullFlag", "a00033.html#gga19fc70fddf16fa061eff3de0f46ee888a3d55cd5136d4cbb5ea3ae3372d7b98ef", null ],

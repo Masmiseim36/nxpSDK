@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PHY_STABILITY_DELAY_US=500000U, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1166/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -514,16 +514,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -533,31 +523,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -597,6 +577,26 @@
               <FileName>fsl_enet_phy_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/cmsis_drivers/fsl_enet_phy_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -786,6 +786,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -817,31 +872,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_ETH_MAC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH_PHY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1178,7 +1208,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PHY_STABILITY_DELAY_US=500000U, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1166/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1212,7 +1242,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1358,16 +1388,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -1377,31 +1397,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -1441,6 +1451,26 @@
               <FileName>fsl_enet_phy_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/cmsis_drivers/fsl_enet_phy_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1630,6 +1660,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1661,31 +1746,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_ETH_MAC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH_PHY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2022,7 +2082,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PHY_STABILITY_DELAY_US=500000U, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1166/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2056,7 +2116,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2202,16 +2262,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -2221,31 +2271,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -2285,6 +2325,26 @@
               <FileName>fsl_enet_phy_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/cmsis_drivers/fsl_enet_phy_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2474,6 +2534,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2505,31 +2620,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_ETH_MAC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH_PHY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2866,7 +2956,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PHY_STABILITY_DELAY_US=500000U, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1166/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2900,7 +2990,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3046,16 +3136,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -3065,31 +3145,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -3129,6 +3199,26 @@
               <FileName>fsl_enet_phy_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/cmsis_drivers/fsl_enet_phy_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3318,6 +3408,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -3349,31 +3494,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_ETH_MAC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH_PHY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3710,7 +3830,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PHY_STABILITY_DELAY_US=500000U, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1166/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3744,7 +3864,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3890,16 +4010,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -3909,31 +4019,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -3973,6 +4073,26 @@
               <FileName>fsl_enet_phy_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/cmsis_drivers/fsl_enet_phy_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4162,6 +4282,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -4193,31 +4368,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_ETH_MAC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH_PHY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4554,7 +4704,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PHY_STABILITY_DELAY_US=500000U, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/silicon_id/socs;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../components/silicon_id/socs;../../../../../../../components/silicon_id;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../../components/phy;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1166/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4588,7 +4738,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4734,16 +4884,6 @@
           <GroupName>component/silicon_id</GroupName>
           <Files>
             <File>
-              <FileName>fsl_silicon_id.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_silicon_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_silicon_id_soc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</FilePath>
@@ -4753,31 +4893,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -4817,6 +4947,26 @@
               <FileName>fsl_enet_phy_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/cmsis_drivers/fsl_enet_phy_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -5006,6 +5156,61 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>CMSIS_driver/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_MAC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_ETH_PHY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -5037,31 +5242,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_ETH_MAC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_MAC.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_ETH_PHY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Driver/Include/Driver_ETH_PHY.h</FilePath>
             </File>
           </Files>
         </Group>

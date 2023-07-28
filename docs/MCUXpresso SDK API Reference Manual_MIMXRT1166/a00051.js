@@ -1,25 +1,43 @@
 var a00051 =
 [
-    [ "kpp_config_t", "a00051.html#a00552", [
-      [ "activeRow", "a00051.html#affe1c0fe7c98a7bbd90e5da557a77029", null ],
-      [ "activeColumn", "a00051.html#a17262e678dbf479fc6fea48e685e94be", null ],
-      [ "interrupt", "a00051.html#a3f6f88fe9bcaf13690da0506e52f8bd9", null ]
+    [ "gpio_pin_config_t", "a00051.html#a00561", [
+      [ "direction", "a00051.html#a5eae83ead0519707b896cfa9082c4e82", null ],
+      [ "outputLogic", "a00051.html#a9d37ffd9a2943f10a91095759bd52da5", null ],
+      [ "interruptMode", "a00051.html#a2aaf4ec1e85d3fcea653b422c673441e", null ]
     ] ],
-    [ "FSL_KPP_DRIVER_VERSION", "a00051.html#ga35c20878a9d0b578ca2bbf50d98666a8", null ],
-    [ "kpp_interrupt_enable_t", "a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72", [
-      [ "kKPP_keyDepressInterrupt", "a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2", null ],
-      [ "kKPP_keyReleaseInterrupt", "a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df", null ]
+    [ "FSL_GPIO_DRIVER_VERSION", "a00051.html#ga5aa5229cbd041b11bcf8417ba12896b2", null ],
+    [ "gpio_pin_direction_t", "a00051.html#gada41ca0a2ce239fe125ee96833e715c0", [
+      [ "kGPIO_DigitalInput", "a00051.html#ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4", null ],
+      [ "kGPIO_DigitalOutput", "a00051.html#ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9", null ]
     ] ],
-    [ "kpp_sync_operation_t", "a00051.html#ga0c44e479c6d310cf4d9a701c09f73485", [
-      [ "kKPP_ClearKeyDepressSyncChain", "a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b", null ],
-      [ "kKPP_SetKeyReleasesSyncChain", "a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5", null ]
+    [ "gpio_interrupt_mode_t", "a00051.html#ga1b9ad57f43a7be04e31c2e43e92aca39", [
+      [ "kGPIO_NoIntmode", "a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d", null ],
+      [ "kGPIO_IntLowLevel", "a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da", null ],
+      [ "kGPIO_IntHighLevel", "a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3", null ],
+      [ "kGPIO_IntRisingEdge", "a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4", null ],
+      [ "kGPIO_IntFallingEdge", "a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887", null ],
+      [ "kGPIO_IntRisingOrFallingEdge", "a00051.html#gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50", null ]
     ] ],
-    [ "KPP_Init", "a00051.html#ga773203cef9b50a6c5864f78c05cb0c83", null ],
-    [ "KPP_Deinit", "a00051.html#ga910f3aec15296a1d993f9b4963a152fd", null ],
-    [ "KPP_EnableInterrupts", "a00051.html#ga4d8bc3929af0678c182047884c50f7db", null ],
-    [ "KPP_DisableInterrupts", "a00051.html#gaa7de1f02a42c4176605cf7053f78baab", null ],
-    [ "KPP_GetStatusFlag", "a00051.html#ga7e0b699fd3ac19ce1bbb95418871ab3e", null ],
-    [ "KPP_ClearStatusFlag", "a00051.html#gad5f48c3a6027700e16a3f9bf477fa7e6", null ],
-    [ "KPP_SetSynchronizeChain", "a00051.html#ga7a240001a7a2b5fb84754a9a75afcb86", null ],
-    [ "KPP_keyPressScanning", "a00051.html#ga636803e3b1c99ec6dc9756548d9ef7b9", null ]
+    [ "GPIO_PinInit", "a00051.html#ga8d3aa26ad7e88ef1427e51242a70c259", null ],
+    [ "GPIO_PinWrite", "a00051.html#ga41c1b70e3ee7825359e0891812c88e85", null ],
+    [ "GPIO_WritePinOutput", "a00051.html#ga5677a2c3b14f5e9f034edbbd5b429c1d", null ],
+    [ "GPIO_PortSet", "a00051.html#ga2de9f41517bfde0920a5dea5db6e56d6", null ],
+    [ "GPIO_SetPinsOutput", "a00051.html#ga2f8a8be69355039abd8b1ddf2a236f4c", null ],
+    [ "GPIO_PortClear", "a00051.html#gaff8a89d83ce5fdaea9db88317eece33c", null ],
+    [ "GPIO_ClearPinsOutput", "a00051.html#ga3ac4a7dccb5285b2926f152c3ff12af9", null ],
+    [ "GPIO_PortToggle", "a00051.html#gaedff8c598cb084323f2aa6c324c2c0cb", null ],
+    [ "GPIO_PinRead", "a00051.html#gac999c0dd229595fe2b651e796da560be", null ],
+    [ "GPIO_ReadPinInput", "a00051.html#gaf8d77b6a1daf18087dbc6c0814b2ed97", null ],
+    [ "GPIO_PinReadPadStatus", "a00051.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa", null ],
+    [ "GPIO_ReadPadStatus", "a00051.html#ga064aa69c0dbb70a4a7344124df9943b1", null ],
+    [ "GPIO_PinSetInterruptConfig", "a00051.html#gac704735fb3cf3a56676f2fb90e67b10f", null ],
+    [ "GPIO_SetPinInterruptConfig", "a00051.html#ga364fe6d19b98557e44282f95ccc5e63d", null ],
+    [ "GPIO_PortEnableInterrupts", "a00051.html#ga2a62aa9cd2aeacf2a81dc4d644f9b0b1", null ],
+    [ "GPIO_EnableInterrupts", "a00051.html#ga7c45f4ed2a5ec769e0e4cd2e32f62ad5", null ],
+    [ "GPIO_PortDisableInterrupts", "a00051.html#gaf9613d5714d047051b09f86592d9cdc4", null ],
+    [ "GPIO_DisableInterrupts", "a00051.html#gaa1deaff6764df2649453fa5502ee0fcc", null ],
+    [ "GPIO_PortGetInterruptFlags", "a00051.html#gaee4bc796792470cf80e8f0aa6d8c0d32", null ],
+    [ "GPIO_GetPinsInterruptFlags", "a00051.html#ga6efe712710a08ee6e9f89a47a507339f", null ],
+    [ "GPIO_PortClearInterruptFlags", "a00051.html#gabc9cd5e2b520359406cf4b45c5761011", null ],
+    [ "GPIO_ClearPinsInterruptFlags", "a00051.html#ga0b1ad50f4212dfb839fd059503f03bed", null ]
 ];

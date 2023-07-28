@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -111,7 +111,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -128,7 +128,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -226,8 +226,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>__USE_SHMEM</state>
           <state>FLEXSPI_IN_USE</state>
-          <state>MULTICORE_APP=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>MULTICORE_APP=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -353,8 +354,8 @@
           <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1160</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
@@ -369,8 +370,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -492,7 +493,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -697,7 +698,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1112,7 +1113,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1212,7 +1213,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1229,7 +1230,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1239,7 +1240,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1318,7 +1319,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1327,8 +1328,9 @@
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>__USE_SHMEM</state>
           <state>FLEXSPI_IN_USE</state>
-          <state>MULTICORE_APP=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDK_OS_BAREMETAL</state>
+          <state>MULTICORE_APP=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1454,8 +1456,8 @@
           <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1160</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
@@ -1470,8 +1472,8 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm4</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1593,7 +1595,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1798,7 +1800,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2429,6 +2431,15 @@
           </file>
         </group>
       </group>
+      <group>
+        <name>environment</name>
+        <group>
+          <name>bm</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</name>
+          </file>
+        </group>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
       </file>
@@ -2453,15 +2464,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
       </file>
-      <group>
-        <name>environment</name>
-        <group>
-          <name>bm</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</name>
-          </file>
-        </group>
-      </group>
     </group>
     <group>
       <name>rpmsg_lite</name>

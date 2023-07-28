@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FlexCAN eDMA Driver</title>
+<title>MCUXpresso SDK API Reference Manual: EWM: External Watchdog Monitor Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,204 +100,175 @@ $(document).ready(function(){initNavTree('a00032.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexCAN eDMA Driver<div class="ingroups"><a class="el" href="a00328.html">FlexCAN: Flex Controller Area Network Driver</a></div></div>  </div>
+<div class="title">EWM: External Watchdog Monitor Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the External Watchdog (EWM) Driver module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="EWMTypUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/ewm </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00379"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00379">flexcan_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00379"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN eDMA handle.  <a href="a00032.html#a00379">More...</a><br/></td></tr>
-<tr class="separator:a00379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00520"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a00520">ewm_config_t</a></td></tr>
+<tr class="memdesc:a00520"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes EWM clock source.  <a href="a00032.html#a00520">More...</a><br/></td></tr>
+<tr class="separator:a00520"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga200b7c77f4d5b5495193e58772e12c68"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga200b7c77f4d5b5495193e58772e12c68">flexcan_edma_transfer_callback_t</a> )(CAN_Type *base, flexcan_edma_handle_t *handle, <a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
-<tr class="memdesc:ga200b7c77f4d5b5495193e58772e12c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN transfer callback function.  <a href="#ga200b7c77f4d5b5495193e58772e12c68">More...</a><br/></td></tr>
-<tr class="separator:ga200b7c77f4d5b5495193e58772e12c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaf1f0321cab3227a897b2e2475ceaec5f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaf1f0321cab3227a897b2e2475ceaec5f">_ewm_interrupt_enable_t</a> { <a class="el" href="a00032.html#ggaf1f0321cab3227a897b2e2475ceaec5fa5bd5d6fb4ae17d0173bda608f54fa0e7">kEWM_InterruptEnable</a> = EWM_CTRL_INTEN_MASK
+ }</td></tr>
+<tr class="memdesc:gaf1f0321cab3227a897b2e2475ceaec5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM interrupt configuration structure with default settings all disabled.  <a href="a00032.html#gaf1f0321cab3227a897b2e2475ceaec5f">More...</a><br/></td></tr>
+<tr class="separator:gaf1f0321cab3227a897b2e2475ceaec5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8713ae33b98d07c7a0aeae8bf78432d1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga8713ae33b98d07c7a0aeae8bf78432d1">_ewm_status_flags_t</a> { <a class="el" href="a00032.html#gga8713ae33b98d07c7a0aeae8bf78432d1a4d8e2380358f82522dc60a6ca08a55d3">kEWM_RunningFlag</a> = EWM_CTRL_EWMEN_MASK
+ }</td></tr>
+<tr class="memdesc:ga8713ae33b98d07c7a0aeae8bf78432d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM status flags.  <a href="a00032.html#ga8713ae33b98d07c7a0aeae8bf78432d1">More...</a><br/></td></tr>
+<tr class="separator:ga8713ae33b98d07c7a0aeae8bf78432d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga3a725e7f5fd30ef8458220269fbea29f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga3a725e7f5fd30ef8458220269fbea29f">FSL_FLEXCAN_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 9, 2))</td></tr>
-<tr class="memdesc:ga3a725e7f5fd30ef8458220269fbea29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN EDMA driver version.  <a href="#ga3a725e7f5fd30ef8458220269fbea29f">More...</a><br/></td></tr>
-<tr class="separator:ga3a725e7f5fd30ef8458220269fbea29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13413f9927ed720755dc3e98f77ecba2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga13413f9927ed720755dc3e98f77ecba2">FSL_EWM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
+<tr class="memdesc:ga13413f9927ed720755dc3e98f77ecba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM driver version 2.0.3.  <a href="#ga13413f9927ed720755dc3e98f77ecba2">More...</a><br/></td></tr>
+<tr class="separator:ga13413f9927ed720755dc3e98f77ecba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-eDMA transactional</h2></td></tr>
-<tr class="memitem:ga1ca334397a0902a09b8b7ddd4a73d87b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga1ca334397a0902a09b8b7ddd4a73d87b">FLEXCAN_TransferCreateHandleEDMA</a> (CAN_Type *base, flexcan_edma_handle_t *handle, <a class="el" href="a00032.html#ga200b7c77f4d5b5495193e58772e12c68">flexcan_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00025.html#a00463">edma_handle_t</a> *rxFifoEdmaHandle)</td></tr>
-<tr class="memdesc:ga1ca334397a0902a09b8b7ddd4a73d87b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FlexCAN handle, which is used in transactional functions.  <a href="#ga1ca334397a0902a09b8b7ddd4a73d87b">More...</a><br/></td></tr>
-<tr class="separator:ga1ca334397a0902a09b8b7ddd4a73d87b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5cedfaa95e88853c01d3d8d5b3161e3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga5cedfaa95e88853c01d3d8d5b3161e3b">FLEXCAN_PrepareTransfConfiguration</a> (CAN_Type *base, <a class="el" href="a00031.html#a00510">flexcan_fifo_transfer_t</a> *pFifoXfer, <a class="el" href="a00025.html#a00466">edma_transfer_config_t</a> *pEdmaConfig)</td></tr>
-<tr class="memdesc:ga5cedfaa95e88853c01d3d8d5b3161e3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the eDMA transfer configuration for FLEXCAN Legacy RX FIFO.  <a href="#ga5cedfaa95e88853c01d3d8d5b3161e3b">More...</a><br/></td></tr>
-<tr class="separator:ga5cedfaa95e88853c01d3d8d5b3161e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a883dbd4d8b2e57e9e04f69a281a8e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga7a883dbd4d8b2e57e9e04f69a281a8e1">FLEXCAN_StartTransferDatafromRxFIFO</a> (CAN_Type *base, flexcan_edma_handle_t *handle, <a class="el" href="a00025.html#a00466">edma_transfer_config_t</a> *pEdmaConfig)</td></tr>
-<tr class="memdesc:ga7a883dbd4d8b2e57e9e04f69a281a8e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start Transfer Data from the FLEXCAN Legacy Rx FIFO using eDMA.  <a href="#ga7a883dbd4d8b2e57e9e04f69a281a8e1">More...</a><br/></td></tr>
-<tr class="separator:ga7a883dbd4d8b2e57e9e04f69a281a8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf38af081946e9543788f45d3b85611b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaf38af081946e9543788f45d3b85611b8">FLEXCAN_TransferReceiveFifoEDMA</a> (CAN_Type *base, flexcan_edma_handle_t *handle, <a class="el" href="a00031.html#a00510">flexcan_fifo_transfer_t</a> *pFifoXfer)</td></tr>
-<tr class="memdesc:gaf38af081946e9543788f45d3b85611b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives the CAN Message from the Legacy Rx FIFO using eDMA.  <a href="#gaf38af081946e9543788f45d3b85611b8">More...</a><br/></td></tr>
-<tr class="separator:gaf38af081946e9543788f45d3b85611b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36a7f4ab5fb2dd0ceee749d0422b6a8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga36a7f4ab5fb2dd0ceee749d0422b6a8c">FLEXCAN_TransferGetReceiveFifoCountEMDA</a> (CAN_Type *base, flexcan_edma_handle_t *handle, size_t *count)</td></tr>
-<tr class="memdesc:ga36a7f4ab5fb2dd0ceee749d0422b6a8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Legacy Rx Fifo transfer status during a interrupt non-blocking receive.  <a href="#ga36a7f4ab5fb2dd0ceee749d0422b6a8c">More...</a><br/></td></tr>
-<tr class="separator:ga36a7f4ab5fb2dd0ceee749d0422b6a8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga518cce21e8dde19dc32b21a68c549b1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga518cce21e8dde19dc32b21a68c549b1b">FLEXCAN_TransferAbortReceiveFifoEDMA</a> (CAN_Type *base, flexcan_edma_handle_t *handle)</td></tr>
-<tr class="memdesc:ga518cce21e8dde19dc32b21a68c549b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the receive Legacy/Enhanced Rx FIFO process which used eDMA.  <a href="#ga518cce21e8dde19dc32b21a68c549b1b">More...</a><br/></td></tr>
-<tr class="separator:ga518cce21e8dde19dc32b21a68c549b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+EWM initialization and de-initialization</h2></td></tr>
+<tr class="memitem:gafe731b0ab2d0c9f566784a1d6ee722cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gafe731b0ab2d0c9f566784a1d6ee722cc">EWM_Init</a> (EWM_Type *base, const <a class="el" href="a00032.html#a00520">ewm_config_t</a> *config)</td></tr>
+<tr class="memdesc:gafe731b0ab2d0c9f566784a1d6ee722cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the EWM peripheral.  <a href="#gafe731b0ab2d0c9f566784a1d6ee722cc">More...</a><br/></td></tr>
+<tr class="separator:gafe731b0ab2d0c9f566784a1d6ee722cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e3101bd8ccb2c11b563819e21058b28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga4e3101bd8ccb2c11b563819e21058b28">EWM_Deinit</a> (EWM_Type *base)</td></tr>
+<tr class="memdesc:ga4e3101bd8ccb2c11b563819e21058b28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the EWM peripheral.  <a href="#ga4e3101bd8ccb2c11b563819e21058b28">More...</a><br/></td></tr>
+<tr class="separator:ga4e3101bd8ccb2c11b563819e21058b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac87adab8a628260058e8bee7b849ec67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gac87adab8a628260058e8bee7b849ec67">EWM_GetDefaultConfig</a> (<a class="el" href="a00032.html#a00520">ewm_config_t</a> *config)</td></tr>
+<tr class="memdesc:gac87adab8a628260058e8bee7b849ec67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the EWM configuration structure.  <a href="#gac87adab8a628260058e8bee7b849ec67">More...</a><br/></td></tr>
+<tr class="separator:gac87adab8a628260058e8bee7b849ec67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+EWM functional Operation</h2></td></tr>
+<tr class="memitem:ga01dcefd3eeaf15ba50ab43b95bb3ef5a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga01dcefd3eeaf15ba50ab43b95bb3ef5a">EWM_EnableInterrupts</a> (EWM_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga01dcefd3eeaf15ba50ab43b95bb3ef5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the EWM interrupt.  <a href="#ga01dcefd3eeaf15ba50ab43b95bb3ef5a">More...</a><br/></td></tr>
+<tr class="separator:ga01dcefd3eeaf15ba50ab43b95bb3ef5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb4ba8a7f7e0bedd5d8acf2e5e185f46"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gacb4ba8a7f7e0bedd5d8acf2e5e185f46">EWM_DisableInterrupts</a> (EWM_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gacb4ba8a7f7e0bedd5d8acf2e5e185f46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the EWM interrupt.  <a href="#gacb4ba8a7f7e0bedd5d8acf2e5e185f46">More...</a><br/></td></tr>
+<tr class="separator:gacb4ba8a7f7e0bedd5d8acf2e5e185f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfb200abe644ca56e7be42fac09d6f6a"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gacfb200abe644ca56e7be42fac09d6f6a">EWM_GetStatusFlags</a> (EWM_Type *base)</td></tr>
+<tr class="memdesc:gacfb200abe644ca56e7be42fac09d6f6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all status flags.  <a href="#gacfb200abe644ca56e7be42fac09d6f6a">More...</a><br/></td></tr>
+<tr class="separator:gacfb200abe644ca56e7be42fac09d6f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf12c54c9b4bab2c1fa19eb1e81e501a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaf12c54c9b4bab2c1fa19eb1e81e501a0">EWM_Refresh</a> (EWM_Type *base)</td></tr>
+<tr class="memdesc:gaf12c54c9b4bab2c1fa19eb1e81e501a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Services the EWM.  <a href="#gaf12c54c9b4bab2c1fa19eb1e81e501a0">More...</a><br/></td></tr>
+<tr class="separator:gaf12c54c9b4bab2c1fa19eb1e81e501a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00379" id="a00379"></a>
+<a name="a00520" id="a00520"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _flexcan_edma_handle</td>
+          <td class="memname">struct ewm_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>Data structure for EWM configuration.</p>
+<p>This structure is used to configure the EWM. </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a63bbb14985ea667bb86d933782244ebe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#ga200b7c77f4d5b5495193e58772e12c68">flexcan_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a63bbb14985ea667bb86d933782244ebe">callback</a></td></tr>
-<tr class="memdesc:a63bbb14985ea667bb86d933782244ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a63bbb14985ea667bb86d933782244ebe">More...</a><br/></td></tr>
-<tr class="separator:a63bbb14985ea667bb86d933782244ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8408c788bc9497c7a74811940a28bce7"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a8408c788bc9497c7a74811940a28bce7">userData</a></td></tr>
-<tr class="memdesc:a8408c788bc9497c7a74811940a28bce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN callback function parameter.  <a href="#a8408c788bc9497c7a74811940a28bce7">More...</a><br/></td></tr>
-<tr class="separator:a8408c788bc9497c7a74811940a28bce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a923894ca8505812ac61ad5632677a7d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#a00463">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a923894ca8505812ac61ad5632677a7d2">rxFifoEdmaHandle</a></td></tr>
-<tr class="memdesc:a923894ca8505812ac61ad5632677a7d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The EDMA handler for Rx FIFO.  <a href="#a923894ca8505812ac61ad5632677a7d2">More...</a><br/></td></tr>
-<tr class="separator:a923894ca8505812ac61ad5632677a7d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af08257e6fde0f8f49d152ab07264dfd3"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#af08257e6fde0f8f49d152ab07264dfd3">rxFifoState</a></td></tr>
-<tr class="memdesc:af08257e6fde0f8f49d152ab07264dfd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx FIFO transfer state.  <a href="#af08257e6fde0f8f49d152ab07264dfd3">More...</a><br/></td></tr>
-<tr class="separator:af08257e6fde0f8f49d152ab07264dfd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a846a4f4d7f079f5e9ef36b2ba77afa4d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a846a4f4d7f079f5e9ef36b2ba77afa4d">frameNum</a></td></tr>
-<tr class="memdesc:a846a4f4d7f079f5e9ef36b2ba77afa4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of messages that need to be received.  <a href="#a846a4f4d7f079f5e9ef36b2ba77afa4d">More...</a><br/></td></tr>
-<tr class="separator:a846a4f4d7f079f5e9ef36b2ba77afa4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc625647ba94efff761a19ea25dedae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fc625647ba94efff761a19ea25dedae"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a9fc625647ba94efff761a19ea25dedae">enableEwm</a></td></tr>
+<tr class="memdesc:a9fc625647ba94efff761a19ea25dedae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM module. <br/></td></tr>
+<tr class="separator:a9fc625647ba94efff761a19ea25dedae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48b7c11c26b8b3a1843bd78e9bd3124c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48b7c11c26b8b3a1843bd78e9bd3124c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a48b7c11c26b8b3a1843bd78e9bd3124c">enableEwmInput</a></td></tr>
+<tr class="memdesc:a48b7c11c26b8b3a1843bd78e9bd3124c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM_in input. <br/></td></tr>
+<tr class="separator:a48b7c11c26b8b3a1843bd78e9bd3124c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a824557f8134c17a6cfea99f510704127"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a824557f8134c17a6cfea99f510704127"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a824557f8134c17a6cfea99f510704127">setInputAssertLogic</a></td></tr>
+<tr class="memdesc:a824557f8134c17a6cfea99f510704127"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM_in signal assertion state. <br/></td></tr>
+<tr class="separator:a824557f8134c17a6cfea99f510704127"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ced8270a61599dc2087649a0881403"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59ced8270a61599dc2087649a0881403"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#a59ced8270a61599dc2087649a0881403">enableInterrupt</a></td></tr>
+<tr class="memdesc:a59ced8270a61599dc2087649a0881403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM interrupt. <br/></td></tr>
+<tr class="separator:a59ced8270a61599dc2087649a0881403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0c9acea46f2d29c2a64b024dcbff24e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0c9acea46f2d29c2a64b024dcbff24e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ab0c9acea46f2d29c2a64b024dcbff24e">compareLowValue</a></td></tr>
+<tr class="memdesc:ab0c9acea46f2d29c2a64b024dcbff24e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare low-register value. <br/></td></tr>
+<tr class="separator:ab0c9acea46f2d29c2a64b024dcbff24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecf428ef0d0ada1bb492fea9e8edbfc4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecf428ef0d0ada1bb492fea9e8edbfc4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#aecf428ef0d0ada1bb492fea9e8edbfc4">compareHighValue</a></td></tr>
+<tr class="memdesc:aecf428ef0d0ada1bb492fea9e8edbfc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare high-register value. <br/></td></tr>
+<tr class="separator:aecf428ef0d0ada1bb492fea9e8edbfc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a63bbb14985ea667bb86d933782244ebe"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00032.html#ga200b7c77f4d5b5495193e58772e12c68">flexcan_edma_transfer_callback_t</a> flexcan_edma_handle_t::callback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a8408c788bc9497c7a74811940a28bce7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* flexcan_edma_handle_t::userData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a923894ca8505812ac61ad5632677a7d2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00025.html#a00463">edma_handle_t</a>* flexcan_edma_handle_t::rxFifoEdmaHandle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af08257e6fde0f8f49d152ab07264dfd3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile uint8_t flexcan_edma_handle_t::rxFifoState</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a846a4f4d7f079f5e9ef36b2ba77afa4d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t flexcan_edma_handle_t::frameNum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga3a725e7f5fd30ef8458220269fbea29f"></a>
+<a class="anchor" id="ga13413f9927ed720755dc3e98f77ecba2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXCAN_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00324.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 9, 2))</td>
+          <td class="memname">#define FSL_EWM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga200b7c77f4d5b5495193e58772e12c68"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaf1f0321cab3227a897b2e2475ceaec5f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* flexcan_edma_transfer_callback_t)(CAN_Type *base, flexcan_edma_handle_t *handle, <a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">enum <a class="el" href="a00032.html#gaf1f0321cab3227a897b2e2475ceaec5f">_ewm_interrupt_enable_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This structure contains the settings for all of EWM interrupt configurations. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf1f0321cab3227a897b2e2475ceaec5fa5bd5d6fb4ae17d0173bda608f54fa0e7"></a>kEWM_InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Enable the EWM to generate an interrupt. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga8713ae33b98d07c7a0aeae8bf78432d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00032.html#ga8713ae33b98d07c7a0aeae8bf78432d1">_ewm_status_flags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the constants for the EWM status flags for use in the EWM functions. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8713ae33b98d07c7a0aeae8bf78432d1a4d8e2380358f82522dc60a6ca08a55d3"></a>kEWM_RunningFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Running flag, set when EWM is enabled. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga1ca334397a0902a09b8b7ddd4a73d87b"></a>
+<a class="anchor" id="gafe731b0ab2d0c9f566784a1d6ee722cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void FLEXCAN_TransferCreateHandleEDMA </td>
+          <td class="memname">void EWM_Init </td>
           <td>(</td>
-          <td class="paramtype">CAN_Type *&#160;</td>
+          <td class="paramtype">EWM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00032.html#ga200b7c77f4d5b5495193e58772e12c68">flexcan_edma_transfer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00463">edma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>rxFifoEdmaHandle</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00032.html#a00520">ewm_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -306,81 +277,97 @@ eDMA transactional</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function is used to initialize the EWM. After calling, the EWM runs immediately according to the configuration. Note that, except for the interrupt enable control bit, other control bits and registers are write once after a CPU reset. Modifying them more than once generates a bus transfer error.</p>
+<p>This is an example. </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00032.html#a00520">ewm_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00032.html#gac87adab8a628260058e8bee7b849ec67">EWM_GetDefaultConfig</a>(&amp;config);</div>
+<div class="line">*   config.<a class="code" href="a00032.html#aecf428ef0d0ada1bb492fea9e8edbfc4">compareHighValue</a> = 0xAAU;</div>
+<div class="line">*   <a class="code" href="a00032.html#gafe731b0ab2d0c9f566784a1d6ee722cc">EWM_Init</a>(ewm_base,&amp;config);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to flexcan_edma_handle_t structure. </td></tr>
-    <tr><td class="paramname">callback</td><td>The callback function. </td></tr>
-    <tr><td class="paramname">userData</td><td>The parameter of the callback function. </td></tr>
-    <tr><td class="paramname">rxFifoEdmaHandle</td><td>User-requested DMA handle for Rx FIFO DMA transfer. </td></tr>
+    <tr><td class="paramname">base</td><td>EWM peripheral base address </td></tr>
+    <tr><td class="paramname">config</td><td>The configuration of the EWM </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5cedfaa95e88853c01d3d8d5b3161e3b"></a>
+<a class="anchor" id="ga4e3101bd8ccb2c11b563819e21058b28"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void FLEXCAN_PrepareTransfConfiguration </td>
+          <td class="memname">void EWM_Deinit </td>
           <td>(</td>
-          <td class="paramtype">CAN_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">EWM_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00510">flexcan_fifo_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>pFifoXfer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00466">edma_transfer_config_t</a> *&#160;</td>
-          <td class="paramname"><em>pEdmaConfig</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function prepares the eDMA transfer configuration structure according to FLEXCAN Legacy RX FIFO.</p>
+<p>This function is used to shut down the EWM.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
-    <tr><td class="paramname">pFifoXfer</td><td>FlexCAN Rx FIFO EDMA transfer structure, see <a class="el" href="a00031.html#a00510" title="FlexCAN Rx FIFO transfer. ">flexcan_fifo_transfer_t</a>. </td></tr>
-    <tr><td class="paramname">pEdmaConfig</td><td>The user configuration structure of type edma_transfer_t. </td></tr>
+    <tr><td class="paramname">base</td><td>EWM peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7a883dbd4d8b2e57e9e04f69a281a8e1"></a>
+<a class="anchor" id="gac87adab8a628260058e8bee7b849ec67"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_StartTransferDatafromRxFIFO </td>
+          <td class="memname">void EWM_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">CAN_Type *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00032.html#a00520">ewm_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the EWM configuration structure to default values. The default values are as follows. </p>
+<div class="fragment"><div class="line">*   ewmConfig-&gt;enableEwm = <span class="keyword">true</span>;</div>
+<div class="line">*   ewmConfig-&gt;enableEwmInput = <span class="keyword">false</span>;</div>
+<div class="line">*   ewmConfig-&gt;setInputAssertLogic = <span class="keyword">false</span>;</div>
+<div class="line">*   ewmConfig-&gt;enableInterrupt = <span class="keyword">false</span>;</div>
+<div class="line">*   ewmConfig-&gt;ewm_lpo_clock_source_t = kEWM_LpoClockSource0;</div>
+<div class="line">*   ewmConfig-&gt;prescaler = 0;</div>
+<div class="line">*   ewmConfig-&gt;compareLowValue = 0;</div>
+<div class="line">*   ewmConfig-&gt;compareHighValue = 0xFEU;</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Pointer to the EWM configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00032.html#a00520" title="Describes EWM clock source. ">ewm_config_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga01dcefd3eeaf15ba50ab43b95bb3ef5a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void EWM_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">EWM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00466">edma_transfer_config_t</a> *&#160;</td>
-          <td class="paramname"><em>pEdmaConfig</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -388,47 +375,44 @@ eDMA transactional</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function to Update edma transfer confiugration and Start eDMA transfer</p>
+<p>This function enables the EWM interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to flexcan_edma_handle_t structure. </td></tr>
-    <tr><td class="paramname">pEdmaConfig</td><td>The user configuration structure of type edma_transfer_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others failed. </td></tr>
-    <tr><td class="paramname">kStatus_FLEXCAN_RxFifoBusy</td><td>Previous transfer ongoing. </td></tr>
+    <tr><td class="paramname">base</td><td>EWM peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable The parameter can be combination of the following source if defined <ul>
+<li>kEWM_InterruptEnable </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf38af081946e9543788f45d3b85611b8"></a>
+<a class="anchor" id="gacb4ba8a7f7e0bedd5d8acf2e5e185f46"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveFifoEDMA </td>
+          <td class="memname">static void EWM_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">CAN_Type *&#160;</td>
+          <td class="paramtype">EWM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00031.html#a00510">flexcan_fifo_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>pFifoXfer</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -436,101 +420,84 @@ eDMA transactional</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function receives the CAN Message using eDMA. This is a non-blocking function, which returns right away. After the CAN Message is received, the receive callback function is called.</p>
+<p>This function enables the EWM interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to flexcan_edma_handle_t structure. </td></tr>
-    <tr><td class="paramname">pFifoXfer</td><td>FlexCAN Rx FIFO EDMA transfer structure, see <a class="el" href="a00031.html#a00510" title="FlexCAN Rx FIFO transfer. ">flexcan_fifo_transfer_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others failed. </td></tr>
-    <tr><td class="paramname">kStatus_FLEXCAN_RxFifoBusy</td><td>Previous transfer ongoing. </td></tr>
+    <tr><td class="paramname">base</td><td>EWM peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable The parameter can be combination of the following source if defined <ul>
+<li>kEWM_InterruptEnable </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga36a7f4ab5fb2dd0ceee749d0422b6a8c"></a>
+<a class="anchor" id="gacfb200abe644ca56e7be42fac09d6f6a"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00324.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferGetReceiveFifoCountEMDA </td>
+          <td class="memname">static uint32_t EWM_GetStatusFlags </td>
           <td>(</td>
-          <td class="paramtype">CAN_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">EWM_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">flexcan_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function gets all status flags.</p>
+<p>This is an example for getting the running flag. </p>
+<div class="fragment"><div class="line">*   uint32_t status;</div>
+<div class="line">*   status = <a class="code" href="a00032.html#gacfb200abe644ca56e7be42fac09d6f6a">EWM_GetStatusFlags</a>(ewm_base) &amp; <a class="code" href="a00032.html#gga8713ae33b98d07c7a0aeae8bf78432d1a4d8e2380358f82522dc60a6ca08a55d3">kEWM_RunningFlag</a>;</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>FlexCAN handle pointer. </td></tr>
-    <tr><td class="paramname">count</td><td>Number of CAN messages receive so far by the non-blocking transaction. </td></tr>
+    <tr><td class="paramname">base</td><td>EWM peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>count is Invalid. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Successfully return the count. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>State of the status flag: asserted (true) or not-asserted (false).</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00032.html#ga8713ae33b98d07c7a0aeae8bf78432d1" title="EWM status flags. ">_ewm_status_flags_t</a><ul>
+<li>True: a related status flag has been set.</li>
+<li>False: a related status flag is not set. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga518cce21e8dde19dc32b21a68c549b1b"></a>
+<a class="anchor" id="gaf12c54c9b4bab2c1fa19eb1e81e501a0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void FLEXCAN_TransferAbortReceiveFifoEDMA </td>
+          <td class="memname">void EWM_Refresh </td>
           <td>(</td>
-          <td class="paramtype">CAN_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">EWM_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">flexcan_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function aborts the receive Legacy/Enhanced Rx FIFO process which used eDMA.</p>
+<p>This function resets the EWM counter to zero.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to flexcan_edma_handle_t structure. </td></tr>
+    <tr><td class="paramname">base</td><td>EWM peripheral base address </td></tr>
   </table>
   </dd>
 </dl>

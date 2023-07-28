@@ -18,11 +18,11 @@
 
 #include "fsl_debug_console.h"
 
-#include "fsl_codec_common.h"
 #include "fsl_wm8962.h"
+#include "app_definitions.h"
+#include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
 #include "fsl_dmamux.h"
-#include "app_definitions.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -187,10 +187,13 @@ status_t list_files(bool autoInput)
             {
                 if (count < MAX_FILES_LIST)
                 {
-                    strncpy(get_eap_att_control()->availableInputs[count], fileInformation.fname,
-                            sizeof(get_eap_att_control()->availableInputs[count]));
-                    PRINTF("  %s\r\n", get_eap_att_control()->availableInputs[count]);
-                    count++;
+                    if (strlen(fileInformation.fname) < MAX_FILE_NAME_LENGTH)
+                    {
+                        strncpy(get_eap_att_control()->availableInputs[count], fileInformation.fname,
+                                MAX_FILE_NAME_LENGTH - 1);
+                        PRINTF("  %s\r\n", get_eap_att_control()->availableInputs[count]);
+                        count++;
+                    }
                 }
                 else
                 {
@@ -325,8 +328,8 @@ int main(void)
 
     /* Init DMAMUX */
     DMAMUX_Init(DEMO_DMAMUX);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_CHANNEL);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
+    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL);
 
     /* Initialize OSA */
     OSA_Init();

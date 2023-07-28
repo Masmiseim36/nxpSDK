@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,6 +21,10 @@
 
 #if defined(PLATFORM_RT1040)
 #define DEVICE_ID    Device_IMXRT1040_CM7
+#define RDSP_NUM_MIC 2
+
+#elif defined(PLATFORM_RT1050)
+#define DEVICE_ID    Device_IMXRT1050_CM7
 #define RDSP_NUM_MIC 2
 
 #elif defined(PLATFORM_RT1060)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -225,8 +225,8 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -362,8 +362,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -485,7 +485,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -689,7 +689,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1098,7 +1098,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1185,7 +1185,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1202,7 +1202,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1225,7 +1225,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -1304,7 +1304,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1318,8 +1318,8 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1455,8 +1455,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1578,7 +1578,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1782,7 +1782,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2191,7 +2191,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2278,7 +2278,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -2295,7 +2295,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -2318,7 +2318,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -2397,7 +2397,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2407,8 +2407,8 @@
           <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2544,8 +2544,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2667,7 +2667,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2871,7 +2871,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3280,7 +3280,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3367,7 +3367,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -3384,7 +3384,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -3407,7 +3407,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -3486,7 +3486,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3496,8 +3496,8 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3633,8 +3633,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3756,7 +3756,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -3960,7 +3960,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4369,7 +4369,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4456,7 +4456,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -4473,7 +4473,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -4496,7 +4496,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -4575,7 +4575,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4583,8 +4583,8 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4720,8 +4720,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4843,7 +4843,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5047,7 +5047,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -5456,7 +5456,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5543,7 +5543,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -5560,7 +5560,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -5583,7 +5583,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -5662,7 +5662,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5676,8 +5676,8 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5813,8 +5813,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5936,7 +5936,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6140,7 +6140,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -6549,7 +6549,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6636,7 +6636,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -6653,7 +6653,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -6676,7 +6676,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -6755,7 +6755,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -6765,8 +6765,8 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6902,8 +6902,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -7025,7 +7025,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -7229,7 +7229,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -7638,7 +7638,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -7725,7 +7725,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -7742,7 +7742,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -7765,7 +7765,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>39</state>
         </option>
         <option>
@@ -7844,7 +7844,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -7854,8 +7854,8 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -7991,8 +7991,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -8114,7 +8114,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -8318,7 +8318,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>

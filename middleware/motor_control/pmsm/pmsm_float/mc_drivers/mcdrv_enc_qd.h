@@ -37,7 +37,7 @@ typedef struct _mcdrv_qd_enc_t
     frac16_t f16PosMeGain;        /* encoder pulses to mechanical position scale gain */
     int16_t i16PosMeGainSh;       /* encoder pulses to mechanical position scale shift */
     acc32_t a32PosMeReal;         /* real position (revolution counter + mechanical position) */
-    uint32_t ui32RevCounter;      /* revolution counter measured by periphery */
+    frac16_t f16RevCounter;       /* revolution counter measured by periphery */
     uint16_t ui16PulseNumber;     /* quadrature pulses per one revolution */
 } mcdrv_qd_enc_t;
 

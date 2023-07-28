@@ -9,6 +9,14 @@
       </member>
       <member>
         <project>dev_hid_mouse_freertos_cm7</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>dev_hid_mouse_freertos_cm7</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+      <member>
+        <project>dev_hid_mouse_freertos_cm7</project>
         <configuration>release</configuration>
       </member>
       <member>
@@ -19,20 +27,26 @@
         <project>dev_hid_mouse_freertos_cm7</project>
         <configuration>sdram_release</configuration>
       </member>
-      <member>
-        <project>dev_hid_mouse_freertos_cm7</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-      <member>
-        <project>dev_hid_mouse_freertos_cm7</project>
-        <configuration>flexspi_nor_release</configuration>
-      </member>
     </batchDefinition>
     <batchDefinition>
       <name>debug</name>
       <member>
         <project>dev_hid_mouse_freertos_cm7</project>
         <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_debug</name>
+      <member>
+        <project>dev_hid_mouse_freertos_cm7</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
+      <member>
+        <project>dev_hid_mouse_freertos_cm7</project>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -54,20 +68,6 @@
       <member>
         <project>dev_hid_mouse_freertos_cm7</project>
         <configuration>sdram_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_debug</name>
-      <member>
-        <project>dev_hid_mouse_freertos_cm7</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_release</name>
-      <member>
-        <project>dev_hid_mouse_freertos_cm7</project>
-        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -74,7 +82,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/label_image
     ${SdkRootDirPath}/middleware/eiq/common
     ${SdkRootDirPath}/middleware/eiq/common/image
@@ -83,163 +91,16 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/label_image/pcq
 )
 
+
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC ${SdkRootDirPath}/boards/evkmimxrt1160/eiq_examples/tflm_multicore/cm4/armgcc/debug)
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm4/armgcc/debug)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC ${SdkRootDirPath}/boards/evkmimxrt1160/eiq_examples/tflm_multicore/cm4/armgcc/release)
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm4/armgcc/release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/video/camera/device
-    ${SdkRootDirPath}/components/video/camera/receiver
-    ${SdkRootDirPath}/components/video/camera/device/sccb
-    ${SdkRootDirPath}/components/video/camera/device/ov5640
-    ${SdkRootDirPath}/components/video/display/rm68191
-    ${SdkRootDirPath}/components/video/display/rm68200
-    ${SdkRootDirPath}/components/video/display/hx8394
-    ${SdkRootDirPath}/components/video/camera
-    ${SdkRootDirPath}/components/video/camera/receiver/csi
-    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
-    ${SdkRootDirPath}/components/video
-    ${SdkRootDirPath}/components/video/i2c
-    ${SdkRootDirPath}/components/video/display/dc
-    ${SdkRootDirPath}/components/video/display/dc/elcdif
-    ${SdkRootDirPath}/components/video/display/dc/lcdifv2
-    ${SdkRootDirPath}/components/video/display
-    ${SdkRootDirPath}/components/video/display/mipi_dsi_cmd
-    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1166/utilities/debug_console_lite
-    ${SdkRootDirPath}/devices/MIMXRT1166/utilities/incbin
-    ${SdkRootDirPath}/middleware/eiq
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/devices/MIMXRT1166
-    ${SdkRootDirPath}/devices/MIMXRT1166/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/third_party/cmsis
-)
-
-# include modules
-include(driver_camera-device-common_MIMXRT1166_cm7)
-
-include(driver_camera-receiver-common_MIMXRT1166_cm7)
-
-include(driver_camera-device-sccb_MIMXRT1166_cm7)
-
-include(driver_camera-device-ov5640_MIMXRT1166_cm7)
-
-include(driver_display-rm68191_MIMXRT1166_cm7)
-
-include(driver_display-rm68200_MIMXRT1166_cm7)
-
-include(driver_display-hx8394_MIMXRT1166_cm7)
-
-include(driver_camera-common_MIMXRT1166_cm7)
-
-include(driver_camera-receiver-csi_MIMXRT1166_cm7)
-
-include(driver_csi_MIMXRT1166_cm7)
-
-include(driver_video-common_MIMXRT1166_cm7)
-
-include(driver_video-i2c_MIMXRT1166_cm7)
-
-include(driver_elcdif_MIMXRT1166_cm7)
-
-include(driver_pxp_MIMXRT1166_cm7)
-
-include(driver_dc-fb-common_MIMXRT1166_cm7)
-
-include(driver_dc-fb-elcdif_MIMXRT1166_cm7)
-
-include(driver_dc-fb-lcdifv2_MIMXRT1166_cm7)
-
-include(driver_display-common_MIMXRT1166_cm7)
-
-include(driver_display-mipi-dsi-cmd_MIMXRT1166_cm7)
-
-include(driver_common_MIMXRT1166_cm7)
-
-include(driver_mipi_dsi_split_MIMXRT1166_cm7)
-
-include(driver_igpio_MIMXRT1166_cm7)
-
-include(driver_mipi_csi2rx_MIMXRT1166_cm7)
-
-include(driver_soc_mipi_csi2rx_MIMXRT1166_cm7)
-
-include(driver_soc_src_MIMXRT1166_cm7)
-
-include(utility_debug_console_lite_MIMXRT1166_cm7)
-
-include(utility_assert_lite_MIMXRT1166_cm7)
-
-include(driver_gpc_3_MIMXRT1166_cm7)
-
-include(driver_pgmc_MIMXRT1166_cm7)
-
-include(driver_clock_MIMXRT1166_cm7)
-
-include(driver_mu_MIMXRT1166_cm7)
-
-include(utility_incbin_MIMXRT1166_cm7)
-
-include(middleware_eiq_worker_video_MIMXRT1166_cm7)
-
-include(middleware_eiq_gui_printf_MIMXRT1166_cm7)
-
-include(middleware_eiq_tensorflow_lite_micro_MIMXRT1166_cm7)
-
-include(component_lists_MIMXRT1166_cm7)
-
-include(component_lpuart_adapter_MIMXRT1166_cm7)
-
-include(driver_lpuart_MIMXRT1166_cm7)
-
-include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
-
-include(device_MIMXRT1166_startup_MIMXRT1166_cm7)
-
-include(driver_dcdc_soc_MIMXRT1166_cm7)
-
-include(driver_pmu_1_MIMXRT1166_cm7)
-
-include(driver_iomuxc_MIMXRT1166_cm7)
-
-include(driver_lpi2c_MIMXRT1166_cm7)
-
-include(driver_xip_device_MIMXRT1166_cm7)
-
-include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
-
-include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1166_cm7)
-
-include(driver_anatop_ai_MIMXRT1166_cm7)
-
-include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
-
-include(driver_memory_MIMXRT1166_cm7)
-
-include(driver_lcdifv2_MIMXRT1166_cm7)
-
-include(middleware_eiq_worker_MIMXRT1166_cm7)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT1166_cm7)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT1166_cm7)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT1166_cm7)
-
-include(utilities_misc_utilities_MIMXRT1166_cm7)
-
-include(device_MIMXRT1166_system_MIMXRT1166_cm7)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1166_cm7)
-
+include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -251,4 +112,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

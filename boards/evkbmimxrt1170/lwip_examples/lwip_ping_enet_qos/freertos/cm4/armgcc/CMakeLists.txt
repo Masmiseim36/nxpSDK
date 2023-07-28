@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -57,94 +65,10 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkbmimxrt1170
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/phy/device/phyrtl8211f
-    ${SdkRootDirPath}/components/silicon_id
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
-    ${SdkRootDirPath}/components/silicon_id/socs/imxrt1170
-    ${SdkRootDirPath}/middleware/lwip
-    ${SdkRootDirPath}/components/phy
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/devices/MIMXRT1176
-    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1176/xip
-    ${SdkRootDirPath}/boards/evkbmimxrt1170/xip
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm4
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(driver_phy-device-rtl8211f_MIMXRT1176_cm4)
-
-include(component_silicon_id_MIMXRT1176_cm4)
-
-include(driver_common_MIMXRT1176_cm4)
-
-include(component_silicon_id_rt1170_MIMXRT1176_cm4)
-
-include(middleware_lwip_contrib_ping_MIMXRT1176_cm4)
-
-include(middleware_lwip_enet_ethernetif_MIMXRT1176_cm4)
-
-include(middleware_lwip_MIMXRT1176_cm4)
-
-include(driver_phy-common_MIMXRT1176_cm4)
-
-include(driver_enet_qos_MIMXRT1176_cm4)
-
-include(driver_clock_MIMXRT1176_cm4)
-
-include(middleware_freertos-kernel_heap_3_MIMXRT1176_cm4)
-
-include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm4)
-
-include(utility_debug_console_MIMXRT1176_cm4)
-
-include(component_lpuart_adapter_MIMXRT1176_cm4)
-
-include(component_serial_manager_MIMXRT1176_cm4)
-
-include(component_lists_MIMXRT1176_cm4)
-
-include(component_serial_manager_uart_MIMXRT1176_cm4)
-
-include(driver_lpuart_MIMXRT1176_cm4)
-
-include(device_MIMXRT1176_startup_MIMXRT1176_cm4)
-
-include(driver_iomuxc_MIMXRT1176_cm4)
-
-include(utility_assert_MIMXRT1176_cm4)
-
-include(driver_igpio_MIMXRT1176_cm4)
-
-include(driver_xip_device_MIMXRT1176_cm4)
-
-include(driver_xip_board_evkbmimxrt1170_MIMXRT1176_cm4)
-
-include(driver_pmu_1_MIMXRT1176_cm4)
-
-include(driver_dcdc_soc_MIMXRT1176_cm4)
-
-include(driver_cache_lmem_MIMXRT1176_cm4)
-
-include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
-
-include(driver_anatop_ai_MIMXRT1176_cm4)
-
-include(driver_memory_MIMXRT1176_cm4)
-
-include(middleware_freertos-kernel_MIMXRT1176_cm4)
-
-include(middleware_freertos-kernel_extension_MIMXRT1176_cm4)
-
-include(utilities_misc_utilities_MIMXRT1176_cm4)
-
-include(device_MIMXRT1176_system_MIMXRT1176_cm4)
-
+include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -156,4 +80,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

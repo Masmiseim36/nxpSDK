@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -42,7 +50,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../resource_config.h"
 "${ProjDirPath}/../resource_config.c"
-"${SdkRootDirPath}/boards/evkbmimxrt1170/demo_apps/tee_fault/tee_fault_common.h"
+"${ProjDirPath}/../tee_fault_common.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -57,75 +65,16 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkbmimxrt1170/demo_apps/tee_fault
 )
 
+
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${SdkRootDirPath}/boards/evkbmimxrt1170/demo_apps/tee_fault/core1/armgcc/debug)
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../core1/armgcc/debug)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${SdkRootDirPath}/boards/evkbmimxrt1170/demo_apps/tee_fault/core1/armgcc/release)
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../core1/armgcc/release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
-    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1176/utilities/debug_console_lite
-    ${SdkRootDirPath}/devices/MIMXRT1176/utilities/incbin
-    ${SdkRootDirPath}/devices/MIMXRT1176
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT1176/xip
-    ${SdkRootDirPath}/boards/evkbmimxrt1170/xip
-    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm7
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
-
-# include modules
-include(driver_soc_src_MIMXRT1176_cm7)
-
-include(utility_debug_console_lite_MIMXRT1176_cm7)
-
-include(utility_assert_lite_MIMXRT1176_cm7)
-
-include(driver_mu_MIMXRT1176_cm7)
-
-include(utility_incbin_MIMXRT1176_cm7)
-
-include(driver_clock_MIMXRT1176_cm7)
-
-include(driver_common_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
-
-include(component_lpuart_adapter_MIMXRT1176_cm7)
-
-include(component_lists_MIMXRT1176_cm7)
-
-include(driver_lpuart_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_startup_MIMXRT1176_cm7)
-
-include(driver_iomuxc_MIMXRT1176_cm7)
-
-include(driver_igpio_MIMXRT1176_cm7)
-
-include(driver_xip_device_MIMXRT1176_cm7)
-
-include(driver_xip_board_evkbmimxrt1170_MIMXRT1176_cm7)
-
-include(driver_pmu_1_MIMXRT1176_cm7)
-
-include(driver_dcdc_soc_MIMXRT1176_cm7)
-
-include(driver_cache_armv7_m7_MIMXRT1176_cm7)
-
-include(driver_anatop_ai_MIMXRT1176_cm7)
-
-include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
-
-include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_system_MIMXRT1176_cm7)
-
+include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -137,4 +86,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

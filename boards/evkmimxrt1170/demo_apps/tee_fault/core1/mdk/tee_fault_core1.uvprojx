@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -386,7 +386,7 @@
             <File>
               <FileName>tee_fault_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../tee_fault_common.h</FilePath>
+              <FilePath>../tee_fault_common.h</FilePath>
             </File>
             <File>
               <FileName>resource_config.h</FileName>
@@ -1112,7 +1112,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1130,7 +1130,7 @@
             <File>
               <FileName>tee_fault_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../tee_fault_common.h</FilePath>
+              <FilePath>../tee_fault_common.h</FilePath>
             </File>
             <File>
               <FileName>resource_config.h</FileName>

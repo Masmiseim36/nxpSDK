@@ -40,11 +40,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DSD_ENABLED \
     -DSDK_OS_FREE_RTOS \
     -D__NXP_MSDK__ \
-    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -72,11 +72,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DSD_ENABLED \
     -DSDK_OS_FREE_RTOS \
     -D__NXP_MSDK__ \
-    -DMCUXPRESSO_SDK \
     -O3 \
     -mcpu=cortex-m7 \
     -Wall \
@@ -97,8 +97,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
-    -D__NXP_MSDK__ \
     -DMCUXPRESSO_SDK \
+    -D__NXP_MSDK__ \
     -O1 \
     -g \
     -mcpu=cortex-m7 \
@@ -106,8 +106,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mthumb \
     -MMD \
     -MP \
-    -Wno-format \
-    -Wno-strict-aliasing \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -116,6 +114,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
+    -Wno-strict-aliasing \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -123,16 +123,14 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
-    -D__NXP_MSDK__ \
     -DMCUXPRESSO_SDK \
+    -D__NXP_MSDK__ \
     -O2 \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
     -MMD \
     -MP \
-    -Wno-format \
-    -Wno-strict-aliasing \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -141,6 +139,8 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
+    -Wno-strict-aliasing \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")

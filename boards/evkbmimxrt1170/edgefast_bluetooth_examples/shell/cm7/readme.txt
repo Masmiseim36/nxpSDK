@@ -5,10 +5,10 @@ Application demonstrating the shell mode of the simplified Adapter APIs.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.7.0
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
+- MCUXpresso  11.8.0
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
 
 Hardware requirements
 =====================
@@ -32,6 +32,8 @@ The hardware should be reworked according to the Hardware Rework Guide for MIMXR
 The hardware should be reworked according to the Hardware Rework Guide for MIMXRT1170-EVKB and Murata 1ZM M.2 Adapter in document Hardware Rework Guide for EdgeFast BT PAL.
 
 Note:
+To ensure that the LITTLEFS flash region has been cleaned,
+all flash sectors need to be erased before downloading example code.
 After downloaded binary into qspiflash and boot from qspiflash directly,
 please reset the board by pressing SW4 or power off and on the board to run the application.
 Prepare the Demo
@@ -55,6 +57,8 @@ Prepare the Demo
 Running the demo
 ================
 The log below shows the output of the example in the terminal window. 
+
+Note: Please note that whether the commands described in the document are supported depends on the specific hardware. Please use the command "help" to view the specific commands supported by the example.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 BLE shell demo start...

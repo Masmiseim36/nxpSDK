@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DMAMUX: Direct Memory Access Multiplexer Driver</title>
+<title>MCUXpresso SDK API Reference Manual: CAAM Non-blocking HASH driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,132 +98,49 @@ $(document).ready(function(){initNavTree('a00332.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DMAMUX: Direct Memory Access Multiplexer Driver</div>  </div>
+<div class="title">CAAM Non-blocking HASH driver<div class="ingroups"><a class="el" href="a00330.html">CAAM Non-blocking APIs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Direct Memory Access Multiplexer (DMAMUX) of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="DMAMUXTypicalUseCase"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="DMAMUXOper"></a>
-DMAMUX Operation</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmamux </p>
+<p>This section describes the programming interface of the CAAM Non-blocking HASH driver. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga52b927e4f978ddf42faf0acf6de3df57">FSL_DMAMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
-<tr class="memdesc:ga52b927e4f978ddf42faf0acf6de3df57"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMAMUX driver version 2.0.5.  <a href="#ga52b927e4f978ddf42faf0acf6de3df57">More...</a><br/></td></tr>
-<tr class="separator:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMAMUX Initialization and de-initialization</h2></td></tr>
-<tr class="memitem:ga850545ac61a004df8ca312db2ca9db73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a> (DMAMUX_Type *base)</td></tr>
-<tr class="memdesc:ga850545ac61a004df8ca312db2ca9db73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DMAMUX peripheral.  <a href="#ga850545ac61a004df8ca312db2ca9db73">More...</a><br/></td></tr>
-<tr class="separator:ga850545ac61a004df8ca312db2ca9db73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#gab663257d094b9b7b6fa1b894fbf8000b">DMAMUX_Deinit</a> (DMAMUX_Type *base)</td></tr>
-<tr class="memdesc:gab663257d094b9b7b6fa1b894fbf8000b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the DMAMUX peripheral.  <a href="#gab663257d094b9b7b6fa1b894fbf8000b">More...</a><br/></td></tr>
-<tr class="separator:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMAMUX Channel Operation</h2></td></tr>
-<tr class="memitem:gaecac68802d961c31a06389caa97387f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:gaecac68802d961c31a06389caa97387f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX channel.  <a href="#gaecac68802d961c31a06389caa97387f5">More...</a><br/></td></tr>
-<tr class="separator:gaecac68802d961c31a06389caa97387f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga4d68cf7796e4a6a9cd0c4289712ca120">DMAMUX_DisableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX channel.  <a href="#ga4d68cf7796e4a6a9cd0c4289712ca120">More...</a><br/></td></tr>
-<tr class="separator:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97083a74f4af599de628cdd8864d6676"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga97083a74f4af599de628cdd8864d6676">DMAMUX_SetSource</a> (DMAMUX_Type *base, uint32_t channel, uint32_t source)</td></tr>
-<tr class="memdesc:ga97083a74f4af599de628cdd8864d6676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the DMAMUX channel source.  <a href="#ga97083a74f4af599de628cdd8864d6676">More...</a><br/></td></tr>
-<tr class="separator:ga97083a74f4af599de628cdd8864d6676"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b873510e45bcc998b5cede12ed359d0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga9b873510e45bcc998b5cede12ed359d0">DMAMUX_EnablePeriodTrigger</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga9b873510e45bcc998b5cede12ed359d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX period trigger.  <a href="#ga9b873510e45bcc998b5cede12ed359d0">More...</a><br/></td></tr>
-<tr class="separator:ga9b873510e45bcc998b5cede12ed359d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga7a632ca1a6bd05a936a4f4ba1295e158">DMAMUX_DisablePeriodTrigger</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX period trigger.  <a href="#ga7a632ca1a6bd05a936a4f4ba1295e158">More...</a><br/></td></tr>
-<tr class="separator:ga7a632ca1a6bd05a936a4f4ba1295e158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga70912895b0619dcfb911663501cb03f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga70912895b0619dcfb911663501cb03f5">DMAMUX_EnableAlwaysOn</a> (DMAMUX_Type *base, uint32_t channel, bool enable)</td></tr>
-<tr class="memdesc:ga70912895b0619dcfb911663501cb03f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMA channel to be always ON.  <a href="#ga70912895b0619dcfb911663501cb03f5">More...</a><br/></td></tr>
-<tr class="separator:ga70912895b0619dcfb911663501cb03f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga43f8383d9039e8e5143f23f99f32785f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga43f8383d9039e8e5143f23f99f32785f">CAAM_HASH_UpdateNonBlocking</a> (<a class="el" href="a00329.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, const uint8_t *input, size_t inputSize)</td></tr>
+<tr class="memdesc:ga43f8383d9039e8e5143f23f99f32785f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add input address and size to input data table.  <a href="#ga43f8383d9039e8e5143f23f99f32785f">More...</a><br/></td></tr>
+<tr class="separator:ga43f8383d9039e8e5143f23f99f32785f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f9428aae83622088c097e6e79c40b15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga3f9428aae83622088c097e6e79c40b15">CAAM_HASH_FinishNonBlocking</a> (<a class="el" href="a00329.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, <a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a> descriptor, uint8_t *output, size_t *outputSize)</td></tr>
+<tr class="memdesc:ga3f9428aae83622088c097e6e79c40b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize hashing.  <a href="#ga3f9428aae83622088c097e6e79c40b15">More...</a><br/></td></tr>
+<tr class="separator:ga3f9428aae83622088c097e6e79c40b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00332.html#ga5ba5834bc5d2b08f7e4438e043094dc3">CAAM_HASH_NonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00440">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a> descriptor, <a class="el" href="a00329.html#ga7fd7e4192d45fffc27544be4037681b3">caam_hash_algo_t</a> algo, const uint8_t *input, size_t inputSize, const uint8_t *key, size_t keySize, uint8_t *output, size_t *outputSize)</td></tr>
+<tr class="memdesc:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create HASH on given data.  <a href="#ga5ba5834bc5d2b08f7e4438e043094dc3">More...</a><br/></td></tr>
+<tr class="separator:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga52b927e4f978ddf42faf0acf6de3df57"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_DMAMUX_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga850545ac61a004df8ca312db2ca9db73"></a>
+<a class="anchor" id="ga43f8383d9039e8e5143f23f99f32785f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DMAMUX_Init </td>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_UpdateNonBlocking </td>
           <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function ungates the DMAMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab663257d094b9b7b6fa1b894fbf8000b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DMAMUX_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the DMAMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaecac68802d961c31a06389caa97387f5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_EnableChannel </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00329.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>inputSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -231,41 +148,48 @@ DMAMUX Channel Operation</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function enables the DMAMUX channel.</p>
+<p>Add data input pointer to a table maintained internally in the context. Each call of this function creates one entry in the table. The entry consists of the input pointer and inputSize. All entries created by one or multiple calls of this function can be processed in one call to <a class="el" href="a00332.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a> function. Individual entries can point to non-continuous data in the memory. The processing will occur in the order in which the <a class="el" href="a00332.html#ga43f8383d9039e8e5143f23f99f32785f" title="Add input address and size to input data table. ">CAAM_HASH_UpdateNonBlocking()</a> have been called.</p>
+<p>Memory pointers will be later accessed by CAAM (at time of <a class="el" href="a00332.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a>), so the memory must stay valid until <a class="el" href="a00332.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a> has been called and CAAM completes the processing.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>HASH context </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the hash update operation </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4d68cf7796e4a6a9cd0c4289712ca120"></a>
+<a class="anchor" id="ga3f9428aae83622088c097e6e79c40b15"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void DMAMUX_DisableChannel </td>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_FinishNonBlocking </td>
           <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
+          <td class="paramtype"><a class="el" href="a00329.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>outputSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -273,48 +197,84 @@ DMAMUX Channel Operation</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function disables the DMAMUX channel.</p>
-<dl class="section note"><dt>Note</dt><dd>The user must disable the DMAMUX channel before configuring it. </dd></dl>
+<p>The actual algorithm is computed with all input data, the memory pointers are accessed by CAAM after the function returns. The input data chunks have been specified by prior calls to <a class="el" href="a00332.html#ga43f8383d9039e8e5143f23f99f32785f" title="Add input address and size to input data table. ">CAAM_HASH_UpdateNonBlocking()</a>. The function schedules the request at CAAM, then returns. After a while, when the CAAM completes processing of the input data chunks, the result is written to the output[] array, outputSize is written and the context is cleared.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Input hash context </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the hash finish operation </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga97083a74f4af599de628cdd8864d6676"></a>
+<a class="anchor" id="ga5ba5834bc5d2b08f7e4438e043094dc3"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void DMAMUX_SetSource </td>
+          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_NonBlocking </td>
           <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00440">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>source</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00329.html#ga7fd7e4192d45fffc27544be4037681b3">caam_hash_algo_t</a>&#160;</td>
+          <td class="paramname"><em>algo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>inputSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>keySize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>output</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>outputSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -322,153 +282,27 @@ DMAMUX Channel Operation</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+<p>Perform the full keyed XCBC-MAC/CMAC or SHA in one function call.</p>
+<p>Key shall be supplied if the underlaying algoritm is AES XCBC-MAC or CMAC. Key shall be NULL if the underlaying algoritm is SHA.</p>
+<p>For XCBC-MAC, the key length must be 16. For CMAC, the key length can be the AES key lengths supported by AES engine. For MDHA the key length argument is ignored.</p>
+<p>The function is non-blocking. The request is scheduled at CAAM.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-    <tr><td class="paramname">source</td><td>Channel source, which is used to trigger the DMA transfer. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key (NULL if underlaying algorithm is SHA) </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of input key in bytes </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9b873510e45bcc998b5cede12ed359d0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_EnablePeriodTrigger </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the DMAMUX period trigger feature.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7a632ca1a6bd05a936a4f4ba1295e158"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_DisablePeriodTrigger </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function disables the DMAMUX period trigger.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga70912895b0619dcfb911663501cb03f5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_EnableAlwaysOn </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the DMAMUX channel always ON feature.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-    <tr><td class="paramname">enable</td><td>Switcher of the always ON feature. "true" means enabled, "false" means disabled. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the one call hash operation. </dd></dl>
 
 </div>
 </div>

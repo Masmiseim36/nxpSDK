@@ -572,7 +572,7 @@ FMSTR_TSA_TABLE_END()
 FMSTR_TSA_TABLE_BEGIN(sAppIdFM_table)
 
 /* Board ID structure definition */
-FMSTR_TSA_RO_MEM(g_sAppIdFM.cBoardID, FMSTR_TSA_UINT8, &g_sAppIdFM.cBoardID[0], 15)
+FMSTR_TSA_RO_MEM(g_sAppIdFM.cBoardID, FMSTR_TSA_UINT8, &g_sAppIdFM.cBoardID[0], 20)
 FMSTR_TSA_RO_MEM(g_sAppIdFM.cExampleID, FMSTR_TSA_UINT8, &g_sAppIdFM.cExampleID[0], 30)
 FMSTR_TSA_RO_MEM(g_sAppIdFM.cAppVer, FMSTR_TSA_UINT8, &g_sAppIdFM.cAppVer[0], 5)
 FMSTR_TSA_RO_VAR(g_sAppIdFM.ui16FeatureSet, FMSTR_TSA_UINT16)
@@ -659,20 +659,20 @@ FMSTR_TSA_TABLE_BEGIN(TSA_MID)
     FMSTR_TSA_RW_VAR(g_sMidDrive.sFocPMSM.sTo.fltPGain,  FMSTR_TSA_FLOAT)
     FMSTR_TSA_RW_VAR(g_sMidDrive.sFocPMSM.sTo.fltIGain,  FMSTR_TSA_FLOAT)
     FMSTR_TSA_RW_VAR(g_sMidDrive.sFocPMSM.sTo.fltThGain,  FMSTR_TSA_FLOAT)
-      
+
     /* global freemaster float variables */
     FMSTR_TSA_RW_VAR(g_fltMIDcurrentScale, FMSTR_TSA_FLOAT)         /* FMSTR_MID_currentScale */
     FMSTR_TSA_RW_VAR(g_fltMIDDCBvoltageScale, FMSTR_TSA_FLOAT)      /* FMSTR_MID_DCBvoltageScale */
     FMSTR_TSA_RW_VAR(g_fltMIDspeedScale, FMSTR_TSA_FLOAT)           /* FMSTR_MID_speedScale */
     FMSTR_TSA_RW_VAR(g_fltMIDvoltageScale, FMSTR_TSA_FLOAT)         /* FMSTR_MID_voltageScale */
     FMSTR_TSA_RW_VAR(g_fltMIDspeedAngularScale, FMSTR_TSA_FLOAT)    /* FMSTR_MID_speedAngularScale */
-      
+
     FMSTR_TSA_RW_VAR(g_sMidDrive.ui16TimeCalibration, FMSTR_TSA_UINT16)              /* MID Calibration time count number */
-	
+
     /* sFocPMSM.sIdPiParams definitions */
     FMSTR_TSA_RW_VAR(g_sMidDrive.sFocPMSM.sIdPiParams.fltIGain, FMSTR_TSA_FLOAT) /* MID Id Ki Gain */
     FMSTR_TSA_RW_VAR(g_sMidDrive.sFocPMSM.sIdPiParams.fltPGain, FMSTR_TSA_FLOAT) /* MID Id Kp Gain */
-    
+
     /* sFocPMSM.sIqPiParams definitions */
     FMSTR_TSA_RW_VAR(g_sMidDrive.sFocPMSM.sIqPiParams.fltIGain, FMSTR_TSA_FLOAT) /* MID Iq Ki Gain */
     FMSTR_TSA_RW_VAR(g_sMidDrive.sFocPMSM.sIqPiParams.fltPGain, FMSTR_TSA_FLOAT) /* MID Iq Kp Gain */
@@ -694,52 +694,48 @@ FMSTR_TSA_TABLE_BEGIN(TSA_MID)
 
 FMSTR_TSA_TABLE_END()
 
-
-/*************************************/
 /* AP identification variables */
 /*!
- * @brief AP MID table structure
- *
- * @param None
- *
- * @return None
- */
+* @brief AP MID table structure
+*
+* @param None
+*
+* @return None
+*/
 /* MID_AP TSA table */
 FMSTR_TSA_TABLE_BEGIN(TSA_AP_MID)
 
-    FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.fltIDcDReq, FMSTR_TSA_FLOAT)                     /* MID AP manual - Required DC current in d-axis */
-    FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.fltIDcQReq, FMSTR_TSA_FLOAT)                     /* MID AP manual - Required DC current in q-axis */
-    FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.fltIAcReq, FMSTR_TSA_FLOAT)                      /* MID AP manual - Required AC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.u16FAc, FMSTR_TSA_UINT16)                        /* MID AP manual - Required frequency of AC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.u8LdqSwitch, FMSTR_TSA_UINT8)                    /* MID AP manual - Swicth between Ld/Lq */
-    FMSTR_TSA_RW_VAR(u8ModeEstimRL, FMSTR_TSA_UINT8)                                    /* MID AP - Selected mode */
+   FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.fltIDcDReq, FMSTR_TSA_FLOAT)                     /* MID AP manual - Required DC current in d-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.fltIDcQReq, FMSTR_TSA_FLOAT)                     /* MID AP manual - Required DC current in q-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.fltIAcReq, FMSTR_TSA_FLOAT)                      /* MID AP manual - Required AC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.u16FAc, FMSTR_TSA_UINT16)                        /* MID AP manual - Required frequency of AC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLCtrlRun.u8LdqSwitch, FMSTR_TSA_UINT8)                    /* MID AP manual - Swicth between Ld/Lq */
+   FMSTR_TSA_RW_VAR(u8ModeEstimRL, FMSTR_TSA_UINT8)                                    /* MID AP - Selected mode */
 
-    FMSTR_TSA_RW_VAR(fltIDcPlot , FMSTR_TSA_FLOAT)                                      /* MID AP identification  - plot DC current */
-    FMSTR_TSA_RW_VAR(fltLdPlot, FMSTR_TSA_FLOAT)                                        /* MID AP identification  - plot inductance in d-axis */
-    FMSTR_TSA_RW_VAR(fltLqPlot, FMSTR_TSA_FLOAT)                                        /* MID AP identification  - plot inductance in q-axis */
+   FMSTR_TSA_RW_VAR(fltIDcPlot , FMSTR_TSA_FLOAT)                                      /* MID AP identification  - plot DC current */
+   FMSTR_TSA_RW_VAR(fltLdPlot, FMSTR_TSA_FLOAT)                                        /* MID AP identification  - plot inductance in d-axis */
+   FMSTR_TSA_RW_VAR(fltLqPlot, FMSTR_TSA_FLOAT)                                        /* MID AP identification  - plot inductance in q-axis */
 
 
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcDReq, FMSTR_TSA_FLOAT)          /* MID AP - Required DC current in d-axis */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcD, FMSTR_TSA_FLOAT)             /* MID AP - DC current in d-axis */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcQReq, FMSTR_TSA_FLOAT)          /* MID AP - Required DC current in q-axis */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcQ, FMSTR_TSA_FLOAT)             /* MID AP - DC current in q-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcDReq, FMSTR_TSA_FLOAT)          /* MID AP - Required DC current in d-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcD, FMSTR_TSA_FLOAT)             /* MID AP - DC current in d-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcQReq, FMSTR_TSA_FLOAT)          /* MID AP - Required DC current in q-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIDcQ, FMSTR_TSA_FLOAT)             /* MID AP - DC current in q-axis */
 
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIAcReq, FMSTR_TSA_FLOAT)           /* MID AP - Required AC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.pIDQAcFilt.fltD, FMSTR_TSA_FLOAT)     /* MID AP - Filtered d-part of the estimated AC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.pIDQAcFilt.fltQ, FMSTR_TSA_FLOAT)     /* MID AP - Filtered q-part of the estimated AC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltUDcDAcc, FMSTR_TSA_FLOAT)          /* MID AP - DC voltage integrator in d-axis */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltUDcQAcc, FMSTR_TSA_FLOAT)          /* MID AP - DC voltage integrator in q-axis */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.fltLd, FMSTR_TSA_FLOAT)                           /* MID AP - estimated d-axis inductance */
-    FMSTR_TSA_RW_VAR(g_sEstimRLStruct.fltLq, FMSTR_TSA_FLOAT)                           /* MID AP - estimated q-axis inductance  */
-      
-    FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcNom, FMSTR_TSA_FLOAT)                    /* MID AP - Nominal DC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcPosMax, FMSTR_TSA_FLOAT)                 /* MID AP - Maximum positive DC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcNegMax, FMSTR_TSA_FLOAT)                 /* MID AP - Maximum negative DC current */
-    FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcLd, FMSTR_TSA_FLOAT)                     /* MID AP - Current used for Ld measurement */
-    FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcLq, FMSTR_TSA_FLOAT)                     /* MID AP - Current used for Lq measurement */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltIAcReq, FMSTR_TSA_FLOAT)           /* MID AP - Required AC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.pIDQAcFilt.fltD, FMSTR_TSA_FLOAT)     /* MID AP - Filtered d-part of the estimated AC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.pIDQAcFilt.fltQ, FMSTR_TSA_FLOAT)     /* MID AP - Filtered q-part of the estimated AC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltUDcDAcc, FMSTR_TSA_FLOAT)          /* MID AP - DC voltage integrator in d-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.pInnerState.fltUDcQAcc, FMSTR_TSA_FLOAT)          /* MID AP - DC voltage integrator in q-axis */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.fltLd, FMSTR_TSA_FLOAT)                           /* MID AP - estimated d-axis inductance */
+   FMSTR_TSA_RW_VAR(g_sEstimRLStruct.fltLq, FMSTR_TSA_FLOAT)                           /* MID AP - estimated q-axis inductance  */
+
+   FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcNom, FMSTR_TSA_FLOAT)                    /* MID AP - Nominal DC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcPosMax, FMSTR_TSA_FLOAT)                 /* MID AP - Maximum positive DC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcNegMax, FMSTR_TSA_FLOAT)                 /* MID AP - Maximum negative DC current */
+   FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcLd, FMSTR_TSA_FLOAT)                     /* MID AP - Current used for Ld measurement */
+   FMSTR_TSA_RW_VAR(g_sEstimRLInitFMSTR.fltIDcLq, FMSTR_TSA_FLOAT)                     /* MID AP - Current used for Lq measurement */
 FMSTR_TSA_TABLE_END()
-
-/************************************/
 
 /*!
  * @brief g_sMidDrive table structure

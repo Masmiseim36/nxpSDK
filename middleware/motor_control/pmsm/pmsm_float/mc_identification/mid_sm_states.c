@@ -14,7 +14,7 @@
 #include "hall_calib.h"
 #include "mlib.h"
 #include "amclib_FP.h"
-#include "mcaa_lib.h"
+#include "mcaa_lib_fp.h"
 
 #define M1_SVM_SECTOR_DEFAULT (2)        /* default SVM sector */
 #define M1_BLOCK_ROT_FAULT_SH (0.03125F) /* filter window */
@@ -130,8 +130,8 @@ volatile float g_fltMIDspeedAngularScale;
 volatile float g_fltMIDspeedMechanicalScale;
 
 /* Variables for RL Estim */
-MCAA_ESTIMRLINIT_RET_T  eEstimRetValInit;       /* Return value of the MCAA_EstimRLInit() */
-MCAA_ESTIMRL_RET_T 	  eEstimRetVal;         /* Return value of the MCAA_EstimRL() */
+MCAA_ESTIMRLINIT_RET_T_FLT  eEstimRetValInit;       /* Return value of the MCAA_EstimRLInit() */
+MCAA_ESTIMRL_RET_T_FLT 	  eEstimRetVal;         /* Return value of the MCAA_EstimRL() */
 MCAA_ESTIMRL_INIT_T_FLT g_sEstimRLInitCfg;      /* RL estimation initialization structure */
 MCAA_ESTIMRL_T_FLT 	  g_sEstimRLStruct;     /* RL estimation configuration structure */
 MCAA_ESTIMRL_RUN_T_FLT  g_sEstimRLCtrlRun;      /* Control manual mode and measured values in modes 1, 2 */
@@ -909,10 +909,6 @@ void MID_Init_AR(void)
     g_fltMIDspeedAngularScale    = (60.0F / (M1_MOTOR_PP * 2.0F * FLOAT_PI));
     g_fltMIDspeedMechanicalScale = (60.0F / (2.0F * FLOAT_PI));
 
-    /* Power Stage characteristic data */
-    g_sMidDrive.sFocPMSM.fltPwrStgCharIRange   = DTCOMP_I_RANGE;
-    g_sMidDrive.sFocPMSM.fltPwrStgCharLinCoeff = DTCOMP_LINCOEFF;
-
     /* Clear rest of variables  */
     MID_ClearFOCVariables();
 
@@ -949,16 +945,8 @@ void MID_ProcessFast_FL(void)
       MID_TransAll2Fault();
     }
     
-//    /* Start CPU tick number couting */
-//    SYSTICK_START_COUNT();
-    
     /* Execute the MID state machine. */
     g_MID_SM_STATE_TABLE[g_sMID.eMIDState]();
-    
-//    /* Stop CPU tick number couting and store actual and maximum ticks */
-//    SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
-//    g_ui32MaxNumberOfCycles =
-//        g_ui32NumberOfCycles > g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
 
     if(g_sMID.eMIDState != kMID_Calib && g_sMID.eMIDState != kMID_RL)
     {

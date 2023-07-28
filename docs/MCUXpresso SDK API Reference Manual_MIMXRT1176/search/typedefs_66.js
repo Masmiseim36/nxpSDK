@@ -17,5 +17,6 @@ var searchData=
   ['flexio_5fspi_5fslave_5ftransfer_5fcallback_5ft',['flexio_spi_slave_transfer_callback_t',['../a00041.html#gad2accadc980b51b0d65e41d122abe261',1,'fsl_flexio_spi.h']]],
   ['flexio_5fuart_5fedma_5ftransfer_5fcallback_5ft',['flexio_uart_edma_transfer_callback_t',['../a00044.html#gab5c1a2db5ce578862b1c444884f72355',1,'fsl_flexio_uart_edma.h']]],
   ['flexio_5fuart_5ftransfer_5fcallback_5ft',['flexio_uart_transfer_callback_t',['../a00043.html#ga47ba0f819db72b1dc4c043205ba7cb18',1,'fsl_flexio_uart.h']]],
-  ['flexspi_5ftransfer_5fcallback_5ft',['flexspi_transfer_callback_t',['../a00045.html#ga40558fffabe6bc75ad0d978ac56726a7',1,'fsl_flexspi.h']]]
+  ['flexspi_5fedma_5fcallback_5ft',['flexspi_edma_callback_t',['../a00048.html#ga18c417694a255c05206b53e1d882d9c3',1,'fsl_flexspi_edma.h']]],
+  ['flexspi_5ftransfer_5fcallback_5ft',['flexspi_transfer_callback_t',['../a00046.html#ga40558fffabe6bc75ad0d978ac56726a7',1,'fsl_flexspi.h']]]
 ];

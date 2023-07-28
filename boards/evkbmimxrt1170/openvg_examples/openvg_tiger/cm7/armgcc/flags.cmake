@@ -50,8 +50,8 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DgcdGC355_MEM_PRINT=0 \
     -DgcdGC355_PROFILER=0 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DSDK_OS_FREE_RTOS \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_FREE_RTOS \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -91,8 +91,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DgcdGC355_MEM_PRINT=0 \
     -DgcdGC355_PROFILER=0 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DSDK_OS_FREE_RTOS \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_FREE_RTOS \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \

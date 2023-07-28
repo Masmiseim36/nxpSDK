@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -71,7 +79,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board_init.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/multicore/m4
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/kws
     ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/common/audio
@@ -80,114 +88,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/codec/wm8960
-    ${SdkRootDirPath}/components/codec
-    ${SdkRootDirPath}/devices/MIMXRT1166/drivers
-    ${SdkRootDirPath}/components/codec/
-    ${SdkRootDirPath}/components/codec/i2c
-    ${SdkRootDirPath}/components/i2c
-    ${SdkRootDirPath}/devices/MIMXRT1166/utilities
-    ${SdkRootDirPath}/devices/MIMXRT1166/utilities/debug_console_lite
-    ${SdkRootDirPath}/middleware/eiq
-    ${SdkRootDirPath}/CMSIS/DSP
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/devices/MIMXRT1166
-    ${SdkRootDirPath}/devices/MIMXRT1166/xip
-    ${SdkRootDirPath}/boards/evkmimxrt1160/xip
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/third_party/cmsis
-)
 
-# include modules
-include(driver_wm8960_MIMXRT1166_cm4)
-
-include(driver_codec_MIMXRT1166_cm4)
-
-include(driver_common_MIMXRT1166_cm4)
-
-include(component_wm8960_adapter_MIMXRT1166_cm4)
-
-include(component_codec_i2c_MIMXRT1166_cm4)
-
-include(component_lpi2c_adapter_MIMXRT1166_cm4)
-
-include(driver_sai_MIMXRT1166_cm4)
-
-include(driver_sai_edma_MIMXRT1166_cm4)
-
-include(driver_dmamux_MIMXRT1166_cm4)
-
-include(utility_debug_console_lite_MIMXRT1166_cm4)
-
-include(utility_assert_lite_MIMXRT1166_cm4)
-
-include(driver_mu_MIMXRT1166_cm4)
-
-include(driver_gpc_3_MIMXRT1166_cm4)
-
-include(driver_pgmc_MIMXRT1166_cm4)
-
-include(driver_soc_src_MIMXRT1166_cm4)
-
-include(middleware_eiq_worker_audio_MIMXRT1166_cm4)
-
-include(CMSIS_DSP_Source_MIMXRT1166_cm4)
-
-include(middleware_eiq_tensorflow_lite_micro_MIMXRT1166_cm4)
-
-include(component_lists_MIMXRT1166_cm4)
-
-include(component_lpuart_adapter_MIMXRT1166_cm4)
-
-include(driver_lpuart_MIMXRT1166_cm4)
-
-include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm4)
-
-include(device_MIMXRT1166_startup_MIMXRT1166_cm4)
-
-include(driver_dcdc_soc_MIMXRT1166_cm4)
-
-include(driver_pmu_1_MIMXRT1166_cm4)
-
-include(driver_clock_MIMXRT1166_cm4)
-
-include(driver_igpio_MIMXRT1166_cm4)
-
-include(driver_iomuxc_MIMXRT1166_cm4)
-
-include(driver_lpi2c_MIMXRT1166_cm4)
-
-include(driver_xip_device_MIMXRT1166_cm4)
-
-include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm4)
-
-include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1166_cm4)
-
-include(driver_anatop_ai_MIMXRT1166_cm4)
-
-include(CMSIS_Include_core_cm_MIMXRT1166_cm4)
-
-include(driver_edma_MIMXRT1166_cm4)
-
-include(driver_memory_MIMXRT1166_cm4)
-
-include(middleware_eiq_worker_MIMXRT1166_cm4)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT1166_cm4)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT1166_cm4)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT1166_cm4)
-
-include(utilities_misc_utilities_MIMXRT1166_cm4)
-
-include(device_MIMXRT1166_system_MIMXRT1166_cm4)
-
-include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1166_cm4)
-
+include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -201,4 +103,6 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/core1_image.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/core1_image.bin")
 

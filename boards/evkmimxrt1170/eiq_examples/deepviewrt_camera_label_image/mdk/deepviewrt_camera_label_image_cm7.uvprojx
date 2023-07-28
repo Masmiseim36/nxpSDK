@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, USE_SDRAM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SKIP_SYSCLK_INIT, SDK_I2C_BASED_COMPONENT_USED=1, EIQ_GUI_PRINTF, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, USE_SDRAM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SKIP_SYSCLK_INIT, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, EIQ_GUI_PRINTF</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,10 +365,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../middleware/eiq/deepviewrt/boards/evkmimxrt1170/camera_label_image/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -558,6 +558,26 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -649,16 +669,6 @@
               <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_video_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dc_fb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
@@ -732,26 +742,6 @@
               <FileName>fsl_pxp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_mipi_dsi.c</FileName>
@@ -834,6 +824,26 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -859,16 +869,6 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
@@ -882,6 +882,16 @@
               <FileName>fsl_lcdifv2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1516,9 +1526,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, USE_SDRAM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SKIP_SYSCLK_INIT, SDK_I2C_BASED_COMPONENT_USED=1, EIQ_GUI_PRINTF, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, USE_SDRAM, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SKIP_SYSCLK_INIT, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, EIQ_GUI_PRINTF</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1549,10 +1559,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../middleware/eiq/deepviewrt/boards/evkmimxrt1170/camera_label_image/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1742,6 +1752,26 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1833,16 +1863,6 @@
               <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_video_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_video_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dc_fb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
@@ -1916,26 +1936,6 @@
               <FileName>fsl_pxp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_mipi_dsi.c</FileName>
@@ -2018,6 +2018,26 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -2043,16 +2063,6 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_anatop_ai.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_anatop_ai.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
@@ -2066,6 +2076,16 @@
               <FileName>fsl_lcdifv2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_anatop_ai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
             </File>
           </Files>
         </Group>

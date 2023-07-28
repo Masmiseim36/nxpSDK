@@ -32,7 +32,7 @@
 #include "gmclib_FP.h"
 #include "amclib_FP.h"
 
-#include "mcaa_lib.h"
+#include "mcaa_lib_fp.h"
 
 /*******************************************************************************
  * Definitions

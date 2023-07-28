@@ -1,31 +1,31 @@
 var a00028 =
 [
-    [ "ENET CMSIS Driver", "a00333.html", null ],
-    [ "enet_rx_bd_struct_t", "a00028.html#a00507", [
+    [ "ENET CMSIS Driver", "a00340.html", null ],
+    [ "enet_rx_bd_struct_t", "a00028.html#a00515", [
       [ "length", "a00028.html#a8f1b6c5523159bc56b37bfd98b378ab6", null ],
       [ "control", "a00028.html#a01a2213b5bf50b154c4ca4866c6379ea", null ],
       [ "buffer", "a00028.html#a9d4d7327dabb5920456e3f874bf0f030", null ]
     ] ],
-    [ "enet_tx_bd_struct_t", "a00028.html#a00511", [
+    [ "enet_tx_bd_struct_t", "a00028.html#a00519", [
       [ "length", "a00028.html#a7f6f448911920d9e7d9ac98f83472e1e", null ],
       [ "control", "a00028.html#a26f3d526bcef8f3c3cd2a0e40760e449", null ],
       [ "buffer", "a00028.html#af9a742c246de1cb1634b1361202916d7", null ]
     ] ],
-    [ "enet_data_error_stats_t", "a00028.html#a00482", [
+    [ "enet_data_error_stats_t", "a00028.html#a00489", [
       [ "statsRxLenGreaterErr", "a00028.html#a49a9b5fd12c01f4e3fdf8fb3f4e1cbcf", null ],
       [ "statsRxAlignErr", "a00028.html#a7aa8325ffacae6ae6ceea48178683da4", null ],
       [ "statsRxFcsErr", "a00028.html#a961dfc75989fe1d056ee40670b01ee8c", null ],
       [ "statsRxOverRunErr", "a00028.html#a4a75e297619c93fe9d0450ccb6f29c82", null ],
       [ "statsRxTruncateErr", "a00028.html#a09504e8c4095afe2540e064d9fec42b0", null ]
     ] ],
-    [ "enet_rx_frame_error_t", "a00028.html#a00508", [
+    [ "enet_rx_frame_error_t", "a00028.html#a00516", [
       [ "statsRxTruncateErr", "a00028.html#a2173d8ae40d913e0e16a8232427865d1", null ],
       [ "statsRxOverRunErr", "a00028.html#ac0ff79b67b123b113ca2a602a1cae328", null ],
       [ "statsRxFcsErr", "a00028.html#acf21e2101caf4fa4ffecfbc255afb78b", null ],
       [ "statsRxAlignErr", "a00028.html#ac197396dbd9f2c1989a14ce5448b5cfb", null ],
       [ "statsRxLenGreaterErr", "a00028.html#adc562d84745ee79c08eea7892244f32f", null ]
     ] ],
-    [ "enet_transfer_stats_t", "a00028.html#a00509", [
+    [ "enet_transfer_stats_t", "a00028.html#a00517", [
       [ "statsRxFrameCount", "a00028.html#a7d171e82c47d9323523f87a33fae63fa", null ],
       [ "statsRxFrameOk", "a00028.html#a2384746839de44160bf4b88f1b214543", null ],
       [ "statsRxCrcErr", "a00028.html#a6e8f9cb625256fc9f8bc7010f8867e1c", null ],
@@ -37,17 +37,17 @@ var a00028 =
       [ "statsTxCrcAlignErr", "a00028.html#ac1f0d3b6d43db27aba5b9466b49b47d2", null ],
       [ "statsTxFifoUnderRunErr", "a00028.html#af46df42a08b486f3e8739413b4310c2e", null ]
     ] ],
-    [ "enet_frame_info_t", "a00028.html#a00483", [
+    [ "enet_frame_info_t", "a00028.html#a00490", [
       [ "context", "a00028.html#ad3987e22d881f422f1d8bcb861eb02a9", null ]
     ] ],
-    [ "enet_tx_dirty_ring_t", "a00028.html#a00512", [
+    [ "enet_tx_dirty_ring_t", "a00028.html#a00520", [
       [ "txDirtyBase", "a00028.html#a7af88381e15c470471345f93e6b95efb", null ],
       [ "txGenIdx", "a00028.html#a433b260bfe4ae02b7046455dcc78df0d", null ],
       [ "txConsumIdx", "a00028.html#abca8f4711537a4e4bec412628b571690", null ],
       [ "txRingLen", "a00028.html#ae445fdbfa651b36e253b53cbcfcb7960", null ],
       [ "isFull", "a00028.html#a04b76eb9bd582eed4c15f4913c04e025", null ]
     ] ],
-    [ "enet_buffer_config_t", "a00028.html#a00480", [
+    [ "enet_buffer_config_t", "a00028.html#a00487", [
       [ "rxBdNumber", "a00028.html#a65e1faa923f03d01a64c133a3830bc7f", null ],
       [ "txBdNumber", "a00028.html#a4f2cfe59fad3a3ea6274ef33edc66676", null ],
       [ "rxBuffSizeAlign", "a00028.html#a8d0b8944b8d70e3c624718e553789136", null ],
@@ -60,17 +60,17 @@ var a00028 =
       [ "txMaintainEnable", "a00028.html#aff5a3ae2854130484aa7e180c45df529", null ],
       [ "txFrameInfo", "a00028.html#aaeebb32b259a0fbbfa6b000b3a143035", null ]
     ] ],
-    [ "enet_intcoalesce_config_t", "a00028.html#a00484", [
+    [ "enet_intcoalesce_config_t", "a00028.html#a00491", [
       [ "txCoalesceFrameCount", "a00028.html#a920e25d5e0e56e1b94ea3185da2b97f6", null ],
       [ "txCoalesceTimeCount", "a00028.html#ab79bf31622cad0e087bef459f8c08ca9", null ],
       [ "rxCoalesceFrameCount", "a00028.html#ad887a24639564d3f902f42fb3652499b", null ],
       [ "rxCoalesceTimeCount", "a00028.html#a7de52c76cb9c659ab17431d0aa9d4a58", null ]
     ] ],
-    [ "enet_avb_config_t", "a00028.html#a00479", [
+    [ "enet_avb_config_t", "a00028.html#a00486", [
       [ "rxClassifyMatch", "a00028.html#a1e6eec9fcb2c7a0fe6be18da59c3a658", null ],
       [ "idleSlope", "a00028.html#a6fc9b1ca99ea88bc576839fae924bcde", null ]
     ] ],
-    [ "enet_config_t", "a00028.html#a00481", [
+    [ "enet_config_t", "a00028.html#a00488", [
       [ "macSpecialConfig", "a00028.html#ae18a59c71607550da3eb35ac6a64ac11", null ],
       [ "interrupt", "a00028.html#ad6126ff38c3d09e8f4b305cc0a45befd", null ],
       [ "rxMaxFrameLen", "a00028.html#a8096267beadb3701fb82163d1e9aa6dd", null ],
@@ -91,19 +91,19 @@ var a00028 =
       [ "callback", "a00028.html#ac8ed5a6af987dea53b3a192fa09a2052", null ],
       [ "userData", "a00028.html#a9da9750eda15683bec50577ed5992ec7", null ]
     ] ],
-    [ "enet_tx_bd_ring_t", "a00028.html#a00510", [
+    [ "enet_tx_bd_ring_t", "a00028.html#a00518", [
       [ "txBdBase", "a00028.html#ac8ea415a5a4e475fc8186a64fe5c7f42", null ],
       [ "txGenIdx", "a00028.html#a02d0c1d6dbec35379899b6d7fded3967", null ],
       [ "txConsumIdx", "a00028.html#acb25ecf9088ef35f7806a0af21ad9893", null ],
       [ "txDescUsed", "a00028.html#a190b8b21e481538bab2eb3800aaf84f0", null ],
       [ "txRingLen", "a00028.html#ae5a88ae171688c9e8cc729e59b9424e7", null ]
     ] ],
-    [ "enet_rx_bd_ring_t", "a00028.html#a00506", [
+    [ "enet_rx_bd_ring_t", "a00028.html#a00514", [
       [ "rxBdBase", "a00028.html#a9b645c4be993309d06f1ffed6c951c45", null ],
       [ "rxGenIdx", "a00028.html#a3358045d4fa5d0656a5972dc6aea7b03", null ],
       [ "rxRingLen", "a00028.html#a8cc38f123dc2aca3c0728d37e8c1c7f5", null ]
     ] ],
-    [ "enet_handle_t", "a00028.html#a00383", [
+    [ "enet_handle_t", "a00028.html#a00390", [
       [ "rxBdRing", "a00028.html#ae902f3f66d8970f7e0e401c93a810732", null ],
       [ "txBdRing", "a00028.html#a5213f4eb065024353d45992c4f9d6644", null ],
       [ "rxBuffSizeAlign", "a00028.html#a7b098c577f9a8c2702c3d27b3d48e5b6", null ],
@@ -154,14 +154,14 @@ var a00028 =
     [ "enet_rx_free_callback_t", "a00028.html#gabc91b20606887f2430289a58f03ca815", null ],
     [ "enet_callback_t", "a00028.html#ga8e1d2f2c373688f7bc76c47bd82c1f42", null ],
     [ "enet_isr_ring_t", "a00028.html#ga7c55db60b8e1c43d5331c70c414e950e", [
-      [ "kStatus_ENET_InitMemoryFail", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167ba7aea34b36e0d0922379df4f2e950e246", null ],
-      [ "kStatus_ENET_RxFrameError", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167baef1f945a6dc8fcf6267d57aac2a19f99", null ],
-      [ "kStatus_ENET_RxFrameFail", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167ba97bf0aacb16c8874c7a0a016483cb2ec", null ],
-      [ "kStatus_ENET_RxFrameEmpty", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167ba50e097caecebfb4afacf2c8a667a5409", null ],
-      [ "kStatus_ENET_RxFrameDrop", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167ba5cc111bececeba55172e9203a5825659", null ],
-      [ "kStatus_ENET_TxFrameOverLen", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167baf12461c772f3ff70fc5a8664bb49701e", null ],
-      [ "kStatus_ENET_TxFrameBusy", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167bad15b9b2af39f28f90889bb19f568e844", null ],
-      [ "kStatus_ENET_TxFrameFail", "a00028.html#gga7ff5f2dff38e7639981794c43dc9167ba34b4c8ff24db933516a0cf13fc8174ad", null ]
+      [ "kStatus_ENET_InitMemoryFail", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a7aea34b36e0d0922379df4f2e950e246", null ],
+      [ "kStatus_ENET_RxFrameError", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8aef1f945a6dc8fcf6267d57aac2a19f99", null ],
+      [ "kStatus_ENET_RxFrameFail", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a97bf0aacb16c8874c7a0a016483cb2ec", null ],
+      [ "kStatus_ENET_RxFrameEmpty", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a50e097caecebfb4afacf2c8a667a5409", null ],
+      [ "kStatus_ENET_RxFrameDrop", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a5cc111bececeba55172e9203a5825659", null ],
+      [ "kStatus_ENET_TxFrameOverLen", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8af12461c772f3ff70fc5a8664bb49701e", null ],
+      [ "kStatus_ENET_TxFrameBusy", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8ad15b9b2af39f28f90889bb19f568e844", null ],
+      [ "kStatus_ENET_TxFrameFail", "a00028.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a34b4c8ff24db933516a0cf13fc8174ad", null ]
     ] ],
     [ "enet_mii_mode_t", "a00028.html#ga4ae0699c0a7f9706deffbaf201025669", [
       [ "kENET_MiiMode", "a00028.html#gga4ae0699c0a7f9706deffbaf201025669a8625ad828cb3aae19fa0c2e6934e9368", null ],
@@ -294,7 +294,6 @@ var a00028 =
     [ "ENET_StartExtC45SMIReadData", "a00028.html#gab9b5e10d43bf267bc32cc3019ac52338", null ],
     [ "ENET_MDIOC45Write", "a00028.html#ga610d4b0c009d03f06e208431ff1b9f33", null ],
     [ "ENET_MDIOC45Read", "a00028.html#ga4a900675299361505ed7992137ff9061", null ],
-    [ "ENET_SetRGMIIClockDelay", "a00028.html#ga3f71765d8252bb8aeecbe537d4e9bd93", null ],
     [ "ENET_SetMacAddr", "a00028.html#ga924622a35ef81eaf69d4a4fd9302a7be", null ],
     [ "ENET_GetMacAddr", "a00028.html#ga89e5a62af8d1ebf7359faa1fc13b56bc", null ],
     [ "ENET_AddMulticastGroup", "a00028.html#ga5b9495b14a42f5b1ee24dcc5a6a9f227", null ],
@@ -309,7 +308,6 @@ var a00028 =
     [ "ENET_SetRxISRHandler", "a00028.html#gae21103f805617333f0f15edf94f895a6", null ],
     [ "ENET_SetTxISRHandler", "a00028.html#ga156266b1c44108aa777dc218164b74e0", null ],
     [ "ENET_SetErrISRHandler", "a00028.html#gaa4533115d3b695265422584bc6964756", null ],
-    [ "ENET_SetCallback", "a00028.html#gae529b5e69f900ed93741a14265eee8fa", null ],
     [ "ENET_GetRxErrBeforeReadFrame", "a00028.html#gae8d5c96025f7b1b870e5eb20850dfa87", null ],
     [ "ENET_GetStatistics", "a00028.html#gaa9f83023f8f13cd9a7e61e49acda85da", null ],
     [ "ENET_GetRxFrameSize", "a00028.html#gab60f9fac51313d5822274a20bb059307", null ],
@@ -317,11 +315,8 @@ var a00028 =
     [ "ENET_SendFrame", "a00028.html#ga420eb9f89621426669164f9ff3ded4b7", null ],
     [ "ENET_SetTxReclaim", "a00028.html#gaa63f1bef0380a6ee9370e9ed90020173", null ],
     [ "ENET_ReclaimTxDescriptor", "a00028.html#gacf0fc8b978c83218ed677336e96b996b", null ],
-    [ "ENET_GetRxBuffer", "a00028.html#ga1f16f0092b6ef1fba801e2e8c9d239a8", null ],
-    [ "ENET_ReleaseRxBuffer", "a00028.html#ga04ebc7e30a4a0bf462b6f2213960fa87", null ],
     [ "ENET_GetRxFrame", "a00028.html#gaa91ebe63c861f928510c45cfce40f5a7", null ],
     [ "ENET_StartTxFrame", "a00028.html#gaf1dfd6bda61a3f763940cc7c5fa8b144", null ],
-    [ "ENET_SendFrameZeroCopy", "a00028.html#gac45cf977f493add878dbfc7082074c98", null ],
     [ "ENET_TransmitIRQHandler", "a00028.html#ga33eb824d276346cda1775b5611f5bae4", null ],
     [ "ENET_ReceiveIRQHandler", "a00028.html#gaf00cb8dc4b85aa7fd7346529c37a3a5a", null ],
     [ "ENET_CommonFrame1IRQHandler", "a00028.html#ga68bc9d588566a5f628e9a34168aa7c21", null ],

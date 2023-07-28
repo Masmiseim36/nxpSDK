@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2020 SixOctets Systems
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -19,7 +19,7 @@
 #define MSG_LEN             5
 
 NET_BUF_POOL_DEFINE(buf_pool, 1, MSG_LEN, USER_DATA_MIN, NULL);
-uint8_t message[MSG_LEN] = {'h','e','l','l','o'};
+uint8_t msg[MSG_LEN] = {'h','e','l','l','o'};
 
 static void bt_ready(int err);
 static int scan_start(void);
@@ -134,6 +134,7 @@ static bool device_scanned(struct bt_data *data, void *user_data)
     uint16_t u16;
     int err;
     int i;
+    char dev[BT_ADDR_LE_STR_LEN];
     bool continueParse = true;
 
     /* return true to continue parsing or false to stop parsing */
@@ -163,7 +164,8 @@ static bool device_scanned(struct bt_data *data, void *user_data)
                         PRINTF("Stop LE scan failed (err %d)\n", err);
                         break;
                     }
-                    PRINTF("Found device: %s", addr);
+                    bt_addr_le_to_str(addr, dev, sizeof(dev));
+                    PRINTF("Found device: %s", dev);
 
                     /* Send connection request */
                     err = bt_conn_le_create(addr, BT_CONN_LE_CREATE_CONN,
@@ -274,19 +276,20 @@ static uint8_t discover_func(struct bt_conn *conn,
 
 static void bt_ready(int err)
 {
-	if (err) {
-		PRINTF("Bluetooth init failed (err %d)\n", err);
-		return;
-	}
-
-	if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
-    {
-        settings_load();
+    if (err) {
+        PRINTF("Bluetooth init failed (err %d)\n", err);
+        return;
     }
+
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
+        settings_load();
+#endif /* CONFIG_BT_SETTINGS */
+
     PRINTF("Bluetooth initialized\n");
 
     /* Register connection callbacks */
-	bt_conn_cb_register(&conn_callbacks);
+    bt_conn_cb_register(&conn_callbacks);
+
 #if CONFIG_BT_SMP
     bt_conn_auth_cb_register(&auth_cb_display);
 #endif
@@ -310,6 +313,8 @@ void central_ipsp_task(void *pvParameters)
     int err;
     struct net_buf *buf;
 
+    PRINTF("BLE Central IPSP demo start...\n");
+
     err = bt_enable(bt_ready);
 	if (err) {
 		PRINTF("Bluetooth init failed (err %d)\n", err);
@@ -326,7 +331,7 @@ void central_ipsp_task(void *pvParameters)
         buf = net_buf_alloc(&buf_pool, osaWaitNone_c);
         if (NULL != buf)
         {
-            net_buf_add_mem(buf, message, MSG_LEN);
+            net_buf_add_mem(buf, msg, MSG_LEN);
             err = ipsp_send(buf);
             if (err)
             {

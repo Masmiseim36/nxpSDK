@@ -10,6 +10,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+ * $Coverage Justification Reference$
+ *
+ * $Justification fsl_lpi2c_edma_c_ref_1$
+ * Need multiple master and slave modules on bus to simulate the true branch
+ *
+ * $Justification fsl_lpi2c_edma_c_ref_2$
+ * FSL_FEATURE_LPI2C_HAS_SEPARATE_DMA_RX_TX_REQn(X) is a constant.
+ *
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -253,8 +264,16 @@ status_t LPI2C_MasterTransferEDMA(LPI2C_Type *base,
         return kStatus_LPI2C_Busy;
     }
 
+    /* Enable the master function and disable the slave function. */
+    LPI2C_MasterEnable(base, true);
+    LPI2C_SlaveEnable(base, false);
+
     /* Return an error if the bus is already in use not by us. */
     result = LPI2C_CheckForBusyBus(base);
+    /*
+     * $Branch Coverage Justification$
+     * $ref fsl_lpi2c_edma_c_ref_1$
+     */
     if (result != kStatus_Success)
     {
         return result;
@@ -299,8 +318,8 @@ status_t LPI2C_MasterTransferEDMA(LPI2C_Type *base,
     bool hasSendData    = (transfer->direction == kLPI2C_Write) && (transfer->dataSize != 0U);
     bool hasReceiveData = (transfer->direction == kLPI2C_Read) && (transfer->dataSize != 0U);
 
-    edma_transfer_config_t transferConfig;
-    edma_tcd_t *linkTcd = NULL;
+    edma_transfer_config_t transferConfig = {0};
+    edma_tcd_t *linkTcd                   = NULL;
 
     /* Set up data transmit. */
     if (hasSendData)
@@ -402,11 +421,18 @@ status_t LPI2C_MasterTransferEDMA(LPI2C_Type *base,
     }
 
     /* Start DMA transfer. */
+    /*
+     * $Branch Coverage Justification$
+     * $ref fsl_lpi2c_edma_c_ref_2$
+     */
     if (hasReceiveData || (0 == FSL_FEATURE_LPI2C_HAS_SEPARATE_DMA_RX_TX_REQn(base)))
     {
         EDMA_StartTransfer(handle->rx);
     }
-
+    /*
+     * $Branch Coverage Justification$
+     * $ref fsl_lpi2c_edma_c_ref_2$
+     */
     if ((hasSendData || (commandCount != 0U)) && (FSL_FEATURE_LPI2C_HAS_SEPARATE_DMA_RX_TX_REQn(base) != 0))
     {
         EDMA_StartTransfer(handle->tx);
@@ -571,6 +597,10 @@ static void LPI2C_MasterTransferEdmaHandleIRQ(LPI2C_Type *base, void *lpi2cMaste
     {
         result = kStatus_LPI2C_PinLowTimeout;
     }
+    /*
+     * $Branch Coverage Justification$
+     * $ref fsl_lpi2c_edma_c_ref_1$
+     */
     else if (0U != (status & (uint32_t)kLPI2C_MasterArbitrationLostFlag))
     {
         result = kStatus_LPI2C_ArbitrationLost;

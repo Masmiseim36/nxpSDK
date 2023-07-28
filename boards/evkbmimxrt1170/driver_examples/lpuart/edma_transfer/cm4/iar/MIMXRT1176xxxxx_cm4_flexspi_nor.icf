@@ -93,7 +93,7 @@ define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block QACCESS_CODE  { section CodeQuickAccess };
 define block QACCESS_DATA  { section DataQuickAccess };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, object fsl_edma.o, object fsl_dmamux.o , object fsl_lpuart_edma.o , section DataQuickAccess };
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };

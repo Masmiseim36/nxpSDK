@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -235,6 +235,7 @@
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
           <state>HTTPSRV_CFG_MBEDTLS_ENABLE=1</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
@@ -242,7 +243,6 @@
           <state>MBEDTLS_THREADING_ALT</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -282,7 +282,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -323,7 +323,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -373,9 +373,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
@@ -386,9 +385,10 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -510,7 +510,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -716,7 +716,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1127,7 +1127,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1214,7 +1214,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1231,7 +1231,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1254,7 +1254,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1333,7 +1333,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1351,6 +1351,7 @@
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
           <state>HTTPSRV_CFG_MBEDTLS_ENABLE=1</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>CACHE_MODE_WRITE_THROUGH=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
@@ -1358,7 +1359,6 @@
           <state>MBEDTLS_THREADING_ALT</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1398,7 +1398,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa167,Pe177,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1439,7 +1439,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1489,9 +1489,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../components/silicon_id/socs</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
@@ -1502,9 +1501,10 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1626,7 +1626,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1832,7 +1832,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2310,16 +2310,16 @@
     <group>
       <name>silicon_id</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/imxrt1170/fsl_silicon_id_soc.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/silicon_id/socs/fsl_silicon_id_soc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
       </file>
     </group>
     <group>
@@ -2334,6 +2334,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -2341,12 +2347,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -2374,6 +2374,12 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_enet.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
     </file>
     <file>
@@ -2384,12 +2390,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
@@ -3144,6 +3144,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</name>
         </file>
       </group>
     </group>

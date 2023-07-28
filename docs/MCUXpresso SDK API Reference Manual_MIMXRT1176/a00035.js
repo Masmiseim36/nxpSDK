@@ -1,12 +1,12 @@
 var a00035 =
 [
-    [ "flexio_config_t", "a00035.html#a00526", [
+    [ "flexio_config_t", "a00035.html#a00532", [
       [ "enableFlexio", "a00035.html#afb84972913d1d65a1a3fcb9ae721035f", null ],
       [ "enableInDoze", "a00035.html#af332627b1e420a400120a9712b7506ab", null ],
       [ "enableInDebug", "a00035.html#a9e3c5868f26379c242e275208b9db003", null ],
       [ "enableFastAccess", "a00035.html#afdc2df1ec426294f37709e5527fa8f3f", null ]
     ] ],
-    [ "flexio_timer_config_t", "a00035.html#a00542", [
+    [ "flexio_timer_config_t", "a00035.html#a00548", [
       [ "triggerSelect", "a00035.html#ae27328971744000d7b5c6a54c5cb473e", null ],
       [ "triggerPolarity", "a00035.html#a556c695584199d97ee53aee49b3649a1", null ],
       [ "triggerSource", "a00035.html#a32c4995f08903e642f96a84a7fc7adb6", null ],
@@ -23,14 +23,13 @@ var a00035 =
       [ "timerStart", "a00035.html#af3b94027f830b704d3e59e4e56378f6a", null ],
       [ "timerCompare", "a00035.html#a2aecddceb83e0b4e03fc265c5778e28e", null ]
     ] ],
-    [ "flexio_shifter_config_t", "a00035.html#a00537", [
+    [ "flexio_shifter_config_t", "a00035.html#a00543", [
       [ "timerSelect", "a00035.html#ab9965aae7682bbba5d74b10b1d79c450", null ],
       [ "timerPolarity", "a00035.html#aa46009da5632d5e9f535f961777f61a9", null ],
       [ "pinConfig", "a00035.html#a5150652a405932cef6ca882528d0ab61", null ],
       [ "pinSelect", "a00035.html#ac6f588cd46f684238315bb48375f810e", null ],
       [ "pinPolarity", "a00035.html#aeb1b3522d6ab916526e82e834d8ffdca", null ],
       [ "shifterMode", "a00035.html#adb1444b1ff42c0f5078312d8da6eb495", null ],
-      [ "parallelWidth", "a00035.html#af53bf799627661586ac8308821318810", null ],
       [ "inputSource", "a00035.html#a2ac9fe568b9c7d972721ae0f2653d7af", null ],
       [ "shifterStop", "a00035.html#ae71c6a47a19d2118b27ddbd602d73808", null ],
       [ "shifterStart", "a00035.html#a33f9213fdda63ac7e6094a3744bc547d", null ]
@@ -72,11 +71,7 @@ var a00035 =
       [ "kFLEXIO_TimerDecSrcOnFlexIOClockShiftTimerOutput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660ea463462a5170939b8d032c66b81b05041", null ],
       [ "kFLEXIO_TimerDecSrcOnTriggerInputShiftTimerOutput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660eae1da2cb9db37f5f2422d838320cd5e58", null ],
       [ "kFLEXIO_TimerDecSrcOnPinInputShiftPinInput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660ea8fb65e2cac5ceaa273be9410c1edd08c", null ],
-      [ "kFLEXIO_TimerDecSrcOnTriggerInputShiftTriggerInput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660ea0685663768a69a1176e876d1012b82f9", null ],
-      [ "kFLEXIO_TimerDecSrcDiv16OnFlexIOClockShiftTimerOutput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660ea053df5f44a165bc3c88e2090bc90b215", null ],
-      [ "kFLEXIO_TimerDecSrcDiv256OnFlexIOClockShiftTimerOutput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660eae7490ab4ad99876b55e03905ab215c35", null ],
-      [ "kFLEXIO_TimerRisSrcOnPinInputShiftPinInput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660ea730a093cf65196a6ef251cc027f57af1", null ],
-      [ "kFLEXIO_TimerRisSrcOnTriggerInputShiftTriggerInput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660eaf98f234ec892b65cdbd480f4c8049e37", null ]
+      [ "kFLEXIO_TimerDecSrcOnTriggerInputShiftTriggerInput", "a00035.html#gga78a707630ad04cfc2dc316cf4d99660ea0685663768a69a1176e876d1012b82f9", null ]
     ] ],
     [ "flexio_timer_reset_condition_t", "a00035.html#ga12536a2356d854da58788e52915d2e9b", [
       [ "kFLEXIO_TimerResetNever", "a00035.html#gga12536a2356d854da58788e52915d2e9ba5f0cc4aa10fe6def493323d3e3c97f2e", null ],
@@ -128,9 +123,7 @@ var a00035 =
       [ "kFLEXIO_ShifterModeReceive", "a00035.html#ggace63beb7edac892f5816ddb502b60534ac66ea35f7b7ce878b9a6199cc1edc77d", null ],
       [ "kFLEXIO_ShifterModeTransmit", "a00035.html#ggace63beb7edac892f5816ddb502b60534ae31c6e80c56e679195c376d9d45be72f", null ],
       [ "kFLEXIO_ShifterModeMatchStore", "a00035.html#ggace63beb7edac892f5816ddb502b60534a0024b0bee9413a4ceed2c7c19132e88a", null ],
-      [ "kFLEXIO_ShifterModeMatchContinuous", "a00035.html#ggace63beb7edac892f5816ddb502b60534ad1aa4842513c21b1cd1ea708dd83582f", null ],
-      [ "kFLEXIO_ShifterModeState", "a00035.html#ggace63beb7edac892f5816ddb502b60534aeb55a0bfc5746860dc8ab6f0d989d39c", null ],
-      [ "kFLEXIO_ShifterModeLogic", "a00035.html#ggace63beb7edac892f5816ddb502b60534a1b664294a953e017f065dfd957ad8d9a", null ]
+      [ "kFLEXIO_ShifterModeMatchContinuous", "a00035.html#ggace63beb7edac892f5816ddb502b60534ad1aa4842513c21b1cd1ea708dd83582f", null ]
     ] ],
     [ "flexio_shifter_input_source_t", "a00035.html#gabcb8e4914f1d5a7267f09dafd90259b5", [
       [ "kFLEXIO_ShifterInputFromPin", "a00035.html#ggabcb8e4914f1d5a7267f09dafd90259b5acafda15226df0667cd70fd630f86605b", null ],
@@ -151,10 +144,7 @@ var a00035 =
       [ "kFLEXIO_ShifterBuffer", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336ba240390ada75c53bead9cd3bc1a1cbaa6", null ],
       [ "kFLEXIO_ShifterBufferBitSwapped", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336ba208f279c1ea5275deb0a9a09f9200010", null ],
       [ "kFLEXIO_ShifterBufferByteSwapped", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336ba966c0e53bd63151d27793d72a5295c11", null ],
-      [ "kFLEXIO_ShifterBufferBitByteSwapped", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336ba73c786ba17100dfa84ca178d6cd4b633", null ],
-      [ "kFLEXIO_ShifterBufferNibbleByteSwapped", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336ba46937e81ac6d297dc2217a452979b43e", null ],
-      [ "kFLEXIO_ShifterBufferHalfWordSwapped", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336bad60ca86557b76f49bb90c2b8e236fef0", null ],
-      [ "kFLEXIO_ShifterBufferNibbleSwapped", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336babbce56de725da837c0ff03d80923d890", null ]
+      [ "kFLEXIO_ShifterBufferBitByteSwapped", "a00035.html#gga5ffbb01a98e7562630bada8a4aee336ba73c786ba17100dfa84ca178d6cd4b633", null ]
     ] ],
     [ "FLEXIO_GetDefaultConfig", "a00035.html#ga8f07f06d58999e94599369689abc0d77", null ],
     [ "FLEXIO_Init", "a00035.html#gadf2cbaaa4104f56a8256d8b6a9188d68", null ],
@@ -162,8 +152,6 @@ var a00035 =
     [ "FLEXIO_GetInstance", "a00035.html#ga9e9d7caf7ca883fea0c17695d4728a6d", null ],
     [ "FLEXIO_Reset", "a00035.html#ga5a2be6b9a88ef67fa057acf98066cbbc", null ],
     [ "FLEXIO_Enable", "a00035.html#ga8eaf1565d5ad16c7aba1beabbfa50fd8", null ],
-    [ "FLEXIO_ReadPinInput", "a00035.html#ga8bd12008b5e59ec3e63da736c3c7a9b6", null ],
-    [ "FLEXIO_GetShifterState", "a00035.html#gaeb7e33009b0a9742a542bd7e28b0d4d7", null ],
     [ "FLEXIO_SetShifterConfig", "a00035.html#ga01ef8ce3081a0276707d93a5214b2858", null ],
     [ "FLEXIO_SetTimerConfig", "a00035.html#ga84363290deba8506240427b3b5600c60", null ],
     [ "FLEXIO_SetClockMode", "a00035.html#gac5178222cc0d3b410723d9100df532ad", null ],

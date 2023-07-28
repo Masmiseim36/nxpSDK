@@ -1,7 +1,9 @@
 var a00337 =
 [
-    [ "LPUART CMSIS Driver", "a00338.html", null ],
-    [ "LPUART Driver", "a00059.html", "a00059" ],
-    [ "LPUART FreeRTOS Driver", "a00061.html", "a00061" ],
-    [ "LPUART eDMA Driver", "a00060.html", "a00060" ]
+    [ "FSL_DMAMUX_DRIVER_VERSION", "a00337.html#ga52b927e4f978ddf42faf0acf6de3df57", null ],
+    [ "DMAMUX_Init", "a00337.html#ga850545ac61a004df8ca312db2ca9db73", null ],
+    [ "DMAMUX_Deinit", "a00337.html#gab663257d094b9b7b6fa1b894fbf8000b", null ],
+    [ "DMAMUX_EnableChannel", "a00337.html#gaecac68802d961c31a06389caa97387f5", null ],
+    [ "DMAMUX_DisableChannel", "a00337.html#ga4d68cf7796e4a6a9cd0c4289712ca120", null ],
+    [ "DMAMUX_SetSource", "a00337.html#gab4cfa329d636dc52dffb7fedef84367e", null ]
 ];

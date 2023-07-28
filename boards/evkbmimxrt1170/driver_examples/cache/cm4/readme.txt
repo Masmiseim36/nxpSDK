@@ -10,9 +10,9 @@ memory and before DMA access the memory.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.30.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
 
 Hardware requirements
 =====================

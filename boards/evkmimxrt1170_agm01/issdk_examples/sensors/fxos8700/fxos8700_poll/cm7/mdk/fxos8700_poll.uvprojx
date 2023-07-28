@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Core/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/MIMXRT1176/template;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -381,27 +381,27 @@
             <File>
               <FileName>evkmimxrt1170.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.c</FilePath>
+              <FilePath>../evkmimxrt1170.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1170.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.h</FilePath>
+              <FilePath>../evkmimxrt1170.h</FilePath>
             </File>
             <File>
               <FileName>frdm_stbc_agm01_shield.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../frdm_stbc_agm01_shield.h</FilePath>
+              <FilePath>../frdm_stbc_agm01_shield.h</FilePath>
             </File>
             <File>
               <FileName>issdk_hal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../issdk_hal.h</FilePath>
+              <FilePath>../issdk_hal.h</FilePath>
             </File>
             <File>
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../RTE_Device.h</FilePath>
+              <FilePath>../RTE_Device.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -864,6 +864,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -877,16 +887,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -941,57 +941,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -1009,9 +959,59 @@
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
             <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1346,9 +1346,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Core/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/MIMXRT1176/template;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1382,7 +1382,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1395,27 +1395,27 @@
             <File>
               <FileName>evkmimxrt1170.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.c</FilePath>
+              <FilePath>../evkmimxrt1170.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1170.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.h</FilePath>
+              <FilePath>../evkmimxrt1170.h</FilePath>
             </File>
             <File>
               <FileName>frdm_stbc_agm01_shield.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../frdm_stbc_agm01_shield.h</FilePath>
+              <FilePath>../frdm_stbc_agm01_shield.h</FilePath>
             </File>
             <File>
               <FileName>issdk_hal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../issdk_hal.h</FilePath>
+              <FilePath>../issdk_hal.h</FilePath>
             </File>
             <File>
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../RTE_Device.h</FilePath>
+              <FilePath>../RTE_Device.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -1878,6 +1878,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1891,16 +1901,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1955,57 +1955,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -2023,9 +1973,59 @@
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
             <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2360,9 +2360,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Core/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/MIMXRT1176/template;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2396,7 +2396,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2409,27 +2409,27 @@
             <File>
               <FileName>evkmimxrt1170.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.c</FilePath>
+              <FilePath>../evkmimxrt1170.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1170.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.h</FilePath>
+              <FilePath>../evkmimxrt1170.h</FilePath>
             </File>
             <File>
               <FileName>frdm_stbc_agm01_shield.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../frdm_stbc_agm01_shield.h</FilePath>
+              <FilePath>../frdm_stbc_agm01_shield.h</FilePath>
             </File>
             <File>
               <FileName>issdk_hal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../issdk_hal.h</FilePath>
+              <FilePath>../issdk_hal.h</FilePath>
             </File>
             <File>
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../RTE_Device.h</FilePath>
+              <FilePath>../RTE_Device.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -2892,6 +2892,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2905,16 +2915,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2969,57 +2969,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -3037,9 +2987,59 @@
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
             <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3374,9 +3374,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Core/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/MIMXRT1176/template;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3410,7 +3410,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3423,27 +3423,27 @@
             <File>
               <FileName>evkmimxrt1170.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.c</FilePath>
+              <FilePath>../evkmimxrt1170.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1170.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.h</FilePath>
+              <FilePath>../evkmimxrt1170.h</FilePath>
             </File>
             <File>
               <FileName>frdm_stbc_agm01_shield.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../frdm_stbc_agm01_shield.h</FilePath>
+              <FilePath>../frdm_stbc_agm01_shield.h</FilePath>
             </File>
             <File>
               <FileName>issdk_hal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../issdk_hal.h</FilePath>
+              <FilePath>../issdk_hal.h</FilePath>
             </File>
             <File>
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../RTE_Device.h</FilePath>
+              <FilePath>../RTE_Device.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -3906,6 +3906,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3919,16 +3929,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3983,57 +3983,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -4051,9 +4001,59 @@
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
             <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4388,9 +4388,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Core/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/MIMXRT1176/template;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4424,7 +4424,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4437,27 +4437,27 @@
             <File>
               <FileName>evkmimxrt1170.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.c</FilePath>
+              <FilePath>../evkmimxrt1170.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1170.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.h</FilePath>
+              <FilePath>../evkmimxrt1170.h</FilePath>
             </File>
             <File>
               <FileName>frdm_stbc_agm01_shield.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../frdm_stbc_agm01_shield.h</FilePath>
+              <FilePath>../frdm_stbc_agm01_shield.h</FilePath>
             </File>
             <File>
               <FileName>issdk_hal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../issdk_hal.h</FilePath>
+              <FilePath>../issdk_hal.h</FilePath>
             </File>
             <File>
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../RTE_Device.h</FilePath>
+              <FilePath>../RTE_Device.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -4920,6 +4920,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4933,16 +4943,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4997,57 +4997,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -5065,9 +5015,59 @@
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
             <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5402,9 +5402,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Core/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;..;../../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../../devices/MIMXRT1176/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/MIMXRT1176;../../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/MIMXRT1176/xip;../../../../../../../evkmimxrt1170/xip;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/MIMXRT1176/template;../../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5438,7 +5438,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5451,27 +5451,27 @@
             <File>
               <FileName>evkmimxrt1170.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.c</FilePath>
+              <FilePath>../evkmimxrt1170.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1170.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1170.h</FilePath>
+              <FilePath>../evkmimxrt1170.h</FilePath>
             </File>
             <File>
               <FileName>frdm_stbc_agm01_shield.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../frdm_stbc_agm01_shield.h</FilePath>
+              <FilePath>../frdm_stbc_agm01_shield.h</FilePath>
             </File>
             <File>
               <FileName>issdk_hal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../issdk_hal.h</FilePath>
+              <FilePath>../issdk_hal.h</FilePath>
             </File>
             <File>
               <FileName>RTE_Device.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../RTE_Device.h</FilePath>
+              <FilePath>../RTE_Device.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -5934,6 +5934,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -5947,16 +5957,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6011,57 +6011,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS_driver</GroupName>
+          <GroupName>CMSIS_driver/Include</GroupName>
           <Files>
             <File>
               <FileName>Driver_I2C.h</FileName>
@@ -6079,9 +6029,59 @@
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_SPI.h</FilePath>
             </File>
             <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+            <File>
               <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Driver/Include/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

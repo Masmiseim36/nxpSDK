@@ -52,5 +52,10 @@ void Network_PhyInit(EXAMPLE_PHY_RES *phy_res, phy_operations_t *phy_ops, uint32
     /* Make sure the Ethernet clock is enabled */
     CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_MDIO_HANDLE)]);
 
+#if defined(FSL_FEATURE_ENET_HAS_EXTRA_CLOCK_GATE) && FSL_FEATURE_ENET_HAS_EXTRA_CLOCK_GATE
+    /* Make sure the Ethernet extra clock is enabled */
+    CLOCK_EnableClock(s_enetExtraClock[ENET_GetInstance(EXAMPLE_MDIO_HANDLE)]);
+#endif
+
     ENET_SetSMI(EXAMPLE_MDIO_HANDLE, csrClock_Hz, false);
 }

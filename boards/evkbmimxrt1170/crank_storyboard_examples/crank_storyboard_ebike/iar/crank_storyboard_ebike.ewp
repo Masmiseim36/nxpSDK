@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_sdram_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -240,12 +240,12 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>CUSTOM_VGLITE_MEMORY_CONFIG=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -383,8 +383,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176</state>
@@ -394,14 +392,17 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../template/cm7</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -523,7 +524,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -730,7 +731,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1166,7 +1167,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1253,7 +1254,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1270,7 +1271,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1293,7 +1294,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1372,7 +1373,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1395,12 +1396,12 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>SDK_OS_FREE_RTOS</state>
           <state>CUSTOM_VGLITE_MEMORY_CONFIG=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1538,8 +1539,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176</state>
@@ -1549,14 +1548,17 @@
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../template/cm7</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1678,7 +1680,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1885,7 +1887,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2419,18 +2421,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
     </file>
     <file>
@@ -2441,6 +2431,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_snvs_hp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
@@ -2482,12 +2484,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
     </file>
     <file>
@@ -2501,6 +2497,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
     </file>
   </group>
   <group>
@@ -2597,6 +2599,36 @@
     <name>freertos</name>
     <group>
       <name>freertos-kernel</name>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM4F</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+            </file>
+          </group>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
       </file>
@@ -2669,36 +2701,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
       </file>
-      <group>
-        <name>portable</name>
-        <group>
-          <name>IAR</name>
-          <group>
-            <name>ARM_CM4F</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/port.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portasm.s</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
-      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
       </file>
@@ -2774,27 +2776,6 @@
     </file>
   </group>
   <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
-    </file>
-  </group>
-  <group>
     <name>vglite</name>
     <group>
       <name>inc</name>
@@ -2821,6 +2802,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_path.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_flat.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_flat.c</name>
       </file>
       <group>
         <name>rtos</name>
@@ -2948,6 +2935,27 @@
     </group>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/vglite/ChangeLogKSDK.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

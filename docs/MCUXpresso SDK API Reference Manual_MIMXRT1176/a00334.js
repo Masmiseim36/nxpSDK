@@ -1,12 +1,12 @@
 var a00334 =
 [
-    [ "FSL_DMAMUX_DRIVER_VERSION", "a00334.html#ga52b927e4f978ddf42faf0acf6de3df57", null ],
-    [ "DMAMUX_Init", "a00334.html#ga850545ac61a004df8ca312db2ca9db73", null ],
-    [ "DMAMUX_Deinit", "a00334.html#gab663257d094b9b7b6fa1b894fbf8000b", null ],
-    [ "DMAMUX_EnableChannel", "a00334.html#gaecac68802d961c31a06389caa97387f5", null ],
-    [ "DMAMUX_DisableChannel", "a00334.html#ga4d68cf7796e4a6a9cd0c4289712ca120", null ],
-    [ "DMAMUX_SetSource", "a00334.html#ga97083a74f4af599de628cdd8864d6676", null ],
-    [ "DMAMUX_EnablePeriodTrigger", "a00334.html#ga9b873510e45bcc998b5cede12ed359d0", null ],
-    [ "DMAMUX_DisablePeriodTrigger", "a00334.html#ga7a632ca1a6bd05a936a4f4ba1295e158", null ],
-    [ "DMAMUX_EnableAlwaysOn", "a00334.html#ga70912895b0619dcfb911663501cb03f5", null ]
+    [ "CAAM_AES_EncryptEcbNonBlocking", "a00334.html#gaf17615d04159c190c4b5dbe849cd60fb", null ],
+    [ "CAAM_AES_DecryptEcbNonBlocking", "a00334.html#ga95932998da1e1e6f8acf8b07425920c5", null ],
+    [ "CAAM_AES_EncryptCbcNonBlocking", "a00334.html#gabb70bd768fda571c83dae0f19ae47960", null ],
+    [ "CAAM_AES_DecryptCbcNonBlocking", "a00334.html#ga8af780abeaba467ebeae110822bac7f4", null ],
+    [ "CAAM_AES_CryptCtrNonBlocking", "a00334.html#gaf8111bdbb0f0477dce2ee307ecea487c", null ],
+    [ "CAAM_AES_EncryptTagCcmNonBlocking", "a00334.html#ga8ba9f0a2d82d4a5e9219d221fb8452b3", null ],
+    [ "CAAM_AES_DecryptTagCcmNonBlocking", "a00334.html#ga33528456ae5c03460e6f6e2e404a29d6", null ],
+    [ "CAAM_AES_EncryptTagGcmNonBlocking", "a00334.html#ga1f256cafc754c9884fbfb6016a87ad5e", null ],
+    [ "CAAM_AES_DecryptTagGcmNonBlocking", "a00334.html#gac1080871a66e816b659c333449423f34", null ]
 ];

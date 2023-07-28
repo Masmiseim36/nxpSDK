@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>aws_shadow_enet_cm7 flexspi_nor_debug</TargetName>
+    <TargetName>aws_shadow_enet_cm7 flexspi_nor_sdram_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_flexspi_nor.ini</tIfile>
+        <tIfile>evkmimxrt1160_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -186,7 +186,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>aws_shadow_enet_cm7 flexspi_nor_release</TargetName>
+    <TargetName>aws_shadow_enet_cm7 flexspi_nor_sdram_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -277,7 +277,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1160_flexspi_nor.ini</tIfile>
+        <tIfile>evkmimxrt1160_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

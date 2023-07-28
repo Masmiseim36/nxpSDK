@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flexspi_nor_sdram_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -232,12 +232,12 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -277,7 +277,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -318,7 +318,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -395,10 +395,10 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -439,7 +439,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -520,7 +520,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -725,7 +725,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1135,7 +1135,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1222,7 +1222,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1239,7 +1239,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1262,7 +1262,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>41</state>
         </option>
         <option>
@@ -1341,7 +1341,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1356,12 +1356,12 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1401,7 +1401,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state>Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1442,7 +1442,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1519,10 +1519,10 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xmcd</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1563,7 +1563,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -1644,7 +1644,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1849,7 +1849,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2282,10 +2282,10 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../lvgl_support.h</name>
+      <name>$PROJ_DIR$/../lvgl_support.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../lvgl_support.c</name>
+      <name>$PROJ_DIR$/../lvgl_support.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.c</name>
@@ -2438,18 +2438,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mipi_dsi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpi2c.c</name>
     </file>
     <file>
@@ -2478,6 +2466,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_elcdif.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
@@ -2513,12 +2513,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</name>
     </file>
     <file>
@@ -2532,6 +2526,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
     </file>
   </group>
   <group>
@@ -2570,6 +2570,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/vglite/VGLite/vg_lite_path.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/vglite/VGLite/vg_lite_flat.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/vglite/VGLite/vg_lite_flat.c</name>
       </file>
       <group>
         <name>rtos</name>
@@ -3027,14 +3033,14 @@
           </group>
           <group>
             <name>nxp</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</name>
-            </file>
             <group>
               <name>pxp</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp.h</name>
+              </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c</name>
               </file>
@@ -3057,6 +3063,12 @@
             <group>
               <name>vglite</name>
               <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</name>
               </file>
               <file>
@@ -3075,16 +3087,22 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</name>
-              </file>
-              <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_buf.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_vglite_utils.h</name>
               </file>
             </group>
           </group>
@@ -3152,6 +3170,15 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_line.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_layer.h</name>
             </file>
           </group>
           <group>
@@ -3692,6 +3719,9 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</name>
               </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</name>
+              </file>
             </group>
             <group>
               <name>rlottie</name>
@@ -3773,11 +3803,20 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.h</name>
               </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/fragment/lv_fragment_manager.c</name>
+              </file>
             </group>
             <group>
               <name>ime</name>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/ime/lv_ime_pinyin.c</name>
               </file>
             </group>
             <group>
@@ -3785,11 +3824,17 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.h</name>
               </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/imgfont/lv_imgfont.c</name>
+              </file>
             </group>
             <group>
               <name>msg</name>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lvgl/lvgl/src/extra/others/msg/lv_msg.c</name>
               </file>
             </group>
           </group>
@@ -4054,6 +4099,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -4061,12 +4112,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>

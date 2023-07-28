@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Serial Port Uart</title>
+<title>MCUXpresso SDK API Reference Manual: XBARB: Inter-Peripheral Crossbar Switch</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.1</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,88 +98,129 @@ $(document).ready(function(){initNavTree('a00369.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Serial Port Uart<div class="ingroups"><a class="el" href="a00083.html">Serial Manager</a></div></div>  </div>
+<div class="title">XBARB: Inter-Peripheral Crossbar Switch</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Inter-Peripheral Crossbar Switch (XBARB) block of MCUXpresso SDK devices.</p>
+<p>The XBARB peripheral driver configures the XBARB (Inter-Peripheral Crossbar Switch) and handles initialization and configuration of the XBARB module.</p>
+<p>XBARB driver has two parts:</p>
+<ul>
+<li>Signal connection interconnects input and output signals.</li>
+</ul>
+<h1><a class="anchor" id="XbarbFunctionalGroups"></a>
+Function groups</h1>
+<h2><a class="anchor" id="XBARBInit"></a>
+XBARB Initialization</h2>
+<p>To initialize the XBARB driver, a state structure has to be passed into the initialization function. This block of memory keeps pointers to user's callback functions and parameters to these functions. The XBARB module is initialized by calling the <a class="el" href="a00369.html#gaef36940e839f28936f9415c3cb6d703f" title="Initializes the XBARB module. ">XBARB_Init()</a> function.</p>
+<h2><a class="anchor" id="XBARBCallDiagram"></a>
+Call diagram</h2>
+<ol type="1">
+<li>Call the "XBARB_Init()" function to initialize the XBARB module.</li>
+<li>Optionally, call the "XBARB_SetSignalsConnection()" function to Set connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal. It connects the XBARB input to the selected XBARB output. A configuration structure of the "xbarb_input_signal_t" type and "xbarb_output_signal_t" type is required.</li>
+<li>Finally, the XBARB works properly.</li>
+</ol>
+<h1><a class="anchor" id="XbarbExample"></a>
+Typical use case</h1>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaff6176ea2af7001a012172a47622e204"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff6176ea2af7001a012172a47622e204"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#gaff6176ea2af7001a012172a47622e204">SERIAL_PORT_UART_DMA_RECEIVE_DATA_LENGTH</a>&#160;&#160;&#160;(64U)</td></tr>
-<tr class="memdesc:gaff6176ea2af7001a012172a47622e204"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart handle size <br/></td></tr>
-<tr class="separator:gaff6176ea2af7001a012172a47622e204"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29c0fa5c543615a75f63bdcb7e086b16"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#ga29c0fa5c543615a75f63bdcb7e086b16">SERIAL_USE_CONFIGURE_STRUCTURE</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the confgure structure pointer. <br/></td></tr>
-<tr class="separator:ga29c0fa5c543615a75f63bdcb7e086b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga89a4bbed0c24cfe5e085194add680ccc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#ga89a4bbed0c24cfe5e085194add680ccc">serial_port_uart_parity_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00369.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00369.html#gga89a4bbed0c24cfe5e085194add680ccca7d9d6f05fb6e1099fdfbf1f79a699356">kSerialManager_UartParityEven</a> = 0x2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00369.html#gga89a4bbed0c24cfe5e085194add680ccca15bc11791c1f07fac71c808d083515db">kSerialManager_UartParityOdd</a> = 0x3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga89a4bbed0c24cfe5e085194add680ccc"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart parity mode  <a href="a00369.html#ga89a4bbed0c24cfe5e085194add680ccc">More...</a><br/></td></tr>
-<tr class="separator:ga89a4bbed0c24cfe5e085194add680ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bdf0213026f54fd54c21971e07f2d56"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#ga8bdf0213026f54fd54c21971e07f2d56">serial_port_uart_stop_bit_count_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00369.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00369.html#gga8bdf0213026f54fd54c21971e07f2d56a83eb7aee91f3fd8964d283c0057880dc">kSerialManager_UartTwoStopBit</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga8bdf0213026f54fd54c21971e07f2d56"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port uart stop bit count  <a href="a00369.html#ga8bdf0213026f54fd54c21971e07f2d56">More...</a><br/></td></tr>
-<tr class="separator:ga8bdf0213026f54fd54c21971e07f2d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+XBARB functional Operation.</h2></td></tr>
+<tr class="memitem:gaef36940e839f28936f9415c3cb6d703f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#gaef36940e839f28936f9415c3cb6d703f">XBARB_Init</a> (XBARB_Type *base)</td></tr>
+<tr class="memdesc:gaef36940e839f28936f9415c3cb6d703f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the XBARB module.  <a href="#gaef36940e839f28936f9415c3cb6d703f">More...</a><br/></td></tr>
+<tr class="separator:gaef36940e839f28936f9415c3cb6d703f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5775a6073d472b2749cc202116d1809"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#gad5775a6073d472b2749cc202116d1809">XBARB_Deinit</a> (XBARB_Type *base)</td></tr>
+<tr class="memdesc:gad5775a6073d472b2749cc202116d1809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the XBARB module.  <a href="#gad5775a6073d472b2749cc202116d1809">More...</a><br/></td></tr>
+<tr class="separator:gad5775a6073d472b2749cc202116d1809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64a72733261fc11d061c0d7f0abe0771"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00369.html#ga64a72733261fc11d061c0d7f0abe0771">XBARB_SetSignalsConnection</a> (XBARB_Type *base, xbar_input_signal_t input, xbar_output_signal_t output)</td></tr>
+<tr class="memdesc:ga64a72733261fc11d061c0d7f0abe0771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures a connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal.  <a href="#ga64a72733261fc11d061c0d7f0abe0771">More...</a><br/></td></tr>
+<tr class="separator:ga64a72733261fc11d061c0d7f0abe0771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga89a4bbed0c24cfe5e085194add680ccc"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaef36940e839f28936f9415c3cb6d703f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00369.html#ga89a4bbed0c24cfe5e085194add680ccc">serial_port_uart_parity_mode_t</a></td>
+          <td class="memname">void XBARB_Init </td>
+          <td>(</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1"></a>kSerialManager_UartParityDisabled</em>&nbsp;</td><td class="fielddoc">
-<p>Parity disabled. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga89a4bbed0c24cfe5e085194add680ccca7d9d6f05fb6e1099fdfbf1f79a699356"></a>kSerialManager_UartParityEven</em>&nbsp;</td><td class="fielddoc">
-<p>Parity even enabled. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga89a4bbed0c24cfe5e085194add680ccca15bc11791c1f07fac71c808d083515db"></a>kSerialManager_UartParityOdd</em>&nbsp;</td><td class="fielddoc">
-<p>Parity odd enabled. </p>
-</td></tr>
-</table>
+<p>This function un-gates the XBARB clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga8bdf0213026f54fd54c21971e07f2d56"></a>
+<a class="anchor" id="gad5775a6073d472b2749cc202116d1809"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00369.html#ga8bdf0213026f54fd54c21971e07f2d56">serial_port_uart_stop_bit_count_t</a></td>
+          <td class="memname">void XBARB_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039"></a>kSerialManager_UartOneStopBit</em>&nbsp;</td><td class="fielddoc">
-<p>One stop bit. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8bdf0213026f54fd54c21971e07f2d56a83eb7aee91f3fd8964d283c0057880dc"></a>kSerialManager_UartTwoStopBit</em>&nbsp;</td><td class="fielddoc">
-<p>Two stop bits. </p>
-</td></tr>
-</table>
+<p>This function disables XBARB clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga64a72733261fc11d061c0d7f0abe0771"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XBARB_SetSignalsConnection </td>
+          <td>(</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">xbar_input_signal_t&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">xbar_output_signal_t&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function configures which XBARB input is connected to the selected XBARB output. If more than one XBARB module is available, only the inputs and outputs from the same module can be connected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+    <tr><td class="paramname">input</td><td>XBARB input signal. </td></tr>
+    <tr><td class="paramname">output</td><td>XBARB output signal. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

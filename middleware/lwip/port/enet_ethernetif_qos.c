@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -580,7 +580,7 @@ static err_t ethernetif_send_frame(struct ethernetif *ethernetif, unsigned char 
 
     do
     {
-        result = ENET_QOS_SendFrame(ethernetif->base, &ethernetif->handle, data, length, 0U, false, NULL);
+        result = ENET_QOS_SendFrame(ethernetif->base, &ethernetif->handle, data, length, 0U, false, NULL, kENET_QOS_TxOffloadDisable);
 
 #if !NO_SYS
         if (result == kStatus_ENET_QOS_TxFrameBusy)

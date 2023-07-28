@@ -1,0 +1,3 @@
+interface SecureMLService {
+    inference(in int32 ifm, in int32 ofm) -> int32
+}

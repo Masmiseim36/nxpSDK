@@ -331,7 +331,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-Wno-implicit  -Os  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm4, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/mmcau;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include</IncludePath>
@@ -368,9 +368,9 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,6238</DisabledWarnings>
+            <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -1065,7 +1065,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-Wno-implicit  -Os  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/mmcau;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include</IncludePath>
@@ -1102,9 +1102,9 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,6238</DisabledWarnings>
+            <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -1799,7 +1799,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-Wno-implicit  -Os  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/mmcau;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include</IncludePath>
@@ -1836,9 +1836,9 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,6238</DisabledWarnings>
+            <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -2533,7 +2533,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-Wno-implicit  -Os  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/mmcau;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include</IncludePath>
@@ -2570,9 +2570,9 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,6238</DisabledWarnings>
+            <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -3267,7 +3267,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-Wno-implicit  -Os  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/mmcau;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include</IncludePath>
@@ -3304,9 +3304,9 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
+            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-D__use_flash64MB__=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,6238</DisabledWarnings>
+            <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -4001,7 +4001,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <MiscControls>-Wno-implicit  -Os  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../middleware/mmcau;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include</IncludePath>
@@ -4038,9 +4038,9 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314,6238</DisabledWarnings>
+            <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>

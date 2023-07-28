@@ -1,12 +1,6 @@
 var a00332 =
 [
-    [ "FSL_DMAMUX_DRIVER_VERSION", "a00332.html#ga52b927e4f978ddf42faf0acf6de3df57", null ],
-    [ "DMAMUX_Init", "a00332.html#ga850545ac61a004df8ca312db2ca9db73", null ],
-    [ "DMAMUX_Deinit", "a00332.html#gab663257d094b9b7b6fa1b894fbf8000b", null ],
-    [ "DMAMUX_EnableChannel", "a00332.html#gaecac68802d961c31a06389caa97387f5", null ],
-    [ "DMAMUX_DisableChannel", "a00332.html#ga4d68cf7796e4a6a9cd0c4289712ca120", null ],
-    [ "DMAMUX_SetSource", "a00332.html#ga97083a74f4af599de628cdd8864d6676", null ],
-    [ "DMAMUX_EnablePeriodTrigger", "a00332.html#ga9b873510e45bcc998b5cede12ed359d0", null ],
-    [ "DMAMUX_DisablePeriodTrigger", "a00332.html#ga7a632ca1a6bd05a936a4f4ba1295e158", null ],
-    [ "DMAMUX_EnableAlwaysOn", "a00332.html#ga70912895b0619dcfb911663501cb03f5", null ]
+    [ "CAAM_HASH_UpdateNonBlocking", "a00332.html#ga43f8383d9039e8e5143f23f99f32785f", null ],
+    [ "CAAM_HASH_FinishNonBlocking", "a00332.html#ga3f9428aae83622088c097e6e79c40b15", null ],
+    [ "CAAM_HASH_NonBlocking", "a00332.html#ga5ba5834bc5d2b08f7e4438e043094dc3", null ]
 ];

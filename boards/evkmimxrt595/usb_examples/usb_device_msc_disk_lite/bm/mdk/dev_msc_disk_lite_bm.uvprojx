@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, MMC_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, _DEBUG=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, MMC_ENABLED, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk_lite/bm;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../flash_config;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,13 +368,58 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -446,51 +491,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -501,32 +501,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/lpcip3511</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileName>fsl_adapter_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/phy</GroupName>
-          <Files>
             <File>
-              <FileName>usb_phy.c</FileName>
+              <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -542,6 +527,26 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -574,14 +579,14 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.h</FileName>
+              <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -594,41 +599,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iopctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -637,6 +607,21 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iopctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
@@ -657,6 +642,41 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -706,38 +726,43 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileName>usb_device_lpcip3511.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileName>usb_device_lpcip3511.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
             </File>
             <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -758,25 +783,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/gpio</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_rt_gpio.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -811,32 +846,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FileName>startup_MIMXRT595S_cm33.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -852,16 +867,6 @@
               <FileName>flash_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../flash_config/flash_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT595S_cm33.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -901,18 +906,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>sdmmc/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
+              <FileName>fsl_sdmmc_osa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
@@ -929,14 +939,24 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_bm.c</FileName>
@@ -1002,21 +1022,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1351,9 +1356,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, MMC_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, MMC_ENABLED, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk_lite/bm;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../flash_config;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1387,13 +1392,58 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -1465,51 +1515,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1520,32 +1525,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/lpcip3511</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileName>fsl_adapter_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/phy</GroupName>
-          <Files>
             <File>
-              <FileName>usb_phy.c</FileName>
+              <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1561,6 +1551,26 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1593,14 +1603,14 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.h</FileName>
+              <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1613,41 +1623,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iopctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -1656,6 +1631,21 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iopctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
@@ -1676,6 +1666,41 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1725,38 +1750,43 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileName>usb_device_lpcip3511.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileName>usb_device_lpcip3511.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
             </File>
             <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -1777,25 +1807,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/gpio</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_rt_gpio.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1830,32 +1870,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FileName>startup_MIMXRT595S_cm33.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1871,16 +1891,6 @@
               <FileName>flash_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../flash_config/flash_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT595S_cm33.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1920,18 +1930,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>sdmmc/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
+              <FileName>fsl_sdmmc_osa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
@@ -1948,14 +1963,24 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_bm.c</FileName>
@@ -2021,21 +2046,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2370,9 +2380,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, MMC_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, MMC_ENABLED, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk_lite/bm;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../flash_config;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2406,13 +2416,58 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -2484,51 +2539,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2539,32 +2549,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/lpcip3511</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileName>fsl_adapter_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/phy</GroupName>
-          <Files>
             <File>
-              <FileName>usb_phy.c</FileName>
+              <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2580,6 +2575,26 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -2612,14 +2627,14 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.h</FileName>
+              <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -2632,41 +2647,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iopctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -2675,6 +2655,21 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iopctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
@@ -2695,6 +2690,41 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2744,38 +2774,43 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileName>usb_device_lpcip3511.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileName>usb_device_lpcip3511.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
             </File>
             <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -2796,25 +2831,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/gpio</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_rt_gpio.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2849,32 +2894,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FileName>startup_MIMXRT595S_cm33.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2890,16 +2915,6 @@
               <FileName>flash_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../flash_config/flash_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT595S_cm33.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2939,18 +2954,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>sdmmc/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
+              <FileName>fsl_sdmmc_osa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
@@ -2967,14 +2987,24 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_bm.c</FileName>
@@ -3040,21 +3070,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3389,9 +3404,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, MMC_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_BM, CPU_MIMXRT595SEVKA=1, USB_STACK_USE_DEDICATED_RAM=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, MMC_ENABLED, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk_lite/bm;../../../../../../components/gpio;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/mmc;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../flash_config;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3425,13 +3440,58 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -3503,51 +3563,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -3558,32 +3573,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb/device/source/lpcip3511</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileName>fsl_adapter_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/phy</GroupName>
-          <Files>
             <File>
-              <FileName>usb_phy.c</FileName>
+              <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3599,6 +3599,26 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -3631,14 +3651,14 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.h</FileName>
+              <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -3651,41 +3671,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iopctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -3694,6 +3679,21 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iopctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
@@ -3714,6 +3714,41 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -3763,38 +3798,43 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileName>usb_device_lpcip3511.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileName>usb_device_lpcip3511.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.c</FilePath>
             </File>
             <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileName>usb_phy.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+              <FilePath>../../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
@@ -3815,25 +3855,35 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
             <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component/gpio</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_adapter_rt_gpio.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3868,32 +3918,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/uart</GroupName>
+          <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>fsl_adapter_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/lists</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+              <FileName>startup_MIMXRT595S_cm33.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3909,16 +3939,6 @@
               <FileName>flash_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../flash_config/flash_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT595S_cm33.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3958,18 +3978,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>sdmmc/osa</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
+              <FileName>fsl_sdmmc_osa.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
             <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
@@ -3986,14 +4011,24 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_os_abstraction_bm.c</FileName>
@@ -4059,21 +4094,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
             </File>
           </Files>
         </Group>

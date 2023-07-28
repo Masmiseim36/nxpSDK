@@ -45,6 +45,10 @@ struct OpDataConv {
   // uint8_t these would be 0 and 255.
   int32_t output_activation_min;
   int32_t output_activation_max;
+
+  // A buffer used to store unpacked filter values. This is used if the source
+  // tensor is of n-bit precision that cannot be easily processed by kernels.
+  int filter_buffer_index;
 };
 
 extern const int kConvInputTensor;
@@ -72,37 +76,39 @@ TfLiteStatus CalculateOpDataConv(TfLiteContext* context, TfLiteNode* node,
 
 TfLiteStatus ConvPrepare(TfLiteContext* context, TfLiteNode* node);
 
-// This is the most generic TfLiteRegistration. The actual supported types may
-// still be target dependent. The only requirement is that every implementation
-// (reference or optimized) must define this function.
-TfLiteRegistration Register_CONV_2D();
+// This is the most generic TfLiteRegistration_V1. The actual supported types
+// may still be target dependent. The only requirement is that every
+// implementation (reference or optimized) must define this function.
+TfLiteRegistration_V1 Register_CONV_2D();
 
 #if defined(XTENSA)
-// Returns a TfLiteRegistration struct for kernel variant that only supports
+// Returns a TfLiteRegistration_V1 struct for kernel variant that only supports
 // int8 activations and int8 weights and always calls the reference
 // implementation.
-TfLiteRegistration Register_CONV_2D_INT8REF();
+TfLiteRegistration_V1 Register_CONV_2D_INT8REF();
 #else
-inline TfLiteRegistration Register_CONV_2D_INT8REF() {
+inline TfLiteRegistration_V1 Register_CONV_2D_INT8REF() {
   return Register_CONV_2D();
 }
 #endif
 
 #if defined(CMSIS_NN)
-// Returns a TfLiteRegistration struct for kernel variant that only supports
+// Returns a TfLiteRegistration_V1 struct for kernel variant that only supports
 // int8 activations and int8 weights and uses the latency optimized
 // implementations.
-TfLiteRegistration Register_CONV_2D_INT8();
+TfLiteRegistration_V1 Register_CONV_2D_INT8();
 
-// Returns a TfLiteRegistration struct for kernel variant that only supports
+// Returns a TfLiteRegistration_V1 struct for kernel variant that only supports
 // int16 activations and int8 weights and uses the latency optimized
 // implementations.
-TfLiteRegistration Register_CONV_2D_INT16();
+TfLiteRegistration_V1 Register_CONV_2D_INT16();
 
 #else
-inline TfLiteRegistration Register_CONV_2D_INT8() { return Register_CONV_2D(); }
+inline TfLiteRegistration_V1 Register_CONV_2D_INT8() {
+  return Register_CONV_2D();
+}
 
-inline TfLiteRegistration Register_CONV_2D_INT16() {
+inline TfLiteRegistration_V1 Register_CONV_2D_INT16() {
   return Register_CONV_2D();
 }
 #endif

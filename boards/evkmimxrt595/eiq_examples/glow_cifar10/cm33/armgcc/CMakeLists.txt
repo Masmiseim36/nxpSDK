@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -37,12 +45,18 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/dsp/binary/dsp_reset_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/dsp/binary/dsp_text_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/dsp/binary/dsp_data_release.bin"
 "${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../dsp_support.h"
 "${ProjDirPath}/../dsp_ipc.c"
 "${ProjDirPath}/../dsp_ipc.h"
 "${ProjDirPath}/../dsp_nn_utils.c"
 "${ProjDirPath}/../dsp_nn_utils.h"
+"${ProjDirPath}/../dsp_nn.c"
+"${ProjDirPath}/../dsp_nn.h"
+"${ProjDirPath}/../config_nn.h"
 "${SdkRootDirPath}/middleware/eiq/glow/bundle_utils/glow_bundle_utils.h"
 "${SdkRootDirPath}/middleware/eiq/glow/bundle_utils/glow_bundle_utils.c"
 "${ProjDirPath}/../pmic_support.c"
@@ -51,9 +65,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/dsp/binary/dsp_reset_release.bin"
-"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/dsp/binary/dsp_text_release.bin"
-"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/dsp/binary/dsp_data_release.bin"
 "${ProjDirPath}/../main_cm33.c"
 "${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/test/input.bin"
 "${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/test/output.bin"
@@ -68,17 +79,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../incbin.S"
 "${ProjDirPath}/../test_incbin.S"
-"${ProjDirPath}/../dsp_nn.c"
-"${ProjDirPath}/../dsp_nn.h"
-"${ProjDirPath}/../config_nn.h"
 "${ProjDirPath}/../glow_bundle/model.h"
-"${ProjDirPath}/../glow_bundle/model.o"
 "${ProjDirPath}/../glow_bundle/model.weights.bin"
 "${ProjDirPath}/../glow_bundle/model.weights.txt"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/dsp/binary
     ${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/glow_cifar10/test
     ${ProjDirPath}/../glow_bundle
@@ -86,95 +93,9 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${SdkRootDirPath}/middleware/eiq/glow/bundle_utils
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
-    ${SdkRootDirPath}/middleware/multicore
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/components/pca9420
-    ${SdkRootDirPath}/devices/MIMXRT595S
-    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(driver_clock_MIMXRT595S_cm33)
-
-include(driver_flexcomm_i2c_MIMXRT595S_cm33)
-
-include(driver_i3c_MIMXRT595S_cm33)
-
-include(driver_lpc_dma_MIMXRT595S_cm33)
-
-include(middleware_multicore_rpmsg_lite_MIMXRT595S_cm33)
-
-include(middleware_multicore_rpmsg_lite_freertos_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT595S_cm33)
-
-include(driver_common_MIMXRT595S_cm33)
-
-include(driver_power_MIMXRT595S_cm33)
-
-include(driver_reset_MIMXRT595S_cm33)
-
-include(driver_dsp_MIMXRT595S_cm33)
-
-include(driver_inputmux_MIMXRT595S_cm33)
-
-include(middleware_multicore_rpmsg_lite_evkmimxrt595_freertos_MIMXRT595S_cm33)
-
-include(driver_mu_MIMXRT595S_cm33)
-
-include(driver_pca9420_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
-
-include(utility_debug_console_MIMXRT595S_cm33)
-
-include(utility_assert_MIMXRT595S_cm33)
-
-include(component_usart_adapter_MIMXRT595S_cm33)
-
-include(driver_flexspi_MIMXRT595S_cm33)
-
-include(driver_cache_cache64_MIMXRT595S_cm33)
-
-include(component_serial_manager_MIMXRT595S_cm33)
-
-include(component_lists_MIMXRT595S_cm33)
-
-include(component_serial_manager_uart_MIMXRT595S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT595S_cm33)
-
-include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
-
-include(driver_flexcomm_MIMXRT595S_cm33)
-
-include(driver_lpc_iopctl_MIMXRT595S_cm33)
-
-include(driver_lpc_gpio_MIMXRT595S_cm33)
-
-include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
-
-include(driver_inputmux_connections_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
-
-include(utilities_misc_utilities_MIMXRT595S_cm33)
-
-include(driver_iap_MIMXRT595S_cm33)
-
+include(${SdkRootDirPath}/devices/MIMXRT595S/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -184,8 +105,18 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
 
+if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../glow_bundle/model.o)
+endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flash_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../glow_bundle/model.o)
+endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
+
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin")
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -7,6 +7,7 @@
 
 #include <string.h>
 
+#include "config_tfm.h"
 #include "its_flash_fs_mblock.h"
 #include "psa/storage_common.h"
 
@@ -212,7 +213,7 @@ static uint8_t its_mblock_latest_meta_block(
     return cur_meta;
 }
 
-#ifdef ITS_VALIDATE_METADATA_FROM_FLASH
+#if ITS_VALIDATE_METADATA_FROM_FLASH
 /**
  * \brief Validates file metadata in order to guarantee that a corruption or
  *        malicious change in stored metadata doesn't result in an invalid
@@ -729,7 +730,7 @@ static psa_status_t its_mblock_validate_header_meta(
         if (err != PSA_SUCCESS) {
             return err;
         }
-#ifdef ITS_VALIDATE_METADATA_FROM_FLASH
+#if ITS_VALIDATE_METADATA_FROM_FLASH
         err = its_mblock_validate_metadata_xor(fs_ctx, h_meta, block_id);
 #endif
     }
@@ -757,7 +758,7 @@ static psa_status_t its_mblock_write_scratch_meta_header(
         /* Increment again to avoid using the erase val as the swap count */
         fs_ctx->meta_block_header.active_swap_count++;
     }
-#ifdef ITS_VALIDATE_METADATA_FROM_FLASH
+#if ITS_VALIDATE_METADATA_FROM_FLASH
     /* Calculate metadata XOR value. */
     err = its_mblock_calculate_metadata_xor(fs_ctx,
                                        fs_ctx->scratch_metablock,
@@ -993,9 +994,10 @@ uint32_t its_flash_fs_mblock_cur_data_scratch_id(
     return fs_ctx->meta_block_header.scratch_dblock;
 }
 
-psa_status_t its_flash_fs_mblock_get_file_idx(struct its_flash_fs_ctx_t *fs_ctx,
-                                              const uint8_t *fid,
-                                              uint32_t *idx)
+psa_status_t its_flash_fs_mblock_get_file_idx_meta(struct its_flash_fs_ctx_t *fs_ctx,
+                                                   const uint8_t *fid,
+                                                   uint32_t *idx,
+                                                   struct its_file_meta_t *file_meta)
 {
     psa_status_t err;
     uint32_t i;
@@ -1011,6 +1013,9 @@ psa_status_t its_flash_fs_mblock_get_file_idx(struct its_flash_fs_ctx_t *fs_ctx,
         if (!memcmp(tmp_metadata.id, fid, ITS_FILE_ID_SIZE)) {
             /* Found */
             *idx = i;
+            if (file_meta != NULL) {
+                *file_meta = tmp_metadata;
+            }
             return PSA_SUCCESS;
         }
     }
@@ -1135,7 +1140,7 @@ psa_status_t its_flash_fs_mblock_read_file_meta(
                             (uint8_t *)file_meta, offset,
                             ITS_FILE_METADATA_SIZE);
 
-#ifdef ITS_VALIDATE_METADATA_FROM_FLASH
+#if ITS_VALIDATE_METADATA_FROM_FLASH
     if (err == PSA_SUCCESS) {
         err = its_mblock_validate_file_meta(fs_ctx, file_meta);
     }
@@ -1157,7 +1162,7 @@ psa_status_t its_flash_fs_mblock_read_block_metadata(
                             (uint8_t *)block_meta, pos,
                             ITS_BLOCK_METADATA_SIZE);
 
-#ifdef ITS_VALIDATE_METADATA_FROM_FLASH
+#if ITS_VALIDATE_METADATA_FROM_FLASH
     if (err == PSA_SUCCESS) {
         err = its_mblock_validate_block_meta(fs_ctx, block_meta);
     }
@@ -1181,7 +1186,7 @@ psa_status_t its_flash_fs_mblock_read_block_metadata_comp(
                             (uint8_t *)block_meta, pos,
                             ITS_BLOCK_METADATA_SIZE);
 
-#ifdef ITS_VALIDATE_METADATA_FROM_FLASH
+#if ITS_VALIDATE_METADATA_FROM_FLASH
     if (err == PSA_SUCCESS) {
         err = its_mblock_validate_block_meta_comp(fs_ctx, block_meta);
     }

@@ -10,8 +10,9 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "config_tfm.h"
 #include "tfm_crypto_defs.h"
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"     //NXP to avoid file name conflicts between MbedTLS and TFM.
 
 #ifndef PS_CRYPTO_AEAD_ALG
 #define PS_CRYPTO_AEAD_ALG PSA_ALG_GCM
@@ -40,9 +41,19 @@ static uint8_t ps_crypto_iv_buf[PS_IV_LEN_BYTES];
 
 psa_status_t ps_crypto_init(void)
 {
-    /* Currently, no initialisation is required. This may change if key
-     * handling is changed.
+    /* For GCM and CCM it is essential that nonce doesn't get repeated. If there
+     * is no rollback protection, an attacker could try to rollback the storage and
+     * encrypt another plaintext block with same IV/Key pair; this breaks GCM and CCM
+     * usage rules.
      */
+    const psa_algorithm_t ps_crypto_aead_alg = PS_CRYPTO_AEAD_ALG;
+#ifndef PS_ROLLBACK_PROTECTION
+    if ((ps_crypto_aead_alg == PSA_ALG_GCM) || (ps_crypto_aead_alg == PSA_ALG_CCM)) {
+        return PSA_ERROR_PROGRAMMER_ERROR;
+    }
+#else
+    (void)ps_crypto_aead_alg;
+#endif
     return PSA_SUCCESS;
 }
 

@@ -666,7 +666,7 @@ void vShadowUpdateTask( void * pvParameters )
 {
     bool xStatus = true;
     uint32_t ulNotificationValue;
-    static MQTTPublishInfo_t xPublishInfo = { 0 };
+    static MQTTPublishInfo_t xPublishInfo = { MQTTQoS0 };
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTStatus_t xCommandAdded;
     uint32_t desiredState = 0;

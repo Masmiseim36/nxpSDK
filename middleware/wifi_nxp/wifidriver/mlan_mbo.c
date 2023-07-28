@@ -4,7 +4,7 @@
  *
  *  Copyright 2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -27,7 +27,8 @@ Change log:
 ********************************************************/
 const t_u8 mbo_oui[3]             = {0x50, 0x6f, 0x9a};
 static const t_u8 mbo_oui_type[1] = {0x16};
-
+/* MBO ATTR ID NON PREF CHAN REPORT */
+static const t_u8 mbo_attr_id[1] = {0x2};
 /********************************************************
                 Local Functions
 ********************************************************/
@@ -61,6 +62,19 @@ t_u8 *wlan_add_mbo_oui_type(t_u8 *oui_type)
 {
     (void)memcpy(oui_type, mbo_oui_type, sizeof(mbo_oui_type));
     return (oui_type + sizeof(mbo_oui_type));
+}
+
+/**
+ * @brief This function add MBO Attributes id.
+ *
+ * @param oui A pointer to MBO OCE element structure
+ *
+ * @return void
+ */
+t_u8 *wlan_add_mbo_attr_id(t_u8 *attr_id)
+{
+    (void)memcpy(attr_id, mbo_attr_id, sizeof(mbo_attr_id));
+    return (attr_id + sizeof(mbo_attr_id));
 }
 
 /**

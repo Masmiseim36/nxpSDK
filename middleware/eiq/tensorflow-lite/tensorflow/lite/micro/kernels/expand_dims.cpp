@@ -17,6 +17,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/internal/tensor_ctypes.h"
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
+#include "tensorflow/lite/micro/micro_log.h"
 #include "tensorflow/lite/micro/micro_utils.h"
 
 namespace tflite {
@@ -141,7 +142,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 }
 }  // namespace
 
-TfLiteRegistration Register_EXPAND_DIMS() {
+TfLiteRegistration_V1 Register_EXPAND_DIMS() {
   return tflite::micro::RegisterOp(nullptr, Prepare, Eval);
 }
 

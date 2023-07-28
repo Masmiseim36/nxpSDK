@@ -41,12 +41,7 @@
 #endif
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-#include "mbed_psa/crypto.h" //NXP
-#endif
-
-#if ( defined(__ARMCC_VERSION) || defined(_MSC_VER) ) && \
-    !defined(inline) && !defined(__cplusplus)
-#define inline __inline
+#include "psa/crypto.h"
 #endif
 
 /** Memory allocation failed. */

@@ -30,7 +30,7 @@
 
 #include "mbedtls/build_info.h"
 
-#include "mbed_psa/crypto.h" //NXP
+#include "psa/crypto.h"
 #include "common.h"
 
 #include "mbedtls/entropy.h"

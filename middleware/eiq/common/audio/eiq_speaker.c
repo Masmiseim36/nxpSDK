@@ -138,13 +138,15 @@ static void init(void)
 #endif
 
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &s_speakerHandle, callback, NULL, &dmaHandle);
-    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
-                          DEMO_AUDIO_DATA_CHANNEL);
+
     SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_MonoRight, kSAI_Channel0Mask);
     saiConfig.syncMode = kSAI_ModeAsync;
     saiConfig.bitClock.bclkPolarity = kSAI_PolarityActiveLow;
-    saiConfig.masterSlave = kSAI_Slave;
+    saiConfig.masterSlave = kSAI_Master;
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &s_speakerHandle, &saiConfig);
+
+    SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
 }
 
 /*!

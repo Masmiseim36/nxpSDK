@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -37,7 +45,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/armgcc/startup_MIMXRT595S_cm33_ns.S"
+"${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/startup_evkmimxrt595.c"
 "${SdkRootDirPath}/devices/MIMXRT595S/system_MIMXRT595S_cm33.c"
 "${SdkRootDirPath}/devices/MIMXRT595S/system_MIMXRT595S_cm33.h"
 "${ProjDirPath}/../pin_mux.c"
@@ -50,120 +58,27 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/devices/MIMXRT595S
     ${ProjDirPath}/..
 )
 
-ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} PRE_BUILD COMMAND
-${TOOLCHAIN_DIR}/bin/arm-none-eabi-gcc -E -P -xc -I${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns.ld -o ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns_pre.ld
+
+if(CMAKE_BUILD_TYPE STREQUAL debug)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE PROJECT_CONFIG_HEADER_FILE="config_profile_large.h" TARGET_CONFIG_HEADER_FILE="config_tfm_target.h")
+endif(CMAKE_BUILD_TYPE STREQUAL debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL release)
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE PROJECT_CONFIG_HEADER_FILE="config_profile_large.h" TARGET_CONFIG_HEADER_FILE="config_tfm_target.h")
+endif(CMAKE_BUILD_TYPE STREQUAL release)
+
+ADD_CUSTOM_TARGET(MCUX_PREBUILD
+COMMAND ${TOOLCHAIN_DIR}/bin/arm-none-eabi-gcc -E -P -xc -I${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition -I${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/common ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns.ld -o ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
-    ${SdkRootDirPath}/middleware/tfm/tf-m
-    ${SdkRootDirPath}/middleware/tfm/tf-m-tests
-    ${SdkRootDirPath}/devices/MIMXRT595S
-    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/CMSIS/RTOS2/RTX/Library
-    ${SdkRootDirPath}/CMSIS/RTOS2
-    ${SdkRootDirPath}/CMSIS/RTOS2/Include
-)
+ADD_DEPENDENCIES(${MCUX_SDK_PROJECT_NAME} MCUX_PREBUILD)
 
-# include modules
-include(driver_ctimer_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_evkmimxrt595_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_s_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_its_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_ps_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_platform_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_attestation_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_crypto_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_qcbor_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_ipc_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_ipc_api_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_core_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_test_irq_slih_MIMXRT595S_cm33)
-
-include(driver_common_MIMXRT595S_cm33)
-
-include(driver_clock_MIMXRT595S_cm33)
-
-include(driver_power_MIMXRT595S_cm33)
-
-include(driver_reset_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
-
-include(utility_debug_console_MIMXRT595S_cm33)
-
-include(utility_assert_MIMXRT595S_cm33)
-
-include(component_usart_adapter_MIMXRT595S_cm33)
-
-include(driver_flexspi_MIMXRT595S_cm33)
-
-include(driver_cache_cache64_MIMXRT595S_cm33)
-
-include(component_serial_manager_MIMXRT595S_cm33)
-
-include(component_lists_MIMXRT595S_cm33)
-
-include(component_serial_manager_uart_MIMXRT595S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT595S_cm33)
-
-include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
-
-include(driver_flexcomm_MIMXRT595S_cm33)
-
-include(driver_lpc_iopctl_MIMXRT595S_cm33)
-
-include(driver_lpc_gpio_MIMXRT595S_cm33)
-
-include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
-
-include(middleware_tfm_ns_MIMXRT595S_cm33)
-
-include(middleware_tfmtests_ns_MIMXRT595S_cm33)
-
-include(CMSIS_RTOS2_NonSecure_MIMXRT595S_cm33)
-
-include(CMSIS_RTOS2_Common_MIMXRT595S_cm33)
-
-include(CMSIS_Device_API_OSTick_MIMXRT595S_cm33)
-
-include(CMSIS_Device_API_RTOS2_MIMXRT595S_cm33)
-
-include(middleware_tfm_t_cose_sign1_verify_MIMXRT595S_cm33)
-
-include(middleware_tfmtests_ns_test_attestation_MIMXRT595S_cm33)
-
-include(middleware_tfm_platform_test_MIMXRT595S_cm33)
-
-include(utilities_misc_utilities_MIMXRT595S_cm33)
-
-include(driver_iap_MIMXRT595S_cm33)
-
+include(${SdkRootDirPath}/devices/MIMXRT595S/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -177,20 +92,14 @@ if(CMAKE_BUILD_TYPE STREQUAL debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../tfm_regression_s/armgcc/${CMAKE_BUILD_TYPE}/tfm_regression_s_CMSE_lib.o)
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
-if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a)
-endif(CMAKE_BUILD_TYPE STREQUAL debug)
-
 if(CMAKE_BUILD_TYPE STREQUAL release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../tfm_regression_s/armgcc/${CMAKE_BUILD_TYPE}/tfm_regression_s_CMSE_lib.o)
-endif(CMAKE_BUILD_TYPE STREQUAL release)
-
-if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a)
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin")
 

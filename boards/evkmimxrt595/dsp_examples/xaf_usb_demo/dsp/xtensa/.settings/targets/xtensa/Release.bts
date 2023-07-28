@@ -21,11 +21,11 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/include/sbc_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/include/sbc_enc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/fusionf1/include/vorbis_dec</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/audio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/lib</ListEntry>
@@ -80,13 +80,14 @@
               <ListEntry key="ALGORITHM_XO" value="1"/>
               <ListEntry key="PLATFORM_ID" value="LVM_IMXRT500"/>
               <ListEntry key="EAP_PROC" value=""/>
-              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
-              <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
+              <ListEntry key="FSL_RTOS_XOS" value="1"/>
+              <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
@@ -103,7 +104,13 @@
 -Wno-unused&#13;
 -Wno-missing-braces&#13;
 -fmessage-length=0&#13;
--std=gnu99</ListEntry></value>
+-std=gnu99&#13;
+-mno-mul16&#13;
+-mno-mul32&#13;
+-mno-div32&#13;
+-fsigned-char&#13;
+-mlongcalls&#13;
+-INLINE:requested</ListEntry></value>
           </StringListMapEntry>
         </StringListMapOptions>
         <SingleFlagMapOptions>

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.28 - Graphical user interface for embedded applications **
+** emWin V6.32 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -75,6 +75,7 @@ Purpose     : SCROLLER internal header file
 #define SCROLLER_SF_TIMER_RESCHEDULE            (1 << 10)                // If inactive timer has run out, but fading was not done, so the timer had to be rescheduled.
 #define SCROLLER_SF_START_TIMER_ON_ANIM_END     (1 << 11)                // If flag is set, the inactive timer is immediately started when the fading animation has finished.
 #define SCROLLER_SF_NO_INACTIVE_TIMER           (1 << 12)                // Inactive timer will not be started.
+#define SCROLLER_SF_OVERRIDE_RECT               (1 << 13)                // Override the content rectangle to determine the SCROLLER size.
 //
 // Private messages
 //
@@ -270,6 +271,7 @@ struct SCROLLER_Obj {
   SCROLLER_ANIM_DATA       AnimScroll;        // Animation handles and data for scrolling animation (when scroller is moved by touching)
   GUI_POINT                TouchPos;
   SCROLLER_WIDGET_API      WidgetAPI;
+  GUI_RECT               * pCustomRect;
   I16                      ClientRectOffset;  // Offset in px that is subtracted from the client rectangle during thumb rectangle calculation.
   U16                      Mul;               // Multiplicator to be used for scroll state calculations.
   U16                      Flags;

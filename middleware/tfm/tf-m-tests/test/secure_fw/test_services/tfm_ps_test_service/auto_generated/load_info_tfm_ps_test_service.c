@@ -12,9 +12,10 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include "config_tfm.h"
 #include "region.h"
 #include "region_defs.h"
-#include "spm_ipc.h"
+#include "spm.h"
 #include "load/interrupt_defs.h"
 #include "load/partition_defs.h"
 #include "load/service_defs.h"
@@ -69,7 +70,7 @@ __root
 const struct partition_tfm_sp_ps_test_load_info_t tfm_sp_ps_test_load
     __attribute__((used, section(".part_load_priority_normal"))) = {
     .load_info = {
-        .psa_ff_ver                 = 0x0100 | PARTITION_INFO_MAGIC,
+        .psa_ff_ver                 = 0x0101 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_PS_TEST,
         .flags                      = 0
                                     | PARTITION_MODEL_IPC
@@ -104,8 +105,8 @@ const struct partition_tfm_sp_ps_test_load_info_t tfm_sp_ps_test_load
 #if TFM_LVL == 3
     .assets                         = {
         {
-            .mem.start              = PART_REGION_ADDR(PT_TFM_SP_PS_TEST_PRIVATE, _DATA_START$$Base),
-            .mem.limit              = PART_REGION_ADDR(PT_TFM_SP_PS_TEST_PRIVATE, _DATA_END$$Base),
+            .mem.start              = (uintptr_t)&REGION_NAME(Image$$, PT_TFM_SP_PS_TEST_PRIVATE, _DATA_START$$Base),
+            .mem.limit              = (uintptr_t)&REGION_NAME(Image$$, PT_TFM_SP_PS_TEST_PRIVATE, _DATA_END$$Base),
             .attr                   = ASSET_ATTR_READ_WRITE,
         },
     },

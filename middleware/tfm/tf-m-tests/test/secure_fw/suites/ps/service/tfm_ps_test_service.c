@@ -5,12 +5,8 @@
  *
  */
 
-#ifdef TFM_PSA_API
 #include "psa/service.h"
 #include "psa_manifest/tfm_ps_test_service.h"
-#else
-#include "psa/client.h"
-#endif
 
 #include "ps_object_system.h"
 
@@ -25,7 +21,6 @@ psa_status_t tfm_ps_test_prepare(psa_invec *in_vec, size_t in_len,
     return ps_system_prepare();
 }
 
-#ifdef TFM_PSA_API
 static psa_status_t tfm_ps_test_handle_msg(const psa_msg_t *msg)
 {
     psa_status_t status = PSA_ERROR_PROGRAMMER_ERROR;
@@ -59,9 +54,3 @@ psa_status_t tfm_ps_test_init(void)
     return PSA_SUCCESS;
 }
 #endif /* TFM_SP_PS_TEST_MODEL_SFN == 1 */
-#else /* TFM_PSA_API */
-psa_status_t tfm_ps_test_init(void)
-{
-    return PSA_SUCCESS;
-}
-#endif /* TFM_PSA_API */

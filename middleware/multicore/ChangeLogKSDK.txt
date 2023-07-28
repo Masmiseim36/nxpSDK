@@ -2,7 +2,53 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.13.0
+  The current version of Multicore SDK is 2.14.0
+  - 2.14.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.11.0
+      - eRPC generator (erpcgen) v.1.11.0
+      - Multicore Manager (MCMgr) v4.1.4
+      - RPMsg-Lite v5.1.0
+    - New features:
+      - eRPC: Makefiles update, GitHub PR #301.
+      - eRPC: Resolving warnings in Python, GitHub PR #325.
+      - eRPC: Python3.8 is not ready for usage of typing.Any type, GitHub PR #325.
+      - eRPC: Improved codec function to use reference instead of address, GitHub PR #324.
+      - eRPC: Fix NULL check for  pending client creation, GitHub PR #341.
+      - eRPC: Replace sprintf with snprintf, GitHub PR #343.
+      - eRPC: Use MU_SendMsg blocking call in MU transport.
+      - eRPC: New LPSPI and LPI2C transport layers.
+      - eRPC: Freeing static objects, GitHub PR #353.
+      - eRPC: Fixed casting in deinit functions, GitHub PR #354.
+      - eRPC: Align LIBUSBSIO.GetNumPorts API use with libusbsio python module v. 2.1.11.
+      - erpcgen: Renamed temp variable to more generic one, GitHub PR #321.
+      - erpcgen: Add check that string read is not more than max length, GitHub PR #328.
+      - erpcgen: Move to g++ in pytest, GitHub PR #335.
+      - erpcgen: Use build=release for make, GitHub PR #334.
+      - erpcgen: Removed boost dependency, GitHub PR #346.
+      - erpcgen: Mingw support, GitHub PR #344.
+      - erpcgen: VS build update, GitHub PR #347.
+      - erpcgen: Modified name for common types macro scope, GitHub PR #337.
+      - erpcgen: Fixed memcpy for template, GitHub PR #352.
+      - eRPC,erpcgen: Change default build target to release + adding artefacts, GitHub PR #334.
+      - eRPC,erpcgen: Remove redundant includes, GitHub PR #338.
+      - eRPC,erpcgen: Many minor code improvements, GitHub PR #323.
+      - MCMgr: Avoid calling tx isr callbacks when respective Messaging Unit Transmit Interrupt Enable flag is not set in the CR/TCR register.
+      - MCMgr: Messaging Unit RX and status registers are cleared after the initialization.
+      - RPMsg-Lite: Resolved issues in ThreadX env. layer implementation.
+      - RPMsg-Lite: Added aarch64 support.
+      - RPMsg-Lite: Increased the queue size to (2 * RL_BUFFER_COUNT) to cover zero copy cases.
+  - 2.13.0_imxrt1180a0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.10.0
+      - eRPC generator (erpcgen) v.1.10.0
+      - Multicore Manager (MCMgr) v4.1.3
+      - RPMsg-Lite v5.0.0
+    - New features:
+      - MCMgr, RPMsg-Lite: Added porting layers for imxrt1180.
+      - MCMgr: mu_isr() updated to avoid calling tx isr callbacks when respective Transmit Interrupt Enable flag is not set in the CR/TCR register.
+      - RPMsg-Lite, eRPC: RPMsg_Lite queue size adjusted.
+      - eRPC: MU transport layer switched to blocking MU_SendMsg() API use.
   - 2.13.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.10.0

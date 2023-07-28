@@ -34,12 +34,12 @@
  *
  * \return 0 on success, non-zero otherwise
  */
-#ifdef CSS /* CSS Module */
+#if defined(ELS)
 
 #include "fsl_css.h"
 #include "fsl_debug_console.h"
 
-#include "mbed_psa/crypto.h"
+#include "psa/crypto.h"
 
 int crypto_hw_accelerator_huk_derive_key(const uint8_t *label,
                                          size_t label_size,
@@ -183,6 +183,6 @@ out:
     return err;
 }
 
-#endif
+#endif /* ELS */
 
 #endif /* CRYPTO_HW_ACCELERATOR */

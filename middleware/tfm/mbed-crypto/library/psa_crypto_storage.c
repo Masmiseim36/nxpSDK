@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mbed_psa/crypto.h" //NXP
+#include "psa/crypto.h"
 #include "psa_crypto_storage.h"
 #include "mbedtls/platform_util.h"
 
@@ -36,13 +36,7 @@
 #include "psa/internal_trusted_storage.h"
 #endif
 
-#if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
-#else
-#include <stdlib.h>
-#define mbedtls_calloc   calloc
-#define mbedtls_free     free
-#endif
 
 
 

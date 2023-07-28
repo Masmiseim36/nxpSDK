@@ -23,13 +23,13 @@ limitations under the License.
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/quantize.h"
 #include "tensorflow/lite/micro/kernels/xtensa/xtensa.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/micro_log.h"
 #include "tensorflow/lite/micro/micro_utils.h"
 
 namespace tflite {
 namespace {
 
-#if defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
+#if defined(HIFI4) || defined(HIFI5)
 TfLiteStatus EvalXtensa(TfLiteContext* context, TfLiteNode* node) {
   TFLITE_DCHECK(node->user_data != nullptr);
   auto* op_data = static_cast<OpDataQuantizeReference*>(node->user_data);
@@ -267,7 +267,7 @@ TfLiteStatus EvalXtensa(TfLiteContext* context, TfLiteNode* node) {
 
   return kTfLiteOk;
 }
-#endif  // defined(HIFI4) || defined (HIFI4_INTERNAL) || defined(HIFI5)
+#endif  // defined(HIFI4) || defined(HIFI5)
 
 void* Init(TfLiteContext* context, const char* buffer, size_t length) {
   TFLITE_DCHECK(context->AllocatePersistentBuffer != nullptr);
@@ -301,16 +301,16 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
 }
 
 TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
-#if defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
+#if defined(HIFI4) || defined(HIFI5)
   return EvalXtensa(context, node);
 #else
   return EvalQuantizeReference(context, node);
-#endif  // defined(HIFI4) || defined (HIFI4_INTERNAL) || defined(HIFI5)
+#endif  // defined(HIFI4) || defined(HIFI5)
 }
 
 }  // namespace
 
-TfLiteRegistration Register_QUANTIZE() {
+TfLiteRegistration_V1 Register_QUANTIZE() {
   return tflite::micro::RegisterOp(Init, Prepare, Eval);
 }
 

@@ -5,11 +5,11 @@
       <name>all</name>
       <member>
         <project>trng_random</project>
-        <configuration>debug</configuration>
+        <configuration>release</configuration>
       </member>
       <member>
         <project>trng_random</project>
-        <configuration>release</configuration>
+        <configuration>debug</configuration>
       </member>
       <member>
         <project>trng_random</project>
@@ -21,17 +21,17 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>trng_random</project>
-        <configuration>debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>release</name>
       <member>
         <project>trng_random</project>
         <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>trng_random</project>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

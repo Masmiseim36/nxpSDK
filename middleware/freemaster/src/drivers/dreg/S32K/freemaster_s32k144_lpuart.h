@@ -15,7 +15,7 @@
  * supplied directly or indirectly from NXP.  See the full NXP Software
  * License Agreement in license/LA_OPT_NXP_Software_License.pdf
  *
- * FreeMASTER Communication Driver - S32G2 UART low-level driver
+ * FreeMASTER Communication Driver - S32K144 UART low-level driver
  */
 
 #ifndef __FREEMASTER_S32K144_LPUART_H

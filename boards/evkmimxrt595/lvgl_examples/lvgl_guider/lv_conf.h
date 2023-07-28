@@ -1,6 +1,6 @@
 /**
  * @file lv_conf.h
- * Configuration file for v8.3.2
+ * Configuration file for v8.3.5
  */
 
 #ifndef LV_CONF_H
@@ -61,7 +61,7 @@
 #define LV_MEM_CUSTOM 0
 #if LV_MEM_CUSTOM == 0
 /* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
-#  define LV_MEM_SIZE    (32U * 1024U)
+#  define LV_MEM_SIZE    (64U * 1024U)
 
 /* Set an address for the memory pool instead of allocating it as an array.
  * Can be in external SRAM too. */

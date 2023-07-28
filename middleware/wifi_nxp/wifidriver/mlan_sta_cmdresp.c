@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides the handling of command
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -34,6 +34,167 @@ Change log:
                 Local Functions
 ********************************************************/
 #ifdef CONFIG_RF_TEST_MODE
+
+/**
+ *  @brief This function prepares command resp of MFG Continuous Tx
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+static mlan_status wlan_ret_mfg_tx_cont(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf)
+{
+    mlan_ds_misc_cfg *misc           = MNULL;
+    HostCmd_DS_MFG_CMD_TX_CONT *mcmd = (HostCmd_DS_MFG_CMD_TX_CONT *)&resp->params.mfg_tx_cont;
+    mlan_ds_mfg_cmd_tx_cont *cfg     = MNULL;
+
+    ENTER();
+    if (!pioctl_buf)
+    {
+        LEAVE();
+        return MLAN_STATUS_FAILURE;
+    }
+    misc = (mlan_ds_misc_cfg *)pioctl_buf;
+    cfg  = (mlan_ds_mfg_cmd_tx_cont *)&misc->param.mfg_tx_cont;
+
+    cfg->error           = wlan_le32_to_cpu(mcmd->error);
+    cfg->enable_tx       = wlan_le32_to_cpu(mcmd->enable_tx);
+    cfg->cw_mode         = wlan_le32_to_cpu(mcmd->cw_mode);
+    cfg->payload_pattern = wlan_le32_to_cpu(mcmd->payload_pattern);
+    cfg->cs_mode         = wlan_le32_to_cpu(mcmd->cs_mode);
+    cfg->act_sub_ch      = wlan_le32_to_cpu(mcmd->act_sub_ch);
+    cfg->tx_rate         = wlan_le32_to_cpu(mcmd->tx_rate);
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief This function prepares command resp of MFG Tx frame
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+static mlan_status wlan_ret_mfg_tx_frame(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf)
+{
+    mlan_ds_misc_cfg *misc             = MNULL;
+    HostCmd_DS_MFG_CMD_TX_FRAME2 *mcmd = (HostCmd_DS_MFG_CMD_TX_FRAME2 *)&resp->params.mfg_tx_frame2;
+    mlan_ds_mfg_cmd_tx_frame2 *cfg     = MNULL;
+
+    ENTER();
+    if (!pioctl_buf)
+    {
+        LEAVE();
+        return MLAN_STATUS_FAILURE;
+    }
+    misc = (mlan_ds_misc_cfg *)pioctl_buf;
+    cfg  = (mlan_ds_mfg_cmd_tx_frame2 *)&misc->param.mfg_tx_frame2;
+
+    cfg->error             = wlan_le32_to_cpu(mcmd->error);
+    cfg->enable            = wlan_le32_to_cpu(mcmd->enable);
+    cfg->data_rate         = wlan_le32_to_cpu(mcmd->data_rate);
+    cfg->frame_pattern     = wlan_le32_to_cpu(mcmd->frame_pattern);
+    cfg->frame_length      = wlan_le32_to_cpu(mcmd->frame_length);
+    cfg->adjust_burst_sifs = wlan_le16_to_cpu(mcmd->adjust_burst_sifs);
+    cfg->burst_sifs_in_us  = wlan_le32_to_cpu(mcmd->burst_sifs_in_us);
+    cfg->short_preamble    = wlan_le32_to_cpu(mcmd->short_preamble);
+    cfg->act_sub_ch        = wlan_le32_to_cpu(mcmd->act_sub_ch);
+    cfg->short_gi          = wlan_le32_to_cpu(mcmd->short_gi);
+    cfg->tx_bf             = wlan_le32_to_cpu(mcmd->tx_bf);
+    cfg->gf_mode           = wlan_le32_to_cpu(mcmd->gf_mode);
+    cfg->stbc              = wlan_le32_to_cpu(mcmd->stbc);
+    memcpy(cfg->bssid, mcmd->bssid, sizeof(cfg->bssid));
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief This function prepares command resp of MFG HE TB Tx
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+
+static mlan_status wlan_ret_mfg_he_tb_tx(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf)
+{
+    mlan_ds_misc_cfg *misc             = MNULL;
+    HostCmd_DS_MFG_CMD_HE_TBTX_T *mcmd = (HostCmd_DS_MFG_CMD_HE_TBTX_T *)&resp->params.mfg_he_power;
+    mlan_ds_mfg_Cmd_HE_TBTx_t *cfg     = MNULL;
+
+    ENTER();
+    if (!pioctl_buf)
+    {
+        LEAVE();
+        return MLAN_STATUS_FAILURE;
+    }
+    misc = (mlan_ds_misc_cfg *)pioctl_buf;
+    cfg  = (mlan_ds_mfg_Cmd_HE_TBTx_t *)&misc->param.mfg_he_power;
+
+    cfg->enable       = wlan_le16_to_cpu(mcmd->enable);
+    cfg->qnum         = wlan_le16_to_cpu(mcmd->qnum);
+    cfg->aid          = wlan_le16_to_cpu(mcmd->aid);
+    cfg->axq_mu_timer = wlan_le16_to_cpu(mcmd->axq_mu_timer);
+    cfg->tx_power     = wlan_le16_to_cpu(mcmd->tx_power);
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief This function prepares command resp of MFG config Trigger frame
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+static mlan_status wlan_ret_mfg_config_trigger_frame(pmlan_private pmpriv,
+                                                     HostCmd_DS_COMMAND *resp,
+                                                     mlan_ioctl_req *pioctl_buf)
+{
+    mlan_ds_misc_cfg *misc = MNULL;
+    HostCmd_MFG_CMD_IEEETYPES_CTLBASICTRIGHDR_T *mcmd =
+        (HostCmd_MFG_CMD_IEEETYPES_CTLBASICTRIGHDR_T *)&resp->params.mfg_tx_trigger_config;
+    mfg_Cmd_IEEEtypes_CtlBasicTrigHdr_t *cfg = MNULL;
+
+    ENTER();
+    if (!pioctl_buf)
+    {
+        LEAVE();
+        return MLAN_STATUS_FAILURE;
+    }
+    misc = (mlan_ds_misc_cfg *)pioctl_buf;
+    cfg  = (mfg_Cmd_IEEEtypes_CtlBasicTrigHdr_t *)&misc->param.mfg_tx_trigger_config;
+
+    cfg->enable_tx       = wlan_le32_to_cpu(mcmd->enable_tx);
+    cfg->standalone_hetb = wlan_le32_to_cpu(mcmd->standalone_hetb);
+    cfg->frmCtl.type     = wlan_le16_to_cpu(mcmd->frmCtl.type);
+    cfg->frmCtl.sub_type = wlan_le16_to_cpu(mcmd->frmCtl.sub_type);
+    cfg->duration        = wlan_le16_to_cpu(mcmd->duration);
+
+    cfg->trig_common_field = wlan_le64_to_cpu(mcmd->trig_common_field);
+
+    cfg->trig_user_info_field = wlan_le64_to_cpu(mcmd->trig_user_info_field);
+
+    // memcpy_ext(pmpriv->adapter, &cfg->trig_user_info_field, &mcmd->trig_user_info_field,
+    //      sizeof(mcmd->trig_user_info_field), sizeof(cfg->trig_user_info_field));
+
+    cfg->basic_trig_user_info = wlan_le16_to_cpu(mcmd->basic_trig_user_info);
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
 /**
  *  @brief This function prepares command resp of MFG Cmd
  *
@@ -46,6 +207,7 @@ Change log:
 mlan_status wlan_ret_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, void *pioctl_buf)
 {
     HostCmd_DS_MFG_CMD_GENERIC_CFG *mcmd = (HostCmd_DS_MFG_CMD_GENERIC_CFG *)&resp->params.mfg_generic_cfg;
+    mlan_ds_misc_cfg *misc_cfg = (mlan_ds_misc_cfg*) pioctl_buf;
     mlan_ds_mfg_cmd_generic_cfg *cfg     = MNULL;
     mlan_status ret                      = MLAN_STATUS_SUCCESS;
 
@@ -57,6 +219,18 @@ mlan_status wlan_ret_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, void *p
     }
     switch (wlan_le32_to_cpu(mcmd->mfg_cmd))
     {
+        case MFG_CMD_TX_CONT:
+            ret = wlan_ret_mfg_tx_cont(pmpriv, resp, pioctl_buf);
+            goto cmd_mfg_done;
+        case MFG_CMD_TX_FRAME:
+            ret = wlan_ret_mfg_tx_frame(pmpriv, resp, pioctl_buf);
+            goto cmd_mfg_done;
+        case MFG_CMD_CONFIG_MAC_HE_TB_TX:
+            ret = wlan_ret_mfg_he_tb_tx(pmpriv, resp, pioctl_buf);
+            goto cmd_mfg_done;
+        case MFG_CMD_CONFIG_TRIGGER_FRAME:
+            ret = wlan_ret_mfg_config_trigger_frame(pmpriv, resp, pioctl_buf);
+            goto cmd_mfg_done;
         case MFG_CMD_SET_TEST_MODE:
         case MFG_CMD_UNSET_TEST_MODE:
         case MFG_CMD_TX_ANT:
@@ -65,12 +239,14 @@ mlan_status wlan_ret_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, void *p
         case MFG_CMD_CLR_RX_ERR:
         case MFG_CMD_RF_BAND_AG:
         case MFG_CMD_RF_CHANNELBW:
+        case MFG_CMD_RADIO_MODE_CFG:
+		case MFG_CMD_RFPWR:
             break;
         default:
             ret = MLAN_STATUS_FAILURE;
             goto cmd_mfg_done;
     }
-    cfg = (mlan_ds_mfg_cmd_generic_cfg *)pioctl_buf;
+    cfg = (mlan_ds_mfg_cmd_generic_cfg *)&(misc_cfg->param);
 
     cfg->error = wlan_le32_to_cpu(mcmd->error);
     cfg->data1 = wlan_le32_to_cpu(mcmd->data1);
@@ -468,7 +644,7 @@ mlan_status wlan_ops_sta_process_cmdresp(IN t_void *priv, IN t_u16 cmdresp_no, I
             ret = wlan_ret_tx_power_cfg(pmpriv, resp, pioctl_buf);
             break;
         case HostCmd_CMD_TX_RATE_CFG:
-            ret = wlan_ret_tx_rate_cfg(pmpriv, resp, pioctl);
+            ret = wlan_ret_tx_rate_cfg(pmpriv, resp, pioctl_buf);
             break;
 #ifndef CONFIG_EXT_SCAN_SUPPORT
         case HostCmd_CMD_802_11_SCAN:
@@ -496,6 +672,15 @@ mlan_status wlan_ops_sta_process_cmdresp(IN t_void *priv, IN t_u16 cmdresp_no, I
             break;
         case HostCmd_CMD_802_11_RF_CHANNEL:
             ret = wlan_ret_802_11_rf_channel(pmpriv, resp, pioctl_buf);
+            break;
+#ifdef CONFIG_WMM
+        case HostCmd_CMD_WMM_PARAM_CONFIG:
+            ret = wlan_ret_wmm_param_config(pmpriv, resp, pioctl_buf);
+            break;
+#endif
+        case HostCmd_CMD_802_11_BG_SCAN_QUERY:
+            ret = wlan_ret_802_11_scan(pmpriv, resp, pioctl_buf);
+            PRINTM(MINFO, "CMD_RESP: BG_SCAN result is ready!\n");
             break;
 #ifdef CONFIG_RF_TEST_MODE
         case HostCmd_CMD_MFG_COMMAND:

@@ -31,6 +31,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "core_mqtt_agent.h"
 
 /**
  * @brief Enum defines states which MQTT agent exposes to the MQTT application tasks.

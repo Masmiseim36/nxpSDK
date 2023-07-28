@@ -1,4 +1,4 @@
-/* Copyright 2022 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2023 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -12,14 +12,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+
 #include "tensorflow/lite/micro/micro_allocation_info.h"
+
+#include <algorithm>
 
 #include "tensorflow/lite/c/c_api_types.h"
 #include "tensorflow/lite/kernels/internal/compatibility.h"
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/memory_helpers.h"
 #include "tensorflow/lite/micro/memory_planner/greedy_memory_planner.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 
@@ -104,8 +107,7 @@ TfLiteStatus AllocationInfoBuilder::CreateAllocationInfo(
       reinterpret_cast<size_t*>(non_persistent_allocator_->AllocateTemp(
           subgraph_offsets_length, alignof(size_t)));
   if (info_.subgraph_offsets == nullptr) {
-    TF_LITE_REPORT_ERROR(
-        reporter_,
+    MicroPrintf(
         "Failed to allocate memory for memory planning, %d bytes required",
         subgraph_offsets_length);
     return kTfLiteError;
@@ -133,8 +135,7 @@ TfLiteStatus AllocationInfoBuilder::CreateAllocationInfo(
   info_.allocation_info = reinterpret_cast<AllocationInfo*>(
       non_persistent_allocator_->AllocateTemp(bytes, alignof(AllocationInfo)));
   if (info_.allocation_info == nullptr) {
-    TF_LITE_REPORT_ERROR(
-        reporter_,
+    MicroPrintf(
         "Failed to allocate memory for memory planning, %d bytes required",
         bytes);
     return kTfLiteError;
@@ -203,6 +204,14 @@ TfLiteStatus AllocationInfoBuilder::InitializeAllocationInfo(
           (current->bytes != 0);
       if (offline_offsets) {
         current->offline_offset = offline_offsets[i];
+
+        // Mark offline planned variable tensors so they can get an offline
+        // offset and be handled offline.
+        if (subgraph->tensors()->Get(i)->is_variable() &&
+            current->offline_offset != kOnlinePlannedBuffer) {
+          current->needs_allocating = true;
+        }
+
       } else {
         current->offline_offset = kOnlinePlannedBuffer;
       }
@@ -240,6 +249,9 @@ TfLiteStatus AllocationInfoBuilder::MarkAllocationLifetimes(
     const int tensor_index = subgraph->inputs()->Get(i);
     AllocationInfo* current = &subgraph_allocation_info[tensor_index];
     UpdateFirstCreated(current, allocation_scope_count_);
+    // This will ensure that the tensors that are inputs to the subgraphs
+    // but not used in any ops also have a reasonable lifetime.
+    UpdateLastUsed(current, allocation_scope_count_);
   }
 
   for (uint32_t i = 0; i < operators_size; i++) {
@@ -311,6 +323,11 @@ TfLiteStatus AllocationInfoBuilder::MarkAllocationLifetimes(
        subgraph->outputs() != nullptr && i < subgraph->outputs()->size(); ++i) {
     const int tensor_index = subgraph->outputs()->Get(i);
     AllocationInfo* current = &subgraph_allocation_info[tensor_index];
+    // Make sure to assign the First created value of the subgraph output
+    // This will handle the case where the subgraph is empty. This helps
+    // ensure all tensors have valid lifetimes before those are used by the
+    // memory planner.
+    UpdateFirstCreated(current, allocation_scope_count_);
     UpdateLastUsed(current, allocation_scope_count_);
   }
   return kTfLiteOk;
@@ -323,28 +340,31 @@ TfLiteStatus AllocationInfoBuilder::GetOfflinePlannedOffsets(
   if (model_->metadata()) {
     for (size_t i = 0; i < model_->metadata()->size(); ++i) {
       auto metadata = model_->metadata()->Get(i);
-      const size_t metadata_name_size = (size_t)metadata->name()->size();
 
-      if ((strncmp(metadata->name()->c_str(), kOfflineMemAllocMetadata,
-                   std::min(metadata_name_size,
-                            strlen(kOfflineMemAllocMetadata))) == 0) &&
-          metadata_name_size == strlen(kOfflineMemAllocMetadata)) {
-        const flatbuffers::Vector<flatbuffers::Offset<Buffer>>* buffers =
-            model_->buffers();
-        auto* buffer = (*buffers)[metadata->buffer()];
-        auto* array = buffer->data();
-        const uint32_t* metadata_buffer =
-            reinterpret_cast<const uint32_t*>(array->data());
-        const size_t nbr_tensors = static_cast<size_t>(metadata_buffer[2]);
-        *offline_planner_offsets =
-            reinterpret_cast<const int32_t*>(&metadata_buffer[3]);
+      if (metadata->name()) {
+        const size_t metadata_name_size = metadata->name()->size();
 
-        if (info_.tensor_count != nbr_tensors) {
-          TF_LITE_REPORT_ERROR(reporter_,
-                               "Nbr of offline buffer offsets (%d) in metadata "
-                               "not equal nbr tensors (%d)\n",
-                               nbr_tensors, info_.tensor_count);
-          return kTfLiteError;
+        if ((strncmp(metadata->name()->c_str(), kOfflineMemAllocMetadata,
+                     std::min(metadata_name_size,
+                              strlen(kOfflineMemAllocMetadata))) == 0) &&
+            metadata_name_size == strlen(kOfflineMemAllocMetadata)) {
+          const flatbuffers::Vector<flatbuffers::Offset<Buffer>>* buffers =
+              model_->buffers();
+          auto* buffer = (*buffers)[metadata->buffer()];
+          auto* array = buffer->data();
+          const uint32_t* metadata_buffer =
+              reinterpret_cast<const uint32_t*>(array->data());
+          const size_t nbr_tensors = static_cast<size_t>(metadata_buffer[2]);
+          *offline_planner_offsets =
+              reinterpret_cast<const int32_t*>(&metadata_buffer[3]);
+
+          if (info_.tensor_count != nbr_tensors) {
+            MicroPrintf(
+                "Nbr of offline buffer offsets (%d) in metadata "
+                "not equal nbr tensors (%d)\n",
+                nbr_tensors, info_.tensor_count);
+            return kTfLiteError;
+          }
         }
       }
     }

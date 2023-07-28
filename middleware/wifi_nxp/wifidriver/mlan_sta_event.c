@@ -4,7 +4,7 @@
  *
  *  Copyright 2008-2021 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -70,6 +70,7 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
 #endif
     priv->max_amsdu = 0;
 
+    priv->tx_pause = 0;
 
     /* Enable auto data rate */
     priv->is_data_rate_auto = MTRUE;

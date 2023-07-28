@@ -12,6 +12,8 @@
 #ifndef __ATTEST_TOKEN_TEST_VALUES_H__
 #define __ATTEST_TOKEN_TEST_VALUES_H__
 
+#include "config_tfm.h"
+
 /**
  * \file attest_token_test_values.h
  *
@@ -247,14 +249,14 @@
 
 /* The expected tokens in the minimal */
 #ifdef SYMMETRIC_INITIAL_ATTESTATION
-    #ifdef ATTEST_TOKEN_PROFILE_PSA_IOT_1
+    #if ATTEST_TOKEN_PROFILE_PSA_IOT_1
     #define MINIMAL_TOKEN SYM_KEY_SIGNED_MINIMAL_TOKEN_PSA_IOT_1
     #else
     /* PSA_2_0_0 */
     #define MINIMAL_TOKEN SYM_KEY_SIGNED_MINIMAL_TOKEN_PSA_2_0_0_0
     #endif
 #else
-    #ifdef ATTEST_TOKEN_PROFILE_PSA_IOT_1
+    #if ATTEST_TOKEN_PROFILE_PSA_IOT_1
     #define MINIMAL_TOKEN ASYM_KEY_SIGNED_MINIMAL_TOKEN_PSA_IOT_1
     #else
     /* PSA_2_0_0 or ARM_CCA profiles */
@@ -311,15 +313,14 @@
  *  - Claim is optional
  *  - Claim is not required at all
  */
-#if defined(ATTEST_TOKEN_PROFILE_PSA_IOT_1) || \
-    defined(ATTEST_TOKEN_PROFILE_PSA_2_0_0)
+#if ATTEST_TOKEN_PROFILE_PSA_IOT_1 || ATTEST_TOKEN_PROFILE_PSA_2_0_0
     #define TOKEN_TEST_REQUIRE_BOOT_SEED            true  /* Mandatory claim */
     #define TOKEN_TEST_REQUIRE_CLIENT_ID            true  /* Mandatory claim */
     #define TOKEN_TEST_REQUIRE_CERT_REF             false /* Optional  claim */
     #define TOKEN_TEST_REQUIRE_PROFILE_DEFINITION   false /* Optional  claim */
     #define TOKEN_TEST_REQUIRE_PLAT_HASH_ALGO_ID    false /* Not required    */
     #define TOKEN_TEST_REQUIRE_PLAT_CONFIG          false /* Not required    */
-#elif defined(ATTEST_TOKEN_PROFILE_ARM_CCA)
+#elif ATTEST_TOKEN_PROFILE_ARM_CCA
     #define TOKEN_TEST_REQUIRE_BOOT_SEED            false /* Not required    */
     #define TOKEN_TEST_REQUIRE_CLIENT_ID            false /* Not required    */
     #define TOKEN_TEST_REQUIRE_CERT_REF             false /* Not required    */
@@ -375,11 +376,11 @@
 /* Text string naming the profile definition:
  *    platform/ext/common/template/attest_hal.c
  */
-#if defined(ATTEST_TOKEN_PROFILE_PSA_IOT_1)
+#if ATTEST_TOKEN_PROFILE_PSA_IOT_1
 #define TOKEN_TEST_VALUE_PROFILE_DEFINITION  "PSA_IOT_PROFILE_1"
-#elif defined(ATTEST_TOKEN_PROFILE_PSA_2_0_0)
+#elif ATTEST_TOKEN_PROFILE_PSA_2_0_0
 #define TOKEN_TEST_VALUE_PROFILE_DEFINITION  "http://arm.com/psa/2.0.0"
-#elif defined(ATTEST_TOKEN_PROFILE_ARM_CCA)
+#elif ATTEST_TOKEN_PROFILE_ARM_CCA
 #define TOKEN_TEST_VALUE_PROFILE_DEFINITION  "http://arm.com/CCA-SSD/1.0.0"
 #else
     #error "Attestation token profile is incorrect"

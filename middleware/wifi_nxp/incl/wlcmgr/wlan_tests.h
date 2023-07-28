@@ -1,6 +1,6 @@
 /*  Copyright 2008-2020 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -17,5 +17,5 @@
  * 		the TX PWR Limit table received from Wi-Fi firmware.
  *
  */
-void print_txpwrlimit(wlan_txpwrlimit_t txpwrlimit);
+void print_txpwrlimit(wlan_txpwrlimit_t *txpwrlimit);
 #endif /* WLAN_TESTS_H */

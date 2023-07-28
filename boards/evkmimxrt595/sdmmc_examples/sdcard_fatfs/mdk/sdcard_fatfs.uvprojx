@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, MCUXPRESSO_SDK, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -442,56 +442,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source</GroupName>
-          <Files>
-            <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -626,6 +576,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -671,36 +656,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -742,6 +697,56 @@
               <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -831,6 +836,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -867,46 +912,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1241,9 +1246,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, MCUXPRESSO_SDK, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1277,7 +1282,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1351,56 +1356,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source</GroupName>
-          <Files>
-            <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1535,6 +1490,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -1580,36 +1570,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -1651,6 +1611,56 @@
               <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1740,6 +1750,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1776,46 +1826,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2150,9 +2160,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, MCUXPRESSO_SDK, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2186,7 +2196,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2260,56 +2270,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source</GroupName>
-          <Files>
-            <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2444,6 +2404,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -2489,36 +2484,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -2560,6 +2525,56 @@
               <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2649,6 +2664,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2685,46 +2740,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3059,9 +3074,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, SD_ENABLED, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_SDMMC_NEED_MANUAL_TUNING, MCUXPRESSO_SDK, SD_ENABLED</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/fatfs/source;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/sd;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sd;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/gpio;../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../middleware/fatfs/source;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3095,7 +3110,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3169,56 +3184,6 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source</GroupName>
-          <Files>
-            <File>
-              <FileName>diskio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
-            <File>
-              <FileName>ffsystem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
-            </File>
-            <File>
-              <FileName>ffunicode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sd_disk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3353,6 +3318,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/host</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -3398,36 +3398,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sdmmc/host</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -3469,6 +3439,56 @@
               <FileName>fsl_adapter_rt_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/gpio/fsl_adapter_rt_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source/fsl_sd_disk</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sd_disk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>fatfs/source</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3558,6 +3578,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>sdmmc/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sdmmc_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -3594,46 +3654,6 @@
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sdmmc/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_sdmmc_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_sdmmc_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/osa</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>

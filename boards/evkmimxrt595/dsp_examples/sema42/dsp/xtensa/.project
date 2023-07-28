@@ -208,46 +208,6 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_mu.c</locationURI>
     </link>
     <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_common.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.h</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_common.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_common_dsp.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_common_dsp.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.h</locationURI>
-    </link>
-    <link>
       <name>component/lists</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -296,6 +256,46 @@
       <name>drivers/fsl_sema42.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_sema42.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.h</locationURI>
     </link>
     <link>
       <name>drivers</name>

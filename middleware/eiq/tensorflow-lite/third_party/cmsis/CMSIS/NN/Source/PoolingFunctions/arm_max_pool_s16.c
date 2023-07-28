@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s16.c
  * Description:  Pooling function implementations
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        26 October 2022
+ * $Revision:    V.2.1.2
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -33,15 +33,29 @@
 
 static void compare_and_replace_if_larger(int16_t *base, const int16_t *target, int32_t length)
 {
-    q15_t *dst = base;
-    const q15_t *src = target;
+#if defined(ARM_MATH_MVEI)
+    int32_t loop_count = (length + 7) / 8;
+    for (int i = 0; i < loop_count; i++)
+    {
+        mve_pred16_t p = vctp16q((uint32_t)length);
+        const int16x8_t op_1 = vldrhq_z_s16(base, p);
+        const int16x8_t op_2 = vldrhq_z_s16(target, p);
+        const int16x8_t max = vmaxq_s16(op_1, op_2);
+        vstrhq_p_s16(base, max, p);
+        base += 8;
+        target += 8;
+        length -= 8;
+    }
+#else
+    int16_t *dst = base;
+    const int16_t *src = target;
     union arm_nnword ref_max;
     union arm_nnword comp_max;
     int32_t cnt = length >> 1;
 
     while (cnt > 0l)
     {
-        ref_max.word = arm_nn_read_q15x2(dst);
+        ref_max.word = arm_nn_read_s16x2(dst);
         comp_max.word = arm_nn_read_q15x2_ia(&src);
 
         if (comp_max.half_words[0] > ref_max.half_words[0])
@@ -65,16 +79,33 @@ static void compare_and_replace_if_larger(int16_t *base, const int16_t *target, 
             *dst = *src;
         }
     }
+#endif
 }
 
 static void clamp_output(int16_t *source, int32_t length, const int16_t act_min, const int16_t act_max)
 {
+#if defined(ARM_MATH_MVEI)
+    const int16x8_t min = vdupq_n_s16((int16_t)act_min);
+    const int16x8_t max = vdupq_n_s16((int16_t)act_max);
+
+    int32_t loop_count = (length + 7) / 8;
+    for (int i = 0; i < loop_count; i++)
+    {
+        mve_pred16_t p = vctp16q((uint32_t)length);
+        length -= 8;
+        const int16x8_t src = vldrhq_z_s16(source, p);
+        int16x8_t res = vmaxq_x_s16(src, min, p);
+        res = vminq_x_s16(res, max, p);
+        vstrhq_p_s16(source, res, p);
+        source += 8;
+    }
+#else
     union arm_nnword in;
     int32_t cnt = length >> 1;
 
     while (cnt > 0l)
     {
-        in.word = arm_nn_read_q15x2(source);
+        in.word = arm_nn_read_s16x2(source);
 
         in.half_words[0] = MAX(in.half_words[0], act_min);
         in.half_words[0] = MIN(in.half_words[0], act_max);
@@ -92,10 +123,11 @@ static void clamp_output(int16_t *source, int32_t length, const int16_t act_min,
         comp = MIN(comp, act_max);
         *source = comp;
     }
+#endif
 }
 
 /**
- *  @ingroup groupNN
+ *  @ingroup Public
  */
 
 /**

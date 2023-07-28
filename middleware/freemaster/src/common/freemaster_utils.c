@@ -29,8 +29,6 @@
  *  optimized memory copy helper macros
  ********************************************************/
 
-#if FMSTR_MEMCPY_MAX_SIZE >= 8
-
 /* Copy variable to destination by bytes from an aligned source address */
 FMSTR_INLINE void _FMSTR_CopySrcAligned_U64(FMSTR_LP_U8 dest, FMSTR_LP_U64 src)
 {
@@ -53,6 +51,8 @@ FMSTR_INLINE void _FMSTR_CopySrcAligned_U64(FMSTR_LP_U8 dest, FMSTR_LP_U64 src)
     *dest++ = *raw++;
     *dest++ = *raw++;
 }
+
+#if FMSTR_MEMCPY_MAX_SIZE >= 8
 
 /* Copy variable from source by bytes to an aligned destination address */
 FMSTR_INLINE void _FMSTR_CopyDstAligned_U64(FMSTR_LP_U64 dest, FMSTR_LP_U8 src)
@@ -1399,6 +1399,38 @@ FMSTR_U32 _FMSTR_Rand(void)
     /* Random number generation not yet implemented, use stdlib function */
     FMSTR_ASSERT(0 == 1);
     return 0;
+}
+
+void FMSTR_MemCpySrcAligned_8(FMSTR_ADDR dest, FMSTR_ADDR src)
+{
+    FMSTR_LP_U8 dest8 = (FMSTR_LP_U8)FMSTR_CAST_ADDR_TO_PTR(dest);
+    FMSTR_LP_U8 src8 = (FMSTR_LP_U8)FMSTR_CAST_ADDR_TO_PTR(src);
+
+    *dest8 = *src8;
+}
+
+void FMSTR_MemCpySrcAligned_16(FMSTR_ADDR dest, FMSTR_ADDR src)
+{
+    FMSTR_LP_U8 dest8 = (FMSTR_LP_U8)FMSTR_CAST_ADDR_TO_PTR(dest);
+    FMSTR_LP_U16 src16 = (FMSTR_LP_U16)FMSTR_CAST_ADDR_TO_PTR(src);
+
+    _FMSTR_CopySrcAligned_U16(dest8, src16);
+}
+
+void FMSTR_MemCpySrcAligned_32(FMSTR_ADDR dest, FMSTR_ADDR src)
+{
+    FMSTR_LP_U8 dest8 = (FMSTR_LP_U8)FMSTR_CAST_ADDR_TO_PTR(dest);
+    FMSTR_LP_U32 src32 = (FMSTR_LP_U32)FMSTR_CAST_ADDR_TO_PTR(src);
+
+    _FMSTR_CopySrcAligned_U32(dest8, src32);
+}
+
+void FMSTR_MemCpySrcAligned_64(FMSTR_ADDR dest, FMSTR_ADDR src)
+{
+    FMSTR_LP_U8 dest8 = (FMSTR_LP_U8)FMSTR_CAST_ADDR_TO_PTR(dest);
+    FMSTR_LP_U64 src64 = (FMSTR_LP_U64)FMSTR_CAST_ADDR_TO_PTR(src);
+
+    _FMSTR_CopySrcAligned_U64(dest8, src64);
 }
 
 #endif /* !FMSTR_DISABLE */

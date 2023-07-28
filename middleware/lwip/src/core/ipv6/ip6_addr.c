@@ -352,4 +352,33 @@ ip6addr_ntoa_r(const ip6_addr_t *addr, char *buf, int buflen)
   return buf;
 }
 
+/**
+ * Copy address but set network bits to zero according mask.
+ *
+ * @param addr ip6 address in network order
+ * @param buf destination address (may be same as addr)
+ * @param mask network mask (0-128)
+ */
+void ip6_addr_net_by_mask(const ip6_addr_t *addr, ip6_addr_t *net_addr, uint8_t mask)
+{
+  uint8_t wildcard = 128-mask;
+  int i = 0;
+
+  for(; i<4; i++) {
+    const u8_t ia = 3-i;
+    if(wildcard >= ((i+1)*32)) {
+      net_addr->addr[ia] = 0;
+    }
+    else {
+      net_addr->addr[ia] = addr->addr[ia] & PP_HTONL(~((1<<(wildcard-i*32))-1));
+      break;
+    }
+  }
+
+  for(i++; i<4; i++) {
+    const u8_t ia = 3-i;
+    net_addr->addr[ia] = addr->addr[ia];
+  }
+}
+
 #endif /* LWIP_IPV6 */

@@ -361,6 +361,7 @@ int ip6addr_aton(const char *cp, ip6_addr_t *addr);
 char *ip6addr_ntoa(const ip6_addr_t *addr);
 char *ip6addr_ntoa_r(const ip6_addr_t *addr, char *buf, int buflen);
 
+void ip6_addr_net_by_mask(const ip6_addr_t *addr, ip6_addr_t *net_addr, uint8_t mask);
 
 
 #ifdef __cplusplus

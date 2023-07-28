@@ -26,22 +26,18 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "mbed_psa/crypto_se_driver.h" //NXP
+#include "psa/crypto_se_driver.h"
 
 #include "psa_crypto_se.h"
 
 #if defined(MBEDTLS_PSA_ITS_FILE_C)
 #include "psa_crypto_its.h"
 #else /* Native ITS implementation */
-#include "mbed_psa/error.h" //NXP
-#include "mbed_psa/internal_trusted_storage.h" //NXP
+#include "psa/error.h"
+#include "psa/internal_trusted_storage.h"
 #endif
 
 #include "mbedtls/platform.h"
-#if !defined(MBEDTLS_PLATFORM_C)
-#define mbedtls_calloc calloc
-#define mbedtls_free   free
-#endif
 
 
 

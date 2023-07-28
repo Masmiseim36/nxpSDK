@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides WLAN ENHANCED Test API
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -26,54 +26,35 @@
  * NXP Test Framework (MTF) functions
  */
 
-static void dump_wlan_set_pmfcfg_usage(void)
+static void dump_wlan_uap_get_pmfcfg_usage()
 {
     (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-set-pmfcfg <mfpc> <mfpr> \r\n");
-    (void)PRINTF("\r\n");
-    (void)PRINTF("\t<mfpc>:   Management Frame Protection Capable (MFPC)\r\n");
-    (void)PRINTF("\t          1: Management Frame Protection Capable\r\n");
-    (void)PRINTF("\t          0: Management Frame Protection not Capable\r\n");
-    (void)PRINTF("\t<mfpr>:   Management Frame Protection Required (MFPR)\r\n");
-    (void)PRINTF("\t          1: Management Frame Protection Required\r\n");
-    (void)PRINTF("\t          0: Management Frame Protection Optional\r\n");
-    (void)PRINTF("\tDefault setting is PMF not capable.\r\n");
-    (void)PRINTF("\tmfpc = 0, mfpr = 1 is an invalid combination\r\n");
+    (void)PRINTF("wlan-uap-get-pmfcfg \r\n");
 }
 
-static void wlan_pmfcfg_set(int argc, char *argv[])
+static void wlan_uap_pmfcfg_get(int argc, char *argv[])
 {
     int ret;
-    uint8_t mfpc, mfpr;
+    uint8_t mfpc = 0U;
+    uint8_t mfpr = 0U;
 
-    if (argc != 3)
+    if (argc != 1)
     {
-        dump_wlan_set_pmfcfg_usage();
+        dump_wlan_uap_get_pmfcfg_usage();
         return;
     }
 
-    errno = 0;
-    mfpc  = (uint8_t)strtol(argv[1], NULL, 10);
-    if (errno != 0)
-    {
-        (void)PRINTF("Error during wlan pmfcfg set arg_1 strtoul errno:%d", errno);
-    }
-    errno = 0;
-    mfpr  = (uint8_t)strtol(argv[2], NULL, 10);
-    if (errno != 0)
-    {
-        (void)PRINTF("Error during wlan pmfcfg set arg_2 strtoul errno:%d", errno);
-    }
-
-    ret = wlan_set_pmfcfg(mfpc, mfpr);
+    ret = wlan_uap_get_pmfcfg(&mfpc, &mfpr);
     if (ret == WM_SUCCESS)
     {
-        (void)PRINTF("PMF configuration successful\r\n");
+        (void)PRINTF("Uap Management Frame Protection Capability: %s\r\n", mfpc == 1 ? "Yes" : "No");
+        if (mfpc != 0U)
+            (void)PRINTF("Uap Management Frame Protection: %s\r\n", mfpr == 1 ? "Required" : "Optional");
     }
     else
     {
-        (void)PRINTF("PMF configuration failed\r\n");
-        dump_wlan_set_pmfcfg_usage();
+        (void)PRINTF("Uap PMF configuration read failed\r\n");
+        dump_wlan_uap_get_pmfcfg_usage();
     }
 }
 
@@ -322,59 +303,6 @@ static int wlan_memrdwr_getset(int argc, char *argv[])
     return WM_SUCCESS;
 }
 #endif
-static void dump_wlan_set_regioncode_usage(void)
-{
-    (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-set-regioncode <region-code>\r\n");
-    (void)PRINTF("where, region code =\r\n");
-    (void)PRINTF("0xAA : World Wide Safe Mode\r\n");
-    (void)PRINTF("0x10 : US FCC, Singapore\r\n");
-    (void)PRINTF("0x20 : IC Canada\r\n");
-    (void)PRINTF("0x30 : ETSI, Australia, Republic of Korea\r\n");
-    (void)PRINTF("0x32 : France\r\n");
-    (void)PRINTF("0x40 : Japan\r\n");
-    (void)PRINTF("0x50 : China\r\n");
-    (void)PRINTF("0xFF : Japan Special\r\n");
-}
-
-static void test_wlan_set_regioncode(int argc, char **argv)
-{
-    if (argc != 2)
-    {
-        dump_wlan_set_regioncode_usage();
-        return;
-    }
-
-    errno             = 0;
-    t_u32 region_code = (t_u32)strtol(argv[1], NULL, 0);
-    if (errno != 0)
-    {
-        (void)PRINTF("Error during strtoul errno:%d", errno);
-    }
-    int rv = wifi_set_region_code(region_code);
-    if (rv != WM_SUCCESS)
-    {
-        (void)PRINTF("Unable to set region code: 0x%x\r\n", region_code);
-    }
-    else
-    {
-        (void)PRINTF("Region code: 0x%x set\r\n", region_code);
-    }
-}
-
-static void test_wlan_get_regioncode(int argc, char **argv)
-{
-    t_u32 region_code = 0;
-    int rv            = wifi_get_region_code(&region_code);
-    if (rv != WM_SUCCESS)
-    {
-        (void)PRINTF("Unable to get region code: 0x%x\r\n", region_code);
-    }
-    else
-    {
-        (void)PRINTF("Region code: 0x%x\r\n", region_code);
-    }
-}
 
 #if SDK_DEBUGCONSOLE != DEBUGCONSOLE_DISABLE
 static char *bw[]           = {"20 MHz", "40 MHz", "80 MHz", "160 MHz"};
@@ -396,7 +324,7 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
         }
         else if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) <= 3U)
         {
-            (void)PRINTF("    Type:       %d (%s)\r\n", ds_rate.param.rate_cfg.rate_format,
+            (void)PRINTF("    Type:         %d (%s)\r\n", ds_rate.param.rate_cfg.rate_format,
                          rate_format[ds_rate.param.rate_cfg.rate_format]);
             if (ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_LG)
             {
@@ -411,8 +339,8 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
             { /* Do Nothing */
             }
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
-            if ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_VHT) ||
-                (ds_rate.param.rate_cfg.rate_format == 3U))
+            if ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_VHT)
+            )
             {
                 (void)PRINTF("    NSS:        %d\r\n", (int)ds_rate.param.rate_cfg.nss);
             }
@@ -439,9 +367,9 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
         {
             /* HT*/
             (void)PRINTF("    Type: %s\r\n", rate_format[1]);
-            if (datarate->tx_ht_bw <= 2)
-                (void)PRINTF("    BW:   %s\r\n", bw[datarate->tx_ht_bw]);
-            if (datarate->tx_ht_gi == 0)
+            if (datarate->tx_bw <= 2)
+                (void)PRINTF("    BW:   %s\r\n", bw[datarate->tx_bw]);
+            if (datarate->tx_gi == 0)
                 (void)PRINTF("    GI:   Long\r\n");
             else
                 (void)PRINTF("    GI:   Short\r\n");
@@ -459,11 +387,11 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
         {
             /* HT*/
             (void)PRINTF("    Type: %s\r\n", rate_format[1]);
-            if (datarate->rx_ht_bw <= 2)
+            if (datarate->rx_bw <= 2)
             {
-                (void)PRINTF("    BW:   %s\r\n", bw[datarate->rx_ht_bw]);
+                (void)PRINTF("    BW:   %s\r\n", bw[datarate->rx_bw]);
             }
-            if (datarate->rx_ht_gi == 0)
+            if (datarate->rx_gi == 0)
             {
                 (void)PRINTF("    GI:   Long\r\n");
             }
@@ -485,25 +413,19 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
             }
             else
             {
-                /* HT and VHT*/
-                if (datarate->tx_ht_bw <= 3U)
+                /* HT, VHT, HE*/
+                if (datarate->tx_bw <= 3)
+                    (void)PRINTF("    BW:   %s\r\n", bw[datarate->tx_bw]);
+                if (datarate->tx_rate_format < 3)
                 {
-                    (void)PRINTF("    BW:   %s\r\n", bw[datarate->tx_ht_bw]);
-                }
-                if (datarate->tx_ht_gi == 0U)
-                {
-                    (void)PRINTF("    GI:   Long\r\n");
-                }
-                else
-                {
-                    (void)PRINTF("    GI:   Short\r\n");
+                    if (datarate->tx_gi == 0)
+                        (void)PRINTF("    GI:   Long\r\n");
+                    else
+                        (void)PRINTF("    GI:   Short\r\n");
                 }
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
-                if (((unsigned int)(datarate->tx_rate_format) == 2U) ||
-                    ((unsigned int)(datarate->tx_rate_format) == 3U))
-                {
-                    (void)PRINTF("    NSS:  %d\r\n", datarate->tx_nss + 1U);
-                }
+                if (datarate->tx_rate_format >= 2)
+                    (void)PRINTF("    NSS:  %d\r\n", datarate->tx_nss + 1);
 #endif
                 if (datarate->tx_mcs_index != 0xFFU)
                 {
@@ -513,8 +435,7 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                 {
                     (void)PRINTF("    MCS:  Auto\r\n");
                 }
-
-                (void)PRINTF("    Rate: %u Mbps\r\n", datarate->tx_data_rate / 2U);
+                (void)PRINTF("    Rate: %.2f Mbps\r\n", (double)datarate->tx_data_rate / 2);
             }
         }
 
@@ -529,25 +450,19 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
             }
             else
             {
-                /* HT and VHT*/
-                if (datarate->rx_ht_bw <= 3U)
+                /* HT, VHT, HE*/
+                if (datarate->rx_bw <= 3)
+                    (void)PRINTF("    BW:   %s\r\n", bw[datarate->rx_bw]);
+                if (datarate->rx_rate_format < 3)
                 {
-                    (void)PRINTF("    BW:   %s\r\n", bw[datarate->rx_ht_bw]);
-                }
-                if (datarate->rx_ht_gi == 0U)
-                {
-                    (void)PRINTF("    GI:   Long\r\n");
-                }
-                else
-                {
-                    (void)PRINTF("    GI:   Short\r\n");
+                    if (datarate->rx_gi == 0)
+                        (void)PRINTF("    GI:   Long\r\n");
+                    else
+                        (void)PRINTF("    GI:   Short\r\n");
                 }
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
-                if (((unsigned int)(datarate->rx_rate_format) == 2U) ||
-                    ((unsigned int)(datarate->rx_rate_format) == 3U))
-                {
-                    (void)PRINTF("    NSS:  %d\r\n", datarate->rx_nss + 1U);
-                }
+                if (datarate->rx_rate_format >= 2)
+                    (void)PRINTF("    NSS:  %d\r\n", datarate->rx_nss + 1);
 #endif
                 if (datarate->rx_mcs_index != 0xFFU)
                 {
@@ -571,11 +486,13 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
 static void dump_wlan_set_txratecfg_usage(void)
 {
     (void)PRINTF("Usage:\r\n");
-    (void)PRINTF("wlan-set-txratecfg <format> <index>");
-#ifdef CONFIG_11AC
-    (void)PRINTF(" <nss>");
+    (void)PRINTF("wlan-set-txratecfg <sta/uap> <format> <index> ");
+#if defined(CONFIG_11AC) || defined(CONFIG_11AX)
+    (void)PRINTF("<nss> ");
+    (void)PRINTF("<rate_setting>\r\n");
 #endif
     (void)PRINTF("\r\n");
+
     (void)PRINTF("\tWhere\r\n");
     (void)PRINTF("\t<format> - This parameter specifies the data rate format used in this command\r\n");
     (void)PRINTF("\t        0:    LG\r\n");
@@ -626,81 +543,136 @@ static void dump_wlan_set_txratecfg_usage(void)
     (void)PRINTF("\t        1       NSS1\r\n");
     (void)PRINTF("\t        2       NSS2\r\n");
 #endif
+    (void)PRINTF("\t<rate_setting> - This parameter can only specifies the GI types now.\r\n");
+    (void)PRINTF("\tIf <format> is 1 (HT),\r\n");
+    (void)PRINTF("\t        0x0000  Long GI\r\n");
+    (void)PRINTF("\t        0x0020  Short GI\r\n");
+#ifdef CONFIG_11AC
+    (void)PRINTF("\tIf <format> is 2 (VHT),\r\n");
+    (void)PRINTF("\t        0x0000  Long GI\r\n");
+    (void)PRINTF("\t        0x0020  Short GI\r\n");
+    (void)PRINTF("\t        0x0060  Short GI and Nsym mod 10=9\r\n");
+#endif
 }
 
 static void test_wlan_set_txratecfg(int argc, char **argv)
 {
+    mlan_bss_type bss_type = (mlan_bss_type)0;
     wlan_ds_rate ds_rate;
     int rv = WM_SUCCESS;
 
-    if (argc < 2 ||
+    if (argc < 3 ||
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
-        argc > 4)
+        argc > 6)
     {
 #else
-        argc > 3)
+        argc > 4)
     {
 #endif
         (void)PRINTF("Invalid arguments\r\n");
         goto done;
     }
+
+    if (string_equal("sta", argv[1]))
+        bss_type = MLAN_BSS_TYPE_STA;
+    else if (string_equal("uap", argv[1]))
+        bss_type = MLAN_BSS_TYPE_UAP;
+    else
+    {
+        (void)PRINTF("Invalid bss type selection\r\n");
+        goto done;
+    }
+
     (void)memset(&ds_rate, 0, sizeof(wlan_ds_rate));
 
     ds_rate.sub_command = WIFI_DS_RATE_CFG;
 
     errno                              = 0;
-    ds_rate.param.rate_cfg.rate_format = (mlan_rate_format)(strtol(argv[1], NULL, 0));
+    ds_rate.param.rate_cfg.rate_format = (mlan_rate_format)(strtol(argv[2], NULL, 0));
     if (errno != 0)
     {
         (void)PRINTF("Error during strtoul errno:%d", errno);
     }
     errno                             = 0;
-    ds_rate.param.rate_cfg.rate_index = (t_u32)strtol(argv[2], NULL, 0);
+    ds_rate.param.rate_cfg.rate_index = (t_u32)strtol(argv[3], NULL, 0);
     if (errno != 0)
     {
         (void)PRINTF("Error during strtoul errno:%d", errno);
     }
-#ifdef CONFIG_11AC
-    errno                      = 0;
-    ds_rate.param.rate_cfg.nss = (t_u32)strtol(argv[3], NULL, 0);
-    if (errno != 0)
+#if defined(CONFIG_11AC) || defined(CONFIG_11AX)
+    if (argc >= 5)
     {
-        (void)PRINTF("Error during strtoul errno:%d", errno);
+        errno                      = 0;
+        ds_rate.param.rate_cfg.nss = strtol(argv[4], NULL, 0);
+        if (errno != 0)
+        {
+            (void)PRINTF("Error during strtoul errno:%d", errno);
+        }
+        else
+        {
+            /*Do Nothing*/
+        }
+    }
+#endif
+    if (argc == 6)
+    {
+        errno                               = 0;
+        ds_rate.param.rate_cfg.rate_setting = strtol(argv[5], NULL, 0);
+        if (errno != 0)
+            (void)PRINTF("Error during strtoul errno:%d", errno);
     }
     else
     {
-        /*Do Nothing*/
+        errno                               = 0;
+        ds_rate.param.rate_cfg.rate_setting = 0xffff;
+        if (errno != 0)
+            (void)PRINTF("Error during strtoul errno:%d", errno);
     }
-#endif
 
+    if ((ds_rate.param.rate_cfg.rate_format != MLAN_RATE_FORMAT_AUTO)
 #if   defined(CONFIG_11AC)
-    if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 2U)
+        && (ds_rate.param.rate_cfg.rate_format > MLAN_RATE_FORMAT_VHT)
 #else
-if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 1U)
+    && (ds_rate.param.rate_cfg.rate_format > MLAN_RATE_FORMAT_HT)
 #endif
+    )
     {
         (void)PRINTF("Invalid format selection\r\n");
         goto done;
     }
 
-    if ((((unsigned int)(ds_rate.param.rate_cfg.rate_format) == 0U) && (ds_rate.param.rate_cfg.rate_index > 11U))
-        || (((unsigned int)(ds_rate.param.rate_cfg.rate_format) == 1U) && (ds_rate.param.rate_cfg.rate_index != 32U) &&
-            (ds_rate.param.rate_cfg.rate_index > 7U))
-    )
+    if (ds_rate.param.rate_cfg.rate_format != MLAN_RATE_FORMAT_AUTO)
     {
-        (void)PRINTF("Invalid index selection\r\n");
-        goto done;
+        if (((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_LG) &&
+             (ds_rate.param.rate_cfg.rate_index > MLAN_RATE_INDEX_OFDM7))
+            || ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_HT) &&
+                (ds_rate.param.rate_cfg.rate_index != 32U) &&
+                (ds_rate.param.rate_cfg.rate_index > 7U)
+                    )
+#ifdef CONFIG_11AC
+            || ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_VHT) &&
+                (ds_rate.param.rate_cfg.rate_index > MLAN_RATE_INDEX_MCS9))
+#endif
+        )
+        {
+            (void)PRINTF("Invalid index selection\r\n");
+            goto done;
+        }
+#if defined(CONFIG_11AC) || defined(CONFIG_11AX)
+        /* NSS is supported up to 2 */
+        if ((ds_rate.param.rate_cfg.nss <= 0) || (ds_rate.param.rate_cfg.nss >= 3))
+        {
+            (void)PRINTF("Invalid nss selection\r\n");
+            goto done;
+        }
+#endif
+
+        if (argc == 6)
+        {
+        }
     }
 
-#if defined(CONFIG_11AC) || defined(CONFIG_11AX)
-    /* NSS is supported up to 2 */
-    if ((ds_rate.param.rate_cfg.nss <= 0U) || (ds_rate.param.rate_cfg.nss >= 3U))
-    {
-        (void)PRINTF("Invalid nss selection\r\n");
-        goto done;
-    }
-#endif
-    rv = wlan_set_txratecfg(ds_rate);
+    rv = wlan_set_txratecfg(ds_rate, bss_type);
     if (rv != WM_SUCCESS)
     {
         (void)PRINTF("Unable to set txratecfg\r\n");
@@ -716,13 +688,31 @@ done:
 
 static void test_wlan_get_txratecfg(int argc, char **argv)
 {
+    mlan_bss_type bss_type = (mlan_bss_type)0;
     wlan_ds_rate ds_rate;
+
+    if (argc != 2)
+    {
+        (void)PRINTF("Invalid arguments\r\n");
+        (void)PRINTF("Usage: wlan-get-txratecfg <sta/uap>\r\n");
+        return;
+    }
+
+    if (string_equal("sta", argv[1]))
+        bss_type = MLAN_BSS_TYPE_STA;
+    else if (string_equal("uap", argv[1]))
+        bss_type = MLAN_BSS_TYPE_UAP;
+    else
+    {
+        (void)PRINTF("Invalid bss type selection\r\n");
+        return;
+    }
 
     (void)memset(&ds_rate, 0, sizeof(wlan_ds_rate));
 
     ds_rate.sub_command = WIFI_DS_RATE_CFG;
 
-    int rv = wlan_get_txratecfg(&ds_rate);
+    int rv = wlan_get_txratecfg(&ds_rate, bss_type);
     if (rv != WM_SUCCESS)
     {
         (void)PRINTF("Unable to get tx rate cfg\r\n");
@@ -734,13 +724,31 @@ static void test_wlan_get_txratecfg(int argc, char **argv)
 
 static void test_wlan_get_data_rate(int argc, char **argv)
 {
+    mlan_bss_type bss_type = (mlan_bss_type)0;
     wlan_ds_rate ds_rate;
+
+    if (argc != 2)
+    {
+        (void)PRINTF("Invalid arguments\r\n");
+        (void)PRINTF("Usage: wlan-get-data-rate <sta/uap>\r\n");
+        return;
+    }
+
+    if (string_equal("sta", argv[1]))
+        bss_type = MLAN_BSS_TYPE_STA;
+    else if (string_equal("uap", argv[1]))
+        bss_type = MLAN_BSS_TYPE_UAP;
+    else
+    {
+        (void)PRINTF("Invalid bss type selection\r\n");
+        return;
+    }
 
     (void)memset(&ds_rate, 0, sizeof(wlan_ds_rate));
 
     ds_rate.sub_command = WIFI_DS_GET_DATA_RATE;
 
-    int rv = wlan_get_data_rate(&ds_rate);
+    int rv = wlan_get_data_rate(&ds_rate, bss_type);
     if (rv != WM_SUCCESS)
     {
         (void)PRINTF("Unable to get tx rate cfg\r\n");
@@ -750,35 +758,32 @@ static void test_wlan_get_data_rate(int argc, char **argv)
     print_ds_rate(ds_rate);
 }
 
-void print_txpwrlimit(wlan_txpwrlimit_t txpwrlimit)
+void print_txpwrlimit(wlan_txpwrlimit_t *txpwrlimit)
 {
-    unsigned char i, j;
+    int i, j;
 
     (void)PRINTF("--------------------------------------------------------------------------------\r\n");
-    (void)PRINTF("Get txpwrlimit: sub_band=%x \r\n", txpwrlimit.subband);
-    for (i = 0; i < txpwrlimit.num_chans; i++)
+    (void)PRINTF("Get txpwrlimit: sub_band=%x \r\n", txpwrlimit->subband);
+    for (i = 0; i < txpwrlimit->num_chans; i++)
     {
-        (void)PRINTF("StartFreq: %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.start_freq);
-        (void)PRINTF("ChanWidth: %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.chan_width);
-        (void)PRINTF("ChanNum:   %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.chan_num);
+        (void)PRINTF("StartFreq: %d\r\n", txpwrlimit->txpwrlimit_config[i].chan_desc.start_freq);
+        (void)PRINTF("ChanWidth: %d\r\n", txpwrlimit->txpwrlimit_config[i].chan_desc.chan_width);
+        (void)PRINTF("ChanNum:   %d\r\n", txpwrlimit->txpwrlimit_config[i].chan_desc.chan_num);
         (void)PRINTF("Pwr:");
-        for (j = 0; j < txpwrlimit.txpwrlimit_config[i].num_mod_grps; j++)
+        for (j = 0; j < txpwrlimit->txpwrlimit_config[i].num_mod_grps; j++)
         {
-            if (j == (txpwrlimit.txpwrlimit_config[i].num_mod_grps - 1U))
-            {
-                (void)PRINTF("%d,%d", txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
-                             txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
-            }
+            if (j == (txpwrlimit->txpwrlimit_config[i].num_mod_grps - 1))
+                (void)PRINTF("%d,%d", txpwrlimit->txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
+                             txpwrlimit->txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
             else
-            {
-                (void)PRINTF("%d,%d,", txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
-                             txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
-            }
+                (void)PRINTF("%d,%d,", txpwrlimit->txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
+                             txpwrlimit->txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
         }
         (void)PRINTF("\r\n");
     }
     (void)PRINTF("\r\n");
 }
+
 
 static void print_chanlist(wlan_chanlist_t chanlist)
 {
@@ -819,7 +824,7 @@ static void dump_wlan_get_txpwrlimit_usage(void)
 static void test_wlan_get_txpwrlimit(int argc, char **argv)
 {
     wifi_SubBand_t subband;
-    wlan_txpwrlimit_t txpwrlimit;
+    wlan_txpwrlimit_t *txpwrlimit = NULL;
 
     if (argc != 2)
     {
@@ -845,7 +850,14 @@ static void test_wlan_get_txpwrlimit(int argc, char **argv)
         return;
     }
 
-    int rv = wlan_get_txpwrlimit(subband, &txpwrlimit);
+    txpwrlimit = os_mem_alloc(sizeof(wlan_txpwrlimit_t));
+    if (txpwrlimit == NULL)
+    {
+        (void)PRINTF("Cannot allocate memory\r\n");
+        return;
+    }
+
+    int rv = wlan_get_txpwrlimit(subband, txpwrlimit);
     if (rv != WM_SUCCESS)
     {
         (void)PRINTF("Unable to get TX PWR Limit configuration\r\n");
@@ -854,13 +866,19 @@ static void test_wlan_get_txpwrlimit(int argc, char **argv)
     {
         print_txpwrlimit(txpwrlimit);
     }
+	os_mem_free(txpwrlimit);
 }
 
 static void test_wlan_set_txpwrlimit(int argc, char **argv)
 {
-    wlan_txpwrlimit_t txpwrlimit;
+    wlan_txpwrlimit_t *txpwrlimit = NULL;
 
-    (void)memset(&txpwrlimit, 0x00, sizeof(wlan_txpwrlimit_t));
+    txpwrlimit = os_mem_alloc(sizeof(wlan_txpwrlimit_t));
+    if (txpwrlimit == NULL)
+    {
+        (void)PRINTF("Cannot allocate memory\r\n");
+        return;
+    }
 
     int rv = wlan_set_txpwrlimit(&tx_pwrlimit_2g_cfg);
     if (rv != WM_SUCCESS)
@@ -878,8 +896,8 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
         else
         {
 #endif
-            txpwrlimit.subband = SubBand_2_4_GHz;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_2_4_GHz;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
@@ -889,8 +907,8 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
                 print_txpwrlimit(txpwrlimit);
             }
 #ifdef CONFIG_5GHz_SUPPORT
-            txpwrlimit.subband = SubBand_5_GHz_0;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_5_GHz_0;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
@@ -899,8 +917,8 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
             {
                 print_txpwrlimit(txpwrlimit);
             }
-            txpwrlimit.subband = SubBand_5_GHz_1;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_5_GHz_1;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
@@ -909,8 +927,8 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
             {
                 print_txpwrlimit(txpwrlimit);
             }
-            txpwrlimit.subband = SubBand_5_GHz_2;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_5_GHz_2;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
@@ -922,13 +940,19 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
         }
 #endif
     }
+    os_mem_free(txpwrlimit);
 }
 
 static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
 {
-    wlan_txpwrlimit_t txpwrlimit;
+    wlan_txpwrlimit_t *txpwrlimit = NULL;
 
-    (void)memset(&txpwrlimit, 0x00, sizeof(wlan_txpwrlimit_t));
+    txpwrlimit = os_mem_alloc(sizeof(wlan_txpwrlimit_t));
+    if (txpwrlimit == NULL)
+    {
+        (void)PRINTF("Cannot allocate memory\r\n");
+        return;
+    }
 
     int rv = wlan_set_chanlist_and_txpwrlimit(&chanlist_2g_cfg, &tx_pwrlimit_2g_cfg);
     if (rv != WM_SUCCESS)
@@ -946,8 +970,8 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
         else
         {
 #endif
-            txpwrlimit.subband = SubBand_2_4_GHz;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_2_4_GHz;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
@@ -957,8 +981,8 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
                 print_txpwrlimit(txpwrlimit);
             }
 #ifdef CONFIG_5GHz_SUPPORT
-            txpwrlimit.subband = SubBand_5_GHz_0;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_5_GHz_0;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
@@ -967,8 +991,8 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
             {
                 print_txpwrlimit(txpwrlimit);
             }
-            txpwrlimit.subband = SubBand_5_GHz_1;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_5_GHz_1;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
@@ -977,8 +1001,8 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
             {
                 print_txpwrlimit(txpwrlimit);
             }
-            txpwrlimit.subband = SubBand_5_GHz_2;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
+            txpwrlimit->subband = SubBand_5_GHz_2;
+            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
@@ -1002,6 +1026,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
             print_chanlist(chanlist);
         }
     }
+    os_mem_free(txpwrlimit);
 }
 
 static void test_wlan_set_chanlist(int argc, char **argv)
@@ -1198,22 +1223,20 @@ static void test_set_clocksync_cfg(int argc, char **argv)
 
 
 static struct cli_command wlan_enhanced_commands[] = {
-    {"wlan-set-regioncode", "<region-code>", test_wlan_set_regioncode},
-    {"wlan-get-regioncode", NULL, test_wlan_get_regioncode},
     {"wlan-get-txpwrlimit", "<subband>", test_wlan_get_txpwrlimit},
     {"wlan-set-txpwrlimit", NULL, test_wlan_set_txpwrlimit},
     {"wlan-set-chanlist-and-txpwrlimit", NULL, test_wlan_set_chanlist_and_txpwrlimit},
     {"wlan-set-chanlist", NULL, test_wlan_set_chanlist},
     {"wlan-get-chanlist", NULL, test_wlan_get_chanlist},
 #ifdef CONFIG_11AC
-    {"wlan-set-txratecfg", "<format> <index> <nss>", test_wlan_set_txratecfg},
+    {"wlan-set-txratecfg", "<sta/uap> <format> <index> <nss> <rate_setting>", test_wlan_set_txratecfg},
 #else
-    {"wlan-set-txratecfg", "<format> <index>", test_wlan_set_txratecfg},
+    {"wlan-set-txratecfg", "<sta/uap> <format> <index>", test_wlan_set_txratecfg},
 #endif
-    {"wlan-get-txratecfg", NULL, test_wlan_get_txratecfg},
-    {"wlan-get-data-rate", NULL, test_wlan_get_data_rate},
-    {"wlan-set-pmfcfg", "<mfpc> <mfpr>", wlan_pmfcfg_set},
+    {"wlan-get-txratecfg", "<sta/uap>", test_wlan_get_txratecfg},
+    {"wlan-get-data-rate", "<sta/uap>", test_wlan_get_data_rate},
     {"wlan-get-pmfcfg", NULL, wlan_pmfcfg_get},
+    {"wlan-uap-get-pmfcfg", NULL, wlan_uap_pmfcfg_get},
 #ifdef CONFIG_5GHz_SUPPORT
     {"wlan-set-ed-mac-mode", "<interface> <ed_ctrl_2g> <ed_offset_2g> <ed_ctrl_5g> <ed_offset_5g>",
      wlan_ed_mac_mode_set},

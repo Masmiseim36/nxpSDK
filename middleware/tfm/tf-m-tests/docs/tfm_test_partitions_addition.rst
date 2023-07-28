@@ -22,7 +22,7 @@ Currently, TF-M test services are located under ``tf-m-tests/test/secure_fw``.
 Implementation
 **************
 
-Adding a test partiton to provide test services is same as adding a secure
+Adding a test partition to provide test services is same as adding a secure
 partition, generally the process can be referenced from the document
 `Adding Secure Partition <https://tf-m-user-guide.trustedfirmware.org/integration_guide/services/tfm_secure_partition_addition.html>`_.
 

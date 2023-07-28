@@ -2,15 +2,15 @@ var a00062 =
 [
     [ "Serial Port SWO", "a00063.html", "a00063" ],
     [ "Serial Port USB", "a00064.html", "a00064" ],
-    [ "Serial Port Uart", "a00275.html", "a00275" ],
-    [ "serial_manager_config_t", "a00062.html#a00435", [
+    [ "Serial Port Uart", "a00279.html", "a00279" ],
+    [ "serial_manager_config_t", "a00062.html#a00440", [
       [ "ringBuffer", "a00062.html#a73403169ff2d3c8d8897059435fe7e01", null ],
       [ "ringBufferSize", "a00062.html#a3cdd8d8501bb64e720345207310de89b", null ],
       [ "type", "a00062.html#a19422220843683406b8487dd40fc2cee", null ],
       [ "blockType", "a00062.html#ae1f413cf0928c0efdf89ce584adf8007", null ],
       [ "portConfig", "a00062.html#ac91431f403f82ce50784274deab7e640", null ]
     ] ],
-    [ "serial_manager_callback_message_t", "a00062.html#a00434", [
+    [ "serial_manager_callback_message_t", "a00062.html#a00439", [
       [ "buffer", "a00062.html#a80694c056b447b821f7e146122040e0f", null ],
       [ "length", "a00062.html#a5eb02d4cb2745ea57f5f78e764f80893", null ]
     ] ],
@@ -24,6 +24,7 @@ var a00062 =
     [ "SERIAL_PORT_TYPE_RPMSG", "a00062.html#gaf8fb1fba8f9d1cea85a3203555fdb270", null ],
     [ "SERIAL_PORT_TYPE_SPI_MASTER", "a00062.html#ga0930f57cce1c63e56b8ce280e7423304", null ],
     [ "SERIAL_PORT_TYPE_SPI_SLAVE", "a00062.html#ga78917d72251361c814cc6c09177fbbf4", null ],
+    [ "SERIAL_PORT_TYPE_BLE_WU", "a00062.html#gafe87e3d59c182fdceba8b869a5cf0a33", null ],
     [ "SERIAL_MANAGER_TASK_HANDLE_TX", "a00062.html#gab26fb3c93b19327a8e346d1fd762c720", null ],
     [ "SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE", "a00062.html#gaefd7b994ea13ed385804afbe3268db7c", null ],
     [ "SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE", "a00062.html#ga5e349416c81a583a8a98e99683624929", null ],
@@ -40,7 +41,7 @@ var a00062 =
     [ "serial_write_handle_t", "a00062.html#gac8319b6189019680778f230eb319530e", null ],
     [ "serial_read_handle_t", "a00062.html#ga8bfec9c49e40728806d775fdb4bbf78e", null ],
     [ "serial_manager_callback_t", "a00062.html#gabe6a6263bb1570ea715938b2420af773", null ],
-    [ "serial_manager_lowpower_critical_callback_t", "a00062.html#ga856d80a20772bd9d9ad950b8ec852635", null ],
+    [ "serial_manager_lowpower_critical_callback_t", "a00062.html#gab4c4ee505dbfd70c8869c63d8f8155e4", null ],
     [ "serial_port_type_t", "a00062.html#ga103db7d7f3fc8234978efadef0fdaf80", [
       [ "kSerialPort_None", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb", null ],
       [ "kSerialPort_Uart", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77", null ],
@@ -59,7 +60,8 @@ var a00062 =
       [ "kSerialPort_Rpmsg", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80aa0ec8166f72522a029c7bdb44dbd8cbe", null ],
       [ "kSerialPort_UartDma", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80acad7e31b320242ceb4088c8a32635c5e", null ],
       [ "kSerialPort_SpiMaster", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea", null ],
-      [ "kSerialPort_SpiSlave", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a", null ]
+      [ "kSerialPort_SpiSlave", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a", null ],
+      [ "kSerialPort_BleWu", "a00062.html#gga103db7d7f3fc8234978efadef0fdaf80a068c303a297863ceefc8359eafc17b7f", null ]
     ] ],
     [ "serial_manager_type_t", "a00062.html#ga7799e0e52d9e9fe5bf5198f0a337331d", [
       [ "kSerialManager_NonBlocking", "a00062.html#gga7799e0e52d9e9fe5bf5198f0a337331dacae754a7dbe5f0d48d345a8b6120227c", null ],
@@ -83,6 +85,14 @@ var a00062 =
     [ "SerialManager_CloseReadHandle", "a00062.html#ga09c8831eb6ca6e544881dcbf18dcb4a7", null ],
     [ "SerialManager_WriteBlocking", "a00062.html#ga3fab1d6bffd89459be9f23d40874248e", null ],
     [ "SerialManager_ReadBlocking", "a00062.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb", null ],
+    [ "SerialManager_WriteNonBlocking", "a00062.html#ga195f1c0ebf9a66952302003d25a50e6b", null ],
+    [ "SerialManager_ReadNonBlocking", "a00062.html#ga73b6a8e57790ee4d41476ef25488c495", null ],
+    [ "SerialManager_TryRead", "a00062.html#ga3f0a934ae5f1e8c20caff894f94bc70e", null ],
+    [ "SerialManager_CancelWriting", "a00062.html#ga54a5b67dbaed110666666e24469fad13", null ],
+    [ "SerialManager_CancelReading", "a00062.html#ga7cb009a3fcc17375bfa591b68008c94e", null ],
+    [ "SerialManager_InstallTxCallback", "a00062.html#ga59eadfa140fe4cb42b306514a02288d4", null ],
+    [ "SerialManager_InstallRxCallback", "a00062.html#gab8a8947d239858adf3626fe937ccda56", null ],
+    [ "SerialManager_needPollingIsr", "a00062.html#ga26a6c26eacf1277930e69676ab77cbec", null ],
     [ "SerialManager_EnterLowpower", "a00062.html#ga32cdccd6df5d87f17037f34cf9f1e416", null ],
     [ "SerialManager_ExitLowpower", "a00062.html#gaef5c404d43871f6d8f761b27dbf183fa", null ],
     [ "SerialManager_SetLowpowerCriticalCb", "a00062.html#ga71bd55adb7a6a552ce5dac06b5794cea", null ]

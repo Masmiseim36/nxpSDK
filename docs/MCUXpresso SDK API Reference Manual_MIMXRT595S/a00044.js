@@ -1,6 +1,6 @@
 var a00044 =
 [
-    [ "i3c_slave_config_t", "a00044.html#a00385", [
+    [ "i3c_slave_config_t", "a00044.html#a00390", [
       [ "enableSlave", "a00044.html#ae2c684a0c8d014cc95005a69a9098234", null ],
       [ "isHotJoin", "a00044.html#a4b8cf9213963e3b1a9bb09542016abf2", null ],
       [ "staticAddr", "a00044.html#a72ff7b8ddcfcd192d3f725e5c031d0cd", null ],
@@ -17,7 +17,7 @@ var a00044 =
       [ "maxWriteLength", "a00044.html#a6da25cf7b73330353129a87dfa969013", null ],
       [ "maxReadLength", "a00044.html#ae90c094ef89f248db0069e4953b6b193", null ]
     ] ],
-    [ "i3c_slave_transfer_t", "a00044.html#a00386", [
+    [ "i3c_slave_transfer_t", "a00044.html#a00391", [
       [ "event", "a00044.html#a66d37b6a457d38cf3436d5ec7920b908", null ],
       [ "txData", "a00044.html#a99c768011290e47a97b298b665b6bc74", null ],
       [ "txDataSize", "a00044.html#a83c9312424beab3c34239ece1865b507", null ],
@@ -26,7 +26,7 @@ var a00044 =
       [ "completionStatus", "a00044.html#a66ea82168521a0843a4619ea4933c0da", null ],
       [ "transferredCount", "a00044.html#a0b66066e2be94f4eaa371adf37da32a8", null ]
     ] ],
-    [ "i3c_slave_handle_t", "a00044.html#a00302", [
+    [ "i3c_slave_handle_t", "a00044.html#a00306", [
       [ "transfer", "a00044.html#a50a74a027294db6b95d2436342644d32", null ],
       [ "isBusy", "a00044.html#a623b52328752ec251c7235b560b359b3", null ],
       [ "wasTransmit", "a00044.html#a726c4eb7a4a7dbcb6bff19892b52fb92", null ],
@@ -34,8 +34,6 @@ var a00044 =
       [ "transferredCount", "a00044.html#a2ba6e2ab17cdd7dfd7c2eb71ad8679fe", null ],
       [ "callback", "a00044.html#a3fa83ecc8a16fce5ad748daa1820c94b", null ],
       [ "userData", "a00044.html#a8d4d3fa4219c24442c1f478837cf87ea", null ],
-      [ "ibiData", "a00044.html#acc0d7822e1c3d4e8058874ea074f95d8", null ],
-      [ "ibiDataSize", "a00044.html#a9cfb821e854e5160a72a8d95041e15d5", null ],
       [ "txFifoSize", "a00044.html#a7b318b7ba2f9b74b90c8bf788af5871e", null ]
     ] ],
     [ "i3c_slave_transfer_callback_t", "a00044.html#gada633855ef6083061ce6205185f29187", null ],
@@ -126,6 +124,6 @@ var a00044 =
     [ "I3C_SlaveTransferGetCount", "a00044.html#ga9f19df9a2dd5d99440e7707aa662d49c", null ],
     [ "I3C_SlaveTransferAbort", "a00044.html#ga2d2b65294f290b2dd43ac2707f3ca87e", null ],
     [ "I3C_SlaveTransferHandleIRQ", "a00044.html#gaf604d3e51fccadaa37e28bd6ba6d37c3", null ],
-    [ "I3C_SlaveRequestIBIWithData", "a00044.html#ga5a70275328fb396b8adedef7f8de3199", null ],
+    [ "I3C_SlaveRequestIBIWithData", "a00044.html#ga41456fa4696a936a2d7419667f39c6b8", null ],
     [ "I3C_SlaveRequestIBIWithSingleData", "a00044.html#gad2b8e86e437281cd6d464930e55cc8be", null ]
 ];

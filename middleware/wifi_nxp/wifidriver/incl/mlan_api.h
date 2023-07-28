@@ -4,7 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -16,7 +16,7 @@
 
 #include "fsl_debug_console.h"
 
-#define MLAN_WMSDK_MAX_WPA_IE_LEN 256U
+#define MLAN_WMSDK_MAX_WPA_IE_LEN 64U
 #define MLAN_MAX_MDIE_LEN         10U
 #define MLAN_MAX_VENDOR_IE_LEN    100U
 
@@ -31,9 +31,7 @@
 #include "mlan_11h.h"
 #include "mlan_11ac.h"
 #include "mlan_11n_aggr.h"
-#ifndef RW610
 #include "mlan_sdio.h"
-#endif
 #include "mlan_11n_rxreorder.h"
 #include "mlan_meas.h"
 #include "mlan_uap.h"
@@ -112,11 +110,38 @@
 
 #define SDIO_DMA_ALIGNMENT 4
 
-extern os_thread_t wifi_scan_thread;
+#define MAX_WAIT_WAKEUP_TIME 3000
+
+/*
+ * Bit 0 : Assoc Req
+ * Bit 1 : Assoc Resp
+ * Bit 2 : ReAssoc Req
+ * Bit 3 : ReAssoc Resp
+ * Bit 4 : Probe Req
+ * Bit 5 : Probe Resp
+ * Bit 8 : Beacon
+ */
+/** Mask for Assoc request frame */
+#define MGMT_MASK_ASSOC_REQ 0x01
+/** Mask for ReAssoc request frame */
+#define MGMT_MASK_REASSOC_REQ 0x04
+/** Mask for Assoc response frame */
+#define MGMT_MASK_ASSOC_RESP 0x02
+/** Mask for ReAssoc response frame */
+#define MGMT_MASK_REASSOC_RESP 0x08
+/** Mask for probe request frame */
+#define MGMT_MASK_PROBE_REQ 0x10
+/** Mask for probe response frame */
+#define MGMT_MASK_PROBE_RESP 0x20
+/** Mask for beacon frame */
+#define MGMT_MASK_BEACON 0x100
+/** Mask for action frame */
+#define MGMT_MASK_ACTION 0x2000
+/** Mask to clear previous settings */
+#define MGMT_MASK_CLEAR 0x000
 
 /* Following is allocated in mlan_register */
 extern mlan_adapter *mlan_adap;
-extern country_code_t wifi_11d_country;
 
 
 extern os_rw_lock_t sleep_rwlock;
@@ -169,12 +194,19 @@ static inline mlan_status wifi_check_bss_entry_wpa2_entp_only(BSSDescriptor_t *p
     }
     return MLAN_STATUS_SUCCESS;
 }
+int wifi_request_bgscan_query(mlan_private *pmpriv);
+int wifi_send_scan_query(void);
+void wifi_get_band(mlan_private *pmpriv, int *band);
 
 int wifi_send_hostcmd(
-    void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
+    const void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
 
 int wifi_send_get_wpa_pmk(int mode, char *ssid);
 int wifi_deauthenticate(uint8_t *bssid);
+#ifdef CONFIG_WPA_SUPP
+int wifi_nxp_deauthenticate(unsigned int bss_type, const uint8_t *bssid, uint16_t reason_code);
+void wifi_get_scan_table(mlan_private *pmpriv, mlan_scan_resp *pscan_resp);
+#endif
 int wifi_get_eeprom_data(uint32_t offset, uint32_t byte_count, uint8_t *buf);
 int wifi_get_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index, void *buf, unsigned int *buf_len);
 int wifi_send_remain_on_channel_cmd(unsigned int bss_type, wifi_remain_on_channel_t *remain_on_channel);
@@ -188,10 +220,6 @@ int wifi_set_smart_mode_cfg(char *ssid,
                             uint8_t *smc_frame_filter,
                             int custom_ie_len,
                             uint8_t *custom_ie);
-wifi_sub_band_set_t *get_sub_band_from_country(country_code_t country, t_u8 *nr_sb);
-#ifdef CONFIG_5GHz_SUPPORT
-wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8 *nr_sb);
-#endif
 int wifi_set_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t id, void *buf, unsigned int buf_len);
 #ifdef SD8801
 int wifi_get_ext_coex_stats(wifi_ext_coex_stats_t *ext_coex_stats);
@@ -203,6 +231,8 @@ int wifi_send_add_wpa_psk(int mode, char *ssid, char *passphrase, unsigned int l
 int wifi_send_add_wpa3_password(int mode, char *ssid, char *password, unsigned int len);
 int wifi_send_add_wpa_pmk(int mode, char *ssid, char *bssid, char *pmk, unsigned int len);
 bool wifi_11d_is_channel_allowed(int channel);
+
+
 /**
  * Get the string representation of the wlan firmware extended version.
  *
@@ -240,7 +270,10 @@ int wifi_set_key(int bss_index,
                  const uint8_t key_index,
                  const uint8_t *key,
                  unsigned key_len,
-                 const uint8_t *mac_addr);
+                 const uint8_t *seq,
+                 unsigned seq_len,
+                 const uint8_t *mac_addr,
+                 unsigned int flags);
 /**
  * Get User Data from OTP Memory
  *
@@ -262,13 +295,10 @@ int wifi_send_scan_cmd(t_u8 bss_mode,
                        const t_u8 num_channels,
                        const wifi_scan_channel_list_t *chan_list,
                        const t_u8 num_probes,
-#ifdef CONFIG_EXT_SCAN_SUPPORT
                        const t_u16 scan_chan_gap,
-#endif
                        const bool keep_previous_scan,
                        const bool active_scan_triggered);
 int wifi_stop_smart_mode(void);
-const char *wifi_get_country_str(country_code_t country);
 int wifi_remove_key(int bss_index, bool is_pairwise, const uint8_t key_index, const uint8_t *mac_addr);
 int wifi_enable_ecsa_support(void);
 int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl, int bss_type);
@@ -277,14 +307,16 @@ int wifi_get_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl, int bss_type);
 int wifi_set_pmfcfg(t_u8 mfpc, t_u8 mfpr);
 int wifi_set_chanlist(wifi_chanlist_t *chanlist);
 int wifi_get_txpwrlimit(wifi_SubBand_t subband, wifi_txpwrlimit_t *txpwrlimit);
-int wifi_get_data_rate(wifi_ds_rate *ds_rate);
-void wifi_get_active_channel_list(t_u8 *chan_list, t_u8 *num_chans);
+int wifi_get_data_rate(wifi_ds_rate *ds_rate, mlan_bss_type bss_type);
+void wifi_get_active_channel_list(t_u8 *chan_list, t_u8 *num_chans, t_u16 acs_band);
 bool wifi_is_ecsa_enabled(void);
 int wifi_set_txpwrlimit(wifi_txpwrlimit_t *txpwrlimit);
 int wifi_send_rssi_info_cmd(wifi_rssi_info_t *rssi_info);
 void wifi_set_curr_bss_channel(uint8_t channel);
 int wifi_get_chanlist(wifi_chanlist_t *chanlist);
+#ifdef CONFIG_WIFI_EU_CRYPTO
 int wifi_set_eu_crypto(EU_Crypto *Crypto_Data, enum _crypto_algorithm Algorithm, t_u16 EncDec);
+#endif
 int wifi_set_rx_mgmt_indication(unsigned int bss_type, unsigned int mgmt_subtype_mask);
 mlan_status wlan_cmd_rx_mgmt_indication(IN pmlan_private pmpriv,
                                         IN HostCmd_DS_COMMAND *cmd,
@@ -295,6 +327,12 @@ wlan_mgmt_pkt *wifi_PrepDefaultMgtMsg(t_u8 sub_type,
                                       mlan_802_11_mac_addr *SrcAddr,
                                       mlan_802_11_mac_addr *Bssid,
                                       t_u16 pkt_len);
+
+int wifi_set_custom_ie(custom_ie *beacon_ies_data,
+                       custom_ie *beacon_wps_ies_data,
+                       custom_ie *proberesp_ies_data,
+                       custom_ie *assocresp_ies_data);
+
 #ifdef CONFIG_11K
 /**
  * rrm scan callback function to process scan results
@@ -335,6 +373,9 @@ int wrapper_bssdesc_first_set(int bss_index,
 int wrapper_bssdesc_second_set(int bss_index,
                                bool *phtcap_ie_present,
                                bool *phtinfo_ie_present,
+#ifdef CONFIG_11AC
+                               bool *pvhtcap_ie_present,
+#endif
                                bool *wmm_ie_present,
                                uint16_t *band,
                                bool *wps_IE_exist,
@@ -359,6 +400,20 @@ int wrapper_bssdesc_second_set(int bss_index,
 #endif
 );
 
+int wifi_get_mgmt_ie2(mlan_bss_type bss_type, void *buf, unsigned int *buf_len);
+int wifi_set_mgmt_ie2(mlan_bss_type bss_type, unsigned short mask, void *buf, unsigned int buf_len);
+int wifi_clear_mgmt_ie2(mlan_bss_type bss_type, int mgmt_bitmap_index);
 
+int wifi_request_bgscan(mlan_private *pmpriv);
+
+#ifdef CONFIG_WPA_SUPP
+int wifi_send_sched_scan_cmd(nxp_wifi_trigger_sched_scan_t *params);
+int wifi_send_stop_sched_scan_cmd(void);
+#endif
+int wifi_set_tol_time(const t_u32 tol_time);
+
+
+
+int wifi_tx_ampdu_prot_mode(tx_ampdu_prot_mode_para *prot_mode, t_u16 action);
 
 #endif /* __MLAN_API_H__ */

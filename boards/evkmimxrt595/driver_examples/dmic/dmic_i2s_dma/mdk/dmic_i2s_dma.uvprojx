@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -444,26 +444,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -532,6 +512,26 @@
               <FileName>fsl_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -636,6 +636,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -667,21 +682,6 @@
               <FileName>fsl_codec_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1196,9 +1196,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1232,7 +1232,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1308,26 +1308,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -1396,6 +1376,26 @@
               <FileName>fsl_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1500,6 +1500,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -1531,21 +1546,6 @@
               <FileName>fsl_codec_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2060,9 +2060,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2096,7 +2096,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2172,26 +2172,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -2260,6 +2240,26 @@
               <FileName>fsl_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -2364,6 +2364,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -2395,21 +2410,6 @@
               <FileName>fsl_codec_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2924,9 +2924,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2960,7 +2960,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3036,26 +3036,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -3124,6 +3104,26 @@
               <FileName>fsl_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -3228,6 +3228,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec</GroupName>
           <Files>
             <File>
@@ -3259,21 +3274,6 @@
               <FileName>fsl_codec_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>

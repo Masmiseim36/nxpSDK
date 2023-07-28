@@ -198,6 +198,8 @@ void lv_deinit(void)
 #if LV_USE_LOG
     lv_log_register_print_cb(NULL);
 #endif
+    lv_timer_register_get_idle_cb(NULL);
+    lv_timer_register_reset_idle_cb(NULL);
 }
 #endif
 

@@ -4,7 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -48,6 +48,8 @@
 #error "Please keep buffer length aligned to SDIO block size"
 #endif /* Sanity check */
 
+#define SDIO_PAYLOAD_SIZE 8
+
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (4U)
 /*! @brief Data buffer size. */
@@ -75,6 +77,9 @@ extern bool cal_data_valid;
 extern bool mac_addr_valid;
 
 mlan_status sd_wifi_init(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size);
+mlan_status sd_wifi_post_init(enum wlan_type type);
+
+mlan_status wlan_flush_wmm_pkt(t_u8 pkt_cnt);
 
 void sd_wifi_deinit(void);
 
@@ -100,7 +105,7 @@ int wifi_send_cmdbuffer(t_u32 tx_blocks, t_u32 len);
 HostCmd_DS_COMMAND *wifi_get_command_buffer(void);
 
 mlan_status wlan_process_int_status(mlan_adapter *pmadapter);
-mlan_status wlan_xmit_pkt(t_u32 txlen, t_u8 interface);
+mlan_status wlan_xmit_pkt(t_u8 *buffer, t_u32 txlen, t_u8 interface);
 int raw_process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface);
 uint32_t wifi_get_device_value1(void);
 
@@ -111,7 +116,7 @@ mlan_status wlan_xmit_wmm_pkt(t_u8 interface, t_u32 txlen, t_u8 *tx_buf);
 
 void sdio_enable_interrupt(void);
 
-void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface);
+void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface, t_u8 tid);
 
 #ifdef CONFIG_WIFI_FW_DEBUG
 extern void wifi_dump_firmware_info();

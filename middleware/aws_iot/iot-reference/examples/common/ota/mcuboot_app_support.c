@@ -94,40 +94,6 @@ static status_t boot_swap_test( void )
     return status;
 }
 
-static status_t boot_swap_perm( void )
-{
-    uint32_t off;
-    status_t status;
-
-    uint32_t buf[ MFLASH_PAGE_SIZE / 4 ]; /* ensure the buffer is word aligned */
-    struct image_trailer * image_trailer_p =
-        ( struct image_trailer * ) ( ( uint8_t * ) buf + MFLASH_PAGE_SIZE - sizeof( struct image_trailer ) );
-
-    off = FLASH_AREA_IMAGE_2_OFFSET + FLASH_AREA_IMAGE_2_SIZE - MFLASH_PAGE_SIZE;
-
-    memset( buf, 0xff, MFLASH_PAGE_SIZE );
-    memcpy( image_trailer_p->magic, boot_img_magic, sizeof( boot_img_magic ) );
-    image_trailer_p->image_ok = BOOT_FLAG_SET;
-
-    status = mflash_drv_sector_erase( FLASH_AREA_IMAGE_2_OFFSET + FLASH_AREA_IMAGE_2_SIZE - MFLASH_SECTOR_SIZE );
-
-    if( status != kStatus_Success )
-    {
-        PRINTF( "boot_setstate_perm: failed to erase trailer2\r\n" );
-        return status;
-    }
-
-    status = mflash_drv_page_program( off, buf );
-
-    if( status != kStatus_Success )
-    {
-        PRINTF( "boot_setstate_perm: failed to write trailer2\r\n" );
-        return status;
-    }
-
-    return status;
-}
-
 static status_t boot_swap_ok( void )
 {
     uint32_t off;

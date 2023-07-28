@@ -1,7 +1,7 @@
 /*
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -24,11 +24,19 @@
 /** Version string buffer length */
 #define MLAN_MAX_VER_STR_LEN 128
 
+#define WIFI_MAX_CHANNEL_NUM 42
+
 #define PMK_BIN_LEN 32
 #define PMK_HEX_LEN 64
 
 #define MOD_GROUPS 7
 
+#ifdef CONFIG_OWE
+/** The open AP in OWE transmition Mode */
+#define OWE_TRANS_MODE_OPEN 1U
+/** The security AP in OWE trsnsition Mode */
+#define OWE_TRANS_MODE_OWE 2U
+#endif
 
 #ifdef CONFIG_WIFI_CAPA
 #ifdef CONFIG_11AC
@@ -180,51 +188,79 @@ struct wifi_message
 /* Wlan Cipher structure */
 typedef struct
 {
+    /** 1 bit value can be set for none */
+    uint16_t none : 1;
     /** 1 bit value can be set for wep40 */
-    uint8_t wep40 : 1;
+    uint16_t wep40 : 1;
     /** 1 bit value can be set for wep104 */
-    uint8_t wep104 : 1;
+    uint16_t wep104 : 1;
     /** 1 bit value can be set for tkip */
-    uint8_t tkip : 1;
+    uint16_t tkip : 1;
     /** 1 bit valuecan be set for ccmp */
-    uint8_t ccmp : 1;
+    uint16_t ccmp : 1;
+    /**  1 bit valuecan be set for aes 128 cmac */
+    uint16_t aes_128_cmac : 1;
+    /** 1 bit value can be set for gcmp */
+    uint16_t gcmp : 1;
+    /** 1 bit value can be set for sms4 */
+    uint16_t sms4 : 1;
+    /** 1 bit value can be set for gcmp 256 */
+    uint16_t gcmp_256 : 1;
+    /** 1 bit valuecan be set for ccmp 256 */
+    uint16_t ccmp_256 : 1;
+    /** 1 bit is reserved */
+    uint16_t rsvd : 1;
+    /** 1 bit value can be set for bip gmac 128 */
+    uint16_t bip_gmac_128 : 1;
+    /** 1 bit value can be set for bip gmac 256 */
+    uint16_t bip_gmac_256 : 1;
+    /** 1 bit value can be set for bip cmac 256 */
+    uint16_t bip_cmac_256 : 1;
+    /** 1 bit valuecan be set for gtk not used */
+    uint16_t gtk_not_used : 1;
     /** 4 bits are reserved */
-    uint8_t rsvd : 4;
+    uint16_t rsvd2 : 2;
 } _Cipher_t;
 
 /* Security mode structure */
 typedef struct
 {
     /** No security */
-    uint16_t noRsn : 1;
+    uint32_t noRsn : 1;
     /** WEP static */
-    uint16_t wepStatic : 1;
+    uint32_t wepStatic : 1;
     /** WEP dynamic */
-    uint16_t wepDynamic : 1;
+    uint32_t wepDynamic : 1;
     /** WPA */
-    uint16_t wpa : 1;
+    uint32_t wpa : 1;
     /** WPA none */
-    uint16_t wpaNone : 1;
+    uint32_t wpaNone : 1;
     /** WPA 2 */
-    uint16_t wpa2 : 1;
+    uint32_t wpa2 : 1;
+    /** WPA 2 sha256 */
+    uint32_t wpa2_sha256 : 1;
     /** OWE */
-    uint16_t owe : 1;
-    /** WPA 3 SAE */
-    uint16_t wpa3_sae : 1;
-#ifdef CONFIG_11R
+    uint32_t owe : 1;
+    /** WPA3 SAE */
+    uint32_t wpa3_sae : 1;
+    /** 802.1x */
+    uint32_t wpa2_entp : 1;
+    /** 802.1x sha256 */
+    uint32_t wpa2_entp_sha256 : 1;
     /** FT 802.1x */
-    uint16_t ft_1x : 1;
+    uint32_t ft_1x : 1;
+    /** FT 802.1x sha384 */
+    uint32_t ft_1x_sha384 : 1;
     /** FT PSK  */
-    uint16_t ft_psk : 1;
+    uint32_t ft_psk : 1;
     /** FT SAE */
-    uint16_t ft_sae : 1;
-    /** Reserved 7 bits */
-    uint16_t rsvd : 7;
-#else
-    /** Reserved 10 bits */
-    uint16_t rsvd : 10;
-#endif
-
+    uint32_t ft_sae : 1;
+    /** WPA3 802.1x sha256 */
+    uint32_t wpa3_1x_sha256 : 1;
+    /** WPA3 802.1x sha384 */
+    uint32_t wpa3_1x_sha384 : 1;
+    /** Reserved 16 bits */
+    uint32_t rsvd : 16;
 } _SecurityMode_t;
 
 /* TODO: clean up the parts brought over from the Host SME BSSDescriptor_t,
@@ -236,7 +272,7 @@ typedef struct
 #define MLAN_MAX_PASS_LENGTH (64)
 
 /** Scan result information */
-struct wifi_scan_result
+struct wifi_scan_result2
 {
     uint8_t bssid[MLAN_MAC_ADDR_LENGTH]; /*!< BSSID array */
     bool is_ibss_bit_set;                /*!< Is bssid set? */
@@ -264,6 +300,10 @@ struct wifi_scan_result
      */
     bool phtcap_ie_present;  /*!< PHT CAP IE present info */
     bool phtinfo_ie_present; /*!< PHT INFO IE present info */
+#ifdef CONFIG_11AC
+    /** 11AC VHT capab support */
+    bool pvhtcap_ie_present;
+#endif
 
     bool wmm_ie_present; /*!< WMM IE present info */
     uint16_t band;       /*!< Band info */
@@ -357,6 +397,7 @@ typedef struct
     uint32_t remain_period;
 } wifi_remain_on_channel_t;
 
+
 /** Data structure for cmd txratecfg */
 typedef PACK_START struct _wifi_rate_cfg_t
 {
@@ -370,6 +411,8 @@ typedef PACK_START struct _wifi_rate_cfg_t
     /** NSS */
     t_u32 nss;
 #endif
+    /** Rate Setting */
+    t_u16 rate_setting;
 } PACK_END wifi_rate_cfg_t;
 
 /** Data structure for cmd get data rate */
@@ -381,13 +424,13 @@ typedef PACK_START struct _wifi_data_rate_t
     t_u32 rx_data_rate;
 
     /** Tx channel bandwidth */
-    t_u32 tx_ht_bw;
+    t_u32 tx_bw;
     /** Tx guard interval */
-    t_u32 tx_ht_gi;
+    t_u32 tx_gi;
     /** Rx channel bandwidth */
-    t_u32 rx_ht_bw;
+    t_u32 rx_bw;
     /** Rx guard interval */
-    t_u32 rx_ht_gi;
+    t_u32 rx_gi;
 
 #ifndef SD8801
     /** MCS index */
@@ -435,12 +478,10 @@ typedef PACK_START struct _wifi_ed_mac_ctrl_t
     t_u16 ed_ctrl_2g;
     /** ED Offset 2G */
     t_s16 ed_offset_2g;
-#ifdef CONFIG_5GHz_SUPPORT
     /** ED CTRL 5G */
     t_u16 ed_ctrl_5g;
     /** ED Offset 5G */
     t_s16 ed_offset_5g;
-#endif
 } PACK_END wifi_ed_mac_ctrl_t;
 
 /** Type definition of wifi_bandcfg_t */
@@ -497,9 +538,11 @@ typedef PACK_START struct _wifi_ext_coex_stats_t
 typedef PACK_START struct _wifi_antcfg_t
 {
     /** Antenna Mode */
-    t_u32 ant_mode;
+    t_u32 *ant_mode;
     /** Evaluate Time */
-    t_u16 evaluate_time;
+    t_u16 *evaluate_time;
+    /** Current antenna*/
+    t_u16 *current_antenna;
 } PACK_END wifi_antcfg_t;
 
 /** CW_MODE_CTRL structure */
@@ -531,7 +574,9 @@ typedef struct
     t_u32 avg_tbtt_offset;
 } wifi_tbtt_offset_t;
 
-#define BIT(n)                           (1U << (n))
+#ifndef BIT
+#define BIT(n) (1U << (n))
+#endif
 #define WOWLAN_MAX_PATTERN_LEN           20
 #define WOWLAN_MAX_OFFSET_LEN            50
 #define MAX_NUM_FILTERS                  10
@@ -587,6 +632,8 @@ typedef struct
  */
 typedef struct _wifi_mef_filter_t
 {
+    /** flag*/
+    t_u32 fill_flag;
     /** BYTE 0X41; Decimal 0X42; Bit 0x43*/
     t_u16 type;
     /** value*/
@@ -697,6 +744,44 @@ typedef struct
     t_u16 dst_port;
 } wifi_nat_keep_alive_t;
 
+#ifdef CONFIG_CLOUD_KEEP_ALIVE
+#define MKEEP_ALIVE_IP_PKT_MAX 256
+/** Cloud keep alive information */
+typedef struct
+{
+    /** Keep alive id */
+    t_u8 mkeep_alive_id;
+    /** Enable keep alive */
+    t_u8 enable;
+    /** Enable/Disable tcp reset */
+    t_u8 reset;
+    /** Saved in driver */
+    t_u8 cached;
+    /** Period to send keep alive packet(The unit is milliseconds) */
+    t_u32 send_interval;
+    /** Period to send retry packet(The unit is milliseconds) */
+    t_u16 retry_interval;
+    /** Count to send retry packet */
+    t_u16 retry_count;
+    /** Source MAC address */
+    t_u8 src_mac[MLAN_MAC_ADDR_LENGTH];
+    /** Destination MAC address */
+    t_u8 dst_mac[MLAN_MAC_ADDR_LENGTH];
+    /** Source IP */
+    t_u32 src_ip;
+    /** Destination IP */
+    t_u32 dst_ip;
+    /** Source Port */
+    t_u16 src_port;
+    /** Destination Port */
+    t_u16 dst_port;
+    /** Packet length */
+    t_u16 pkt_len;
+    /** Packet buffer */
+    t_u8 packet[MKEEP_ALIVE_IP_PKT_MAX];
+} wifi_cloud_keep_alive_t;
+#endif
+
 /** RSSI information */
 typedef struct
 {
@@ -741,22 +826,6 @@ typedef struct
     t_u8 max_tx_pwr;
 
 } wifi_sub_band_set_t;
-
-/**
- * Data structure for domain parameters
- *
- * This structure is accepted by wlan_uap_set_domain_params() API. This
- * information is used to generate the country info IE.
- */
-typedef struct
-{
-    /** Country code */
-    t_u8 country_code[COUNTRY_CODE_LEN];
-    /** subbands count */
-    t_u8 no_of_sub_band;
-    /** Set of subbands of no_of_sub_band number of elements */
-    wifi_sub_band_set_t sub_band[1];
-} wifi_domain_param_t;
 
 /**
  * Data structure for Channel attributes
@@ -918,7 +987,6 @@ typedef PACK_START struct
 } PACK_END wifi_tsf_info_t;
 #endif /* CONFIG_WIFI_CLOCKSYNC */
 
-
 /** Wifi frame types */
 typedef enum
 {
@@ -950,6 +1018,10 @@ typedef enum
     QOS_DATA_FRAME = 0x88,
 } wifi_frame_type_t;
 
+typedef PACK_START struct
+{
+    wifi_frame_type_t frame_type;
+} PACK_END wifi_frame_t;
 
 typedef struct
 {
@@ -1035,24 +1107,31 @@ typedef PACK_START struct _wifi_scan_channel_list_t
 } PACK_END wifi_scan_channel_list_t;
 
 /* Configuration for wireless scanning */
-#define MAX_CHANNEL_LIST 5
+#define MAX_CHANNEL_LIST 6
+#define MAX_NUM_SSID 2
 /** V2 scan parameters */
 typedef PACK_START struct _wifi_scan_params_v2_t
 {
+#ifdef CONFIG_WPA_SUPP
+    /** Scan Only */
+    t_u8 scan_only;
+    /** BSSID present */
+    t_u8 is_bssid;
+    /** SSID present */
+    t_u8 is_ssid;
+#endif
     /** BSSID to scan */
     t_u8 bssid[MLAN_MAC_ADDR_LENGTH];
     /** SSID to scan */
-    char ssid[MLAN_MAX_SSID_LENGTH + 1];
+    char ssid[MAX_NUM_SSID][MLAN_MAX_SSID_LENGTH + 1];
     /** Number of channels */
     t_u8 num_channels;
     /** Channel list with channel information */
     wifi_scan_channel_list_t chan_list[MAX_CHANNEL_LIST];
     /** Number of probes */
     t_u8 num_probes;
-#ifdef CONFIG_EXT_SCAN_SUPPORT
     /** scan channel gap */
     t_u16 scan_chan_gap;
-#endif
     /** Callback to be called when scan is completed */
     int (*cb)(unsigned int count);
 } PACK_END wifi_scan_params_v2_t;
@@ -1146,6 +1225,58 @@ typedef PACK_START struct _wifi_mfg_cmd_tx_cont
     /** power id */
     t_u32 rsvd;
 } PACK_END wifi_mfg_cmd_tx_cont_t;
+
+typedef PACK_START struct wifi_mfg_cmd_he_tb_tx
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** Enable Tx */
+    t_u16 enable;
+    /** Q num */
+    t_u16 qnum;
+    /** AID */
+    t_u16 aid;
+    /** AXQ Mu Timer */
+    t_u16 axq_mu_timer;
+    /** Tx Power */
+    t_s16 tx_power;
+} PACK_END wifi_mfg_cmd_he_tb_tx_t;
+
+typedef PACK_START struct wifi_mfg_cmd_IEEEtypes_CtlBasicTrigHdr
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** enable Tx*/
+    t_u32 enable_tx;
+    /** enable Stand Alone HE TB */
+    t_u32 standalone_hetb;
+    /** Frame Control */
+    mfg_cmd_IEEEtypes_FrameCtrl_t frmCtl;
+    /** Duration */
+    t_u16 duration;
+    /** Destination MAC Address */
+    t_u8 dest_addr[MLAN_MAC_ADDR_LENGTH];
+    /** Source MAC Address */
+    t_u8 src_addr[MLAN_MAC_ADDR_LENGTH];
+    /** Common Info Field **/
+    mfg_cmd_IEEEtypes_HETrigComInfo_t trig_common_field;
+    /** User Info Field **/
+    mfg_cmd_IEEEtypes_HETrigUserInfo_t trig_user_info_field;
+    /** Trigger Dependent User Info Field **/
+    mfg_cmd_IEEETypes_BasicHETrigUserInfo_t basic_trig_user_info;
+} PACK_END wifi_mfg_cmd_IEEEtypes_CtlBasicTrigHdr_t;
 #endif
 
 #ifdef CONFIG_HEAP_DEBUG

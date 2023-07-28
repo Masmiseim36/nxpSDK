@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -228,12 +228,12 @@
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>VG_BLIT_WORKAROUND=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>VG_BLIT_WORKAROUND=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -386,9 +386,9 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -510,7 +510,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -714,7 +714,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1123,7 +1123,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1210,7 +1210,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1227,7 +1227,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1250,7 +1250,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1329,7 +1329,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1341,12 +1341,12 @@
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>VG_BLIT_WORKAROUND=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>VG_BLIT_WORKAROUND=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1499,9 +1499,9 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1623,7 +1623,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1827,7 +1827,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2236,7 +2236,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2323,7 +2323,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2340,7 +2340,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2363,7 +2363,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2442,7 +2442,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2453,12 +2453,12 @@
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>VG_BLIT_WORKAROUND=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>VG_BLIT_WORKAROUND=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2611,9 +2611,9 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2735,7 +2735,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2939,7 +2939,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3348,7 +3348,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3435,7 +3435,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3452,7 +3452,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3475,7 +3475,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3554,7 +3554,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3566,12 +3566,12 @@
           <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>VG_BLIT_WORKAROUND=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>VG_BLIT_WORKAROUND=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3724,9 +3724,9 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3848,7 +3848,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4051,7 +4051,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4567,6 +4567,12 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
     </file>
     <file>
@@ -4577,12 +4583,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</name>
@@ -4618,6 +4618,9 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma.h</name>
     </file>
     <file>
@@ -4625,9 +4628,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</name>
@@ -5070,6 +5070,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -5077,12 +5083,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>

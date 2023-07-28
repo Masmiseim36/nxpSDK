@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "config_tfm.h"
 #include "ns_test_helpers.h"
 #include "psa/protected_storage.h"
 #include "test_framework_helpers.h"

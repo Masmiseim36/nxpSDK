@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,23 +217,24 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=1</state>
           <state>DEBUG</state>
+          <state>_DEBUG=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>MMC_ENABLED</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>MMC_ENABLED</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -356,23 +357,24 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk/bm</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -494,7 +496,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -697,7 +699,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1107,7 +1109,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1194,7 +1196,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1211,7 +1213,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1234,7 +1236,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1313,7 +1315,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1325,11 +1327,12 @@
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>MMC_ENABLED</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>MMC_ENABLED</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1452,23 +1455,24 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk/bm</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1590,7 +1594,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1793,7 +1797,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2203,7 +2207,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2290,7 +2294,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2307,7 +2311,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2330,7 +2334,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2409,23 +2413,24 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>_DEBUG=0</state>
           <state>NDEBUG</state>
+          <state>_DEBUG=0</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>MMC_ENABLED</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>MMC_ENABLED</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2548,23 +2553,24 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk/bm</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2686,7 +2692,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2889,7 +2895,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3299,7 +3305,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3386,7 +3392,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3403,7 +3409,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3426,7 +3432,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3505,7 +3511,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3517,11 +3523,12 @@
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>MMC_ENABLED</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>MMC_ENABLED</state>
+          <state>SDK_OS_BAREMETAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3644,23 +3651,24 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/example/boards/evkmimxrt595/usb_device_msc_disk/bm</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/mmc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3782,7 +3790,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3984,7 +3992,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4385,6 +4393,33 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sdmmc_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sdmmc_config.h</name>
+    </file>
+  </group>
+  <group>
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../usb_disk_adapter.h</name>
@@ -4409,33 +4444,6 @@
     </file>
   </group>
   <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../sdmmc_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sdmmc_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-  </group>
-  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
@@ -4446,40 +4454,7 @@
     <group>
       <name>device</name>
       <group>
-        <name>source</name>
-        <group>
-          <name>lpcip3511</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-      </group>
-      <group>
         <name>class</name>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_class.h</name>
-        </file>
         <group>
           <name>msc</name>
           <file>
@@ -4495,6 +4470,39 @@
             <name>$PROJ_DIR$/../usb_device_msc_ufi.h</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_class.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_class.h</name>
+        </file>
+      </group>
+      <group>
+        <name>source</name>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
+        </file>
+        <group>
+          <name>lpcip3511</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_lpcip3511.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
       </group>
       <group>
         <name>include</name>
@@ -4529,12 +4537,81 @@
     </group>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>gpio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_gpio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_rt_gpio.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h</name>
@@ -4555,10 +4632,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.c</name>
@@ -4567,31 +4644,19 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_power.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_power.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</name>
@@ -4608,6 +4673,27 @@
   </group>
   <group>
     <name>sdmmc</name>
+    <group>
+      <name>host</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+    </group>
     <group>
       <name>src</name>
       <file>
@@ -4636,24 +4722,6 @@
       </file>
     </group>
     <group>
-      <name>host</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-    </group>
-    <group>
       <name>osa</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</name>
@@ -4666,6 +4734,9 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
     </file>
     <file>
@@ -4677,66 +4748,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_debug_console.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>gpio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_gpio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_rt_gpio.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>device</name>
@@ -4757,18 +4768,18 @@
     </file>
   </group>
   <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/iar/startup_MIMXRT595S_cm33.s</name>
+    </file>
+  </group>
+  <group>
     <name>flash_config</name>
     <file>
       <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../flash_config/flash_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/iar/startup_MIMXRT595S_cm33.s</name>
     </file>
   </group>
   <group>

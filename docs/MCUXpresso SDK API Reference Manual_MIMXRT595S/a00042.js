@@ -1,6 +1,6 @@
 var a00042 =
 [
-    [ "i3c_config_t", "a00042.html#a00379", [
+    [ "i3c_config_t", "a00042.html#a00384", [
       [ "enableMaster", "a00042.html#ad1e4c2ce3253d98d040efd01171c5ca9", null ],
       [ "disableTimeout", "a00042.html#a3dfc24c094086ccfa26a5300c828382b", null ],
       [ "hKeep", "a00042.html#a2277cf58ff7c3e08b6def636857c03d4", null ],

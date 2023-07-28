@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('a00068.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">SPI DMA Driver<div class="ingroups"><a class="el" href="a00244.html">SPI: Serial Peripheral Interface Driver</a></div></div>  </div>
+<div class="title">SPI DMA Driver<div class="ingroups"><a class="el" href="a00248.html">SPI: Serial Peripheral Interface Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -116,54 +116,54 @@ Files</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00304"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00304">spi_dma_handle_t</a></td></tr>
-<tr class="memdesc:a00304"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00068.html#a00304">More...</a><br/></td></tr>
-<tr class="separator:a00304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00308"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00308">spi_dma_handle_t</a></td></tr>
+<tr class="memdesc:a00308"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00068.html#a00308">More...</a><br/></td></tr>
+<tr class="separator:a00308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga72ce9db8c2a57d66c7b508ca7891f4b3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> )(SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:ga72ce9db8c2a57d66c7b508ca7891f4b3"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> )(SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga72ce9db8c2a57d66c7b508ca7891f4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI DMA callback called at the end of transfer.  <a href="#ga72ce9db8c2a57d66c7b508ca7891f4b3">More...</a><br/></td></tr>
 <tr class="separator:ga72ce9db8c2a57d66c7b508ca7891f4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gab72873a3a11fc293023558be553de43c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gab72873a3a11fc293023558be553de43c">FSL_SPI_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
+<tr class="memitem:gab72873a3a11fc293023558be553de43c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gab72873a3a11fc293023558be553de43c">FSL_SPI_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
 <tr class="memdesc:gab72873a3a11fc293023558be553de43c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI DMA driver version 2.1.1.  <a href="#gab72873a3a11fc293023558be553de43c">More...</a><br/></td></tr>
 <tr class="separator:gab72873a3a11fc293023558be553de43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 DMA Transactional</h2></td></tr>
-<tr class="memitem:gae8aa0229e688aa1b88185d5e9e7bf0b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gae8aa0229e688aa1b88185d5e9e7bf0b8">SPI_MasterTransferCreateHandleDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00068.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00331">dma_handle_t</a> *txHandle, <a class="el" href="a00016.html#a00331">dma_handle_t</a> *rxHandle)</td></tr>
+<tr class="memitem:gae8aa0229e688aa1b88185d5e9e7bf0b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gae8aa0229e688aa1b88185d5e9e7bf0b8">SPI_MasterTransferCreateHandleDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00068.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00015.html#a00333">dma_handle_t</a> *txHandle, <a class="el" href="a00015.html#a00333">dma_handle_t</a> *rxHandle)</td></tr>
 <tr class="memdesc:gae8aa0229e688aa1b88185d5e9e7bf0b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SPI master DMA handle.  <a href="#gae8aa0229e688aa1b88185d5e9e7bf0b8">More...</a><br/></td></tr>
 <tr class="separator:gae8aa0229e688aa1b88185d5e9e7bf0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2bcf43f1d6908810b6b41d2d87bda3a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga2bcf43f1d6908810b6b41d2d87bda3a9">SPI_MasterTransferDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00067.html#a00450">spi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga2bcf43f1d6908810b6b41d2d87bda3a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga2bcf43f1d6908810b6b41d2d87bda3a9">SPI_MasterTransferDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00067.html#a00457">spi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga2bcf43f1d6908810b6b41d2d87bda3a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a non-blocking SPI transfer using DMA.  <a href="#ga2bcf43f1d6908810b6b41d2d87bda3a9">More...</a><br/></td></tr>
 <tr class="separator:ga2bcf43f1d6908810b6b41d2d87bda3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga761647975e2cfffca46793a6723ffd95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga761647975e2cfffca46793a6723ffd95">SPI_MasterHalfDuplexTransferDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00067.html#a00446">spi_half_duplex_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga761647975e2cfffca46793a6723ffd95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga761647975e2cfffca46793a6723ffd95">SPI_MasterHalfDuplexTransferDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00067.html#a00453">spi_half_duplex_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga761647975e2cfffca46793a6723ffd95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfers a block of data using a DMA method.  <a href="#ga761647975e2cfffca46793a6723ffd95">More...</a><br/></td></tr>
 <tr class="separator:ga761647975e2cfffca46793a6723ffd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga029df430a54021c536661fd17b9c60bb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga029df430a54021c536661fd17b9c60bb">SPI_SlaveTransferCreateHandleDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00068.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00331">dma_handle_t</a> *txHandle, <a class="el" href="a00016.html#a00331">dma_handle_t</a> *rxHandle)</td></tr>
+<tr class="memitem:ga029df430a54021c536661fd17b9c60bb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga029df430a54021c536661fd17b9c60bb">SPI_SlaveTransferCreateHandleDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00068.html#ga72ce9db8c2a57d66c7b508ca7891f4b3">spi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00015.html#a00333">dma_handle_t</a> *txHandle, <a class="el" href="a00015.html#a00333">dma_handle_t</a> *rxHandle)</td></tr>
 <tr class="memdesc:ga029df430a54021c536661fd17b9c60bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SPI slave DMA handle.  <a href="#ga029df430a54021c536661fd17b9c60bb">More...</a><br/></td></tr>
 <tr class="separator:ga029df430a54021c536661fd17b9c60bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6848a2579e3e84d48123407448df60ed"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga6848a2579e3e84d48123407448df60ed">SPI_SlaveTransferDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00067.html#a00450">spi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga6848a2579e3e84d48123407448df60ed"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga6848a2579e3e84d48123407448df60ed">SPI_SlaveTransferDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00067.html#a00457">spi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga6848a2579e3e84d48123407448df60ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a non-blocking SPI transfer using DMA.  <a href="#ga6848a2579e3e84d48123407448df60ed">More...</a><br/></td></tr>
 <tr class="separator:ga6848a2579e3e84d48123407448df60ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac5f2aabca472a57709db2ef153e031c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac5f2aabca472a57709db2ef153e031c8">SPI_MasterTransferAbortDMA</a> (SPI_Type *base, spi_dma_handle_t *handle)</td></tr>
 <tr class="memdesc:gac5f2aabca472a57709db2ef153e031c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort a SPI transfer using DMA.  <a href="#gac5f2aabca472a57709db2ef153e031c8">More...</a><br/></td></tr>
 <tr class="separator:gac5f2aabca472a57709db2ef153e031c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga642d1fe963b7f1c28e5d8f4dd5b92861"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga642d1fe963b7f1c28e5d8f4dd5b92861">SPI_MasterTransferGetCountDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga642d1fe963b7f1c28e5d8f4dd5b92861"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga642d1fe963b7f1c28e5d8f4dd5b92861">SPI_MasterTransferGetCountDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga642d1fe963b7f1c28e5d8f4dd5b92861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master DMA transfer remaining bytes.  <a href="#ga642d1fe963b7f1c28e5d8f4dd5b92861">More...</a><br/></td></tr>
 <tr class="separator:ga642d1fe963b7f1c28e5d8f4dd5b92861"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03ab24789dc4c2438a5daff733ce2cfe"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga03ab24789dc4c2438a5daff733ce2cfe">SPI_SlaveTransferAbortDMA</a> (SPI_Type *base, spi_dma_handle_t *handle)</td></tr>
 <tr class="memdesc:ga03ab24789dc4c2438a5daff733ce2cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort a SPI transfer using DMA.  <a href="#ga03ab24789dc4c2438a5daff733ce2cfe">More...</a><br/></td></tr>
 <tr class="separator:ga03ab24789dc4c2438a5daff733ce2cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa44608920f3653a4692f87f4d4220cc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gafa44608920f3653a4692f87f4d4220cc">SPI_SlaveTransferGetCountDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gafa44608920f3653a4692f87f4d4220cc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gafa44608920f3653a4692f87f4d4220cc">SPI_SlaveTransferGetCountDMA</a> (SPI_Type *base, spi_dma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:gafa44608920f3653a4692f87f4d4220cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave DMA transfer remaining bytes.  <a href="#gafa44608920f3653a4692f87f4d4220cc">More...</a><br/></td></tr>
 <tr class="separator:gafa44608920f3653a4692f87f4d4220cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00304" id="a00304"></a>
+<a name="a00308" id="a00308"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -183,11 +183,11 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="memdesc:a685da0814b5b3310007a857d5def7bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive transfer finished. <br/></td></tr>
 <tr class="separator:a685da0814b5b3310007a857d5def7bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1c68e2b431fe999805c73a98e147a2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1c68e2b431fe999805c73a98e147a2f"></a>
-<a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ac1c68e2b431fe999805c73a98e147a2f">txHandle</a></td></tr>
+<a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ac1c68e2b431fe999805c73a98e147a2f">txHandle</a></td></tr>
 <tr class="memdesc:ac1c68e2b431fe999805c73a98e147a2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for SPI send. <br/></td></tr>
 <tr class="separator:ac1c68e2b431fe999805c73a98e147a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8324f0ace75610fa4cba54f669b58f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8324f0ace75610fa4cba54f669b58f6"></a>
-<a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#af8324f0ace75610fa4cba54f669b58f6">rxHandle</a></td></tr>
+<a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#af8324f0ace75610fa4cba54f669b58f6">rxHandle</a></td></tr>
 <tr class="memdesc:af8324f0ace75610fa4cba54f669b58f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for SPI receive. <br/></td></tr>
 <tr class="separator:af8324f0ace75610fa4cba54f669b58f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab83d82c084cba678e9ddb1135f89c29c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab83d82c084cba678e9ddb1135f89c29c"></a>
@@ -220,7 +220,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SPI_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td>
+          <td class="memname">#define FSL_SPI_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -233,7 +233,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* spi_dma_callback_t)(SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* spi_dma_callback_t)(SPI_Type *base, spi_dma_handle_t *handle, <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -246,7 +246,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferCreateHandleDMA </td>
+          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferCreateHandleDMA </td>
           <td>(</td>
           <td class="paramtype">SPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -272,13 +272,13 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -308,7 +308,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferDMA </td>
+          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferDMA </td>
           <td>(</td>
           <td class="paramtype">SPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -322,7 +322,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00450">spi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00067.html#a00457">spi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -357,7 +357,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterHalfDuplexTransferDMA </td>
+          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterHalfDuplexTransferDMA </td>
           <td>(</td>
           <td class="paramtype">SPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -371,7 +371,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00446">spi_half_duplex_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00067.html#a00453">spi_half_duplex_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -386,7 +386,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <table class="params">
     <tr><td class="paramname">base</td><td>SPI base pointer </td></tr>
     <tr><td class="paramname">handle</td><td>A pointer to the spi_master_dma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">xfer</td><td>A pointer to the <a class="el" href="a00067.html#a00446" title="SPI half-duplex(master only) transfer structure. ">spi_half_duplex_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">xfer</td><td>A pointer to the <a class="el" href="a00067.html#a00453" title="SPI half-duplex(master only) transfer structure. ">spi_half_duplex_transfer_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -402,7 +402,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferCreateHandleDMA </td>
+          <td class="memname">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferCreateHandleDMA </td>
           <td>(</td>
           <td class="paramtype">SPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -428,13 +428,13 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#a00331">dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -472,7 +472,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferDMA </td>
+          <td class="memname">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferDMA </td>
           <td>(</td>
           <td class="paramtype">SPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -486,7 +486,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00450">spi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00067.html#a00457">spi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -559,7 +559,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferGetCountDMA </td>
+          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_MasterTransferGetCountDMA </td>
           <td>(</td>
           <td class="paramtype">SPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -645,7 +645,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00236.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferGetCountDMA </td>
+          <td class="memname">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPI_SlaveTransferGetCountDMA </td>
           <td>(</td>
           <td class="paramtype">SPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

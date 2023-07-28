@@ -1,35 +1,69 @@
 var a00263 =
 [
-    [ "FSL_SEMA42_DRIVER_VERSION", "a00263.html#ga9d157e87f2444c405d2ebf7fe9a39508", null ],
-    [ "SEMA42_GATE_NUM_RESET_ALL", "a00263.html#gaa2a42c2ffaa2a3b57c39a5e46988d7f3", null ],
-    [ "SEMA42_GATEn", "a00263.html#ga530cd6b85fc81427b81eb16b837b7dfd", [
-      [ "kStatus_SEMA42_Busy", "a00263.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ad5619ab112a016977ca65fb758bf6c17", null ],
-      [ "kStatus_SEMA42_Reseting", "a00263.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ab405b2900737aa815ebc18ea68df56b1", null ]
+    [ "pint_cb_t", "a00263.html#ga262ac9596c0926fbe5f346e0f6aaf9f5", null ],
+    [ "pint_pin_enable_t", "a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91", [
+      [ "kPINT_PinIntEnableNone", "a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91aa48de84b39b48759086f2d7ae0c8091e", null ],
+      [ "kPINT_PinIntEnableRiseEdge", "a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91ae873d30aec2ca54de88c69f55ea42a07", null ],
+      [ "kPINT_PinIntEnableFallEdge", "a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91a6f54d55ac52e8e697f83637109560e89", null ],
+      [ "kPINT_PinIntEnableBothEdges", "a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91a58ac8e76b409274b7d02ef6e9805dcef", null ],
+      [ "kPINT_PinIntEnableLowLevel", "a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91a3bd6a570eee5c1fddd95ef2411b35a7e", null ],
+      [ "kPINT_PinIntEnableHighLevel", "a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91affc9b2756b7642ddb60ea78f4bbbd592", null ]
     ] ],
-    [ "sema42_gate_status_t", "a00263.html#ga84eaf8f6200932ad09d0a75ece6e463d", [
-      [ "kSEMA42_Unlocked", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463daf9c45d68a643bac3a34b65a5cf1aade6", null ],
-      [ "kSEMA42_LockedByProc0", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da3006dc26747f1eb2b8e1941660f7dc24", null ],
-      [ "kSEMA42_LockedByProc1", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463daf4a285b99114632b0b00c85ea7bf1956", null ],
-      [ "kSEMA42_LockedByProc2", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da94c2081e5497a328126e879bf874fbc5", null ],
-      [ "kSEMA42_LockedByProc3", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463dad41b71c7142766ca69c0aade4c3bee53", null ],
-      [ "kSEMA42_LockedByProc4", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da9e984cd6c8ea942d67614cbd8faa7799", null ],
-      [ "kSEMA42_LockedByProc5", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463dad5f2f1cfd86ec744eb9c406baccdeeaf", null ],
-      [ "kSEMA42_LockedByProc6", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da20694487b850dcb86cab5735686d9590", null ],
-      [ "kSEMA42_LockedByProc7", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da94c20f5d4e13f9ed07cf370b3bbe33cb", null ],
-      [ "kSEMA42_LockedByProc8", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463dad614e32d0b0814c1fe69c3e0c92f7f94", null ],
-      [ "kSEMA42_LockedByProc9", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da26fb2f4b8ceeae21a8e93fd069d9f2e4", null ],
-      [ "kSEMA42_LockedByProc10", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463dad888ea149e3b30c04aec2e828f97deee", null ],
-      [ "kSEMA42_LockedByProc11", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da1923aba10a72c8729327a9c8e6a008f1", null ],
-      [ "kSEMA42_LockedByProc12", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463dac2129067e57645365d38996426d8197f", null ],
-      [ "kSEMA42_LockedByProc13", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463da6e63d742de6625c789e49b0586f73c3e", null ],
-      [ "kSEMA42_LockedByProc14", "a00263.html#gga84eaf8f6200932ad09d0a75ece6e463daed15def9132f383c674644194a699ef9", null ]
+    [ "pint_pin_int_t", "a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8", [
+      [ "kPINT_PinInt0", "a00263.html#gga15da1f70e8d0a05e9d492d01ceca7da8a5df52c4fbb437e61b638d35cbc550162", null ]
     ] ],
-    [ "SEMA42_Init", "a00263.html#ga13685f70a38ed1f8368581b475e963cf", null ],
-    [ "SEMA42_Deinit", "a00263.html#gae646085e5d791b895d478e9ef161c3b3", null ],
-    [ "SEMA42_TryLock", "a00263.html#gab5e2b0d71c6219bcfb381f4b70d7e7b0", null ],
-    [ "SEMA42_Lock", "a00263.html#gaab41e809f563868b6b477a7bb62c9ce2", null ],
-    [ "SEMA42_Unlock", "a00263.html#gac19b80ba254697a9e22b54866226e879", null ],
-    [ "SEMA42_GetGateStatus", "a00263.html#gace62f3aae17c5f6d75764f932f2a673f", null ],
-    [ "SEMA42_ResetGate", "a00263.html#ga6fc8ecf853c6394511d55536d37c7d4f", null ],
-    [ "SEMA42_ResetAllGates", "a00263.html#ga9695921a658471089cddadb8789bb138", null ]
+    [ "pint_pmatch_input_src_t", "a00263.html#ga2e05f827d6a43eade4c22e9d75bc5d76", [
+      [ "kPINT_PatternMatchInp0Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a51f543e6f680df9beb5841231b7b3a96", null ],
+      [ "kPINT_PatternMatchInp1Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a6fc5c9dbee30b375feb9ce6c86b224c2", null ],
+      [ "kPINT_PatternMatchInp2Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a41b057b493937cd87bc212cb2e316f8a", null ],
+      [ "kPINT_PatternMatchInp3Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a6be4432cb9e687d043a2c25c1af48869", null ],
+      [ "kPINT_PatternMatchInp4Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76aabc93fc28498f5577939f38e0513304c", null ],
+      [ "kPINT_PatternMatchInp5Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a78ff6e40ab17d81181284c56b62b77aa", null ],
+      [ "kPINT_PatternMatchInp6Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a9b2f5abc74e498a599f5c005a6cc911f", null ],
+      [ "kPINT_PatternMatchInp7Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a2c93115b816dc676460cfc1be85778f0", null ],
+      [ "kPINT_SecPatternMatchInp0Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a1f7f561990336a81a46f22395820907d", null ],
+      [ "kPINT_SecPatternMatchInp1Src", "a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a8cc05c9aec163085b7a2b4481fdc971d", null ]
+    ] ],
+    [ "pint_pmatch_bslice_t", "a00263.html#ga048bc24e58d7df40af2a45efaabeea9b", [
+      [ "kPINT_PatternMatchBSlice0", "a00263.html#gga048bc24e58d7df40af2a45efaabeea9ba106986aeb5e12c2b76e070def3b37d95", null ]
+    ] ],
+    [ "pint_pmatch_bslice_cfg_t", "a00263.html#gae1e5bfc17515fab76a1deab955203c6a", [
+      [ "kPINT_PatternMatchAlways", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa128703d2c2175a315aaffad869ed6a32", null ],
+      [ "kPINT_PatternMatchStickyRise", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa654c70eeed38b0be2271dc51d7cc04f5", null ],
+      [ "kPINT_PatternMatchStickyFall", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa9d2a3e9717c34de3a884b695f35a6c37", null ],
+      [ "kPINT_PatternMatchStickyBothEdges", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa059c3472509304186252b655cf486d8b", null ],
+      [ "kPINT_PatternMatchHigh", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa7dc0770cf7ffe184788c30bd1ac9c515", null ],
+      [ "kPINT_PatternMatchLow", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa3b4af984526871b66489b0eb294d2df5", null ],
+      [ "kPINT_PatternMatchNever", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aab5630ebfbc6e52c9b04f659918c094f2", null ],
+      [ "kPINT_PatternMatchBothEdges", "a00263.html#ggae1e5bfc17515fab76a1deab955203c6aaac967156901735a43316f7f1c4720328", null ]
+    ] ],
+    [ "PINT_Init", "a00263.html#gaf043d142dac622bedd50b736b52ac6e9", null ],
+    [ "PINT_PinInterruptConfig", "a00263.html#ga363edbba9536380728e44bd7d1a0e7df", null ],
+    [ "PINT_PinInterruptGetConfig", "a00263.html#ga12c568c9b7f6d46257dc63505a381701", null ],
+    [ "PINT_PinInterruptClrStatus", "a00263.html#gab784e6aea0129b0c90164462bd0dbac5", null ],
+    [ "PINT_PinInterruptGetStatus", "a00263.html#ga99a96e386a822de59ac2d60149ec47f3", null ],
+    [ "PINT_PinInterruptClrStatusAll", "a00263.html#gace94acb3f70964230b2606fdbeb5f58b", null ],
+    [ "PINT_PinInterruptGetStatusAll", "a00263.html#gab5dbaf58c90b1ef54bcd2c5dba9e178f", null ],
+    [ "PINT_PinInterruptClrFallFlag", "a00263.html#ga055c655c611b5645ce6903557ef809bb", null ],
+    [ "PINT_PinInterruptGetFallFlag", "a00263.html#gaace443444dec2e5b7e3e20cf69c53def", null ],
+    [ "PINT_PinInterruptClrFallFlagAll", "a00263.html#ga11c44cbe5b42c79b22a3053c85b1e5d0", null ],
+    [ "PINT_PinInterruptGetFallFlagAll", "a00263.html#ga58eced039e8c793b7ff148d6cfacde5b", null ],
+    [ "PINT_PinInterruptClrRiseFlag", "a00263.html#ga269af5856a4cfd5d2a171b4777d6884a", null ],
+    [ "PINT_PinInterruptGetRiseFlag", "a00263.html#gaec7a3986f92f8c11a70a80af1a93a3b6", null ],
+    [ "PINT_PinInterruptClrRiseFlagAll", "a00263.html#ga53dd5706866fa0313689db6e4d9c1a9b", null ],
+    [ "PINT_PinInterruptGetRiseFlagAll", "a00263.html#ga08b623f67c277521182f8c9e630037ae", null ],
+    [ "PINT_PatternMatchConfig", "a00263.html#ga1dc66cd865640c0b60eb128a868eab37", null ],
+    [ "PINT_PatternMatchGetConfig", "a00263.html#ga6d4f8e83cec4bc716231c97c2ceb5421", null ],
+    [ "PINT_PatternMatchGetStatus", "a00263.html#ga74b3eece6c6eabc38f3194b125ff80d5", null ],
+    [ "PINT_PatternMatchGetStatusAll", "a00263.html#ga567b159bbfa265ed02c4900769ed8fe4", null ],
+    [ "PINT_PatternMatchResetDetectLogic", "a00263.html#ga00d40f5f01c445206f1f800dcc7b6e89", null ],
+    [ "PINT_PatternMatchEnable", "a00263.html#ga8911d499fb65ffe496c01f65bad9314f", null ],
+    [ "PINT_PatternMatchDisable", "a00263.html#ga4dd886dc387a64a5cb146ccd7297e1e1", null ],
+    [ "PINT_PatternMatchEnableRXEV", "a00263.html#gaf5754b4b1d1436c359dde18101657d4e", null ],
+    [ "PINT_PatternMatchDisableRXEV", "a00263.html#ga73f0e7280f898bf99fe92b3519878a77", null ],
+    [ "PINT_EnableCallback", "a00263.html#gac6b1406205adace6696a1647250ad76d", null ],
+    [ "PINT_DisableCallback", "a00263.html#gada262638d555d9a503ddcdbed24ec475", null ],
+    [ "PINT_Deinit", "a00263.html#ga78ffa3e09e17db8dc6a9038123ad1c46", null ],
+    [ "PINT_EnableCallbackByIndex", "a00263.html#ga2cb0ee73a24657dd6994cb00b78c3137", null ],
+    [ "PINT_DisableCallbackByIndex", "a00263.html#gad7300bf374c0cdc65fadff76f3ee7e5c", null ]
 ];

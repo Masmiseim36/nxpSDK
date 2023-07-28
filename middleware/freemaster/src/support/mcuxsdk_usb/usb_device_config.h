@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -33,12 +33,23 @@
 #undef FSL_FEATURE_USB_KHCI_COUNT
 #endif
 
+#ifdef CPU_MCXN947VDF_cm33_core0
+/* MCXN1 has both KHCI and EHCI, force using EHCI */
+#undef FSL_FEATURE_USB_KHCI_COUNT
+#undef FSL_FEATURE_USBHS_EHCI_COUNT
+#define FSL_FEATURE_USBHS_EHCI_COUNT 1
+#endif
+
 /* Determine USB configuration automatically from the processor-specifc feature options */
 
 #if defined(FSL_FEATURE_USB_KHCI_COUNT) && FSL_FEATURE_USB_KHCI_COUNT>0
 
     /*! brief USB interrupt vector name */
-    #define USB_MCU_INT_HANDLER USB0_IRQHandler
+    #if defined(USBFS_IRQHandler)
+        #define USB_MCU_INT_HANDLER USBFS_IRQHandler /* MCXNxxx with both KHCI and EHCI */
+    #else
+        #define USB_MCU_INT_HANDLER USB0_IRQHandler  /* Default USB0 ISR name */
+    #endif
 
     /*! brief USB interrupt vectors indexes */
     #define USB_IRQS_LIST USB_IRQS

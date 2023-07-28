@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,13 +8,13 @@
 #include "dsp_support.h"
 #include "fsl_debug_console.h"
 
-#include "dsp_config.h"
 #include "fsl_wm8904.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
+#include "dsp_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -49,11 +49,11 @@ codec_config_t g_boardCodecConfig = {.codecDevType = kCODEC_WM8904, .codecDevCon
 
 int BOARD_CODEC_Init(void)
 {
-    PRINTF("Configure WM8904 codec\r\n");
+    PRINTF("[CM33 Main] Configure WM8904 codec\r\n");
 
     if (CODEC_Init(&g_codecHandle, &g_boardCodecConfig) != kStatus_Success)
     {
-        PRINTF("WM8904_Init failed!\r\n");
+        PRINTF("[CM33 Main] WM8904_Init failed!\r\n");
         return -1;
     }
 
@@ -107,12 +107,12 @@ int main(void)
     /* Set flexcomm3 SCK, WS from shared signal set 0 */
     SYSCTL1->FCCTRLSEL[3] = SYSCTL1_FCCTRLSEL_SCKINSEL(1) | SYSCTL1_FCCTRLSEL_WSINSEL(1);
 
-    PRINTF("\r\nAudio demo started. Initialize pins and codec on core 'Cortex-M33'\r\n");
+    PRINTF("\r\n[CM33 Main] Audio demo started. Initialize pins and codec on core 'Cortex-M33'\r\n");
 
     BOARD_CODEC_Init();
 
     /* Print the initial banner */
-    PRINTF("Pins and codec initialized.\r\n");
+    PRINTF("[CM33 Main] Pins and codec initialized.\r\n");
 
     /* Copy DSP image to RAM and start DSP core. */
     BOARD_DSP_Init();

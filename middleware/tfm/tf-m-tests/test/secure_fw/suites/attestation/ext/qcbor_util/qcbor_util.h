@@ -12,7 +12,7 @@
 #define __QCBOR_UTILS_H__
 
 
-#include "qcbor.h"
+#include "qcbor/qcbor.h"
 #include "q_useful_buf.h"
 #include "attest_token.h" /* For error codes */
 

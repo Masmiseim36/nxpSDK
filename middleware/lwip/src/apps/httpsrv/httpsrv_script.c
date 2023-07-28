@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016, 2019 NXP
+ * Copyright 2016, 2019, 2023 NXP
  * All rights reserved.
  *
  *
@@ -83,6 +83,17 @@ void httpsrv_call_cgi(HTTPSRV_CGI_CALLBACK_FN function,
 
     getsockname(session->sock, &l_address, &length);
     getpeername(session->sock, &r_address, &length);
+#if LWIP_IPV6
+    if (l_address.sa_family == AF_INET6)
+    {
+        inet_ntop(l_address.sa_family, ((struct sockaddr_in6 *)&l_address)->sin6_addr.s6_addr, server_ip,
+                  sizeof(server_ip));
+        inet_ntop(r_address.sa_family, ((struct sockaddr_in6 *)&r_address)->sin6_addr.s6_addr, remote_ip,
+                  sizeof(remote_ip));
+        cgi_param.server_port = ((struct sockaddr_in6 *)&l_address)->sin6_port;
+    }
+    else
+#endif
 #if LWIP_IPV4
     if (l_address.sa_family == AF_INET)
     {
@@ -91,17 +102,6 @@ void httpsrv_call_cgi(HTTPSRV_CGI_CALLBACK_FN function,
         inet_ntop(r_address.sa_family, &((struct sockaddr_in *)&r_address)->sin_addr.s_addr, remote_ip,
                   sizeof(remote_ip));
         cgi_param.server_port = ((struct sockaddr_in *)&l_address)->sin_port;
-    }
-    else
-#endif
-#if LWIP_IPV6
-        if (l_address.sa_family == AF_INET6)
-    {
-        inet_ntop(l_address.sa_family, ((struct sockaddr_in6 *)&l_address)->sin6_addr.s6_addr, server_ip,
-                  sizeof(server_ip));
-        inet_ntop(r_address.sa_family, ((struct sockaddr_in6 *)&r_address)->sin6_addr.s6_addr, remote_ip,
-                  sizeof(remote_ip));
-        cgi_param.server_port = ((struct sockaddr_in6 *)&l_address)->sin6_port;
     }
     else
 #endif

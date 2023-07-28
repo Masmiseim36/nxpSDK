@@ -12,7 +12,6 @@
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
@@ -49,10 +48,6 @@
           <SingleFlagMapEntry>
             <key>OptimizeSpace</key>
             <value use="true" flag="-Os"/>
-          </SingleFlagMapEntry>
-          <SingleFlagMapEntry>
-            <key>CompilerEnableLongCall</key>
-            <value use="true" flag="-mlongcalls"/>
           </SingleFlagMapEntry>
           <SingleFlagMapEntry>
             <key>WarningSetting</key>

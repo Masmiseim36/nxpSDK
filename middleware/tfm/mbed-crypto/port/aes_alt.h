@@ -22,7 +22,7 @@
 
 /*  Copyright (C) 2006-2018, Arm Limited (or its affiliates), All Rights Reserved.
  *  SPDX-License-Identifier: Apache-2.0
- *  Copyright 2018 NXP. Not a Contribution
+ *  Copyright 2018, 2022 NXP. Not a Contribution
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -55,8 +55,8 @@ extern "C" {
  */
 #define mbedtls_aes_context hashcrypt_handle_t
 
-#elif defined(MBEDTLS_MCUX_CSS_AES) && MBEDTLS_MCUX_CSS_AES
-/* CSS AES */
+#elif ((defined(MBEDTLS_MCUX_CSS_AES) && MBEDTLS_MCUX_CSS_AES) || (defined(MBEDTLS_MCUX_ELS_AES) && MBEDTLS_MCUX_ELS_AES)) 
+/* CSS/ELS AES */
 typedef struct
 {
     uint32_t keyLength;  /*!< AES key length in bytes. */

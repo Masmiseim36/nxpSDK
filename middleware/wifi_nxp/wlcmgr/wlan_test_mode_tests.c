@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides WLAN Test Mode APIs
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -67,6 +67,16 @@ static void dump_wlan_set_channel_usage(void)
     (void)PRINTF("\r\n");
 }
 
+static void dump_wlan_set_radio_mode_usage()
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-rf-radio-mode <radio_mode> \r\n");
+    (void)PRINTF("0: set the radio in power down mode\r\n");
+    (void)PRINTF("3: sets the radio in 5GHz band, 1X1 mode(path A)\r\n");
+    (void)PRINTF("11: sets the radio in 2.4GHz band, 1X1 mode(path A)\r\n");
+    (void)PRINTF("\r\n");
+}
+
 static void wlan_rf_channel_set(int argc, char *argv[])
 {
     int ret;
@@ -95,6 +105,41 @@ static void wlan_rf_channel_set(int argc, char *argv[])
     {
         (void)PRINTF("Channel configuration failed\r\n");
         dump_wlan_set_channel_usage();
+    }
+}
+
+static void dump_wlan_get_radio_mode_usage()
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-get-rf-radio-mode \r\n");
+}
+
+static void wlan_rf_radio_mode_get(int argc, char *argv[])
+{
+    int ret;
+    uint8_t radio_mode;
+
+    if (!rf_test_mode)
+    {
+        dump_wlan_set_rf_test_mode();
+        return;
+    }
+
+    if (argc != 1)
+    {
+        dump_wlan_get_radio_mode_usage();
+        return;
+    }
+
+    ret = wlan_get_rf_radio_mode(&radio_mode);
+    if (ret == WM_SUCCESS)
+    {
+        (void)PRINTF("Configured radio mode is: %d\r\n", radio_mode);
+    }
+    else
+    {
+        (void)PRINTF("Radio mode configuration read failed\r\n");
+        dump_wlan_get_radio_mode_usage();
     }
 }
 
@@ -590,12 +635,41 @@ static void dump_wlan_set_tx_power_usage(void)
     (void)PRINTF("\r\n");
 }
 
+#if !defined(SD8978) && !defined(SD8987)
+/*
+ *  @brief PowerLevelToDUT11Bits
+ *
+ *  @param Pwr		A user txpwr values of type int
+ *  @param PowerLevel	A Pointer of uint32 type for converted txpwr vals
+ *  @return		nothing just exit
+ */
+static void PowerLevelToDUT11Bits(int Pwr, uint32_t *PowerLevel)
+{
+    int Z = 0;
+
+    if ((Pwr > 64) || (Pwr < -64))
+        return;
+
+    Z = (int)(Pwr * 16);
+    if (Z < 0)
+    {
+        Z = Z + (1 << 11);
+    }
+    (*PowerLevel) = (uint32_t)Z;
+
+    return;
+}
+#endif
+
 static void wlan_rf_tx_power_set(int argc, char *argv[])
 {
     int ret;
     uint8_t power;
     uint8_t mod;
     uint8_t path_id;
+#if !defined(SD8978) && !defined(SD8987)
+    uint32_t power_converted = 0xffffffff;
+#endif
 
     if (!rf_test_mode)
     {
@@ -615,23 +689,29 @@ static void wlan_rf_tx_power_set(int argc, char *argv[])
 
     if (power > 24U)
     {
-        dump_wlan_set_rx_antenna_usage();
+        dump_wlan_set_tx_power_usage();
         return;
     }
 
     if (mod != 0U && mod != 1U && mod != 2U)
     {
-        dump_wlan_set_rx_antenna_usage();
+        dump_wlan_set_tx_power_usage();
         return;
     }
 
     if (path_id != 0U && path_id != 1U && path_id != 2U)
     {
-        dump_wlan_set_rx_antenna_usage();
+        dump_wlan_set_tx_power_usage();
         return;
     }
 
+#if !defined(SD8978) && !defined(SD8987)
+    /* We need to convert user power vals including -ve vals as per labtool */
+    PowerLevelToDUT11Bits((int)power, &power_converted);
+    ret = wlan_set_rf_tx_power(power_converted, mod, path_id);
+#else
     ret = wlan_set_rf_tx_power(power, mod, path_id);
+#endif
     if (ret == WM_SUCCESS)
     {
         (void)PRINTF("Tx Power configuration successful\r\n");
@@ -679,7 +759,7 @@ static void wlan_rf_tx_frame_set(int argc, char *argv[])
     uint32_t data_rate;
     uint32_t frame_pattern;
     uint32_t frame_length;
-    uint32_t adjust_burst_sifs;
+    uint16_t adjust_burst_sifs;
     uint32_t burst_sifs_in_us;
     uint32_t short_preamble;
     uint32_t act_sub_ch;
@@ -688,7 +768,7 @@ static void wlan_rf_tx_frame_set(int argc, char *argv[])
     uint32_t tx_bf;
     uint32_t gf_mode;
     uint32_t stbc;
-    uint32_t bssid[MLAN_MAC_ADDR_LENGTH];
+    uint8_t bssid[MLAN_MAC_ADDR_LENGTH];
 
     if (!rf_test_mode)
     {
@@ -721,9 +801,9 @@ static void wlan_rf_tx_frame_set(int argc, char *argv[])
     }
 
     enable        = strtol(argv[1], NULL, 10);
-    data_rate     = strtol(argv[2], NULL, 10);
+    data_rate     = strtol(argv[2], NULL, 16);
     errno         = 0;
-    frame_pattern = strtol(argv[3], NULL, 16);
+    frame_pattern = strtoul(argv[3], NULL, 16);
     if (errno != 0)
     {
         (void)PRINTF("Error during strtoul errno:%d", errno);
@@ -766,8 +846,8 @@ disable:
         (void)PRINTF("Tx Frame configuration successful\r\n");
         (void)PRINTF("  Enable                    : %s\r\n", enable ? "enable" : "disable");
         (void)PRINTF("  Tx Data Rate              : %d\r\n", data_rate);
-        (void)PRINTF("  Payload Pattern           : 0x%08X\r\n", frame_pattern);
-        (void)PRINTF("  Payload Length            : 0x%08X\r\n", frame_length);
+        (void)PRINTF("  Payload Pattern           : 0x%X\r\n", frame_pattern);
+        (void)PRINTF("  Payload Length            : 0x%X\r\n", frame_length);
         (void)PRINTF("  Adjust Burst SIFS3 Gap    : %s\r\n", adjust_burst_sifs ? "enable" : "disable");
         (void)PRINTF("  Burst SIFS in us          : %d us\r\n", burst_sifs_in_us);
         (void)PRINTF("  Short Preamble            : %s\r\n", short_preamble ? "enable" : "disable");
@@ -789,6 +869,287 @@ disable:
     }
 }
 
+static void dump_wlan_set_rf_trigger_frame_cfg_usage(void)
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF(
+        "wlan-set-rf-trigger-frame-cfg <Enable_tx> <Standalone_hetb> <FRAME_CTRL_TYPE> <FRAME_CTRL_SUBTYPE> "
+        "<FRAME_DURATION>"
+        "<TriggerType> <UlLen> <MoreTF> <CSRequired> <UlBw> <LTFType> <LTFMode>"
+        "<LTFSymbol> <UlSTBC> <LdpcESS> <ApTxPwr> <PreFecPadFct> <PeDisambig> <SpatialReuse>"
+        "<Doppler> <HeSig2> <AID12> <RUAllocReg> <RUAlloc> <UlCodingType> <UlMCS> <UlDCM>"
+        "<SSAlloc> <UlTargetRSSI> <MPDU_MU_SF> <TID_AL> <AC_PL> <Pref_AC>\r\n");
+    (void)PRINTF("Enable_tx                   (Enable/Disable trigger frame transmission)\r\n");
+    (void)PRINTF("Standalone_hetb             (Enable/Disable Standalone HE TB support.)\r\n");
+    (void)PRINTF("FRAME_CTRL_TYPE             (Frame control type)\r\n");
+    (void)PRINTF("FRAME_CTRL_SUBTYPE          (Frame control subtype)\r\n");
+    (void)PRINTF("FRAME_DURATION              (Max Duration time)\r\n");
+    (void)PRINTF("TriggerType                 (Identifies the Trigger frame variant and its encoding)\r\n");
+    (void)PRINTF(
+        "UlLen                       (Indicates the value of the L-SIG LENGTH field of the solicited HE TB PPDU)\r\n");
+    (void)PRINTF(
+        "MoreTF                      (Indicates whether a subsequent Trigger frame is scheduled for transmission)\r\n");
+    (void)PRINTF(
+        "CSRequired                  (Required to use ED to sense the medium and to consider the medium state and the "
+        "NAV in determining whether to respond)\r\n");
+    (void)PRINTF("UlBw                        (Indicates the bandwidth in the HE-SIG-A field of the HE TB PPDU)\r\n");
+    (void)PRINTF("LTFType                     (Indicates the LTF type of the HE TB PPDU response)\r\n");
+    (void)PRINTF("LTFMode                     (Indicates the LTF mode for an HE TB PPDU)\r\n");
+    (void)PRINTF("LTFSymbol                   (Indicates the number of LTF symbols present in the HE TB PPDU)\r\n");
+    (void)PRINTF(
+        "UlSTBC                      (Indicates the status of STBC encoding for the solicited HE TB PPDUs)\r\n");
+    (void)PRINTF("LdpcESS                     (Indicates the status of the LDPC extra symbol segment)\r\n");
+    (void)PRINTF(
+        "ApTxPwr                     (Indicates the AP’s combined transmit power at the transmit antenna connector of "
+        "all the antennas used to transmit the triggering PPDU)\r\n");
+    (void)PRINTF("PreFecPadFct                (Indicates the pre-FEC padding factor)\r\n");
+    (void)PRINTF("PeDisambig                  (Indicates PE disambiguity)\r\n");
+    (void)PRINTF(
+        "SpatialReuse                (Carries the values to be included in the Spatial Reuse fields in the HE-SIG-A "
+        "field of the solicited HE TB PPDUs)\r\n");
+    (void)PRINTF("Doppler                     (Indicate that a midamble is present in the HE TB PPDU)\r\n");
+    (void)PRINTF(
+        "HeSig2                      (Carries the value to be included in the Reserved field in the HE-SIG-A2 subfield "
+        "of the solicited HE TB PPDUs)\r\n");
+    (void)PRINTF(
+        "AID12                       (If set to 0 allocates one or more contiguous RA-RUs for associated STAs)\r\n");
+    (void)PRINTF("RUAllocReg                  (RUAllocReg)\r\n");
+    (void)PRINTF("RUAlloc                     (Identifies the size and the location of the RU)\r\n");
+    (void)PRINTF("UlCodingType                (Indicates the code type of the solicited HE TB PPDU)\r\n");
+    (void)PRINTF("UlMCS                       (Indicates the HE-MCS of the solicited HE TB PPDU)\r\n");
+    (void)PRINTF("UlDCM                       (Indicates DCM of the solicited HE TB PPDU)\r\n");
+    (void)PRINTF("SSAlloc                     (Indicates the spatial streams of the solicited HE TB PPDU)\r\n");
+    (void)PRINTF("UlTargetRSSI                (Indicates the expected receive signal power)\r\n");
+    (void)PRINTF(
+        "MPDU_MU_SF                  (Used for calculating the value by which the minimum MPDU start spacing is "
+        "multiplied)\r\n");
+    (void)PRINTF(
+        "TID_AL                      (Indicates the MPDUs allowed in an A-MPDU carried in the HE TB PPDU and the "
+        "maximum number of TIDs that can be aggregated by the STA in the A-MPDU)\r\n");
+    (void)PRINTF("AC_PL                       (Reserved)\r\n");
+    (void)PRINTF(
+        "Pref_AC                     (Indicates the lowest AC that is recommended for aggregation of MPDUs in the "
+        "A-MPDU contained in the HE TB PPDU sent as a response to the Trigger frame)\r\n");
+}
+
+static void wlan_set_rf_trigger_frame_cfg(int argc, char *argv[])
+{
+    int ret;
+    uint32_t Enable_tx;
+    uint32_t Standalone_hetb;
+    uint8_t FRAME_CTRL_TYPE;
+    uint8_t FRAME_CTRL_SUBTYPE;
+    uint16_t FRAME_DURATION;
+    uint64_t TriggerType;
+    uint64_t UlLen;
+    uint64_t MoreTF;
+    uint64_t CSRequired;
+    uint64_t UlBw;
+    uint64_t LTFType;
+    uint64_t LTFMode;
+    uint64_t LTFSymbol;
+    uint64_t UlSTBC;
+    uint64_t LdpcESS;
+    uint64_t ApTxPwr;
+    uint64_t PreFecPadFct;
+    uint64_t PeDisambig;
+    uint64_t SpatialReuse;
+    uint64_t Doppler;
+    uint64_t HeSig2;
+    uint32_t AID12;
+    uint32_t RUAllocReg;
+    uint32_t RUAlloc;
+    uint32_t UlCodingType;
+    uint32_t UlMCS;
+    uint32_t UlDCM;
+    uint32_t SSAlloc;
+    uint8_t UlTargetRSSI;
+    uint8_t MPDU_MU_SF;
+    uint8_t TID_AL;
+    uint8_t AC_PL;
+    uint8_t Pref_AC;
+
+    if (!rf_test_mode)
+    {
+        dump_wlan_set_rf_test_mode();
+        return;
+    }
+
+    if (argc != 34)
+    {
+        dump_wlan_set_rf_trigger_frame_cfg_usage();
+        return;
+    }
+
+    Enable_tx          = strtol(argv[1], NULL, 10);
+    Standalone_hetb    = strtol(argv[2], NULL, 10);
+    FRAME_CTRL_TYPE    = strtol(argv[3], NULL, 10);
+    FRAME_CTRL_SUBTYPE = strtol(argv[4], NULL, 10);
+    FRAME_DURATION     = strtol(argv[5], NULL, 10);
+    TriggerType        = strtol(argv[6], NULL, 10);
+    UlLen              = strtol(argv[7], NULL, 10);
+    MoreTF             = strtol(argv[8], NULL, 10);
+    CSRequired         = strtol(argv[9], NULL, 10);
+    UlBw               = strtol(argv[10], NULL, 10);
+    LTFType            = strtol(argv[11], NULL, 10);
+    LTFMode            = strtol(argv[12], NULL, 10);
+    LTFSymbol          = strtol(argv[13], NULL, 10);
+    UlSTBC             = strtol(argv[14], NULL, 10);
+    LdpcESS            = strtol(argv[15], NULL, 10);
+    ApTxPwr            = strtol(argv[16], NULL, 10);
+    PreFecPadFct       = strtol(argv[17], NULL, 10);
+    PeDisambig         = strtol(argv[18], NULL, 10);
+    SpatialReuse       = strtol(argv[19], NULL, 10);
+    Doppler            = strtol(argv[20], NULL, 10);
+    HeSig2             = strtol(argv[21], NULL, 10);
+    AID12              = strtol(argv[22], NULL, 10);
+    RUAllocReg         = strtol(argv[23], NULL, 10);
+    RUAlloc            = strtol(argv[24], NULL, 10);
+    UlCodingType       = strtol(argv[25], NULL, 10);
+    UlMCS              = strtol(argv[26], NULL, 10);
+    UlDCM              = strtol(argv[27], NULL, 10);
+    SSAlloc            = strtol(argv[28], NULL, 10);
+    UlTargetRSSI       = strtol(argv[29], NULL, 10);
+    MPDU_MU_SF         = strtol(argv[30], NULL, 10);
+    TID_AL             = strtol(argv[31], NULL, 10);
+    AC_PL              = strtol(argv[32], NULL, 10);
+    Pref_AC            = strtol(argv[33], NULL, 10);
+
+    ret = wlan_rf_trigger_frame_cfg(Enable_tx, Standalone_hetb, FRAME_CTRL_TYPE, FRAME_CTRL_SUBTYPE, FRAME_DURATION,
+                                    TriggerType, UlLen, MoreTF, CSRequired, UlBw, LTFType, LTFMode, LTFSymbol, UlSTBC,
+                                    LdpcESS, ApTxPwr, PreFecPadFct, PeDisambig, SpatialReuse, Doppler, HeSig2, AID12,
+                                    RUAllocReg, RUAlloc, UlCodingType, UlMCS, UlDCM, SSAlloc, UlTargetRSSI, MPDU_MU_SF,
+                                    TID_AL, AC_PL, Pref_AC);
+    if (ret == WM_SUCCESS)
+    {
+        (void)PRINTF("RF Trigger Frame configuration successful\r\n");
+        (void)PRINTF("Enable_tx                   : %d\r\n", Enable_tx);
+        (void)PRINTF("Standalone_hetb             : %d\r\n", Standalone_hetb);
+        (void)PRINTF("FRAME_CTRL_TYPE             : %d\r\n", FRAME_CTRL_TYPE);
+        (void)PRINTF("FRAME_CTRL_SUBTYPE          : %d\r\n", FRAME_CTRL_SUBTYPE);
+        (void)PRINTF("FRAME_DURATION              : %d\r\n", FRAME_DURATION);
+        (void)PRINTF("TriggerType                 : %lld\r\n", TriggerType);
+        (void)PRINTF("UlLen                       : %lld\r\n", UlLen);
+        (void)PRINTF("MoreTF                      : %lld\r\n", MoreTF);
+        (void)PRINTF("CSRequired                  : %lld\r\n", CSRequired);
+        (void)PRINTF("UlBw                        : %lld\r\n", UlBw);
+        (void)PRINTF("LTFType                     : %lld\r\n", LTFType);
+        (void)PRINTF("LTFMode                     : %lld\r\n", LTFMode);
+        (void)PRINTF("LTFSymbol                   : %lld\r\n", LTFSymbol);
+        (void)PRINTF("UlSTBC                      : %lld\r\n", UlSTBC);
+        (void)PRINTF("LdpcESS                     : %lld\r\n", LdpcESS);
+        (void)PRINTF("ApTxPwr                     : %lld\r\n", ApTxPwr);
+        (void)PRINTF("PreFecPadFct                : %lld\r\n", PreFecPadFct);
+        (void)PRINTF("PeDisambig                  : %lld\r\n", PeDisambig);
+        (void)PRINTF("SpatialReuse                : %lld\r\n", SpatialReuse);
+        (void)PRINTF("Doppler                     : %lld\r\n", Doppler);
+        (void)PRINTF("HeSig2                      : %lld\r\n", HeSig2);
+        (void)PRINTF("AID12                       : %d\r\n", AID12);
+        (void)PRINTF("RUAllocReg                  : %d\r\n", RUAllocReg);
+        (void)PRINTF("RUAlloc                     : %d\r\n", RUAlloc);
+        (void)PRINTF("UlCodingType                : %d\r\n", UlCodingType);
+        (void)PRINTF("UlMCS                       : %d\r\n", UlMCS);
+        (void)PRINTF("UlDCM                       : %d\r\n", UlDCM);
+        (void)PRINTF("SSAlloc                     : %d\r\n", SSAlloc);
+        (void)PRINTF("UlTargetRSSI                : %d\r\n", UlTargetRSSI);
+        (void)PRINTF("MPDU_MU_SF                  : %d\r\n", MPDU_MU_SF);
+        (void)PRINTF("TID_AL                      : %d\r\n", TID_AL);
+        (void)PRINTF("AC_PL                       : %d\r\n", AC_PL);
+        (void)PRINTF("Pref_AC                     : %d\r\n", Pref_AC);
+    }
+    else
+    {
+        (void)PRINTF("RF Trigger Frame configuration failed\r\n");
+        dump_wlan_set_rf_trigger_frame_cfg_usage();
+    }
+}
+
+static void dump_wlan_set_rf_he_tb_tx_usage(void)
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-rf-he-tb-tx <enable> <qnum> <uint16_t aid> <axq_mu_timer> <tx_power>\r\n");
+    (void)PRINTF("Enable           (Enable/Disable trigger response mode)\r\n");
+    (void)PRINTF("qnum             (AXQ to be used for the trigger response frame)\r\n");
+    (void)PRINTF("aid              (AID of the peer to which response is to be generated)\r\n");
+    (void)PRINTF("axq_mu_timer     (MU timer for the AXQ on which response is sent)\r\n");
+    (void)PRINTF("tx_power         (TxPwr to be configured for the response)\r\n");
+}
+
+static void wlan_set_rf_he_tb_tx(int argc, char *argv[])
+{
+    int ret;
+
+    uint16_t enable;
+    uint16_t qnum;
+    uint16_t aid;
+    uint16_t axq_mu_timer;
+    int16_t tx_power;
+
+    if (!rf_test_mode)
+    {
+        dump_wlan_set_rf_test_mode();
+        return;
+    }
+
+    if (argc != 6)
+    {
+        dump_wlan_set_rf_he_tb_tx_usage();
+        return;
+    }
+
+    enable       = strtol(argv[1], NULL, 10);
+    qnum         = strtol(argv[2], NULL, 10);
+    aid          = strtol(argv[3], NULL, 10);
+    axq_mu_timer = strtol(argv[4], NULL, 10);
+    tx_power     = strtol(argv[5], NULL, 10);
+
+    ret = wlan_cfg_rf_he_tb_tx(enable, qnum, aid, axq_mu_timer, tx_power);
+    if (ret == WM_SUCCESS)
+    {
+        (void)PRINTF("HE TB Tx configuration successful\r\n");
+        (void)PRINTF("Enable           : %d\r\n", enable);
+        (void)PRINTF("qnum             : %d\r\n", qnum);
+        (void)PRINTF("aid              : %d\r\n", aid);
+        (void)PRINTF("axq_mu_timer     : %d\r\n", axq_mu_timer);
+        (void)PRINTF("tx_power         : %d\r\n", tx_power);
+    }
+    else
+    {
+        (void)PRINTF("Wrong he tb tx configurations\r\n");
+        dump_wlan_set_rf_he_tb_tx_usage();
+    }
+}
+
+static void wlan_rf_radio_mode_set(int argc, char *argv[])
+{
+    int ret;
+    uint8_t radio_mode;
+
+    if (!rf_test_mode)
+    {
+        dump_wlan_set_rf_test_mode();
+        return;
+    }
+
+    if (argc != 2)
+    {
+        dump_wlan_set_radio_mode_usage();
+        return;
+    }
+
+    radio_mode = atoi(argv[1]);
+    ret        = wlan_set_rf_radio_mode(radio_mode);
+    if (ret == WM_SUCCESS)
+    {
+        (void)PRINTF("Set radio mode successful\r\n");
+    }
+    else
+    {
+        (void)PRINTF("Set radio mode failed!\r\n");
+        dump_wlan_set_radio_mode_usage();
+    }
+}
+
 static struct cli_command wlan_test_mode_commands[] = {
     {"wlan-set-rf-test-mode", NULL, wlan_rf_test_mode_set},
     {"wlan-set-rf-tx-antenna", "<antenna>", wlan_rf_tx_antenna_set},
@@ -801,6 +1162,8 @@ static struct cli_command wlan_test_mode_commands[] = {
     {"wlan-get-rf-bandwidth", NULL, wlan_rf_bandwidth_get},
     {"wlan-set-rf-channel", "<channel>", wlan_rf_channel_set},
     {"wlan-get-rf-channel", NULL, wlan_rf_channel_get},
+    {"wlan-set-rf-radio-mode", "<radio_mode>", wlan_rf_radio_mode_set},
+    {"wlan-get-rf-radio-mode", NULL, wlan_rf_radio_mode_get},
     {"wlan-set-rf-tx-power", "<tx_power> <modulation> <path_id>", wlan_rf_tx_power_set},
     {"wlan-set-rf-tx-cont-mode", "<enable_tx> <cw_mode> <payload_pattern> <cs_mode> <act_sub_ch> <tx_rate>",
      wlan_rf_tx_cont_mode_set},
@@ -808,6 +1171,14 @@ static struct cli_command wlan_test_mode_commands[] = {
      "<start> <data_rate> <frame_pattern> <frame_len> <adjust_burst_sifs> <burst_sifs_in_us> <short_preamble> "
      "<act_sub_ch> <short_gi> <adv_coding> <tx_bf> <gf_mode> <stbc> <bssid>",
      wlan_rf_tx_frame_set},
+    {"wlan-set-rf-trigger-frame-cfg",
+     "<Enable_tx> <Standalone_hetb> <FRAME_CTRL_TYPE> <FRAME_CTRL_SUBTYPE> <FRAME_DURATION>"
+     "<TriggerType> <UlLen> <MoreTF> <CSRequired> <UlBw> <LTFType> <LTFMode>"
+     "<LTFSymbol> <UlSTBC> <LdpcESS> <ApTxPwr> <PreFecPadFct> <PeDisambig> <SpatialReuse>"
+     "<Doppler> <HeSig2> <AID12> <RUAllocReg> <RUAlloc> <UlCodingType> <UlMCS> <UlDCM>"
+     "<SSAlloc> <UlTargetRSSI> <MPDU_MU_SF> <TID_AL> <AC_PL> <Pref_AC> ",
+     wlan_set_rf_trigger_frame_cfg},
+    {"wlan-set-rf-he-tb-tx", "<enable> <qnum> <aid> <axq_mu_timer> <tx_power>", wlan_set_rf_he_tb_tx},
     {"wlan-get-and-reset-rf-per", NULL, wlan_rf_per_get},
 };
 

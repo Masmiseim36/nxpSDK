@@ -1,6 +1,6 @@
 var a00036 =
 [
-    [ "i2c_master_dma_handle_t", "a00036.html#a00294", [
+    [ "i2c_master_dma_handle_t", "a00036.html#a00298", [
       [ "state", "a00036.html#acb92e84abaa14c90df432c0a9e2584d4", null ],
       [ "transferCount", "a00036.html#a73cc3322c771d1724d27ac9e68ea0651", null ],
       [ "remainingBytesDMA", "a00036.html#a7f6ca41c6a8299d2e442d8843874f925", null ],

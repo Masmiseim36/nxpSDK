@@ -8,8 +8,8 @@
 #include "build_config_check.h"
 #include "fih.h"
 #include "ffm/tfm_boot_data.h"
-#include "region.h"
-#include "spm_ipc.h"
+#include "memory_symbols.h"
+#include "spm.h"
 #include "tfm_hal_isolation.h"
 #include "tfm_hal_platform.h"
 #include "tfm_api.h"
@@ -18,7 +18,7 @@
 #include "tfm_plat_otp.h"
 #include "tfm_plat_provisioning.h"
 
-REGION_DECLARE(Image$$, ARM_LIB_STACK, $$ZI$$Base);
+uintptr_t spm_boundary = (uintptr_t)NULL;
 
 static fih_int tfm_core_init(void)
 {
@@ -29,11 +29,10 @@ static fih_int tfm_core_init(void)
      * Access to any peripheral should be performed after programming
      * the necessary security components such as PPC/SAU.
      */
-    FIH_CALL(tfm_hal_set_up_static_boundaries, fih_rc);
+    FIH_CALL(tfm_hal_set_up_static_boundaries, fih_rc, &spm_boundary);
     if (fih_not_eq(fih_rc, fih_int_encode(TFM_HAL_SUCCESS))) {
         FIH_RET(fih_int_encode(TFM_ERROR_GENERIC));
     }
-
 #ifdef TFM_FIH_PROFILE_ON
     FIH_CALL(tfm_hal_verify_static_boundaries, fih_rc);
     if (fih_not_eq(fih_rc, fih_int_encode(TFM_HAL_SUCCESS))) {
@@ -87,8 +86,7 @@ int main(void)
     fih_int fih_rc = FIH_FAILURE;
 
     /* set Main Stack Pointer limit */
-    tfm_arch_set_msplim((uint32_t)&REGION_NAME(Image$$, ARM_LIB_STACK,
-                                                                   $$ZI$$Base));
+    tfm_arch_set_msplim(SPM_BOOT_STACK_TOP);
 
     fih_delay_init();
 
@@ -108,6 +106,14 @@ int main(void)
      * secure SVC or SecureFault. Do it before PSA API initialization.
      */
     tfm_arch_set_secure_exception_priorities();
+
+#ifdef TFM_FIH_PROFILE_ON
+    /* Check secure exception priority */
+    FIH_CALL(tfm_arch_verify_secure_exception_priorities, fih_rc);
+    if (fih_not_eq(fih_rc, FIH_SUCCESS)) {
+         tfm_core_panic();
+    }
+#endif
 
     /* Move to handler mode for further SPM initialization. */
     tfm_core_handler_mode();

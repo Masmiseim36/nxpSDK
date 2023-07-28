@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
 # Copyright (c) 2020, IAR Systems AB. All rights reserved.
-# Copyright (c) 2020, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -8,12 +8,6 @@
 
 cmake_minimum_required(VERSION 3.22)
 cmake_policy(SET CMP0115 NEW)
-
-# Don't load this file if it is specified as a cmake toolchain file
-if(NOT TFM_TOOLCHAIN_FILE)
-    message(DEPRECATION "SETTING CMAKE_TOOLCHAIN_FILE is deprecated. It has been replaced with TFM_TOOLCHAIN_FILE.")
-    return()
-endif()
 
 SET(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR       ${TFM_SYSTEM_PROCESSOR})
@@ -27,10 +21,13 @@ else()
 endif()
 
 set(CMAKE_C_COMPILER iccarm)
+set(CMAKE_CXX_COMPILER iccarm)
 set(CMAKE_ASM_COMPILER iasmarm)
 
 set(LINKER_VENEER_OUTPUT_FLAG --import_cmse_lib_out= )
 set(COMPILER_CMSE_FLAG --cmse)
+
+set(CMAKE_C_FLAGS_DEBUG "-r -On")
 
 # This variable name is a bit of a misnomer. The file it is set to is included
 # at a particular step in the compiler initialisation. It is used here to
@@ -44,13 +41,12 @@ macro(tfm_toolchain_reset_compiler_flags)
     add_compile_options(
         $<$<COMPILE_LANGUAGE:C,CXX>:-e>
         $<$<COMPILE_LANGUAGE:C,CXX>:--dlib_config=full>
-        $<$<COMPILE_LANGUAGE:C,CXX>:--vla>
         $<$<COMPILE_LANGUAGE:C,CXX>:--silent>
         $<$<COMPILE_LANGUAGE:C,CXX>:-DNO_TYPEOF>
         $<$<COMPILE_LANGUAGE:C,CXX>:-D_NO_DEFINITIONS_IN_HEADER_FILES>
         $<$<COMPILE_LANGUAGE:C,CXX>:--diag_suppress=Pe546,Pe940,Pa082,Pa084>
         $<$<COMPILE_LANGUAGE:C,CXX>:--no_path_in_file_macros>
-        $<$<COMPILE_LANGUAGE:C,CXX,ASM>:--fpu=none>
+        "$<$<COMPILE_LANGUAGE:C,CXX,ASM>:SHELL:--fpu none>"
         $<$<AND:$<COMPILE_LANGUAGE:C,CXX,ASM>,$<BOOL:${TFM_DEBUG_SYMBOLS}>,$<CONFIG:Release,MinSizeRel>>:-r>
     )
 endmacro()
@@ -62,7 +58,7 @@ macro(tfm_toolchain_reset_linker_flags)
       --silent
       --semihosting
       --redirect __write=__write_buffered
-      --fpu=none
+      "SHELL:--fpu none"
     )
 endmacro()
 
@@ -97,6 +93,18 @@ macro(tfm_toolchain_reload_compiler)
 
     set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS_INIT})
     set(CMAKE_ASM_FLAGS ${CMAKE_ASM_FLAGS_INIT})
+
+    # Can't use the highest optimization with IAR on v8.1m arch because of the
+    # compilation bug in mbedcrypto
+    if ((CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL "9.20") AND
+        (CMAKE_C_COMPILER_VERSION VERSION_LESS_EQUAL "9.32.1") AND
+        ((TFM_SYSTEM_PROCESSOR STREQUAL "cortex-m85") OR
+         (TFM_SYSTEM_PROCESSOR STREQUAL "cortex-m55")) AND
+        (NOT (CMAKE_BUILD_TYPE STREQUAL "Debug")))
+        message(FATAL_ERROR "Only debug build available for M55 and M85"
+                " cores with IAR version between 9.20 and 9.32.1")
+    endif()
+
 endmacro()
 
 # Configure environment for the compiler setup run by cmake at the first

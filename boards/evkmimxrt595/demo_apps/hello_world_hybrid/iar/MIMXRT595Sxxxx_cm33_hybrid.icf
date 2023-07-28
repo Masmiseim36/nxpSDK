@@ -87,7 +87,7 @@ define region USB_SRAM_region = mem:[from m_usb_sram_start + usb_bdt_size to m_u
 /* Relocate all of the code to the RAM excluding the startup, system files and .xip_section. 
 The RAM code is copied in iar_program_start(). All code and data which are accessed before iar_program_start() must NOT be relocated. */
 initialize by copy { readonly, readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess}
-            except { section .xip_section, section .rodata, section .flash_conf, readonly object startup_MIMXRT595S_cm33.o, readonly object system_MIMXRT595S_cm33.o};
+            except { section .xip_section, section .rodata, section .flash_conf, section .intvec, readonly object startup_MIMXRT595S_cm33.o, readonly object system_MIMXRT595S_cm33.o};
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
 

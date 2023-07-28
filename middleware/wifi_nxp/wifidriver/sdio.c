@@ -4,9 +4,12 @@
  *
  *  Copyright 2021-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
+
+#include <wmerrno.h>
+#include <wm_utils.h>
 
 #include <fsl_os_abstraction.h>
 #include <mlan_sdio_api.h>
@@ -39,7 +42,11 @@
  */
 
 /*! @brief Data written to the card */
-SDK_ALIGN(uint8_t outbuf[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+#ifdef CONFIG_SDIO_MULTI_PORT_TX_AGGR
+SDK_ALIGN(uint8_t outbuf[SDIO_MP_AGGR_DEF_PKT_LIMIT * 2 * DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+#else
+SDK_ALIGN(uint8_t outbuf[DATA_BUFFER_SIZE + DATA_BUFFER_SIZE / 2], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+#endif
 
 /*! @brief Data read from the card */
 #ifdef CONFIG_SDIO_MULTI_PORT_RX_AGGR
@@ -96,24 +103,13 @@ bool wlan_card_status(t_u8 bits)
     return false;
 }
 
+#define SDIO_BLOCK_SIZE 256U
+
 void calculate_sdio_write_params(t_u32 txlen, t_u32 *tx_blocks, t_u32 *buflen)
 {
-    *tx_blocks = 1;
-    *buflen    = MLAN_SDIO_BLOCK_SIZE;
+    *tx_blocks = (txlen + SDIO_BLOCK_SIZE - 1) / SDIO_BLOCK_SIZE;
 
-    if (txlen > 512U)
-    {
-        *tx_blocks = (txlen + MLAN_SDIO_BLOCK_SIZE_FW_DNLD - 1) / MLAN_SDIO_BLOCK_SIZE_FW_DNLD;
-        /* this is really blksize */
-        *buflen = MLAN_SDIO_BLOCK_SIZE_FW_DNLD;
-    }
-    else
-    {
-        *tx_blocks = (txlen + MLAN_SDIO_BLOCK_SIZE_FW_DNLD - 1) / MLAN_SDIO_BLOCK_SIZE_FW_DNLD;
-        *buflen    = *tx_blocks * MLAN_SDIO_BLOCK_SIZE_FW_DNLD;
-
-        *tx_blocks = 1; /* tx_blocks of size 512 */
-    }
+    *buflen = SDIO_BLOCK_SIZE;
 }
 
 static uint32_t wlan_card_read_scratch_reg(void)
@@ -201,7 +197,7 @@ t_u16 wlan_card_read_f1_base_regs(void)
     return reg;
 }
 
-mlan_status sdio_init(void)
+int sdio_init(void)
 {
     uint32_t resp = 0;
     /* Initialize SDIO driver */
@@ -209,14 +205,14 @@ mlan_status sdio_init(void)
     if (rv != WM_SUCCESS)
     {
         sdio_io_e("SDIO driver init failed.");
-        return MLAN_STATUS_FAILURE;
+        return -1;
     }
 
 #if 0
 	sdio_drv = sdio_drv_open("MDEV_SDIO");
 	if (!sdio_drv) {
 		sdio_io_e("SDIO driver open failed.");
-		return MLAN_STATUS_FAILURE;
+		return -1;
 	}
 #endif
     int ret = 0;
@@ -242,7 +238,7 @@ mlan_status sdio_init(void)
                         "SDIO read failed, "
                         "resp:%x",
                         resp);
-                    return MLAN_STATUS_FAILURE;
+                    return -1;
                 }
             }
         }
@@ -250,20 +246,20 @@ mlan_status sdio_init(void)
     else if (!ret)
     {
         sdio_io_e("failed to read EVENT_REG");
-        return MLAN_STATUS_FAILURE;
+        return -1;
     }
     else
     { /* Do Nothing */
     }
-    return MLAN_STATUS_SUCCESS;
+    return 0;
 }
 
-mlan_status sdio_ioport_init(void)
+int sdio_ioport_init(void)
 {
     /* this sets intmask on card and makes interrupts repeatable */
     wlan_sdio_init_ioport();
 
-    return MLAN_STATUS_SUCCESS;
+    return 0;
 }
 
 /**

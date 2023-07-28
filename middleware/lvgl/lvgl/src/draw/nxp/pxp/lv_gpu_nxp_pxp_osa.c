@@ -6,7 +6,7 @@
 /**
  * MIT License
  *
- * Copyright 2020, 2022 NXP
+ * Copyright 2020, 2022, 2023 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -169,8 +169,8 @@ static void _lv_gpu_nxp_pxp_wait(void)
     if(s_pxpIdle == true)
         return;
 
-    xSemaphoreTake(s_pxpIdleSem, portMAX_DELAY);
-    s_pxpIdle = true;
+    if(xSemaphoreTake(s_pxpIdleSem, portMAX_DELAY) == pdTRUE)
+        s_pxpIdle = true;
 #else
     while(s_pxpIdle == false) {
     }

@@ -41,6 +41,8 @@
  */
 OtaPalImageState_t xOtaPalGetPlatformImageState( OtaFileContext_t * const pFileContext );
 
+#define otaPal_GetPlatformImageState    xOtaPalGetPlatformImageState
+
 /**
  * @brief Set the current firmware image state in flash.
  *
@@ -50,6 +52,8 @@ OtaPalImageState_t xOtaPalGetPlatformImageState( OtaFileContext_t * const pFileC
  */
 OtaPalStatus_t xOtaPalSetPlatformImageState( OtaFileContext_t * const pFileContext,
                                              OtaImageState_t eState );
+
+#define otaPal_SetPlatformImageState    xOtaPalSetPlatformImageState
 
 /**
  * @brief Resets the device with the current firmware image.
@@ -61,6 +65,8 @@ OtaPalStatus_t xOtaPalSetPlatformImageState( OtaFileContext_t * const pFileConte
  */
 OtaPalStatus_t xOtaPalResetDevice( OtaFileContext_t * const pFileContext );
 
+#define otaPal_ResetDevice    xOtaPalResetDevice
+
 /**
  * @brief Activates the device with the new firmware image.
  * The API should prepare the new image to be booted up and reset the device to boot up with the new image.
@@ -69,6 +75,8 @@ OtaPalStatus_t xOtaPalResetDevice( OtaFileContext_t * const pFileContext );
  * @return OtaPalSuccess if successful, else OTA error code along with detailed PAL error code.
  */
 OtaPalStatus_t xOtaPalActivateNewImage( OtaFileContext_t * const pFileContext );
+
+#define otaPal_ActivateNewImage    xOtaPalActivateNewImage
 
 /**
  * @brief Writes a block of the firmware image to flash.
@@ -84,6 +92,8 @@ int16_t xOtaPalWriteBlock( OtaFileContext_t * const pFileContext,
                            uint8_t * const pData,
                            uint32_t blockSize );
 
+#define otaPal_WriteBlock    xOtaPalWriteBlock
+
 /**
  * @brief Closes the firmware image after reading or writing.
  *
@@ -91,6 +101,8 @@ int16_t xOtaPalWriteBlock( OtaFileContext_t * const pFileContext,
  * @return OtaPalSuccess if successful, else OTA error code along with detailed PAL error code.
  */
 OtaPalStatus_t xOtaPalCloseFile( OtaFileContext_t * const pFileContext );
+
+#define otaPal_CloseFile    xOtaPalCloseFile
 
 /**
  * @brief Prepares a new firmware image to be written.
@@ -100,6 +112,8 @@ OtaPalStatus_t xOtaPalCloseFile( OtaFileContext_t * const pFileContext );
  */
 OtaPalStatus_t xOtaPalCreateFileForRx( OtaFileContext_t * const pFileContext );
 
+#define otaPal_CreateFileForRx    xOtaPalCreateFileForRx
+
 /**
  * @brief Aborts the current firmware image being written.
  *
@@ -107,6 +121,9 @@ OtaPalStatus_t xOtaPalCreateFileForRx( OtaFileContext_t * const pFileContext );
  * @return OtaPalSuccess if successful, else OTA error code along with detailed PAL error code.
  */
 OtaPalStatus_t xOtaPalAbort( OtaFileContext_t * const pFileContext );
+
+#define otaPal_Abort    xOtaPalAbort
+
 
 /**
  * @brief Opens the firmware image for reading
@@ -116,6 +133,8 @@ OtaPalStatus_t xOtaPalAbort( OtaFileContext_t * const pFileContext );
  * @return OtaPalSuccess if successful, else OTA error code along with detailed PAL error code.
  */
 OtaPalStatus_t xOtaPalOpenFileForRead( OtaFileContext_t * const pContext );
+
+#define otaPal_OpenFileForRead    xOtaPalOpenFileForRead
 
 /**
  * @brief Reads a block of firmware image from flash
@@ -130,6 +149,8 @@ int32_t xOtaPalReadBlock( OtaFileContext_t * const pContext,
                           uint32_t offset,
                           uint8_t * pData,
                           uint16_t blockSize );
+
+#define otaPal_ReadBlock    xOtaPalReadBlock
 
 OtaPalStatus_t xFlashPalValidateSignature( uint8_t * pMappedAddress,
                                            size_t mappedLength,

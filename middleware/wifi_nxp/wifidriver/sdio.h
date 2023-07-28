@@ -4,18 +4,19 @@
  *
  *  Copyright 2021-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 #ifndef _SDIO_H_
 #define _SDIO_H_
 
+#include <wmerrno.h>
+#include "type_decls.h"
+
 #include "fsl_sdmmc_common.h"
 #include "fsl_sdmmc_host.h"
 #include "fsl_common.h"
 #include "sdmmc_config.h"
-
-#include <wifi.h>
 
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (4U)
@@ -31,12 +32,18 @@
 #define sdio_io_d(...)
 #endif /* ! CONFIG_SDIO_IO_DEBUG */
 
-extern uint8_t outbuf[DATA_BUFFER_SIZE];
+#ifdef CONFIG_SDIO_MULTI_PORT_RX_AGGR
+#define INBUF_SIZE (SDIO_MP_AGGR_DEF_PKT_LIMIT * 2 * DATA_BUFFER_SIZE)
+#else
+#define INBUF_SIZE (2 * DATA_BUFFER_SIZE)
+#endif /*CONFIG_SDIO_MULTI_PORT_RX_AGGR*/
+
+extern uint8_t outbuf[];
 
 extern uint8_t inbuf[];
 
-mlan_status sdio_init(void);
-mlan_status sdio_ioport_init(void);
+int sdio_init(void);
+int sdio_ioport_init(void);
 void calculate_sdio_write_params(t_u32 txlen, t_u32 *tx_blocks, t_u32 *buflen);
 bool wlan_card_status(t_u8 bits);
 t_u16 wlan_card_read_f1_base_regs(void);

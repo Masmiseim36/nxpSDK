@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1092,7 +1092,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1816,7 +1816,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2540,7 +2540,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>

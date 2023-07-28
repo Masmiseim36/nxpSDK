@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,6 +13,7 @@
 #include "srtm_config.h"
 #include "srtm_utils.h"
 
+#include "fsl_sema42.h"
 #include "fsl_common.h"
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
 #include "fsl_memory.h"
@@ -24,24 +25,22 @@
 
 #include "fsl_gpio.h"
 
-#include "dsp_config.h"
 #include "board_fusionf1.h"
 #include "fsl_inputmux.h"
 #include "fsl_dma.h"
 #include "fsl_i2s.h"
 #include "pin_mux.h"
+#include "dsp_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define INIT_DEBUG_CONSOLE 0
-
+#define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
+#define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
 #define APP_RPMSG_READY_EVENT_DATA    (1)
 #define APP_RPMSG_EP_READY_EVENT_DATA (2)
 
 #define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
 #define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
-#define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
-#define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
 #define DSP_THREAD_STACK_SIZE (10 * 1024)
 #define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
@@ -107,10 +106,10 @@ static void DSP_XAF_Init(dsp_handle_t *dsp)
     xaf_get_verinfo(version);
 
     DSP_PRINTF("\r\n");
-    DSP_PRINTF("Cadence Xtensa Audio Framework\r\n");
-    DSP_PRINTF("  Library Name    : %s\r\n", version[0]);
-    DSP_PRINTF("  Library Version : %s\r\n", version[1]);
-    DSP_PRINTF("  API Version     : %s\r\n", version[2]);
+    DSP_PRINTF("[DSP_Main] Cadence Xtensa Audio Framework\r\n");
+    DSP_PRINTF("[DSP_Main] Library Name    : %s\r\n", version[0]);
+    DSP_PRINTF("[DSP_Main] Library Version : %s\r\n", version[1]);
+    DSP_PRINTF("[DSP_Main] API Version     : %s\r\n", version[2]);
     DSP_PRINTF("\r\n");
 }
 
@@ -148,8 +147,8 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             /* Param 0 Number of Channels*/
             /* Param 1 Sampling Rate*/
             /* Param 2 PCM bit Width*/
-            DSP_PRINTF("Number of channels %d, sampling rate %d, PCM width %d\r\n", msg->param[0], msg->param[1],
-                       msg->param[2]);
+            DSP_PRINTF("[DSP_Main] Number of channels %d, sampling rate %d, PCM width %d\r\n", msg->param[0],
+                       msg->param[1], msg->param[2]);
             if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0))
             {
                 msg->head.type = SRTM_MessageTypeNotification;
@@ -197,7 +196,7 @@ static int DSP_MSG_Process(dsp_handle_t *dsp, srtm_message *msg)
     /* Sanity check */
     if ((msg->head.majorVersion != SRTM_VERSION_MAJOR) || (msg->head.minorVersion != SRTM_VERSION_MINOR))
     {
-        DSP_PRINTF("SRTM version doesn't match!\r\n");
+        DSP_PRINTF("[DSP_Main] SRTM version doesn't match!\r\n");
         return -1;
     }
 
@@ -242,6 +241,8 @@ int DSP_Main(void *arg, int wake_value)
 
     DSP_XAF_Init(dsp);
 
+    SEMA42_Lock(APP_SEMA42, SEMA_STARTUP_NUM, SEMA_CORE_ID_DSP);
+
     DSP_PRINTF("[DSP_Main] start\r\n");
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
@@ -256,6 +257,8 @@ int DSP_Main(void *arg, int wake_value)
     rpmsg_lite_wait_for_link_up(dsp->rpmsg, RL_BLOCK);
 
     DSP_PRINTF("[DSP_Main] established RPMsg link\r\n");
+
+    SEMA42_Unlock(APP_SEMA42, SEMA_STARTUP_NUM);
 
     dsp->ept = rpmsg_lite_create_ept(dsp->rpmsg, DSP_EPT_ADDR, rpmsg_queue_rx_cb, (void *)dsp->rpmsg_queue);
 
@@ -286,9 +289,7 @@ int main(void)
     XOS_Init();
     BOARD_InitPins();
     BOARD_InitClock();
-#if INIT_DEBUG_CONSOLE || APP_DSP_ONLY
     BOARD_InitDebugConsole();
-#endif
 
 #ifdef XA_CLIENT_PROXY
     /* Dummy I2S init for EAP */
@@ -303,6 +304,9 @@ int main(void)
      * EXTINT19 = DSP INT 23 */
     xos_register_interrupt_handler(XCHAL_EXTINT19_NUM, (XosIntFunc *)DMA_IRQHandle, DMA1);
     xos_interrupt_enable(XCHAL_EXTINT19_NUM);
+
+    /* SEMA42 init */
+    SEMA42_Init(APP_SEMA42);
 
     xos_thread_create(&thread_main, NULL, DSP_Main, &dsp, "DSP Main", dsp_thread_stack, DSP_THREAD_STACK_SIZE,
                       DSP_THREAD_PRIORITY, 0, 0);

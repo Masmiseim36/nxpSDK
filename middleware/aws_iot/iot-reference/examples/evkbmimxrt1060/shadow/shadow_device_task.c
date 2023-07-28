@@ -1047,7 +1047,7 @@ static void prvGetRejectedCallback( void * pxSubscriptionContext,
 
 static bool prvGetShadowFromCloud( void )
 {
-    static MQTTPublishInfo_t xPublishInfo = { 0 };
+    static MQTTPublishInfo_t xPublishInfo = { MQTTQoS0 };
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTStatus_t xCommandStatus = MQTTSendFailed;
     bool xReturnStatus = false;
@@ -1128,7 +1128,7 @@ static bool prvGetShadowFromCloud( void )
 
 static bool prvUpdateShadowDocument( void )
 {
-    static MQTTPublishInfo_t xPublishInfo = { 0 };
+    static MQTTPublishInfo_t xPublishInfo = { MQTTQoS1 };
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTStatus_t xCommandStatus = MQTTSendFailed;
     bool xReturnStatus = false;

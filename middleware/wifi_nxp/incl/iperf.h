@@ -5,7 +5,7 @@
 /*
  *  Copyright 2008-2020 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 

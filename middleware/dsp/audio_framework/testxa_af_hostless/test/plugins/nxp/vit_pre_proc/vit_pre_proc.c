@@ -1,4 +1,5 @@
 /*******************************************************************************
+* Copyright 2020-2023 NXP
 * Copyright (c) 2015-2019 Cadence Design Systems, Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
@@ -61,9 +62,6 @@ extern clk_t vit_pre_proc_cycles;
 // Configure the detection period in second for each command
 // VIT will return UNKNOWN if no command is recognized during this time span.
 #define VIT_COMMAND_TIME_SPAN           3.0 // in second
-
-#undef DSP_PRINTF
-#define DSP_PRINTF CM33_Print
 
 /*******************************************************************************
  * Tracing configuration
@@ -156,39 +154,39 @@ extern RETUNE_VOICESEEKERLIGHT_plugin_t vsl;
  * DSP functions
  ******************************************************************************/
 
-static void CM33_Print(const char* ptr, ...)
-{
-	//Create buffer with processed string
-	static char buf[256];
-	int message_length;
-	va_list args;
-	va_start(args, ptr);
-	message_length = vsprintf(buf, ptr, args);
-	va_end(args);
-
-	//Create srtm_message for sending string to CM33 side
-	srtm_message msg = {0};
-	msg.head.type = SRTM_MessageTypeNotification;
-	msg.head.majorVersion = SRTM_VERSION_MAJOR;
-	msg.head.minorVersion = SRTM_VERSION_MINOR;
-	msg.head.category = SRTM_MessageCategory_AUDIO;
-	msg.head.command  = SRTM_Print_String;
-
-	//Send string to CM33
-	int pos = 0;
-	for(int i = 0; i<message_length; i++)
-	{
-		msg.param[pos++] = buf[i];
-		if( ((pos+1)==SRTM_CMD_PARAMS_MAX) || ((i+1)==message_length) )
-		{
-			msg.param[pos] = '\0';
-			pos = 0;
-			xos_mutex_lock(&dsp.rpmsgMutex);
-			rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), 100);
-			xos_mutex_unlock(&dsp.rpmsgMutex);
-		}
-	}
-}
+//static void CM33_Print(const char* ptr, ...)
+//{
+//	//Create buffer with processed string
+//	static char buf[256];
+//	int message_length;
+//	va_list args;
+//	va_start(args, ptr);
+//	message_length = vsprintf(buf, ptr, args);
+//	va_end(args);
+//
+//	//Create srtm_message for sending string to CM33 side
+//	srtm_message msg = {0};
+//	msg.head.type = SRTM_MessageTypeNotification;
+//	msg.head.majorVersion = SRTM_VERSION_MAJOR;
+//	msg.head.minorVersion = SRTM_VERSION_MINOR;
+//	msg.head.category = SRTM_MessageCategory_AUDIO;
+//	msg.head.command  = SRTM_Print_String;
+//
+//	//Send string to CM33
+//	int pos = 0;
+//	for(int i = 0; i<message_length; i++)
+//	{
+//		msg.param[pos++] = buf[i];
+//		if( ((pos+1)==SRTM_CMD_PARAMS_MAX) || ((i+1)==message_length) )
+//		{
+//			msg.param[pos] = '\0';
+//			pos = 0;
+//			xos_mutex_lock(&dsp.rpmsgMutex);
+//			rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), 100);
+//			xos_mutex_unlock(&dsp.rpmsgMutex);
+//		}
+//	}
+//}
 
 static inline void xa_vit_pre_proc_preinit(vit_pre_proc_t *d)
 {
@@ -235,7 +233,7 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
 
     if (VIT_Status != VIT_SUCCESS)
     {
-        // DSP_PRINTF("VIT_Process error : %d\n", Status);
+        // DSP_PRINTF("[DSP VIT] VIT_Process error : %d\n", Status);
         return VIT_SYSTEM_ERROR;                                            // will stop processing VIT and go directly to MEM free
     }
 
@@ -246,12 +244,12 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
     	VIT_Status = VIT_GetWakeWordFound( VITHandle, &WakeWord);
 		if (VIT_Status != VIT_SUCCESS)
 		{
-			DSP_PRINTF("VIT_GetWakeWordFound error : %d\r\n", VIT_Status);
+			DSP_PRINTF("[DSP VIT] VIT_GetWakeWordFound error : %d\r\n", VIT_Status);
 			return VIT_SYSTEM_ERROR;
 		}
 		else
 		{
-			DSP_PRINTF(" - WakeWord detected %d", WakeWord.Id);
+			DSP_PRINTF("[DSP VIT]  - WakeWord detected %d", WakeWord.Id);
 
 			// Retrieve WakeWord Name : OPTIONAL
 			// Check first if WakeWord string is present
@@ -273,12 +271,12 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
                                               );
         if (VIT_Status != VIT_SUCCESS)
         {
-            DSP_PRINTF("VIT_GetVoiceCommandFound error : %d\r\n", VIT_Status);
+            DSP_PRINTF("[DSP VIT] VIT_GetVoiceCommandFound error : %d\r\n", VIT_Status);
             return VIT_SYSTEM_ERROR;                                              // will stop processing VIT and go directly to MEM free
         }
         else
         {
-            DSP_PRINTF(" - Voice Command detected %d", VoiceCommand.Id);
+            DSP_PRINTF("[DSP VIT]  - Voice Command detected %d", VoiceCommand.Id);
 
             // Retrieve CMD Name : OPTIONAL
             // Check first if CMD string is present
@@ -288,7 +286,7 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
             }
             else
             {
-            	DSP_PRINTF("\r\n");
+                DSP_PRINTF("[DSP VIT] \r\n");
             }
         }
     }
@@ -837,46 +835,46 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
     VIT_Status = VIT_GetModelInfo(&Model_Info);
     if (VIT_Status != VIT_SUCCESS)
     {
-        DSP_PRINTF("VIT_GetModelInfo error : %d\r\n", VIT_Status);
+        DSP_PRINTF("[DSP VIT] VIT_GetModelInfo error : %d\r\n", VIT_Status);
         return VIT_INVALID_MODEL;
     }
 
-    DSP_PRINTF("VIT Model info \r\n");
-    DSP_PRINTF("  VIT Model Release = 0x%04x\r\n", Model_Info.VIT_Model_Release);
+    DSP_PRINTF("[DSP VIT] VIT Model info \r\n");
+    DSP_PRINTF("[DSP VIT]   VIT Model Release = 0x%04x\r\n", Model_Info.VIT_Model_Release);
     if (Model_Info.pLanguage != PL_NULL)
     {
-        DSP_PRINTF("  Language supported : %s \r\n", Model_Info.pLanguage);
+        DSP_PRINTF("[DSP VIT]   Language supported : %s \r\n", Model_Info.pLanguage);
     }
 
-    DSP_PRINTF("  Number of WakeWords supported : %d \r\n", Model_Info.NbOfWakeWords);
-    DSP_PRINTF("  Number of Commands supported : %d \r\n",  Model_Info.NbOfVoiceCmds);
+    DSP_PRINTF("[DSP VIT]   Number of WakeWords supported : %d \r\n", Model_Info.NbOfWakeWords);
+    DSP_PRINTF("[DSP VIT]   Number of Commands supported : %d \r\n",  Model_Info.NbOfVoiceCmds);
 
     if (!Model_Info.WW_VoiceCmds_Strings)               // Check here if Model is containing WW and CMDs strings
     {
-        DSP_PRINTF("  VIT_Model integrating WakeWord and Voice Commands strings : NO\r\n");
+        DSP_PRINTF("[DSP VIT]   VIT_Model integrating WakeWord and Voice Commands strings : NO\r\n");
     }
     else
     {
         const char* ptr;
 
-        DSP_PRINTF("  VIT_Model integrating WakeWord and Voice Commands strings : YES\r\n");
-        DSP_PRINTF("  WakeWords supported : \r\n");
+        DSP_PRINTF("[DSP VIT]   VIT_Model integrating WakeWord and Voice Commands strings : YES\r\n");
+        DSP_PRINTF("[DSP VIT]   WakeWords supported : \r\n");
         ptr = Model_Info.pWakeWord_List;
         if (ptr != PL_NULL)
         {
         	for (PL_UINT16 i = 0; i < Model_Info.NbOfWakeWords; i++)
 			{
-        		DSP_PRINTF("   '%s' \r\n", ptr);
+                DSP_PRINTF("[DSP VIT]    '%s' \r\n", ptr);
 				ptr += strlen(ptr) + 1;                 // to consider NULL char
 			}
         }
-        DSP_PRINTF("  Voice commands supported : \r\n");
+        DSP_PRINTF("[DSP VIT]   Voice commands supported : \r\n");
         ptr = Model_Info.pVoiceCmds_List;
         if (ptr != PL_NULL)
         {
             for (PL_UINT16 i = 0; i < Model_Info.NbOfVoiceCmds; i++)
             {
-                DSP_PRINTF("   '%s' \r\n", ptr);
+                DSP_PRINTF("[DSP VIT]    '%s' \r\n", ptr);
                 ptr += strlen(ptr) + 1;                 // to consider NULL char
             }
         }
@@ -892,7 +890,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     VIT_Model = (PL_UINT8 *)INSTALLOC_ALIGN(pMem);
     memcpy(VIT_Model, dsp.VITModelCM_33, dsp.size_of_VIT_model);
 
-    VIT_Status = VIT_SetModel(VIT_Model, VIT_MODEL_IN_RAM);
+    VIT_Status = VIT_SetModel(VIT_Model, VIT_MODEL_IN_FAST_MEM);
 
     if (VIT_Status != VIT_SUCCESS)
     {
@@ -921,7 +919,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
                                  &VITInstParams);
     if (VIT_Status != VIT_SUCCESS)
     {
-        // DSP_PRINTF("VIT_GetMemoryTable error : %d\n", Status);
+        // DSP_PRINTF("[DSP VIT] VIT_GetMemoryTable error : %d\n", Status);
         return VIT_INVALID_BUFFER_MEMORY_ALIGNMENT;
     }
 
@@ -931,7 +929,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     for (int i = 0; i < PL_NR_MEMORY_REGIONS; i++)
     {
         /* Log the memory size */
-        // DSP_PRINTF("Memory region %d, size %d in Bytes\n", (int)i, (int)VITMemoryTable.Region[i].Size);
+        // DSP_PRINTF("[DSP VIT] Memory region %d, size %d in Bytes\n", (int)i, (int)VITMemoryTable.Region[i].Size);
         if (VITMemoryTable.Region[i].Size != 0)
         {
             // reserve memory space
@@ -940,7 +938,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
             pMemory[i] = malloc(VITMemoryTable.Region[i].Size + MEMORY_ALIGNMENT);
             VITMemoryTable.Region[i].pBaseAddress = (void *)pMemory[i];
 
-            // DSP_PRINTF(" Memory region address %p\n", VITMemoryTable.Region[i].pBaseAddress);
+            // DSP_PRINTF("[DSP VIT]  Memory region address %p\n", VITMemoryTable.Region[i].pBaseAddress);
         }
     }
 
@@ -954,7 +952,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     if (VIT_Status != VIT_SUCCESS)
     {
         InitPhase_Error = PL_TRUE;
-        // DSP_PRINTF("VIT_GetInstanceHandle error : %d\n", Status);
+        // DSP_PRINTF("[DSP VIT] VIT_GetInstanceHandle error : %d\n", Status);
     }
 
     /*
@@ -966,7 +964,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
         if (VIT_Status != VIT_SUCCESS)
         {
             InitPhase_Error = PL_TRUE;
-            // DSP_PRINTF("VIT_ResetInstance error : %d\n", Status);
+            // DSP_PRINTF("[DSP VIT] VIT_ResetInstance error : %d\n", Status);
         }
     }
 
@@ -984,7 +982,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
         if (VIT_Status != VIT_SUCCESS)
         {
             InitPhase_Error = PL_TRUE;
-            // DSP_PRINTF("VIT_SetControlParameters error : %d\n", Status);
+            // DSP_PRINTF("[DSP VIT] VIT_SetControlParameters error : %d\n", Status);
         }
     }
 
@@ -1000,7 +998,7 @@ void VIT_Deinit(void)
                                    &VITInstParams);
     if (VIT_Status != VIT_SUCCESS)
     {
-        // DSP_PRINTF("VIT_GetMemoryTable error : %d\n", Status);
+        // DSP_PRINTF("[DSP VIT] VIT_GetMemoryTable error : %d\n", Status);
         return;
     }
 

@@ -72,8 +72,41 @@
 
 #endif /* FSL_FEATURE_SOC_CASPER_COUNT */
 
-/* Enable CSS */
-#ifdef CSS
+
+/* If HW Acceleration is expected to be provided by psa_crypto_driver_wrapper, then no need to enable ALT implementation
+However, as a temporary solution, ALT can also be enabled in combination with psa_crypto_driver_wrapper. 
+It will help in following cases: 
+1- Still support needs to be added via psa_crypto_driver_wrapper, or
+2- Failures in during psa_crypto_driver_wrapper execution. 
+In case of fallback, if alt is enabled, module can exercise alt implementation otherwise, simply use SW. 
+At the moment, alt implementation is not enabled while HW Acceleration is provided by psa_crypto_driver_wrapper */
+#if !defined(PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE)
+
+/* Enable ELS */
+#if defined(ELS)
+#if defined(MBEDTLS_MCUX_USE_ELS)
+
+    #ifndef MBEDTLS_MCUX_ELS
+        #define MBEDTLS_MCUX_ELS        (1)     /* Enable use of ELS. */
+    #endif
+
+    #ifndef MBEDTLS_MCUX_ELS_AES
+        #define MBEDTLS_MCUX_ELS_AES    (1)     /* Enable use of ELS AES.*/
+    #endif
+
+    #ifndef MBEDTLS_MCUX_ELS_SHA256
+        #define MBEDTLS_MCUX_ELS_SHA256 (1)     /* Enable use of ELS SHA256.*/
+    #endif
+
+    #ifndef MBEDTLS_MCUX_ELS_SHA512
+        #define MBEDTLS_MCUX_ELS_SHA512 (1)     /* Enable use of ELS SHA512.*/
+    #endif
+#else
+
+    #ifndef MBEDTLS_MCUX_CSS
+        #define MBEDTLS_MCUX_CSS        (1)     /* Enable use of CSS. */
+    #endif
+
     #ifndef MBEDTLS_MCUX_CSS_AES
         #define MBEDTLS_MCUX_CSS_AES    (1)     /* Enable use of CSS AES.*/
     #endif
@@ -85,6 +118,7 @@
     #ifndef MBEDTLS_MCUX_CSS_SHA512
         #define MBEDTLS_MCUX_CSS_SHA512 (1)     /* Enable use of CSS SHA512.*/
     #endif
+#endif /* MBEDTLS_MCUX_USE_ELS */
 #endif /* CSS */
 
 /* Enable PKC */
@@ -92,7 +126,7 @@
     #ifndef MBEDTLS_MCUX_PKC
         #define MBEDTLS_MCUX_PKC        (1)     /* Enable use of PKC. */
     #endif
-    
+
     #ifndef MBEDTLS_MCUX_PKC_ECDH
         #define MBEDTLS_MCUX_PKC_ECDH   (1)     /* Enable use of PKC ECDH.*/
     #endif
@@ -100,18 +134,19 @@
     #ifndef MBEDTLS_MCUX_PKC_ECDSA
         #define MBEDTLS_MCUX_PKC_ECDSA  (1)     /* Enable use of PKC ECDSA.*/
     #endif
-    
+
     #ifndef MBEDTLS_MCUX_PKC_RSA
         #define MBEDTLS_MCUX_PKC_RSA    (1)     /* Enable use of PKC RSA.*/
     #endif
 #endif /* PKC */
+#endif /* !defined (PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE) */
 
 /* Entropy */
 #if (defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)) || \
     (defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)) || \
     (defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) || \
     (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)) || \
-    (defined(CSS))
+    (defined(ELS) || defined (CSS))
 
     #ifndef MBEDTLS_MCUX_ENTROPY  
         #define MBEDTLS_MCUX_ENTROPY    (1)
@@ -159,7 +194,7 @@
     #define MBEDTLS_ECP_MULADD_ALT      /* Alternate implementation of mbedtls_ecp_muladd() */
 #endif
 
-#if defined(MBEDTLS_MCUX_CSS_AES) && MBEDTLS_MCUX_CSS_AES
+#if ((defined(MBEDTLS_MCUX_CSS_AES) && MBEDTLS_MCUX_CSS_AES) || (defined(MBEDTLS_MCUX_ELS_AES) && MBEDTLS_MCUX_ELS_AES))
     #define MBEDTLS_AES_ALT
     #define MBEDTLS_AES_SETKEY_ENC_ALT
     #define MBEDTLS_AES_SETKEY_DEC_ALT
@@ -167,11 +202,11 @@
     #define MBEDTLS_AES_DECRYPT_ALT
 #endif
 
-#if defined(MBEDTLS_MCUX_CSS_SHA256) && MBEDTLS_MCUX_CSS_SHA256
+#if ((defined(MBEDTLS_MCUX_CSS_SHA256) && MBEDTLS_MCUX_CSS_SHA256) || (defined(MBEDTLS_MCUX_ELS_SHA256) && MBEDTLS_MCUX_ELS_SHA256))
     #define MBEDTLS_SHA256_ALT
 #endif
 
-#if defined(MBEDTLS_MCUX_CSS_SHA512) && MBEDTLS_MCUX_CSS_SHA512
+#if ((defined(MBEDTLS_MCUX_CSS_SHA512) && MBEDTLS_MCUX_CSS_SHA512) || (defined(MBEDTLS_MCUX_ELS_SHA512) && MBEDTLS_MCUX_ELS_SHA512))
     #define MBEDTLS_SHA512_ALT
 #endif
 

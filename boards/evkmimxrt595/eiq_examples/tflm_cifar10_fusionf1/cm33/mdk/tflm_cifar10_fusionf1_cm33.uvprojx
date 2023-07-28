@@ -332,7 +332,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG, DSP_IMAGE_COPY_TO_RAM=1</Define>
               <Undefine/>
-              <IncludePath>../../fusionf1/binary</IncludePath>
+              <IncludePath>../../dsp/binary</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -399,11 +399,6 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>board_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board_init.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../pin_mux.c</FilePath>
@@ -417,6 +412,11 @@
               <FileName>board_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>board_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board_init.h</FilePath>
             </File>
             <File>
               <FileName>dsp_support.c</FileName>
@@ -466,17 +466,17 @@
             <File>
               <FileName>dsp_reset_release.bin</FileName>
               <FileType>5</FileType>
-              <FilePath>../../fusionf1/binary/dsp_reset_release.bin</FilePath>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
             </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>
-              <FilePath>../../fusionf1/binary/dsp_text_release.bin</FilePath>
+              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
             </File>
             <File>
               <FileName>dsp_data_release.bin</FileName>
               <FileType>5</FileType>
-              <FilePath>../../fusionf1/binary/dsp_data_release.bin</FilePath>
+              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
             </File>
           </Files>
         </Group>
@@ -509,26 +509,6 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
@@ -557,6 +537,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_dsp.h</FileName>
@@ -1146,7 +1146,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../components/lists;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1166,7 +1166,7 @@
               <MiscControls/>
               <Define>NDEBUG, DSP_IMAGE_COPY_TO_RAM=1</Define>
               <Undefine/>
-              <IncludePath>../../fusionf1/binary</IncludePath>
+              <IncludePath>../../dsp/binary</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1182,7 +1182,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1213,11 +1213,6 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>board_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board_init.h</FilePath>
-            </File>
-            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../pin_mux.c</FilePath>
@@ -1231,6 +1226,11 @@
               <FileName>board_init.c</FileName>
               <FileType>1</FileType>
               <FilePath>../board_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>board_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board_init.h</FilePath>
             </File>
             <File>
               <FileName>dsp_support.c</FileName>
@@ -1280,17 +1280,17 @@
             <File>
               <FileName>dsp_reset_release.bin</FileName>
               <FileType>5</FileType>
-              <FilePath>../../fusionf1/binary/dsp_reset_release.bin</FilePath>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
             </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>
-              <FilePath>../../fusionf1/binary/dsp_text_release.bin</FilePath>
+              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
             </File>
             <File>
               <FileName>dsp_data_release.bin</FileName>
               <FileType>5</FileType>
-              <FilePath>../../fusionf1/binary/dsp_data_release.bin</FilePath>
+              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
             </File>
           </Files>
         </Group>
@@ -1323,26 +1323,6 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</FilePath>
@@ -1371,6 +1351,26 @@
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_dsp.h</FileName>

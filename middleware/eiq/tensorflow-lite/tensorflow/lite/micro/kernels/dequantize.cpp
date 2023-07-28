@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/dequantize.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 
@@ -80,7 +80,7 @@ TfLiteStatus DequantizeEval(TfLiteContext* context, TfLiteNode* node) {
   return kTfLiteOk;
 }
 
-TfLiteRegistration Register_DEQUANTIZE() {
+TfLiteRegistration_V1 Register_DEQUANTIZE() {
   return tflite::micro::RegisterOp(DequantizeInit, DequantizePrepare,
                                    DequantizeEval);
 }

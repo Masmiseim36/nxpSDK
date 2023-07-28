@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -37,27 +45,28 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
+"${ProjDirPath}/../config_files/core_mqtt_config.h"
+"${ProjDirPath}/../config_files/core_pkcs11_config.h"
+"${ProjDirPath}/../config_files/demo_config.h"
+"${ProjDirPath}/../config_files/kvstore_config.h"
+"${ProjDirPath}/../config_files/shadow_config.h"
+"${ProjDirPath}/../aws_clientcredential.h"
+"${ProjDirPath}/../aws_clientcredential_keys.h"
+"${ProjDirPath}/../freertos_tasks_c_additions.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
-"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_wifi_config.h"
-"${ProjDirPath}/../config_files/core_http_config.h"
-"${ProjDirPath}/../config_files/core_mqtt_config.h"
-"${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
-"${ProjDirPath}/../config_files/ota_config.h"
-"${ProjDirPath}/../config_files/ota_demo_config.h"
-"${ProjDirPath}/../config_files/aws_iot_network_config.h"
+"${ProjDirPath}/../aws_dev_mode_key_provisioning.h"
+"${ProjDirPath}/../aws_dev_mode_key_provisioning.c"
 "${ProjDirPath}/../main_wifi.c"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../config_files/ota_config.h"
 "${ProjDirPath}/../mcuboot_app_support.c"
 "${ProjDirPath}/../mcuboot_app_support.h"
 "${ProjDirPath}/../bootutil_port/board_specific/flash_partitioning.h"
@@ -68,15 +77,20 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../bootutil_port/flash_map.h"
 "${ProjDirPath}/../bootutil_port/sysflash/sysflash.h"
 "${ProjDirPath}/../bootutil_port/sbldef.h"
+"${ProjDirPath}/../ota/ota_pal.c"
+"${ProjDirPath}/../ota/ota_pal.h"
+"${ProjDirPath}/../ota/ota_signature_validation.c"
+"${ProjDirPath}/../ota/ota_update.c"
+"${ProjDirPath}/../ota/ota_update.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../iot_pkcs11_pal.c"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../config_files
     ${SdkRootDirPath}/boards/evkmimxrt595
     ${ProjDirPath}/..
@@ -85,7 +99,21 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
     ${ProjDirPath}/../bootutil_port/mcuboot_config
     ${ProjDirPath}/../bootutil_port/sysflash
     ${ProjDirPath}/../bootutil_port/board_specific
+    ${ProjDirPath}/../ota
 )
+
+set_source_files_properties("${ProjDirPath}/../app_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../config_files/core_mqtt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos_coremqtt_template")
+set_source_files_properties("${ProjDirPath}/../config_files/core_pkcs11_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos_corepkcs11_template")
+set_source_files_properties("${ProjDirPath}/../config_files/demo_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_iot_reference_template")
+set_source_files_properties("${ProjDirPath}/../config_files/kvstore_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_iot_reference_template")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
+set_source_files_properties("${ProjDirPath}/../config_files/FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
+set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
+set_source_files_properties("${ProjDirPath}/../wifi_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
      target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h")
@@ -103,207 +131,7 @@ if(CMAKE_BUILD_TYPE STREQUAL flash_release)
      target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h")
 endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/middleware/aws_iot/amazon-freertos
-    ${SdkRootDirPath}/middleware/aws_iot/ota
-    ${SdkRootDirPath}/middleware/lwip
-    ${SdkRootDirPath}/middleware/wifi_nxp
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/rtos/freertos/coremqtt
-    ${SdkRootDirPath}/components/wifi_bt_module
-    ${SdkRootDirPath}/middleware/pkcs11
-    ${SdkRootDirPath}/rtos/freertos/corepkcs11
-    ${SdkRootDirPath}/middleware/mbedtls
-    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
-    ${SdkRootDirPath}/components/pca9420
-    ${SdkRootDirPath}/components/flash/mflash
-    ${SdkRootDirPath}/components/flash/mflash/mimxrt595
-    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
-    ${SdkRootDirPath}/middleware/sdmmc
-    ${SdkRootDirPath}/components/gpio
-    ${SdkRootDirPath}/devices/MIMXRT595S
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/rtos/freertos/corejson
-    ${SdkRootDirPath}/middleware/tinycbor
-    ${SdkRootDirPath}/rtos/freertos/backoffalgorithm
-    ${SdkRootDirPath}/rtos/freertos/coremqtt-agent
-    ${SdkRootDirPath}/components/osa
-)
-
-# include modules
-include(middleware_amazon-freertos_demos_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_demos_dev_mode_key_provisioning_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_demos_ota_mqtt_MIMXRT595S_cm33)
-
-include(middleware_aws_iot_ota_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_vendor_nxp_secure_sockets_lwip_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_vendor_nxp_wifi_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_vendor_nxp_ota_pal_MIMXRT595S_cm33)
-
-include(middleware_lwip_MIMXRT595S_cm33)
-
-include(middleware_wifi_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_abstractions_transport_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_abstractions_secure_sockets_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_logging_MIMXRT595S_cm33)
-
-include(middleware_freertos_coremqtt_MIMXRT595S_cm33)
-
-include(component_wifi_bt_module_tx_pwr_limits_MIMXRT595S_cm33)
-
-include(middleware_pkcs11_MIMXRT595S_cm33)
-
-include(middleware_freertos_corepkcs11_MIMXRT595S_cm33)
-
-include(middleware_freertos_corepkcs11_mbedtls_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_vendor_nxp_pkcs11_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
-
-include(middleware_mbedtls_MIMXRT595S_cm33)
-
-include(middleware_mbedtls_port_ksdk_MIMXRT595S_cm33)
-
-include(middleware_mbedtls_rt1_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT595S_cm33)
-
-include(driver_flexcomm_i2c_MIMXRT595S_cm33)
-
-include(driver_pca9420_MIMXRT595S_cm33)
-
-include(component_mflash_file_MIMXRT595S_cm33)
-
-include(component_mflash_rt595_MIMXRT595S_cm33)
-
-include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
-
-include(utility_debug_console_MIMXRT595S_cm33)
-
-include(middleware_wifi_sdio_MIMXRT595S_cm33)
-
-include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_sdio_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_common_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
-
-include(component_rt_gpio_adapter_MIMXRT595S_cm33)
-
-include(driver_clock_MIMXRT595S_cm33)
-
-include(driver_common_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
-
-include(utility_assert_MIMXRT595S_cm33)
-
-include(component_usart_adapter_MIMXRT595S_cm33)
-
-include(driver_power_MIMXRT595S_cm33)
-
-include(driver_flexspi_MIMXRT595S_cm33)
-
-include(driver_cache_cache64_MIMXRT595S_cm33)
-
-include(component_serial_manager_MIMXRT595S_cm33)
-
-include(component_lists_MIMXRT595S_cm33)
-
-include(component_serial_manager_uart_MIMXRT595S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
-
-include(driver_flexcomm_MIMXRT595S_cm33)
-
-include(driver_lpc_iopctl_MIMXRT595S_cm33)
-
-include(driver_lpc_gpio_MIMXRT595S_cm33)
-
-include(driver_reset_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_abstractions_platform_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_c_sdk_standard_common_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_c_sdk_standard_common_include_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_network_manager_MIMXRT595S_cm33)
-
-include(driver_casper_MIMXRT595S_cm33)
-
-include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
-
-include(driver_hashcrypt_MIMXRT595S_cm33)
-
-include(driver_trng_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_demos_ota_demo_helpers_MIMXRT595S_cm33)
-
-include(middleware_freertos_corejson_MIMXRT595S_cm33)
-
-include(middleware_tinycbor_MIMXRT595S_cm33)
-
-include(middleware_freertos_backoffalgorithm_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_abstractions_mqtt_agent_MIMXRT595S_cm33)
-
-include(middleware_freertos_coremqtt-agent_MIMXRT595S_cm33)
-
-include(middleware_aws_iot_ota_freertos_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_pkcs11_helpers_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_demos_common_mqtt_subscription_manager_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_freertos_plus_standard_tls_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_3rdparty_mbedtls_utils_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_freertos_plus_standard_crypto_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_freertos_plus_standard_utils_MIMXRT595S_cm33)
-
-include(middleware_amazon-freertos_libraries_abstractions_wifi_MIMXRT595S_cm33)
-
-include(component_mflash_common_MIMXRT595S_cm33)
-
-include(middleware_wifi_sdio-2_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
-
-include(component_osa_free_rtos_MIMXRT595S_cm33)
-
-include(driver_usdhc_MIMXRT595S_cm33)
-
-include(middleware_wifi_common_files_MIMXRT595S_cm33)
-
-include(utilities_misc_utilities_MIMXRT595S_cm33)
-
-include(driver_iap_MIMXRT595S_cm33)
-
+include(${SdkRootDirPath}/devices/MIMXRT595S/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -317,4 +145,6 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/ota_demo.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/ota_demo.bin")
 

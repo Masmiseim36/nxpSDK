@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020, 2022 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -97,7 +97,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S32K144_LPUART =
 #define FMSTR_LPUART_CTRL_OFFSET         0x18       /* 32bit register */
 #define FMSTR_LPUART_DATA_OFFSET         0x1C       /* 32bit register */
 
-/* LPUART CTRL Control Register 1 bits */
+/* LPUART CTRL Control register bits */
 #define FMSTR_LPUART_CTRL_TIE            0x00800000
 #define FMSTR_LPUART_CTRL_TCIE           0x00400000
 #define FMSTR_LPUART_CTRL_RIE            0x00200000
@@ -108,8 +108,9 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S32K144_LPUART =
 #define FMSTR_LPUART_STAT_TDRE           0x00800000
 #define FMSTR_LPUART_STAT_TC             0x00400000
 #define FMSTR_LPUART_STAT_RDRF           0x00200000
+#define FMSTR_LPUART_STAT_OR             0x00080000
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    SCI communication initialization
 *
@@ -130,7 +131,7 @@ static FMSTR_BOOL _FMSTR_S32K144_Init(void)
 }
 
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Enable/Disable LPUART transmitter
 *
@@ -148,10 +149,9 @@ static void _FMSTR_S32K144_EnableTransmit(FMSTR_BOOL enable)
         /* Disable transmitter */
         FMSTR_CLRBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_CTRL_OFFSET, FMSTR_LPUART_CTRL_TE);
     }
-
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Enable/Disable LPUART receiver
 *
@@ -171,7 +171,7 @@ static void _FMSTR_S32K144_EnableReceive(FMSTR_BOOL enable)
     }
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Enable/Disable interrupt from transmit register empty event
 *
@@ -191,7 +191,7 @@ static void _FMSTR_S32K144_EnableTransmitInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Enable/Disable interrupt when transmission is complete
 *
@@ -211,7 +211,7 @@ static void _FMSTR_S32K144_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Enable/Disable interrupt from receive register full event
 *
@@ -231,7 +231,7 @@ static void _FMSTR_S32K144_EnableReceiveInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
 *
@@ -242,7 +242,7 @@ static FMSTR_BOOL _FMSTR_S32K144_IsTransmitRegEmpty(void)
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_TDRE);
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
 *
@@ -250,10 +250,16 @@ static FMSTR_BOOL _FMSTR_S32K144_IsTransmitRegEmpty(void)
 
 static FMSTR_BOOL _FMSTR_S32K144_IsReceiveRegFull(void)
 {
+    /* Clear overrun bit if set for the receiver to continue normal operation. */
+    if(FMSTR_TSTBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_OR))
+    {
+        FMSTR_SETBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_OR);
+    }
+
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_RDRF);
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Returns TRUE if the transmitter is still active
 *
@@ -265,7 +271,7 @@ static FMSTR_BOOL _FMSTR_S32K144_IsTransmitterActive(void)
     return (!(FMSTR_TSTBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_TC)));
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    The function puts the char for transmit
 *
@@ -276,7 +282,7 @@ static void _FMSTR_S32K144_PutChar(FMSTR_BCHR  ch)
     FMSTR_SETREG(fmstr_LPUARTBaseAddr, FMSTR_LPUART_DATA_OFFSET , ch);
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    The function gets the received char
 *
@@ -288,7 +294,7 @@ static FMSTR_BCHR _FMSTR_S32K144_GetChar(void)
     return c;
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    The function sends buffered data
 *
@@ -296,10 +302,9 @@ static FMSTR_BCHR _FMSTR_S32K144_GetChar(void)
 
 static void _FMSTR_S32K144_Flush(void)
 {
-
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Assign FreeMASTER communication module base address
 *
@@ -310,13 +315,13 @@ void FMSTR_SerialSetBaseAddress(FMSTR_ADDR base)
     fmstr_LPUARTBaseAddr = base;
 }
 
-/******************************************************************************
+/**************************************************************************//*!
 *
 * @brief    Process FreeMASTER serial interrupt (call this function from SCI ISR)
 *
 ******************************************************************************/
 
-void FMSTR_SerialIsr(void)
+void FMSTR_SerialIsr()
 {
     /* process incoming or just transmitted byte */
     #if (FMSTR_LONG_INTR) || (FMSTR_SHORT_INTR)
@@ -332,7 +337,7 @@ void FMSTR_SerialSetBaseAddress(FMSTR_ADDR base)
     FMSTR_UNUSED(base);
 }
 
-void FMSTR_SerialIsr(void)
+void FMSTR_SerialIsr()
 {
 }
 

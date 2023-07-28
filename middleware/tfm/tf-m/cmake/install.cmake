@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
-# Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
+# Copyright (c) 2020-2023, Arm Limited. All rights reserved.
+# Copyright (c) 2022-2023 Cypress Semiconductor Corporation (an Infineon company)
 # or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -35,21 +35,20 @@ install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/psa_manifest
 
 install(FILES       ${INTERFACE_INC_DIR}/tfm_api.h
                     ${INTERFACE_INC_DIR}/tfm_ns_interface.h
-                    ${INTERFACE_INC_DIR}/psa_config.h
         DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 
 install(FILES       ${INTERFACE_INC_DIR}/tfm_ns_client_ext.h
         DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 
-install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/config_impl.h
+install(FILES       ${CMAKE_SOURCE_DIR}/secure_fw/include/config_tfm.h
+        DESTINATION ${INSTALL_INTERFACE_INC_DIR})
+install(FILES       ${CMAKE_SOURCE_DIR}/config/config_base.h
         DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 
-if (TFM_PSA_API)
-    install(FILES       ${INTERFACE_INC_DIR}/tfm_psa_call_pack.h
-            DESTINATION ${INSTALL_INTERFACE_INC_DIR})
-    install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/psa/framework_feature.h
-            DESTINATION ${INSTALL_INTERFACE_INC_DIR}/psa)
-endif()
+install(FILES       ${INTERFACE_INC_DIR}/tfm_psa_call_pack.h
+        DESTINATION ${INSTALL_INTERFACE_INC_DIR})
+install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/psa/framework_feature.h
+        DESTINATION ${INSTALL_INTERFACE_INC_DIR}/psa)
 
 if (TFM_PARTITION_NS_AGENT_MAILBOX)
     install(FILES       ${INTERFACE_INC_DIR}/multi_core/tfm_multi_core_api.h
@@ -58,11 +57,6 @@ if (TFM_PARTITION_NS_AGENT_MAILBOX)
                         ${INTERFACE_INC_DIR}/multi_core/tfm_ns_mailbox_test.h
                         ${CMAKE_BINARY_DIR}/generated/interface/include/tfm_mailbox_config.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
-endif()
-
-if (NOT TFM_PSA_API)
-    install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/tfm_veneers.h
-            DESTINATION ${INSTALL_INTERFACE_INC_DIR}/tfm/veneers)
 endif()
 
 if (TFM_PARTITION_PROTECTED_STORAGE)
@@ -102,12 +96,6 @@ if (TFM_PARTITION_INITIAL_ATTESTATION)
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
 endif()
 
-if(TFM_PARTITION_AUDIT_LOG)
-    install(FILES       ${INTERFACE_INC_DIR}/psa_audit_api.h
-                        ${INTERFACE_INC_DIR}/psa_audit_defs.h
-            DESTINATION ${INSTALL_INTERFACE_INC_DIR})
-endif()
-
 if(TFM_PARTITION_PLATFORM)
     install(FILES       ${INTERFACE_INC_DIR}/tfm_platform_api.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR})
@@ -141,64 +129,37 @@ if (TFM_PARTITION_NS_AGENT_TZ)
             DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
+    install(DIRECTORY   ${INTERFACE_INC_DIR}/os_wrapper
+            DESTINATION ${INSTALL_INTERFACE_INC_DIR})
+
 if (CONFIG_TFM_USE_TRUSTZONE)
-    install(FILES       ${INTERFACE_SRC_DIR}/tfm_ns_interface.c.example
+    install(DIRECTORY   ${INTERFACE_SRC_DIR}/os_wrapper
             DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
 if (TFM_PARTITION_PROTECTED_STORAGE)
-    if (TFM_PSA_API)
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_ps_ipc_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    else()
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_ps_func_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    endif()
+    install(FILES       ${INTERFACE_SRC_DIR}/tfm_ps_api.c
+            DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
 if (TFM_PARTITION_INTERNAL_TRUSTED_STORAGE)
-    if (TFM_PSA_API)
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_its_ipc_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    else()
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_its_func_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    endif()
+    install(FILES       ${INTERFACE_SRC_DIR}/tfm_its_api.c
+            DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
 if (TFM_PARTITION_CRYPTO)
-    if (TFM_PSA_API)
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_crypto_ipc_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    else()
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_crypto_func_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    endif()
+    install(FILES       ${INTERFACE_SRC_DIR}/tfm_crypto_api.c
+            DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
 if (TFM_PARTITION_INITIAL_ATTESTATION)
-    if (TFM_PSA_API)
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_initial_attestation_ipc_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    else()
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_initial_attestation_func_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    endif()
-endif()
-
-if(TFM_PARTITION_AUDIT_LOG)
-    install(FILES       ${INTERFACE_SRC_DIR}/tfm_audit_func_api.c
+    install(FILES       ${INTERFACE_SRC_DIR}/tfm_attest_api.c
             DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
 if(TFM_PARTITION_PLATFORM)
-    if(TFM_PSA_API)
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_platform_ipc_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    else()
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_platform_func_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    endif()
+    install(FILES       ${INTERFACE_SRC_DIR}/tfm_platform_api.c
+            DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
 
 
@@ -215,12 +176,14 @@ if(BL2)
                 DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/keys)
     endif()
 
-    install(FILES $<TARGET_OBJECTS:signing_layout_s>
+    if (PLATFORM_DEFAULT_IMAGE_SIGNING)
+        install(FILES $<TARGET_OBJECTS:signing_layout_s>
             DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/layout_files)
 
-    if(MCUBOOT_IMAGE_NUMBER GREATER 1)
-        install(FILES $<TARGET_OBJECTS:signing_layout_ns>
-                DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/layout_files)
+        if(MCUBOOT_IMAGE_NUMBER GREATER 1)
+            install(FILES $<TARGET_OBJECTS:signing_layout_ns>
+                    DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/layout_files)
+    endif()
 
         install(FILES ${MCUBOOT_KEY_NS}
                 DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/keys)
@@ -231,17 +194,16 @@ if(BL2)
 endif()
 
 if(TFM_PARTITION_FIRMWARE_UPDATE)
-    if(TFM_PSA_API)
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_firmware_update_ipc_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    else()
-        install(FILES       ${INTERFACE_SRC_DIR}/tfm_firmware_update_func_api.c
-                DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
-    endif()
+    install(FILES       ${INTERFACE_SRC_DIR}/tfm_fwu_api.c
+            DESTINATION ${INSTALL_INTERFACE_SRC_DIR})
 endif()
+
+###################### Install for NS regression tests #########################
+
+include(${CMAKE_SOURCE_DIR}/lib/ext/tf-m-tests/install.cmake)
 
 ##################### Platform-specific installation ###########################
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/platform/ext/target/${TFM_PLATFORM}/install.cmake)
-    include(platform/ext/target/${TFM_PLATFORM}/install.cmake)
+if (EXISTS ${TARGET_PLATFORM_PATH}/install.cmake)
+    include(${TARGET_PLATFORM_PATH}/install.cmake)
 endif()

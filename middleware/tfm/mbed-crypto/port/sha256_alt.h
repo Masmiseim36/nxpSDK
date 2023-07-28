@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2021 NXP
+ * Copyright 2019 - 2022 NXP
  * All rights reserved.
  *
  *
@@ -24,13 +24,24 @@ extern "C" {
 
 #define mbedtls_sha256_context hashcrypt_hash_ctx_t
 
-#elif defined(MBEDTLS_MCUX_CSS_SHA256) && MBEDTLS_MCUX_CSS_SHA256 /* CSS */
+/* CSS */
+#elif defined(MBEDTLS_MCUX_CSS_SHA256) && MBEDTLS_MCUX_CSS_SHA256
 
 #include <mcuxClHash.h>
 
 typedef struct mbedtls_sha256_context
 {
     mcuxClHash_Context_t context;
+}
+mbedtls_sha256_context;
+
+/* ELS */
+#elif defined(MBEDTLS_MCUX_ELS_SHA256) && MBEDTLS_MCUX_ELS_SHA256  
+
+#include <mcuxClHash.h>
+typedef struct mbedtls_sha256_context
+{
+    uint32_t context[MCUXCLHASH_CONTEXT_SIZE/sizeof(uint32_t)];
 }
 mbedtls_sha256_context;
 

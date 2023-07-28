@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,6 +35,8 @@ typedef struct {
     psa_status_t            expected_status;
 } test_data;
 
+#if ((defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CBC_PKCS7) || defined(ARCH_TEST_CIPHER_MODE_CTR)))||\
+(defined(ARCH_TEST_CBC_NO_PADDING) && (defined(ARCH_TEST_DES_1KEY) || defined(ARCH_TEST_DES_2KEY) || defined(ARCH_TEST_DES_3KEY)))) //NXP
 static const test_data check1[] = {
 #ifdef ARCH_TEST_AES_128
 #ifdef ARCH_TEST_CBC_NO_PADDING
@@ -52,7 +54,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = ciphertext_1,
-    .expected_output_length = 0,
+    .expected_output_length = 16,
     .expected_status        = PSA_SUCCESS
 },
 
@@ -90,7 +92,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = ciphertext_1,
-    .expected_output_length = 16,
+    .expected_output_length = 32,
     .expected_status        = PSA_SUCCESS
 },
 
@@ -128,7 +130,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = ciphertext_2,
-    .expected_output_length = 0,
+    .expected_output_length = 16,
     .expected_status        = PSA_SUCCESS
 },
 
@@ -146,7 +148,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = ciphertext_2,
-    .expected_output_length = 0,
+    .expected_output_length = 15,
     .expected_status        = PSA_SUCCESS
 },
 #endif
@@ -168,7 +170,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = ciphertext_3,
-    .expected_output_length = 0,
+    .expected_output_length = 8,
     .expected_status        = PSA_SUCCESS
 },
 #endif
@@ -188,7 +190,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = ciphertext_4,
-    .expected_output_length = 0,
+    .expected_output_length = 8,
     .expected_status        = PSA_SUCCESS
 },
 #endif
@@ -208,7 +210,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = ciphertext_5,
-    .expected_output_length = 0,
+    .expected_output_length = 8,
     .expected_status        = PSA_SUCCESS
 },
 #endif
@@ -250,7 +252,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = plaintext,
-    .expected_output_length = 0,
+    .expected_output_length = 16,
     .expected_status        = PSA_SUCCESS
 },
 
@@ -269,7 +271,7 @@ static const test_data check1[] = {
     .output_size            = 0,
     .expected_output        = NULL,
     .expected_output_length = 0,
-    .expected_status        = PSA_ERROR_BAD_STATE
+    .expected_status        = PSA_ERROR_INVALID_ARGUMENT
 },
 
 #endif
@@ -289,7 +291,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = plaintext,
-    .expected_output_length = 0,
+    .expected_output_length = 16,
     .expected_status        = PSA_SUCCESS
 },
 
@@ -327,7 +329,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = plaintext,
-    .expected_output_length = 0,
+    .expected_output_length = 16,
     .expected_status        = PSA_SUCCESS
 },
 
@@ -341,11 +343,11 @@ static const test_data check1[] = {
     .iv                     = iv,
     .iv_length              = 16,
     .input                  = ciphertext_2,
-    .input_length           = 16,
+    .input_length           = 15,
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = plaintext,
-    .expected_output_length = 0,
+    .expected_output_length = 15,
     .expected_status        = PSA_SUCCESS
 },
 #endif
@@ -367,7 +369,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = plaintext,
-    .expected_output_length = 0,
+    .expected_output_length = 8,
     .expected_status        = PSA_SUCCESS
 },
 #endif
@@ -387,7 +389,7 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = plaintext,
-    .expected_output_length = 0,
+    .expected_output_length = 8,
     .expected_status        = PSA_SUCCESS
 },
 #endif
@@ -407,9 +409,11 @@ static const test_data check1[] = {
     .output                 = expected_output,
     .output_size            = BUFFER_SIZE,
     .expected_output        = plaintext,
-    .expected_output_length = 0,
+    .expected_output_length = 8,
     .expected_status        = PSA_SUCCESS
 },
 #endif
 #endif
 };
+#endif /* ((defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CBC_PKCS7) || defined(ARCH_TEST_CIPHER_MODE_CTR))||
+(defined(ARCH_TEST_CBC_NO_PADDING) && (defined(ARCH_TEST_DES_1KEY) || defined(ARCH_TEST_DES_2KEY) || defined(ARCH_TEST_DES_3KEY))))*/ //NXP

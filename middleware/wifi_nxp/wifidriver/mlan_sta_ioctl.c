@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides functions for station ioctl
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -365,7 +365,7 @@ static int wlan_get_modulation_class(pmlan_adapter pmadapter, int rate_index)
         LEAVE();
         return (int)MOD_CLASS_OFDM;
     }
-    else if (rate_index >= MLAN_RATE_INDEX_MCS0 && rate_index <= MLAN_RATE_INDEX_MCS127)
+    else if (rate_index <= MLAN_RATE_INDEX_MCS127)
     {
         LEAVE();
         return (int)MOD_CLASS_HT;
@@ -593,197 +593,6 @@ t_u8 wlan_get_random_charactor(pmlan_adapter pmadapter)
  *
  *  @return		MLAN_STATUS_PENDING --success, otherwise fail
  */
-static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
-{
-    mlan_status ret          = MLAN_STATUS_SUCCESS;
-    mlan_private *pmpriv     = pmadapter->priv[pioctl_req->bss_index];
-    mlan_ds_sec_cfg *sec     = MNULL;
-    mrvl_wep_key_t *pwep_key = MNULL;
-    unsigned int index;
-    unsigned int i = 0;
-
-    ENTER();
-
-    if (pmpriv->wep_key_curr_index >= MRVL_NUM_WEP_KEY)
-    {
-        pmpriv->wep_key_curr_index = 0;
-    }
-    pwep_key = &pmpriv->wep_key[pmpriv->wep_key_curr_index];
-    sec      = (mlan_ds_sec_cfg *)(void *)pioctl_req->pbuf;
-    if (sec->param.encrypt_key.key_index == MLAN_KEY_INDEX_DEFAULT)
-    {
-        index = pmpriv->wep_key_curr_index;
-        sec->param.encrypt_key.key_index = index;
-    }
-    else
-    {
-        if (sec->param.encrypt_key.key_index >= MRVL_NUM_WEP_KEY)
-        {
-            if ((sec->param.encrypt_key.key_remove == MTRUE) && (sec->param.encrypt_key.key_index <= 5))
-            {
-                /* call firmware remove key */
-                ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, MNULL,
-                                       &sec->param.encrypt_key);
-                goto exit;
-            }
-            PRINTM(MERROR, "Key_index is invalid\n");
-            ret = MLAN_STATUS_FAILURE;
-            goto exit;
-        }
-        index = sec->param.encrypt_key.key_index;
-    }
-
-    if ((sec->param.encrypt_key.key_disable == MTRUE) || (sec->param.encrypt_key.key_remove == MTRUE))
-    {
-        pmpriv->sec_info.wep_status = Wlan802_11WEPDisabled;
-        /* remove key */
-        if (sec->param.encrypt_key.key_remove == MTRUE)
-        {
-            (void)__memset(pmadapter, &pmpriv->wep_key[index], 0, sizeof(mrvl_wep_key_t));
-            /* call firmware remove key */
-            ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, MNULL,
-                                   &sec->param.encrypt_key);
-            if (ret != MLAN_STATUS_SUCCESS)
-            {
-                goto exit;
-            }
-        }
-    }
-    else
-    {
-        if (sec->param.encrypt_key.key_len != 0U)
-        {
-            if ((sec->param.encrypt_key.key_len != WEP_104_BIT_LEN) &&
-                (sec->param.encrypt_key.key_len != WEP_40_BIT_LEN))
-            {
-                PRINTM(MERROR, "Invalid wep key len=%d\n", sec->param.encrypt_key.key_len);
-                /* We will use random key to clear the key buffer in FW */
-                if (sec->param.encrypt_key.key_len < WEP_40_BIT_LEN)
-                {
-                    sec->param.encrypt_key.key_len = WEP_40_BIT_LEN;
-                }
-                else
-                {
-                    sec->param.encrypt_key.key_len = WEP_104_BIT_LEN;
-                }
-                for (i = 0; i < sec->param.encrypt_key.key_len; i++)
-                {
-                    sec->param.encrypt_key.key_material[i] = wlan_get_random_charactor(pmadapter);
-                }
-            }
-            pwep_key = &pmpriv->wep_key[index];
-            /* Cleanup */
-            (void)__memset(pmadapter, pwep_key, 0, sizeof(mrvl_wep_key_t));
-            /* Copy the key in the driver */
-
-            (void)__memcpy(pmadapter, pwep_key->key_material, sec->param.encrypt_key.key_material,
-                           sec->param.encrypt_key.key_len);
-            pwep_key->key_index  = index;
-            pwep_key->key_length = sec->param.encrypt_key.key_len;
-            if (pmpriv->sec_info.wep_status != Wlan802_11WEPEnabled)
-            {
-                /*
-                 * The status is set as Key Absent
-                 * so as to make sure we display the
-                 * keys when iwlist mlanX key is used
-                 */
-                pmpriv->sec_info.wep_status = Wlan802_11WEPKeyAbsent;
-            }
-        }
-        if (sec->param.encrypt_key.is_current_wep_key == MTRUE)
-        {
-            /* Copy the required key as the current key */
-            pwep_key = &pmpriv->wep_key[index];
-            if (!pwep_key->key_length)
-            {
-                if (pmpriv->sec_info.wpa_enabled != 0U)
-                {
-                    ret = MLAN_STATUS_SUCCESS;
-                    goto exit;
-                }
-#ifdef WPA2
-                if (&pmpriv->sec_info.wpa2_enabled != 0U)
-                {
-                    ret = MLAN_STATUS_SUCCESS;
-                    goto exit;
-                }
-#endif /*WPA*/
-
-                PRINTM(MERROR,
-                       "Key %d not set,so "
-                       "cannot enable it\n",
-                       index);
-                pioctl_req->status_code = MLAN_ERROR_CMD_RESP_FAIL;
-                ret                     = MLAN_STATUS_FAILURE;
-                goto exit;
-            }
-            pmpriv->wep_key_curr_index  = (t_u16)index;
-            pmpriv->sec_info.wep_status = Wlan802_11WEPEnabled;
-        }
-        if (sec->param.encrypt_key.key_flags && pwep_key->key_length)
-        {
-            pmpriv->wep_key_curr_index  = (t_u16)index;
-            pmpriv->sec_info.wep_status = Wlan802_11WEPEnabled;
-        }
-    }
-    if (pmpriv->sec_info.wep_status == Wlan802_11WEPEnabled)
-    {
-        pmpriv->curr_pkt_filter |= (t_u16)HostCmd_ACT_MAC_WEP_ENABLE;
-    }
-    else
-    {
-        pmpriv->curr_pkt_filter &= ~((t_u16)HostCmd_ACT_MAC_WEP_ENABLE);
-    }
-
-    /* Send request to firmware */
-    if (pmpriv->sec_info.wep_status == Wlan802_11WEPEnabled && pwep_key->key_length)
-    {
-        ret =
-            wlan_prepare_cmd(pmpriv, HostCmd_CMD_MAC_CONTROL, HostCmd_ACT_GEN_SET, 0, MNULL, &pmpriv->curr_pkt_filter);
-        if (ret != MLAN_STATUS_SUCCESS)
-        {
-            goto exit;
-        }
-        if (!sec->param.encrypt_key.key_len)
-        {
-            sec->param.encrypt_key.key_index = pwep_key->key_index;
-            sec->param.encrypt_key.key_len   = pwep_key->key_length;
-            (void)__memcpy(pmadapter, sec->param.encrypt_key.key_material, pwep_key->key_material,
-                           sec->param.encrypt_key.key_len);
-        }
-        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
-                               &sec->param.encrypt_key);
-    }
-    else
-    {
-        if (pwep_key->key_length != 0U)
-        {
-            if (!sec->param.encrypt_key.key_len)
-            {
-                sec->param.encrypt_key.key_index = pwep_key->key_index;
-                sec->param.encrypt_key.key_len   = pwep_key->key_length;
-                (void)__memcpy(pmadapter, sec->param.encrypt_key.key_material, pwep_key->key_material,
-                               sec->param.encrypt_key.key_len);
-            }
-            ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, MNULL,
-                                   &sec->param.encrypt_key);
-            if (ret != MLAN_STATUS_SUCCESS)
-            {
-                goto exit;
-            }
-        }
-        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_MAC_CONTROL, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
-                               &pmpriv->curr_pkt_filter);
-    }
-    if (ret == MLAN_STATUS_SUCCESS)
-    {
-        ret = MLAN_STATUS_PENDING;
-    }
-
-exit:
-    LEAVE();
-    return ret;
-}
 
 /**
  *  @brief Set WPA key
@@ -847,10 +656,6 @@ static mlan_status wlan_sec_ioctl_encrypt_key(IN pmlan_adapter pmadapter, IN pml
             if (sec->param.encrypt_key.key_len > MAX_WEP_KEY_SIZE)
         {
             status = wlan_sec_ioctl_set_wpa_key(pmadapter, pioctl_req);
-        }
-        else
-        {
-            status = wlan_sec_ioctl_set_wep_key(pmadapter, pioctl_req);
         }
     }
     else
@@ -1217,6 +1022,11 @@ static mlan_status wlan_misc_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioct
         case MLAN_OID_MISC_REGION:
             status = wlan_misc_ioctl_region(pmadapter, pioctl_req);
             break;
+#ifdef CONFIG_ROAMING
+        case MLAN_OID_MISC_SUBSCRIBE_EVENT:
+            status = wlan_misc_ioctl_subscribe_evt(pmadapter, pioctl_req);
+            break;
+#endif
 #ifdef WLAN_LOW_POWER_ENABLE
         case MLAN_OID_MISC_LOW_PWR_MODE:
             status = wlan_misc_ioctl_low_pwr_mode(pmadapter, pioctl_req);
@@ -1230,6 +1040,15 @@ static mlan_status wlan_misc_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioct
             status = wlan_misc_get_tsf_info(pmadapter, pioctl_req);
             break;
 #endif /* CONFIG_WIFI_CLOCKSYNC */
+#ifdef CONFIG_RF_TEST_MODE
+        case MLAN_OID_MISC_RF_TEST_GENERIC:
+        case MLAN_OID_MISC_RF_TEST_TX_CONT:
+        case MLAN_OID_MISC_RF_TEST_CONFIG_TRIGGER_FRAME:
+        case MLAN_OID_MISC_RF_TEST_TX_FRAME:
+        case MLAN_OID_MISC_RF_TEST_HE_POWER:
+            status = wlan_misc_ioctl_rf_test_cfg(pmadapter, pioctl_req);
+            break;
+#endif /* CONFIG_RF_TEST_MODE */
         default:
             pioctl_req->status_code = MLAN_ERROR_IOCTL_INVALID;
 
@@ -1239,6 +1058,7 @@ static mlan_status wlan_misc_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioct
     LEAVE();
     return status;
 }
+
 
 
 

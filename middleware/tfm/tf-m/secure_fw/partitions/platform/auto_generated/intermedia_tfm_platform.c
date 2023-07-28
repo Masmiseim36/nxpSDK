@@ -8,5 +8,6 @@
 /***********  WARNING: This is an auto-generated file. Do not edit!  ***********/
 
 #include <stdint.h>
+#include "config_tfm.h"
 
-uint8_t tfm_sp_platform_stack[0x500] __attribute__((aligned(8)));
+uint8_t tfm_sp_platform_stack[PLATFORM_SP_STACK_SIZE] __attribute__((aligned(8)));

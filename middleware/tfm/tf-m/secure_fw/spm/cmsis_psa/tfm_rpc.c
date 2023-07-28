@@ -5,7 +5,8 @@
  *
  */
 
-#include "spm_ipc.h"
+#include "config_impl.h"
+#include "spm.h"
 #include "ffm/psa_api.h"
 #include "tfm_rpc.h"
 #include "utilities.h"
@@ -42,14 +43,14 @@ uint32_t tfm_rpc_psa_framework_version(void)
 
 uint32_t tfm_rpc_psa_version(const struct client_call_params_t *params)
 {
-    TFM_CORE_ASSERT(params != NULL);
+    SPM_ASSERT(params != NULL);
 
     return tfm_spm_client_psa_version(params->sid);
 }
 
 psa_status_t tfm_rpc_psa_call(const struct client_call_params_t *params)
 {
-    TFM_CORE_ASSERT(params != NULL);
+    SPM_ASSERT(params != NULL);
 
     return tfm_spm_client_psa_call(params->handle,
                                    PARAM_PACK(params->type,
@@ -63,14 +64,14 @@ psa_status_t tfm_rpc_psa_call(const struct client_call_params_t *params)
 
 psa_status_t tfm_rpc_psa_connect(const struct client_call_params_t *params)
 {
-    TFM_CORE_ASSERT(params != NULL);
+    SPM_ASSERT(params != NULL);
 
     return tfm_spm_client_psa_connect(params->sid, params->version);
 }
 
 void tfm_rpc_psa_close(const struct client_call_params_t *params)
 {
-    TFM_CORE_ASSERT(params != NULL);
+    SPM_ASSERT(params != NULL);
 
     tfm_spm_client_psa_close(params->handle);
 }
@@ -115,12 +116,12 @@ void tfm_rpc_client_call_handler(void)
 
 void tfm_rpc_client_call_reply(const void *owner, int32_t ret)
 {
-    const struct conn_handle_t *handle = (const struct conn_handle_t *)owner;
+    const struct connection_t *handle = (const struct connection_t *)owner;
 
     rpc_ops.reply(handle->caller_data, ret);
 }
 
-void tfm_rpc_set_caller_data(struct conn_handle_t *handle, int32_t client_id)
+void tfm_rpc_set_caller_data(struct connection_t *handle, int32_t client_id)
 {
     handle->caller_data = rpc_ops.get_caller_data(client_id);
 }

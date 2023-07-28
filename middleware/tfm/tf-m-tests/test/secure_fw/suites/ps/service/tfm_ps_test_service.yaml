@@ -6,22 +6,13 @@
 #-------------------------------------------------------------------------------
 
 {
-  "psa_framework_version": 1.0,
+  "psa_framework_version": 1.1,
   "name": "TFM_SP_PS_TEST",
   "type": "PSA-ROT",
   "model": "dual",
   "priority": "NORMAL",
   "entry_point": "tfm_ps_test_init",
   "stack_size": "0x500",
-  "secure_functions": [
-    {
-      "name": "TFM_PS_TEST_PREPARE",
-      "signal": "TFM_PS_TEST_PREPARE",
-      "non_secure_clients": false,
-      "version": 1,
-      "version_policy": "STRICT"
-    },
-  ],
   "services": [
     {
       "name": "TFM_PS_TEST_PREPARE",

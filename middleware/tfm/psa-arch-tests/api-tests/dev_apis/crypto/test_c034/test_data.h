@@ -30,6 +30,9 @@ typedef struct {
     psa_status_t            expected_status;
 } test_data;
 
+#if ((defined(ARCH_TEST_CIPHER_MODE_CTR) && (defined(ARCH_TEST_AES_128) || defined(ARCH_TEST_AES_192) || defined(ARCH_TEST_AES_256)))||\
+(defined(ARCH_TEST_CBC_AES_NO_PADDING) && (defined(ARCH_TEST_DES_1KEY) || defined(ARCH_TEST_DES_2KEY) || defined(ARCH_TEST_DES_3KEY)))) //NXP
+
 static const test_data check1[] = {
 #ifdef ARCH_TEST_CIPHER_MODE_CTR
 #ifdef ARCH_TEST_AES_128
@@ -158,4 +161,6 @@ static const test_data check1[] = {
 },
 #endif
 #endif
-};
+}; 
+#endif /*((defined(ARCH_TEST_CIPHER_MODE_CTR) && (defined(ARCH_TEST_AES_128) || defined(ARCH_TEST_AES_192) || defined(ARCH_TEST_AES_256)))||
+(defined(ARCH_TEST_CBC_AES_NO_PADDING) && (defined(ARCH_TEST_DES_1KEY) || defined(ARCH_TEST_DES_2KEY) || defined(ARCH_TEST_DES_3KEY))))*/ //NXP

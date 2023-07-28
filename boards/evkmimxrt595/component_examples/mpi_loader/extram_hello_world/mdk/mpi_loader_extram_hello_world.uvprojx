@@ -568,16 +568,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_iap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1256,16 +1246,6 @@
               <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
             </File>
           </Files>
         </Group>

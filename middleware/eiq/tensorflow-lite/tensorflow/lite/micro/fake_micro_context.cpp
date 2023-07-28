@@ -19,7 +19,7 @@ limitations under the License.
 #include "tensorflow/lite/micro/arena_allocator/single_arena_buffer_allocator.h"
 #include "tensorflow/lite/micro/micro_allocator.h"
 #include "tensorflow/lite/micro/micro_arena_constants.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 namespace {
@@ -33,23 +33,32 @@ FakeMicroContext::FakeMicroContext(TfLiteTensor* tensors,
                                    SingleArenaBufferAllocator* allocator,
                                    MicroGraph* micro_graph)
     : MicroContext(
-          MicroAllocator::Create(dummy_tensor_arena, KDummyTensorArenaSize,
-                                 GetMicroErrorReporter()),
+          MicroAllocator::Create(dummy_tensor_arena, KDummyTensorArenaSize),
           nullptr, micro_graph),
       tensors_(tensors),
       allocator_(allocator) {}
 
 TfLiteTensor* FakeMicroContext::AllocateTempTfLiteTensor(int tensor_index) {
-  allocated_tensor_count_++;
+  allocated_temp_count_++;
   return &tensors_[tensor_index];
 }
 
 void FakeMicroContext::DeallocateTempTfLiteTensor(TfLiteTensor* tensor) {
-  allocated_tensor_count_--;
+  allocated_temp_count_--;
 }
 
 bool FakeMicroContext::IsAllTempTfLiteTensorDeallocated() {
-  return !allocated_tensor_count_;
+  return !allocated_temp_count_;
+}
+
+uint8_t* FakeMicroContext::AllocateTempBuffer(size_t size, size_t alignment) {
+  allocated_temp_count_++;
+  return allocator_->AllocateTemp(size, alignment);
+}
+
+void FakeMicroContext::DeallocateTempBuffer(uint8_t* buffer) {
+  allocated_temp_count_--;
+  allocator_->DeallocateTemp(buffer);
 }
 
 TfLiteEvalTensor* FakeMicroContext::GetEvalTensor(int tensor_index) {

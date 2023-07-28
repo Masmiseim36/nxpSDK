@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: I2C Driver</title>
+<title>MCUXpresso SDK API Reference Manual: DMIC: Digital Microphone</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,427 +99,51 @@ $(document).ready(function(){initNavTree('a00241.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">I2C Driver<div class="ingroups"><a class="el" href="a00240.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">DMIC: Digital Microphone</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Digital Microphone (DMIC) module. <br/>
+The DMIC driver is created to help the user more easily operate the DMIC module. This driver can be used to performed basic and advanced DMIC operations. The driver can be used to transfer data from DMIC to memory using DMA as well as in interrupt mode. The DMIC and DMA transfer in pingpong mode is preferred as DMIC is a streaming device. <br/>
+ </p>
+<h1><a class="anchor" id="DMICFuncGrps"></a>
+Function groups</h1>
+<h2><a class="anchor" id="DMICInitDeinit"></a>
+Initialization and deinitialization</h2>
+<p>This function group implements DMIC initialization and deinitialization API. <a class="el" href="a00016.html#ga9c6bce944abc7a1ab3fe991b214a45d3" title="Turns DMIC Clock on. ">DMIC_Init()</a> function Enables the clock to the DMIC register interface. DMIC_Dinit() function Disables the clock to the DMIC register interface.</p>
+<h2><a class="anchor" id="DMICConfiguration"></a>
+Configuration</h2>
+<p>This function group implements DMIC configration API. <a class="el" href="a00016.html#ga354c40c8888e29816891352d3d20e79d" title="Configure DMIC io. ">DMIC_ConfigIO()</a>function configures the use of PDM (Pulse Density moulation) pins. <a class="el" href="a00016.html#ga1d879be7966325a36ac004513ce8c688" title="Set DMIC operating mode. ">DMIC_SetOperationMode()</a>function configures the mode of operation either in DMA or in interrupt. <a class="el" href="a00016.html#ga1bfcaed7509b4295cd60dfaac9586e6a" title="Configure DMIC channel. ">DMIC_ConfigChannel()</a> function configures the various property of a DMIC channel. <a class="el" href="a00016.html#gafaadf7842594e1aa1557b0321f677dc2" title="Configure Clock scaling. ">DMIC_Use2fs()</a>function configures the clock scaling used for PCM data output. <a class="el" href="a00016.html#ga9feb1c1487876380c080dc28a8335647" title="Enable a particualr channel. ">DMIC_EnableChannnel()</a> function enables a particualr DMIC channel. <a class="el" href="a00016.html#ga17af24956c1bde8a0c66345e3e0957c9" title="Configure fifo settings for DMIC channel. ">DMIC_FifoChannel()</a> function configures FIFO settings for a DMIC channel.</p>
+<h2><a class="anchor" id="DMICDataStatus"></a>
+DMIC Data and status</h2>
+<p>This function group implements the API to get data and status of DMIC FIFO. <a class="el" href="a00016.html#gad7ab9196cff9972a1c859dde2ca2df4a" title="Get FIFO status. ">DMIC_FifoGetStatus()</a> function gives the status of a DMIC FIFO. DMIC_ClearStatus() function clears the status of a DMIC FIFO. <a class="el" href="a00016.html#ga7ba039347e508039816670ae64678e4a" title="Get FIFO data. ">DMIC_FifoGetData()</a> function gets data from a DMIC FIFO.</p>
+<h2><a class="anchor" id="DMICInterrupt"></a>
+DMIC Interrupt Functions</h2>
+<p>DMIC_EnablebleIntCallback() enables the interrupt for the selected DMIC peripheral. <a class="el" href="a00016.html#gab0cc7b4e67381315fa1b7e81d4a7771c" title="Disable callback. ">DMIC_DisableIntCallback()</a> disables the interrupt for the selected DMIC peripheral.</p>
+<h2><a class="anchor" id="HWVADFunction"></a>
+DMIC HWVAD Functions</h2>
+<p>This function group implements the API for HWVAD. <a class="el" href="a00016.html#gae0b7e1f69c320b0a1ca0815cdb8344f9" title="Sets the gain value for the noise estimator. ">DMIC_SetGainNoiseEstHwvad()</a> Sets the gain value for the noise estimator. <a class="el" href="a00016.html#ga0666228b59392fd37c209fc2bc38c4ba" title="Sets the gain value for the signal estimator. ">DMIC_SetGainSignalEstHwvad()</a> Sets the gain value for the signal estimator. <a class="el" href="a00016.html#gad224cdf0525be5cc5342c440c9f6f5f3" title="Sets the hwvad filter cutoff frequency parameter. ">DMIC_SetFilterCtrlHwvad()</a> Sets the HWVAD filter cutoff frequency parameter. <a class="el" href="a00016.html#ga68409219a45a0f46f601a97f88fd672c" title="Sets the input gain of hwvad. ">DMIC_SetInputGainHwvad()</a> Sets the input gain of HWVAD. <a class="el" href="a00016.html#gad2837b74dbbcd557736ae4ac3be8db06" title="Clears hwvad internal interrupt flag. ">DMIC_CtrlClrIntrHwvad()</a> Clears HWVAD internal interrupt flag. <a class="el" href="a00016.html#ga144a8ee8ddc2f71d1ea731d3f7141724" title="Resets hwvad filters. ">DMIC_FilterResetHwvad()</a> Resets HWVAD filters. <a class="el" href="a00016.html#ga10ebe9447d9bc55f4ad3f0f45387f6f8" title="Gets the value from output of the filter z7. ">DMIC_GetNoiseEnvlpEst()</a> Gets the value from output of the filter z7.</p>
+<h2><a class="anchor" id="DMICHWVADInterrupt"></a>
+DMIC HWVAD Interrupt Functions</h2>
+<p><a class="el" href="a00016.html#gac31c9046eaf53062ffa0749aa53cc789" title="Enable hwvad callback. ">DMIC_HwvadEnableIntCallback()</a> enables the HWVAD interrupt for the selected DMIC peripheral. <a class="el" href="a00016.html#ga6d50d3f50203f8c86b3f56fbf6e99af3" title="Disable callback. ">DMIC_HwvadDisableIntCallback()</a> disables the HWVAD interrupt for the selected DMIC peripheral.</p>
+<h1><a class="anchor" id="DMICTpyUC"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="DMICDMAConfig"></a>
+DMIC DMA Configuration</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmic </p>
+<h2><a class="anchor" id="DMADMICInterrupt"></a>
+DMIC use case</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmic </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00141"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html">fsl_i2c.h</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00017"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html">DMIC DMA Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaac288786aaa7d0cb947c91591baf42d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#gaac288786aaa7d0cb947c91591baf42d7">I2C_RETRY_TIMES</a>&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td></tr>
-<tr class="memdesc:gaac288786aaa7d0cb947c91591baf42d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retry times for waiting flag.  <a href="#gaac288786aaa7d0cb947c91591baf42d7">More...</a><br/></td></tr>
-<tr class="separator:gaac288786aaa7d0cb947c91591baf42d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b47e7c452fba658505c64060797d1ee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#ga0b47e7c452fba658505c64060797d1ee">I2C_MASTER_TRANSMIT_IGNORE_LAST_NACK</a>&#160;&#160;&#160;1U /* Define to one means master ignores the last byte's nack and considers the transfer successful. */</td></tr>
-<tr class="memdesc:ga0b47e7c452fba658505c64060797d1ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to ignore the nack signal of the last byte during master transmit.  <a href="#ga0b47e7c452fba658505c64060797d1ee">More...</a><br/></td></tr>
-<tr class="separator:ga0b47e7c452fba658505c64060797d1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2c6171791d36810488b3e31648156d40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2c6171791d36810488b3e31648156d40"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#ga2c6171791d36810488b3e31648156d40">I2C_STAT_MSTCODE_IDLE</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga2c6171791d36810488b3e31648156d40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master Idle State Code. <br/></td></tr>
-<tr class="separator:ga2c6171791d36810488b3e31648156d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d910a54f8271411dbed62a08ac462a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6d910a54f8271411dbed62a08ac462a2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#ga6d910a54f8271411dbed62a08ac462a2">I2C_STAT_MSTCODE_RXREADY</a>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:ga6d910a54f8271411dbed62a08ac462a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master Receive Ready State Code. <br/></td></tr>
-<tr class="separator:ga6d910a54f8271411dbed62a08ac462a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa638faf1f9e205ac8df1e4cf44de0a14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa638faf1f9e205ac8df1e4cf44de0a14"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#gaa638faf1f9e205ac8df1e4cf44de0a14">I2C_STAT_MSTCODE_TXREADY</a>&#160;&#160;&#160;(2U)</td></tr>
-<tr class="memdesc:gaa638faf1f9e205ac8df1e4cf44de0a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master Transmit Ready State Code. <br/></td></tr>
-<tr class="separator:gaa638faf1f9e205ac8df1e4cf44de0a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f10a8d39f171f4c6fb65bba7ff9bb2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5f10a8d39f171f4c6fb65bba7ff9bb2b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#ga5f10a8d39f171f4c6fb65bba7ff9bb2b">I2C_STAT_MSTCODE_NACKADR</a>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="memdesc:ga5f10a8d39f171f4c6fb65bba7ff9bb2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master NACK by slave on address State Code. <br/></td></tr>
-<tr class="separator:ga5f10a8d39f171f4c6fb65bba7ff9bb2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac815d26a6d964108edbc558afe774828"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac815d26a6d964108edbc558afe774828"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#gac815d26a6d964108edbc558afe774828">I2C_STAT_MSTCODE_NACKDAT</a>&#160;&#160;&#160;(4U)</td></tr>
-<tr class="memdesc:gac815d26a6d964108edbc558afe774828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master NACK by slave on data State Code. <br/></td></tr>
-<tr class="separator:gac815d26a6d964108edbc558afe774828"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga61dadd085c1777f559549e05962b2c9e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952">kStatus_I2C_Busy</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 0), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea628d242f7bc0e3d5949c7f73eafaa508">kStatus_I2C_Idle</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00">kStatus_I2C_Nak</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea308bcea12eeef85aeac416ead81639b9">kStatus_I2C_InvalidParameter</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea0db20b358696db03a068816bb72a0310">kStatus_I2C_BitError</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea139b52cc3305ec2c06d0ac94313c221f">kStatus_I2C_ArbitrationLost</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea834a772763c85b5bedf8eb0a0cfa2f9e">kStatus_I2C_NoTransferInProgress</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9eac0253b1c986e61b7905da4a7f1fbf844">kStatus_I2C_DmaRequestFail</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 7), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea256cb58b123f0814d020cc8449cf48d5">kStatus_I2C_StartStopError</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 8), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea99cb29358dad3255402d30285f844632">kStatus_I2C_UnexpectedState</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 9), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9ea81ad7cc198436cabbe91ea55c5288747">kStatus_I2C_Timeout</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9eadf7437bfedcc0d57338ed33f1be5c805">kStatus_I2C_Addr_Nak</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 11), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9eab32229544c596a841b296ca881e343db">kStatus_I2C_EventTimeout</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 12), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga61dadd085c1777f559549e05962b2c9eabc4c6f641447dde279d71fbf841fe375">kStatus_I2C_SclLowTimeout</a> = MAKE_STATUS(kStatusGroup_FLEXCOMM_I2C, 13)
-<br/>
- }</td></tr>
-<tr class="memdesc:ga61dadd085c1777f559549e05962b2c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C status return codes.  <a href="a00241.html#ga61dadd085c1777f559549e05962b2c9e">More...</a><br/></td></tr>
-<tr class="separator:ga61dadd085c1777f559549e05962b2c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee8495a8bc52a9a7df6e97d1d7ead2cd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#gaee8495a8bc52a9a7df6e97d1d7ead2cd">_i2c_status_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda9cc49a1ca21e87058a7fbf733cce0e62">kI2C_MasterPendingFlag</a> = I2C_STAT_MSTPENDING_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda7b487779b58af99a7a8c179545f78ccd">kI2C_MasterArbitrationLostFlag</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdab5cec1d9be7dc5fb2c106e2b87889517">kI2C_MasterStartStopErrorFlag</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda84d91c821f636464e8f5aaa4e98244da">kI2C_MasterIdleFlag</a> = 1UL &lt;&lt; 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdab7e0b8eea07bed757db3ca73a210f3f4">kI2C_MasterRxReadyFlag</a> = 1UL &lt;&lt; I2C_STAT_MSTSTATE_SHIFT, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdaa7c533624719d30895900f5e951f8e8f">kI2C_MasterTxReadyFlag</a> = 1UL &lt;&lt; (I2C_STAT_MSTSTATE_SHIFT + 1U), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda2aa14507c111c06e493952928381d1ca">kI2C_MasterAddrNackFlag</a> = 1UL &lt;&lt; 7U, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda3b4096f00b35233272a03eb234f13686">kI2C_MasterDataNackFlag</a> = 1UL &lt;&lt; (I2C_STAT_MSTSTATE_SHIFT + 2U), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdabd274f2defb8f0f8d2f6c2fcdd71c63c">kI2C_SlavePendingFlag</a> = I2C_STAT_SLVPENDING_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdaf7ad09504bcf02f9c1177431ee44562e">kI2C_SlaveNotStretching</a> = I2C_STAT_SLVNOTSTR_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda2d0c7dc4bf2815768510b916b7c1d54e">kI2C_SlaveSelected</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdad834aafd823863602d905d4b3d8c9430">kI2C_SaveDeselected</a> = I2C_STAT_SLVDESEL_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda3882db16dd2743fd65c86e3c4a63d92e">kI2C_SlaveAddressedFlag</a> = 1UL &lt;&lt; 22U, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda80ab3de8e46ed5538359e2392a622392">kI2C_SlaveReceiveFlag</a> = 1UL &lt;&lt; I2C_STAT_SLVSTATE_SHIFT, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda917f5d3582bf606a9240771717202cc9">kI2C_SlaveTransmitFlag</a> = 1UL &lt;&lt; (I2C_STAT_SLVSTATE_SHIFT + 1U), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda1fc36f6e588b5a69934b823fbd67aa6e">kI2C_SlaveAddress0MatchFlag</a> = 1UL &lt;&lt; 20U, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda8f739436285cab47c6ad980fac8e8a5a">kI2C_SlaveAddress1MatchFlag</a> = 1UL &lt;&lt; I2C_STAT_SLVIDX_SHIFT, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda870964e7ab526c41292508a008545b17">kI2C_SlaveAddress2MatchFlag</a> = 1UL &lt;&lt; (I2C_STAT_SLVIDX_SHIFT + 1U), 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda73c9a11a8cf36c1d40eb229ef7aa7aaa">kI2C_SlaveAddress3MatchFlag</a> = 1UL &lt;&lt; 21U, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda2b60b4ac5de80ea7558cec8d324ca8ad">kI2C_MonitorReadyFlag</a> = I2C_STAT_MONRDY_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda8a90a3bf143ef802e4ca0f20faa6d282">kI2C_MonitorOverflowFlag</a> = I2C_STAT_MONOV_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdad286a8214a4e988f8070584ffdd92c3c">kI2C_MonitorActiveFlag</a> = I2C_STAT_MONACTIVE_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda53133d393c06a769144e7ab20bd40b67">kI2C_MonitorIdleFlag</a> = I2C_STAT_MONIDLE_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdaf4201f88e98256fab8141ab2ad0bbb17">kI2C_EventTimeoutFlag</a> = I2C_STAT_EVENTTIMEOUT_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda805fcadee84621f1e3482312917967b0">kI2C_SclTimeoutFlag</a> = I2C_STAT_SCLTIMEOUT_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:gaee8495a8bc52a9a7df6e97d1d7ead2cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C status flags.  <a href="a00241.html#gaee8495a8bc52a9a7df6e97d1d7ead2cd">More...</a><br/></td></tr>
-<tr class="separator:gaee8495a8bc52a9a7df6e97d1d7ead2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga87c81dd985dad07dc26cb93125a94ec7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#ga87c81dd985dad07dc26cb93125a94ec7">_i2c_interrupt_enable</a> { <br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7a468c887ddb0e6a5ed127a30020cdaf27">kI2C_MasterPendingInterruptEnable</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7afaef8940629b3509896b3655713040a7">kI2C_MasterArbitrationLostInterruptEnable</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7abd1300d3436b5ffac4b136665dfc65d0">kI2C_MasterStartStopErrorInterruptEnable</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7a102951fe051b7f2aa580cf61177e92c0">kI2C_SlavePendingInterruptEnable</a> = I2C_STAT_SLVPENDING_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7a5c67f9350a076acf9ac9d0483b6eef4f">kI2C_SlaveNotStretchingInterruptEnable</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7aa53f3b67028775148b028817fa3c38c2">kI2C_SlaveDeselectedInterruptEnable</a> = I2C_STAT_SLVDESEL_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7ad1eba178622a65c075b35424ed5c852a">kI2C_MonitorReadyInterruptEnable</a> = I2C_STAT_MONRDY_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7a2160e88225c475c42fa44c2323b46244">kI2C_MonitorOverflowInterruptEnable</a> = I2C_STAT_MONOV_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7ad80e41bdf1fc2f9ad2cbf93cec959002">kI2C_MonitorIdleInterruptEnable</a> = I2C_STAT_MONIDLE_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7af98032784f0b9e54f7c54541cd2ba67b">kI2C_EventTimeoutInterruptEnable</a> = I2C_STAT_EVENTTIMEOUT_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00241.html#gga87c81dd985dad07dc26cb93125a94ec7afa4e4e9ca4f7f58fc940ddb89d4148ee">kI2C_SclTimeoutInterruptEnable</a> = I2C_STAT_SCLTIMEOUT_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:ga87c81dd985dad07dc26cb93125a94ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C interrupt enable.  <a href="a00241.html#ga87c81dd985dad07dc26cb93125a94ec7">More...</a><br/></td></tr>
-<tr class="separator:ga87c81dd985dad07dc26cb93125a94ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga60fdaec284298758a650ce1122aef231"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#ga60fdaec284298758a650ce1122aef231">FSL_I2C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
-<tr class="memdesc:ga60fdaec284298758a650ce1122aef231"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C driver version.  <a href="#ga60fdaec284298758a650ce1122aef231">More...</a><br/></td></tr>
-<tr class="separator:ga60fdaec284298758a650ce1122aef231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00016"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00016.html">DMIC Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga60fdaec284298758a650ce1122aef231"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_I2C_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gaac288786aaa7d0cb947c91591baf42d7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define I2C_RETRY_TIMES&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga0b47e7c452fba658505c64060797d1ee"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define I2C_MASTER_TRANSMIT_IGNORE_LAST_NACK&#160;&#160;&#160;1U /* Define to one means master ignores the last byte's nack and considers the transfer successful. */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga61dadd085c1777f559549e05962b2c9e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea49091894b590d7e479605bf113918952"></a>kStatus_I2C_Busy</em>&nbsp;</td><td class="fielddoc">
-<p>The master is already performing a transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea628d242f7bc0e3d5949c7f73eafaa508"></a>kStatus_I2C_Idle</em>&nbsp;</td><td class="fielddoc">
-<p>The slave driver is idle. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00"></a>kStatus_I2C_Nak</em>&nbsp;</td><td class="fielddoc">
-<p>The slave device sent a NAK in response to a byte. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea308bcea12eeef85aeac416ead81639b9"></a>kStatus_I2C_InvalidParameter</em>&nbsp;</td><td class="fielddoc">
-<p>Unable to proceed due to invalid parameter. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea0db20b358696db03a068816bb72a0310"></a>kStatus_I2C_BitError</em>&nbsp;</td><td class="fielddoc">
-<p>Transferred bit was not seen on the bus. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea139b52cc3305ec2c06d0ac94313c221f"></a>kStatus_I2C_ArbitrationLost</em>&nbsp;</td><td class="fielddoc">
-<p>Arbitration lost error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea834a772763c85b5bedf8eb0a0cfa2f9e"></a>kStatus_I2C_NoTransferInProgress</em>&nbsp;</td><td class="fielddoc">
-<p>Attempt to abort a transfer when one is not in progress. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9eac0253b1c986e61b7905da4a7f1fbf844"></a>kStatus_I2C_DmaRequestFail</em>&nbsp;</td><td class="fielddoc">
-<p>DMA request failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea256cb58b123f0814d020cc8449cf48d5"></a>kStatus_I2C_StartStopError</em>&nbsp;</td><td class="fielddoc">
-<p>Start and stop error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea99cb29358dad3255402d30285f844632"></a>kStatus_I2C_UnexpectedState</em>&nbsp;</td><td class="fielddoc">
-<p>Unexpected state. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9ea81ad7cc198436cabbe91ea55c5288747"></a>kStatus_I2C_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>Timeout when waiting for I2C master/slave pending status to set to continue transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9eadf7437bfedcc0d57338ed33f1be5c805"></a>kStatus_I2C_Addr_Nak</em>&nbsp;</td><td class="fielddoc">
-<p>NAK received for Address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9eab32229544c596a841b296ca881e343db"></a>kStatus_I2C_EventTimeout</em>&nbsp;</td><td class="fielddoc">
-<p>Timeout waiting for bus event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga61dadd085c1777f559549e05962b2c9eabc4c6f641447dde279d71fbf841fe375"></a>kStatus_I2C_SclLowTimeout</em>&nbsp;</td><td class="fielddoc">
-<p>Timeout SCL signal remains low. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaee8495a8bc52a9a7df6e97d1d7ead2cd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00241.html#gaee8495a8bc52a9a7df6e97d1d7ead2cd">_i2c_status_flags</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>These enums are meant to be OR'd together to form a bit mask. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda9cc49a1ca21e87058a7fbf733cce0e62"></a>kI2C_MasterPendingFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C module is waiting for software interaction. </p>
-<p>bit 0 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda7b487779b58af99a7a8c179545f78ccd"></a>kI2C_MasterArbitrationLostFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The arbitration of the bus was lost. </p>
-<p>There was collision on the bus. bit 4 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdab5cec1d9be7dc5fb2c106e2b87889517"></a>kI2C_MasterStartStopErrorFlag</em>&nbsp;</td><td class="fielddoc">
-<p>There was an error during start or stop phase of the transaction. </p>
-<p>bit 6 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda84d91c821f636464e8f5aaa4e98244da"></a>kI2C_MasterIdleFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master idle status. </p>
-<p>bit 5 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdab7e0b8eea07bed757db3ca73a210f3f4"></a>kI2C_MasterRxReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master rx ready status. </p>
-<p>bit 1 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdaa7c533624719d30895900f5e951f8e8f"></a>kI2C_MasterTxReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master tx ready status. </p>
-<p>bit 2 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda2aa14507c111c06e493952928381d1ca"></a>kI2C_MasterAddrNackFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master address nack status. </p>
-<p>bit 7 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda3b4096f00b35233272a03eb234f13686"></a>kI2C_MasterDataNackFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master data nack status. </p>
-<p>bit 3 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdabd274f2defb8f0f8d2f6c2fcdd71c63c"></a>kI2C_SlavePendingFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C module is waiting for software interaction. </p>
-<p>bit 8 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdaf7ad09504bcf02f9c1177431ee44562e"></a>kI2C_SlaveNotStretching</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether the slave is currently stretching clock (0 = yes, 1 = no). </p>
-<p>bit 11 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda2d0c7dc4bf2815768510b916b7c1d54e"></a>kI2C_SlaveSelected</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates whether the slave is selected by an address match. </p>
-<p>bit 14 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdad834aafd823863602d905d4b3d8c9430"></a>kI2C_SaveDeselected</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates that slave was previously deselected (deselect event took place, w1c). </p>
-<p>bit 15 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda3882db16dd2743fd65c86e3c4a63d92e"></a>kI2C_SlaveAddressedFlag</em>&nbsp;</td><td class="fielddoc">
-<p>One of the I2C slave's 4 addresses is matched. </p>
-<p>bit 22 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda80ab3de8e46ed5538359e2392a622392"></a>kI2C_SlaveReceiveFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Slave receive data available. </p>
-<p>bit 9 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda917f5d3582bf606a9240771717202cc9"></a>kI2C_SlaveTransmitFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Slave data can be transmitted. </p>
-<p>bit 10 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda1fc36f6e588b5a69934b823fbd67aa6e"></a>kI2C_SlaveAddress0MatchFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Slave address0 match. </p>
-<p>bit 20 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda8f739436285cab47c6ad980fac8e8a5a"></a>kI2C_SlaveAddress1MatchFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Slave address1 match. </p>
-<p>bit 12 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda870964e7ab526c41292508a008545b17"></a>kI2C_SlaveAddress2MatchFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Slave address2 match. </p>
-<p>bit 13 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda73c9a11a8cf36c1d40eb229ef7aa7aaa"></a>kI2C_SlaveAddress3MatchFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Slave address3 match. </p>
-<p>bit 21 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda2b60b4ac5de80ea7558cec8d324ca8ad"></a>kI2C_MonitorReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C monitor ready interrupt. </p>
-<p>bit 16 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda8a90a3bf143ef802e4ca0f20faa6d282"></a>kI2C_MonitorOverflowFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The monitor data overrun interrupt. </p>
-<p>bit 17 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdad286a8214a4e988f8070584ffdd92c3c"></a>kI2C_MonitorActiveFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The monitor is active. </p>
-<p>bit 18 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda53133d393c06a769144e7ab20bd40b67"></a>kI2C_MonitorIdleFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The monitor idle interrupt. </p>
-<p>bit 19 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cdaf4201f88e98256fab8141ab2ad0bbb17"></a>kI2C_EventTimeoutFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The bus event timeout interrupt. </p>
-<p>bit 24 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee8495a8bc52a9a7df6e97d1d7ead2cda805fcadee84621f1e3482312917967b0"></a>kI2C_SclTimeoutFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The SCL timeout interrupt. </p>
-<p>bit 25 </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga87c81dd985dad07dc26cb93125a94ec7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00241.html#ga87c81dd985dad07dc26cb93125a94ec7">_i2c_interrupt_enable</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>These enums are meant to be OR'd together to form a bit mask. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7a468c887ddb0e6a5ed127a30020cdaf27"></a>kI2C_MasterPendingInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master communication pending interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7afaef8940629b3509896b3655713040a7"></a>kI2C_MasterArbitrationLostInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master arbitration lost interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7abd1300d3436b5ffac4b136665dfc65d0"></a>kI2C_MasterStartStopErrorInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C master start/stop timing error interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7a102951fe051b7f2aa580cf61177e92c0"></a>kI2C_SlavePendingInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C slave communication pending interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7a5c67f9350a076acf9ac9d0483b6eef4f"></a>kI2C_SlaveNotStretchingInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C slave not streching interrupt, deep-sleep mode can be entered only when this interrupt occurs. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7aa53f3b67028775148b028817fa3c38c2"></a>kI2C_SlaveDeselectedInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C slave deselection interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7ad1eba178622a65c075b35424ed5c852a"></a>kI2C_MonitorReadyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The I2C monitor ready interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7a2160e88225c475c42fa44c2323b46244"></a>kI2C_MonitorOverflowInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The monitor data overrun interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7ad80e41bdf1fc2f9ad2cbf93cec959002"></a>kI2C_MonitorIdleInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The monitor idle interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7af98032784f0b9e54f7c54541cd2ba67b"></a>kI2C_EventTimeoutInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The bus event timeout interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga87c81dd985dad07dc26cb93125a94ec7afa4e4e9ca4f7f58fc940ddb89d4148ee"></a>kI2C_SclTimeoutInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>The SCL timeout interrupt. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

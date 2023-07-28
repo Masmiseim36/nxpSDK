@@ -13,7 +13,7 @@
 #include "t_cose_sign1_verify.h"
 #include "q_useful_buf.h"
 #include "qcbor_util.h"
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"            //NXP to avoid file name conflicts between MbedTLS and TFM.
 #include "attest.h"
 #include "tfm_crypto_defs.h"
 

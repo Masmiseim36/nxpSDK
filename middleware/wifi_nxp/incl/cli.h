@@ -1,7 +1,7 @@
 /*
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -129,4 +129,5 @@ typedef int (*cli_name_val_set)(const char *name, const char *value);
  * CLI help command to print all registered CLIs
  */
 void help_command(int argc, char **argv);
+
 #endif /* __CLI_H__ */

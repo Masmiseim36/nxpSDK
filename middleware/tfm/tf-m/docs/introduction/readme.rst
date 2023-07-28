@@ -14,13 +14,21 @@ Environment (NSPE) and the Secure Processing Environment (SPE). It can but is
 not limited to using the `Arm TrustZone technology`_ on Armv8-M and Armv8.1-M
 architectures. In pre-Armv8-M architectures physical core isolation is required.
 
-**Trusted Firmware-M consists of:**
+**TF-M consists of:**
 
-- Secure Boot to authenticate integrity of NSPE and SPE images
-- TF-M Core responsible for controlling the isolation, communication and
-  execution within SPE and with NSPE
-- Crypto, Internal Trusted Storage (ITS), Protected Storage (PS) and
-  Attestation secure services
+- Secure Boot to authenticate NSPE and SPE images
+- TF-M Core for controlling the isolation, communication
+  and execution within SPE and with NSPE
+- Crypto, Internal Trusted Storage (ITS), Protected Storage (PS),
+  Firmware Update and Attestation secure services
+
+TF-M implements `PSA-FF-M`_ defined IPC and SFN mechanisms to allow communication
+between isolated firmware partitions. TF-M is highly configurable allowing users
+to only include the required secure services and features. Project provides
+:ref:`Base_configuration` build with just TF-M core and platform drivers and 4 predefined
+configurations known as :ref:`tf-m_profiles`. TF-M Profiles or TF-M base can
+be configured to include required services and features as described in the
+:ref:`tf-m_configuration` section.
 
 .. figure:: readme_tfm_v8.png
    :scale: 65 %
@@ -49,14 +57,26 @@ Contributions to this project are accepted under the same license with developer
 sign-off as described in the :doc:`Contributing Guidelines </contributing/contributing_process>`.
 
 This project contains code from other projects as listed below. The code from
-external projects is limited to ``app``, ``bl2``, ``lib`` and ``platform``
+external projects is limited to ``bl2``, ``lib`` and ``platform``
 folders. The original license text is included in those source files.
 
-- The ``app`` folder contains files imported from CMSIS_5 project and the files
-  have Apache 2.0 license.
 - The ``bl2`` folder contains files imported from MCUBoot project and the files
   have Apache 2.0 license.
-- The ``lib`` folder may contain 3rd party files with diverse licenses.
+- The ``lib/ext`` folder may contain 3rd party projects and files with
+  diverse licenses. Here are some that are different from the BSD-3-Clause and
+  may be a part of the runtime image. The source code for these projects is
+  fetched from upstream at build time only.
+
+   - ``CMSIS_5``    - Apache 2.0 license
+   - ``mbedcrypto`` - `Apache 2.0 license MbedTLS
+     <https://github.com/Mbed-TLS/mbedtls/blob/development/LICENSE>`_
+   - ``mcuboot``    - `Apache 2.0 license MCUBoot
+     <https://github.com/mcu-tools/mcuboot/blob/main/LICENSE>`_
+   - ``qcbor``      - `Modified BSD-3-Clause license
+     <https://github.com/laurencelundblade/QCBOR#copyright-and-license>`_
+   - ``tf-m-extras`` - Set of additional components. Please check individually in
+     `tf-m-extras repository <https://git.trustedfirmware.org/TF-M/tf-m-extras.git/tree/>`_
+
 - The ``platform`` folder currently contains platforms support imported from
   the external project and the files may have different licenses.
 
@@ -88,6 +108,7 @@ online. Welcome to join `TF-M Forum <https://www.trustedfirmware.org/meetings/tf
 .. _Cortex-M85: https://developer.arm.com/Processors/Cortex-M85
 .. _PSA Certified: https://www.psacertified.org/about/developing-psa-certified/
 .. _Arm TrustZone technology: https://developer.arm.com/ip-products/security-ip/trustzone/trustzone-for-cortex-m
+.. _PSA-FF-M: https://www.arm.com/architecture/security-features/platform-security
 
 --------------
 

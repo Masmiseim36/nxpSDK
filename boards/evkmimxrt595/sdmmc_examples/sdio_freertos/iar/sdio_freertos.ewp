@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -226,10 +226,10 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>SDIO_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -351,13 +351,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
@@ -365,9 +364,10 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -489,7 +489,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -693,7 +693,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1104,7 +1104,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1191,7 +1191,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1208,7 +1208,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1231,7 +1231,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1310,7 +1310,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1320,10 +1320,10 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>SDIO_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1445,13 +1445,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
@@ -1459,9 +1458,10 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1583,7 +1583,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1787,7 +1787,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2198,7 +2198,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2285,7 +2285,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2302,7 +2302,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2325,7 +2325,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2404,7 +2404,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2413,10 +2413,10 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>SDIO_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2538,13 +2538,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
@@ -2552,9 +2551,10 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2676,7 +2676,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2880,7 +2880,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3291,7 +3291,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3378,7 +3378,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3395,7 +3395,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3418,7 +3418,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3497,7 +3497,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3507,10 +3507,10 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>SDIO_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3632,13 +3632,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
@@ -3646,9 +3645,10 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3770,7 +3770,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3973,7 +3973,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4417,135 +4417,6 @@
     </file>
   </group>
   <group>
-    <name>freertos</name>
-    <group>
-      <name>freertos-kernel</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
-      </file>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
-      </file>
-      <group>
-        <name>portable</name>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
-        <group>
-          <name>IAR</name>
-          <group>
-            <name>ARM_CM33_NTZ</name>
-            <group>
-              <name>non_secure</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
-              </file>
-            </group>
-          </group>
-        </group>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.c</name>
@@ -4624,7 +4495,157 @@
     </file>
   </group>
   <group>
+    <name>freertos</name>
+    <group>
+      <name>freertos-kernel</name>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM33_NTZ</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>sdmmc</name>
+    <group>
+      <name>host</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+    </group>
     <group>
       <name>src</name>
       <file>
@@ -4650,24 +4671,6 @@
       <name>sdio</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/ChangeLogKSDK.txt</name>
-      </file>
-    </group>
-    <group>
-      <name>host</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
       </file>
     </group>
     <group>
@@ -4703,6 +4706,12 @@
     <group>
       <name>serial_manager</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
@@ -4710,12 +4719,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -4730,16 +4733,16 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
     </group>
   </group>

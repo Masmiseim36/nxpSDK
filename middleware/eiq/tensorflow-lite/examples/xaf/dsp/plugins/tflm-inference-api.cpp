@@ -23,7 +23,6 @@
 */
 
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/schema/schema_generated.h"
@@ -36,7 +35,6 @@ namespace {}  // namespace
 
 typedef struct
 {
-    tflite::MicroErrorReporter error_reporter;
     //void *p_micro_op_resolver;
     tflite::MicroInterpreter interpreter;
     int kTensorArenaSize;
@@ -52,13 +50,12 @@ int inference_persistent_byte_size(int kTensorArenaSize)
 int inference_init(void *pPersist, void * pModel, int kTensorArenaSize, void *p_micro_op_resolver)
 {
     xa_inference_state_struct *pState = (xa_inference_state_struct *)pPersist;
-    tflite::MicroErrorReporter *error_reporter = new (&pState->error_reporter) tflite::MicroErrorReporter;
     const tflite::Model* model;
     model = tflite::GetModel(pModel);
         
     // Build an interpreter to run the model with.
     tflite::MicroInterpreter *interpreter = new (&pState->interpreter) tflite::MicroInterpreter(
-            model, *(tflite::MicroOpResolver *) p_micro_op_resolver, (uint8_t *)pState->tensor_arena, kTensorArenaSize, error_reporter);
+            model, *(tflite::MicroOpResolver *) p_micro_op_resolver, (uint8_t *)pState->tensor_arena, kTensorArenaSize);
 
     pState->kTensorArenaSize = kTensorArenaSize;
 

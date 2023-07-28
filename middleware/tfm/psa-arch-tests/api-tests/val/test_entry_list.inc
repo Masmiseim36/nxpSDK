@@ -4,14 +4,10 @@
     {203, &test_entry_c003},
     {204, &test_entry_c004},
     {205, &test_entry_c005},
-#ifdef NOT_SUPPORTED //NXP
     {206, &test_entry_c006},
     {207, &test_entry_c007},
-#endif
     {208, &test_entry_c008},
-#ifdef NOT_SUPPORTED //NXP
     {209, &test_entry_c009},
-#endif
     {210, &test_entry_c010},
     {211, &test_entry_c011},
     {212, &test_entry_c012},
@@ -22,27 +18,25 @@
     {217, &test_entry_c017},
     {218, &test_entry_c018},
     {219, &test_entry_c019},
-#ifdef NOT_SUPPORTED //NXP
     {220, &test_entry_c020},
     {221, &test_entry_c021},
-#endif
     {222, &test_entry_c022},
     {223, &test_entry_c023},
     {224, &test_entry_c024},
     {225, &test_entry_c025},
-//NXP IAR	{226, &test_entry_c026},
-//NXP IAR	{227, &test_entry_c027},
-//NXP IAR	{228, &test_entry_c028},
-//NXP IAR	{229, &test_entry_c029},
-//NXP IAR	{230, &test_entry_c030},
+    {226, &test_entry_c026},
+    {227, &test_entry_c027},
+    {228, &test_entry_c028},
+    {229, &test_entry_c029},
+    {230, &test_entry_c030},
     {231, &test_entry_c031},
     {232, &test_entry_c032},
     {233, &test_entry_c033},
-//NXP IAR	{234, &test_entry_c034},
-//NXP IAR	{235, &test_entry_c035},
-//NXP IAR	{236, &test_entry_c036},
-//NXP IAR	{237, &test_entry_c037},
-//NXP IAR	{238, &test_entry_c038},
+    {234, &test_entry_c034},
+    {235, &test_entry_c035},
+    {236, &test_entry_c036},
+    {237, &test_entry_c037},
+    {238, &test_entry_c038},
     {239, &test_entry_c039},
     {240, &test_entry_c040},
     {241, &test_entry_c041},
@@ -50,7 +44,6 @@
     {243, &test_entry_c043},
     {244, &test_entry_c044},
     {245, &test_entry_c045},
-#ifdef NOT_SUPPORTED //NXP
     {246, &test_entry_c046},
     {247, &test_entry_c047},
     {248, &test_entry_c048},
@@ -67,8 +60,6 @@
     {259, &test_entry_c059},
     {260, &test_entry_c060},
     {261, &test_entry_c061},
-#endif
-   
 #endif
 #ifdef INITIAL_ATTESTATION
     {601, &test_entry_a001},

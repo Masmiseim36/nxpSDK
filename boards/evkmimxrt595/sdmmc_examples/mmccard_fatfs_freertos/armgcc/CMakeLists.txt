@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -50,99 +58,16 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/middleware/fatfs
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
-    ${SdkRootDirPath}/middleware/sdmmc
-    ${SdkRootDirPath}/components/gpio
-    ${SdkRootDirPath}/devices/MIMXRT595S
-    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
-    ${SdkRootDirPath}/CMSIS/Core/Include
-    ${SdkRootDirPath}/components/osa
-)
+set_source_files_properties("${ProjDirPath}/../ffconf.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_mmc")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_sdmmc_usdhc_template")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(middleware_fatfs_MIMXRT595S_cm33)
-
-include(middleware_fatfs_mmc_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
-
-include(driver_usdhc_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_mmc_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_common_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT595S_cm33)
-
-include(component_rt_gpio_adapter_MIMXRT595S_cm33)
-
-include(driver_clock_MIMXRT595S_cm33)
-
-include(driver_common_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
-
-include(utility_debug_console_MIMXRT595S_cm33)
-
-include(utility_assert_MIMXRT595S_cm33)
-
-include(component_usart_adapter_MIMXRT595S_cm33)
-
-include(driver_power_MIMXRT595S_cm33)
-
-include(driver_flexspi_MIMXRT595S_cm33)
-
-include(driver_cache_cache64_MIMXRT595S_cm33)
-
-include(component_serial_manager_MIMXRT595S_cm33)
-
-include(component_lists_MIMXRT595S_cm33)
-
-include(component_serial_manager_uart_MIMXRT595S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT595S_cm33)
-
-include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
-
-include(driver_flexcomm_MIMXRT595S_cm33)
-
-include(driver_lpc_iopctl_MIMXRT595S_cm33)
-
-include(driver_lpc_gpio_MIMXRT595S_cm33)
-
-include(driver_reset_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
-
-include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
-
-include(component_osa_free_rtos_MIMXRT595S_cm33)
-
-include(utilities_misc_utilities_MIMXRT595S_cm33)
-
-include(driver_iap_MIMXRT595S_cm33)
-
+include(${SdkRootDirPath}/devices/MIMXRT595S/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -156,4 +81,6 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin")
 

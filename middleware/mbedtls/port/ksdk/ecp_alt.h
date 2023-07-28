@@ -87,8 +87,7 @@ extern "C" {
  * reduction. It must return 0 on success and non-zero on failure.
  *
  */
-typedef struct mbedtls_ecp_group
-{
+typedef struct mbedtls_ecp_group {
     mbedtls_ecp_group_id id;    /*!< An internal group identifier. */
     mbedtls_mpi P;              /*!< The prime modulus of the base field. */
     mbedtls_mpi A;              /*!< For Short Weierstrass: \p A in the equation. For
@@ -116,8 +115,8 @@ typedef struct mbedtls_ecp_group
 #endif
 #if defined(SSS_HAVE_MBEDTLS_ALT_SSS) && (SSS_HAVE_MBEDTLS_ALT_SSS == 1)
     /** Reference to object mapped between SSS Layer        */
-    sss_object_t* pSSSObject;
-    sss_key_store_t* hostKs;
+    sss_object_t *pSSSObject;
+    sss_key_store_t *hostKs;
 #endif
 }
 mbedtls_ecp_group;
@@ -137,8 +136,8 @@ mbedtls_ecp_group;
 #define MBEDTLS_ECP_MAX_BITS     521   /**< The maximum size of groups, in bits. */
 #endif
 
-#define MBEDTLS_ECP_MAX_BYTES    ( ( MBEDTLS_ECP_MAX_BITS + 7 ) / 8 )
-#define MBEDTLS_ECP_MAX_PT_LEN   ( 2 * MBEDTLS_ECP_MAX_BYTES + 1 )
+#define MBEDTLS_ECP_MAX_BYTES    ((MBEDTLS_ECP_MAX_BITS + 7) / 8)
+#define MBEDTLS_ECP_MAX_PT_LEN   (2 * MBEDTLS_ECP_MAX_BYTES + 1)
 
 #if !defined(MBEDTLS_ECP_WINDOW_SIZE)
 /*
@@ -180,9 +179,9 @@ mbedtls_ecp_group;
 
 /* \} name SECTION: Module settings */
 
-int ecp_add( const mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
-             const mbedtls_ecp_point *P,
-             const mbedtls_ecp_point *Q );
+int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
+            const mbedtls_ecp_point *P,
+            const mbedtls_ecp_point *Q);
 
 #endif /* MBEDTLS_ECP_ALT */
 

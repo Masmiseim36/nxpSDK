@@ -2,9 +2,9 @@
  *
  *  @brief This file provides mlan driver for SDIO
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -147,6 +147,7 @@ static void SDIO_CardInterruptCallBack(void *userData)
 {
     SDMMCHOST_EnableCardInt(wm_g_sd.host, false);
     handle_cdint(0);
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void sdio_enable_interrupt(void)

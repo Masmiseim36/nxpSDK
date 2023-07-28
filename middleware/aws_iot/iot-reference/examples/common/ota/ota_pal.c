@@ -29,7 +29,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
-
+#include "ota_config.h"
 #include "ota_pal.h"
 #include "fsl_common.h"
 #include "mflash_drv.h"
@@ -179,6 +179,7 @@ OtaPalStatus_t xOtaPalCloseFile( OtaFileContext_t * const C )
         LogError( ( "[OTA-NXP] CheckFileSignature failed" ) );
     }
 
+#ifndef DISABLE_OTA_CLOSE_FILE_HEADER_CHECK
     /* Sanity check of the image and its header solely from the flash as the bootloader would do */
     if( result == OtaPalSuccess )
     {
@@ -195,6 +196,7 @@ OtaPalStatus_t xOtaPalCloseFile( OtaFileContext_t * const C )
         LogError( ( "[OTA-NXP] Failed to set image state" ) );
         result = OtaPalBootInfoCreateFailed;
     }
+#endif /* ifndef DISABLE_OTA_CLOSE_FILE_HEADER_CHECK */
 
     C->pFile = NULL;
     return OTA_PAL_COMBINE_ERR( result, 0U );

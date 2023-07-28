@@ -1645,6 +1645,14 @@ static status_t SD_Erase(sd_card_t *card, uint32_t startBlock, uint32_t blockCou
         return kStatus_SDMMC_TransferFailed;
     }
 
+    /* polling card status idle */
+    error = SD_PollingCardStatusBusy(card, timeout);
+    if (kStatus_SDMMC_CardStatusIdle != error)
+    {
+        SDMMC_LOG("Error : write failed, card status busy\r\n");
+        return kStatus_SDMMC_PollingCardIdleFailed;
+    }
+
     return kStatus_Success;
 }
 
@@ -1663,13 +1671,13 @@ status_t SD_ReadBlocks(sd_card_t *card, uint8_t *buffer, uint32_t startBlock, ui
     assert(blockCount != 0U);
     assert((blockCount + startBlock) <= card->blockCount);
 
-    uint32_t blockCountOneTime;
     uint32_t blockLeft;
-    uint32_t blockDone   = 0U;
-    uint8_t *nextBuffer  = buffer;
-    bool dataAddrAlign   = true;
-    uint8_t *alignBuffer = (uint8_t *)FSL_SDMMC_CARD_INTERNAL_BUFFER_ALIGN_ADDR(card->internalBuffer);
-    status_t error       = kStatus_Success;
+    uint32_t blockCountOneTime = 0U;
+    uint32_t blockDone         = 0U;
+    uint8_t *nextBuffer        = buffer;
+    bool dataAddrAlign         = true;
+    uint8_t *alignBuffer       = (uint8_t *)FSL_SDMMC_CARD_INTERNAL_BUFFER_ALIGN_ADDR(card->internalBuffer);
+    status_t error             = kStatus_Success;
 
     (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
 
@@ -1780,104 +1788,116 @@ status_t SD_WriteBlocks(sd_card_t *card, const uint8_t *buffer, uint32_t startBl
     return error;
 }
 
-static uint32_t SD_CalculateEraseTimeout(sd_card_t *card, uint32_t blockCount, uint32_t auSize)
-{
-    uint32_t auCount    = blockCount / (auSize / FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-    uint32_t timeout_ms = 0U;
-
-    if (auCount == 0U)
-    {
-        auCount = 1U;
-    }
-
-    timeout_ms = auCount * 250U; /* 250 ms erase timeout per AU by default */
-
-    if ((card->stat.eraseTimeout != 0U) && (card->stat.eraseSize != 0U))
-    {
-        /* timeout determined by the block count to be erased and the au size */
-        timeout_ms = auCount * (((uint32_t)card->stat.eraseTimeout * 1000U) / (uint32_t)card->stat.eraseSize + 500U) +
-                     card->stat.eraseOffset * 1000U;
-    }
-
-    /* convert to ms */
-    return timeout_ms < 1000U ? 1000U : timeout_ms;
-}
-
 status_t SD_EraseBlocks(sd_card_t *card, uint32_t startBlock, uint32_t blockCount)
 {
     assert(card != NULL);
     assert(blockCount != 0U);
     assert((blockCount + startBlock) <= card->blockCount);
 
-    uint32_t blockCountOneTime; /* The block count can be erased in one time sending ERASE_BLOCKS command. */
-    uint32_t blockDone = 0U;    /* The block count has been erased. */
-    uint32_t blockLeft;         /* Left block count to be erase. */
     status_t error                 = kStatus_Success;
+    uint32_t blockCountOneTime     = 0U; /* The block count can be erased in one time sending ERASE_BLOCKS command. */
+    uint32_t blockTail             = 0U; /* The block tail has been erased. */
+    uint32_t blockLeft             = blockCount; /* Left block count to be erase. */
+    uint32_t blockHead             = startBlock; /* Completed block Index */
+    uint32_t auBlocks              = 0U;
+    uint32_t auTimeout             = 250U; /* 250ms erase timeout by default */
     uint32_t onetimeMaxEraseBlocks = 0U;
-    uint32_t auSize                = 0U;
 
     (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
 
-    /* sdsc card erasable sector is determined by CSD register */
-    if (card->csd.csdStructure == 0U)
+    if ((card->stat.auSize == 0U) && (card->stat.eraseTimeout == 0U))
     {
-        onetimeMaxEraseBlocks = card->csd.eraseSectorSize + 1UL;
-    }
-    else
-    {
-        /* limit one time maximum erase size to 1 AU */
-        if ((card->stat.auSize >= SD_AU_START_VALUE))
+        /* sdsc card erasable sector is determined by CSD register */
+        if ((card->csd.flags & kSD_CsdEraseBlockEnabledFlag) != 0U)
         {
-            /* UHS card should use uhs au size field */
-            if (card->operationVoltage == kSDMMC_OperationVoltage180V)
-            {
-                auSize = s_sdAuSizeMap[card->stat.uhsAuSize == 0U ? card->stat.auSize : card->stat.uhsAuSize];
-                onetimeMaxEraseBlocks = auSize / FSL_SDMMC_DEFAULT_BLOCK_SIZE;
-            }
-            else
-            {
-                auSize                = s_sdAuSizeMap[card->stat.auSize];
-                onetimeMaxEraseBlocks = auSize / FSL_SDMMC_DEFAULT_BLOCK_SIZE;
-            }
-
-            if (card->stat.eraseSize != 0U)
-            {
-                onetimeMaxEraseBlocks *= card->stat.eraseSize;
-            }
+            error = SD_Erase(card, startBlock, blockCount, 250U * blockCount);
         }
-    }
-
-    if (onetimeMaxEraseBlocks == 0U)
-    {
-        SDMMC_LOG(
-            "Warning: AU size in sd descriptor is not set properly, please check if SD_ReadStatus is called before\
-          SD_EraseBlocks\r\n");
-        error = kStatus_SDMMC_AuSizeNotSetProperly;
+        SDMMC_LOG("\r\n erase block directly: total %d, start %d, timeout %d, status %d \r\n", blockCount, startBlock,
+                  250U * blockCount, error);
     }
     else
     {
-        blockLeft = blockCount;
-        while (blockLeft != 0U)
+        /* UHS card should use uhs au size field */
+        if (card->operationVoltage == kSDMMC_OperationVoltage180V)
         {
-            if (blockLeft > onetimeMaxEraseBlocks)
+            auBlocks = s_sdAuSizeMap[card->stat.uhsAuSize == 0U ? card->stat.auSize : card->stat.uhsAuSize] /
+                       FSL_SDMMC_DEFAULT_BLOCK_SIZE;
+        }
+        else
+        {
+            auBlocks = s_sdAuSizeMap[card->stat.auSize] / FSL_SDMMC_DEFAULT_BLOCK_SIZE;
+        }
+
+        auTimeout = (((uint32_t)card->stat.eraseTimeout * 1000U) / (uint32_t)card->stat.eraseSize) +
+                    card->stat.eraseOffset * 1000U;
+
+        /* erase blocks within one AU */
+        if ((startBlock + blockCount) < (startBlock / auBlocks + 1U) * auBlocks)
+        {
+            error = SD_Erase(card, startBlock, blockCount, auTimeout + 500U);
+
+            SDMMC_LOG("\r\n erase blockS within AU : total %d, start %d, timeout %d, status %d \r\n", blockCount,
+                      startBlock, auTimeout + 500U, error);
+        }
+        else
+        {
+            /* Erase partially start block */
+            if ((startBlock % auBlocks) != 0U)
             {
-                blockCountOneTime = onetimeMaxEraseBlocks;
-                blockLeft         = blockLeft - blockCountOneTime;
-            }
-            else
-            {
-                blockCountOneTime = blockLeft;
-                blockLeft         = 0U;
+                blockCountOneTime = (startBlock / auBlocks + 1U) * auBlocks - startBlock;
+                error             = SD_Erase(card, startBlock, blockCountOneTime, auTimeout + 250U);
+
+                SDMMC_LOG("\r\n erase partially block head : total %d, start %d, timeout %d, status %d \r\n",
+                          blockCountOneTime, startBlock, auTimeout + 250U, error);
             }
 
-            error = SD_Erase(card, (startBlock + blockDone), blockCountOneTime,
-                             SD_CalculateEraseTimeout(card, blockCountOneTime, auSize));
-            if (error != kStatus_Success)
+            /* Erase au align blocks */
+            if (kStatus_Success == error)
             {
-                break;
+                blockLeft -= blockCountOneTime;
+                blockHead += blockCountOneTime;
+
+                blockTail = blockLeft % auBlocks;
+                blockLeft -= blockTail;
+
+                onetimeMaxEraseBlocks = auBlocks;
+                if (card->stat.eraseSize != 0U)
+                {
+                    onetimeMaxEraseBlocks *= card->stat.eraseSize;
+                }
+
+                while (blockLeft != 0U)
+                {
+                    if (blockLeft > onetimeMaxEraseBlocks)
+                    {
+                        blockCountOneTime = onetimeMaxEraseBlocks;
+                        blockLeft         = blockLeft - blockCountOneTime;
+                    }
+                    else
+                    {
+                        blockCountOneTime = blockLeft;
+                        blockLeft         = 0U;
+                    }
+
+                    error = SD_Erase(card, blockHead, blockCountOneTime, (blockCountOneTime / auBlocks) * auTimeout);
+                    SDMMC_LOG("\r\n erase AU block head : total %d, start %d, timeout %d, status %d \r\n",
+                              blockCountOneTime, blockHead, (blockCountOneTime / auBlocks) * auTimeout, error);
+                    if (error != kStatus_Success)
+                    {
+                        break;
+                    }
+
+                    blockHead += blockCountOneTime;
+                }
             }
 
-            blockDone += blockCountOneTime;
+            /* Erase partially end block */
+            if ((error == kStatus_Success) && (blockTail))
+            {
+                error = SD_Erase(card, blockHead, blockTail, auTimeout + 250U);
+                SDMMC_LOG("\r\n erase partially tail block : total %d, start %d, timeout %d, status %d \r\n", blockTail,
+                          blockHead, auTimeout + 250U, error);
+            }
         }
     }
 

@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -41,90 +49,29 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../board_init.h"
 "${ProjDirPath}/../incbin.S"
 "${ProjDirPath}/../dsp_config.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board_init.c"
+"${ProjDirPath}/../board_init.h"
 "${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../dsp_support.h"
-"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/fusionf1/binary/dsp_reset_release.bin"
-"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/fusionf1/binary/dsp_text_release.bin"
-"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/fusionf1/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/dsp/binary/dsp_reset_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/dsp/binary/dsp_text_release.bin"
+"${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/dsp/binary/dsp_data_release.bin"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    ${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/fusionf1/binary
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_cifar10_fusionf1/dsp/binary
     ${ProjDirPath}/..
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/devices/MIMXRT595S
-    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
-    ${SdkRootDirPath}/components/pca9420
-    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
-    ${SdkRootDirPath}/devices/MIMXRT595S/utilities/debug_console_lite
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
 
-# include modules
-include(component_lists_MIMXRT595S_cm33)
-
-include(driver_common_MIMXRT595S_cm33)
-
-include(component_usart_adapter_MIMXRT595S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
-
-include(driver_cache_cache64_MIMXRT595S_cm33)
-
-include(driver_clock_MIMXRT595S_cm33)
-
-include(driver_dsp_MIMXRT595S_cm33)
-
-include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
-
-include(driver_flexcomm_MIMXRT595S_cm33)
-
-include(driver_flexcomm_i2c_MIMXRT595S_cm33)
-
-include(driver_flexspi_MIMXRT595S_cm33)
-
-include(driver_inputmux_MIMXRT595S_cm33)
-
-include(driver_lpc_gpio_MIMXRT595S_cm33)
-
-include(driver_lpc_iopctl_MIMXRT595S_cm33)
-
-include(driver_pca9420_MIMXRT595S_cm33)
-
-include(driver_power_MIMXRT595S_cm33)
-
-include(driver_reset_MIMXRT595S_cm33)
-
-include(utility_debug_console_lite_MIMXRT595S_cm33)
-
-include(utility_assert_lite_MIMXRT595S_cm33)
-
-include(utilities_misc_utilities_MIMXRT595S_cm33)
-
-include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
-
-include(driver_iap_MIMXRT595S_cm33)
-
-include(driver_inputmux_connections_MIMXRT595S_cm33)
-
+include(${SdkRootDirPath}/devices/MIMXRT595S/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -136,4 +83,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBR
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map")
 

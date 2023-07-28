@@ -34,6 +34,18 @@ extern "C" {
 struct _lv_timer_t;
 
 /**
+ * Get idle time callback.
+ * It returns the idle time counter in ms since the last reset.
+ */
+typedef uint32_t (*lv_timer_get_idle_cb_t)(void);
+
+/**
+ * Reset idle time callback.
+ * It sets to zero the idle time counter.
+ */
+typedef void (*lv_timer_reset_idle_cb_t)(void);
+
+/**
  * Timers execute this type of functions.
  */
 typedef void (*lv_timer_cb_t)(struct _lv_timer_t *);
@@ -53,6 +65,21 @@ typedef struct _lv_timer_t {
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
+
+/**
+ * Register custom get idle time function.
+ */
+void lv_timer_register_get_idle_cb(lv_timer_get_idle_cb_t get_idle_cb);
+
+/**
+ * Register custom reset idle time function.
+ */
+void lv_timer_register_reset_idle_cb(lv_timer_reset_idle_cb_t reset_idle_cb);
+
+/**
+ * Reset idle time counter.
+ */
+void lv_timer_reset_idle(void);
 
 /**
  * Init the lv_timer module

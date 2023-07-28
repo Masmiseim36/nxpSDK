@@ -1,7 +1,7 @@
 /*
  * Lab-Project-coreMQTT-Agent 201215
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -27,10 +27,7 @@
 /* FreeRTOS kernel includes. */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "queue.h"
-#include "timers.h"
 
-#include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -53,7 +50,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
 #define APP_DEBUG_UART_TYPE     kSerialPort_Uart
 #define APP_DEBUG_UART_INSTANCE 12U
 #define APP_DEBUG_UART_CLK_FREQ CLOCK_GetFlexcommClkFreq(12)
@@ -61,6 +57,7 @@
     (&(const clock_frg_clk_config_t){12U, kCLOCK_FrgPllDiv, 255U, 0U}) /*!< Select FRG0 mux as frg_pll */
 #define APP_DEBUG_UART_CLK_ATTACH kFRG_to_FLEXCOMM12
 #define APP_DEBUG_UART_BAUDRATE   115200
+
 /**
  * @brief Stack size and priority for shadow device sync task.
  */
@@ -83,6 +80,9 @@
 #define appmainMQTT_AGENT_TASK_STACK_SIZE (2048)
 #define appmainMQTT_AGENT_TASK_PRIORITY   (tskIDLE_PRIORITY + 2)
 
+#define INIT_TASK_STACK_SIZE (1024)
+#define INIT_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
+
 #define WIFI_NETWORK_LABEL "aws_wifi"
 
 /*******************************************************************************
@@ -90,15 +90,14 @@
  ******************************************************************************/
 extern void vShadowDeviceTask(void *pvParameters);
 extern void vShadowUpdateTask(void *pvParameters);
-
 static void LinkStatusChangeCallback(bool linkState);
 int init_network(void);
 int app_main(void);
+void init_task(void *pvParameters);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-const char *g_port_name                   = NULL;
 static const mflash_file_t dir_template[] = {{.path = KVSTORE_FILE_PATH, .max_size = 3000},
                                              {.path = pkcs11palFILE_NAME_CLIENT_CERTIFICATE, .max_size = 2000},
                                              {.path = pkcs11palFILE_NAME_KEY, .max_size = 2000},
@@ -148,8 +147,17 @@ int main(void)
     if (CRYPTO_InitHardware() != 0)
     {
         PRINTF(("\r\nFailed to initialize MBEDTLS crypto.\r\n"));
+        while (true)
+        {
+        }
+    }
 
-        while (1)
+    BaseType_t xResult;
+    xResult = xTaskCreate(init_task, "init_task", INIT_TASK_STACK_SIZE, NULL, INIT_TASK_PRIORITY, NULL);
+    if (xResult != pdPASS)
+    {
+        PRINTF("\r\nFailed to create init task.\r\n");
+        for (;;)
         {
         }
     }
@@ -162,13 +170,14 @@ int main(void)
     }
 }
 
-void vApplicationDaemonTaskStartupHook(void)
+void init_task(void *pvParameters)
 {
+    (void)pvParameters;
+
     /* Initialize file system. */
     if (mflash_init(dir_template, true) != kStatus_Success)
     {
         PRINTF("\r\nFailed to initialize file system.\r\n");
-
         for (;;)
         {
         }
@@ -177,12 +186,18 @@ void vApplicationDaemonTaskStartupHook(void)
     /* A simple example to demonstrate key and certificate provisioning in
      * microcontroller flash using PKCS#11 interface. This should be replaced
      * by production ready key provisioning mechanism. */
-    vDevModeKeyProvisioning();
+    CK_RV ret_prov = vDevModeKeyProvisioning();
+    if (ret_prov != CKR_OK)
+    {
+        PRINTF("\r\nDevice provisioning failed: %d\r\n", ret_prov);
+        for (;;)
+        {
+        }
+    }
 
     /* Initialize network. */
     if (init_network() != kStatus_Success)
     {
-        PRINTF("\r\nInitialization of network failed.\r\n");
         while (true)
         {
         }
@@ -222,6 +237,8 @@ void vApplicationDaemonTaskStartupHook(void)
         {
         }
     }
+
+    vTaskDelete(NULL);
 }
 
 /**

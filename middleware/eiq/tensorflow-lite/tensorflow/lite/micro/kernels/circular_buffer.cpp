@@ -24,6 +24,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/op_macros.h"
 #include "tensorflow/lite/micro/flatbuffer_utils.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 /*
  * The circular buffer custom operator is used to implement strided streaming
@@ -107,8 +108,8 @@ TfLiteStatus CircularBufferEval(TfLiteContext* context, TfLiteNode* node) {
   return kTfLiteOk;
 }
 
-TfLiteRegistration* Register_CIRCULAR_BUFFER() {
-  static TfLiteRegistration r = tflite::micro::RegisterOp(
+TfLiteRegistration_V1* Register_CIRCULAR_BUFFER() {
+  static TfLiteRegistration_V1 r = tflite::micro::RegisterOp(
       CircularBufferInit, CircularBufferPrepare, CircularBufferEval);
   return &r;
 }

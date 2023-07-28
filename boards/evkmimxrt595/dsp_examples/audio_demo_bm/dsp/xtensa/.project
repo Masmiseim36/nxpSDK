@@ -208,6 +208,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_dma.h</locationURI>
     </link>
     <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_usart.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_usart.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_usart.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_usart.c</locationURI>
+    </link>
+    <link>
       <name>component/serial_manager</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -246,56 +266,6 @@
       <name>component/uart/fsl_adapter_usart.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/components/uart/fsl_adapter_usart.c</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_manager.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.h</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_port_internal.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_internal.h</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/serial_manager/fsl_component_serial_manager.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_usart.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_usart.h</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_usart.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_usart.c</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -378,64 +348,34 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_gpio.c</locationURI>
     </link>
     <link>
-      <name>drivers</name>
+      <name>component/serial_manager</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_common.h</name>
+      <name>component/serial_manager/fsl_component_serial_manager.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.h</locationURI>
     </link>
     <link>
-      <name>drivers</name>
+      <name>component/serial_manager</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_common.c</name>
+      <name>component/serial_manager/fsl_component_serial_port_internal.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_port_internal.h</locationURI>
     </link>
     <link>
-      <name>drivers</name>
+      <name>component/serial_manager</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>drivers/fsl_common_dsp.c</name>
+      <name>component/serial_manager/fsl_component_serial_manager.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_common_dsp.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/components/serial_manager/fsl_component_serial_manager.c</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -508,6 +448,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h</locationURI>
     </link>
     <link>
+      <name>component/lists</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/lists/fsl_component_generic_list.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.h</locationURI>
+    </link>
+    <link>
+      <name>component/lists</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/lists/fsl_component_generic_list.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.c</locationURI>
+    </link>
+    <link>
       <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -536,6 +496,46 @@
       <name>utilities/fsl_shell.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/fsl_shell.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -636,6 +636,26 @@
       <name>drivers/fsl_flexcomm.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_flexcomm.c</locationURI>
+    </link>
+    <link>
+      <name>utilities</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>utilities/fsl_str.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/str/fsl_str.c</locationURI>
+    </link>
+    <link>
+      <name>utilities</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>utilities/fsl_str.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/str/fsl_str.h</locationURI>
     </link>
   </linkedResources>
 </projectDescription>

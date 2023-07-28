@@ -8,10 +8,14 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "config_tfm.h"
 #include "tfm_mbedcrypto_include.h"
 
 #include "tfm_crypto_api.h"
+#include "tfm_crypto_key.h"
 #include "tfm_crypto_defs.h"
+
+#include "crypto_library.h"
 
 /*!
  * \addtogroup tfm_crypto_api_shim_layer
@@ -19,10 +23,10 @@
  */
 
 /*!@{*/
-#ifndef TFM_CRYPTO_CIPHER_MODULE_DISABLED
+#if CRYPTO_CIPHER_MODULE_ENABLED
 psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
                                          psa_outvec out_vec[],
-                                         mbedtls_svc_key_id_t *encoded_key)
+                                         struct tfm_crypto_key_id_s *encoded_key)
 {
     const struct tfm_crypto_pack_iovec *iov = in_vec[0].base;
     psa_status_t status = PSA_ERROR_NOT_SUPPORTED;
@@ -30,8 +34,10 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
     uint32_t *p_handle = NULL;
     uint16_t sid = iov->function_id;
 
+    tfm_crypto_library_key_id_t library_key = tfm_crypto_library_key_id_init(
+                                                  encoded_key->owner, encoded_key->key_id);
     if (sid == TFM_CRYPTO_CIPHER_ENCRYPT_SID) {
-#ifdef CRYPTO_SINGLE_PART_FUNCS_DISABLED
+#if CRYPTO_SINGLE_PART_FUNCS_DISABLED
         return PSA_ERROR_NOT_SUPPORTED;
 #else
         const uint8_t *input = in_vec[1].base;
@@ -39,13 +45,17 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
         uint8_t *output = out_vec[0].base;
         size_t output_size = out_vec[0].len;
 
-        return psa_cipher_encrypt(*encoded_key, iov->alg, input, input_length,
-                                  output, output_size, &out_vec[0].len);
+        status = psa_cipher_encrypt(library_key, iov->alg, input, input_length,
+                                    output, output_size, &out_vec[0].len);
+        if (status != PSA_SUCCESS) {
+            out_vec[0].len = 0;
+        }
+        return status;
 #endif
     }
 
     if (sid == TFM_CRYPTO_CIPHER_DECRYPT_SID) {
-#ifdef CRYPTO_SINGLE_PART_FUNCS_DISABLED
+#if CRYPTO_SINGLE_PART_FUNCS_DISABLED
         return PSA_ERROR_NOT_SUPPORTED;
 #else
         const uint8_t *input = in_vec[1].base;
@@ -53,8 +63,12 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
         uint8_t *output = out_vec[0].base;
         size_t output_size = out_vec[0].len;
 
-        return psa_cipher_decrypt(*encoded_key, iov->alg, input, input_length,
-                                  output, output_size, &out_vec[0].len);
+        status = psa_cipher_decrypt(library_key, iov->alg, input, input_length,
+                                    output, output_size, &out_vec[0].len);
+        if (status != PSA_SUCCESS) {
+            out_vec[0].len = 0;
+        }
+        return status;
 #endif
     }
 
@@ -103,7 +117,11 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
         unsigned char *iv = out_vec[0].base;
         size_t iv_size = out_vec[0].len;
 
-        return psa_cipher_generate_iv(operation, iv, iv_size, &out_vec[0].len);
+        status = psa_cipher_generate_iv(operation, iv, iv_size, &out_vec[0].len);
+        if (status != PSA_SUCCESS) {
+            out_vec[0].len = 0;
+        }
+        return status;
     }
     case TFM_CRYPTO_CIPHER_SET_IV_SID:
     {
@@ -114,7 +132,7 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
     }
     case TFM_CRYPTO_CIPHER_ENCRYPT_SETUP_SID:
     {
-        status = psa_cipher_encrypt_setup(operation, *encoded_key, iov->alg);
+        status = psa_cipher_encrypt_setup(operation, library_key, iov->alg);
         if (status != PSA_SUCCESS) {
             goto release_operation_and_return;
         }
@@ -122,7 +140,7 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
     break;
     case TFM_CRYPTO_CIPHER_DECRYPT_SETUP_SID:
     {
-        status = psa_cipher_decrypt_setup(operation, *encoded_key, iov->alg);
+        status = psa_cipher_decrypt_setup(operation, library_key, iov->alg);
         if (status != PSA_SUCCESS) {
             goto release_operation_and_return;
         }
@@ -134,24 +152,26 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
         size_t input_length = in_vec[1].len;
         unsigned char *output = out_vec[0].base;
         size_t output_size = out_vec[0].len;
-        /* Initialise the output_length to zero */
-        out_vec[0].len = 0;
 
-        return psa_cipher_update(operation, input, input_length,
-                                 output, output_size, &out_vec[0].len);
+        status = psa_cipher_update(operation, input, input_length,
+                                   output, output_size, &out_vec[0].len);
+        if (status != PSA_SUCCESS) {
+            out_vec[0].len = 0;
+        }
+        return status;
     }
     case TFM_CRYPTO_CIPHER_FINISH_SID:
     {
         uint8_t *output = out_vec[1].base;
         size_t output_size = out_vec[1].len;
-        /* Initialise the output_length to zero */
-        out_vec[1].len = 0;
 
         status = psa_cipher_finish(operation,
                                    output, output_size, &out_vec[1].len);
         if (status == PSA_SUCCESS) {
             /* In case of success automatically release the operation */
             goto release_operation_and_return;
+        } else {
+            out_vec[1].len = 0;
         }
     }
     break;
@@ -171,10 +191,10 @@ release_operation_and_return:
     (void)tfm_crypto_operation_release(p_handle);
     return status;
 }
-#else /* !TFM_CRYPTO_CIPHER_MODULE_DISABLED */
+#else /* CRYPTO_CIPHER_MODULE_ENABLED */
 psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
                                          psa_outvec out_vec[],
-                                         mbedtls_svc_key_id_t *encoded_key)
+                                         struct tfm_crypto_key_id_s *encoded_key)
 {
     (void)in_vec;
     (void)out_vec;
@@ -182,5 +202,5 @@ psa_status_t tfm_crypto_cipher_interface(psa_invec in_vec[],
 
     return PSA_ERROR_NOT_SUPPORTED;
 }
-#endif /* !TFM_CRYPTO_CIPHER_MODULE_DISABLED */
+#endif /* CRYPTO_CIPHER_MODULE_ENABLED */
 /*!@}*/

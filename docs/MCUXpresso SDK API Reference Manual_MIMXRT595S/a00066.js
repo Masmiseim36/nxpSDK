@@ -1,14 +1,30 @@
 var a00066 =
 [
-    [ "smartdma_flexio_mculcd_param_t", "a00066.html#a00441", null ],
-    [ "smartdma_flexio_onelane_mculcd_param_t", "a00066.html#a00442", null ],
-    [ "smartdma_dsi_param_t", "a00066.html#a00440", [
+    [ "smartdma_flexio_mculcd_param_t", "a00066.html#a00448", null ],
+    [ "smartdma_flexio_onelane_mculcd_param_t", "a00066.html#a00449", null ],
+    [ "smartdma_dsi_param_t", "a00066.html#a00447", [
       [ "p_buffer", "a00066.html#a35d9912bc77bd698c788ed5343ee03d6", null ],
       [ "buffersize", "a00066.html#a5d1d927902078988bf40b85b8b16f060", null ],
       [ "smartdma_stack", "a00066.html#a810c20a6405868e960d1824c0b09655e", null ],
       [ "disablePixelByteSwap", "a00066.html#a6fd4fd15d869669034fe69d4245e1a3e", null ]
     ] ],
-    [ "smartdma_rgb565_rgb888_param_t", "a00066.html#a00443", null ],
+    [ "smartdma_dsi_2d_param_t", "a00066.html#a00445", [
+      [ "p_buffer", "a00066.html#ad97a1a89b32a191bd3e1f67460ae2161", null ],
+      [ "minorLoop", "a00066.html#a5d3cceb8bfc49b33e0ec3800ef8d1bb1", null ],
+      [ "minorLoopOffset", "a00066.html#a7284b9a15f5cbcef5b99f102a13ed537", null ],
+      [ "majorLoop", "a00066.html#ad6eae39012788e7bb7c0eaaf2ba45cdf", null ],
+      [ "smartdma_stack", "a00066.html#a5bc2f1f1111c86ae36d11370b7d31ca9", null ],
+      [ "disablePixelByteSwap", "a00066.html#a5496e6843d9cc1260b73b16b13131a95", null ]
+    ] ],
+    [ "smartdma_dsi_checkerboard_param_t", "a00066.html#a00446", [
+      [ "p_buffer", "a00066.html#a86ad7aa3bae5e1ef1c48d73f42aef0fd", null ],
+      [ "width", "a00066.html#a99e7d18da27ae6ccf153ec8e714f6aac", null ],
+      [ "cbType", "a00066.html#a212b5cc92b298107a0e80b849cd746a9", null ],
+      [ "indexOff", "a00066.html#aa88b140df3a7e93886414b71e311811d", null ],
+      [ "smartdma_stack", "a00066.html#a385ce0b6d3b1b90f0196c8702296a27f", null ],
+      [ "disablePixelByteSwap", "a00066.html#a8012209345466ad90daf4f99c35a995e", null ]
+    ] ],
+    [ "smartdma_rgb565_rgb888_param_t", "a00066.html#a00450", null ],
     [ "FSL_SMARTDMA_DRIVER_VERSION", "a00066.html#ga7b5e8b00441c9f9c17e65e207da3996a", null ],
     [ "SMARTDMA_DISPLAY_MEM_ADDR", "a00066.html#gac92722a2c2b3d0719e1d8a58f5b83253", null ],
     [ "SMARTDMA_DISPLAY_FIRMWARE_SIZE", "a00066.html#gafb05655b19a7e403a699761657301141", null ],
@@ -30,6 +46,8 @@ var a00066 =
       [ "kSMARTDMA_MIPI_RGB565_R180_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea5359a2860318711b864448cb0662675f", null ],
       [ "kSMARTDMA_MIPI_RGB888_R180_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ead817fde8a544404ab3a998e583992681", null ],
       [ "kSMARTDMA_MIPI_XRGB2RGB_R180_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea79c2dbe820d9b4e0f528019a69d99df9", null ],
+      [ "kSMARTDMA_MIPI_RGB5652RGB888_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78eac3bc498d6b86ef007c78f95fd85ea8f5", null ],
+      [ "kSMARTDMA_MIPI_RGB888_CHECKER_BOARD_DMA", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78ea6e1a80f8ef42a3f14831151bff7665ee", null ],
       [ "kSMARTDMA_FlexIO_DMA_ONELANE", "a00066.html#gga448c1b5fe7ac9062647b8dddd567c78eace75536eccdc84626f83feb2695fa545", null ]
     ] ],
     [ "SMARTDMA_Init", "a00066.html#ga0160c7e7812b4500e84c918190a405a4", null ],

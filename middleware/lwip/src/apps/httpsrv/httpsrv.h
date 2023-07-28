@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  *
@@ -237,7 +237,7 @@ typedef struct httpsrv_tls_param_struct
 */
 typedef struct httpsrv_param_struct
 {
-    struct sockaddr address;                     /* Server address.*/
+    struct sockaddr_storage address;             /* Server address.*/
     const char *root_dir;                        /* root directory */
     const char *index_page;                      /* index page full path and name */
     uint32_t max_uri;                            /* maximal URI length */

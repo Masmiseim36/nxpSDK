@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -17,17 +17,20 @@
  */
 void tfm_core_panic(void);
 
-/* Core assert and spin */
+/* SPM assert */
 #ifndef NDEBUG
-#define TFM_CORE_ASSERT(cond)                                       \
-            do {                                                    \
-                if (!(cond)) {                                      \
-                    while (1)                                       \
-                        ;                                           \
-                }                                                   \
+#define SPM_ASSERT(cond)                                                    \
+            do {                                                            \
+                if (!(cond)) {                                              \
+                    SPMLOG_INFMSG("Assert:");                               \
+                    SPMLOG_INFMSG(__func__);                                \
+                    SPMLOG_INFMSGVAL(",", __LINE__);                        \
+                    while (1)                                               \
+                        ;                                                   \
+                }                                                           \
             } while (0)
 #else
-#define TFM_CORE_ASSERT(cond)
+#define SPM_ASSERT(cond)
 #endif
 
 /* Get container structure start address from member */
@@ -42,7 +45,16 @@ void tfm_core_panic(void);
 #define M2S(m) STRINGIFY_EXPAND(m)
 
 /* Runtime memory operations forwarding */
+#ifndef spm_memcpy
 #define spm_memcpy memcpy
+#else
+void *spm_memcpy(void *dest, const void *src, size_t n);
+#endif /* spm_memcpy */
+
+#ifndef spm_memset
 #define spm_memset memset
+#else
+void *spm_memset(void *s, int c, size_t n);
+#endif /* spm_memset */
 
 #endif /* __TFM_UTILS_H__ */

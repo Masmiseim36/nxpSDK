@@ -25,6 +25,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/internal/types.h"
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 namespace {
@@ -143,7 +144,7 @@ TfLiteStatus EluEval(TfLiteContext* context, TfLiteNode* node) {
 
 }  // namespace
 
-TfLiteRegistration Register_ELU() {
+TfLiteRegistration_V1 Register_ELU() {
   return tflite::micro::RegisterOp(EluInit, EluPrepare, EluEval);
 }
 

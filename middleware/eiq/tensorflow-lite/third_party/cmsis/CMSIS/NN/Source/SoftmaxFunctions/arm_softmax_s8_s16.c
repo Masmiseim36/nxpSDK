@@ -32,7 +32,7 @@
 #include "third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
 
 /**
- *  @ingroup groupNN
+ *  @ingroup Public
  */
 
 /**

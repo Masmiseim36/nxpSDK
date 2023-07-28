@@ -243,6 +243,36 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>drivers/fsl_iopctl.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_iopctl.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/naturedsp/fusionf1/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/naturedsp/fusionf1/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/naturedsp/fusionf1/include/NatureDSP_types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/fusionf1/include/NatureDSP_types.h</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>drivers/fsl_common.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.h</locationURI>
@@ -276,56 +306,6 @@
       <name>drivers/fsl_common_dsp.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_iopctl.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_iopctl.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1/include/NatureDSP_types.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/fusionf1/include/NatureDSP_types.h</locationURI>
     </link>
     <link>
       <name>drivers</name>

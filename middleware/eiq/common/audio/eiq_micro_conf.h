@@ -120,7 +120,11 @@
 #define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
 #endif
 /* demo audio data channel */
+#ifndef DEMO_CODEC_WM8962
 #define DEMO_AUDIO_DATA_CHANNEL (1U)
+#else
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+#endif
 /* demo audio bit width */
 #define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
 

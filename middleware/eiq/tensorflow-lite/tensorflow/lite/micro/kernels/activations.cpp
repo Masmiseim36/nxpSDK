@@ -24,7 +24,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/kernels/op_macros.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/micro_log.h"
 #include "tensorflow/lite/micro/micro_utils.h"
 
 namespace tflite {
@@ -109,11 +109,11 @@ TfLiteStatus Relu6Eval(TfLiteContext* context, TfLiteNode* node) {
 
 }  // namespace
 
-TfLiteRegistration Register_RELU() {
+TfLiteRegistration_V1 Register_RELU() {
   return tflite::micro::RegisterOp(ReluInit, ReluPrepare, ReluEval);
 }
 
-TfLiteRegistration Register_RELU6() {
+TfLiteRegistration_V1 Register_RELU6() {
   return tflite::micro::RegisterOp(Relu6Init, Relu6Prepare, Relu6Eval);
 }
 

@@ -5,7 +5,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -63,9 +63,67 @@ static INLINE int wlan_wmm_list_len(pmlan_adapter pmadapter, pmlan_list_head hea
     return count;
 }
 
+/**
+ *  @brief This function requests a ralist lock
+ *
+ *  @param priv         A pointer to mlan_private structure
+ *
+ *  @return             N/A
+ */
+static INLINE t_void wlan_request_ralist_lock(pmlan_private priv)
+{
+
+    ENTER();
+
+    os_mutex_get(&priv->tx_ba_stream_tbl_lock, OS_WAIT_FOREVER);
+
+    LEAVE();
+    return;
+}
+
+/**
+ *  @brief This function releases a lock on ralist
+ *
+ *  @param priv         A pointer to mlan_private structure
+ *
+ *  @return             N/A
+ */
+static INLINE t_void wlan_release_ralist_lock(pmlan_private priv)
+{
+
+    ENTER();
+
+    os_mutex_put(&priv->tx_ba_stream_tbl_lock);
+
+    LEAVE();
+    return;
+}
+
+/** Add buffer to WMM Tx queue */
+void wlan_wmm_add_buf_txqueue(pmlan_adapter pmadapter, pmlan_buffer pmbuf);
+/** Add to RA list */
+void wlan_ralist_add(mlan_private *priv, t_u8 *ra);
+/** Update the RA list */
+int wlan_ralist_update(mlan_private *priv, t_u8 *old_ra, t_u8 *new_ra);
+/** WMM status change command handler */
+mlan_status wlan_cmd_wmm_status_change(pmlan_private priv);
+/** Check if WMM lists are empty */
+int wlan_wmm_lists_empty(pmlan_adapter pmadapter);
+/** Process WMM transmission */
+t_void wlan_wmm_process_tx(pmlan_adapter pmadapter);
+/** Test to see if the ralist ptr is valid */
+int wlan_is_ralist_valid(mlan_private *priv, raListTbl *ra_list, int tid);
 raListTbl *wlan_wmm_get_ralist_node(pmlan_private priv, t_u8 tid, t_u8 *ra_addr);
+t_u8 wlan_get_random_ba_threshold(pmlan_adapter pmadapter);
+
+/** Compute driver packet delay */
+t_u8 wlan_wmm_compute_driver_packet_delay(pmlan_private priv, const pmlan_buffer pmbuf);
 /** Initialize WMM */
 t_void wlan_wmm_init(pmlan_adapter pmadapter);
+/** Initialize WMM paramter */
+t_void wlan_init_wmm_param(pmlan_adapter pmadapter);
+/** Setup WMM queues */
+extern void wlan_wmm_setup_queues(pmlan_private priv);
 /* Setup default queues */
 void wlan_wmm_default_queue_priorities(pmlan_private priv);
 
@@ -75,17 +133,73 @@ extern t_u32 wlan_wmm_process_association_req(pmlan_private priv,
                                               IEEEtypes_WmmParameter_t *pWmmIE,
                                               IEEEtypes_HTCap_t *pHTCap);
 
+/** setup wmm queue priorities */
+void wlan_wmm_setup_queue_priorities(pmlan_private priv, IEEEtypes_WmmParameter_t *wmm_ie);
 
+/** Downgrade WMM priority queue */
+void wlan_wmm_setup_ac_downgrade(pmlan_private priv);
+/** select WMM queue */
+t_u8 wlan_wmm_select_queue(mlan_private *pmpriv, t_u8 tid);
+t_void wlan_wmm_delete_peer_ralist(pmlan_private priv, t_u8 *mac);
+
+/** WMM TS_STATUS command handler */
+extern mlan_status wlan_cmd_wmm_ts_status(IN pmlan_private pmpriv, OUT HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
+/** WMM ADDTS request command response handler */
+extern mlan_status wlan_ret_wmm_addts_req(IN pmlan_private pmpriv,
+                                          const IN HostCmd_DS_COMMAND *resp,
+                                          OUT mlan_ioctl_req *pioctl_buf);
+/** WMM DELTS request command response handler */
+extern mlan_status wlan_ret_wmm_delts_req(IN pmlan_private pmpriv,
+                                          const IN HostCmd_DS_COMMAND *resp,
+                                          OUT mlan_ioctl_req *pioctl_buf);
+/*
+ *  Functions used in the cmd handling routine
+ */
+/** WMM ADDTS request command handler */
+extern mlan_status wlan_cmd_wmm_addts_req(IN pmlan_private pmpriv, OUT HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
+/** WMM QUEUE_STATS command handler */
+extern mlan_status wlan_cmd_wmm_queue_stats(IN pmlan_private pmpriv, OUT HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
+/** WMM QUEUE_CONFIG command handler */
+extern mlan_status wlan_cmd_wmm_queue_config(IN pmlan_private pmpriv,
+                                             OUT HostCmd_DS_COMMAND *cmd,
+                                             IN t_void *pdata_buf);
+/** WMM get status command response handler */
+extern mlan_status wlan_ret_wmm_get_status(IN pmlan_private priv, IN t_u8 *ptlv, IN int resp_len);
+/** WMM TS_STATUS command response handler */
+extern mlan_status wlan_ret_wmm_ts_status(IN pmlan_private pmpriv,
+                                          IN HostCmd_DS_COMMAND *resp,
+                                          OUT mlan_ioctl_req *pioctl_buf);
+/** WMM QUEUE_CONFIG command response handler */
+extern mlan_status wlan_ret_wmm_queue_config(IN pmlan_private pmpriv,
+                                             const IN HostCmd_DS_COMMAND *resp,
+                                             OUT mlan_ioctl_req *pioctl_buf);
+/** WMM QUEUE_STATS command response handler */
+extern mlan_status wlan_ret_wmm_queue_stats(IN pmlan_private pmpriv,
+                                            const IN HostCmd_DS_COMMAND *resp,
+                                            OUT mlan_ioctl_req *pioctl_buf);
 /** WMM DELTS request command handler */
 extern mlan_status wlan_cmd_wmm_delts_req(IN pmlan_private pmpriv, OUT HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
 
-#ifdef CONFIG_WMM_ENH
-/* wmm enhance buffer pool */
-#define MAX_WMM_BUF_NUM 32
-#define WMM_DATA_LEN 1518
-#define OUTBUF_WMM_LEN (sizeof(outbuf_t))
 
-typedef struct {
+t_void wlan_wmm_delete_peer_ralist(pmlan_private priv, t_u8 *mac);
+
+/* process wmm_param_config command */
+mlan_status wlan_cmd_wmm_param_config(pmlan_private pmpriv,
+                                      HostCmd_DS_COMMAND *cmd,
+                                      t_u8 cmd_action,
+                                      t_void *pdata_buf);
+
+/* process wmm_param_config command response */
+mlan_status wlan_ret_wmm_param_config(pmlan_private pmpriv, const HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf);
+
+#ifdef CONFIG_WMM
+/* wmm enhance buffer pool */
+#define MAX_WMM_BUF_NUM 16
+#define WMM_DATA_LEN    1580
+#define OUTBUF_WMM_LEN  (sizeof(outbuf_t))
+
+typedef struct
+{
     mlan_linked_list entry;
     t_u8 intf_header[INTF_HEADER_LEN];
     TxPD tx_pd;
@@ -96,17 +210,11 @@ typedef struct {
 void wifi_wmm_da_to_ra(uint8_t *da, uint8_t *ra);
 
 /* wmm enhance get free buffer */
-uint8_t *wifi_wmm_get_outbuf_enh(uint32_t *outbuf_len,
-                                 mlan_wmm_ac_e queue,
-                                 const uint8_t interface,
-                                 uint8_t *ra,
-                                 bool *is_tx_pause);
+uint8_t *wifi_wmm_get_outbuf_enh(
+    uint32_t *outbuf_len, mlan_wmm_ac_e queue, const uint8_t interface, uint8_t *ra, bool *is_tx_pause);
 
 /* wmm enhance enqueue tx buffer */
-int wlan_wmm_add_buf_txqueue_enh(const uint8_t interface,
-                          const uint8_t *buffer,
-                          const uint16_t len,
-                          uint8_t pkt_prio);
+int wlan_wmm_add_buf_txqueue_enh(const uint8_t interface, const uint8_t *buffer, const uint16_t len, uint8_t pkt_prio);
 
 /* wmm enhance buffer pool management */
 outbuf_t *wifi_wmm_buf_get(void);

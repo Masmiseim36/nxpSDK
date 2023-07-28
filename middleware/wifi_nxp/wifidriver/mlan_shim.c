@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides  APIs to MOAL module
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -59,9 +59,6 @@ static mlan_operations *mlan_ops[] = {
     &mlan_uap_ops,
     MNULL,
 };
-#if defined(RW610)
-extern bus_operations imu_ops;
-#endif
 /** Global moal_assert callback */
 t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond) = MNULL;
 #ifdef DEBUG_LEVEL1
@@ -182,10 +179,12 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
             if (pmdevice->bss_attr[i].bss_type == MLAN_BSS_TYPE_STA)
             {
                 pmadapter->priv[i]->bss_role = MLAN_BSS_ROLE_STA;
+                pmadapter->priv[i]->bss_mode = MLAN_BSS_MODE_INFRA;
             }
             else if (pmdevice->bss_attr[i].bss_type == MLAN_BSS_TYPE_UAP)
             {
                 pmadapter->priv[i]->bss_role = MLAN_BSS_ROLE_UAP;
+                pmadapter->priv[i]->bss_mode = MLAN_BSS_MODE_AUTO;
             }
             else
             {
@@ -206,9 +205,6 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
         }
     }
 
-#if defined(RW610)
-    (void)__memcpy(pmadapter, &pmadapter->bus_ops, &imu_ops, sizeof(bus_operations));
-#endif
 
     /* Initialize lock variables */
     if (wlan_init_lock_list(pmadapter) != MLAN_STATUS_SUCCESS)
@@ -259,6 +255,8 @@ MLAN_API mlan_status mlan_unregister(IN t_void *pmlan_adapter)
     ENTER();
 
     pcb = &pmadapter->callbacks;
+
+    wlan_free_adapter(pmadapter);
 
     /* Free private structures */
     for (i = 0; i < MIN(pmadapter->priv_num, MLAN_MAX_BSS_NUM); i++)

@@ -2,7 +2,13 @@
 @page middleware_log Middleware Change Log
 
 @section sd SD Card driver for MCUXpresso SDK
-  The current driver version is 2.4.1.
+  The current driver version is 2.4.2.
+  
+  - 2.4.2
+    - Improvements
+      - Improved the erase timeout calculation logical in function SD_EraseBlocks according to SD specifications.
+      - Added polling erase done status after each erase operations.
+
   - 2.4.1
     - Improvements
       - Added macro SDMMCHOST_SUPPORT_VOLTAGE_CONTROL for the host which not support voltage control.

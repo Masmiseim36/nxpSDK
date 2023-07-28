@@ -3,8 +3,16 @@ SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
-SET (Tutorial_VERSION_MAJOR 1)
-SET (Tutorial_VERSION_MINOR 0)
+SET (MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION 2)
+SET (MCUXPRESSO_CMAKE_FORMAT_MINOR_VERSION 0)
+
+include(ide_overrides.cmake OPTIONAL)
+
+if(CMAKE_SCRIPT_MODE_FILE)
+  message("${MCUXPRESSO_CMAKE_FORMAT_MAJOR_VERSION}")
+  return()
+endif()
+
 
 # ENABLE ASM
 ENABLE_LANGUAGE(ASM)
@@ -24,7 +32,7 @@ SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 project(dev_composite_hid_audio_unified_freertos)
 
-set(MCUX_BUILD_TYPES release flash_release debug flash_debug)
+set(MCUX_BUILD_TYPES flash_release release flash_debug debug)
 
 set(MCUX_SDK_PROJECT_NAME dev_composite_hid_audio_unified_freertos.elf)
 
@@ -37,6 +45,12 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../usb_audio_config.h"
 "${ProjDirPath}/../audio_unified.c"
 "${ProjDirPath}/../audio_unified.h"
@@ -48,142 +62,26 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usb_device_descriptor.h"
 "${ProjDirPath}/../usb_device_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../usb_device_ch9.c"
-"${ProjDirPath}/../usb_device_ch9.h"
-"${ProjDirPath}/../usb_device_class.c"
-"${ProjDirPath}/../usb_device_class.h"
 "${ProjDirPath}/../usb_device_audio.c"
 "${ProjDirPath}/../usb_device_audio.h"
 "${ProjDirPath}/../usb_device_hid.c"
 "${ProjDirPath}/../usb_device_hid.h"
+"${ProjDirPath}/../usb_device_ch9.c"
+"${ProjDirPath}/../usb_device_ch9.h"
+"${ProjDirPath}/../usb_device_class.c"
+"${ProjDirPath}/../usb_device_class.h"
 )
 
-target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${SdkRootDirPath}/boards/evkmimxrt595
+    ${SdkRootDirPath}/middleware/usb/example/boards/evkmimxrt595/usb_device_composite_hid_audio_unified/freertos
 )
 
-set(CMAKE_MODULE_PATH
-    ${SdkRootDirPath}/middleware/usb
-    ${SdkRootDirPath}/devices/MIMXRT595S/drivers
-    ${SdkRootDirPath}/components/codec/wm8904
-    ${SdkRootDirPath}/components/codec
-    ${SdkRootDirPath}/components/codec/
-    ${SdkRootDirPath}/components/codec/i2c
-    ${SdkRootDirPath}/components/i2c
-    ${SdkRootDirPath}/components/audio
-    ${SdkRootDirPath}/rtos/freertos/freertos-kernel
-    ${SdkRootDirPath}/devices/MIMXRT595S
-    ${SdkRootDirPath}/devices/MIMXRT595S/utilities
-    ${SdkRootDirPath}/components/uart
-    ${SdkRootDirPath}/components/serial_manager
-    ${SdkRootDirPath}/components/lists
-    ${SdkRootDirPath}/boards/evkmimxrt595/flash_config
-    ${SdkRootDirPath}/components/osa
-    ${SdkRootDirPath}/CMSIS/Core/Include
-)
+set_source_files_properties("${ProjDirPath}/../usb_device_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_device_ip3511hs_config_header")
+set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 
-# include modules
-include(middleware_usb_device_ip3511hs_MIMXRT595S_cm33)
-
-include(middleware_usb_phy_MIMXRT595S_cm33)
-
-include(driver_flexcomm_i2c_MIMXRT595S_cm33)
-
-include(driver_flexcomm_i2s_MIMXRT595S_cm33)
-
-include(driver_flexcomm_i2s_dma_MIMXRT595S_cm33)
-
-include(driver_lpc_dma_MIMXRT595S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT595S_cm33)
-
-include(driver_wm8904_MIMXRT595S_cm33)
-
-include(driver_i3c_MIMXRT595S_cm33)
-
-include(driver_pint_MIMXRT595S_cm33)
-
-include(driver_inputmux_MIMXRT595S_cm33)
-
-include(driver_ctimer_MIMXRT595S_cm33)
-
-include(driver_codec_MIMXRT595S_cm33)
-
-include(driver_common_MIMXRT595S_cm33)
-
-include(component_wm8904_adapter_MIMXRT595S_cm33)
-
-include(component_codec_i2c_MIMXRT595S_cm33)
-
-include(component_i3c_adapter_MIMXRT595S_cm33)
-
-include(component_audio_flexcomm_i2s_dma_adapter_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_MIMXRT595S_cm33)
-
-include(driver_clock_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
-
-include(utility_debug_console_MIMXRT595S_cm33)
-
-include(utility_assert_MIMXRT595S_cm33)
-
-include(component_usart_adapter_MIMXRT595S_cm33)
-
-include(driver_power_MIMXRT595S_cm33)
-
-include(driver_flexspi_MIMXRT595S_cm33)
-
-include(driver_cache_cache64_MIMXRT595S_cm33)
-
-include(component_serial_manager_MIMXRT595S_cm33)
-
-include(component_lists_MIMXRT595S_cm33)
-
-include(component_serial_manager_uart_MIMXRT595S_cm33)
-
-include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
-
-include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
-
-include(driver_flexcomm_MIMXRT595S_cm33)
-
-include(driver_lpc_iopctl_MIMXRT595S_cm33)
-
-include(driver_lpc_gpio_MIMXRT595S_cm33)
-
-include(driver_reset_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT595S_cm33)
-
-include(middleware_usb_device_controller_driver_MIMXRT595S_cm33)
-
-include(component_osa_MIMXRT595S_cm33)
-
-include(middleware_usb_common_header_MIMXRT595S_cm33)
-
-include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
-
-include(middleware_usb_device_common_header_MIMXRT595S_cm33)
-
-include(driver_inputmux_connections_MIMXRT595S_cm33)
-
-include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
-
-include(utilities_misc_utilities_MIMXRT595S_cm33)
-
-include(driver_iap_MIMXRT595S_cm33)
-
+include(${SdkRootDirPath}/devices/MIMXRT595S/all_lib_device.cmake)
 
 IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
     SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
@@ -197,4 +95,6 @@ TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 -Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
+
+set_target_properties(${MCUX_SDK_PROJECT_NAME} PROPERTIES ADDITIONAL_CLEAN_FILES "output.map;${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin")
 

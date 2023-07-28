@@ -1,97 +1,162 @@
 var a00015 =
 [
-    [ "ctimer_match_config_t", "a00015.html#a00327", [
-      [ "matchValue", "a00015.html#afa3614f09e787565b3514ddd4d9545a0", null ],
-      [ "enableCounterReset", "a00015.html#aaa00b16aba273e3f11f9480154acc1e5", null ],
-      [ "enableCounterStop", "a00015.html#a94fe2c63ce7fcb5cf68f9ce73974a3e8", null ],
-      [ "outControl", "a00015.html#a0e8b29f0c0f74c5273942a521e3b16d6", null ],
-      [ "outPinInitState", "a00015.html#a31ca8ee3406b7a17c793d94469e1e68d", null ],
-      [ "enableInterrupt", "a00015.html#ae09fd69820c9285d7f146260d2c51584", null ]
+    [ "dma_descriptor_t", "a00015.html#a00332", [
+      [ "xfercfg", "a00015.html#ad49be57eb231061b32b021a8854fe425", null ],
+      [ "srcEndAddr", "a00015.html#aabb52c29097e7d9eedb34f5421740f04", null ],
+      [ "dstEndAddr", "a00015.html#ab0a39d7a7b627b1a714117f2d150bac0", null ],
+      [ "linkToNextDesc", "a00015.html#a8b4151dcf43270fbbeff39334048e7e1", null ]
     ] ],
-    [ "ctimer_config_t", "a00015.html#a00326", [
-      [ "mode", "a00015.html#ab72ef3a10cab9754d3cecb44ef7ad6ac", null ],
-      [ "input", "a00015.html#ac07c23c0bbadea74c24c03e401321fbc", null ],
-      [ "prescale", "a00015.html#aa8baec2c586854dc58ff4cdb82b7996b", null ]
+    [ "dma_xfercfg_t", "a00015.html#a00335", [
+      [ "valid", "a00015.html#a4a97a76d0d7266ee9cc8de82d19e5d81", null ],
+      [ "reload", "a00015.html#a6387faccdc3dcd079d22b56b1c4806fd", null ],
+      [ "swtrig", "a00015.html#a69253cda0502dcfa038c5d71a3cac593", null ],
+      [ "clrtrig", "a00015.html#ab30c2a4b2d436b966ba948edb010688f", null ],
+      [ "intA", "a00015.html#ae2c9381d6fc00cee3491c5a8217c30a1", null ],
+      [ "intB", "a00015.html#a7827b3fe247d5d7218b0263ecbb0aede", null ],
+      [ "byteWidth", "a00015.html#a93c1b2f32e5e046cf10ba7e8b1c215ce", null ],
+      [ "srcInc", "a00015.html#ab21f9a2d11b2ce02da230adfd32b789e", null ],
+      [ "dstInc", "a00015.html#a674be34352d78e2029f8b36f0664cf6f", null ],
+      [ "transferCount", "a00015.html#a11b16354c24a04222507d6508a475bab", null ]
     ] ],
-    [ "FSL_CTIMER_DRIVER_VERSION", "a00015.html#ga89b626fd25a5b3bbd511672ff51618f8", null ],
-    [ "ctimer_capture_channel_t", "a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f", [
-      [ "kCTIMER_Capture_0", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3faa13dee3bb29b8962385da2ac6d8dc938", null ],
-      [ "kCTIMER_Capture_1", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fac4fcf23f15faa447489ef7ccc4d6cb25", null ],
-      [ "kCTIMER_Capture_2", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d6d30f6a5498d009cd87fafee3bccd5", null ],
-      [ "kCTIMER_Capture_3", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d2f295d94d98bc376159ecea3ff2461", null ]
+    [ "dma_channel_trigger_t", "a00015.html#a00331", [
+      [ "type", "a00015.html#a80afb7ab2642836025d063ac8b0c9738", null ],
+      [ "burst", "a00015.html#a66ad3f0d6159adbb560799bfb93da76a", null ],
+      [ "wrap", "a00015.html#acbcaa81a9d2806d3fa021b5ad27fea6f", null ]
     ] ],
-    [ "ctimer_capture_edge_t", "a00015.html#gac37706bc06bc7590ce1e3d1b4bf73638", [
-      [ "kCTIMER_Capture_RiseEdge", "a00015.html#ggac37706bc06bc7590ce1e3d1b4bf73638ac8297b7a4be687e63200fc22be1d2f02", null ],
-      [ "kCTIMER_Capture_FallEdge", "a00015.html#ggac37706bc06bc7590ce1e3d1b4bf73638a18a0af674c980ebbdfd0413dcfa3f3c0", null ],
-      [ "kCTIMER_Capture_BothEdge", "a00015.html#ggac37706bc06bc7590ce1e3d1b4bf73638ab73ca62f50120abc4662c750925e9b5a", null ]
+    [ "dma_channel_config_t", "a00015.html#a00330", [
+      [ "srcStartAddr", "a00015.html#a50d258467783dad5f163860724cb4c32", null ],
+      [ "dstStartAddr", "a00015.html#a7cf6b2c7eef13541394e9131987a2209", null ],
+      [ "nextDesc", "a00015.html#a7bdfedca753e094b2c288f1cbb956889", null ],
+      [ "xferCfg", "a00015.html#a93ad6347b6c5e7c72320be81a67f6baf", null ],
+      [ "trigger", "a00015.html#ae2b24289699bf3639fea8bb56baf0d15", null ],
+      [ "isPeriph", "a00015.html#a0ab90a7e2c3a70511144d346a52aeea7", null ]
     ] ],
-    [ "ctimer_match_t", "a00015.html#gae60f7d34c9e499abba96e5979ee1818d", [
-      [ "kCTIMER_Match_0", "a00015.html#ggae60f7d34c9e499abba96e5979ee1818dac06fa7bc66bbb978bc14348fc0cb4633", null ],
-      [ "kCTIMER_Match_1", "a00015.html#ggae60f7d34c9e499abba96e5979ee1818da38a7356dba8d8a5a8877e9de9fde2faf", null ],
-      [ "kCTIMER_Match_2", "a00015.html#ggae60f7d34c9e499abba96e5979ee1818da98b35c6f057b201073c8afa4bdce60ed", null ],
-      [ "kCTIMER_Match_3", "a00015.html#ggae60f7d34c9e499abba96e5979ee1818da6acca2e2ccd6cc6d08a3d958e47c80fb", null ]
+    [ "dma_transfer_config_t", "a00015.html#a00334", [
+      [ "srcAddr", "a00015.html#a2a315d0141311dd82dd6ac1a3523671b", null ],
+      [ "dstAddr", "a00015.html#a8eb88e8dcaea9033a76c0003fcabadd8", null ],
+      [ "nextDesc", "a00015.html#a24f716a2b7775c1cb9a59b7c2374508b", null ],
+      [ "xfercfg", "a00015.html#a365dbf9376f6927bc8b6527ce136914c", null ],
+      [ "isPeriph", "a00015.html#a3d7f9ccb3edc3a6b1dbf2feb5a8b8f93", null ]
     ] ],
-    [ "ctimer_external_match_t", "a00015.html#ga09f5eb858c001377062fe0b8a0d5bd29", [
-      [ "kCTIMER_External_Match_0", "a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29a42b2f4d5cb9a524f87f6626169155207", null ],
-      [ "kCTIMER_External_Match_1", "a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29a90643d7c03749f64e0d20cfcf55a80ed", null ],
-      [ "kCTIMER_External_Match_2", "a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29ab4602750f83eba0e5cebd0f2ed91a3c4", null ],
-      [ "kCTIMER_External_Match_3", "a00015.html#gga09f5eb858c001377062fe0b8a0d5bd29aba7194efe10386e467b082fc0b847031", null ]
+    [ "dma_handle_t", "a00015.html#a00333", [
+      [ "callback", "a00015.html#a47a5c6af4c934cc9db355d394bb94f46", null ],
+      [ "userData", "a00015.html#a2a10a0701fc2085ce58a0e35032e8a8e", null ],
+      [ "base", "a00015.html#a84d667acc1301d6d56ae52573e4b6b87", null ],
+      [ "channel", "a00015.html#a7c068d330cc60423ee3fd86821221b85", null ]
     ] ],
-    [ "ctimer_match_output_control_t", "a00015.html#ga22cef1fc5f8e23a35b6c3a012e3d143c", [
-      [ "kCTIMER_Output_NoAction", "a00015.html#gga22cef1fc5f8e23a35b6c3a012e3d143cac387e950c7d8c19c1464dd27e5c7396f", null ],
-      [ "kCTIMER_Output_Clear", "a00015.html#gga22cef1fc5f8e23a35b6c3a012e3d143ca2086fd6712693ac8f0758553ff7bb3d3", null ],
-      [ "kCTIMER_Output_Set", "a00015.html#gga22cef1fc5f8e23a35b6c3a012e3d143cae1b0b02fe1e0af81f62fb40ff8339b8f", null ],
-      [ "kCTIMER_Output_Toggle", "a00015.html#gga22cef1fc5f8e23a35b6c3a012e3d143ca4ad940f7bea1dbae09b156ec0415f5f2", null ]
+    [ "FSL_DMA_DRIVER_VERSION", "a00015.html#gac68c8082b53756a7e58ec6d5f25117d2", null ],
+    [ "DMA_MAX_TRANSFER_COUNT", "a00015.html#gaebe7d948ac31ff020dde038034ae3bbd", null ],
+    [ "FSL_FEATURE_DMA_LINK_DESCRIPTOR_ALIGN_SIZE", "a00015.html#ga160b4ffad583e82ad4a80575e4830592", null ],
+    [ "DMA_ALLOCATE_HEAD_DESCRIPTORS", "a00015.html#gac52594676141a30266441619dca00d40", null ],
+    [ "DMA_ALLOCATE_HEAD_DESCRIPTORS_AT_NONCACHEABLE", "a00015.html#ga9f9ae6642bb5eeed8ccc1dffa7ec14e1", null ],
+    [ "DMA_ALLOCATE_LINK_DESCRIPTORS", "a00015.html#ga6dcd898a0c546f25356e016b9276a3de", null ],
+    [ "DMA_ALLOCATE_LINK_DESCRIPTORS_AT_NONCACHEABLE", "a00015.html#ga2cc9e4b6dceb1346d950ab7fb5f52bb7", null ],
+    [ "DMA_ALLOCATE_DATA_TRANSFER_BUFFER", "a00015.html#ga79665a4079015c9420f1dd82e15f4b30", null ],
+    [ "DMA_COMMON_REG_GET", "a00015.html#ga17d8b80c6e8d8c3ac95c2424f26e723f", null ],
+    [ "DMA_DESCRIPTOR_END_ADDRESS", "a00015.html#gaa355501ba0bfb05cc9be452396f92bce", null ],
+    [ "dma_callback", "a00015.html#gab844237884d5badd07ac902a9be34275", [
+      [ "kStatus_DMA_Busy", "a00015.html#gga1fb9092bcdeada2d206bdc74afbbe122a9b95dc670083f57c33f96b0c10d0c8ba", null ],
+      [ "kDMA_AddressInterleave0xWidth", "a00015.html#gga84627a72058502328269676b81780f89ad9802a5e2f1df9d748838e6e23e0279b", null ],
+      [ "kDMA_AddressInterleave1xWidth", "a00015.html#gga84627a72058502328269676b81780f89a84af12bf3a826e9f4725ae5bb4bbebb8", null ],
+      [ "kDMA_AddressInterleave2xWidth", "a00015.html#gga84627a72058502328269676b81780f89ad703190659614263db03cea5d2dfbb6e", null ],
+      [ "kDMA_AddressInterleave4xWidth", "a00015.html#gga84627a72058502328269676b81780f89aecf2cec42cd7819983e265710c691888", null ],
+      [ "kDMA_Transfer8BitWidth", "a00015.html#ggaf3520ff6d43011872bab77edd27d4de3a80c88f3fbb3bb2946149c0ec7a7e922a", null ],
+      [ "kDMA_Transfer16BitWidth", "a00015.html#ggaf3520ff6d43011872bab77edd27d4de3a5b38513482d6d6d92927898f9e2c7703", null ],
+      [ "kDMA_Transfer32BitWidth", "a00015.html#ggaf3520ff6d43011872bab77edd27d4de3a1a43c564953a0e097907e45cd159c265", null ]
     ] ],
-    [ "ctimer_timer_mode_t", "a00015.html#ga9cc18e14c871b2a79888a4cdacbb0eee", null ],
-    [ "ctimer_interrupt_enable_t", "a00015.html#ga0971c614f932bcf55994bf6c92325eb2", [
-      [ "kCTIMER_Match0InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a05694ae09ff514b7237388b33acaaa99", null ],
-      [ "kCTIMER_Match1InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a47f020e940359f6f08c5c8171d2942b9", null ],
-      [ "kCTIMER_Match2InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2ab15c129ca07d334ae13d77e0646c7287", null ],
-      [ "kCTIMER_Match3InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a1f67c8c1e8039ca326e9f25fabffdd0d", null ],
-      [ "kCTIMER_Capture0InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a5fe0ea705babd6351564e59c8db8e928", null ],
-      [ "kCTIMER_Capture1InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a5d70800d3cc33733d42f525242edbbf4", null ],
-      [ "kCTIMER_Capture2InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a68a56db3574cd0ea3bb783c7d13f0894", null ],
-      [ "kCTIMER_Capture3InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a347ceee25f668e7af7a459da9bbc9418", null ]
+    [ "dma_priority_t", "a00015.html#ga63f28310491d665df0ad9a99dc22a77f", [
+      [ "kDMA_ChannelPriority0", "a00015.html#gga63f28310491d665df0ad9a99dc22a77fafaf9bf976bb9d2db3bd2f629cd545f45", null ],
+      [ "kDMA_ChannelPriority1", "a00015.html#gga63f28310491d665df0ad9a99dc22a77fa6ff9161839b0b5e675b01353a684a63f", null ],
+      [ "kDMA_ChannelPriority2", "a00015.html#gga63f28310491d665df0ad9a99dc22a77fa259e4e6cf7b6b79608abbe1769e262fe", null ],
+      [ "kDMA_ChannelPriority3", "a00015.html#gga63f28310491d665df0ad9a99dc22a77fa8615d84237aa24c16fdc1675cc932efb", null ],
+      [ "kDMA_ChannelPriority4", "a00015.html#gga63f28310491d665df0ad9a99dc22a77fae7f6c72a518bc4c68b3be696da1a872d", null ],
+      [ "kDMA_ChannelPriority5", "a00015.html#gga63f28310491d665df0ad9a99dc22a77fa08b83d1381be3c10688f449c9bf90fc4", null ],
+      [ "kDMA_ChannelPriority6", "a00015.html#gga63f28310491d665df0ad9a99dc22a77facc5b892b2bcf8a632acb64e9c5645273", null ],
+      [ "kDMA_ChannelPriority7", "a00015.html#gga63f28310491d665df0ad9a99dc22a77faf238cfde678fdbd26a054fc055f40a4d", null ]
     ] ],
-    [ "ctimer_status_flags_t", "a00015.html#gae64285eb2e52bf5cc2b723870392ff60", [
-      [ "kCTIMER_Match0Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60ad76fd4735e0604307b50d2fd12cba3c0", null ],
-      [ "kCTIMER_Match1Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a901042ca905603329df3cf1d316a2e53", null ],
-      [ "kCTIMER_Match2Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60af5a6c5ee43a01803e82c26181dedfa97", null ],
-      [ "kCTIMER_Match3Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a02e58518795f05162313b509a600a3d3", null ],
-      [ "kCTIMER_Capture0Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a5504b0ec94b832a46824ec297a106df1", null ],
-      [ "kCTIMER_Capture1Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60af3a0db73d48116ea419af737c706b30b", null ],
-      [ "kCTIMER_Capture2Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60aaf0224295d4f330d0d61d10ab30f38ea", null ],
-      [ "kCTIMER_Capture3Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a2bd4b55092422d4faa550293c529dacf", null ]
+    [ "dma_irq_t", "a00015.html#ga5658ee3bb7fbf1da24d997d9bc341e11", [
+      [ "kDMA_IntA", "a00015.html#gga5658ee3bb7fbf1da24d997d9bc341e11ab39861058eb1c9573babd0752286ea48", null ],
+      [ "kDMA_IntB", "a00015.html#gga5658ee3bb7fbf1da24d997d9bc341e11a50cabcc60fb8dc805c62070318fe0c97", null ],
+      [ "kDMA_IntError", "a00015.html#gga5658ee3bb7fbf1da24d997d9bc341e11a28e17f00c59b3dde88943be07a8902bd", null ]
     ] ],
-    [ "ctimer_callback_type_t", "a00015.html#ga740677adee6ada817bb45ed62607c3c4", [
-      [ "kCTIMER_SingleCallback", "a00015.html#gga740677adee6ada817bb45ed62607c3c4af805d881e4dc37e339a8434c1816f930", null ],
-      [ "kCTIMER_MultipleCallback", "a00015.html#gga740677adee6ada817bb45ed62607c3c4a38d629ce598178fd96f48660e63ae1e7", null ]
+    [ "dma_trigger_type_t", "a00015.html#ga0468cf171e413581e9bba9803df91427", [
+      [ "kDMA_NoTrigger", "a00015.html#gga0468cf171e413581e9bba9803df91427ae45693316c3b50f21a0fa93e539e9ae5", null ],
+      [ "kDMA_LowLevelTrigger", "a00015.html#gga0468cf171e413581e9bba9803df91427aca6b545d2f8661404c932a70b8a5abcf", null ],
+      [ "kDMA_HighLevelTrigger", "a00015.html#gga0468cf171e413581e9bba9803df91427a4636793fc071ed9f8e753e84a6e12f85", null ],
+      [ "kDMA_FallingEdgeTrigger", "a00015.html#gga0468cf171e413581e9bba9803df91427a9b9f27849a8e3cf715e30a29b4ba1d04", null ],
+      [ "kDMA_RisingEdgeTrigger", "a00015.html#gga0468cf171e413581e9bba9803df91427aa4d1b3c95a9ca3d756d2f68a3bb0afc8", null ],
+      [ "kDMA_BurstSize1", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0afa3126f29988635183fa3851e1ee1f2d", null ],
+      [ "kDMA_BurstSize2", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a3144a4ab7b2408051fc06ab07b583eab", null ],
+      [ "kDMA_BurstSize4", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ac5b15e2705b1295a56557036487d291b", null ],
+      [ "kDMA_BurstSize8", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a7aacfca8b6c86bdd0e727b0c8ae046b1", null ],
+      [ "kDMA_BurstSize16", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ad6487c57cdb11ae590172c2ff1364ca8", null ],
+      [ "kDMA_BurstSize32", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ae05054c8a11020169733c22349aa158e", null ],
+      [ "kDMA_BurstSize64", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0acb974685c9968ac9dbf74035ecf23bb6", null ],
+      [ "kDMA_BurstSize128", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a3c0044f4c389c21f73b08dbb0b8ef829", null ],
+      [ "kDMA_BurstSize256", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ac03b658552cde955b815365386e40a70", null ],
+      [ "kDMA_BurstSize512", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a491cc51131bb7e9dcd647e54ec8549e7", null ],
+      [ "kDMA_BurstSize1024", "a00015.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0af12e2d1fe9b0fccba12b6cad6bc685b3", null ]
     ] ],
-    [ "CTIMER_Init", "a00015.html#gacae8e1dbb60368ab01a9564de7eda037", null ],
-    [ "CTIMER_Deinit", "a00015.html#ga97daa711029883d46933204381f44c9f", null ],
-    [ "CTIMER_GetDefaultConfig", "a00015.html#gac44f44c3f88125a41081ca2a7cf06223", null ],
-    [ "CTIMER_SetupPwmPeriod", "a00015.html#gacb1f53d8b6a2b157194983172c448707", null ],
-    [ "CTIMER_SetupPwm", "a00015.html#ga2a70f03b835a36e5b321861d0b0ebb41", null ],
-    [ "CTIMER_UpdatePwmPulsePeriod", "a00015.html#gad9f4a6073c669662f300d395d66e16bb", null ],
-    [ "CTIMER_UpdatePwmDutycycle", "a00015.html#ga5d04834d4b29c8505b0a89b8875c2e78", null ],
-    [ "CTIMER_SetupMatch", "a00015.html#ga64b1d0ba86d952b5ec30e201880c7bb5", null ],
-    [ "CTIMER_GetOutputMatchStatus", "a00015.html#gae4d610de22fd8b8c9577e774dac88ac5", null ],
-    [ "CTIMER_SetupCapture", "a00015.html#gae279db71f27ceb5a6d15ad8d17cbd670", null ],
-    [ "CTIMER_GetTimerCountValue", "a00015.html#ga0b2f1b62dee7adf60574c3410e7bd26f", null ],
-    [ "CTIMER_RegisterCallBack", "a00015.html#gaa7de0b40e3127d3d8901398df50feb20", null ],
-    [ "CTIMER_EnableInterrupts", "a00015.html#ga24464606cafc0f316116b164966a906e", null ],
-    [ "CTIMER_DisableInterrupts", "a00015.html#gaf1b8088779288346a7508dc7ef6e99d1", null ],
-    [ "CTIMER_GetEnabledInterrupts", "a00015.html#ga635d2570c0274ff40f10ac7b5f3317df", null ],
-    [ "CTIMER_GetStatusFlags", "a00015.html#gad65b4a95cbfca13083f6d93e7a46f1cb", null ],
-    [ "CTIMER_ClearStatusFlags", "a00015.html#ga43b7410d9c6aab6aad466bd481b9222b", null ],
-    [ "CTIMER_StartTimer", "a00015.html#gae9a75a0e18a696baa795ae67aa30a120", null ],
-    [ "CTIMER_StopTimer", "a00015.html#ga3c7e8e1eb12e5f48ecca04c8128a9545", null ],
-    [ "CTIMER_Reset", "a00015.html#ga7ea373165af081e0e1700f7a3ba56642", null ],
-    [ "CTIMER_SetPrescale", "a00015.html#gacd6bd05573ab1128b8f3feaf30058e32", null ],
-    [ "CTIMER_GetCaptureValue", "a00015.html#gad50a3d5668e4b0e9aba06d4d555139b9", null ],
-    [ "CTIMER_EnableResetMatchChannel", "a00015.html#gaeb3527b175c6158c02d76e063e2794b5", null ],
-    [ "CTIMER_EnableStopMatchChannel", "a00015.html#gaf575852d70d9db218b0def620a0b7302", null ],
-    [ "CTIMER_EnableRisingEdgeCapture", "a00015.html#ga0b4954f928c8e278c29325ea10aa7fa5", null ],
-    [ "CTIMER_EnableFallingEdgeCapture", "a00015.html#ga37f6a866661fa105f4e66e76e02d4236", null ]
+    [ "dma_trigger_burst_t", "a00015.html#ga776b1091528ddc2571284f481ddde830", [
+      [ "kDMA_SingleTransfer", "a00015.html#gga776b1091528ddc2571284f481ddde830aa5f7edec7506a38b3b57d04dd774b0b0", null ],
+      [ "kDMA_LevelBurstTransfer", "a00015.html#gga776b1091528ddc2571284f481ddde830aa6cc38822f852f1ddd1f22c5b79949b8", null ],
+      [ "kDMA_EdgeBurstTransfer1", "a00015.html#gga776b1091528ddc2571284f481ddde830af06ebd49d4066394642c80ece815d55b", null ],
+      [ "kDMA_EdgeBurstTransfer2", "a00015.html#gga776b1091528ddc2571284f481ddde830af0ab73a40234a51b14203e7d83621ac9", null ],
+      [ "kDMA_EdgeBurstTransfer4", "a00015.html#gga776b1091528ddc2571284f481ddde830a42eb0fe4fd6b2030e64b5d0173c93c68", null ],
+      [ "kDMA_EdgeBurstTransfer8", "a00015.html#gga776b1091528ddc2571284f481ddde830a4858703ddbc176a60c3015f23a490e17", null ],
+      [ "kDMA_EdgeBurstTransfer16", "a00015.html#gga776b1091528ddc2571284f481ddde830a0641c94c5e494890f587f3cb60ed7800", null ],
+      [ "kDMA_EdgeBurstTransfer32", "a00015.html#gga776b1091528ddc2571284f481ddde830af1764eeb6c94e0e1f86529bf6210c524", null ],
+      [ "kDMA_EdgeBurstTransfer64", "a00015.html#gga776b1091528ddc2571284f481ddde830a8dec3f95cf71d668439e065b17f27235", null ],
+      [ "kDMA_EdgeBurstTransfer128", "a00015.html#gga776b1091528ddc2571284f481ddde830af2c60c5f0dcbd8bd7d782a7c08c87f0b", null ],
+      [ "kDMA_EdgeBurstTransfer256", "a00015.html#gga776b1091528ddc2571284f481ddde830a8640003c589e5d3ffd94d4cd962b8456", null ],
+      [ "kDMA_EdgeBurstTransfer512", "a00015.html#gga776b1091528ddc2571284f481ddde830a0ef881d258e59978faca416630fb1a74", null ],
+      [ "kDMA_EdgeBurstTransfer1024", "a00015.html#gga776b1091528ddc2571284f481ddde830a6aae117efdce18b2c054ddae971559da", null ]
+    ] ],
+    [ "dma_burst_wrap_t", "a00015.html#gacea88ecaac2447ba3c9f2157e40b9a82", [
+      [ "kDMA_NoWrap", "a00015.html#ggacea88ecaac2447ba3c9f2157e40b9a82a99b1a9eb98902b9277c2ae64f48e5a88", null ],
+      [ "kDMA_SrcWrap", "a00015.html#ggacea88ecaac2447ba3c9f2157e40b9a82ac0ab79249ad0e6bf887498d0f3e3db90", null ],
+      [ "kDMA_DstWrap", "a00015.html#ggacea88ecaac2447ba3c9f2157e40b9a82afaae8afb83546031e25b0ac5e6494f2b", null ],
+      [ "kDMA_SrcAndDstWrap", "a00015.html#ggacea88ecaac2447ba3c9f2157e40b9a82a543352fa3896623517af17829598eb0c", null ]
+    ] ],
+    [ "dma_transfer_type_t", "a00015.html#ga9cb7087af6efc80106c1033f80d60219", [
+      [ "kDMA_MemoryToMemory", "a00015.html#gga9cb7087af6efc80106c1033f80d60219a24392a93deeb55e04559201839343f3c", null ],
+      [ "kDMA_PeripheralToMemory", "a00015.html#gga9cb7087af6efc80106c1033f80d60219a7bf1938ae68b1f494aade7a0f4189303", null ],
+      [ "kDMA_MemoryToPeripheral", "a00015.html#gga9cb7087af6efc80106c1033f80d60219aae1c6bab576d7a25d2fa1249f9cd4ee9", null ],
+      [ "kDMA_StaticToStatic", "a00015.html#gga9cb7087af6efc80106c1033f80d60219af59909afb24e786824cfecdb6afd0da8", null ]
+    ] ],
+    [ "DMA_Init", "a00015.html#gade1b5efa61054ce538b37b181dd075bb", null ],
+    [ "DMA_Deinit", "a00015.html#ga634ced9b86d7dc9543e0b4387123fcac", null ],
+    [ "DMA_InstallDescriptorMemory", "a00015.html#ga9ba95776f25ee8eae5bdf9bf5fd9c9e6", null ],
+    [ "DMA_ChannelIsActive", "a00015.html#ga0e6279e44ebd6778355f6e9e26e9a8b6", null ],
+    [ "DMA_ChannelIsBusy", "a00015.html#gade4163a20de203d8ddfccbbeedb6caa9", null ],
+    [ "DMA_EnableChannelInterrupts", "a00015.html#ga02671643755a7f9395ce1f151a914630", null ],
+    [ "DMA_DisableChannelInterrupts", "a00015.html#gac9873a0205538dffcba7bb59ed1450c5", null ],
+    [ "DMA_EnableChannel", "a00015.html#gaa0293771d55ee1a7c42a8ffecb0728e7", null ],
+    [ "DMA_DisableChannel", "a00015.html#ga8025eebc80c23fa9b5a3a4454855e347", null ],
+    [ "DMA_EnableChannelPeriphRq", "a00015.html#gaa706c05b4875366e7f84c83b8d09ae29", null ],
+    [ "DMA_DisableChannelPeriphRq", "a00015.html#gab2d2f88ed16097b2974d1955c725a5dc", null ],
+    [ "DMA_ConfigureChannelTrigger", "a00015.html#ga04d2004d7d054b4f36676304bc2cd8ad", null ],
+    [ "DMA_SetChannelConfig", "a00015.html#gafc795a7c0b3e5f4bbf32c1eed3a9ea47", null ],
+    [ "DMA_SetChannelXferConfig", "a00015.html#gaed498d0e17c40aa2899869626c238507", null ],
+    [ "DMA_GetRemainingBytes", "a00015.html#gaf0197c674ce188bf214c13bc7be43e14", null ],
+    [ "DMA_SetChannelPriority", "a00015.html#gad8ae76fc5d858b97de3362100af86df6", null ],
+    [ "DMA_GetChannelPriority", "a00015.html#ga1a5311b6ad708e230db517fb04f98a5f", null ],
+    [ "DMA_SetChannelConfigValid", "a00015.html#gaa200c0bd1a2d714f6cd002919ed8a213", null ],
+    [ "DMA_DoChannelSoftwareTrigger", "a00015.html#gae8ffd8526580ed3b7ca3520024d0002c", null ],
+    [ "DMA_LoadChannelTransferConfig", "a00015.html#ga956cf0c90e0562e5087475ceefcc489f", null ],
+    [ "DMA_CreateDescriptor", "a00015.html#gaf2955b2c961a33fe24d3154ec801f9fd", null ],
+    [ "DMA_SetupDescriptor", "a00015.html#gabbdbf43b54f0a0029cd27c09c094de36", null ],
+    [ "DMA_SetupChannelDescriptor", "a00015.html#ga6c69a736b8e5719fe01bb7d3b76f9088", null ],
+    [ "DMA_LoadChannelDescriptor", "a00015.html#gae7c3ca634a04a8afe85b1e55360b17aa", null ],
+    [ "DMA_AbortTransfer", "a00015.html#ga3c61d6121d88d2cdf287fc1cd72912fd", null ],
+    [ "DMA_CreateHandle", "a00015.html#ga5354ff2c0c1ec53e2cbd712169fc5558", null ],
+    [ "DMA_SetCallback", "a00015.html#ga2eb9a831b9a84c5108097f770dbe90db", null ],
+    [ "DMA_PrepareTransfer", "a00015.html#ga01ed2edd4ac04c70f83c7c3091ec4b65", null ],
+    [ "DMA_PrepareChannelTransfer", "a00015.html#gad29055b5d8b160f94bb18abce476af7d", null ],
+    [ "DMA_SubmitTransfer", "a00015.html#gade169c9d37d6a2ff949546268ba1c382", null ],
+    [ "DMA_SubmitChannelTransferParameter", "a00015.html#ga55d406dd20fa70d7cca25601bae20777", null ],
+    [ "DMA_SubmitChannelDescriptor", "a00015.html#gabf72e148a82d885b8b4ab3cffd549cc3", null ],
+    [ "DMA_SubmitChannelTransfer", "a00015.html#gae702541c17430371d54c7aea5dbef084", null ],
+    [ "DMA_StartTransfer", "a00015.html#gac6fb3f30e13c937cc00fe11218e6ec76", null ],
+    [ "DMA_IRQHandle", "a00015.html#ga9da5a899fb0109cec4fc9303e5df0433", null ]
 ];

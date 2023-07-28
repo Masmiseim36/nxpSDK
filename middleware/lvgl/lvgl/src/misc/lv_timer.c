@@ -25,6 +25,9 @@
 /**********************
  *  STATIC PROTOTYPES
  **********************/
+static lv_timer_get_idle_cb_t get_idle_time_cb;
+static lv_timer_reset_idle_cb_t reset_idle_time_cb;
+
 static bool lv_timer_exec(lv_timer_t * timer);
 static uint32_t lv_timer_time_remaining(lv_timer_t * timer);
 
@@ -48,6 +51,22 @@ static bool timer_created;
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
+
+void lv_timer_register_get_idle_cb(lv_timer_get_idle_cb_t get_idle_cb)
+{
+    get_idle_time_cb = get_idle_cb;
+}
+
+void lv_timer_register_reset_idle_cb(lv_timer_reset_idle_cb_t reset_idle_cb)
+{
+    reset_idle_time_cb = reset_idle_cb;
+}
+
+void lv_timer_reset_idle(void)
+{
+    if(reset_idle_time_cb)
+        reset_idle_time_cb();
+}
 
 /**
  * Init the lv_timer module
@@ -82,7 +101,8 @@ LV_ATTRIBUTE_TIMER_HANDLER uint32_t lv_timer_handler(void)
     }
 
     static uint32_t idle_period_start = 0;
-    static uint32_t busy_time         = 0;
+    static uint32_t busy_time = 0;
+    static uint32_t idle_time = 0;
 
     uint32_t handler_start = lv_tick_get();
 
@@ -133,9 +153,18 @@ LV_ATTRIBUTE_TIMER_HANDLER uint32_t lv_timer_handler(void)
     busy_time += lv_tick_elaps(handler_start);
     uint32_t idle_period_time = lv_tick_elaps(idle_period_start);
     if(idle_period_time >= IDLE_MEAS_PERIOD) {
-        idle_last         = (busy_time * 100) / idle_period_time;  /*Calculate the busy percentage*/
-        idle_last         = idle_last > 100 ? 0 : 100 - idle_last; /*But we need idle time*/
-        busy_time         = 0;
+        if(get_idle_time_cb)
+            idle_time = get_idle_time_cb();
+        else
+            idle_time = idle_period_time - busy_time;
+
+        idle_last = (idle_time * 100) / idle_period_time;
+
+        if(reset_idle_time_cb)
+            reset_idle_time_cb();
+
+        busy_time = 0;
+
         idle_period_start = lv_tick_get();
     }
 

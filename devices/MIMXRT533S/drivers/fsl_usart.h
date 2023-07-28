@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief USART driver version. */
-#define FSL_USART_DRIVER_VERSION (MAKE_VERSION(2, 7, 0))
+#define FSL_USART_DRIVER_VERSION (MAKE_VERSION(2, 8, 2))
 /*@}*/
 
 #define USART_FIFOTRIG_TXLVL_GET(base) (((base)->FIFOTRIG & USART_FIFOTRIG_TXLVL_MASK) >> USART_FIFOTRIG_TXLVL_SHIFT)

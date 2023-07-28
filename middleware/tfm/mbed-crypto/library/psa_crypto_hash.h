@@ -21,18 +21,9 @@
 #ifndef PSA_CRYPTO_HASH_H
 #define PSA_CRYPTO_HASH_H
 
-#include <mbed_psa/crypto.h> //NXP
+#include <psa/crypto.h>
 
 #include "md_wrap.h"
-
-/** Get Mbed TLS MD information of a hash algorithm given its PSA identifier
- *
- * \param[in] alg  PSA hash algorithm identifier
- *
- * \return  The Mbed TLS MD information of the hash algorithm. \c NULL if the
- *          PSA hash algorithm is not supported.
- */
-const mbedtls_md_info_t *mbedtls_md_info_from_psa( psa_algorithm_t alg );
 
 /** Calculate the hash (digest) of a message using Mbed TLS routines.
  *

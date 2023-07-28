@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2023 Cypress Semiconductor Corporation (an Infineon company)
+ * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -14,7 +16,7 @@ extern "C" {
 
 #include <stddef.h>
 
-#include "common.h"
+#include "os_wrapper/common.h"
 
 /**
  * \brief Create and initialize a message queue

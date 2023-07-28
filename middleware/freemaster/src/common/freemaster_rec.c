@@ -95,12 +95,17 @@ FMSTR_TYPEDEF_LPTR(struct FMSTR_REC_VAR_DATA_S, FMSTR_LP_REC_VAR_DATA);
 /* compare functions prototype */
 typedef FMSTR_BOOL (*FMSTR_PCOMPAREFUNC)(FMSTR_LP_REC_VAR_DATA varData);
 
+/* read variable functions prototype */
+typedef void (*FMSTR_PREADFUNC)(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+
 /* Recorder internal description of one variable */
 typedef struct FMSTR_REC_VAR_DATA_S
 {
     FMSTR_REC_VAR cfg;                /* variable configuration */
     FMSTR_REC_THRESHOLD thresholdVal; /* trigger threshold value if used */
     FMSTR_PCOMPAREFUNC compareFunc;   /* pointer to trigger compare function if used */
+    FMSTR_PREADFUNC readFunc;         /* pointer to variable read (value copy) function */
+
     FMSTR_BOOL trgLastState;          /* last trigger comparison state for edge detection if used */
 } FMSTR_REC_VAR_DATA;
 
@@ -361,6 +366,14 @@ FMSTR_BOOL FMSTR_RecorderConfigure(FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg)
 
 static FMSTR_U8 _FMSTR_RecMemCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg)
 {
+    /* Cannot use time division */
+#if FMSTR_FASTREC_NO_TIME_DIVISION
+    if (recCfg->timeDiv > 0)
+    {
+        return FMSTR_STC_INVCONF;
+    }
+#endif
+
     FMSTR_REC_BUFF *recBuff = _FMSTR_GetRecorderBufferByRecIx(recIndex);
     FMSTR_ADDR dynAddr;
     FMSTR_INDEX spaceLeft;
@@ -478,8 +491,25 @@ static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recVarIx, FM
 {
     FMSTR_LP_REC_VAR_DATA varDescr;
     FMSTR_PCOMPAREFUNC compareFunc = NULL;
+    FMSTR_PREADFUNC readFunc = NULL;
 
     FMSTR_ASSERT_RETURN(((FMSTR_SIZE)recVarIx) < recorder->config.varCount, FMSTR_STC_INSTERR);
+
+    /* Cannot use level mode or faling edge mode for recorder variable */
+#if FMSTR_FASTREC_RISING_EDGE_TRG_ONLY
+    if ((recVarCfg->triggerMode & FMSTR_REC_TRG_F_LEVEL) != 0U || (recVarCfg->triggerMode & FMSTR_REC_TRG_F_BELOW) != 0U)
+    {
+        return FMSTR_STC_INVCONF;
+    }
+#endif
+
+    /* Cannot use level mode or rising edge mode for recorder variable */
+#if FMSTR_FASTREC_FALLING_EDGE_TRG_ONLY
+    if ((recVarCfg->triggerMode & FMSTR_REC_TRG_F_LEVEL) != 0U || (recVarCfg->triggerMode & FMSTR_REC_TRG_F_ABOVE) != 0U)
+    {
+        return FMSTR_STC_INVCONF;
+    }
+#endif
 
     /* Cannot change variable configuration when recorder is already configured (or even running) */
     if (recorder->flags.all != 0U)
@@ -491,6 +521,24 @@ static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recVarIx, FM
     if (_FMSTR_RecIsValidVarSize(recVarCfg->size) == FMSTR_FALSE)
     {
         return FMSTR_STC_INVSIZE;
+    }
+    else
+    {
+        switch (recVarCfg->size)
+        {
+            case 1:
+                readFunc = FMSTR_MemCpySrcAligned_8;
+                break;
+            case 2:
+                readFunc = FMSTR_MemCpySrcAligned_16;
+                break;
+            case 4:
+                readFunc = FMSTR_MemCpySrcAligned_32;
+                break;
+            case 8:
+                readFunc = FMSTR_MemCpySrcAligned_64;
+                break;
+        }
     }
 
 #if FMSTR_USE_TSA > 0 && FMSTR_USE_TSA_SAFETY > 0
@@ -565,6 +613,7 @@ static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recVarIx, FM
     /* Store the variable configuration */
     varDescr->cfg         = *recVarCfg;
     varDescr->compareFunc = compareFunc;
+    varDescr->readFunc    = readFunc;
 
     return FMSTR_STS_OK;
 }
@@ -1399,12 +1448,14 @@ static void _FMSTR_Recorder2(FMSTR_LP_REC recorder)
 {
     FMSTR_LP_REC_VAR_DATA recVarData;
     FMSTR_PCOMPAREFUNC compareFunc;
+    FMSTR_PREADFUNC readFunc;
     FMSTR_SIZE8 triggerMode;
     FMSTR_SIZE8 sz;
     FMSTR_SIZE i;
     FMSTR_BOOL cmp;
     FMSTR_U8 triggerResult;
 
+#if FMSTR_FASTREC_NO_TIME_DIVISION == 0
     /* skip this call ? */
     if (recorder->timeDivCtr > 0U)
     {
@@ -1415,6 +1466,7 @@ static void _FMSTR_Recorder2(FMSTR_LP_REC recorder)
 
     /* re-initialize divider */
     recorder->timeDivCtr = recorder->config.timeDiv;
+#endif /* FMSTR_FASTREC_NO_TIME_DIVISION */
 
     /* variable info data for the next loop processing */
     recVarData  = recorder->varDescr;
@@ -1434,6 +1486,13 @@ static void _FMSTR_Recorder2(FMSTR_LP_REC recorder)
             /* No trigger checking in virgin cycle */
             if (recorder->flags.flg.isVirginCycle == 0U)
             {
+#if FMSTR_FASTREC_RISING_EDGE_TRG_ONLY
+                if (cmp != FMSTR_FALSE && recVarData->trgLastState == FMSTR_FALSE)
+                    triggerResult = _FMSTR_TriggerRec(recorder);
+#elif FMSTR_FASTREC_FALLING_EDGE_TRG_ONLY
+                if (cmp == FMSTR_FALSE && recVarData->trgLastState != FMSTR_FALSE)
+                    triggerResult = _FMSTR_TriggerRec(recorder);
+#else
                 /* Check the Above trigger */
                 if (cmp != FMSTR_FALSE && (triggerMode & FMSTR_REC_TRG_F_ABOVE) != 0U)
                 {
@@ -1453,6 +1512,7 @@ static void _FMSTR_Recorder2(FMSTR_LP_REC recorder)
                         triggerResult = _FMSTR_TriggerRec(recorder);
                     }
                 }
+#endif
             }
 
             /* Store the last comparison */
@@ -1463,7 +1523,14 @@ static void _FMSTR_Recorder2(FMSTR_LP_REC recorder)
         if ((triggerMode & FMSTR_REC_TRG_F_TRGONLY) == 0U)
         {
             sz = recVarData->cfg.size;
-            FMSTR_MemCpyFrom(recorder->writePtr, recVarData->cfg.addr, sz);
+            readFunc = recVarData->readFunc;
+
+            /* Use optimized value-copy routine, otherwise use normal copy */
+            if (readFunc != NULL)
+                readFunc(recorder->writePtr, recVarData->cfg.addr);
+            else
+                FMSTR_MemCpyFrom(recorder->writePtr, recVarData->cfg.addr, sz);
+
             sz /= FMSTR_CFG_BUS_WIDTH;
             recorder->writePtr += sz;
         }

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.28 - Graphical user interface for embedded applications **
+** emWin V6.32 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -197,6 +197,7 @@ int                  SCROLLER_OwnerDraw       (const WIDGET_ITEM_DRAW_INFO * pDr
 int                  SCROLLER_ParentMsgHandler(WM_MESSAGE * pMsg);
 void                 SCROLLER_SetInterfaceAPI (SCROLLER_Handle hObj, const SCROLLER_INTERFACE_API * pAPI);
 void                 SCROLLER_SetState        (SCROLLER_Handle hObj, U8 Active, U8 NoTimer);
+void                 SCROLLER_SetContentRect  (SCROLLER_Handle hObj, const GUI_RECT * pRect);
 //
 // Properties (getters)
 //

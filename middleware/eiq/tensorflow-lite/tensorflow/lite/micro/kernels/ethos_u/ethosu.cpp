@@ -19,7 +19,7 @@ limitations under the License.
 #include "tensorflow/lite/c/common.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/micro_context.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 namespace {
@@ -36,8 +36,6 @@ void* Init(TfLiteContext* context, const char* buffer, size_t length) {
   TFLITE_DCHECK(context->AllocatePersistentBuffer != nullptr);
   return context->AllocatePersistentBuffer(context, sizeof(OpData));
 }
-
-void Free(TfLiteContext* context, void* buffer) {}
 
 TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
   TFLITE_DCHECK(context != nullptr);
@@ -165,15 +163,9 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 
 }  // namespace
 
-TfLiteRegistration* Register_ETHOSU() {
-  static TfLiteRegistration r = {Init,
-                                 Free,
-                                 Prepare,
-                                 Eval,
-                                 /*profiling_string=*/nullptr,
-                                 /*builtin_code=*/0,
-                                 /*custom_name=*/nullptr,
-                                 /*version=*/0};
+TfLiteRegistration_V1* Register_ETHOSU() {
+  static TfLiteRegistration_V1 r =
+      tflite::micro::RegisterOp(Init, Prepare, Eval);
   return &r;
 }
 

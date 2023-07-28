@@ -36,7 +36,7 @@
 
 #include <string.h>
 #include <mbedtls/entropy.h> // only for error codes
-#include <mbed_psa/crypto.h> //NXP
+#include <psa/crypto.h>
 
 typedef mbedtls_psa_external_random_context_t mbedtls_psa_random_context_t;
 

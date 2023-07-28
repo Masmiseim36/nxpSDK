@@ -2,9 +2,9 @@
  *
  *  @brief This file declares the generic data structures and APIs.
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -18,6 +18,9 @@ Change log:
 
 #include "type_decls.h"
 #include <wm_os.h>
+#ifdef CONFIG_WPA_SUPP
+#include <ieee802_11_defs.h>
+#endif
 
 /** MLAN release version */
 #define MLAN_RELEASE_VERSION "310"
@@ -87,7 +90,7 @@ Change log:
 #define MLAN_NET_IP_ALIGN 0
 
 /** DMA alignment */
-#define DMA_ALIGNMENT 64U
+#define DMA_ALIGNMENT 32U
 /** max size of TxPD */
 #define MAX_TXPD_SIZE 32
 
@@ -102,44 +105,30 @@ Change log:
 /** This is current limit on Maximum Rx AMPDU allowed */
 #define MLAN_MAX_RX_BASTREAM_SUPPORTED 16
 
-#ifdef SD8801
+/** US country code */
+#define COUNTRY_CODE_US 0x10
+
 /** Default Win size attached during ADDBA request */
-#define MLAN_STA_AMPDU_DEF_TXWINSIZE 8
-#else
-/** Default Win size attached during ADDBA request */
-#ifdef RW610
-#define MLAN_STA_AMPDU_DEF_TXWINSIZE 64
-#else
+#ifndef MLAN_STA_AMPDU_DEF_TXWINSIZE
 #define MLAN_STA_AMPDU_DEF_TXWINSIZE 16
 #endif
-#endif
+
+/** Default Win size attached during ADDBA response */
 #ifndef MLAN_STA_AMPDU_DEF_RXWINSIZE
-#ifdef SD8801
-/** Default Win size attached during ADDBA response */
-#define MLAN_STA_AMPDU_DEF_RXWINSIZE 16
-#else
-/** Default Win size attached during ADDBA response */
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 32
 #endif
-#endif
-#ifdef SD8801
+
 /** Default Win size attached during ADDBA request */
-#define MLAN_UAP_AMPDU_DEF_TXWINSIZE 8
-#else
-#ifdef RW610
-#define MLAN_UAP_AMPDU_DEF_TXWINSIZE 64
-#else
-/** Default Win size attached during ADDBA request */
+#ifndef MLAN_UAP_AMPDU_DEF_TXWINSIZE
 #define MLAN_UAP_AMPDU_DEF_TXWINSIZE 16
 #endif
-#endif
-#ifdef SD8801
+
 /** Default Win size attached during ADDBA response */
-#define MLAN_UAP_AMPDU_DEF_RXWINSIZE 16
-#else
-/** Default Win size attached during ADDBA response */
+#ifndef MLAN_UAP_AMPDU_DEF_RXWINSIZE
 #define MLAN_UAP_AMPDU_DEF_RXWINSIZE 32
 #endif
+
+
 /** Block ack timeout value */
 #define MLAN_DEFAULT_BLOCK_ACK_TIMEOUT 0U
 /** Maximum Tx Win size configured for ADDBA request [10 bits] */
@@ -156,18 +145,23 @@ Change log:
 /** Rate index for OFDM 7 */
 #define MLAN_RATE_INDEX_OFDM7 11
 /** Rate index for MCS 0 */
-#define MLAN_RATE_INDEX_MCS0 12U
+#define MLAN_RATE_INDEX_MCS0 0U
+/** Rate index for MCS 2 */
+#define MLAN_RATE_INDEX_MCS2 2U
+/** Rate index for MCS 4 */
+#define MLAN_RATE_INDEX_MCS4 4U
 /** Rate index for MCS 7 */
-#define MLAN_RATE_INDEX_MCS7 19
+#define MLAN_RATE_INDEX_MCS7 7U
 /** Rate index for MCS 9 */
-#define MLAN_RATE_INDEX_MCS9 21
+#define MLAN_RATE_INDEX_MCS9 9U
 /** Rate index for MCS 32 */
-#define MLAN_RATE_INDEX_MCS32 44
+#define MLAN_RATE_INDEX_MCS32 32U
 /** Rate index for MCS 127 */
-#define MLAN_RATE_INDEX_MCS127 139
-
+#define MLAN_RATE_INDEX_MCS127 127U
+#if defined(CONFIG_11AC) || defined(CONFIG_11AX)
 #define MLAN_RATE_NSS1 1
 #define MLAN_RATE_NSS2 2
+#endif
 
 /** Rate bitmap for OFDM 0 */
 #define MLAN_RATE_BITMAP_OFDM0 16
@@ -177,20 +171,15 @@ Change log:
 #define MLAN_RATE_BITMAP_MCS0 32U
 /** Rate bitmap for MCS 127 */
 #define MLAN_RATE_BITMAP_MCS127 159
-
+#ifdef CONFIG_11AC
 #define MLAN_RATE_BITMAP_NSS1_MCS0 160
 #define MLAN_RATE_BITMAP_NSS1_MCS9 169
 #define MLAN_RATE_BITMAP_NSS2_MCS0 176
 #define MLAN_RATE_BITMAP_NSS2_MCS9 185
+#endif
 
 /** MU beamformer */
 #define DEFALUT_11AC_CAP_BEAMFORMING_RESET_MASK (MBIT(19))
-#ifdef RW610
-/** Short GI for 80MHz/TVHT_MODE_4C */
-#define DEFALUT_11AC_CAP_SHORTGI_80MHZ_RESET_MASK (MBIT(5))
-/** HE Phy Cap Info(40MHz in 2.4GHz band) */
-#define DEFAULT_11AX_CAP_40MHZIH2_4GHZBAND_RESET_MASK (MBIT(1))
-#endif
 
 /** Size of rx data buffer */
 #define MLAN_RX_DATA_BUF_SIZE (4 * 1024)
@@ -284,6 +273,26 @@ typedef t_u8 mlan_802_11_mac_addr[MLAN_MAC_ADDR_LENGTH];
 
 /** Default memory allocation flag */
 #define MLAN_MEM_DEF 0U
+
+/** MrvlExtIEtypesHeader_t */
+typedef MLAN_PACK_START struct _MrvlExtIEtypesHeader
+{
+    /** Header type */
+    t_u16 type;
+    /** Header length */
+    t_u16 len;
+    /** ext id */
+    t_u8 ext_id;
+} MLAN_PACK_END MrvlExtIEtypesHeader_t;
+
+/** MrvlIEtypes_Data_t */
+typedef MLAN_PACK_START struct _MrvlExtIEtypes_Data_t
+{
+    /** Header */
+    MrvlExtIEtypesHeader_t header;
+    /** Data */
+    t_u8 data[];
+} MLAN_PACK_END MrvlExtIEtypes_Data_t;
 
 /** mlan_status */
 typedef enum _mlan_status
@@ -530,9 +539,9 @@ typedef MLAN_PACK_START struct _mlan_event_scan_result
 typedef struct _mlan_buffer
 {
     /** Pointer to previous mlan_buffer */
-    struct _mlan_buffer *pprev;
+    // struct _mlan_buffer *pprev;
     /** Pointer to next mlan_buffer */
-    struct _mlan_buffer *pnext;
+    // struct _mlan_buffer *pnext;
     /** Status code from firmware/driver */
     t_u32 status_code;
     /** Flags for this buffer */
@@ -557,17 +566,17 @@ typedef struct _mlan_buffer
     /** QoS priority */
     t_u32 priority;
     /** Time stamp when packet is received (seconds) */
-    t_u32 in_ts_sec;
+    // t_u32 in_ts_sec;
     /** Time stamp when packet is received (micro seconds) */
-    t_u32 in_ts_usec;
+    // t_u32 in_ts_usec;
     /** Time stamp when packet is processed (seconds) */
-    t_u32 out_ts_sec;
+    // t_u32 out_ts_sec;
     /** Time stamp when packet is processed (micro seconds) */
-    t_u32 out_ts_usec;
+    // t_u32 out_ts_usec;
 
     /** Fields below are valid for MLAN module only */
     /** Pointer to parent mlan_buffer */
-    struct _mlan_buffer *pparent;
+    // struct _mlan_buffer *pparent;
     /** Use count for this buffer */
     t_u32 use_count;
 } mlan_buffer, *pmlan_buffer;
@@ -599,8 +608,12 @@ typedef MLAN_PACK_START enum _mlan_cmd_result_e {
     MLAN_CMD_RESULT_INVALID_DATA = 3
 } MLAN_PACK_END mlan_cmd_result_e;
 
-/** Type enumeration of WMM AC_QUEUES */
-typedef MLAN_PACK_START enum _mlan_wmm_ac_e { WMM_AC_BK, WMM_AC_BE, WMM_AC_VI, WMM_AC_VO } MLAN_PACK_END mlan_wmm_ac_e;
+#define WMM_AC_BK 0
+#define WMM_AC_BE 1
+#define WMM_AC_VI 2
+#define WMM_AC_VO 3
+
+typedef t_u8 mlan_wmm_ac_e;
 
 /** Type enumeration for the action field in the Queue Config command */
 typedef MLAN_PACK_START enum _mlan_wmm_queue_config_action_e {
@@ -711,6 +724,38 @@ typedef MLAN_PACK_START struct _mlan_ds_misc_custom_ie
     tlvbuf_max_mgmt_ie max_mgmt_ie;
 } MLAN_PACK_END mlan_ds_misc_custom_ie;
 
+/** channel type */
+enum mlan_channel_type
+{
+    CHAN_NO_HT,
+    CHAN_HT20,
+    CHAN_HT40MINUS,
+    CHAN_HT40PLUS,
+    CHAN_VHT80
+};
+
+/** channel band */
+enum
+{
+    BAND_2GHZ = 0,
+    BAND_5GHZ = 1,
+    BAND_6GHZ = 2,
+    BAND_4GHZ = 3,
+};
+
+/** Band_Config_t */
+typedef MLAN_PACK_START struct _Band_Config_t
+{
+    /** Band Info - (00)=2.4GHz, (01)=5GHz */
+    t_u8 chanBand : 2;
+    /** Channel Width - (00)=20MHz, (10)=40MHz, (11)=80MHz */
+    t_u8 chanWidth : 2;
+    /** Secondary Channel Offset - (00)=None, (01)=Above, (11)=Below */
+    t_u8 chan2Offset : 2;
+    /** Channel Selection Mode - (00)=manual, (01)=ACS, (02)=Adoption mode*/
+    t_u8 scanMode : 2;
+} MLAN_PACK_END Band_Config_t;
+
 /** csi event data structure */
 
 #ifdef PRAGMA_PACK
@@ -799,12 +844,10 @@ typedef struct _mlan_callbacks
                                           OUT t_u32 * psec, OUT t_u32 * pusec);
 #endif /* 0 */
 
-      /** moal_memcpy_ext */
-      t_void *(*moal_memcpy_ext)(t_void *pmoal, t_void *pdest,
-                       const t_void *psrc, t_u32 num,
-                       t_u32 dest_size);
+    /** moal_memcpy_ext */
+    t_void *(*moal_memcpy_ext)(t_void *pmoal, t_void *pdest, const t_void *psrc, t_u32 num, t_u32 dest_size);
 
-       /** moal_init_timer*/
+    /** moal_init_timer*/
     mlan_status (*moal_init_timer)(IN t_void *pmoal_handle,
                                    OUT t_void **pptimer,
                                    IN t_void (*callback)(os_timer_arg_t arg),
@@ -823,7 +866,7 @@ typedef struct _mlan_callbacks
     mlan_status (*moal_spin_lock)(IN t_void *pmoal_handle, IN t_void *plock);
     /** moal_spin_unlock */
     mlan_status (*moal_spin_unlock)(IN t_void *pmoal_handle, IN t_void *plock);
-#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+#ifdef CONFIG_WMM
     /** moal_init_semaphore */
     mlan_status (*moal_init_semaphore)(IN t_void *pmoal_handle, IN const char *name, OUT t_void **pplock);
     /** moal_free_semaphore */

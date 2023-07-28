@@ -51,6 +51,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DUSB_STACK_BM=1 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -77,6 +78,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DUSB_STACK_BM=1 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -103,6 +105,7 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DUSB_STACK_BM=1 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -130,6 +133,7 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DUSB_STACK_BM=1 \
     -DUSB_STACK_USE_DEDICATED_RAM=1 \
     -DMCUXPRESSO_SDK \
+    -DSDK_OS_BAREMETAL \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \

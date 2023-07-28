@@ -14,8 +14,8 @@
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/inc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
@@ -35,6 +35,7 @@
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
               <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
+              <ListEntry key="FSL_RTOS_XOS" value="1"/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
@@ -52,7 +53,9 @@
 -Wno-unused&#13;
 -Wno-missing-braces&#13;
 -fmessage-length=0&#13;
--std=gnu99</ListEntry></value>
+-std=gnu99&#13;
+-mlongcalls&#13;
+-fsigned-char</ListEntry></value>
           </StringListMapEntry>
         </StringListMapOptions>
         <SingleFlagMapOptions>
@@ -88,7 +91,6 @@
             <key>Libraries</key>
             <value inheritance="prepend" flag="-l">
               <ListEntry>xos</ListEntry>
-              <ListEntry>xtutil</ListEntry>
             </value>
           </StringListMapEntry>
           <StringListMapEntry>

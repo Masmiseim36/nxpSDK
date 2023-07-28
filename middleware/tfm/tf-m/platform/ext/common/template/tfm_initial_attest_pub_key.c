@@ -6,7 +6,7 @@
  */
 
 #include <stdint.h>
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"       //NXP to avoid file name conflicts between MbedTLS and TFM.
 
 /*
  * This file contains the hard coded public key part of the ECDSA P-256 secret

@@ -1,16 +1,16 @@
 var a00070 =
 [
-    [ "tfa9896BiquadM_t", "a00070.html#a00455", null ],
-    [ "tfa9896FilterM_t", "a00070.html#a00456", [
+    [ "tfa9896BiquadM_t", "a00070.html#a00462", null ],
+    [ "tfa9896FilterM_t", "a00070.html#a00463", [
       [ "type", "a00070.html#a4fab783b859fb7d34b6784d1ac767132", null ]
     ] ],
-    [ "tfa9896_StateInfoLive_t", "a00070.html#a00454", null ],
-    [ "tfa9896SPKRBST_SpkrModel_t", "a00070.html#a00457", null ],
-    [ "tfa9896_audio_format_t", "a00070.html#a00451", [
+    [ "tfa9896_StateInfoLive_t", "a00070.html#a00461", null ],
+    [ "tfa9896SPKRBST_SpkrModel_t", "a00070.html#a00464", null ],
+    [ "tfa9896_audio_format_t", "a00070.html#a00458", [
       [ "sampleRate", "a00070.html#a2b730e7bab077dbb17a924a63e3f0834", null ],
       [ "bitWidth", "a00070.html#a6e264facd0de6875bde7a85082801302", null ]
     ] ],
-    [ "tfa9896_config_t", "a00070.html#a00452", [
+    [ "tfa9896_config_t", "a00070.html#a00459", [
       [ "protocol", "a00070.html#add039bc65768f5d2889cb4e5b94dd32b", null ],
       [ "format", "a00070.html#a46af04b19ffb0e7e58afa81c5127518e", null ],
       [ "master", "a00070.html#ad21dc0af0f99f5013447ffe11c1499d1", null ],
@@ -18,29 +18,29 @@ var a00070 =
       [ "i2cConfig", "a00070.html#a833e17ebf7d8fb21a0bbf7ff2bea0a7f", null ],
       [ "calibrate", "a00070.html#a451c29de38b29e1945035e70a49e3dc9", null ]
     ] ],
-    [ "tfa9896_handle_t", "a00070.html#a00453", [
+    [ "tfa9896_handle_t", "a00070.html#a00460", [
       [ "config", "a00070.html#a0560e6935f186de518c92492b285a227", null ]
     ] ],
     [ "TFA_I2C_BITRATE", "a00070.html#ga54b74827a76190d676e518c9a8c375b5", null ],
     [ "TFA9896_I2C_HANDLER_SIZE", "a00070.html#ga1874852878d8c2578f0fb1cf42c8633c", null ],
     [ "int24", "a00070.html#ga333137b2db185b63ac9f044cfde537d2", [
-      [ "kStatus_TFA9896_Ok", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca73f6871a231416e62fc5a35b095c1c97", null ],
-      [ "kStatus_TFA9896_DSP_not_running", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca138890157a8a51177f90bc8b65bb3590", null ],
-      [ "kStatus_TFA9896_Bad_Parameter", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00caebfc1ac4d7197919c4c27db5c19e2388", null ],
-      [ "kStatus_TFA9896_NotOpen", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00caf2eded66b8c75336dff0815a83e8ad4e", null ],
-      [ "kStatus_TFA9896_OutOfHandles", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00caea029980549aa03b1c06e5ba7dc4a032", null ],
-      [ "kStatus_TFA9896_StateTimedOut", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00cac060c8087d555767d252a3e38f288243", null ],
-      [ "kStatus_TFA9896_RpcBase", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca45f8c0bf99b7fa88c61db9f8b9f4a080", null ],
-      [ "kStatus_TFA9896_RpcBusy", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca7b886bfb6db816e82a6223d4f704c25d", null ],
-      [ "kStatus_TFA9896_RpcModId", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca37ad9d131a0fa32dc2e0b7c383c28165", null ],
-      [ "kStatus_TFA9896_RpcParamId", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca1ca1cf644a509510c889f244f38834b1", null ],
-      [ "kStatus_TFA9896_RpcInfoId", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00caee417465058b6a6779ef074bc410fc3f", null ],
-      [ "kStatus_TFA9896_RpcNotAllowedSpeaker", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00caffa87838f14a26d7d9a054e2b547cda6", null ],
-      [ "kStatus_TFA9896_Not_Implemented", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca09dc20e0ac9acfc9d0c29d09fb4832eb", null ],
-      [ "kStatus_TFA9896_Not_Supported", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00cafaf2505bb94e1dc39acf5f46e06fb06e", null ],
-      [ "kStatus_TFA9896_I2C_Fatal", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00cab3ed0e85aa20a29dc347f0ae096b1e1f", null ],
-      [ "kStatus_TFA9896_I2C_NonFatal", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca3b4fc4400752730da6b1739598fe8022", null ],
-      [ "kStatus_TFA9896_Other", "a00070.html#ggafeaa6456e370d2eb59f5e139d9f8b00ca66ad07d50e0cfde9da210053b1030b5e", null ]
+      [ "kStatus_TFA9896_Ok", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a73f6871a231416e62fc5a35b095c1c97", null ],
+      [ "kStatus_TFA9896_DSP_not_running", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a138890157a8a51177f90bc8b65bb3590", null ],
+      [ "kStatus_TFA9896_Bad_Parameter", "a00070.html#gga8420dba71b9cc240cf981b0bef892004aebfc1ac4d7197919c4c27db5c19e2388", null ],
+      [ "kStatus_TFA9896_NotOpen", "a00070.html#gga8420dba71b9cc240cf981b0bef892004af2eded66b8c75336dff0815a83e8ad4e", null ],
+      [ "kStatus_TFA9896_OutOfHandles", "a00070.html#gga8420dba71b9cc240cf981b0bef892004aea029980549aa03b1c06e5ba7dc4a032", null ],
+      [ "kStatus_TFA9896_StateTimedOut", "a00070.html#gga8420dba71b9cc240cf981b0bef892004ac060c8087d555767d252a3e38f288243", null ],
+      [ "kStatus_TFA9896_RpcBase", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a45f8c0bf99b7fa88c61db9f8b9f4a080", null ],
+      [ "kStatus_TFA9896_RpcBusy", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a7b886bfb6db816e82a6223d4f704c25d", null ],
+      [ "kStatus_TFA9896_RpcModId", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a37ad9d131a0fa32dc2e0b7c383c28165", null ],
+      [ "kStatus_TFA9896_RpcParamId", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a1ca1cf644a509510c889f244f38834b1", null ],
+      [ "kStatus_TFA9896_RpcInfoId", "a00070.html#gga8420dba71b9cc240cf981b0bef892004aee417465058b6a6779ef074bc410fc3f", null ],
+      [ "kStatus_TFA9896_RpcNotAllowedSpeaker", "a00070.html#gga8420dba71b9cc240cf981b0bef892004affa87838f14a26d7d9a054e2b547cda6", null ],
+      [ "kStatus_TFA9896_Not_Implemented", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a09dc20e0ac9acfc9d0c29d09fb4832eb", null ],
+      [ "kStatus_TFA9896_Not_Supported", "a00070.html#gga8420dba71b9cc240cf981b0bef892004afaf2505bb94e1dc39acf5f46e06fb06e", null ],
+      [ "kStatus_TFA9896_I2C_Fatal", "a00070.html#gga8420dba71b9cc240cf981b0bef892004ab3ed0e85aa20a29dc347f0ae096b1e1f", null ],
+      [ "kStatus_TFA9896_I2C_NonFatal", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a3b4fc4400752730da6b1739598fe8022", null ],
+      [ "kStatus_TFA9896_Other", "a00070.html#gga8420dba71b9cc240cf981b0bef892004a66ad07d50e0cfde9da210053b1030b5e", null ]
     ] ],
     [ "tfa9896_DMEM_t", "a00070.html#ga9357c391ca075dab9e24100f664ddfb3", [
       [ "DMEM_PMEM", "a00070.html#gga9357c391ca075dab9e24100f664ddfb3a8727f84c13928b30c69868b6a5f294bf", null ],

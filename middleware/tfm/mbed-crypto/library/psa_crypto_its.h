@@ -24,8 +24,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <mbed_psa/crypto_types.h> //NXP
-#include <mbed_psa/crypto_values.h> //NXP
+#include <psa/crypto_types.h>
+#include <psa/crypto_values.h>
 
 #ifdef __cplusplus
 extern "C" {

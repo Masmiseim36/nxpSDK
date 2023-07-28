@@ -59,8 +59,7 @@ static void reverse_array(uint8_t *src, size_t src_len)
 {
     int i;
 
-    for (i = 0; i < src_len / 2; i++)
-    {
+    for (i = 0; i < src_len / 2; i++) {
         uint8_t tmp;
 
         tmp                  = src[i];
@@ -82,78 +81,73 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
 
     int ret = 0;
 #if defined(MBEDTLS_THREADING_C)
-    if ((ret = mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0)
-        return (ret);
+    if ((ret = mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
 #endif
 
     size = mbedtls_mpi_size(&grp->P);
 
-    uint32_t M[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = {0};
-    uint32_t X[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = {0};
-    uint32_t Y[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = {0};
+    uint32_t M[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = { 0 };
+    uint32_t X[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = { 0 };
+    uint32_t Y[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = { 0 };
 
     //* Write MbedTLS mpi coordinates into binary buffer */
-    mbedtls_mpi_write_binary(&P->X, (unsigned char *)&X[0], size);
-    mbedtls_mpi_write_binary(&P->Y, (unsigned char *)&Y[0], size);
+    mbedtls_mpi_write_binary(&P->X, (unsigned char *) &X[0], size);
+    mbedtls_mpi_write_binary(&P->Y, (unsigned char *) &Y[0], size);
 
     /* Reverse endianness for CASPER */
-    reverse_array((uint8_t *)X, size);
-    reverse_array((uint8_t *)Y, size);
+    reverse_array((uint8_t *) X, size);
+    reverse_array((uint8_t *) Y, size);
 
     /* Init CASPER */
-    if (size == 32)
-    {
+    if (size == 32) {
         CASPER_ecc_init(kCASPER_ECC_P256);
     }
-    if (size == 48)
-    {
+    if (size == 48) {
         CASPER_ecc_init(kCASPER_ECC_P384);
     }
-    if (size == 66)
-    {
+    if (size == 66) {
         CASPER_ecc_init(kCASPER_ECC_P521);
     }
 
-    if (mbedtls_mpi_size(m) > sizeof(M))
-    {
+    if (mbedtls_mpi_size(m) > sizeof(M)) {
         __BKPT(0);
 #if defined(MBEDTLS_THREADING_C)
         ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex);
 
 #endif /* (MBEDTLS_THREADING_C) */
         ret = MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
-        return (ret);
+        return ret;
     }
-    mbedtls_mpi_write_binary(m, (void *)M, size);
-    reverse_array((void *)M, size);
+    mbedtls_mpi_write_binary(m, (void *) M, size);
+    reverse_array((void *) M, size);
 
-    if (size == 32)
-    {
-        CASPER_ECC_SECP256R1_Mul(CASPER, &X[0], &Y[0], &X[0], &Y[0], (void *)M);
+    if (size == 32) {
+        CASPER_ECC_SECP256R1_Mul(CASPER, &X[0], &Y[0], &X[0], &Y[0], (void *) M);
     }
 
-    if (size == 48)
-    {
-        CASPER_ECC_SECP384R1_Mul(CASPER, &X[0], &Y[0], &X[0], &Y[0], (void *)M);
+    if (size == 48) {
+        CASPER_ECC_SECP384R1_Mul(CASPER, &X[0], &Y[0], &X[0], &Y[0], (void *) M);
     }
-    if (size == 66)
-    {
-        CASPER_ECC_SECP521R1_Mul(CASPER, &X[0], &Y[0], &X[0], &Y[0], (void *)M);
+    if (size == 66) {
+        CASPER_ECC_SECP521R1_Mul(CASPER, &X[0], &Y[0], &X[0], &Y[0], (void *) M);
     }
     /* Reverse results back to MbedTLS format */
-    reverse_array((uint8_t *)X, size);
-    reverse_array((uint8_t *)Y, size);
+    reverse_array((uint8_t *) X, size);
+    reverse_array((uint8_t *) Y, size);
 
     /* Write results into R MPI */
-    mbedtls_mpi_read_binary(&R->X, (void *)&X[0], size);
-    mbedtls_mpi_read_binary(&R->Y, (void *)&Y[0], size);
+    mbedtls_mpi_read_binary(&R->X, (void *) &X[0], size);
+    mbedtls_mpi_read_binary(&R->Y, (void *) &Y[0], size);
     mbedtls_mpi_lset(&R->Z, 1);
 
 #if defined(MBEDTLS_THREADING_C)
-    if ((ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0)
-        return (ret);
+    if ((ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
 #endif
-    return (ret);
+    return ret;
 }
 #endif /* MBEDTLS_ECP_MUL_COMB_ALT */
 
@@ -170,106 +164,102 @@ int mbedtls_ecp_muladd_restartable(mbedtls_ecp_group *grp,
                                    const mbedtls_ecp_point *Q,
                                    mbedtls_ecp_restart_ctx *rs_ctx) /* TBD restartable is not implemented */
 {
-    uint32_t X1[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = {0};
-    uint32_t Y1[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = {0};
-    uint32_t X2[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = {0};
-    uint32_t Y2[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = {0};
-    uint32_t M[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)]  = {0};
-    uint32_t N[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)]  = {0};
+    uint32_t X1[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = { 0 };
+    uint32_t Y1[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = { 0 };
+    uint32_t X2[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = { 0 };
+    uint32_t Y2[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)] = { 0 };
+    uint32_t M[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)]  = { 0 };
+    uint32_t N[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)]  = { 0 };
 
     size_t size;
 
     int ret = 0;
 #if defined(MBEDTLS_THREADING_C)
-    if ((ret = mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0)
-        return (ret);
+    if ((ret = mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
 #endif
 
     /* shortcut for (m == 1) && (n == 1). this case is point addition. */
     /* this shortcut follows original mbedtls_ecp_muladd() implementation */
     /* and is required for ecjpake_ecp_add3(). */
-    if ((mbedtls_mpi_cmp_int(m, 1) == 0) && (mbedtls_mpi_cmp_int(n, 1) == 0))
-    {
+    if ((mbedtls_mpi_cmp_int(m, 1) == 0) && (mbedtls_mpi_cmp_int(n, 1) == 0)) {
         return ecp_add(grp, R, P, Q);
     }
 
     /* Write MbedTLS mpi coordinates into binary buffer */
     size = mbedtls_mpi_size(&grp->P);
 
-    mbedtls_mpi_write_binary(&P->X, (unsigned char *)&X1[0], size);
-    mbedtls_mpi_write_binary(&P->Y, (unsigned char *)&Y1[0], size);
+    mbedtls_mpi_write_binary(&P->X, (unsigned char *) &X1[0], size);
+    mbedtls_mpi_write_binary(&P->Y, (unsigned char *) &Y1[0], size);
 
-    reverse_array((uint8_t *)X1, size);
-    reverse_array((uint8_t *)Y1, size);
+    reverse_array((uint8_t *) X1, size);
+    reverse_array((uint8_t *) Y1, size);
 
     /* Init CASPER */
-    if (size == 32)
-    {
+    if (size == 32) {
         CASPER_ecc_init(kCASPER_ECC_P256);
     }
-    if (size == 48)
-    {
+    if (size == 48) {
         CASPER_ecc_init(kCASPER_ECC_P384);
     }
-    if (size == 66)
-    {
+    if (size == 66) {
         CASPER_ecc_init(kCASPER_ECC_P521);
     }
 
-    if (mbedtls_mpi_size(m) > sizeof(M))
-    {
+    if (mbedtls_mpi_size(m) > sizeof(M)) {
         __BKPT(0);
 #if defined(MBEDTLS_THREADING_C)
         ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex);
 
 #endif /* (MBEDTLS_THREADING_C) */
         ret = MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
-        return (ret);
+        return ret;
     }
-    mbedtls_mpi_write_binary(m, (void *)M, size);
-    reverse_array((void *)M, size);
+    mbedtls_mpi_write_binary(m, (void *) M, size);
+    reverse_array((void *) M, size);
 
     /* Write MbedTLS mpi coordinates into binary bufer */
-    mbedtls_mpi_write_binary(&Q->X, (unsigned char *)&X2[0], size);
-    mbedtls_mpi_write_binary(&Q->Y, (unsigned char *)&Y2[0], size);
+    mbedtls_mpi_write_binary(&Q->X, (unsigned char *) &X2[0], size);
+    mbedtls_mpi_write_binary(&Q->Y, (unsigned char *) &Y2[0], size);
 
-    reverse_array((uint8_t *)X2, size);
-    reverse_array((uint8_t *)Y2, size);
+    reverse_array((uint8_t *) X2, size);
+    reverse_array((uint8_t *) Y2, size);
 
-    if (mbedtls_mpi_size(n) > sizeof(N))
-    {
+    if (mbedtls_mpi_size(n) > sizeof(N)) {
         __BKPT(0);
         ret = MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
-        return (ret);
+        return ret;
     }
-    mbedtls_mpi_write_binary(n, (void *)N, size);
-    reverse_array((void *)N, size);
+    mbedtls_mpi_write_binary(n, (void *) N, size);
+    reverse_array((void *) N, size);
 
-    if (size == 32)
-    {
-        CASPER_ECC_SECP256R1_MulAdd(CASPER, &X1[0], &Y1[0], &X1[0], &Y1[0], (void *)M, &X2[0], &Y2[0], (void *)N);
+    if (size == 32) {
+        CASPER_ECC_SECP256R1_MulAdd(CASPER, &X1[0], &Y1[0], &X1[0], &Y1[0], (void *) M, &X2[0],
+                                    &Y2[0], (void *) N);
     }
 
-    if (size == 48)
-    {
-        CASPER_ECC_SECP384R1_MulAdd(CASPER, &X1[0], &Y1[0], &X1[0], &Y1[0], (void *)M, &X2[0], &Y2[0], (void *)N);
+    if (size == 48) {
+        CASPER_ECC_SECP384R1_MulAdd(CASPER, &X1[0], &Y1[0], &X1[0], &Y1[0], (void *) M, &X2[0],
+                                    &Y2[0], (void *) N);
     }
-    if (size == 66)
-    {
-        CASPER_ECC_SECP521R1_MulAdd(CASPER, &X1[0], &Y1[0], &X1[0], &Y1[0], (void *)M, &X2[0], &Y2[0], (void *)N);
+    if (size == 66) {
+        CASPER_ECC_SECP521R1_MulAdd(CASPER, &X1[0], &Y1[0], &X1[0], &Y1[0], (void *) M, &X2[0],
+                                    &Y2[0], (void *) N);
     }
     /* Reverse results back to MbedTLS format */
-    reverse_array((uint8_t *)X1, size);
-    reverse_array((uint8_t *)Y1, size);
+    reverse_array((uint8_t *) X1, size);
+    reverse_array((uint8_t *) Y1, size);
 
     /* Write results into R MPI */
-    mbedtls_mpi_read_binary(&R->X, (void *)&X1[0], size);
-    mbedtls_mpi_read_binary(&R->Y, (void *)&Y1[0], size);
+    mbedtls_mpi_read_binary(&R->X, (void *) &X1[0], size);
+    mbedtls_mpi_read_binary(&R->Y, (void *) &Y1[0], size);
     mbedtls_mpi_lset(&R->Z, 1);
 
 #if defined(MBEDTLS_THREADING_C)
-    if ((ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0)
-        return (ret);
+    if ((ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
 #endif
     return ret;
 }
@@ -291,7 +281,7 @@ int mbedtls_ecp_muladd(mbedtls_ecp_group *grp,
     ECP_VALIDATE_RET(P != NULL);
     ECP_VALIDATE_RET(n != NULL);
     ECP_VALIDATE_RET(Q != NULL);
-    return (mbedtls_ecp_muladd_restartable(grp, R, m, P, n, Q, NULL));
+    return mbedtls_ecp_muladd_restartable(grp, R, m, P, n, Q, NULL);
 }
 #endif /* MBEDTLS_ECP_MULADD_ALT */
 

@@ -14,7 +14,7 @@
 #include "psa/initial_attestation.h"
 #include "attest_token_decode.h"
 #include "attest_token_test_values.h"
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"              //NXP to avoid file name conflicts between MbedTLS and TFM.
 #include "test_log.h"
 
 

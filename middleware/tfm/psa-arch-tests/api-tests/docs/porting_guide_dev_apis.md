@@ -1,6 +1,6 @@
 
-# Porting Guide: PSA Functional APIs Architecture Test Suite
------------------------------------------------------
+# Porting Guide: PSA Certified APIs Architecture Test Suite
+-----------------------------------------------------------
 
 ## Introduction
 The architecture test suite contains the *Platform Abstraction Layer* (PAL) which abstracts platform-specific information from the tests. You must implement and port the PAL interface functions to your target platform. Create and update the target configuration file to match the details of this target platform.
@@ -72,4 +72,4 @@ Arm PSA test suite is distributed under Apache v2.0 License.
 
 --------------
 
-*Copyright (c) 2019-2020, Arm Limited and Contributors. All rights reserved.*
+*Copyright (c) 2019-2022, Arm Limited and Contributors. All rights reserved.*

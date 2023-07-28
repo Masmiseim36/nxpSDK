@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited. All rights reserved.
  * Copyright (c) 2018-2019, Laurence Lundblade.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,11 +9,12 @@
 #include "attest_key.h"
 #include <stdint.h>
 #include <stddef.h>
+#include "config_tfm.h"
 #include "tfm_plat_defs.h"
 #include "tfm_plat_device_id.h"
 #include "t_cose_standard_constants.h"
 #include "q_useful_buf.h"
-#include "qcbor.h"
+#include "qcbor/qcbor.h"
 #include "tfm_crypto_defs.h"
 
 #define ATTEST_ECC_PUBLIC_KEY_SIZE \
@@ -33,7 +34,7 @@ static uint8_t  attestation_public_key[ATTEST_ECC_PUBLIC_KEY_SIZE];
 static size_t   attestation_public_key_len = 0;
 static psa_ecc_family_t attestation_key_curve;
 
-#ifdef INCLUDE_COSE_KEY_ID
+#if ATTEST_INCLUDE_COSE_KEY_ID
 /* 32bytes */
 static uint8_t attestation_key_id[PSA_HASH_LENGTH(PSA_ALG_SHA_256)];
 #endif
@@ -53,7 +54,7 @@ static enum psa_attest_err_t attest_load_public_key(void)
         return PSA_ATTEST_ERR_GENERAL;
     }
 
-    attestation_key_curve = PSA_KEY_TYPE_ECC_GET_FAMILY(attr.type);
+    attestation_key_curve = PSA_KEY_TYPE_ECC_GET_FAMILY(psa_get_key_type(&attr));
 
     crypto_res = psa_export_public_key(handle, attestation_public_key,
                                        sizeof(attestation_public_key),
@@ -128,7 +129,7 @@ attest_get_instance_id(struct q_useful_buf_c *id_buf)
     return PSA_ATTEST_ERR_SUCCESS;
 }
 
-#ifdef INCLUDE_COSE_KEY_ID
+#if ATTEST_INCLUDE_COSE_KEY_ID
 
 #define MAX_ENCODED_COSE_KEY_SIZE \
     1 + /* 1 byte to encode map */ \
@@ -356,4 +357,4 @@ attest_get_initial_attestation_key_id(struct q_useful_buf_c *attest_key_id)
 
     return PSA_ATTEST_ERR_SUCCESS;
 }
-#endif /* INCLUDE_COSE_KEY_ID */
+#endif /* ATTEST_INCLUDE_COSE_KEY_ID */

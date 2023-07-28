@@ -159,7 +159,9 @@ int32_t psa_cipher_decrypt_setup_negative_test(caller_security_t caller __UNUSED
     /* Set the key for a multipart symmetric decryption operation */
     status = val->crypto_function(VAL_CRYPTO_CIPHER_DECRYPT_SETUP, &operation, key,
                                   check1[valid_test_input_index].alg);
-    TEST_ASSERT_EQUAL(status, PSA_ERROR_INVALID_ARGUMENT, TEST_CHECKPOINT_NUM(3)); //NXP  PSA_ERROR_INVALID_HANDLE
+
+    TEST_ASSERT_DUAL(status, PSA_ERROR_INVALID_HANDLE,
+                             PSA_ERROR_INVALID_ARGUMENT, TEST_CHECKPOINT_NUM(3)); //NXP ,was PSA_ERROR_INVALID_HANDLE
 
     val->print(PRINT_TEST, "[Check %d] Test psa_cipher_decrypt_setup - Zero as key handle\n",
                                                                                g_test_count++);
@@ -169,7 +171,9 @@ int32_t psa_cipher_decrypt_setup_negative_test(caller_security_t caller __UNUSED
     /* Set the key for a multipart symmetric decryption operation */
     status = val->crypto_function(VAL_CRYPTO_CIPHER_DECRYPT_SETUP, &operation, 0,
                                   check1[valid_test_input_index].alg);
-    TEST_ASSERT_EQUAL(status, PSA_ERROR_INVALID_ARGUMENT, TEST_CHECKPOINT_NUM(4)); //NXP PSA_ERROR_INVALID_HANDLE
+
+    TEST_ASSERT_DUAL(status, PSA_ERROR_INVALID_HANDLE,
+                             PSA_ERROR_INVALID_ARGUMENT, TEST_CHECKPOINT_NUM(4)); //NXP ,was PSA_ERROR_INVALID_HANDLE
 
     status = val->crypto_function(VAL_CRYPTO_CIPHER_ABORT, &operation);
     TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(5));

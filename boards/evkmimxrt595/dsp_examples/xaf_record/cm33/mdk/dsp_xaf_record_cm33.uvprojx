@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_VOICE_SEEKER=1, XA_RENDERER=1, XA_CAPTURER=1, BOARD_DMIC_NUM=2, DEBUG_CONSOLE_RX_ENABLE=0, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_DMIC_NUM=2, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_VOICE_SEEKER=1, XA_RENDERER=1, XA_CAPTURER=1, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/vit/FusionF1/Lib;../../../../../../middleware/vit/FusionF1/Lib/Inc;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/vit/FusionF1/Lib/Inc;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../middleware/vit/FusionF1/Lib;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,9 +350,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG</Define>
+              <Define>DEBUG, DSP_IMAGE_COPY_TO_RAM=1</Define>
               <Undefine/>
-              <IncludePath>..;../../dsp/binary</IncludePath>
+              <IncludePath>../../dsp/binary;..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -378,6 +378,21 @@
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>PL_platformTypes_HIFI4_FUSIONF1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h</FilePath>
+            </File>
+            <File>
+              <FileName>PL_memoryRegion.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/Inc/PL_memoryRegion.h</FilePath>
+            </File>
             <File>
               <FileName>main_cm33.c</FileName>
               <FileType>1</FileType>
@@ -407,11 +422,6 @@
               <FileName>dsp_ipc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dsp_ipc.h</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dsp_config.h</FilePath>
             </File>
             <File>
               <FileName>srtm_config.h</FileName>
@@ -449,26 +459,6 @@
                                   <FileArmAds>
                                   </FileArmAds>
                                 </FileOption>
-            </File>
-            <File>
-              <FileName>VIT_Model_cn.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../VIT_Model_cn.h</FilePath>
-            </File>
-            <File>
-              <FileName>VIT_Model_en.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../VIT_Model_en.h</FilePath>
-            </File>
-            <File>
-              <FileName>PL_platformTypes_HIFI4_FUSIONF1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../PL_platformTypes_HIFI4_FUSIONF1.h</FilePath>
-            </File>
-            <File>
-              <FileName>PL_memoryRegion.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../PL_memoryRegion.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOSConfig.h</FileName>
@@ -533,6 +523,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>dsp_binary</GroupName>
+          <Files>
+            <File>
+              <FileName>dsp_data_debug.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_data_debug.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_data_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_reset_debug.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_debug.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_reset_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_text_debug.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_text_debug.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_text_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -543,28 +568,48 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dsp_binary</GroupName>
-          <Files>
-            <File>
-              <FileName>dsp_reset_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_text_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_data_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_dsp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -594,6 +639,16 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sema42.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_sema42.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sema42.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_sema42.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -634,46 +689,6 @@
               <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dsp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i3c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -734,6 +749,166 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/platform/imxrt500_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33/rpmsg_platform.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt500_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt500_m33/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/wm8904</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>vit/FusionF1/Lib</GroupName>
+          <Files>
+            <File>
+              <FileName>VIT_Model_en.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_en.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_cn.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_cn.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_de.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_de.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_es.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_es.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_fr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_fr.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_it.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_ja.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ja.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_ko.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ko.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_tr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_tr.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -920,115 +1095,15 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/platform/imxrt500_m33</GroupName>
-          <Files>
             <File>
-              <FileName>rpmsg_platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33/rpmsg_platform.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt500_m33</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_platform.c</FileName>
+              <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt500_m33/rpmsg_platform.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_pca9420.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_wm8904.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port/wm8904</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1081,6 +1156,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1094,16 +1179,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1144,46 +1219,6 @@
               <FileName>startup_MIMXRT595S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1354,6 +1389,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1688,9 +1763,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_VOICE_SEEKER=1, XA_RENDERER=1, XA_CAPTURER=1, BOARD_DMIC_NUM=2, DEBUG_CONSOLE_RX_ENABLE=0, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_DMIC_NUM=2, XA_PCM_GAIN=1, XA_VIT_PRE_PROC=1, XA_VOICE_SEEKER=1, XA_RENDERER=1, XA_CAPTURER=1, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/vit/FusionF1/Lib;../../../../../../middleware/vit/FusionF1/Lib/Inc;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos-kernel/include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/vit/FusionF1/Lib/Inc;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../middleware/vit/FusionF1/Lib;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1706,9 +1781,9 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG</Define>
+              <Define>NDEBUG, DSP_IMAGE_COPY_TO_RAM=1</Define>
               <Undefine/>
-              <IncludePath>..;../../dsp/binary</IncludePath>
+              <IncludePath>../../dsp/binary;..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1724,7 +1799,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1734,6 +1809,21 @@
         <Group>
           <GroupName>source</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>PL_platformTypes_HIFI4_FUSIONF1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h</FilePath>
+            </File>
+            <File>
+              <FileName>PL_memoryRegion.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/Inc/PL_memoryRegion.h</FilePath>
+            </File>
             <File>
               <FileName>main_cm33.c</FileName>
               <FileType>1</FileType>
@@ -1763,11 +1853,6 @@
               <FileName>dsp_ipc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dsp_ipc.h</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dsp_config.h</FilePath>
             </File>
             <File>
               <FileName>srtm_config.h</FileName>
@@ -1805,26 +1890,6 @@
                                   <FileArmAds>
                                   </FileArmAds>
                                 </FileOption>
-            </File>
-            <File>
-              <FileName>VIT_Model_cn.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../VIT_Model_cn.h</FilePath>
-            </File>
-            <File>
-              <FileName>VIT_Model_en.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../VIT_Model_en.h</FilePath>
-            </File>
-            <File>
-              <FileName>PL_platformTypes_HIFI4_FUSIONF1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../PL_platformTypes_HIFI4_FUSIONF1.h</FilePath>
-            </File>
-            <File>
-              <FileName>PL_memoryRegion.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../PL_memoryRegion.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOSConfig.h</FileName>
@@ -1889,6 +1954,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>dsp_binary</GroupName>
+          <Files>
+            <File>
+              <FileName>dsp_data_debug.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_data_debug.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_data_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_reset_debug.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_debug.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_reset_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_text_debug.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_text_debug.bin</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_text_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1899,28 +1999,48 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dsp_binary</GroupName>
-          <Files>
-            <File>
-              <FileName>dsp_reset_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_text_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_text_release.bin</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_data_release.bin</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../dsp/binary/dsp_data_release.bin</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_dsp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
+            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -1950,6 +2070,16 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sema42.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_sema42.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sema42.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_sema42.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1990,46 +2120,6 @@
               <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dsp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mu.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i3c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -2090,6 +2180,166 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/platform/imxrt500_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33/rpmsg_platform.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt500_m33</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt500_m33/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/wm8904</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>vit/FusionF1/Lib</GroupName>
+          <Files>
+            <File>
+              <FileName>VIT_Model_en.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_en.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_cn.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_cn.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_de.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_de.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_es.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_es.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_fr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_fr.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_it.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_ja.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ja.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_ko.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ko.h</FilePath>
+            </File>
+            <File>
+              <FileName>VIT_Model_tr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_tr.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2276,115 +2526,15 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/include/platform/imxrt500_m33</GroupName>
-          <Files>
             <File>
-              <FileName>rpmsg_platform.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33/rpmsg_platform.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt500_m33</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_platform.c</FileName>
+              <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt500_m33/rpmsg_platform.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_pca9420.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_wm8904.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port/wm8904</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2437,6 +2587,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -2450,16 +2610,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2500,46 +2650,6 @@
               <FileName>startup_MIMXRT595S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/arm/startup_MIMXRT595S_cm33.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2710,6 +2820,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

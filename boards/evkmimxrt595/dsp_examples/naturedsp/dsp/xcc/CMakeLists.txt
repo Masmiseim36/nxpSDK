@@ -51,8 +51,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mlongcalls")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fsigned-char")
@@ -84,8 +82,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mlongcalls")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
 
@@ -131,8 +127,6 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilitie
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite)
 
-include_directories(${ProjDirPath}/../../../../../../components/lists)
-
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
@@ -161,15 +155,13 @@ add_executable(dsp_naturedsp_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_types.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.h"
-"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
-"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_types.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.h"

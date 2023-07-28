@@ -4,7 +4,7 @@
  *
  *  Copyright 2008-2020 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -46,14 +46,16 @@ static void test_wlan_get_mac_address(int argc, char **argv)
     uint8_t sta_mac[MLAN_MAC_ADDR_LENGTH], uap_mac[MLAN_MAC_ADDR_LENGTH];
 
     (void)PRINTF("MAC address\r\n");
-    if (wlan_get_mac_address(sta_mac, uap_mac))
+    if (wlan_get_mac_address_uap(uap_mac) || wlan_get_mac_address(sta_mac))
     {
         (void)PRINTF("Error: unable to retrieve MAC address\r\n");
     }
     else
     {
-        (void)PRINTF("STA MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n", sta_mac[0], sta_mac[1], sta_mac[2], sta_mac[3], sta_mac[4], sta_mac[5]);
-        (void)PRINTF("uAP MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n", uap_mac[0], uap_mac[1], uap_mac[2], uap_mac[3], uap_mac[4], uap_mac[5]);
+        (void)PRINTF("STA MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n", sta_mac[0], sta_mac[1], sta_mac[2],
+                     sta_mac[3], sta_mac[4], sta_mac[5]);
+        (void)PRINTF("uAP MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n", uap_mac[0], uap_mac[1], uap_mac[2],
+                     uap_mac[3], uap_mac[4], uap_mac[5]);
     }
 }
 

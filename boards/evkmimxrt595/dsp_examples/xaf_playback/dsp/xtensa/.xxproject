@@ -20,5 +20,5 @@
     <exportDirs autoConsumeDirs="true" includeDepDirs="false" mode="auto"/>
   </propertyGroup>
   <propertyGroup name="build.custom.steps">
-  <post-build enable="true"><content>${xt_project_loc}/../post_build.bat</content></post-build><pre-clean enable="true"><content>${xt_project_loc}/../pre_clean.bat</content></pre-clean></propertyGroup>
+  </propertyGroup>
 </xxProperties>

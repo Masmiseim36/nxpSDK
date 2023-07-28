@@ -1,6 +1,6 @@
 var a00068 =
 [
-    [ "spi_dma_handle_t", "a00068.html#a00304", [
+    [ "spi_dma_handle_t", "a00068.html#a00308", [
       [ "txInProgress", "a00068.html#aaabe40c6b90d200b13e68ac7217fff22", null ],
       [ "rxInProgress", "a00068.html#a685da0814b5b3310007a857d5def7bfb", null ],
       [ "txHandle", "a00068.html#ac1c68e2b431fe999805c73a98e147a2f", null ],

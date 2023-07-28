@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -104,7 +104,7 @@ static const test_data check1[] = {
     .test_desc              = "Test psa_asymmetric_decrypt - Invalid key type (RSA public key)\n",
     .type                   = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
     .data                   = rsa_128_key_data,
-    .data_length            = 162,
+    .data_length            = 140,
     .usage_flags            = PSA_KEY_USAGE_DECRYPT,
     .alg                    = PSA_ALG_RSA_PKCS1V15_CRYPT,
     .input                  = NULL,

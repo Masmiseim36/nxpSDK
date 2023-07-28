@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -111,22 +111,18 @@ $(document).ready(function(){initNavTree('a00043.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00254"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00254.html">I3C FreeRTOS Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00252"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00252.html">I3C Master DMA Driver</a></td></tr>
+<tr class="memitem:a00042"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00042.html">I3C Common Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00041"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html">I3C Master Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00253"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00253.html">I3C Slave DMA Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00044"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html">I3C Slave Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00380"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00380">i3c_device_info_t</a></td></tr>
-<tr class="memdesc:a00380"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C device information.  <a href="a00043.html#a00380">More...</a><br/></td></tr>
-<tr class="separator:a00380"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00385"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00385">i3c_device_info_t</a></td></tr>
+<tr class="memdesc:a00385"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C device information.  <a href="a00043.html#a00385">More...</a><br/></td></tr>
+<tr class="separator:a00385"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -136,50 +132,50 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaae05225933a42f81e7c4a9fb286596f9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a3762f16a9354bdcbc99b05c938d3867c">kStatus_I3C_Busy</a> = MAKE_STATUS(kStatusGroup_I3C, 0), 
+<tr class="memitem:ga94798fdadfbf49a7c658ace669a1d310"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a3762f16a9354bdcbc99b05c938d3867c">kStatus_I3C_Busy</a> = MAKE_STATUS(kStatusGroup_I3C, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a121e7eccc4bdafa890313b8c0b08c49d">kStatus_I3C_Idle</a> = MAKE_STATUS(kStatusGroup_I3C, 1), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a121e7eccc4bdafa890313b8c0b08c49d">kStatus_I3C_Idle</a> = MAKE_STATUS(kStatusGroup_I3C, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a3ed2939c8d83d81804512322d001e740">kStatus_I3C_Nak</a> = MAKE_STATUS(kStatusGroup_I3C, 2), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a3ed2939c8d83d81804512322d001e740">kStatus_I3C_Nak</a> = MAKE_STATUS(kStatusGroup_I3C, 2), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a35dcb142f61c8ff4779d5f6b5b23b5de">kStatus_I3C_WriteAbort</a>, 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a35dcb142f61c8ff4779d5f6b5b23b5de">kStatus_I3C_WriteAbort</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a44213e1f693b99a95b397ab886f4639b">kStatus_I3C_Term</a> = MAKE_STATUS(kStatusGroup_I3C, 4), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a44213e1f693b99a95b397ab886f4639b">kStatus_I3C_Term</a> = MAKE_STATUS(kStatusGroup_I3C, 4), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a9abddf0a7e7b083164af01db2c097096">kStatus_I3C_HdrParityError</a> = MAKE_STATUS(kStatusGroup_I3C, 5), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a9abddf0a7e7b083164af01db2c097096">kStatus_I3C_HdrParityError</a> = MAKE_STATUS(kStatusGroup_I3C, 5), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9acfda04a4d0a28eaebfdf5782d1f98f08">kStatus_I3C_CrcError</a> = MAKE_STATUS(kStatusGroup_I3C, 6), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310acfda04a4d0a28eaebfdf5782d1f98f08">kStatus_I3C_CrcError</a> = MAKE_STATUS(kStatusGroup_I3C, 6), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9ab2f9f9f9ea46a58de73776f50d97e77b">kStatus_I3C_ReadFifoError</a> = MAKE_STATUS(kStatusGroup_I3C, 7), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310ab2f9f9f9ea46a58de73776f50d97e77b">kStatus_I3C_ReadFifoError</a> = MAKE_STATUS(kStatusGroup_I3C, 7), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a123c72bdcefad2cbd5926266af329936">kStatus_I3C_WriteFifoError</a> = MAKE_STATUS(kStatusGroup_I3C, 8), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a123c72bdcefad2cbd5926266af329936">kStatus_I3C_WriteFifoError</a> = MAKE_STATUS(kStatusGroup_I3C, 8), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a2048ccedbed421e63f6c2303c2dbd3ef">kStatus_I3C_MsgError</a>, 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a2048ccedbed421e63f6c2303c2dbd3ef">kStatus_I3C_MsgError</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9abc69734a51e6c32e7da9e14efeb0df47">kStatus_I3C_InvalidReq</a> = MAKE_STATUS(kStatusGroup_I3C, 10), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310abc69734a51e6c32e7da9e14efeb0df47">kStatus_I3C_InvalidReq</a> = MAKE_STATUS(kStatusGroup_I3C, 10), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9abb073c687a177100617e94d117ce51f3">kStatus_I3C_Timeout</a> = MAKE_STATUS(kStatusGroup_I3C, 11), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310abb073c687a177100617e94d117ce51f3">kStatus_I3C_Timeout</a> = MAKE_STATUS(kStatusGroup_I3C, 11), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a73076eb00a2c6f4c3d6205d66c980526">kStatus_I3C_SlaveCountExceed</a>, 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a73076eb00a2c6f4c3d6205d66c980526">kStatus_I3C_SlaveCountExceed</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a11ff36d41103f38710773355924d7104">kStatus_I3C_IBIWon</a>, 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a11ff36d41103f38710773355924d7104">kStatus_I3C_IBIWon</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a75c0f7a8ba41935f6ebc7635d716520c">kStatus_I3C_OverrunError</a> = MAKE_STATUS(kStatusGroup_I3C, 14), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a75c0f7a8ba41935f6ebc7635d716520c">kStatus_I3C_OverrunError</a> = MAKE_STATUS(kStatusGroup_I3C, 14), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a9e6234b9bdde57e720ef19477e45b989">kStatus_I3C_UnderrunError</a> = MAKE_STATUS(kStatusGroup_I3C, 15), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a9e6234b9bdde57e720ef19477e45b989">kStatus_I3C_UnderrunError</a> = MAKE_STATUS(kStatusGroup_I3C, 15), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a3c0f1fcfcc4bfe3ea822b534a6533beb">kStatus_I3C_UnderrunNak</a>, 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a3c0f1fcfcc4bfe3ea822b534a6533beb">kStatus_I3C_UnderrunNak</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a725c8fff58c234755d781adbaef8b0f0">kStatus_I3C_InvalidStart</a> = MAKE_STATUS(kStatusGroup_I3C, 17), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a725c8fff58c234755d781adbaef8b0f0">kStatus_I3C_InvalidStart</a> = MAKE_STATUS(kStatusGroup_I3C, 17), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a1d7edf69e0ea3fd0980d230f78c5f7cd">kStatus_I3C_SdrParityError</a> = MAKE_STATUS(kStatusGroup_I3C, 18), 
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a1d7edf69e0ea3fd0980d230f78c5f7cd">kStatus_I3C_SdrParityError</a> = MAKE_STATUS(kStatusGroup_I3C, 18), 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#ggaae05225933a42f81e7c4a9fb286596f9a062b154b947a5db7e4e32abfd941fdd5">kStatus_I3C_S0S1Error</a> = MAKE_STATUS(kStatusGroup_I3C, 19)
+&#160;&#160;<a class="el" href="a00043.html#gga94798fdadfbf49a7c658ace669a1d310a062b154b947a5db7e4e32abfd941fdd5">kStatus_I3C_S0S1Error</a> = MAKE_STATUS(kStatusGroup_I3C, 19)
 <br/>
  }</td></tr>
-<tr class="memdesc:gaae05225933a42f81e7c4a9fb286596f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C status return codes.  <a href="a00043.html#gaae05225933a42f81e7c4a9fb286596f9">More...</a><br/></td></tr>
-<tr class="separator:gaae05225933a42f81e7c4a9fb286596f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga94798fdadfbf49a7c658ace669a1d310"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C status return codes.  <a href="a00043.html#ga94798fdadfbf49a7c658ace669a1d310">More...</a><br/></td></tr>
+<tr class="separator:ga94798fdadfbf49a7c658ace669a1d310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9cc3047d71168e8e79989f1d6fd59cef"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga9cc3047d71168e8e79989f1d6fd59cef">i3c_hdr_mode_t</a> </td></tr>
 <tr class="memdesc:ga9cc3047d71168e8e79989f1d6fd59cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C HDR modes.  <a href="a00043.html#ga9cc3047d71168e8e79989f1d6fd59cef">More...</a><br/></td></tr>
 <tr class="separator:ga9cc3047d71168e8e79989f1d6fd59cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,12 +183,12 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga9969405bde9b0859074c423ae688ca99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9969405bde9b0859074c423ae688ca99"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga9969405bde9b0859074c423ae688ca99">FSL_I3C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00236.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 9, 0))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga9969405bde9b0859074c423ae688ca99">FSL_I3C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 10, 3))</td></tr>
 <tr class="memdesc:ga9969405bde9b0859074c423ae688ca99"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C driver version. <br/></td></tr>
 <tr class="separator:ga9969405bde9b0859074c423ae688ca99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00380" id="a00380"></a>
+<a name="a00385" id="a00385"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -346,7 +342,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaae05225933a42f81e7c4a9fb286596f9"></a>
+<a class="anchor" id="ga94798fdadfbf49a7c658ace669a1d310"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -356,64 +352,64 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a3762f16a9354bdcbc99b05c938d3867c"></a>kStatus_I3C_Busy</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a3762f16a9354bdcbc99b05c938d3867c"></a>kStatus_I3C_Busy</em>&nbsp;</td><td class="fielddoc">
 <p>The master is already performing a transfer. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a121e7eccc4bdafa890313b8c0b08c49d"></a>kStatus_I3C_Idle</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a121e7eccc4bdafa890313b8c0b08c49d"></a>kStatus_I3C_Idle</em>&nbsp;</td><td class="fielddoc">
 <p>The slave driver is idle. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a3ed2939c8d83d81804512322d001e740"></a>kStatus_I3C_Nak</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a3ed2939c8d83d81804512322d001e740"></a>kStatus_I3C_Nak</em>&nbsp;</td><td class="fielddoc">
 <p>The slave device sent a NAK in response to an address. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a35dcb142f61c8ff4779d5f6b5b23b5de"></a>kStatus_I3C_WriteAbort</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a35dcb142f61c8ff4779d5f6b5b23b5de"></a>kStatus_I3C_WriteAbort</em>&nbsp;</td><td class="fielddoc">
 <p>The slave device sent a NAK in response to a write. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a44213e1f693b99a95b397ab886f4639b"></a>kStatus_I3C_Term</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a44213e1f693b99a95b397ab886f4639b"></a>kStatus_I3C_Term</em>&nbsp;</td><td class="fielddoc">
 <p>The master terminates slave read. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a9abddf0a7e7b083164af01db2c097096"></a>kStatus_I3C_HdrParityError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a9abddf0a7e7b083164af01db2c097096"></a>kStatus_I3C_HdrParityError</em>&nbsp;</td><td class="fielddoc">
 <p>Parity error from DDR read. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9acfda04a4d0a28eaebfdf5782d1f98f08"></a>kStatus_I3C_CrcError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310acfda04a4d0a28eaebfdf5782d1f98f08"></a>kStatus_I3C_CrcError</em>&nbsp;</td><td class="fielddoc">
 <p>CRC error from DDR read. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9ab2f9f9f9ea46a58de73776f50d97e77b"></a>kStatus_I3C_ReadFifoError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310ab2f9f9f9ea46a58de73776f50d97e77b"></a>kStatus_I3C_ReadFifoError</em>&nbsp;</td><td class="fielddoc">
 <p>Read from M/SRDATAB register when FIFO empty. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a123c72bdcefad2cbd5926266af329936"></a>kStatus_I3C_WriteFifoError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a123c72bdcefad2cbd5926266af329936"></a>kStatus_I3C_WriteFifoError</em>&nbsp;</td><td class="fielddoc">
 <p>Write to M/SWDATAB register when FIFO full. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a2048ccedbed421e63f6c2303c2dbd3ef"></a>kStatus_I3C_MsgError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a2048ccedbed421e63f6c2303c2dbd3ef"></a>kStatus_I3C_MsgError</em>&nbsp;</td><td class="fielddoc">
 <p>Message SDR/DDR mismatch or read/write message in wrong state. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9abc69734a51e6c32e7da9e14efeb0df47"></a>kStatus_I3C_InvalidReq</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310abc69734a51e6c32e7da9e14efeb0df47"></a>kStatus_I3C_InvalidReq</em>&nbsp;</td><td class="fielddoc">
 <p>Invalid use of request. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9abb073c687a177100617e94d117ce51f3"></a>kStatus_I3C_Timeout</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310abb073c687a177100617e94d117ce51f3"></a>kStatus_I3C_Timeout</em>&nbsp;</td><td class="fielddoc">
 <p>The module has stalled too long in a frame. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a73076eb00a2c6f4c3d6205d66c980526"></a>kStatus_I3C_SlaveCountExceed</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a73076eb00a2c6f4c3d6205d66c980526"></a>kStatus_I3C_SlaveCountExceed</em>&nbsp;</td><td class="fielddoc">
 <p>The I3C slave count has exceed the definition in I3C_MAX_DEVCNT. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a11ff36d41103f38710773355924d7104"></a>kStatus_I3C_IBIWon</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a11ff36d41103f38710773355924d7104"></a>kStatus_I3C_IBIWon</em>&nbsp;</td><td class="fielddoc">
 <p>The I3C slave event IBI or MR or HJ won the arbitration on a header address. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a75c0f7a8ba41935f6ebc7635d716520c"></a>kStatus_I3C_OverrunError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a75c0f7a8ba41935f6ebc7635d716520c"></a>kStatus_I3C_OverrunError</em>&nbsp;</td><td class="fielddoc">
 <p>Slave internal from-bus buffer/FIFO overrun. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a9e6234b9bdde57e720ef19477e45b989"></a>kStatus_I3C_UnderrunError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a9e6234b9bdde57e720ef19477e45b989"></a>kStatus_I3C_UnderrunError</em>&nbsp;</td><td class="fielddoc">
 <p>Slave internal to-bus buffer/FIFO underrun. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a3c0f1fcfcc4bfe3ea822b534a6533beb"></a>kStatus_I3C_UnderrunNak</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a3c0f1fcfcc4bfe3ea822b534a6533beb"></a>kStatus_I3C_UnderrunNak</em>&nbsp;</td><td class="fielddoc">
 <p>Slave internal from-bus buffer/FIFO underrun and NACK error. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a725c8fff58c234755d781adbaef8b0f0"></a>kStatus_I3C_InvalidStart</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a725c8fff58c234755d781adbaef8b0f0"></a>kStatus_I3C_InvalidStart</em>&nbsp;</td><td class="fielddoc">
 <p>Slave invalid start flag. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a1d7edf69e0ea3fd0980d230f78c5f7cd"></a>kStatus_I3C_SdrParityError</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a1d7edf69e0ea3fd0980d230f78c5f7cd"></a>kStatus_I3C_SdrParityError</em>&nbsp;</td><td class="fielddoc">
 <p>SDR parity error. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a062b154b947a5db7e4e32abfd941fdd5"></a>kStatus_I3C_S0S1Error</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga94798fdadfbf49a7c658ace669a1d310a062b154b947a5db7e4e32abfd941fdd5"></a>kStatus_I3C_S0S1Error</em>&nbsp;</td><td class="fielddoc">
 <p>S0 or S1 error. </p>
 </td></tr>
 </table>

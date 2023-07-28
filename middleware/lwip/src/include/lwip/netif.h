@@ -365,6 +365,36 @@ struct netif {
   /** Number of Router Solicitation messages that remain to be sent. */
   u8_t rs_count;
 #endif /* LWIP_IPV6_SEND_ROUTER_SOLICIT */
+#if LWIP_IPV6_SEND_ROUTER_ADVERTISE
+  /** Index of IPv6 address used as prefix or -1 to disable ra */
+  s8_t ra_prefix_idx;
+  /** For how long will be valid default route via us. IP6_RA_RT_LIFETIME_NO_DEFAULT_ROUTE (0)
+   * means we will never be default router.*/
+  u16_t ra_router_lifetime;
+  /* Flag to indicates whether we are in the initial phase of Router Advertisement sending */
+  u8_t ra_is_initial;
+  /** Number of Router Advertisement messages that remain to be sent in the initial phase. */
+  u8_t ra_initial_count;
+  /* Timer to decide when to send a Router Advertisement */
+  u32_t ra_timer;
+
+#if LWIP_IPV6_RA_NUM_ROUTE_INFOS > 0
+  /** Sending of route information option in RA enabled. */
+  u8_t ra_rio_enabled[LWIP_IPV6_RA_NUM_ROUTE_INFOS];
+
+  /** The number of leading bits in the Prefix that are valid. The value ranges from 0 to 128. */
+  u8_t ra_rio_prefix_length[LWIP_IPV6_RA_NUM_ROUTE_INFOS];
+
+  /** The length of time in seconds (relative to the time the packet is sent) that the prefix
+   * is valid for route determination. A value of all one bits (0xffffffff) represents
+   * infinity. */
+  u32_t ra_rio_route_lifetime[LWIP_IPV6_RA_NUM_ROUTE_INFOS];
+
+  /** IP address or a prefix of an IP address. */
+  ip6_addr_t ra_rio_prefix[LWIP_IPV6_RA_NUM_ROUTE_INFOS];
+#endif /* LWIP_IPV6_RA_NUM_ROUTE_INFOS > 0 */
+
+#endif /* LWIP_IPV6_SEND_ROUTER_ADVERTISE */
 #if MIB2_STATS
   /** link type (from "snmp_ifType" enum from snmp_mib2.h) */
   u8_t link_type;
@@ -560,6 +590,12 @@ err_t netif_add_ip6_address(struct netif *netif, const ip6_addr_t *ip6addr, s8_t
 #else /* LWIP_ND6_ALLOW_RA_UPDATES */
 #define netif_mtu6(netif) ((netif)->mtu)
 #endif /* LWIP_ND6_ALLOW_RA_UPDATES */
+
+#if LWIP_IPV6_SEND_ROUTER_ADVERTISE
+#define netif_ip6_ra_send_enabled(netif) (netif->ra_prefix_idx >= 0)
+#define IP6_RA_RT_LIFETIME_NO_DEFAULT_ROUTE 0
+#endif /*LWIP_IPV6_SEND_ROUTER_ADVERTISE*/
+
 #endif /* LWIP_IPV6 */
 
 #if LWIP_NETIF_USE_HINTS

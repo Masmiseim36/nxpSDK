@@ -2,7 +2,7 @@
  * attest_token_encode.c
  *
  * Copyright (c) 2018-2019, Laurence Lundblade. All rights reserved.
- * Copyright (c) 2020-2022, Arm Limited.
+ * Copyright (c) 2020-2023, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -10,7 +10,8 @@
  */
 
 #include "attest_token.h"
-#include "qcbor.h"
+#include "config_tfm.h"
+#include "qcbor/qcbor.h"
 #ifdef SYMMETRIC_INITIAL_ATTESTATION
 #include "t_cose_mac0_sign.h"
 #else
@@ -18,7 +19,7 @@
 #endif
 #include "t_cose_common.h"
 #include "q_useful_buf.h"
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"           //NXP to avoid file name conflicts between MbedTLS and TFM.
 #include "attest_key.h"
 #include "tfm_crypto_defs.h"
 
@@ -244,12 +245,12 @@ attest_token_encode_start(struct attest_token_encode_ctx *me,
     if (opt_flags & TOKEN_OPT_SHORT_CIRCUIT_SIGN) {
         t_cose_options |= T_COSE_OPT_SHORT_CIRCUIT_SIG;
     } else {
-#ifdef INCLUDE_COSE_KEY_ID
+#if ATTEST_INCLUDE_COSE_KEY_ID
         attest_ret = attest_get_initial_attestation_key_id(&attest_key_id);
         if (attest_ret != PSA_ATTEST_ERR_SUCCESS) {
             return ATTEST_TOKEN_ERR_GENERAL;
         }
-#endif /* INCLUDE_COSE_KEY_ID */
+#endif /* ATTEST_INCLUDE_COSE_KEY_ID */
     }
 
     t_cose_sign1_sign_init(&(me->signer_ctx), t_cose_options, cose_alg_id);

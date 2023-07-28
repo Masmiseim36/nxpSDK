@@ -8,5 +8,6 @@
 /***********  WARNING: This is an auto-generated file. Do not edit!  ***********/
 
 #include <stdint.h>
+#include "config_tfm.h"
 
-uint8_t tfm_sp_initial_attestation_stack[0x700] __attribute__((aligned(8)));
+uint8_t tfm_sp_initial_attestation_stack[ATTEST_STACK_SIZE] __attribute__((aligned(8)));

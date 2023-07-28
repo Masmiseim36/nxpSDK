@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flash_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,29 +217,29 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>DSP_IMAGE_COPY_TO_RAM=0</state>
           <state>DEBUG</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>BOARD_DMIC_NUM=2</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_VIT_PRE_PROC=1</state>
           <state>XA_VOICE_SEEKER=1</state>
           <state>XA_RENDERER=1</state>
           <state>XA_CAPTURER=1</state>
-          <state>BOARD_DMIC_NUM=2</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
+          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -361,21 +361,21 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib</state>
           <state>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/Inc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33</state>
+          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33</state>
-          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
@@ -383,8 +383,8 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -506,7 +506,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -556,8 +556,8 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state>DSP_IMAGE_COPY_TO_RAM=0</state>
           <state>DEBUG</state>
+          <state>DSP_IMAGE_COPY_TO_RAM=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -649,8 +649,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../dsp/binary</state>
+          <state>$PROJ_DIR$/..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -712,7 +712,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -830,10 +830,16 @@
         </option>
         <option>
           <name>IlinkUseExtraOptions</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_reset_debug.bin,__dsp_reset_bin,__dsp_reset_section,4</state>
+          <state>--keep=__dsp_reset_bin</state>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin,__dsp_text_bin,__dsp_text_section,4</state>
+          <state>--keep=__dsp_text_bin</state>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin,__dsp_data_bin,__dsp_data_section,4</state>
+          <state>--keep=__dsp_data_bin</state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1121,7 +1127,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1208,7 +1214,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1225,7 +1231,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1248,7 +1254,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1327,29 +1333,29 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
+          <state>BOARD_DMIC_NUM=2</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_VIT_PRE_PROC=1</state>
           <state>XA_VOICE_SEEKER=1</state>
           <state>XA_RENDERER=1</state>
           <state>XA_CAPTURER=1</state>
-          <state>BOARD_DMIC_NUM=2</state>
-          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
+          <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1471,21 +1477,21 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib</state>
           <state>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/Inc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33</state>
+          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33</state>
-          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
@@ -1493,8 +1499,8 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1616,7 +1622,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1758,8 +1764,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../dsp/binary</state>
+          <state>$PROJ_DIR$/..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1821,7 +1827,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2229,6 +2235,15 @@
   <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../dsp_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/Inc/PL_memoryRegion.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../main_cm33.c</name>
     </file>
     <file>
@@ -2247,9 +2262,6 @@
       <name>$PROJ_DIR$/../dsp_ipc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../dsp_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../srtm_config.h</name>
     </file>
     <file>
@@ -2260,18 +2272,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../rpmsg_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../VIT_Model_cn.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../VIT_Model_en.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../PL_platformTypes_HIFI4_FUSIONF1.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../PL_memoryRegion.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
@@ -2311,25 +2311,58 @@
     </file>
   </group>
   <group>
+    <name>dsp_binary</name>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_reset_debug.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</name>
+    </file>
+  </group>
+  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
     </file>
   </group>
   <group>
-    <name>dsp_binary</name>
-    <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin</name>
-    </file>
-  </group>
-  <group>
     <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h</name>
     </file>
@@ -2347,6 +2380,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_sema42.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_sema42.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
@@ -2371,30 +2410,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_dsp.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_mu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_mu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_i3c.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.c</name>
@@ -2437,6 +2452,15 @@
     <name>rpmsg_lite</name>
     <group>
       <name>include</name>
+      <group>
+        <name>platform</name>
+        <group>
+          <name>imxrt500_m33</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33/rpmsg_platform.h</name>
+          </file>
+        </group>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
       </file>
@@ -2473,38 +2497,11 @@
           </file>
         </group>
       </group>
-      <group>
-        <name>platform</name>
-        <group>
-          <name>imxrt500_m33</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33/rpmsg_platform.h</name>
-          </file>
-        </group>
-      </group>
-    </group>
-    <group>
-      <name>common</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
-      </file>
     </group>
     <group>
       <name>rpmsg_lite</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</name>
-      </file>
       <group>
         <name>porting</name>
-        <group>
-          <name>environment</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
-          </file>
-        </group>
         <group>
           <name>platform</name>
           <group>
@@ -2514,9 +2511,27 @@
             </file>
           </group>
         </group>
+        <group>
+          <name>environment</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
+          </file>
+        </group>
       </group>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
+      </file>
+    </group>
+    <group>
+      <name>common</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
       </file>
     </group>
     <group>
@@ -2524,6 +2539,135 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</name>
       </file>
+    </group>
+  </group>
+  <group>
+    <name>pmic_driver</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.c</name>
+    </file>
+  </group>
+  <group>
+    <name>codec</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
+    </file>
+    <group>
+      <name>port</name>
+      <group>
+        <name>wm8904</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+    </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>i2c</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i3c.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>vit</name>
+    <group>
+      <name>FusionF1</name>
+      <group>
+        <name>Lib</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_en.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_cn.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_de.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_es.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_fr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_it.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ja.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ko.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_tr.h</name>
+        </file>
+      </group>
     </group>
   </group>
   <group>
@@ -2681,99 +2825,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
     </file>
-  </group>
-  <group>
-    <name>pmic_driver</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h</name>
     </file>
-  </group>
-  <group>
-    <name>codec</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
-    </file>
-    <group>
-      <name>port</name>
-      <group>
-        <name>wm8904</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
-    </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>i2c</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i3c.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>device</name>

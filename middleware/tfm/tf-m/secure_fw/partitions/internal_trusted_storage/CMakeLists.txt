@@ -44,38 +44,23 @@ target_sources(tfm_psa_rot_partition_its
 # The generated sources
 target_sources(tfm_psa_rot_partition_its
     PRIVATE
-        $<$<BOOL:${TFM_PSA_API}>:
-            ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/internal_trusted_storage/auto_generated/intermedia_tfm_internal_trusted_storage.c>
+        ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/internal_trusted_storage/auto_generated/intermedia_tfm_internal_trusted_storage.c
 )
 target_sources(tfm_partitions
     INTERFACE
-        $<$<BOOL:${TFM_PSA_API}>:
-            ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/internal_trusted_storage/auto_generated/load_info_tfm_internal_trusted_storage.c>
+        ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/internal_trusted_storage/auto_generated/load_info_tfm_internal_trusted_storage.c
 )
 
 target_link_libraries(tfm_psa_rot_partition_its
     PRIVATE
         platform_s
+        tfm_config
         tfm_sprt
 )
 
 target_compile_definitions(tfm_psa_rot_partition_its
     PUBLIC
-        $<$<BOOL:${PS_CREATE_FLASH_LAYOUT}>:PS_CREATE_FLASH_LAYOUT>
-        $<$<BOOL:${PS_ENCRYPTION}>:PS_ENCRYPTION>
-        $<$<BOOL:${PS_RAM_FS}>:PS_RAM_FS>
-        $<$<BOOL:${PS_ROLLBACK_PROTECTION}>:PS_ROLLBACK_PROTECTION>
-        $<$<BOOL:${PS_VALIDATE_METADATA_FROM_FLASH}>:PS_VALIDATE_METADATA_FROM_FLASH>
-        PS_MAX_ASSET_SIZE=${PS_MAX_ASSET_SIZE}
-        PS_NUM_ASSETS=${PS_NUM_ASSETS}
         PS_CRYPTO_AEAD_ALG=${PS_CRYPTO_AEAD_ALG}
-    PRIVATE
-        $<$<BOOL:${ITS_CREATE_FLASH_LAYOUT}>:ITS_CREATE_FLASH_LAYOUT>
-        $<$<BOOL:${ITS_RAM_FS}>:ITS_RAM_FS>
-        $<$<OR:$<BOOL:${ITS_VALIDATE_METADATA_FROM_FLASH}>,$<BOOL:${PS_VALIDATE_METADATA_FROM_FLASH}>>:ITS_VALIDATE_METADATA_FROM_FLASH>
-        ITS_MAX_ASSET_SIZE=${ITS_MAX_ASSET_SIZE}
-        ITS_NUM_ASSETS=${ITS_NUM_ASSETS}
-        $<$<BOOL:${ITS_BUF_SIZE}>:ITS_BUF_SIZE=${ITS_BUF_SIZE}>
 )
 
 ################ Display the configuration being applied #######################
@@ -83,42 +68,9 @@ target_compile_definitions(tfm_psa_rot_partition_its
 include(utils)
     dump_options("Storage config"
     "
-        PS_CREATE_FLASH_LAYOUT;
-        PS_ENCRYPTION;
-        PS_RAM_FS;
-        PS_ROLLBACK_PROTECTION;
-        PS_VALIDATE_METADATA_FROM_FLASH;
-        PS_MAX_ASSET_SIZE;
-        PS_NUM_ASSETS;
         PS_CRYPTO_AEAD_ALG;
-        PS_STACK_SIZE;
-
-        ITS_CREATE_FLASH_LAYOUT;
-        ITS_RAM_FS;
-        ITS_VALIDATE_METADATA_FROM_FLASH;
-        ITS_MAX_ASSET_SIZE;
-        ITS_NUM_ASSETS;
-        ITS_BUF_SIZE;
-        ITS_STACK_SIZE
     "
     )
-
-############################ Secure API ########################################
-
-target_sources(tfm_sprt
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/tfm_its_secure_api.c
-)
-
-# The veneers give warnings about not being properly declared so they get hidden
-# to not overshadow _real_ warnings.
-set_source_files_properties(tfm_its_secure_api.c
-    PROPERTIES
-        COMPILE_FLAGS
-            $<$<C_COMPILER_ID:ARMClang>:-Wno-implicit-function-declaration>
-            $<$<C_COMPILER_ID:GNU>:-Wno-implicit-function-declaration>
-            $<$<C_COMPILER_ID:IAR>:>
-)
 
 ############################ Partition Defs ####################################
 

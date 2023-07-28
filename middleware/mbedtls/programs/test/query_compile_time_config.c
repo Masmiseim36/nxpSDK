@@ -23,14 +23,7 @@
 #include MBEDTLS_CONFIG_FILE
 #endif
 
-#if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
-#else
-#include <stdio.h>
-#include <stdlib.h>
-#define mbedtls_printf       printf
-#define MBEDTLS_EXIT_FAILURE EXIT_FAILURE
-#endif
 
 #define USAGE                                                                \
     "usage: %s [ <MBEDTLS_CONFIG> | -l ]\n\n"                                \
@@ -43,19 +36,17 @@
 #include <string.h>
 #include "query_config.h"
 
-int main( int argc, char *argv[] )
+int main(int argc, char *argv[])
 {
-    if ( argc != 2 )
-    {
-        mbedtls_printf( USAGE, argv[0] );
-        return( MBEDTLS_EXIT_FAILURE );
+    if (argc < 2 || strcmp(argv[1], "-h") == 0) {
+        mbedtls_printf(USAGE, argv[0]);
+        return MBEDTLS_EXIT_FAILURE;
     }
 
-    if( strcmp( argv[1], "-l" ) == 0 )
-    {
+    if (strcmp(argv[1], "-l") == 0) {
         list_config();
-        return( 0 );
+        return 0;
     }
 
-    return( query_config( argv[1] ) );
+    return query_config(argv[1]);
 }

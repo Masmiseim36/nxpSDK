@@ -4,7 +4,7 @@
  *
  *  Copyright 2021-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -94,7 +94,7 @@ static int32_t wlan_download_normal_fw(const t_u8 *wlanfw_dl, t_u32 firmwarelen,
             else
             {
                 fwdnld_io_e("Error in wlan_card_status()");
-                break;
+                return FWDNLD_STATUS_FAILURE;
             }
 
             // (void)PRINTF("len %d =>", len);
@@ -107,6 +107,8 @@ static int32_t wlan_download_normal_fw(const t_u8 *wlanfw_dl, t_u32 firmwarelen,
         if (len == 0U)
         {
             fwdnld_io_e("Card timeout %s:%d", __func__, __LINE__);
+            if (offset > 0)
+                return FWDNLD_STATUS_SUCCESS;
             return FWDNLD_STATUS_FAILURE;
         }
         else if (len > outbuf_len)

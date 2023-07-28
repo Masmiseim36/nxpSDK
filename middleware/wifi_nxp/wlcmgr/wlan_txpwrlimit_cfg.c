@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides WLAN World Wide Safe Mode Tx Power Limit APIs.
  *
- *  Copyright 2008-2021 NXP
+ *  Copyright 2008-2021, 2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -17,9 +17,13 @@
 #error "Region tx power config not defined"
 #endif
 
+#define ARG_UNUSED(x) (void)(x)
+
+
 int wlan_set_wwsm_txpwrlimit(void)
 {
     int rv = WM_SUCCESS;
+
 
     rv = wlan_set_chanlist_and_txpwrlimit(&chanlist_2g_cfg, &tx_pwrlimit_2g_cfg);
     if (rv != WM_SUCCESS)

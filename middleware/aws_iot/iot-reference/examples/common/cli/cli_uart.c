@@ -28,6 +28,12 @@
 #include "fsl_debug_console.h"
 
 /**
+ * @brief Reads a single byte from the UART console.
+ * @return Byte read. -1 on failure.
+ */
+static int32_t prvUARTConsoleGetChar( void );
+
+/**
  * @brief UART console blocking read for requested number of bytes.
  * Function blocks reading from UART console until the requested
  * number of bytes are read.
@@ -46,10 +52,15 @@ static void prvUARTConsoleWrite( const char * const pcOutputBuffer,
 
 xConsoleIO_t uartConsoleIO =
 {
-    .getChar = DbgConsole_Getchar,
+    .getChar = prvUARTConsoleGetChar,
     .read    = prvUARTConsoleRead,
     .write   = prvUARTConsoleWrite
 };
+
+static int32_t prvUARTConsoleGetChar( void )
+{
+    return ( int32_t ) DbgConsole_Getchar();
+}
 
 int32_t prvUARTConsoleRead( char * const pcInputBuffer,
                             uint32_t ulInputBufferLen,

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  *
@@ -352,7 +352,7 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
     int error;
     int option;
 
-    if ((server->sock = lwip_socket(server->params.address.sa_family, SOCK_STREAM, 0)) < 0)
+    if ((server->sock = lwip_socket(server->params.address.ss_family, SOCK_STREAM, 0)) < 0)
     {
         return (HTTPSRV_CREATE_FAIL);
     }
@@ -380,7 +380,23 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
     /* SO_SNDBUF is not implemented.*/
 
     /* Bind socket */
-    error = lwip_bind(server->sock, &server->params.address, sizeof(server->params.address));
+#if LWIP_IPV6
+    if (server->params.address.ss_family == AF_INET6)
+    {
+        error = lwip_bind(server->sock, (struct sockaddr *)&server->params.address, sizeof(struct sockaddr_in6));
+    }
+    else
+#endif
+#if LWIP_IPV4
+    if (server->params.address.ss_family == AF_INET)
+    {
+        error = lwip_bind(server->sock, (struct sockaddr *)&server->params.address, sizeof(struct sockaddr_in));
+    }
+    else
+#endif
+    {
+        error = -1;
+    }
     if (error == -1)
     {
         return (HTTPSRV_BIND_FAIL);
@@ -410,12 +426,12 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
 */
 static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *params)
 {
-#if LWIP_IPV4
-    server->params.address.sa_family                            = AF_INET;
+#if LWIP_IPV6
+    server->params.address.ss_family                              = AF_INET6;
+    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);  
+#elif LWIP_IPV4
+    server->params.address.ss_family                            = AF_INET;
     ((struct sockaddr_in *)(&server->params.address))->sin_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);
-#elif LWIP_IPV6
-    server->params.address.sa_family                              = AF_INET6;
-    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);
 #endif
 
     server->params.max_uri     = HTTPSRV_CFG_DEFAULT_URL_LEN;
@@ -433,26 +449,27 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
     /* If there is parameters structure copy nonzero values to server */
     if (params != NULL)
     {
-        if (params->address.sa_family)
-            server->params.address.sa_family = params->address.sa_family;
+        if (params->address.ss_family)
+            server->params.address.ss_family = params->address.ss_family;
 
+#if LWIP_IPV6
+        if (server->params.address.ss_family == AF_INET6)
+        {
+            if (((struct sockaddr_in6 *)(&params->address))->sin6_port)
+                ((struct sockaddr_in6 *)(&server->params.address))->sin6_port =
+                    ((struct sockaddr_in6 *)(&params->address))->sin6_port;
+        }
+        else
+#endif
 #if LWIP_IPV4
-        if (server->params.address.sa_family == AF_INET)
+        if (server->params.address.ss_family == AF_INET)
         {
             if (((struct sockaddr_in *)(&params->address))->sin_port)
                 ((struct sockaddr_in *)(&server->params.address))->sin_port =
                     ((struct sockaddr_in *)(&params->address))->sin_port;
         }
-#endif
-#if LWIP_IPV6
-        else if (server->params.address.sa_family == AF_INET6)
-        {
-            if (((struct sockaddr_in6 *)(&params->address))->sin6_port)
-                ((struct sockaddr_in6 *)(&server->params.address))->sin6_port =
-                    ((struct sockaddr_in *)(&params->address))->sin_port;
-        }
-#endif
         else
+#endif
         {
         } /* wrong family detexcted by socket().*/
 
@@ -491,8 +508,18 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
             }
 
             /* Set default HTTPS port.*/
+#if LWIP_IPV6
+            if (server->params.address.ss_family == AF_INET6)
+            {
+                if (((struct sockaddr_in6 *)(&params->address))->sin6_port == 0)
+
+                    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port =
+                        PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
+            }
+			else
+#endif
 #if LWIP_IPV4
-            if (server->params.address.sa_family == AF_INET)
+            if (server->params.address.ss_family == AF_INET)
             {
                 /* Set default port.*/
                 if (((struct sockaddr_in *)(&params->address))->sin_port == 0)
@@ -501,17 +528,8 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
                         PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
                 }
             }
+			else
 #endif
-#if LWIP_IPV6
-            else if (server->params.address.sa_family == AF_INET6)
-            {
-                if (((struct sockaddr_in6 *)(&params->address))->sin6_port == 0)
-
-                    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port =
-                        PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
-            }
-#endif
-            else
             {
             }
         }

@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -27,13 +27,11 @@ target_sources(tfm_psa_rot_partition_attestation PRIVATE
 # The generated sources
 target_sources(tfm_psa_rot_partition_attestation
     PRIVATE
-        $<$<BOOL:${TFM_PSA_API}>:
-            ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/initial_attestation/auto_generated/intermedia_tfm_initial_attestation.c>
+        ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/initial_attestation/auto_generated/intermedia_tfm_initial_attestation.c
 )
 target_sources(tfm_partitions
     INTERFACE
-        $<$<BOOL:${TFM_PSA_API}>:
-            ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/initial_attestation/auto_generated/load_info_tfm_initial_attestation.c>
+        ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/initial_attestation/auto_generated/load_info_tfm_initial_attestation.c
 )
 
 # Set include directory
@@ -51,20 +49,18 @@ target_include_directories(tfm_partitions
 target_link_libraries(tfm_psa_rot_partition_attestation
     PRIVATE
         platform_s
-        tfm_qcbor_s
+        tfm_config
         tfm_t_cose_s
         tfm_sprt
         tfm_boot_status
+        qcbor
 )
 
 target_compile_definitions(tfm_psa_rot_partition_attestation
     PRIVATE
         $<$<BOOL:${ATTEST_INCLUDE_TEST_CODE}>:INCLUDE_TEST_CODE>
         $<$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>:SYMMETRIC_INITIAL_ATTESTATION>
-        $<$<BOOL:${ATTEST_INCLUDE_OPTIONAL_CLAIMS}>:INCLUDE_OPTIONAL_CLAIMS>
-        $<$<BOOL:${ATTEST_INCLUDE_COSE_KEY_ID}>:INCLUDE_COSE_KEY_ID>
         $<$<NOT:$<BOOL:${PLATFORM_DEFAULT_ATTEST_HAL}>>:CLAIM_VALUE_CHECK>
-        ATTEST_TOKEN_PROFILE_${ATTEST_TOKEN_PROFILE}
         $<$<NOT:$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>>:ATTEST_KEY_BITS=${ATTEST_KEY_BITS}>
 )
 
@@ -77,26 +73,9 @@ target_include_directories(tfm_attestation_defs
         .
 )
 
-target_compile_definitions(tfm_attestation_defs
+target_link_libraries(tfm_attestation_defs
     INTERFACE
-        ATTEST_TOKEN_PROFILE_${ATTEST_TOKEN_PROFILE}
-)
-
-############################ Secure API ########################################
-
-target_sources(tfm_sprt
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/tfm_attest_secure_api.c
-)
-
-# The veneers give warnings about not being properly declared so they get hidden
-# to not overshadow _real_ warnings.
-set_source_files_properties(tfm_attest_secure_api.c
-    PROPERTIES
-        COMPILE_FLAGS
-            $<$<C_COMPILER_ID:ARMClang>:-Wno-implicit-function-declaration>
-            $<$<C_COMPILER_ID:GNU>:-Wno-implicit-function-declaration>
-            $<$<C_COMPILER_ID:IAR>:>
+        tfm_config
 )
 
 ############################ Partition Defs ####################################
@@ -110,13 +89,4 @@ target_link_libraries(tfm_partitions
 target_compile_definitions(tfm_partition_defs
     INTERFACE
     TFM_PARTITION_INITIAL_ATTESTATION
-)
-
-################ Display the configuration being applied #######################
-
-include(utils)
-dump_options("Initial Attestation config"
-"
-    ATTEST_STACK_SIZE
-"
 )

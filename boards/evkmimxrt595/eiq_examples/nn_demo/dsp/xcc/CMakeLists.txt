@@ -47,6 +47,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNNLIB_V2")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_XOS=1")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
@@ -79,6 +81,10 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fmessage-length=0")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mlongcalls")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fsigned-char")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXOS_DEBUG_ALL=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=0")
@@ -96,6 +102,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT595SFFOC_dsp")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNNLIB_V2")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_XOS=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -127,6 +135,10 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fmessage-length=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mlongcalls")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fsigned-char")
+
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
@@ -135,6 +147,10 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DNNLIB_V2")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mlongcalls")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsigned-char")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=0")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
@@ -142,6 +158,10 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNNLIB_V2")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mlongcalls")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fsigned-char")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/gdbio")
 
@@ -171,9 +191,9 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilitie
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include)
+include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm)
+include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc)
 
@@ -239,15 +259,15 @@ add_executable(dsp_nn_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dmic_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.h"
-"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
-"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.c"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_xos.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c"
+"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos/rpmsg_env_specific.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h"
@@ -260,8 +280,6 @@ add_executable(dsp_nn_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/LICENSE"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_cnn_api.h"
@@ -270,6 +288,10 @@ add_executable(dsp_nn_demo_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_lstm_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_standards.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_type_def.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.h"
@@ -286,15 +308,7 @@ add_executable(dsp_nn_demo_fusionf1.elf
 TARGET_LINK_LIBRARIES(dsp_nn_demo_fusionf1.elf -Wl,--start-group)
 target_link_libraries(dsp_nn_demo_fusionf1.elf debug xos)
 
-target_link_libraries(dsp_nn_demo_fusionf1.elf debug xtutil)
-
-target_link_libraries(dsp_nn_demo_fusionf1.elf debug m)
-
 target_link_libraries(dsp_nn_demo_fusionf1.elf optimized xos)
-
-target_link_libraries(dsp_nn_demo_fusionf1.elf optimized xtutil)
-
-target_link_libraries(dsp_nn_demo_fusionf1.elf optimized m)
 
 
 target_link_libraries(dsp_nn_demo_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a)

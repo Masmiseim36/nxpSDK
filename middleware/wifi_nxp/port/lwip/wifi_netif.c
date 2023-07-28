@@ -56,9 +56,10 @@ err_t lwip_netif_uap_init(struct netif *netif);
 err_t lwip_netif_init(struct netif *netif);
 void handle_data_packet(const t_u8 interface, const t_u8 *rcvdata, const t_u16 datalen);
 void handle_amsdu_data_packet(t_u8 interface, t_u8 *rcvdata, t_u16 datalen);
-void handle_deliver_packet_above(t_u8 interface, t_void *lwip_pbuf);
+void handle_deliver_packet_above(t_void *rxpd, t_u8 interface, t_void *lwip_pbuf);
 bool wrapper_net_is_ip_or_ipv6(const t_u8 *buffer);
 
+#ifndef CONFIG_WPA_SUPP
 static int (*rx_mgmt_callback)(const enum wlan_bss_type bss_type, const wifi_mgmt_frame_t *frame, const size_t len);
 void rx_mgmt_register_callback(int (*rx_mgmt_cb_fn)(const enum wlan_bss_type bss_type,
                                                     const wifi_mgmt_frame_t *frame,
@@ -71,6 +72,7 @@ void rx_mgmt_deregister_callback()
 {
     rx_mgmt_callback = NULL;
 }
+#endif
 
 static void register_interface(struct netif *iface, mlan_bss_type iface_type)
 {
@@ -83,6 +85,7 @@ static void deliver_packet_above(struct pbuf *p, int recv_interface)
     /* points to packet payload, which starts with an Ethernet header */
     struct eth_hdr *ethhdr = p->payload;
 
+
     w_pkt_d("Data RX: Driver=>Kernel, if %d, len %d %d", recv_interface, p->tot_len, p->len);
     switch (htons(ethhdr->type))
     {
@@ -91,6 +94,8 @@ static void deliver_packet_above(struct pbuf *p, int recv_interface)
         case ETHTYPE_IPV6:
 #endif
         case ETHTYPE_ARP:
+            LINK_STATS_INC(link.recv);
+
             if ((unsigned)recv_interface >= MAX_INTERFACES_SUPPORTED)
             {
                 while (true)
@@ -98,7 +103,6 @@ static void deliver_packet_above(struct pbuf *p, int recv_interface)
                     ;
                 }
             }
-
             /* full packet send to tcpip_thread to process */
             lwiperr = netif_arr[recv_interface]->input(p, netif_arr[recv_interface]);
             if (lwiperr != (s8_t)ERR_OK)
@@ -110,7 +114,15 @@ static void deliver_packet_above(struct pbuf *p, int recv_interface)
             }
             break;
         case ETHTYPE_EAPOL:
+            LINK_STATS_INC(link.recv);
 
+#ifdef CONFIG_WPA_SUPP
+            if (l2_packet_rx_callback)
+            {
+                p->if_idx = recv_interface;
+                l2_packet_rx_callback(p);
+            }
+#endif /* CONFIG_WPA_SUPP */
             (void)pbuf_free(p);
             p = NULL;
             break;
@@ -145,23 +157,23 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
 {
     RxPD *rxpd                   = (RxPD *)(void *)((t_u8 *)rcvdata + INTF_HEADER_LEN);
     mlan_bss_type recv_interface = (mlan_bss_type)(rxpd->bss_type);
-#if defined(RW610)
     u16_t header_type;
-#endif
+
+#ifndef CONFIG_WPA_SUPP
 #if defined(CONFIG_11K) || defined(CONFIG_11V) || defined(CONFIG_1AS)
     wlan_mgmt_pkt *pmgmt_pkt_hdr      = MNULL;
     wlan_802_11_header *pieee_pkt_hdr = MNULL;
     t_u16 sub_type                    = 0;
     t_u8 category                     = 0;
 #endif
+#endif
+
     t_u8 *payload     = NULL;
     t_u16 payload_len = (t_u16)0U;
     struct pbuf *p    = NULL;
 
     if (rxpd->rx_pkt_type == PKT_TYPE_AMSDU)
     {
-#if defined(RW610)
-#ifdef AMSDU_IN_AMPDU
         Eth803Hdr_t *eth803hdr = (Eth803Hdr_t *)((t_u8 *)rxpd + rxpd->rx_pkt_offset);
         /* If the AMSDU packet is unicast and is not for us, drop it */
         if (memcmp(mlan_adap->priv[recv_interface]->curr_addr, eth803hdr->dest_addr, MLAN_MAC_ADDR_LENGTH) &&
@@ -175,14 +187,6 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
             wrapper_wlan_handle_amsdu_rx_packet(rcvdata, datalen);
             return;
         }
-#else
-        /* Not support AMSDU, drop it */
-        return;
-#endif
-#else
-        (void)wrapper_wlan_handle_amsdu_rx_packet(rcvdata, datalen);
-        return;
-#endif
     }
 
     if (recv_interface == MLAN_BSS_TYPE_STA || recv_interface == MLAN_BSS_TYPE_UAP)
@@ -191,6 +195,7 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
         g_data_snr_last = rxpd->snr;
     }
 
+#ifndef CONFIG_WPA_SUPP
 #if defined(CONFIG_11K) || defined(CONFIG_11V) || defined(CONFIG_1AS)
     if ((rxpd->rx_pkt_type == PKT_TYPE_MGMT_FRAME) && (recv_interface == MLAN_BSS_TYPE_STA))
     {
@@ -214,6 +219,7 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
     }
     else
 #endif
+#endif
     {
         payload     = (t_u8 *)rxpd + rxpd->rx_pkt_offset;
         payload_len = rxpd->rx_pkt_length;
@@ -229,8 +235,17 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
         return;
     }
 
+#ifndef CONFIG_WPA_SUPP
     if (rxpd->rx_pkt_type == PKT_TYPE_MGMT_FRAME)
     {
+        /* Bypass the management frame about Add Block Ack Request or Add Block Ack Response*/
+        if (wlan_bypass_802dot11_mgmt_pkt(p->payload) == WM_SUCCESS)
+        {
+            pbuf_free(p);
+            p = NULL;
+            return;
+        }
+
 #if defined(CONFIG_11K) || defined(CONFIG_11V) || defined(CONFIG_1AS)
         if (sub_type == (t_u16)SUBTYPE_ACTION && recv_interface == MLAN_BSS_TYPE_STA)
         {
@@ -254,6 +269,8 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
         }
         return;
     }
+#endif
+
     /* points to packet payload, which starts with an Ethernet header */
     struct eth_hdr *ethhdr = p->payload;
 
@@ -268,29 +285,27 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
     }
 #endif
 
-#if defined(RW610)
     header_type = htons(ethhdr->type);
-#endif
+
     if (!memcmp((t_u8 *)p->payload + SIZEOF_ETH_HDR, rfc1042_eth_hdr, sizeof(rfc1042_eth_hdr)))
     {
         struct eth_llc_hdr *ethllchdr = (struct eth_llc_hdr *)(void *)((t_u8 *)p->payload + SIZEOF_ETH_HDR);
-#if defined(RW610)
-        header_type = htons(ethllchdr->type);
-        if (rxpd->rx_pkt_type != PKT_TYPE_AMSDU)
-#else
-        ethhdr->type = ethllchdr->type;
-#endif
+
+        if (rxpd->rx_pkt_type == PKT_TYPE_AMSDU)
         {
+            header_type = htons(ethllchdr->type);
+        }
+        else
+        {
+            ethhdr->type = ethllchdr->type;
             p->len -= SIZEOF_ETH_LLC_HDR;
             (void)memcpy((t_u8 *)p->payload + SIZEOF_ETH_HDR, (t_u8 *)p->payload + SIZEOF_ETH_HDR + SIZEOF_ETH_LLC_HDR,
                          p->len - SIZEOF_ETH_LLC_HDR);
+            header_type = htons(ethhdr->type);
         }
     }
-#if defined(RW610)
+
     switch (header_type)
-#else
-    switch (htons(ethhdr->type))
-#endif
     {
         case ETHTYPE_IP:
 #ifdef CONFIG_IPV6
@@ -325,6 +340,7 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
             /* fixme: avoid pbuf allocation in this case */
             LINK_STATS_INC(link.drop);
             (void)pbuf_free(p);
+            p = NULL;
             break;
     }
 }
@@ -340,26 +356,24 @@ void handle_data_packet(const t_u8 interface, const t_u8 *rcvdata, const t_u16 d
 
 void handle_amsdu_data_packet(t_u8 interface, t_u8 *rcvdata, t_u16 datalen)
 {
+
     struct pbuf *p = gen_pbuf_from_data(rcvdata, datalen);
     if (p == NULL)
     {
         w_pkt_e("[amsdu] No pbuf available. Dropping packet");
-#if defined(RW610)
         LINK_STATS_INC(link.memerr);
         LINK_STATS_INC(link.drop);
-#endif
         return;
     }
-#if defined(RW610)
     LINK_STATS_INC(link.recv);
-#endif
     deliver_packet_above(p, interface);
 }
 
-void handle_deliver_packet_above(t_u8 interface, t_void *lwip_pbuf)
+void handle_deliver_packet_above(t_void *rxpd, t_u8 interface, t_void *lwip_pbuf)
 {
     struct pbuf *p = (struct pbuf *)lwip_pbuf;
 
+    (void)rxpd;
     deliver_packet_above(p, interface);
 }
 
@@ -378,6 +392,8 @@ bool wrapper_net_is_ip_or_ipv6(const t_u8 *buffer)
  */
 static void low_level_init(struct netif *netif)
 {
+    struct ethernetif *ethernetif = (struct ethernetif *)netif->state;
+
     /* set MAC hardware address length */
     netif->hwaddr_len = ETHARP_HWADDR_LEN;
 
@@ -388,8 +404,11 @@ static void low_level_init(struct netif *netif)
     /* don't set NETIF_FLAG_ETHARP if this device is not an ethernet one */
     netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP;
 
-    netif_set_igmp_mac_filter(netif, igmp_mac_filter);
-    netif->flags |= NETIF_FLAG_IGMP;
+    if (ethernetif->interface == MLAN_BSS_TYPE_STA)
+    {
+        netif_set_igmp_mac_filter(netif, igmp_mac_filter);
+        netif->flags |= NETIF_FLAG_IGMP;
+    }
 #ifdef CONFIG_IPV6
     netif_set_mld_mac_filter(netif, mld_mac_filter);
     netif->flags |= NETIF_FLAG_MLD6;
@@ -407,7 +426,9 @@ static void low_level_init(struct netif *netif)
     }
 #endif
 }
+
 extern int retry_attempts;
+
 /**
  * This function should do the actual transmission of the packet. The packet is
  * contained in the pbuf that is passed to the function. This pbuf
@@ -427,138 +448,121 @@ extern int retry_attempts;
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
 {
     int ret;
-    struct pbuf *q;
     struct ethernetif *ethernetif = netif->state;
     u32_t pkt_len, outbuf_len;
+    u16_t uCopied;
+    t_u8 interface   = ethernetif->interface;
+    t_u8 *wmm_outbuf = NULL;
 #ifdef CONFIG_WMM
-    t_u8 tid          = 0;
-    int retry         = retry_attempts;
-    bool is_udp_frame = false;
-#ifdef RW610
-    struct bus_message msg;
-#endif
+    t_u8 tid                      = 0;
+    int retry                     = 0;
+    t_u8 ra[MLAN_MAC_ADDR_LENGTH] = {0};
+    bool is_tx_pause              = false;
 
-    int pkt_prio = wifi_wmm_get_pkt_prio(p->payload, &tid, &is_udp_frame);
+    t_u32 pkt_prio = wifi_wmm_get_pkt_prio(p->payload, &tid);
     if (pkt_prio == -WM_FAIL)
     {
         return ERR_MEM;
     }
 
-#ifdef CONFIG_WMM_ENH
-    uint8_t ra[MLAN_MAC_ADDR_LENGTH] = {0};
-    uint8_t *wmm_outbuf              = NULL;
-    bool is_tx_pause                 = false;
-
-    if (ethernetif->interface > WLAN_BSS_TYPE_UAP)
+    if (interface > WLAN_BSS_TYPE_UAP)
     {
-        wifi_wmm_drop_no_media(ethernetif->interface);
+        wifi_wmm_drop_no_media(interface);
         return ERR_MEM;
+    }
+
+    if (wifi_tx_status == WIFI_DATA_BLOCK)
+    {
+        wifi_tx_block_cnt++;
+        return ERR_OK;
     }
 
     wifi_wmm_da_to_ra(p->payload, ra);
 
-    wmm_outbuf = wifi_wmm_get_outbuf_enh(&outbuf_len, (mlan_wmm_ac_e)pkt_prio, ethernetif->interface, ra, &is_tx_pause);
-    ret        = (wmm_outbuf == NULL) ? true : false;
-    if (ret == true && is_tx_pause == true)
+    do
     {
-        wifi_wmm_drop_pause_drop(ethernetif->interface);
-        return ERR_MEM;
-    }
-#else
-    ret = is_wifi_wmm_queue_full(pkt_prio);
-#endif
-
-#ifdef RW610
-    while (ret == true && retry > 0)
-#else
-    while (ret == true && !is_udp_frame && retry > 0)
-#endif
-    {
-#ifdef RW610
-        msg.event  = MLAN_TYPE_DATA;
-        msg.reason = ethernetif->interface;
-        os_queue_send(&wm_wifi.tx_data, &msg, OS_NO_WAIT);
-
-        taskYIELD();
-#else
-        os_thread_sleep(os_msec_to_ticks(1));
-#endif
-#ifdef CONFIG_WMM_ENH
-        wmm_outbuf =
-            wifi_wmm_get_outbuf_enh(&outbuf_len, (mlan_wmm_ac_e)pkt_prio, ethernetif->interface, ra, &is_tx_pause);
-        ret = (wmm_outbuf == NULL) ? true : false;
-        if (ret == true && is_tx_pause == true)
+        if (retry != 0)
         {
-            wifi_wmm_drop_pause_drop(ethernetif->interface);
+            send_wifi_driver_tx_data_event(interface);
+            taskYIELD();
+        }
+        else
+        {
+            retry = retry_attempts;
+        }
+
+        wmm_outbuf = wifi_wmm_get_outbuf_enh(&outbuf_len, (mlan_wmm_ac_e)pkt_prio, interface, ra, &is_tx_pause);
+        ret        = (wmm_outbuf == NULL) ? true : false;
+
+        if (is_tx_pause == true)
+        {
+            wifi_wmm_drop_pause_drop(interface);
             return ERR_MEM;
         }
-#else
-        ret = is_wifi_wmm_queue_full(pkt_prio);
-#endif
+
         retry--;
-    }
+    } while (ret == true && retry > 0);
+
     if (ret == true)
     {
-#ifdef CONFIG_WMM_ENH
-        wifi_wmm_drop_retried_drop(ethernetif->interface);
-#endif
+        wifi_wmm_drop_retried_drop(interface);
         return ERR_MEM;
     }
-#ifdef CONFIG_WMM_ENH
-    /*
-     *  wmm enhance buffer has more than a list_entry head to enqueue,
-     *  so push forward outbuf ptr for common process,
-     *  and pull back when about to wifi_low_level_output to enqueue
-     */
-    wmm_outbuf += sizeof(mlan_linked_list);
-    outbuf_len -= sizeof(mlan_linked_list);
 #else
-    uint8_t *wmm_outbuf = wifi_wmm_get_outbuf(&outbuf_len, pkt_prio);
-#endif
-#else
-    uint8_t *wmm_outbuf = wifi_get_outbuf((uint32_t *)(&outbuf_len));
-#endif
+    wmm_outbuf = wifi_get_outbuf((uint32_t *)(&outbuf_len));
+
     if (wmm_outbuf == NULL)
     {
         return ERR_MEM;
     }
+#endif
 
-    pkt_len = sizeof(TxPD) + INTF_HEADER_LEN;
+    pkt_len =
+#ifdef CONFIG_WMM
+        sizeof(mlan_linked_list) +
+#endif
+        sizeof(TxPD) + INTF_HEADER_LEN;
 
-    (void)memset(wmm_outbuf, 0x00, pkt_len);
-
-    for (q = p; q != NULL; q = q->next)
+#ifndef CONFIG_WMM
+#ifdef LWIP_NETIF_TX_SINGLE_PBUF
+    if ((p->len == p->tot_len) && (pbuf_header(p, pkt_len) == 0))
     {
-        if (pkt_len > outbuf_len)
-        {
-            while (true)
-            {
-                LWIP_DEBUGF(NETIF_DEBUG, ("PANIC: Xmit packet"
-                                          "is bigger than inbuf.\r\n"));
-                vTaskDelay((3000U) / portTICK_PERIOD_MS);
-            }
-        }
-        (void)memcpy((u8_t *)wmm_outbuf + pkt_len, (u8_t *)q->payload, q->len);
-        pkt_len += q->len;
+        wmm_outbuf = p->payload;
+        memset(wmm_outbuf, 0x00, pkt_len);
+        pkt_len = p->tot_len;
+    }
+    else
+#endif
+#endif
+    {
+        memset(wmm_outbuf, 0x00, pkt_len);
+
+        uCopied = pbuf_copy_partial(p, wmm_outbuf + pkt_len, p->tot_len, 0);
+
+        LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
+        pkt_len += p->tot_len;
     }
 
-#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
-    /*
-     *  for enqueue operation, wmm enhance need to use the whole outbuf with
-     *  mlan_linked_list, INTF header, TxPD and data payload,
-     *  so in_param outbuf and len are different from others
-     */
-    wmm_outbuf -= sizeof(mlan_linked_list);
-    ret = wifi_low_level_output(ethernetif->interface, wmm_outbuf, pkt_len + sizeof(mlan_linked_list), pkt_prio, tid);
-#else
-    ret = wifi_low_level_output(ethernetif->interface, wmm_outbuf + sizeof(TxPD) + INTF_HEADER_LEN,
-                                pkt_len - sizeof(TxPD) - INTF_HEADER_LEN
+    ret = wifi_low_level_output(interface, wmm_outbuf, pkt_len
 #ifdef CONFIG_WMM
                                 ,
                                 pkt_prio, tid
 #endif
     );
-#endif /* CONFIG_WMM && CONFIG_WMM_ENH */
+
+#ifdef CONFIG_WMM
+#ifdef LWIP_NETIF_TX_SINGLE_PBUF
+    pkt_len = sizeof(TxPD) + INTF_HEADER_LEN;
+
+    pbuf_header(p, -pkt_len);
+#endif
+#endif
+
+    if (ret == WM_SUCCESS)
+    {
+        LINK_STATS_INC(link.xmit);
+        return ERR_OK;
+    }
 
     if (ret == -WM_E_NOMEM)
     {
@@ -570,18 +574,12 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         LINK_STATS_INC(link.err);
         ret = ERR_TIMEOUT;
     }
-    else if (ret == WM_SUCCESS)
-    {
-        LINK_STATS_INC(link.xmit);
-        ret = ERR_OK;
-    }
     else
     { /* Do Nothing */
     }
 
     return ret;
 }
-
 
 
 
@@ -822,7 +820,6 @@ done:
 err_t lwip_netif_init(struct netif *netif)
 {
     struct ethernetif *ethernetif;
-    unsigned char ignore_mac[MLAN_MAC_ADDR_LENGTH];
 
     LWIP_ASSERT("netif != NULL", (netif != NULL));
 
@@ -860,7 +857,7 @@ err_t lwip_netif_init(struct netif *netif)
     low_level_init(netif);
 
     /* set sta MAC hardware address */
-    (void)wlan_get_mac_address(netif->hwaddr, ignore_mac);
+    (void)wlan_get_mac_address(netif->hwaddr);
 
     register_interface(netif, MLAN_BSS_TYPE_STA);
     return ERR_OK;
@@ -869,7 +866,6 @@ err_t lwip_netif_init(struct netif *netif)
 err_t lwip_netif_uap_init(struct netif *netif)
 {
     struct ethernetif *ethernetif;
-    unsigned char ignore_mac[MLAN_MAC_ADDR_LENGTH];
 
     LWIP_ASSERT("netif != NULL", (netif != NULL));
 
@@ -900,7 +896,7 @@ err_t lwip_netif_uap_init(struct netif *netif)
     low_level_init(netif);
 
     /* set uap MAC hardware address */
-    (void)wlan_get_mac_address(ignore_mac, netif->hwaddr);
+    (void)wlan_get_mac_address_uap(netif->hwaddr);
 
     register_interface(netif, MLAN_BSS_TYPE_UAP);
 

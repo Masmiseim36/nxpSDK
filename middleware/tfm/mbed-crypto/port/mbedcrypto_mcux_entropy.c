@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 - 2021 NXP
+ * Copyright 2019 - 2022 NXP
  * All rights reserved.
  *
  *
@@ -20,10 +20,25 @@
 #include "fsl_rng.h"
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
 #include "fsl_rng.h"
-#elif defined(CSS)
+#endif
+
+
+/* Defining the block in all cases, if platform supports CSS/ELS*/
+#if defined(ELS)
+#if defined(PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE)
+extern status_t  mbecrypto_mcux_els_pkc_init(void);
+#else
+#if defined(MBEDTLS_MCUX_USE_ELS)
+extern status_t  mbecrypto_mcux_els_init(void);
+#else
+#if defined(MBEDTLS_MCUX_CSS)
 #include "mcuxClCss.h"               /* Interface to the entire nxpClCss component */
 extern status_t  mbecrypto_mcux_css_init(void);
-#endif
+#endif /* MBEDTLS_MCUX_USE_CLS */
+#endif /* MBEDTLS_MCUX_ELS */
+#endif /* PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE */
+#endif /* ELS */
+
 
 static void mbedtls_mcux_rng_init(void)
 {
@@ -42,7 +57,18 @@ static void mbedtls_mcux_rng_init(void)
     RNGA_Seed(RNG, SIM->UIDL);
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     RNG_Init(RNG);
-#elif defined(CSS)
+#endif
+    
+/* Defining the block in all cases, if platform supports CSS/ELS*/
+#if defined(ELS)
+
+#if defined(PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE)
+    mbecrypto_mcux_els_pkc_init();
+#else
+#if defined(MBEDTLS_MCUX_USE_ELS)
+    mbecrypto_mcux_els_init();
+#else /* MBEDTLS_MCUX_USE_CSS*/
+#if defined(MBEDTLS_MCUX_CSS)
 #if 0 /* Simple initialization */
     if( MCUX_CSSL_FP_RESULT(mcuxClCss_Enable_Async()) == MCUXCLCSS_STATUS_OK_WAIT) /* Enable the CSSv2. */
     {
@@ -51,7 +77,11 @@ static void mbedtls_mcux_rng_init(void)
 #else
     mbecrypto_mcux_css_init();
 #endif
-#endif
+#endif /* MBEDTLS_MCUX_USE_CSS */
+#endif /* MBEDTLS_MCUX_ELS */
+#endif /* PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE */
+#endif /* ELS */
+
 }
 
 /* Entropy poll callback for a hardware source */
@@ -114,7 +144,7 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     result = kStatus_Success;
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     result = RNG_GetRandomData(RNG, output, len);
-#elif defined(CSS)
+#elif defined(ELS) //as CSS is renamed for LPC55S36 already, hence the update here
 
     uint8_t rn[MCUXCLCSS_RNG_DRBG_TEST_EXTRACT_OUTPUT_MIN_SIZE];
     size_t  length = len;

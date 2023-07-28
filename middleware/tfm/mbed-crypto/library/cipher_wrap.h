@@ -29,7 +29,7 @@
 #include "mbedtls/cipher.h"
 
 #if defined(MBEDTLS_USE_PSA_CRYPTO)
-#include "mbed_psa/crypto.h" //NXP
+#include "psa/crypto.h"
 #endif /* MBEDTLS_USE_PSA_CRYPTO */
 
 #ifdef __cplusplus

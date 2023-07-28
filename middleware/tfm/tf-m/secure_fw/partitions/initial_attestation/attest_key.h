@@ -9,8 +9,9 @@
 #define __ATTEST_KEY_H__
 
 #include "attest.h"
+#include "config_tfm.h"
 #include "psa/initial_attestation.h"
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"            //NXP to avoid file name conflicts between MbedTLS and TFM.
 #include "q_useful_buf.h"
 
 #ifdef __cplusplus
@@ -30,7 +31,7 @@ extern "C" {
 enum psa_attest_err_t
 attest_get_instance_id(struct q_useful_buf_c *id_buf);
 
-#ifdef INCLUDE_COSE_KEY_ID
+#if ATTEST_INCLUDE_COSE_KEY_ID
 /**
  * \brief Get the attestation key ID.
  *        In asymmetric key algorithm based Initial Attestation, it is the hash
@@ -46,7 +47,7 @@ attest_get_instance_id(struct q_useful_buf_c *id_buf);
  */
 enum psa_attest_err_t
 attest_get_initial_attestation_key_id(struct q_useful_buf_c *attest_key_id);
-#else /* INCLUDE_COSE_KEY_ID */
+#else /* ATTEST_INCLUDE_COSE_KEY_ID */
 static inline enum psa_attest_err_t
 attest_get_initial_attestation_key_id(struct q_useful_buf_c *attest_key_id)
 {
@@ -54,7 +55,7 @@ attest_get_initial_attestation_key_id(struct q_useful_buf_c *attest_key_id)
 
     return PSA_ATTEST_ERR_SUCCESS;
 }
-#endif /* INCLUDE_COSE_KEY_ID */
+#endif /* ATTEST_INCLUDE_COSE_KEY_ID */
 
 #ifdef __cplusplus
 }

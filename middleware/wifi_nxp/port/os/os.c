@@ -4,7 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 #include <inttypes.h>
@@ -18,6 +18,19 @@
 void vApplicationIdleHook(void);
 void os_thread_stackmark(char *name);
 int os_event_flags_delete(event_group_handle_t *hnd);
+
+/** Check if cpu is in isr context
+ *
+ * \return bool value - true if cpu is in isr context
+ */
+bool is_isr_context(void)
+{
+#ifdef __CA7_REV
+    return (0U != if (SystemGetIRQNestingLevel()))
+#else /* __CA7_REV */
+    return (0U != __get_IPSR());
+#endif
+}
 
 /** Get current OS tick counter value
  *
@@ -155,7 +168,7 @@ int os_timer_activate(os_timer_t *timer_t)
          * context, hence use FromISR FreeRTOS APIs.
          */
         ret = xTimerStartFromISR(*timer_t, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -203,7 +216,7 @@ int os_timer_change(os_timer_t *timer_t, os_timer_tick ntime, os_timer_tick bloc
          * context, hence use FromISR FreeRTOS APIs.
          */
         ret = xTimerChangePeriodFromISR(*timer_t, ntime, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -258,7 +271,7 @@ int os_timer_reset(os_timer_t *timer_t)
          * context, hence use FromISR FreeRTOS APIs.
          */
         ret = xTimerResetFromISR(*timer_t, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -288,7 +301,7 @@ int os_timer_deactivate(os_timer_t *timer_t)
          * context, hence use FromISR FreeRTOS APIs.
          */
         ret = xTimerStopFromISR(*timer_t, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -352,7 +365,7 @@ int os_queue_send(os_queue_t *qhandle, const void *msg, unsigned long wait)
          * context, hence use FromISR FreeRTOS APIs.
          */
         ret = xQueueSendToBackFromISR(*qhandle, msg, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -1014,7 +1027,7 @@ int os_event_notify_put(os_thread_t task)
          * context, hence use FromISR FreeRTOS APIs.
          */
         vTaskNotifyGiveFromISR(task, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -1074,7 +1087,7 @@ int os_semaphore_get(os_semaphore_t *mhandle, unsigned long wait)
          * context, hence use FromISR FreeRTOS APIs.
          */
         ret = xSemaphoreTakeFromISR(*mhandle, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -1099,7 +1112,7 @@ int os_semaphore_put(os_semaphore_t *mhandle)
          * context, hence use FromISR FreeRTOS APIs.
          */
         ret = xSemaphoreGiveFromISR(*mhandle, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+        portYIELD_FROM_ISR((bool)(xHigherPriorityTaskWoken));
     }
     else
     {
@@ -1149,7 +1162,7 @@ int os_rwlock_read_lock(os_rw_lock_t *lock, unsigned int wait_time)
 {
     int ret = WM_SUCCESS;
     ret     = os_mutex_get(&(lock->reader_mutex), OS_WAIT_FOREVER);
-    if (ret == -WM_FAIL)
+    if (ret != WM_SUCCESS)
     {
         return ret;
     }
@@ -1159,7 +1172,7 @@ int os_rwlock_read_lock(os_rw_lock_t *lock, unsigned int wait_time)
         if (lock->reader_cb != NULL)
         {
             ret = lock->reader_cb(lock, wait_time);
-            if (ret == -WM_FAIL)
+            if (ret != WM_SUCCESS)
             {
                 lock->reader_count--;
                 (void)os_mutex_put(&(lock->reader_mutex));
@@ -1173,7 +1186,7 @@ int os_rwlock_read_lock(os_rw_lock_t *lock, unsigned int wait_time)
              * else reader will block.
              */
             ret = os_semaphore_get(&(lock->rw_lock), wait_time);
-            if (ret == -WM_FAIL)
+            if (ret != WM_SUCCESS)
             {
                 lock->reader_count--;
                 (void)os_mutex_put(&(lock->reader_mutex));

@@ -1,5 +1,5 @@
 /* Copyright 2019 The TensorFlow Authors. All Rights Reserved.
-   Copyright 2021-2022 NXP
+   Copyright 2021-2023 NXP
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,44 +18,33 @@ limitations under the License.
    /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
 
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
-#include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
+#include "tensorflow/lite/micro/micro_op_resolver.h"
 #include "tensorflow/lite/schema/schema_generated.h"
 
 #include "fsl_debug_console.h"
 #include "model.h"
 #include "model_data.h"
 
-static tflite::ErrorReporter* s_errorReporter = nullptr;
 static const tflite::Model* s_model = nullptr;
 static tflite::MicroInterpreter* s_interpreter = nullptr;
-static TfLiteTensor* inputTensor;
 
-extern tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter);
+extern tflite::MicroOpResolver &MODEL_GetOpsResolver();
 
 // An area of memory to use for input, output, and intermediate arrays.
 // (Can be adjusted based on the model needs.)
-constexpr int kTensorArenaSize = 256 * 1024;
 static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(16);
 
 status_t MODEL_Init(void)
 {
-    // Set up logging. Google style is to avoid globals or statics because of
-    // lifetime uncertainty, but since this has a trivial destructor it's okay.
-    // NOLINTNEXTLINE(runtime-global-variables)
-    static tflite::MicroErrorReporter micro_error_reporter;
-    s_errorReporter = &micro_error_reporter;
-
     // Map the model into a usable data structure. This doesn't involve any
     // copying or parsing, it's a very lightweight operation.
     s_model = tflite::GetModel(model_data);
     if (s_model->version() != TFLITE_SCHEMA_VERSION)
     {
-        TF_LITE_REPORT_ERROR(s_errorReporter,
-                             "Model provided is schema version %d not equal "
-                             "to supported version %d.",
-                             s_model->version(), TFLITE_SCHEMA_VERSION);
+        PRINTF("Model provided is schema version %d not equal "
+               "to supported version %d.",
+               s_model->version(), TFLITE_SCHEMA_VERSION);
         return kStatus_Fail;
     }
 
@@ -67,23 +56,20 @@ status_t MODEL_Init(void)
     //
     // tflite::AllOpsResolver resolver;
     // NOLINTNEXTLINE(runtime-global-variables)
-    tflite::MicroOpResolver &micro_op_resolver = MODEL_GetOpsResolver(s_errorReporter);
+    tflite::MicroOpResolver &micro_op_resolver = MODEL_GetOpsResolver();
 
     // Build an interpreter to run the model with.
     static tflite::MicroInterpreter static_interpreter(
-        s_model, micro_op_resolver, s_tensorArena, kTensorArenaSize, s_errorReporter);
+        s_model, micro_op_resolver, s_tensorArena, kTensorArenaSize);
     s_interpreter = &static_interpreter;
 
     // Allocate memory from the tensor_arena for the model's tensors.
     TfLiteStatus allocate_status = s_interpreter->AllocateTensors();
     if (allocate_status != kTfLiteOk)
     {
-        TF_LITE_REPORT_ERROR(s_errorReporter, "AllocateTensors() failed");
+        PRINTF("AllocateTensors() failed");
         return kStatus_Fail;
     }
-
-    // Get information about the memory area to use for the model's input.
-    inputTensor = s_interpreter->input(0);
 
     return kStatus_Success;
 }
@@ -128,6 +114,8 @@ uint8_t* GetTensorData(TfLiteTensor* tensor, tensor_dims_t* dims, tensor_type_t*
 
 uint8_t* MODEL_GetInputTensorData(tensor_dims_t* dims, tensor_type_t* type)
 {
+    TfLiteTensor* inputTensor = s_interpreter->input(0);
+
     return GetTensorData(inputTensor, dims, type);
 }
 

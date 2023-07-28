@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,6 +19,7 @@
 #include "xaf-utils-test.h"
 
 #include "fsl_gpio.h"
+#include "fsl_sema42.h"
 
 #define AUDIO_BUFFER_FILL_THRESHOLD (16 * 1024)
 
@@ -28,6 +29,15 @@ XosMsgQueue *event_queue = NULL;
 /*******************************************************************************
  * Utility Functions
  ******************************************************************************/
+void DSP_PRINTF(const char* ptr, ...)
+{
+    va_list ap;
+    SEMA42_Lock(APP_SEMA42, SEMA_PRINTF_NUM, SEMA_CORE_ID_DSP);
+    va_start(ap, ptr);
+    DbgConsole_Vprintf(ptr, ap);
+    va_end(ap);
+    SEMA42_Unlock(APP_SEMA42, SEMA_PRINTF_NUM);
+}
 
 /* Wrap stdlib malloc() for audio framework allocator */
 void *DSP_Malloc(int32_t size, int32_t id)

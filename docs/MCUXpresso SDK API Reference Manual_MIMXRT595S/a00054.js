@@ -1,11 +1,11 @@
 var a00054 =
 [
-    [ "pq_prescale_t", "a00054.html#a00413", [
+    [ "pq_prescale_t", "a00054.html#a00418", [
       [ "inputPrescale", "a00054.html#aaeb2ce65b19c6c83a752e899b9def942", null ],
       [ "outputPrescale", "a00054.html#abd109972c1d75809d38b0b461aba2319", null ],
       [ "outputSaturate", "a00054.html#a9df386ce33fd8233bdccdb744e68cd35", null ]
     ] ],
-    [ "pq_config_t", "a00054.html#a00411", [
+    [ "pq_config_t", "a00054.html#a00416", [
       [ "inputAFormat", "a00054.html#adbf583e02dee6b954bf1a50e64621e64", null ],
       [ "inputAPrescale", "a00054.html#af562376169b59f05ce67208111e41264", null ],
       [ "inputBFormat", "a00054.html#a780fe123c2f494996b4dcb95095f9103", null ],
@@ -17,7 +17,7 @@ var a00054 =
       [ "machineFormat", "a00054.html#aa637fb7118e5803896e33e2417275e9e", null ],
       [ "tmpBase", "a00054.html#a5a883485872c6c229020ad0df0267adc", null ]
     ] ],
-    [ "pq_biquad_param_t", "a00054.html#a00409", [
+    [ "pq_biquad_param_t", "a00054.html#a00414", [
       [ "v_n_1", "a00054.html#a078065dc66934bae9862b01102ad6224", null ],
       [ "v_n", "a00054.html#a580f579beedafb1867cbfae2811d7371", null ],
       [ "a_1", "a00054.html#a68208deb20e82d04b70ea427d4dfce1d", null ],
@@ -26,15 +26,15 @@ var a00054 =
       [ "b_1", "a00054.html#a7968ccb44e07689df32bcc87ee2f739d", null ],
       [ "b_2", "a00054.html#a0f5b79cba289c326aa72bf99d2e32076", null ]
     ] ],
-    [ "pq_biquad_state_t", "a00054.html#a00410", [
+    [ "pq_biquad_state_t", "a00054.html#a00415", [
       [ "param", "a00054.html#a6e0c4b7d01ba3f7f44d2a988096b4e11", null ],
       [ "compreg", "a00054.html#a63b7c4782cdd100b9f8c5e26648d7b03", null ]
     ] ],
-    [ "pq_biquad_cascade_df2_instance", "a00054.html#a00408", [
+    [ "pq_biquad_cascade_df2_instance", "a00054.html#a00413", [
       [ "numStages", "a00054.html#a5e1778feb63d1236c1243e0f500e63ac", null ],
       [ "pState", "a00054.html#a5242f86b4d36fc8ae4639ed144e79226", null ]
     ] ],
-    [ "pq_float_t", "a00054.html#a00412", [
+    [ "pq_float_t", "a00054.html#a00417", [
       [ "floatX", "a00054.html#a22508fdc137ac3fe040aaff8549b3f50", null ],
       [ "integerX", "a00054.html#ae6024461e02a5fac5d24d73518daa1e0", null ]
     ] ],

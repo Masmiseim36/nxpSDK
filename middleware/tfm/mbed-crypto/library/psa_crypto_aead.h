@@ -21,7 +21,7 @@
 #ifndef PSA_CRYPTO_AEAD_H
 #define PSA_CRYPTO_AEAD_H
 
-#include <mbed_psa/crypto.h> //NXP
+#include <psa/crypto.h>
 
 /**
  * \brief Process an authenticated encryption operation.

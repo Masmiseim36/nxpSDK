@@ -7,10 +7,8 @@
 
 #include "tfm_secure_client_service.h"
 #include "test_framework_integ_test.h"
-#ifdef TFM_PSA_API
 #include "psa/service.h"
 #include "psa_manifest/tfm_secure_client_service.h"
-#endif
 /**
  * \brief Service initialisation function. No special initialisation is
  *        required.
@@ -19,7 +17,6 @@
  */
 int32_t tfm_secure_client_service_init(void)
 {
-#ifdef TFM_PSA_API
     tfm_secure_client_service_sfn_run_tests();
 
 #if TFM_SP_SECURE_TEST_PARTITION_MODEL_IPC == 1
@@ -29,7 +26,6 @@ int32_t tfm_secure_client_service_init(void)
         psa_panic();
     }
 #endif /* TFM_SP_SECURE_TEST_PARTITION_MODEL_IPC == 1 */
-#endif
     return 0;
 }
 

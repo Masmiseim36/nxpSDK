@@ -11,7 +11,7 @@
 #include <limits.h>
 #include <stdint.h>
 #include <stddef.h>
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"         //NXP to avoid file name conflicts between MbedTLS and TFM.
 
 #ifdef __cplusplus
 extern "C" {

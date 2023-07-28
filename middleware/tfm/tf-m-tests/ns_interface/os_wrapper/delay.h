@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2023 Cypress Semiconductor Corporation (an Infineon company)
+ * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -12,7 +14,7 @@
 extern "C" {
 #endif
 
-#include "common.h"
+#include "os_wrapper/common.h"
 
 /**
  * \brief Waits for a time period specified in kernel ticks.

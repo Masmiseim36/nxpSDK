@@ -187,7 +187,9 @@ extern "C" {
  */
 #include "pkcs11t.h"
 
+#ifndef __PASTE
 #define __PASTE(x,y)      x##y
+#endif
 
 
 /* ==============================================================

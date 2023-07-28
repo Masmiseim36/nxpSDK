@@ -1,0 +1,48 @@
+# get build target from current directory and make it's first letter lowercase
+build_target = $(notdir $(CURDIR))
+build_target := $(subst R,r,$(build_target))
+build_target := $(subst D,d,$(build_target))
+
+post-all:
+	@echo post all rule
+	@echo ${xt_sysargs}
+	@echo ${xt_project}
+	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_reset_$(build_target).bin \
+	--only-section=.ResetVector.text
+	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_text_$(build_target).bin \
+	--only-section=.WindowVectors.text \
+	--only-section=.Level2InterruptVector.text \
+	--only-section=.Level3InterruptVector.literal \
+	--only-section=.Level3InterruptVector.text \
+	--only-section=.DebugExceptionVector.literal \
+	--only-section=.DebugExceptionVector.text \
+	--only-section=.NMIExceptionVector.literal \
+	--only-section=.NMIExceptionVector.text \
+	--only-section=.KernelExceptionVector.text \
+	--only-section=.UserExceptionVector.literal \
+	--only-section=.UserExceptionVector.text \
+	--only-section=.DoubleExceptionVector.text \
+	--only-section=.text
+	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_data_$(build_target).bin \
+	--only-section=.rtos.rodata \
+	--only-section=.rodata \
+	--only-section=.clib.data \
+	--only-section=.rtos.percpu.data \
+	--only-section=.data
+
+#
+bin_path = ../../../../binary/
+ifeq ($(OS),Windows_NT)
+	# windows
+	rm_cmd = del /Q
+	bin_path := $(subst /,\,$(bin_path))
+else
+	# unix
+	rm_cmd = rm -f
+endif
+
+pre-clean:
+	@echo pre-clean rule
+	$(rm_cmd) "$(bin_path)dsp_reset_$(build_target).bin"
+	$(rm_cmd) "$(bin_path)dsp_text_$(build_target).bin"
+	$(rm_cmd) "$(bin_path)dsp_data_$(build_target).bin"

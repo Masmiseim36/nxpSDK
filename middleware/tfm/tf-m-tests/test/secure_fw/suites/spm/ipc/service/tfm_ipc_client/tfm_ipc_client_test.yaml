@@ -12,8 +12,6 @@
   "priority": "NORMAL",
   "entry_point": "ipc_client_test_main",
   "stack_size": "0x0300",
-  "secure_functions": [
-  ],
   "services" : [
     {
       "name": "IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM",

@@ -21,7 +21,7 @@
 #ifndef PSA_CRYPTO_SLOT_MANAGEMENT_H
 #define PSA_CRYPTO_SLOT_MANAGEMENT_H
 
-#include "mbed_psa/crypto.h" //NXP
+#include "psa/crypto.h"
 #include "psa_crypto_core.h"
 #include "psa_crypto_se.h"
 

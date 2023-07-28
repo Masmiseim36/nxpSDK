@@ -675,7 +675,7 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *inpu
 /*
  * SHA-256 final digest
  */
-int mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char output[32])
+int mbedtls_sha256_finish( mbedtls_sha256_context *ctx, unsigned char *output )
 {
     status_t ret = kStatus_Fail;
     size_t outputSize = 32;

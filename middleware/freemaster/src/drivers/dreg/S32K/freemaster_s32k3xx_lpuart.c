@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020, 2022 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -97,7 +97,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S32K3XX_LPUART =
 #define FMSTR_LPUART_CTRL_OFFSET         0x18       /* 32bit register */
 #define FMSTR_LPUART_DATA_OFFSET         0x1C       /* 32bit register */
 
-/* LPUART CTRL Control Register 1 bits */
+/* LPUART CTRL Control register bits */
 #define FMSTR_LPUART_CTRL_TIE            0x00800000
 #define FMSTR_LPUART_CTRL_TCIE           0x00400000
 #define FMSTR_LPUART_CTRL_RIE            0x00200000
@@ -108,6 +108,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S32K3XX_LPUART =
 #define FMSTR_LPUART_STAT_TDRE           0x00800000
 #define FMSTR_LPUART_STAT_TC             0x00400000
 #define FMSTR_LPUART_STAT_RDRF           0x00200000
+#define FMSTR_LPUART_STAT_OR             0x00080000
 
 /**************************************************************************//*!
 *
@@ -198,16 +199,16 @@ static void _FMSTR_S32K3XX_EnableTransmitInterrupt(FMSTR_BOOL enable)
 
 static void _FMSTR_S32K3XX_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
-	if(enable)
-	{
-		/* Enable interrupt */
-		FMSTR_SETBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_CTRL_TCIE);
-	}
-	else
-	{
-		/* Disable interrupt */
-		FMSTR_CLRBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_CTRL_TCIE);
-	}
+    if(enable)
+    {
+        /* Enable interrupt */
+        FMSTR_SETBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_CTRL_TCIE);
+    }
+    else
+    {
+        /* Disable interrupt */
+        FMSTR_CLRBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_CTRL_TCIE);
+    }
 }
 
 /**************************************************************************//*!
@@ -249,6 +250,12 @@ static FMSTR_BOOL _FMSTR_S32K3XX_IsTransmitRegEmpty(void)
 
 static FMSTR_BOOL _FMSTR_S32K3XX_IsReceiveRegFull(void)
 {
+    /* Clear overrun bit if set for the receiver to continue normal operation. */
+    if(FMSTR_TSTBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_OR))
+    {
+        FMSTR_SETBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_OR);
+    }
+
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_STAT_RDRF);
 }
 

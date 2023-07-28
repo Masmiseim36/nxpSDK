@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.28 - Graphical user interface for embedded applications **
+** emWin V6.32 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -62,6 +62,25 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #if defined (_MSC_VER)
   #if (_MSC_VER > 1200)
     #pragma warning( disable : 4996)
+  #endif
+#endif
+
+/*********************************************************************
+*
+*       Numeric limits
+*/
+#ifndef __LONG_MIN__
+  #ifdef LONG_MIN
+    #define __LONG_MIN__ LONG_MIN
+  #else
+    #define __LONG_MIN__ (-2147483647L - 1)
+  #endif
+#endif
+#ifndef __LONG_MAX__
+  #ifdef LONG_MIN
+    #define __LONG_MAX__ LONG_MAX
+  #else
+    #define __LONG_MAX__ 2147483647L
   #endif
 #endif
 
@@ -600,10 +619,11 @@ void GUI_MoveTo                (int x, int y);
 void GUI_SetAlphaMask8888      (U32 OrMask, U32 AndMask);
 void GUI_SetFuncFillCircle     (int (* pfFillCircle)(int x0, int y0, int r));
 void GUI_SetFuncDrawCircle     (int (* pfDrawCircle)(int x0, int y0, int r));
-void GUI_SetFuncDrawLine       (int (* pfDrawLine)(int x0, int y0, int x2, int y1));
+void GUI_SetFuncDrawLine       (int (* pfDrawLine)(int x0, int y0, int x1, int y1));
 void GUI_SetFuncDrawRect       (int (* pfDrawRect)(int x0, int y0, int x1, int y1));
 void GUI_SetFuncFillRoundedRect(int (* pfFillRoundedRect)(int x0, int y0, int x1, int y1, int r));
 void GUI_SetFuncDrawRoundedRect(int (* pfDrawRoundedRect)(int x0, int y0, int x1, int y1, int r));
+void GUI_SetFuncDrawBitmapEx   (int (* pfDrawBitmapEx)(const GUI_BITMAP * pBitmap, int x0, int y0, int xMag, int yMag));
 
 /*********************************************************************
 *
@@ -689,6 +709,34 @@ void GUI_JPEG_SetpfDrawEx(int (* pfDrawEx)(GUI_GET_DATA_FUNC * pfGetData, void *
 
 /*********************************************************************
 *
+*       GUI_TIMER module
+*/
+#define GUI_TIMER_CF_WINDOW (1 << 0)
+#define GUI_TIMER_CF_CURSOR (1 << 1)
+
+typedef GUI_HMEM GUI_TIMER_HANDLE;
+
+typedef struct {
+  GUI_TIMER_TIME   Time;
+  PTR_ADDR         Context;
+  GUI_TIMER_HANDLE hTimer;
+} GUI_TIMER_MESSAGE;
+
+typedef void GUI_TIMER_CALLBACK(/*const*/ GUI_TIMER_MESSAGE* pTM);
+
+GUI_TIMER_HANDLE GUI_TIMER_Create   (GUI_TIMER_CALLBACK * cb, GUI_TIMER_TIME Time, PTR_ADDR Context, U16 Flags);
+void             GUI_TIMER_Delete   (GUI_TIMER_HANDLE hObj);
+
+/* Methods changing properties */
+GUI_TIMER_TIME GUI_TIMER_GetPeriod(GUI_TIMER_HANDLE hObj);
+void           GUI_TIMER_SetPeriod(GUI_TIMER_HANDLE hObj, GUI_TIMER_TIME Period);
+void           GUI_TIMER_SetDelay (GUI_TIMER_HANDLE hObj, GUI_TIMER_TIME Delay);
+void           GUI_TIMER_Restart  (GUI_TIMER_HANDLE hObj);
+int            GUI_TIMER_GetFlag  (GUI_TIMER_HANDLE hObj, int Flag); /* Not to be documented */
+int            GUI_TIMER_Exec     (void);
+
+/*********************************************************************
+*
 *       MOVIE file support
 */
 /*********************************************************************
@@ -723,23 +771,33 @@ typedef struct {
   U32 NumFrames;     // Number of frames of the movie file.
 } GUI_MOVIE_INFO;
 
-GUI_MOVIE_HANDLE GUI_MOVIE_Create       (const void * pFileData, U32 FileSize, GUI_MOVIE_FUNC * pfNotify);
-GUI_MOVIE_HANDLE GUI_MOVIE_CreateEx     (GUI_GET_DATA_FUNC * pfGetData, void * pParam, GUI_MOVIE_FUNC * pfNotify);
-int              GUI_MOVIE_Delete       (GUI_MOVIE_HANDLE hMovie);
-void             GUI_MOVIE_DrawFrame    (GUI_MOVIE_HANDLE hMovie, int Index, int x, int y);
-U32              GUI_MOVIE_GetFrameIndex(GUI_MOVIE_HANDLE hMovie);
-int              GUI_MOVIE_GetInfo      (const void * pFileData, U32 FileSize, GUI_MOVIE_INFO * pInfo);
-int              GUI_MOVIE_GetInfoEx    (GUI_GET_DATA_FUNC * pfGetData, void * pParam, GUI_MOVIE_INFO * pInfo);
-int              GUI_MOVIE_GetInfoH     (GUI_MOVIE_HANDLE hMovie, GUI_MOVIE_INFO * pInfo);
-int              GUI_MOVIE_GetNumFrames (GUI_MOVIE_HANDLE hMovie);
-int              GUI_MOVIE_GetPos       (GUI_MOVIE_HANDLE hMovie, int * pxPos, int * pyPos, int * pxSize, int * pySize);
-int              GUI_MOVIE_GotoFrame    (GUI_MOVIE_HANDLE hMovie, U32 Frame);
-int              GUI_MOVIE_Pause        (GUI_MOVIE_HANDLE hMovie);
-int              GUI_MOVIE_Play         (GUI_MOVIE_HANDLE hMovie);
-int              GUI_MOVIE_SetPeriod    (GUI_MOVIE_HANDLE hMovie, unsigned Period);
-void             GUI_MOVIE_SetpfNotify  (GUI_MOVIE_FUNC * pfNotify);
-int              GUI_MOVIE_SetPos       (GUI_MOVIE_HANDLE hMovie, int xPos, int yPos);
-int              GUI_MOVIE_Show         (GUI_MOVIE_HANDLE hMovie, int xPos, int yPos, int DoLoop);
+GUI_MOVIE_HANDLE GUI_MOVIE_Create         (const void * pFileData, U32 FileSize, GUI_MOVIE_FUNC * pfNotify);
+GUI_MOVIE_HANDLE GUI_MOVIE_CreateEx       (GUI_GET_DATA_FUNC * pfGetData, void * pParam, GUI_MOVIE_FUNC * pfNotify);
+int              GUI_MOVIE_Delete         (GUI_MOVIE_HANDLE hMovie);
+void             GUI_MOVIE_DrawFrame      (GUI_MOVIE_HANDLE hMovie, int Index, int x, int y);
+U32              GUI_MOVIE_GetFrameIndex  (GUI_MOVIE_HANDLE hMovie);
+int              GUI_MOVIE_GetInfo        (const void * pFileData, U32 FileSize, GUI_MOVIE_INFO * pInfo);
+int              GUI_MOVIE_GetInfoEx      (GUI_GET_DATA_FUNC * pfGetData, void * pParam, GUI_MOVIE_INFO * pInfo);
+int              GUI_MOVIE_GetInfoH       (GUI_MOVIE_HANDLE hMovie, GUI_MOVIE_INFO * pInfo);
+int              GUI_MOVIE_GetNumFrames   (GUI_MOVIE_HANDLE hMovie);
+int              GUI_MOVIE_GetPos         (GUI_MOVIE_HANDLE hMovie, int * pxPos, int * pyPos, int * pxSize, int * pySize);
+int              GUI_MOVIE_GotoFrame      (GUI_MOVIE_HANDLE hMovie, U32 Frame);
+int              GUI_MOVIE_IsPlaying      (GUI_MOVIE_HANDLE hMovie);
+int              GUI_MOVIE_Pause          (GUI_MOVIE_HANDLE hMovie);
+int              GUI_MOVIE_Play           (GUI_MOVIE_HANDLE hMovie);
+int              GUI_MOVIE_SetPeriod      (GUI_MOVIE_HANDLE hMovie, unsigned Period);
+void             GUI_MOVIE_SetpfNotify    (GUI_MOVIE_FUNC * pfNotify);
+int              GUI_MOVIE_SetPos         (GUI_MOVIE_HANDLE hMovie, int xPos, int yPos);
+void             GUI_MOVIE_SetSecondHandle(GUI_MOVIE_HANDLE hMovie, void * pParamTable);
+int              GUI_MOVIE_Show           (GUI_MOVIE_HANDLE hMovie, int xPos, int yPos, int DoLoop);
+
+void             GUI_MOVIE__OnTimeSlice (GUI_MOVIE_HANDLE hMovie, int Run, int DeactivateWM);
+int              GUI_MOVIE__Play        (GUI_MOVIE_HANDLE hMovie, GUI_TIMER_CALLBACK * cbTimer, int DoLoop, GUI_HMEM hExtra);
+int              GUI_MOVIE__Pause       (GUI_MOVIE_HANDLE hMovie, int ShowFrame, int DeactivateWM);
+void             GUI_MOVIE__SetTimerFlag(GUI_MOVIE_HANDLE hMovie);
+GUI_MOVIE_HANDLE GUI_MOVIE__CreateUser  (GUI_GET_DATA_FUNC * pfGetData, void * pParam, GUI_MOVIE_FUNC * pfNotify, void * pVoid);
+void           * GUI_MOVIE__GetUserData (GUI_MOVIE_HANDLE hMovie);
+void             GUI_MOVIE__SetUserData (GUI_MOVIE_HANDLE hMovie, void * pVoid);
 
 /*********************************************************************
 *
@@ -1266,6 +1324,8 @@ void GUI_MEMDEV_SetDrawMemdev16bppFunc(GUI_DRAWMEMDEV_16BPP_FUNC * pfDrawMemdev1
 void GUI_MEMDEV_SetRotateFuncLR(int (* pfRotate)(GUI_MEMDEV_Handle hSrc, GUI_MEMDEV_Handle hDst, int dx, int dy, int a, int Mag));
 void GUI_MEMDEV_SetRotateFuncHR(int (* pfRotate)(GUI_MEMDEV_Handle hSrc, GUI_MEMDEV_Handle hDst, int dx, int dy, int a, int Mag));
 
+void GUI_MEMDEV_SetBlendFunc(int (* pfBlend)(GUI_MEMDEV_Handle hMem, GUI_COLOR Color, U8 BlendIntens));
+
 /*********************************************************************
 *
 *       Alpha blending
@@ -1645,34 +1705,6 @@ int     GUI_MessageBox   (const char * sMessage, const char * sCaption, int Flag
 
 /*********************************************************************
 *
-*       GUI_TIMER module
-*/
-#define GUI_TIMER_CF_WINDOW (1 << 0)
-#define GUI_TIMER_CF_CURSOR (1 << 1)
-
-typedef GUI_HMEM GUI_TIMER_HANDLE;
-
-typedef struct {
-  GUI_TIMER_TIME   Time;
-  PTR_ADDR         Context;
-  GUI_TIMER_HANDLE hTimer;
-} GUI_TIMER_MESSAGE;
-
-typedef void GUI_TIMER_CALLBACK(/*const*/ GUI_TIMER_MESSAGE* pTM);
-
-GUI_TIMER_HANDLE GUI_TIMER_Create   (GUI_TIMER_CALLBACK * cb, GUI_TIMER_TIME Time, PTR_ADDR Context, U16 Flags);
-void             GUI_TIMER_Delete   (GUI_TIMER_HANDLE hObj);
-
-/* Methods changing properties */
-GUI_TIMER_TIME GUI_TIMER_GetPeriod(GUI_TIMER_HANDLE hObj);
-void           GUI_TIMER_SetPeriod(GUI_TIMER_HANDLE hObj, GUI_TIMER_TIME Period);
-void           GUI_TIMER_SetDelay (GUI_TIMER_HANDLE hObj, GUI_TIMER_TIME Delay);
-void           GUI_TIMER_Restart  (GUI_TIMER_HANDLE hObj);
-int            GUI_TIMER_GetFlag  (GUI_TIMER_HANDLE hObj, int Flag); /* Not to be documented */
-int            GUI_TIMER_Exec     (void);
-
-/*********************************************************************
-*
 *       Anti Aliasing
 */
 #define GUI_AA_TRANS   0  // Foreground color mixed up with current content of framebuffer
@@ -1737,6 +1769,7 @@ int  GUI_GetKey(void);
 int  GUI_WaitKey(void);
 void GUI_StoreKey(int c);
 void GUI_ClearKeyBuffer(void);
+int  GUI_GetKeyPressed(void);
 
 /*********************************************************************
 *
@@ -2357,6 +2390,28 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 #define GUI_ID_WHEEL8     0x398
 #define GUI_ID_WHEEL9     0x399
 
+#define GUI_ID_MOVIE0     0x400
+#define GUI_ID_MOVIE1     0x401
+#define GUI_ID_MOVIE2     0x402
+#define GUI_ID_MOVIE3     0x403
+#define GUI_ID_MOVIE4     0x404
+#define GUI_ID_MOVIE5     0x405
+#define GUI_ID_MOVIE6     0x406
+#define GUI_ID_MOVIE7     0x407
+#define GUI_ID_MOVIE8     0x408
+#define GUI_ID_MOVIE9     0x409
+
+#define GUI_ID_TICKER0    0x410
+#define GUI_ID_TICKER1    0x411
+#define GUI_ID_TICKER2    0x412
+#define GUI_ID_TICKER3    0x413
+#define GUI_ID_TICKER4    0x414
+#define GUI_ID_TICKER5    0x415
+#define GUI_ID_TICKER6    0x416
+#define GUI_ID_TICKER7    0x417
+#define GUI_ID_TICKER8    0x418
+#define GUI_ID_TICKER9    0x419
+
 #define GUI_ID_USER       0x800
 
 /*********************************************************************
@@ -2497,10 +2552,14 @@ void GUI_MTOUCH_StoreEvent      (GUI_MTOUCH_EVENT * pEvent, GUI_MTOUCH_INPUT * p
 
 /*********************************************************************
 *
-*       Coordinates used in touch driver
+*       Axis values
+* 
+*  Description
+*    Defines to distinguish between the X and Y axis. Used in various
+*    emWin functions.
 */
-#define GUI_COORD_X 0
-#define GUI_COORD_Y 1
+#define GUI_COORD_X     0     // X axis.
+#define GUI_COORD_Y     1     // Y axis.
 
 /*********************************************************************
 *

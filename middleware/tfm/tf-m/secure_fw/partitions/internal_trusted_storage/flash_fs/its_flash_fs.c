@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2023, Arm Limited. All rights reserved.
  * Copyright (c) 2020, Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -194,20 +194,6 @@ psa_status_t its_flash_fs_wipe_all(struct its_flash_fs_ctx_t *fs_ctx)
     return its_flash_fs_mblock_reset_metablock(fs_ctx);
 }
 
-psa_status_t its_flash_fs_file_exist(struct its_flash_fs_ctx_t *fs_ctx,
-                                     const uint8_t *fid)
-{
-    psa_status_t err;
-    uint32_t idx;
-
-    err = its_flash_fs_mblock_get_file_idx(fs_ctx, fid, &idx);
-    if (err != PSA_SUCCESS) {
-        return PSA_ERROR_DOES_NOT_EXIST;
-    }
-
-    return PSA_SUCCESS;
-}
-
 psa_status_t its_flash_fs_file_get_info(struct its_flash_fs_ctx_t *fs_ctx,
                                         const uint8_t *fid,
                                         struct its_file_info_t *info)
@@ -216,23 +202,11 @@ psa_status_t its_flash_fs_file_get_info(struct its_flash_fs_ctx_t *fs_ctx,
     uint32_t idx;
     struct its_file_meta_t tmp_metadata;
 
-    /* Get the meta data index */
-    err = its_flash_fs_mblock_get_file_idx(fs_ctx, fid, &idx);
+    /* Get the meta data index and meta data */
+    err = its_flash_fs_mblock_get_file_idx_meta(fs_ctx, fid, &idx, &tmp_metadata);
     if (err != PSA_SUCCESS) {
         return PSA_ERROR_DOES_NOT_EXIST;
     }
-
-    /* Read file metadata */
-    err = its_flash_fs_mblock_read_file_meta(fs_ctx, idx, &tmp_metadata);
-    if (err != PSA_SUCCESS) {
-        return err;
-    }
-
-    /* Check if index is still referring to same file */
-    if (memcmp(fid, tmp_metadata.id, ITS_FILE_ID_SIZE)) {
-        return PSA_ERROR_DOES_NOT_EXIST;
-    }
-
     info->size_max = tmp_metadata.max_size;
     info->size_current = tmp_metadata.cur_size;
     info->flags = tmp_metadata.flags & ITS_FLASH_FS_USER_FLAGS_MASK;
@@ -268,14 +242,8 @@ psa_status_t its_flash_fs_file_write(struct its_flash_fs_ctx_t *fs_ctx,
 #endif
 
     /* Check if the file already exists */
-    err = its_flash_fs_mblock_get_file_idx(fs_ctx, fid, &old_idx);
+    err = its_flash_fs_mblock_get_file_idx_meta(fs_ctx, fid, &old_idx, &file_meta);
     if (err == PSA_SUCCESS) {
-        /* Read existing file metadata */
-        err = its_flash_fs_mblock_read_file_meta(fs_ctx, old_idx, &file_meta);
-        if (err != PSA_SUCCESS) {
-            return PSA_ERROR_DOES_NOT_EXIST;
-        }
-
         if (flags & ITS_FLASH_FS_FLAG_TRUNCATE) {
             if (file_meta.max_size == max_size) {
                 /* Truncate and reuse the existing file, which is already the
@@ -449,6 +417,7 @@ static psa_status_t its_flash_fs_delete_idx(struct its_flash_fs_ctx_t *fs_ctx,
     size_t nbr_bytes_to_move = 0;
     uint32_t idx;
     struct its_file_meta_t file_meta;
+    struct its_block_meta_t block_meta;
 
     err = its_flash_fs_mblock_read_file_meta(fs_ctx, del_file_idx, &file_meta);
     if (err != PSA_SUCCESS) {
@@ -520,24 +489,42 @@ static psa_status_t its_flash_fs_delete_idx(struct its_flash_fs_ctx_t *fs_ctx,
         }
     }
 
-    /* Compact data block */
-    err = its_flash_fs_dblock_compact_block(fs_ctx, del_file_lblock,
-                                            del_file_max_size,
-                                            src_offset, del_file_data_idx,
-                                            nbr_bytes_to_move);
+    if (del_file_max_size == 0) {
+        /* If the asset max size is 0, there is no need to compact the data block.
+         * Copy the block metadata and the block data to scratch metadata block.
+         */
+        err = its_flash_fs_mblock_read_block_metadata(fs_ctx, ITS_LOGICAL_DBLOCK0, &block_meta);
+        if (err != PSA_SUCCESS) {
+            return err;
+        }
+        err = its_flash_fs_mblock_update_scratch_block_meta(fs_ctx, ITS_LOGICAL_DBLOCK0,
+                                                            &block_meta);
+    } else {
+        /* Compact data block */
+        err = its_flash_fs_dblock_compact_block(fs_ctx, del_file_lblock,
+                                                del_file_max_size,
+                                                src_offset, del_file_data_idx,
+                                                nbr_bytes_to_move);
+    }
+
     if (err != PSA_SUCCESS) {
         return err;
     }
 
-    /* The file data in the logical block 0 is stored in same physical block
+    /* If the max size of file to delete is not 0:
+     * The file data in the logical block 0 is stored in same physical block
      * where the metadata is stored. A change in the metadata requires a
      * swap of physical blocks. So, the file data stored in the current
      * metadata block needs to be copied in the scratch block, if the data
      * of the file processed is not located in the logical block 0. When an
      * file data is located in the logical block 0, that copy has been done
      * while processing the file data.
+     * If the max size of file to delete is 0:
+     * The file metadata and block metadata has been updated into the scratch
+     * metadata block, copy the file data to the scratch block.
      */
-    if (del_file_lblock != ITS_LOGICAL_DBLOCK0) {
+    if ((del_file_max_size != 0 && del_file_lblock != ITS_LOGICAL_DBLOCK0) ||
+        (del_file_max_size == 0)) {
         err = its_flash_fs_mblock_migrate_lb0_data_to_scratch(fs_ctx);
         if (err != PSA_SUCCESS) {
             return PSA_ERROR_GENERIC_ERROR;
@@ -556,8 +543,8 @@ psa_status_t its_flash_fs_file_delete(struct its_flash_fs_ctx_t *fs_ctx,
     psa_status_t err;
     uint32_t del_file_idx;
 
-    /* Get the file index */
-    err = its_flash_fs_mblock_get_file_idx(fs_ctx, fid, &del_file_idx);
+    /* Get the file index. */
+    err = its_flash_fs_mblock_get_file_idx_meta(fs_ctx, fid, &del_file_idx, NULL);
     if (err != PSA_SUCCESS) {
         return PSA_ERROR_DOES_NOT_EXIST;
     }
@@ -575,20 +562,9 @@ psa_status_t its_flash_fs_file_read(struct its_flash_fs_ctx_t *fs_ctx,
     uint32_t idx;
     struct its_file_meta_t tmp_metadata;
 
-    /* Get the file index */
-    err = its_flash_fs_mblock_get_file_idx(fs_ctx, fid, &idx);
+    /* Get the file index and meta data */
+    err = its_flash_fs_mblock_get_file_idx_meta(fs_ctx, fid, &idx, &tmp_metadata);
     if (err != PSA_SUCCESS) {
-        return PSA_ERROR_DOES_NOT_EXIST;
-    }
-
-    /* Read file metadata */
-    err = its_flash_fs_mblock_read_file_meta(fs_ctx, idx, &tmp_metadata);
-    if (err != PSA_SUCCESS) {
-        return PSA_ERROR_GENERIC_ERROR;
-    }
-
-    /* Check if index is still referring to same file */
-    if (memcmp(fid, tmp_metadata.id, ITS_FILE_ID_SIZE)) {
         return PSA_ERROR_DOES_NOT_EXIST;
     }
 

@@ -18,7 +18,6 @@ This document uses the following terms and abbreviations.
    IPC                Interprocess communication
    IPC model          The secure IPC framework
    irqs               Interrupt requests
-   Library model      The secure function call framework
    MMIO               Memory Mapped I/O
    PSA                Platform Security Architecture
    RoT                Root of Trust
@@ -47,8 +46,7 @@ focuses on the configuration, manifest, implement rules. The actual
 source-level implementation is not included in this document.
 
 .. Note::
-   If not otherwise specified, the steps are identical for Library, IPC and SFN
-   model.
+   If not otherwise specified, the steps are identical for IPC and SFN model.
 
    The IPC and SFN model conforms to the *PSA Firmware Framework for M (FF-M) v
    1.1* changes. Refer to `PSA Firmware Framework specification`_ and
@@ -189,7 +187,6 @@ Here is the RoT Service ID table used in TF-M.
    =========================== ====================== ========================
    **Partitions**              **Vendor ID(20 bits)** **Function ID(12 bits)**
    =========================== ====================== ========================
-   audit_logging               0x00000                0x000-0x01F
    initial_attestation         0x00000                0x020-0x03F
    platform                    0x00000                0x040-0x05F
    protected_storage           0x00000                0x060-0x06F
@@ -197,8 +194,6 @@ Here is the RoT Service ID table used in TF-M.
    crypto                      0x00000                0x080-0x09F
    firmware_update             0x00000                0x0A0-0x0BF
    tfm_secure_client           0x0000F                0x000-0x01F
-   core_test                   0x0000F                0x020-0x03F
-   core_test_2                 0x0000F                0x040-0x05F
    tfm_ipc_client              0x0000F                0x060-0x07F
    tfm_ipc_service             0x0000F                0x080-0x09F
    tfm_slih_test_service       0x0000F                0x0A0-0x0AF
@@ -250,7 +245,7 @@ The ``stack_size`` is required to indicate the stack memory usage of the Secure
 Partition.
 The value of this attribute must be a decimal or hexadecimal value in bytes.
 It can also be a build configurable with default value defined in
-``config_default.cmake``.
+``config_base.cmake``.
 The value of the configuration can be overridden to fit different use cases.
 
 heap_size
@@ -290,26 +285,6 @@ Here is an example for it:
    #define TFM_PERIPHERAL_A                 (&tfm_peripheral_A)
 
 
-Library model support
----------------------
-For the library model, the user needs to add a ``secure_functions`` item. The
-main difference between ``secure_function`` and ``services`` is the extra
-``signal`` key for secure function entry. This is not required in FF-M v1.0.
-
-The ``signal`` must be the upper case of the secure function name.
-
-.. code-block:: yaml
-
-  "secure_functions": [
-    {
-      "name": "TFM_EXAMPLE_A",
-      "signal": "EXAMPLE_A_FUNC",
-      "sid": "0x00000000",
-      "non_secure_clients": true,
-      "version": 1,
-      "version_policy": "STRICT"
-    },
-
 Add configuration
 =================
 The following configuration tasks are required for the newly added secure
@@ -323,9 +298,7 @@ Add CMake configure files
 
 Here is a reference example for `CMakeLists.txt`_
 
-.. _CMakeLists.txt: https://git.trustedfirmware.org/TF-M/tf-m-tools.git/tree/
-  example_partition/CMakeLists.txt
-
+.. _CMakeLists.txt: https://git.trustedfirmware.org/TF-M/tf-m-extras.git/tree/examples/example_partition/CMakeLists.txt
 .. Note::
    The secure partition must be built as a standalone static library, and the
    name of the library must follow this pattern, as it affects how the linker
@@ -334,7 +307,7 @@ Here is a reference example for `CMakeLists.txt`_
    - ``tfm_app_rot_partition*`` in case of an Application RoT partition
 
 The current CMake configuration should also be updated, by updating
-``<TF-M base folder>/config/config_default.cmake``
+``<TF-M base folder>/config/config_base.cmake``
 to include the CMake configuration variable of the newly added Secure
 Partition, e.g, TFM_PARTITION_EXAMPLE and adding the relevant
 subdirectory in ``<TF-M base folder>/secure_fw/CMakeLists.txt``, e.g.
@@ -543,7 +516,7 @@ for the details of adding a regression test suite.
 
 Some regression tests require a dedicated RoT service. The implementations of
 the RoT service for test are similar to secure partition addition. Refer to
-`Adding partitions for regression tests <https://git.trustedfirmware.org/TF-M/tf-m-tests.git/tree/docs/tfm_test_services_addition.rst>`_
+`Adding partitions for regression tests <https://git.trustedfirmware.org/TF-M/tf-m-tests.git/tree/docs/tfm_test_partitions_addition.rst>`_
 to get more information.
 
 Out-of-tree Secure Partition build

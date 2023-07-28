@@ -4,7 +4,7 @@
  *
  *  Copyright 2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -15,11 +15,7 @@ Change log:
 
 #include <mlan_api.h>
 #include "wifi.h"
-#ifdef RW610
-#include "wifi-imu.h"
-#else
 #include "wifi-sdio.h"
-#endif
 
 /********************************************************
                 Local Variables

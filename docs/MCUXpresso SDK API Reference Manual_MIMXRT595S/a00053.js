@@ -1,6 +1,6 @@
 var a00053 =
 [
-    [ "power_pad_vrange_t", "a00053.html#a00407", [
+    [ "power_pad_vrange_t", "a00053.html#a00412", [
       [ "Vdde0Range", "a00053.html#ab028a393646771ab91ec06036fae2851", null ],
       [ "Vdde1Range", "a00053.html#ad59ee29d625573694a590b9bc5a1758b", null ],
       [ "Vdde2Range", "a00053.html#acd79506cc3e460c5bb4af56b02fecdb4", null ],
@@ -11,8 +11,7 @@ var a00053 =
     [ "FSL_POWER_DRIVER_VERSION", "a00053.html#ga566dde551cccfbff838b7f6f474e525b", null ],
     [ "PMIC_VDDCORE_RECOVERY_TIME_IGNORE", "a00053.html#gad7b390514bc10f7c22b430b2b411a21a", null ],
     [ "SYSCTL0_TUPLE_REG", "a00053.html#ga15f4422b6c26f96a9713f34a4f059664", null ],
-    [ "POWER_INVALID_VOLT_LEVEL", "a00053.html#ga0534d0c316fa4fe4638687d09f7e1fbd", null ],
-    [ "POWER_FREQ_LEVELS_NUM", "a00053.html#ga8b83680402ffc4f67688b84dded9d29e", null ],
+    [ "power_vddcore_set_func_t", "a00053.html#ga15f214b2d38f6b142814a0a46ef14b9a", null ],
     [ "_pmc_interrupt", "a00053.html#gab5ab4472585bbb5e1a1f56288df2d884", [
       [ "kPMC_INT_LVDCORE", "a00053.html#ggab5ab4472585bbb5e1a1f56288df2d884a1c214a969f306e69992061bff63d0782", null ],
       [ "kPMC_INT_HVDCORE", "a00053.html#ggab5ab4472585bbb5e1a1f56288df2d884a1e2f845ddb49e6845a020da333d1441c", null ],
@@ -36,6 +35,10 @@ var a00053 =
     [ "power_mode_cfg_t", "a00053.html#ga83d2885b317cb97d259dc1468b80a007", null ],
     [ "body_bias_mode_t", "a00053.html#ga415d6dd5b9c784fbc62c098816c31d14", null ],
     [ "power_deep_sleep_clk_t", "a00053.html#gaa876c8d0dab427abe183b4882d166c3c", null ],
+    [ "power_vddcore_src_t", "a00053.html#ga9043cf2a6084c43b8b0c451f537724c2", [
+      [ "kVddCoreSrc_LDO", "a00053.html#gga9043cf2a6084c43b8b0c451f537724c2a71f69b0e3418eec19794d04fc03b0c46", null ],
+      [ "kVddCoreSrc_PMIC", "a00053.html#gga9043cf2a6084c43b8b0c451f537724c2a437c60afa31dc290f0631b52fb6b8e6f", null ]
+    ] ],
     [ "power_pad_vrange_val_t", "a00053.html#ga16f4786c3049a639175e2480946d1ddb", [
       [ "kPadVol_171_360", "a00053.html#gga16f4786c3049a639175e2480946d1ddba49cee3aa8974ae344b374807da15ebab", null ],
       [ "kPadVol_Continuous", "a00053.html#gga16f4786c3049a639175e2480946d1ddba178e6323b0a93e2d673bf191011183c9", null ],
@@ -60,6 +63,15 @@ var a00053 =
       [ "kLvdFallingTripVol_930", "a00053.html#gga505e9ff78630230f448738e3c24ea7d2af7ff2b1ff777d169e1d6d994c2bab0e9", null ],
       [ "kLvdFallingTripVol_945", "a00053.html#gga505e9ff78630230f448738e3c24ea7d2ab805e65397883e277e0d0c4c6bd7d75c", null ]
     ] ],
+    [ "power_control_for_pmic_mode", "a00053.html#ga831ac12ac01bba368ebfdde23418946c", [
+      [ "kVddCoreOnMode1", "a00053.html#gga831ac12ac01bba368ebfdde23418946ca333a9b1956d11fb3f5d39ac52329004c", null ],
+      [ "kVddCoreOnMode2", "a00053.html#gga831ac12ac01bba368ebfdde23418946ca7a05aff1439d3fc24c52ab7c00a27f6c", null ],
+      [ "kVddCoreOnMode3", "a00053.html#gga831ac12ac01bba368ebfdde23418946caaf42b9a61a7bf410c9e819958bba4347", null ],
+      [ "kVdd1v8OnMode1", "a00053.html#gga831ac12ac01bba368ebfdde23418946ca5da1b33c59dfe0c14bbdd856f691e10e", null ],
+      [ "kVdd1v8OnMode2", "a00053.html#gga831ac12ac01bba368ebfdde23418946ca885d81662994092082afa266c2d3aa2e", null ],
+      [ "kVdd1v8OnMode3", "a00053.html#gga831ac12ac01bba368ebfdde23418946ca6cecbc2aa4dbfa3a06a917e473291bc0", null ]
+    ] ],
+    [ "POWER_PmicPowerModeSelectControl", "a00053.html#ga8fb07d65f0b0af3e87414a9b5609892e", null ],
     [ "POWER_EnablePD", "a00053.html#ga4996310890cbf4c7338834e708ccbbf9", null ],
     [ "POWER_DisablePD", "a00053.html#gaa2d4889b51d6e07accc9d1e3ec67c92b", null ],
     [ "POWER_EnableDeepSleep", "a00053.html#gae9733cfb042126b04d237cc8db40dba0", null ],
@@ -79,6 +91,9 @@ var a00053 =
     [ "POWER_EnterFbb", "a00053.html#ga571cb27ca51e9ccfdb35b5a191bdd3b4", null ],
     [ "POWER_EnterNbb", "a00053.html#gaae264215d0180f0d9bd0ed2864013197", null ],
     [ "POWER_SetLdoVoltageForFreq", "a00053.html#ga1d5506de2c6a60bdf2824424ab05ef39", null ],
+    [ "POWER_SetVddCoreSupplySrc", "a00053.html#ga9c91598172b667c713ac605654ded908", null ],
+    [ "POWER_SetPmicCoreSupplyFunc", "a00053.html#ga2c2ab1ac72cae98f4cca0e87bf85f38a", null ],
+    [ "POWER_SetVoltageForFreq", "a00053.html#gaf3bdfdc47d4293a244688981d6e13c2e", null ],
     [ "POWER_SetLvdFallingTripVoltage", "a00053.html#gafbdad7c38f2c3bc2c7132fb2d0900f1a", null ],
     [ "POWER_GetLvdFallingTripVoltage", "a00053.html#gac8d806330b0b694ed63a0cef7db004b8", null ],
     [ "POWER_DisableLVD", "a00053.html#ga877732658756ca9047ff93aed9613d33", null ],
@@ -92,6 +107,5 @@ var a00053 =
     [ "POWER_EnterPowerMode", "a00053.html#ga808fa9aff5474a74f0c78dbd05c8896f", null ],
     [ "EnableDeepSleepIRQ", "a00053.html#ga00a1c5f2555215dc1ac509052e0f3376", null ],
     [ "DisableDeepSleepIRQ", "a00053.html#ga73a306a0d86cc31334f1825593c613a1", null ],
-    [ "POWER_GetLibVersion", "a00053.html#gac28a380c6f92d302c5d99f30cc126fe5", null ],
-    [ "powerFreqLevel", "a00053.html#gac6646144e03a38eee140c611850899dc", null ]
+    [ "POWER_GetLibVersion", "a00053.html#gac28a380c6f92d302c5d99f30cc126fe5", null ]
 ];

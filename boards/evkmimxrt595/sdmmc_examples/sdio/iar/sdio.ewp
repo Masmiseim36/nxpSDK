@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -226,8 +226,8 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>BOARD_SDMMC_NEED_MANUAL_TUNING</state>
-          <state>SDIO_ENABLED</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -350,9 +350,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
@@ -360,9 +359,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -484,7 +484,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -687,7 +687,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1096,7 +1096,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1183,7 +1183,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1200,7 +1200,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1223,7 +1223,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1302,7 +1302,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1312,8 +1312,8 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOARD_SDMMC_NEED_MANUAL_TUNING</state>
-          <state>SDIO_ENABLED</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1436,9 +1436,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
@@ -1446,9 +1445,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1570,7 +1570,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1773,7 +1773,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2182,7 +2182,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2269,7 +2269,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2286,7 +2286,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2309,7 +2309,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -2388,7 +2388,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2397,8 +2397,8 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>BOARD_SDMMC_NEED_MANUAL_TUNING</state>
-          <state>SDIO_ENABLED</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2521,9 +2521,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
@@ -2531,9 +2530,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2655,7 +2655,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2858,7 +2858,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -3267,7 +3267,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3354,7 +3354,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3371,7 +3371,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3394,7 +3394,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -3473,7 +3473,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3483,8 +3483,8 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>BOARD_SDMMC_NEED_MANUAL_TUNING</state>
-          <state>SDIO_ENABLED</state>
           <state>MCUXPRESSO_SDK</state>
+          <state>SDIO_ENABLED</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3607,9 +3607,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
@@ -3617,9 +3616,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3741,7 +3741,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3943,7 +3943,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -4462,6 +4462,27 @@
   <group>
     <name>sdmmc</name>
     <group>
+      <name>host</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/blocking/fsl_sdmmc_host.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+    </group>
+    <group>
       <name>src</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/fsl_sdio.c</name>
@@ -4486,24 +4507,6 @@
       <name>sdio</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio/ChangeLogKSDK.txt</name>
-      </file>
-    </group>
-    <group>
-      <name>host</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/blocking/fsl_sdmmc_host.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
       </file>
     </group>
     <group>
@@ -4566,16 +4569,16 @@
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
     </group>
   </group>

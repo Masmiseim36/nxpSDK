@@ -2,9 +2,9 @@
  *
  *  @brief This file provides the DHCP Server
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -551,6 +551,9 @@ void dhcp_server(os_thread_arg_t data)
 done:
     dhcp_clean_sockets();
     dns_free_allocations();
+#ifdef CONFIG_WPA_SUPP
+    netconn_thread_cleanup();
+#endif
     (void)os_mutex_put(&dhcpd_mutex);
     os_thread_self_complete(NULL);
 }
@@ -745,7 +748,6 @@ int dhcp_free_allocations(void)
 
 static int send_gratuitous_arp(uint32_t ip)
 {
-    uint8_t sta_mac[ETH_HW_ADDR_LEN];
     int sock;
     struct arp_packet pkt;
     struct sockaddr_in to_addr;
@@ -763,7 +765,7 @@ static int send_gratuitous_arp(uint32_t ip)
 
     (void)memset(pkt.targ_hw_addr, 0xff, ETH_HW_ADDR_LEN);
     (void)memset(pkt.rcpt_hw_addr, 0xff, ETH_HW_ADDR_LEN);
-    (void)wlan_get_mac_address(sta_mac, pkt.sndr_hw_addr);
+    (void)wlan_get_mac_address_uap(pkt.sndr_hw_addr);
     (void)memcpy(pkt.src_hw_addr, pkt.sndr_hw_addr, ETH_HW_ADDR_LEN);
     sock = net_socket(AF_INET, SOCK_DGRAM, 0);
     if (sock < 0)

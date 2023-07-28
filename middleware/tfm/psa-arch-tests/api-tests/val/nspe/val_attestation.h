@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -100,9 +100,7 @@
                                                 1 << (EAT_CBOR_ARM_RANGE_BASE                      \
                                                     - EAT_CBOR_ARM_LABEL_NO_SW_COMPONENTS))
 
-#define MANDATORY_SW_COMP                      (1 << EAT_CBOR_SW_COMPONENT_MEASUREMENT      |     \
-                                                1 << EAT_CBOR_SW_COMPONENT_VERSION          |     \
-                                                1 << EAT_CBOR_SW_COMPONENT_SIGNER_ID)
+#define MANDATORY_SW_COMP                      (1 << EAT_CBOR_SW_COMPONENT_MEASUREMENT)
 
 #define VAL_ATTEST_MIN_ERROR                    70
 

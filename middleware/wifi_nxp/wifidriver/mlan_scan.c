@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides wlan scan IOCTL and firmware command APIs
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -244,6 +244,51 @@ static t_u16 radio_type_to_band(t_u8 radio_type)
 }
 
 /**
+ *  @brief This function will update the channel statistics from scan result
+ *
+ *  @param pmpriv           A pointer to mlan_private structure
+ *  @param pchanstats_tlv   A pointer to MrvlIEtypes_ChannelStats_t tlv
+ *
+ *  @return                NA
+ */
+static void wlan_update_chan_statistics(mlan_private *pmpriv, MrvlIEtypes_ChannelStats_t *pchanstats_tlv)
+{
+    mlan_adapter *pmadapter = pmpriv->adapter;
+    t_u8 i;
+    chan_statistics_t *pchan_stats = (chan_statistics_t *)((t_u8 *)pchanstats_tlv + sizeof(MrvlIEtypesHeader_t));
+    t_u8 num_chan                  = wlan_le16_to_cpu(pchanstats_tlv->header.len) / sizeof(chan_statistics_t);
+
+    ENTER();
+
+    for (i = 0; i < num_chan; i++)
+    {
+        if (pchan_stats->chan_num == 0U)
+        {
+            break;
+        }
+
+        if (pmadapter->idx_chan_stats >= pmadapter->num_in_chan_stats)
+        {
+            wifi_d("Over flow: idx_chan_stats=%d, num_in_chan_stats=%d", pmadapter->idx_chan_stats,
+                   pmadapter->num_in_chan_stats);
+            break;
+        }
+        pchan_stats->total_networks    = wlan_le16_to_cpu(pchan_stats->total_networks);
+        pchan_stats->cca_scan_duration = wlan_le16_to_cpu(pchan_stats->cca_scan_duration);
+        pchan_stats->cca_busy_duration = wlan_le16_to_cpu(pchan_stats->cca_busy_duration);
+        wifi_d("chan=%d, noise=%d, total_network=%d scan_duration=%d, busy_duration=%d", pchan_stats->chan_num,
+               pchan_stats->noise, pchan_stats->total_networks, pchan_stats->cca_scan_duration,
+               pchan_stats->cca_busy_duration);
+        __memcpy(pmadapter, (chan_statistics_t *)&pmadapter->pchan_stats[pmadapter->idx_chan_stats], pchan_stats,
+                 sizeof(chan_statistics_t));
+        pmadapter->idx_chan_stats++;
+        pchan_stats++;
+    }
+    LEAVE();
+    return;
+}
+
+/**
  *  @brief compare config band and a band from the scan result,
  *  which is defined by functiion radio_type_to_band(t_u8 radio_type) above
  *
@@ -428,6 +473,97 @@ static t_void wlan_scan_create_channel_list(IN mlan_private *pmpriv,
     LEAVE();
 }
 
+#ifdef CONFIG_WPA_SUPP
+#ifdef CONFIG_WPA_SUPP_WPS
+/**
+ *  @brief Add WPS IE to probe request frame
+ *
+ *  @param pmpriv             A pointer to mlan_private structure
+ *  @param pptlv_out          A pointer to TLV to fill in
+ *
+ *  @return                   N/A
+ */
+static void wlan_add_wps_probe_request_ie(IN mlan_private *pmpriv, OUT t_u8 **pptlv_out)
+{
+    MrvlIEtypesHeader_t *tlv;
+
+    ENTER();
+
+    if (pmpriv->wps.wps_ie.vend_hdr.len)
+    {
+        tlv       = (MrvlIEtypesHeader_t *)*pptlv_out;
+        tlv->type = wlan_cpu_to_le16(VENDOR_SPECIFIC_221);
+        tlv->len  = wlan_cpu_to_le16(pmpriv->wps.wps_ie.vend_hdr.len);
+        *pptlv_out += sizeof(MrvlIEtypesHeader_t);
+        (void)__memcpy(pmpriv->adapter, *pptlv_out, pmpriv->wps.wps_ie.vend_hdr.oui, pmpriv->wps.wps_ie.vend_hdr.len);
+        *pptlv_out += (pmpriv->wps.wps_ie.vend_hdr.len + sizeof(MrvlIEtypesHeader_t));
+        *pptlv_out += pmpriv->wps.wps_ie.vend_hdr.len;
+    }
+    LEAVE();
+}
+#endif
+
+/**
+ *  @brief Add IE to probe request frame
+ *
+ *  @param pmpriv             A pointer to mlan_private structure
+ *  @param pptlv_out          A pointer to TLV to fill in
+ *
+ *  @return                   N/A
+ */
+static void wlan_add_probe_request_ie(IN mlan_private *pmpriv, OUT t_u8 **pptlv_out)
+{
+    MrvlIEtypesHeader_t *tlv;
+    t_u8 *ies                     = MNULL;
+    t_u8 ies_len                  = 0;
+    t_u32 bytes_left              = 0;
+    t_u8 *pcurrent_ptr            = MNULL;
+    IEEEtypes_Header_t *pieee_hdr = MNULL;
+
+    ENTER();
+
+    if (pmpriv->default_scan_ies_len != 0)
+    {
+        ies     = pmpriv->default_scan_ies;
+        ies_len = pmpriv->default_scan_ies_len;
+    }
+    else if (pmpriv->gen_ie_buf_len != 0)
+    {
+        ies     = pmpriv->gen_ie_buf;
+        ies_len = pmpriv->gen_ie_buf_len;
+    }
+    else
+    {
+        return;
+    }
+
+    bytes_left   = ies_len;
+    pcurrent_ptr = ies;
+
+    while (bytes_left >= sizeof(IEEEtypes_Header_t))
+    {
+        pieee_hdr = (IEEEtypes_Header_t *)pcurrent_ptr;
+
+        if (pieee_hdr->element_id == EXT_CAPABILITY)
+        {
+            goto skip;
+        }
+
+        tlv       = (MrvlIEtypesHeader_t *)*pptlv_out;
+        tlv->type = wlan_cpu_to_le16(pieee_hdr->element_id);
+        tlv->len  = wlan_cpu_to_le16(pieee_hdr->len);
+        *pptlv_out += sizeof(MrvlIEtypesHeader_t);
+        (void)__memcpy(pmpriv->adapter, *pptlv_out, pcurrent_ptr + sizeof(IEEEtypes_Header_t), pieee_hdr->len);
+        *pptlv_out += pieee_hdr->len;
+
+    skip:
+        pcurrent_ptr += pieee_hdr->len + sizeof(IEEEtypes_Header_t);
+        bytes_left -= pieee_hdr->len + sizeof(IEEEtypes_Header_t);
+    }
+
+    LEAVE();
+}
+#endif
 
 /**
  *  @brief Construct and send multiple scan config commands to the firmware
@@ -462,6 +598,7 @@ static mlan_status wlan_scan_channel_list(IN mlan_private *pmpriv,
 {
     mlan_status ret         = MLAN_STATUS_SUCCESS;
     mlan_adapter *pmadapter = pmpriv->adapter;
+    MrvlIEtypes_ChanListParamSet_t *pchan_tlv_out_temp;
     ChanScanParamSet_t *ptmp_chan_list;
     ChanScanParamSet_t *pstart_chan;
     pmlan_ioctl_req pioctl_req = (mlan_ioctl_req *)pioctl_buf;
@@ -496,6 +633,8 @@ static mlan_status wlan_scan_channel_list(IN mlan_private *pmpriv,
 
     pchan_tlv_out->header.type = wlan_cpu_to_le16(TLV_TYPE_CHANLIST);
 
+    pchan_tlv_out_temp = pchan_tlv_out;
+
     /* Set the temp channel struct pointer to the start of the desired list */
     ptmp_chan_list = pscan_chan_list;
 
@@ -509,6 +648,44 @@ static mlan_status wlan_scan_channel_list(IN mlan_private *pmpriv,
         pchan_tlv_out->header.len = 0;
         pstart_chan               = ptmp_chan_list;
         done_early                = MFALSE;
+
+        t_u8 *ptlv_pos = (t_u8 *)pchan_tlv_out_temp;
+        MrvlIEtypes_RatesParamSet_t *prates_tlv;
+        t_u16 config_bands;
+        WLAN_802_11_RATES rates;
+        t_u32 rates_size;
+
+        config_bands = pmpriv->config_bands;
+        if (pstart_chan->chan_number > MAX_CHANNELS_BG)
+        {
+            config_bands &= ~(BAND_B | BAND_G | BAND_GN
+#ifdef CONFIG_11AC
+                              | BAND_GAC
+#endif
+            );
+        }
+
+        config_bands = (pmpriv->bss_mode == MLAN_BSS_MODE_INFRA) ? config_bands : pmadapter->adhoc_start_band;
+
+        /* Append rates tlv */
+        (void)__memset(pmadapter, rates, 0, sizeof(rates));
+        rates_size              = wlan_get_supported_rates(pmpriv, pmpriv->bss_mode, config_bands, rates);
+        prates_tlv              = (MrvlIEtypes_RatesParamSet_t *)ptlv_pos;
+        prates_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_RATES);
+        prates_tlv->header.len  = wlan_cpu_to_le16((t_u16)rates_size);
+
+        if (rates_size != 0U && rates_size <= sizeof(prates_tlv->rates))
+        {
+            (void)__memcpy(pmadapter, prates_tlv->rates, rates, rates_size);
+        }
+
+        ptlv_pos += sizeof(prates_tlv->header) + rates_size;
+
+        PRINTM(MINFO, "SCAN_CMD: Rates size = %d\n", rates_size);
+
+        pchan_tlv_out              = (MrvlIEtypes_ChanListParamSet_t *)ptlv_pos;
+        pchan_tlv_out->header.type = wlan_cpu_to_le16(TLV_TYPE_CHANLIST);
+        pchan_tlv_out->header.len  = 0;
 
         /*
          * Construct the Channel TLV for the scan command.  Continue to
@@ -565,6 +742,12 @@ static mlan_status wlan_scan_channel_list(IN mlan_private *pmpriv,
                interation */
             if (!filtered_scan && (ptmp_chan_list->chan_number == 1U || ptmp_chan_list->chan_number == 6U ||
                                    ptmp_chan_list->chan_number == 11U))
+            {
+                done_early = MTRUE;
+            }
+
+            /* Stop the loop if the *next* channel is 36. Get supported rates for 2G/5G channels seperately */
+            if (ptmp_chan_list->chan_number == 36)
             {
                 done_early = MTRUE;
             }
@@ -630,6 +813,10 @@ static mlan_status wlan_scan_channel_list(IN mlan_private *pmpriv,
         {
             abort_split_scan       = false;
             split_scan_in_progress = false;
+#ifdef CONFIG_WPA_SUPP
+            pmadapter->num_in_scan_table = 0;
+            ret                          = MLAN_STATUS_FAILURE;
+#endif
             break;
         }
     }
@@ -696,7 +883,6 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
     mlan_status ret         = MLAN_STATUS_SUCCESS;
     MrvlIEtypes_NumProbes_t *pnum_probes_tlv;
     MrvlIEtypes_WildCardSsIdParamSet_t *pwildcard_ssid_tlv;
-    MrvlIEtypes_RatesParamSet_t *prates_tlv;
 #ifdef CONFIG_EXT_SCAN_SUPPORT
     MrvlIEtypes_Bssid_List_t *pbssid_tlv;
 #endif
@@ -711,10 +897,9 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
     t_u8 radio_type;
     t_u32 ssid_idx;
     t_u8 ssid_filter;
-    WLAN_802_11_RATES rates;
-    t_u32 rates_size;
     MrvlIETypes_HTCap_t *pht_cap;
     MrvlIETypes_VHTCap_t *pvht_cap;
+    MrvlIEtypes_ScanChanGap_t *pscan_gap_tlv;
     ENTER();
 
     pmpriv->ssid_filter = MFALSE;
@@ -748,7 +933,6 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
 
         /* Set the number of probes to send, use Adapter setting if unset */
         num_probes = (puser_scan_in->num_probes ? puser_scan_in->num_probes : pmadapter->scan_probes);
-
 
         /*
          * Set the BSSID filter to the incoming configuration,
@@ -832,7 +1016,31 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
     {
         *pmax_chan_per_scan = MRVDRV_CHANNELS_PER_SCAN_CMD;
     }
-
+    if (puser_scan_in)
+    {
+        if (puser_scan_in->scan_chan_gap)
+        {
+            *pmax_chan_per_scan = MRVDRV_MAX_CHANNELS_PER_SPECIFIC_SCAN;
+            PRINTM(MCMND, "Scan: channel gap = 0x%x\n", puser_scan_in->scan_chan_gap);
+            pscan_gap_tlv              = (MrvlIEtypes_ScanChanGap_t *)ptlv_pos;
+            pscan_gap_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_SCAN_CHANNEL_GAP);
+            pscan_gap_tlv->header.len  = sizeof(pscan_gap_tlv->gap);
+            pscan_gap_tlv->gap         = wlan_cpu_to_le16((t_u16)puser_scan_in->scan_chan_gap);
+            ptlv_pos += sizeof(pscan_gap_tlv->header) + pscan_gap_tlv->header.len;
+            pscan_gap_tlv->header.len = wlan_cpu_to_le16(pscan_gap_tlv->header.len);
+        }
+    }
+    else if (pmadapter->scan_chan_gap)
+    {
+        *pmax_chan_per_scan = MRVDRV_MAX_CHANNELS_PER_SPECIFIC_SCAN;
+        PRINTM(MCMND, "Scan: channel gap = 0x%x\n", pmadapter->scan_chan_gap);
+        pscan_gap_tlv              = (MrvlIEtypes_ScanChanGap_t *)ptlv_pos;
+        pscan_gap_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_SCAN_CHANNEL_GAP);
+        pscan_gap_tlv->header.len  = sizeof(pscan_gap_tlv->gap);
+        pscan_gap_tlv->gap         = wlan_cpu_to_le16((t_u16)pmadapter->scan_chan_gap);
+        ptlv_pos += sizeof(pscan_gap_tlv->header) + pscan_gap_tlv->header.len;
+        pscan_gap_tlv->header.len = wlan_cpu_to_le16(pscan_gap_tlv->header.len);
+    }
     /* If the input config or adapter has the number of Probes set, add tlv */
     if (num_probes != 0U)
     {
@@ -847,24 +1055,6 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
 
         pnum_probes_tlv->header.len = wlan_cpu_to_le16(pnum_probes_tlv->header.len);
     }
-
-    /* Append rates tlv */
-    (void)__memset(pmadapter, rates, 0, sizeof(rates));
-
-    rates_size = wlan_get_supported_rates(
-        pmpriv, pmpriv->bss_mode,
-        (pmpriv->bss_mode == MLAN_BSS_MODE_INFRA) ? pmpriv->config_bands : pmadapter->adhoc_start_band, rates);
-
-    prates_tlv              = (MrvlIEtypes_RatesParamSet_t *)(void *)ptlv_pos;
-    prates_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_RATES);
-    prates_tlv->header.len  = wlan_cpu_to_le16((t_u16)rates_size);
-    if ((rates_size > 0) && (rates_size <= MAX_DATA_RATES))
-    {
-        (void)__memcpy(pmadapter, prates_tlv->rates, rates, rates_size);
-    }
-    ptlv_pos += sizeof(prates_tlv->header) + rates_size;
-
-    PRINTM(MINFO, "SCAN_CMD: Rates size = %d\n", rates_size);
 
     if (ISSUPP_11NENABLED(pmpriv->adapter->fw_cap_info) &&
         (pmpriv->config_bands & BAND_GN || pmpriv->config_bands & BAND_AN) && wmsdk_is_11N_enabled())
@@ -895,7 +1085,14 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
 
     /* fixme: enable this later when req. */
 
-#ifdef CONFIG_MBO
+#ifdef CONFIG_WPA_SUPP
+#ifdef CONFIG_WPA_SUPP_WPS
+    wlan_add_wps_probe_request_ie(pmpriv, &ptlv_pos);
+#endif
+    wlan_add_probe_request_ie(pmpriv, &ptlv_pos);
+#endif
+
+#if defined(CONFIG_MBO) || defined(CONFIG_WPA_SUPP)
     wlan_add_ext_capa_info_ie(pmpriv, NULL, &ptlv_pos);
 #endif
 
@@ -949,6 +1146,7 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
             if (pmadapter->active_scan_triggered == MFALSE)
             {
                 /* Prevent active scanning on a radar controlled channel */
+#ifdef CONFIG_5GHz_SUPPORT
                 if (radio_type == HostCmd_SCAN_RADIO_TYPE_A)
                 {
                     if (wlan_11h_radar_detect_required(pmpriv, channel))
@@ -956,6 +1154,7 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
                         scan_type = MLAN_SCAN_TYPE_PASSIVE;
                     }
                 }
+#endif
                 if (radio_type == HostCmd_SCAN_RADIO_TYPE_BG)
                 {
                     if (wlan_bg_scan_type_is_passive(pmpriv, channel))
@@ -1018,92 +1217,153 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
     return ret;
 }
 
-#if !defined(CONFIG_EXT_SCAN_SUPPORT) || defined(CONFIG_ROAMING)
+#ifdef CONFIG_WPA_SUPP_WPS
+
+void check_for_wps_ie(const uint8_t *poui,
+                      t_u8 oui_type,
+                      bool *wps_IE_exist,
+                      t_u16 *wps_session,
+                      void *element_data,
+                      unsigned element_len);
+#endif /* CONFIG_WPA_SUPP_WPS */
+
 /**
- *  @brief Inspect the scan response buffer for pointers to expected TLVs
+ *  @brief  Check if any hidden SSID found in passive scan channels
+ *          and do specific SSID active scan for those channels
  *
- *  TLVs can be included at the end of the scan response BSS information.
- *    Parse the data in the buffer for pointers to TLVs that can potentially
- *    be passed back in the response
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
  *
- *  @param pmadapter        Pointer to the mlan_adapter structure
- *  @param ptlv             Pointer to the start of the TLV buffer to parse
- *  @param tlv_buf_size     Size of the TLV buffer
- *  @param req_tlv_type     Request TLV's type
- *  @param pptlv            Output parameter: Pointer to the request TLV if found
- *
- *  @return                 N/A
+ *  @return             MTRUE/MFALSE
  */
-static t_void wlan_ret_802_11_scan_get_tlv_ptrs(IN pmlan_adapter pmadapter,
-                                                IN MrvlIEtypes_Data_t *ptlv,
-                                                IN t_u32 tlv_buf_size,
-                                                IN t_u32 req_tlv_type,
-                                                OUT MrvlIEtypes_Data_t **pptlv)
+bool wlan_active_scan_req_for_passive_chan(mlan_private *pmpriv, wlan_user_scan_cfg *puser_scan_in)
 {
-    MrvlIEtypes_Data_t *pcurrent_tlv;
-    t_u32 tlv_buf_left;
-    t_u32 tlv_type;
-    t_u32 tlv_len;
-    bool invalid_tlv = MFALSE;
+    bool ret                = MFALSE;
+    mlan_adapter *pmadapter = pmpriv->adapter;
+    bool scan_reqd          = MFALSE;
+    bool chan_listed        = MFALSE;
+    t_u8 id                 = 0;
+    t_u32 bss_idx, i;
+    t_u8 null_ssid[MLAN_MAX_SSID_LENGTH] = {0};
+    mlan_callbacks *pcb                  = (mlan_callbacks *)&pmpriv->adapter->callbacks;
+    wlan_user_scan_cfg *user_scan_cfg    = MNULL;
+    t_u16 band;
 
     ENTER();
 
-    pcurrent_tlv = ptlv;
-    tlv_buf_left = tlv_buf_size;
-    *pptlv       = MNULL;
-
-    PRINTM(MINFO, "SCAN_RESP: tlv_buf_size = %d\n", tlv_buf_size);
-
-    while (tlv_buf_left >= sizeof(MrvlIEtypesHeader_t))
+    if (!pmpriv->ssid_filter)
     {
-        tlv_type = wlan_le16_to_cpu(pcurrent_tlv->header.type);
-        tlv_len  = wlan_le16_to_cpu(pcurrent_tlv->header.len);
+        goto done;
+    }
 
-        if (sizeof(ptlv->header) + tlv_len > tlv_buf_left)
-        {
-            PRINTM(MERROR, "SCAN_RESP: TLV buffer corrupt\n");
-            break;
-        }
+    if (pmadapter->active_scan_triggered)
+    {
+        pmadapter->active_scan_triggered = MFALSE;
+        goto done;
+    }
 
-        if (req_tlv_type == tlv_type)
+    if ((pcb->moal_malloc(pmadapter->pmoal_handle, sizeof(wlan_user_scan_cfg), MLAN_MEM_DEF, (t_u8 **)&user_scan_cfg) !=
+         MLAN_STATUS_SUCCESS) ||
+        !user_scan_cfg)
+    {
+        wifi_d("Memory allocation for user_scan_cfg failed\r\n");
+        goto done;
+    }
+
+    memset(user_scan_cfg, 0x00, sizeof(wlan_user_scan_cfg));
+
+    for (bss_idx = 0; bss_idx < pmadapter->num_in_scan_table; bss_idx++)
+    {
+        scan_reqd = MFALSE;
+        if (!memcmp(pmadapter->pscan_table[bss_idx].ssid.ssid, null_ssid,
+                    pmadapter->pscan_table[bss_idx].ssid.ssid_len))
         {
-            switch (tlv_type)
+            if (puser_scan_in && puser_scan_in->chan_list[0].chan_number)
             {
-                case TLV_TYPE_TSFTIMESTAMP:
-                    PRINTM(MINFO, "SCAN_RESP: TSF Timestamp TLV, len = %d\n", tlv_len);
-                    *pptlv = (MrvlIEtypes_Data_t *)pcurrent_tlv;
-                    break;
-                case TLV_TYPE_CHANNELBANDLIST:
-                    PRINTM(MINFO, "SCAN_RESP: CHANNEL BAND LIST TLV, len = %d\n", tlv_len);
-                    *pptlv = (MrvlIEtypes_Data_t *)pcurrent_tlv;
-                    break;
-                default:
-                    PRINTM(MERROR, "SCAN_RESP: Unhandled TLV = %d\n", tlv_type);
-                    /* Give up, this seems corrupted */
-                    invalid_tlv = MTRUE;
+                for (i = 0; i < WLAN_USER_SCAN_CHAN_MAX && puser_scan_in->chan_list[i].chan_number; i++)
+                {
+                    if (puser_scan_in->chan_list[i].chan_number == pmadapter->pscan_table[bss_idx].channel)
+                    {
+                        if (puser_scan_in->chan_list[i].scan_type == MLAN_SCAN_TYPE_PASSIVE)
+                            scan_reqd = MTRUE;
+                        break;
+                    }
+                }
+            }
+            else if (pmadapter->scan_type == MLAN_SCAN_TYPE_PASSIVE)
+            {
+                scan_reqd = MTRUE;
+            }
+            else
+            {
+#ifdef CONFIG_5GHz_SUPPORT
+                if ((pmadapter->pscan_table[bss_idx].bss_band & BAND_A) &&
+                    wlan_11h_radar_detect_required(pmpriv, pmadapter->pscan_table[bss_idx].channel))
+                    scan_reqd = MTRUE;
+#endif
+                if (pmadapter->pscan_table[bss_idx].bss_band & (BAND_B | BAND_G) &&
+                    wlan_bg_scan_type_is_passive(pmpriv, pmadapter->pscan_table[bss_idx].channel))
+                    scan_reqd = MTRUE;
+            }
+
+            if (scan_reqd)
+            {
+                chan_listed = MFALSE;
+                for (i = 0; i < id; i++)
+                {
+                    band = radio_type_to_band(user_scan_cfg->chan_list[i].radio_type);
+
+                    if ((user_scan_cfg->chan_list[i].chan_number == pmadapter->pscan_table[bss_idx].channel) &&
+                        (band & pmadapter->pscan_table[bss_idx].bss_band))
+                    {
+                        chan_listed = MTRUE;
+                        break;
+                    }
+                }
+                if (chan_listed == MTRUE)
+                    continue;
+                user_scan_cfg->chan_list[id].chan_number = pmadapter->pscan_table[bss_idx].channel;
+                if (pmadapter->pscan_table[bss_idx].bss_band & (BAND_B | BAND_G))
+                    user_scan_cfg->chan_list[id].radio_type = BAND_2GHZ;
+#ifdef CONFIG_5GHz_SUPPORT
+                if (pmadapter->pscan_table[bss_idx].bss_band & BAND_A)
+                    user_scan_cfg->chan_list[id].radio_type = BAND_5GHZ;
+#endif
+                user_scan_cfg->chan_list[id].scan_type = MLAN_SCAN_TYPE_ACTIVE;
+
+                user_scan_cfg->chan_list[id].scan_time = MRVDRV_ACTIVE_SCAN_CHAN_TIME;
+
+                id++;
+
+                if (id >= WLAN_USER_SCAN_CHAN_MAX)
                     break;
             }
-            if (invalid_tlv == MTRUE)
-            {
-                LEAVE();
-                return;
-            }
         }
-
-        if (*pptlv != NULL)
+    }
+    if (id)
+    {
+        pmadapter->active_scan_triggered = MTRUE;
+        (void)__memcpy(pmadapter, user_scan_cfg->ssid_list, puser_scan_in->ssid_list, sizeof(user_scan_cfg->ssid_list));
+        user_scan_cfg->keep_previous_scan = MTRUE;
+#ifdef EXT_SCAN_ENH
+        if (pmadapter->ext_scan_type == EXT_SCAN_ENHANCE)
+            user_scan_cfg->ext_scan_type = EXT_SCAN_ENHANCE;
+#endif
+        wifi_d("active scan request for passive channel %d\r\n", id);
+        if (MLAN_STATUS_SUCCESS != wlan_scan_networks(pmpriv, NULL, user_scan_cfg))
         {
-            // HEXDUMP("SCAN_RESP: TLV Buf", (t_u8 *)*pptlv+4, tlv_len);
-            break;
+            goto done;
         }
-
-        tlv_buf_left -= (sizeof(ptlv->header) + tlv_len);
-        pcurrent_tlv = (MrvlIEtypes_Data_t *)(void *)(pcurrent_tlv->data + tlv_len);
-
-    } /* while */
+        ret = MTRUE;
+    }
+done:
+    split_scan_in_progress = false;
+    if (user_scan_cfg)
+        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)user_scan_cfg);
 
     LEAVE();
+    return ret;
 }
-#endif
 
 /**
  *  @brief Interpret a BSS scan response returned from the firmware
@@ -1150,6 +1410,10 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
     const t_u8 wpa_type[1] = {0x01};
     const t_u8 wmm_oui[3]  = {0x00, 0x50, 0xf2};
     const t_u8 wmm_type[1] = {0x02};
+#ifdef CONFIG_OWE
+    const t_u8 owe_oui[3]  = {0x50, 0x6f, 0x9a};
+    const t_u8 owe_type[1] = {0x01c};
+#endif
 #ifdef CONFIG_MBO
     const t_u8 scan_mbo_oui[3]  = {0x50, 0x6f, 0x9a};
     const t_u8 scan_mbo_type[1] = {0x016};
@@ -1198,7 +1462,7 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
     }
 
     (void)__memcpy(pmadapter, pbss_entry->mac_address, pcurrent_ptr, MLAN_MAC_ADDR_LENGTH);
-    PRINTM(MINFO, "InterpretIE: AP MAC Addr-%02x:%02x:%02x:%02x:%02x:%02x\n", pbss_entry->mac_address[0],
+    wifi_d("InterpretIE: AP MAC Addr-%02x:%02x:%02x:%02x:%02x:%02x", pbss_entry->mac_address[0],
            pbss_entry->mac_address[1], pbss_entry->mac_address[2], pbss_entry->mac_address[3],
            pbss_entry->mac_address[4], pbss_entry->mac_address[5]);
 
@@ -1230,6 +1494,8 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
     pbss_entry->pbeacon_buf     = pcurrent_ptr;
     pbss_entry->beacon_buf_size = bytes_left_for_current_beacon;
 
+    (void)__memcpy(pmadapter, pbss_entry->time_stamp, pcurrent_ptr, 8);
+
     pcurrent_ptr += 8;
     bytes_left_for_current_beacon -= 8U;
 
@@ -1249,9 +1515,25 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
     bytes_left_for_current_beacon -= 2U;
 
     /* Rest of the current buffer are IE's */
-    PRINTM(MINFO, "InterpretIE: IELength for this AP = %d\n", bytes_left_for_current_beacon);
+    wifi_d("InterpretIE: IELength for this AP = %d", bytes_left_for_current_beacon);
 
     HEXDUMP("InterpretIE: IE info", (t_u8 *)pcurrent_ptr, bytes_left_for_current_beacon);
+
+#ifdef CONFIG_WPA_SUPP
+    /* Store IE pointer and len for wpa supplicant scan result, no need to process each IE below*/
+    if (pmadapter->wpa_supp_scan_triggered == MTRUE)
+    {
+        wifi_d("Alloc ies for BSS");
+        pbss_entry->ies = (u8 *)os_mem_alloc(bytes_left_for_current_beacon);
+        if (pbss_entry->ies == MNULL)
+        {
+            wifi_d("Failed to alloc memory for BSS ies");
+            return MLAN_STATUS_FAILURE;
+        }
+        (void)__memcpy(pmadapter, pbss_entry->ies, (t_u8 *)pcurrent_ptr, bytes_left_for_current_beacon);
+        pbss_entry->ies_len = bytes_left_for_current_beacon;
+    }
+#endif
 
     if (pcap_info->privacy == MTRUE)
     {
@@ -1472,6 +1754,42 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
                         HEXDUMP("InterpretIE: Resp WMM_IE", (t_u8 *)&pbss_entry->wmm_ie, total_ie_len);
                     }
                 }
+#ifdef CONFIG_OWE
+                else if (IS_FW_SUPPORT_EMBEDDED_OWE(pmadapter) &&
+                         (!__memcmp(pmadapter, pvendor_ie->vend_hdr.oui, owe_oui, sizeof(owe_oui)) &&
+                          (pvendor_ie->vend_hdr.oui_type == owe_type[0])))
+                {
+                    /* Current Format of OWE IE is element_id:element_len:oui:MAC Address:SSID length:SSID */
+                    t_u8 trans_ssid_len =
+                        *(pcurrent_ptr + sizeof(IEEEtypes_Header_t) + sizeof(owe_oui) + MLAN_MAC_ADDR_LENGTH);
+
+                    if (!trans_ssid_len || trans_ssid_len > MRVDRV_MAX_SSID_LENGTH)
+                    {
+                        bytes_left_for_current_beacon = 0;
+                        continue;
+                    }
+                    if (!pcap_info->privacy)
+                    {
+                        pbss_entry->owe_transition_mode = OWE_TRANS_MODE_OPEN;
+                    }
+                    else
+                    {
+                        pbss_entry->owe_transition_mode = OWE_TRANS_MODE_OWE;
+                    }
+
+                    (void)__memcpy(pmadapter, pbss_entry->trans_mac_address,
+                                   (pcurrent_ptr + sizeof(IEEEtypes_Header_t) + sizeof(owe_oui)), MLAN_MAC_ADDR_LENGTH);
+                    pbss_entry->trans_ssid.ssid_len = trans_ssid_len;
+                    (void)__memcpy(pmadapter, pbss_entry->trans_ssid.ssid,
+                                   (pcurrent_ptr + sizeof(IEEEtypes_Header_t) + sizeof(owe_oui) + MLAN_MAC_ADDR_LENGTH +
+                                    sizeof(t_u8)),
+                                   trans_ssid_len);
+
+                    PRINTM(MCMND, "InterpretIE: OWE Transition AP privacy=%d MAC Addr-" MACSTR " ssid %s\n",
+                           pbss_entry->owe_transition_mode, MAC2STR(pbss_entry->trans_mac_address),
+                           pbss_entry->trans_ssid.ssid);
+                }
+#endif
 #ifdef CONFIG_MBO
                 else if (__memcmp(pmadapter, pvendor_ie->vend_hdr.oui, scan_mbo_oui, sizeof(scan_mbo_oui)) == 0 &&
                          (pvendor_ie->vend_hdr.oui_type == scan_mbo_type[0]))
@@ -1517,6 +1835,12 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
                 }
 #endif
 
+#ifdef CONFIG_WPA_SUPP_WPS
+                /* fixme: Added for WMSDK. Check if can be merged properly with
+                   mlan. There should be a better way */
+                check_for_wps_ie(pvendor_ie->vend_hdr.oui, pvendor_ie->vend_hdr.oui_type, &pbss_entry->wps_IE_exist,
+                                 &pbss_entry->wps_session, pcurrent_ptr + 2, element_len);
+#endif /* CONFIG_WPA_SUPP_WPS */
                 break;
             case RSN_IE:
                 /* Save it here since we do not have beacon buffer */
@@ -1659,6 +1983,114 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
 
 
 /**
+ *  @brief get the chan load from chan stats.
+ *
+ *  @param pmadapter    A pointer to mlan_adapter structure
+ *  @param channel      channel  *
+ *
+ *  @return             channel load
+ */
+static t_u16 wlan_get_chan_load(mlan_adapter *pmadapter, t_u8 channel)
+{
+    t_u16 chan_load = 0;
+    int i;
+    for (i = 0; i < (int)pmadapter->num_in_chan_stats; i++)
+    {
+        if ((pmadapter->pchan_stats[i].chan_num == channel) && pmadapter->pchan_stats[i].cca_scan_duration)
+        {
+            chan_load =
+                (pmadapter->pchan_stats[i].cca_busy_duration * 100) / pmadapter->pchan_stats[i].cca_scan_duration;
+            break;
+        }
+    }
+    return chan_load;
+}
+
+static t_u16 wlan_get_chan_noise(mlan_adapter *pmadapter, t_u8 channel)
+{
+    t_u16 chan_noise = 0;
+    int i;
+    for (i = 0; i < (int)pmadapter->num_in_chan_stats; i++)
+    {
+        if ((pmadapter->pchan_stats[i].chan_num == channel) && pmadapter->pchan_stats[i].noise)
+        {
+            chan_noise = pmadapter->pchan_stats[i].noise;
+            break;
+        }
+    }
+    return chan_noise;
+}
+
+/**
+ *  @brief get the chan min/max rssi
+ *
+ *  @param pmadapter    A pointer to mlan_adapter structure
+ *  @param channel      channel  *
+ *  @param min_flag     flag to get min rssi
+ *  @return             rssi
+ */
+static t_u8 wlan_get_chan_rssi(mlan_adapter *pmadapter, t_u8 channel, t_u8 min_flag)
+{
+    t_u8 rssi = 0;
+    int i;
+    for (i = 0; i < (int)pmadapter->num_in_scan_table; i++)
+    {
+        if (pmadapter->pscan_table[i].channel == channel)
+        {
+            if (rssi == 0)
+                rssi = (t_s32)pmadapter->pscan_table[i].rssi;
+            else
+            {
+                if (min_flag)
+                    rssi = MIN(rssi, pmadapter->pscan_table[i].rssi);
+                else
+                    rssi = MAX(rssi, pmadapter->pscan_table[i].rssi);
+            }
+        }
+    }
+    return rssi;
+}
+
+/**
+ *  @brief update the min/max rssi for channel statistics.
+ *
+ *  @param pmadapter    A pointer to mlan_adapter structure
+ *	@return             N/A
+ */
+static t_void wlan_update_chan_rssi(mlan_adapter *pmadapter)
+{
+    int i;
+    t_s8 min_rssi = 0;
+    t_s8 max_rssi = 0;
+    t_s8 rss      = 0;
+    for (i = 0; i < (int)pmadapter->num_in_chan_stats; i++)
+    {
+        if (pmadapter->pchan_stats[i].chan_num && pmadapter->pchan_stats[i].cca_scan_duration)
+        {
+            min_rssi = -wlan_get_chan_rssi(pmadapter, pmadapter->pchan_stats[i].chan_num, MFALSE);
+            max_rssi = -wlan_get_chan_rssi(pmadapter, pmadapter->pchan_stats[i].chan_num, MTRUE);
+            rss      = min_rssi - pmadapter->pchan_stats[i].noise;
+            // rss should always > 0, FW need fix the wrong
+            // rssi/noise in scantable
+            if (rss > 0)
+                pmadapter->pchan_stats[i].min_rss = rss;
+            else
+                pmadapter->pchan_stats[i].min_rss = 0;
+
+            rss = max_rssi - pmadapter->pchan_stats[i].noise;
+            if (rss > 0)
+                pmadapter->pchan_stats[i].max_rss = rss;
+            else
+                pmadapter->pchan_stats[i].max_rss = 0;
+            PRINTM(MCMND, "chan=%d, min_rssi=%d, max_rssi=%d noise=%d min_rss=%d, max_rss=%d\n",
+                   pmadapter->pchan_stats[i].chan_num, min_rssi, max_rssi, pmadapter->pchan_stats[i].noise,
+                   pmadapter->pchan_stats[i].min_rss, pmadapter->pchan_stats[i].max_rss);
+        }
+    }
+    return;
+}
+
+/**
  *  @brief Post process the scan table after a new scan command has completed
  *
  *  Inspect each entry of the scan table and try to find an entry that
@@ -1674,7 +2106,23 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
  */
 /* static */ void wlan_scan_process_results(IN mlan_private *pmpriv)
 {
+    mlan_adapter *pmadapter = pmpriv->adapter;
+    t_u32 i;
 
+
+    for (i = 0; i < pmadapter->num_in_scan_table; i++)
+    {
+        PRINTM(MINFO,
+               "Scan:(%02d) %02x:%02x:%02x:%02x:%02x:%02x, "
+               "RSSI[%03d], SSID[%s]\n",
+               i, pmadapter->pscan_table[i].mac_address[0], pmadapter->pscan_table[i].mac_address[1],
+               pmadapter->pscan_table[i].mac_address[2], pmadapter->pscan_table[i].mac_address[3],
+               pmadapter->pscan_table[i].mac_address[4], pmadapter->pscan_table[i].mac_address[5],
+               (t_s32)pmadapter->pscan_table[i].rssi, pmadapter->pscan_table[i].ssid.ssid);
+        pmadapter->pscan_table[i].chan_load  = wlan_get_chan_load(pmadapter, pmadapter->pscan_table[i].channel);
+        pmadapter->pscan_table[i].chan_noise = wlan_get_chan_noise(pmadapter, pmadapter->pscan_table[i].channel);
+    }
+    wlan_update_chan_rssi(pmadapter);
     /*
      * Prepares domain info from scan table and downloads the
      *   domain info command to the FW.
@@ -1741,6 +2189,15 @@ t_s32 wlan_is_network_compatible(IN mlan_private *pmpriv, IN t_u32 index, IN mla
 
 
     /* fixme: Disabled for now */
+#ifdef CONFIG_OWE
+    if ((pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OPEN) &&
+        (pmpriv->sec_info.authentication_mode != MLAN_AUTH_MODE_OWE))
+    {
+        PRINTM(MINFO, "Return success directly in OWE Transition mode\n");
+        LEAVE();
+        return index;
+    }
+#endif
     if ((pbss_desc->bss_mode == mode) && (pmpriv->sec_info.ewpa_enabled == MTRUE))
     {
         if (((pbss_desc->pwpa_ie != MNULL) && ((*(pbss_desc->pwpa_ie)).vend_hdr.element_id == WPA_IE)) ||
@@ -2028,6 +2485,8 @@ mlan_status wlan_scan_networks(IN mlan_private *pmpriv,
         pmadapter->num_in_scan_table = 0;
     }
 
+    pmadapter->idx_chan_stats = 0;
+
     split_scan_in_progress = true;
     ret = wlan_scan_channel_list(pmpriv, pioctl_buf, max_chan_per_scan, filtered_scan, &pscan_cfg_out->config,
                                  pchan_list_out, pscan_chan_list);
@@ -2101,7 +2560,7 @@ mlan_status wlan_cmd_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
  * pointers still point to buffer addresses in the separate structure. We
  * will update them here.
  */
-static void adjust_pointers_to_internal_buffers(BSSDescriptor_t *pbss_entry)
+static void adjust_pointers_to_internal_buffers(BSSDescriptor_t *pbss_entry, BSSDescriptor_t *pbss_new_entry)
 {
     if (pbss_entry->pht_cap != NULL)
     {
@@ -2149,9 +2608,14 @@ static void adjust_pointers_to_internal_buffers(BSSDescriptor_t *pbss_entry)
     {
         pbss_entry->prsnx_ie = &pbss_entry->rsnx_ie_saved;
     }
+#ifdef CONFIG_WPA_SUPP
+    if (pbss_new_entry->ies != NULL)
+    {
+        pbss_entry->ies = pbss_new_entry->ies;
+    }
+#endif
 }
 
-#if !defined(CONFIG_EXT_SCAN_SUPPORT) || defined(CONFIG_ROAMING)
 /**
  *  @brief This function handles the command response of scan
  *
@@ -2200,11 +2664,24 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
     MrvlIEtypes_ChanBandListParamSet_t *pchan_band_tlv = MNULL;
     ChanBandParamSet_t *pchan_band;
     t_u16 band;
+    t_u8 is_bgscan_resp;
     /* t_u32 age_ts_usec; */
     t_u32 lowest_rssi_index = 0;
+    MrvlIEtypes_ChannelStats_t *pchanstats_tlv = MNULL;
+    t_u8 null_ssid[MLAN_MAX_SSID_LENGTH] = {0};
+    MrvlIEtypes_Data_t *pcurrent_tlv;
+    t_u32 tlv_buf_left;
+    t_u16 tlv_type;
+    t_u16 tlv_len;
 
     ENTER();
     pcb = (pmlan_callbacks)&pmadapter->callbacks;
+    is_bgscan_resp = ((resp->command & HostCmd_CMD_ID_MASK) == HostCmd_CMD_802_11_BG_SCAN_QUERY);
+    if (is_bgscan_resp)
+    {
+        pscan_rsp = &resp->params.bg_scan_query_resp.scan_resp;
+    }
+    else
     {
         pscan_rsp = &resp->params.scan_resp;
     }
@@ -2215,6 +2692,12 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
 
     bytes_left = wlan_le16_to_cpu(pscan_rsp->bss_descript_size);
     PRINTM(MINFO, "SCAN_RESP: bss_descript_size %d\n", bytes_left);
+
+    if ((pscan_rsp->number_of_sets == 0U) && (bytes_left == 0U))
+    {
+        wscan_d("SCAN_RESP: number of sets are zero");
+        goto done;
+    }
 
     scan_resp_size = resp->size;
 
@@ -2232,15 +2715,56 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
     tlv_buf_size = scan_resp_size -
                    (bytes_left + sizeof(pscan_rsp->bss_descript_size) + sizeof(pscan_rsp->number_of_sets) + S_DS_GEN);
 
+    if (is_bgscan_resp && (tlv_buf_size > sizeof(resp->params.bg_scan_query_resp.report_condition)))
+    {
+        tlv_buf_size -= sizeof(resp->params.bg_scan_query_resp.report_condition);
+    }
     ptlv = (MrvlIEtypes_Data_t *)(void *)(pscan_rsp->bss_desc_and_tlv_buffer + bytes_left);
 
-    /* Search the TLV buffer space in the scan response for any valid TLVs */
-    wlan_ret_802_11_scan_get_tlv_ptrs(pmadapter, ptlv, tlv_buf_size, TLV_TYPE_TSFTIMESTAMP,
-                                      (MrvlIEtypes_Data_t **)(void **)&ptsf_tlv);
+    pcurrent_tlv = ptlv;
+    tlv_buf_left = tlv_buf_size;
 
-    /* Search the TLV buffer space in the scan response for any valid TLVs */
-    wlan_ret_802_11_scan_get_tlv_ptrs(pmadapter, ptlv, tlv_buf_size, TLV_TYPE_CHANNELBANDLIST,
-                                      (MrvlIEtypes_Data_t **)(void **)&pchan_band_tlv);
+    wscan_d("SCAN_RESP: tlv_buf_size = %d", tlv_buf_size);
+
+    while (tlv_buf_left >= sizeof(MrvlIEtypesHeader_t))
+    {
+        tlv_type = wlan_le16_to_cpu(pcurrent_tlv->header.type);
+        tlv_len  = wlan_le16_to_cpu(pcurrent_tlv->header.len);
+
+        if (sizeof(ptlv->header) + tlv_len > tlv_buf_left)
+        {
+            wscan_d("SCAN_RESP: TLV buffer corrupt");
+            break;
+        }
+
+        switch (tlv_type)
+        {
+            case TLV_TYPE_TSFTIMESTAMP:
+                wscan_d("SCAN_RESP: TSF Timestamp TLV, len = %d", tlv_len);
+                ptsf_tlv = (MrvlIEtypes_TsfTimestamp_t *)pcurrent_tlv;
+                break;
+            case TLV_TYPE_CHANNELBANDLIST:
+                wscan_d("SCAN_RESP: CHANNEL BAND LIST TLV, len = %d", tlv_len);
+                pchan_band_tlv = (MrvlIEtypes_ChanBandListParamSet_t *)pcurrent_tlv;
+                break;
+            case TLV_TYPE_CHANNEL_STATS:
+                wscan_d("SCAN_RESP: CHANNEL STATS TLV, len = %d", tlv_len);
+                pchanstats_tlv = (MrvlIEtypes_ChannelStats_t *)pcurrent_tlv;
+                break;
+            default:
+                wscan_d("SCAN_RESP: Unhandled TLV = %d", tlv_type);
+                break;
+        }
+
+        tlv_buf_left -= (sizeof(ptlv->header) + tlv_len);
+        pcurrent_tlv = (MrvlIEtypes_Data_t *)(void *)(pcurrent_tlv->data + tlv_len);
+
+    } /* while */
+
+    if (pchanstats_tlv != MNULL)
+    {
+        wlan_update_chan_statistics(pmpriv, pchanstats_tlv);
+    }
 
     /*
      *  Process each scan response returned (pscan_rsp->number_of_sets).  Save
@@ -2272,14 +2796,27 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
         if (wlan_interpret_bss_desc_with_ie(pmadapter, bss_new_entry, &pbss_info, &bytes_left, MFALSE) ==
             MLAN_STATUS_SUCCESS)
         {
-            PRINTM(MINFO, "SCAN_RESP: BSSID = %02x:%02x:%02x:%02x:%02x:%02x\n", bss_new_entry->mac_address[0],
-                   bss_new_entry->mac_address[1], bss_new_entry->mac_address[2], bss_new_entry->mac_address[3],
-                   bss_new_entry->mac_address[4], bss_new_entry->mac_address[5]);
+            wscan_d("SCAN_RESP: BSSID = %02x:%02x:%02x:%02x:%02x:%02x", bss_new_entry->mac_address[0],
+                    bss_new_entry->mac_address[1], bss_new_entry->mac_address[2], bss_new_entry->mac_address[3],
+                    bss_new_entry->mac_address[4], bss_new_entry->mac_address[5]);
 
-            if ((pmpriv->ssid_filter) && ((bss_new_entry->ssid.ssid_len == 0) || (bss_new_entry->ssid.ssid[0] == '\0')))
+#ifdef CONFIG_WPA_SUPP
+#ifdef CONFIG_WPA_SUPP_WPS
+            if (pmpriv->wps.session_enable == MTRUE)
             {
-                continue;
+                if ((bss_new_entry->wps_IE_exist == MFALSE) || (bss_new_entry->wps_session == 0xffff))
+                {
+                    if (bss_new_entry->ies != NULL)
+                    {
+                        os_mem_free(bss_new_entry->ies);
+                        bss_new_entry->ies = NULL;
+                    }
+                    continue;
+                }
             }
+#endif /* CONFIG_WPA_SUPP_WPS */
+#endif
+
             /*
              * Search the scan table for the same bssid
              */
@@ -2297,7 +2834,19 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
                         (!__memcmp(pmadapter, bss_new_entry->ssid.ssid, pmadapter->pscan_table[bss_idx].ssid.ssid,
                                    bss_new_entry->ssid.ssid_len)))
                     {
-                        PRINTM(MINFO, "SCAN_RESP: Duplicate of index: %d\n", bss_idx);
+                        wscan_d("SCAN_RESP: Duplicate of index: %d", bss_idx);
+                        break;
+                    }
+                    /*
+                     * If the SSID is NULL for same BSSID
+                     * keep the bss_idx set to this entry
+                     * so we replace the old contents in
+                     * the table
+                     */
+                    if (!__memcmp(pmadapter, pmadapter->pscan_table[bss_idx].ssid.ssid, null_ssid,
+                                  pmadapter->pscan_table[bss_idx].ssid.ssid_len))
+                    {
+                        wscan_d("SCAN_RESP: Duplicate of index: %d", bss_idx);
                         break;
                     }
                 }
@@ -2324,7 +2873,14 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
                 if ((bss_new_entry->channel != pmadapter->pscan_table[bss_idx].channel) &&
                     (bss_new_entry->rssi > pmadapter->pscan_table[bss_idx].rssi))
                 {
-                    PRINTM(MCMND, "skip update the duplicate entry with low rssi\n");
+                    wscan_d("skip update the duplicate entry with low rssi");
+#ifdef CONFIG_WPA_SUPP
+                    if (bss_new_entry->ies != NULL)
+                    {
+                        os_mem_free(bss_new_entry->ies);
+                        bss_new_entry->ies = NULL;
+                    }
+#endif
                     continue;
                 }
             }
@@ -2347,7 +2903,11 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
             if (pchan_band_tlv != MNULL)
             {
                 pchan_band = &pchan_band_tlv->chan_band_param[idx];
-                band       = radio_type_to_band(pchan_band->radio_type & (MBIT(0) | MBIT(1)));
+                if (bss_new_entry->channel == 0)
+                {
+                    bss_new_entry->channel = pchan_band->chan_number;
+                }
+                band = radio_type_to_band(pchan_band->radio_type & (MBIT(0) | MBIT(1)));
             }
 
             /* Save the band designation for this entry for use in join */
@@ -2362,33 +2922,105 @@ mlan_status wlan_ret_802_11_scan(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND 
             {
                 bss_new_entry->freq = 0;
             }
+
+            if ((is_bgscan_resp) && (pmpriv->roaming_enabled == MTRUE))
+            {
+                if (num_in_table == 2U)
+                {
+                    if (pmadapter->pscan_table[0].rssi > bss_new_entry->rssi)
+                    {
+#ifdef CONFIG_WPA_SUPP
+                        /* If the scan table is full, free ies of the lowest rssi entry before this entry is replaced */
+                        if (pmadapter->pscan_table[0].ies != NULL)
+                        {
+                            os_mem_free(pmadapter->pscan_table[0].ies);
+                            pmadapter->pscan_table[0].ies = NULL;
+                        }
+#endif
+                        (void)__memcpy(pmadapter, &pmadapter->pscan_table[0], bss_new_entry,
+                                       sizeof(pmadapter->pscan_table[0]));
+                        adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[0], bss_new_entry);
+                    }
+#ifdef CONFIG_WPA_SUPP
+                    /* If the scan table is full, free ies of the new entry with lowest rssi, which won't be added into
+                     * table */
+                    else
+                    {
+                        if (bss_new_entry->ies != NULL)
+                        {
+                            os_mem_free(bss_new_entry->ies);
+                            bss_new_entry->ies = NULL;
+                        }
+                    }
+#endif
+                    num_in_table--;
+                    continue;
+                }
+            }
+
             if (bss_idx == MRVDRV_MAX_BSSID_LIST)
             {
                 if (pmadapter->pscan_table[lowest_rssi_index].rssi > bss_new_entry->rssi)
                 {
+#ifdef CONFIG_WPA_SUPP
+                    /* If the scan table is full, free ies of the lowest rssi entry before this entry is replaced */
+                    if (pmadapter->pscan_table[lowest_rssi_index].ies != NULL)
+                    {
+                        os_mem_free(pmadapter->pscan_table[lowest_rssi_index].ies);
+                        pmadapter->pscan_table[lowest_rssi_index].ies = NULL;
+                    }
+#endif
                     (void)__memcpy(pmadapter, &pmadapter->pscan_table[lowest_rssi_index], bss_new_entry,
                                    sizeof(pmadapter->pscan_table[lowest_rssi_index]));
-                    adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[lowest_rssi_index]);
+                    adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[lowest_rssi_index], bss_new_entry);
                 }
+#ifdef CONFIG_WPA_SUPP
+                /* If the scan table is full, free ies of the new entry with lowest rssi, which won't be added into
+                 * table */
+                else
+                {
+                    if (bss_new_entry->ies != NULL)
+                    {
+                        os_mem_free(bss_new_entry->ies);
+                        bss_new_entry->ies = NULL;
+                    }
+                }
+#endif
             }
             else
             {
+#ifdef CONFIG_WPA_SUPP
+                /* Free ies of the old entry if it's duplicate entry */
+                if (pmadapter->pscan_table[bss_idx].ies != NULL)
+                {
+                    os_mem_free(pmadapter->pscan_table[bss_idx].ies);
+                    pmadapter->pscan_table[bss_idx].ies = NULL;
+                }
+#endif
+
                 /* Copy the locally created bss_new_entry to the scan table */
                 (void)__memcpy(pmadapter, &pmadapter->pscan_table[bss_idx], bss_new_entry,
                                sizeof(pmadapter->pscan_table[bss_idx]));
-                adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[bss_idx]);
+                adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[bss_idx], bss_new_entry);
             }
         }
         else
         {
             /* Error parsing/interpreting the scan response, skipped */
             PRINTM(MERROR, "SCAN_RESP: wlan_interpret_bss_desc_with_ie returned error\n");
+#ifdef CONFIG_WPA_SUPP
+            if (bss_new_entry->ies != NULL)
+            {
+                os_mem_free(bss_new_entry->ies);
+                bss_new_entry->ies = NULL;
+            }
+#endif
         }
         idx++;
     }
 
-    PRINTM(MINFO, "SCAN_RESP: Scanned %2d APs, %d valid, %d total\n", pscan_rsp->number_of_sets,
-           num_in_table - pmadapter->num_in_scan_table, num_in_table);
+    wscan_d("SCAN_RESP: Scanned %2d APs, %d valid, %d total", pscan_rsp->number_of_sets,
+            num_in_table - pmadapter->num_in_scan_table, num_in_table);
 
     /* Update the total number of BSSIDs in the scan table */
     pmadapter->num_in_scan_table = num_in_table;
@@ -2404,7 +3036,6 @@ done:
     LEAVE();
     return ret;
 }
-#endif
 
 #if defined(CONFIG_EXT_SCAN_SUPPORT)
 /**
@@ -2455,10 +3086,78 @@ mlan_status wlan_cmd_802_11_scan_ext(IN mlan_private *pmpriv, IN HostCmd_DS_COMM
  */
 mlan_status wlan_ret_802_11_scan_ext(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND *resp, IN t_void *pioctl_buf)
 {
+    HostCmd_DS_802_11_SCAN_EXT *pext_scan_cmd = &(resp->params.ext_scan);
+    MrvlIEtypesHeader_t *tlv                  = MNULL;
+    MrvlIEtypes_ChannelStats_t *tlv_chanstats = MNULL;
+    t_u16 tlv_buf_left                        = 0;
+    t_u16 tlv_type                            = 0;
+    t_u16 tlv_len                             = 0;
+#ifdef EXT_SCAN_ENH
+    t_u32 ext_scan_type;
+    mlan_callbacks *pcb        = (mlan_callbacks *)&pmpriv->adapter->callbacks;
+    pmlan_ioctl_req pioctl_req = (pmlan_ioctl_req)pioctl_buf;
+    mlan_adapter *pmadapter    = pmpriv->adapter;
+#endif
     ENTER();
 
     PRINTM(MINFO, "EXT scan returns successfully\n");
-
+#ifdef EXT_SCAN_ENH
+    pmadapter->scan_state |= wlan_get_ext_scan_state(resp);
+    ext_scan_type = pext_scan_cmd->ext_scan_type;
+    if (ext_scan_type == EXT_SCAN_CANCEL)
+    {
+        PRINTM(MCMND, "Cancel scan command completed!\n");
+        wlan_request_cmd_lock(pmadapter);
+        pmadapter->scan_processing = MFALSE;
+        pmadapter->scan_state |= SCAN_STATE_SCAN_COMPLETE;
+        pmadapter->ext_scan_type = EXT_SCAN_DEFAULT;
+#ifdef HOST_CCX
+        pmadapter->scan_data_block = MFALSE;
+#endif
+        wlan_release_cmd_lock(pmadapter);
+        /* Need to indicate IOCTL complete */
+        if (pioctl_req != MNULL)
+        {
+            pioctl_req->status_code = MLAN_STATUS_SUCCESS;
+            /* Indicate ioctl complete */
+            pcb->moal_ioctl_complete(pmadapter->pmoal_handle, (pmlan_ioctl_req)pioctl_req, MLAN_STATUS_SUCCESS);
+        }
+        LEAVE();
+        return MLAN_STATUS_SUCCESS;
+    }
+    else if (ext_scan_type == EXT_SCAN_ENHANCE)
+    {
+        /* Setup the timer after scan command response */
+        pcb->moal_start_timer(pmpriv->adapter->pmoal_handle, pmpriv->adapter->pmlan_cmd_timer, MFALSE,
+                              MRVDRV_TIMER_10S * 2);
+        pmpriv->adapter->cmd_timer_is_set = MTRUE;
+        LEAVE();
+        return MLAN_STATUS_SUCCESS;
+    }
+#endif
+    tlv          = (MrvlIEtypesHeader_t *)pext_scan_cmd->tlv_buffer;
+    tlv_buf_left = resp->size - (sizeof(HostCmd_DS_802_11_SCAN_EXT) - 1 + S_DS_GEN);
+    while (tlv_buf_left >= sizeof(MrvlIEtypesHeader_t))
+    {
+        tlv_type = wlan_le16_to_cpu(tlv->type);
+        tlv_len  = wlan_le16_to_cpu(tlv->len);
+        if (tlv_buf_left < (tlv_len + sizeof(MrvlIEtypesHeader_t)))
+        {
+            PRINTM(MERROR, "Error processing scan gap TLV\n");
+            break;
+        }
+        switch (tlv_type)
+        {
+            case TLV_TYPE_CHANNEL_STATS:
+                tlv_chanstats = (MrvlIEtypes_ChannelStats_t *)tlv;
+                wlan_update_chan_statistics(pmpriv, tlv_chanstats);
+                break;
+            default:
+                break;
+        }
+        tlv_buf_left -= tlv_len + sizeof(MrvlIEtypesHeader_t);
+        tlv = (MrvlIEtypesHeader_t *)((t_u8 *)tlv + tlv_len + sizeof(MrvlIEtypesHeader_t));
+    }
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
@@ -2497,7 +3196,8 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
     MrvlIEtypes_Bss_Scan_Info_t *pscan_info_tlv = MNULL;
     t_u16 band;
     /* t_u32 age_ts_usec; */
-    t_u32 lowest_rssi_index = 0;
+    t_u32 lowest_rssi_index              = 0;
+    t_u8 null_ssid[MLAN_MAX_SSID_LENGTH] = {0};
 
     ENTER();
     pcb = (pmlan_callbacks)&pmadapter->callbacks;
@@ -2506,6 +3206,12 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
     bytes_left = scan_resp_size;
     PRINTM(MINFO, "EXT_SCAN: bss_descript_size %d\n", scan_resp_size);
     PRINTM(MINFO, "EXT_SCAN: returned %d APs before parsing\n", number_of_sets);
+
+    if ((number_of_sets == 0U) && (bytes_left == 0U))
+    {
+        wscan_d("SCAN_RESP: number of sets are zero");
+        goto done;
+    }
 
     num_in_table = pmadapter->num_in_scan_table;
     ptlv         = (MrvlIEtypes_Data_t *)pscan_resp;
@@ -2603,10 +3309,22 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
                    bss_new_entry->mac_address[1], bss_new_entry->mac_address[2], bss_new_entry->mac_address[3],
                    bss_new_entry->mac_address[4], bss_new_entry->mac_address[5]);
 
-            if ((pmpriv->ssid_filter) && ((bss_new_entry->ssid.ssid_len == 0) || (bss_new_entry->ssid.ssid[0] == '\0')))
+#ifdef CONFIG_WPA_SUPP
+#ifdef CONFIG_WPA_SUPP_WPS
+            if (pmpriv->wps.session_enable == MTRUE)
             {
-                continue;
+                if ((bss_new_entry->wps_IE_exist == MFALSE) || (bss_new_entry->wps_session == 0xffff))
+                {
+                    if (bss_new_entry->ies != NULL)
+                    {
+                        os_mem_free(bss_new_entry->ies);
+                        bss_new_entry->ies = NULL;
+                    }
+                    continue;
+                }
             }
+#endif /* CONFIG_WPA_SUPP_WPS */
+#endif
 
             /*
              * Search the scan table for the same bssid
@@ -2626,6 +3344,18 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
                                    bss_new_entry->ssid.ssid_len)))
                     {
                         PRINTM(MINFO, "EXT_SCAN: Duplicate of index: %d\n", bss_idx);
+                        break;
+                    }
+                    /*
+                     * If the SSID is NULL for same BSSID
+                     * keep the bss_idx set to this entry
+                     * so we replace the old contents in
+                     * the table
+                     */
+                    if (!__memcmp(pmadapter, pmadapter->pscan_table[bss_idx].ssid.ssid, null_ssid,
+                                  pmadapter->pscan_table[bss_idx].ssid.ssid_len))
+                    {
+                        PRINTM(MINFO, "SCAN_RESP: Duplicate of index: %d\n", bss_idx);
                         break;
                     }
                 }
@@ -2653,6 +3383,13 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
                     (bss_new_entry->rssi > pmadapter->pscan_table[bss_idx].rssi))
                 {
                     PRINTM(MCMND, "skip update the duplicate entry with low rssi\n");
+#ifdef CONFIG_WPA_SUPP
+                    if (bss_new_entry->ies != NULL)
+                    {
+                        os_mem_free(bss_new_entry->ies);
+                        bss_new_entry->ies = NULL;
+                    }
+#endif
                     continue;
                 }
             }
@@ -2678,6 +3415,8 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
                 (void)__memcpy(pmpriv->adapter, &bss_new_entry->network_tsf, &tsf_val,
                                sizeof(bss_new_entry->network_tsf));
                 band = radio_type_to_band(pscan_info_tlv->band);
+                if (bss_new_entry->channel == 0)
+                    bss_new_entry->channel = pscan_info_tlv->channel;
             }
             /* Save the band designation for this entry for use in join */
             bss_new_entry->bss_band = band;
@@ -2691,23 +3430,56 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
             {
                 if (pmadapter->pscan_table[lowest_rssi_index].rssi > bss_new_entry->rssi)
                 {
+#ifdef CONFIG_WPA_SUPP
+                    if (pmadapter->pscan_table[lowest_rssi_index].ies != NULL)
+                    {
+                        os_mem_free(pmadapter->pscan_table[lowest_rssi_index].ies);
+                        pmadapter->pscan_table[lowest_rssi_index].ies = NULL;
+                    }
+#endif
                     (void)__memcpy(pmadapter, &pmadapter->pscan_table[lowest_rssi_index], bss_new_entry,
                                    sizeof(pmadapter->pscan_table[lowest_rssi_index]));
-                    adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[lowest_rssi_index]);
+                    adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[lowest_rssi_index], bss_new_entry);
                 }
+#ifdef CONFIG_WPA_SUPP
+                /* If the scan table is full, free ies of the new entry with lowest rssi, which won't be added into
+                 * table */
+                else
+                {
+                    if (bss_new_entry->ies != NULL)
+                    {
+                        os_mem_free(bss_new_entry->ies);
+                        bss_new_entry->ies = NULL;
+                    }
+                }
+#endif
             }
             else
             {
                 /* Copy the locally created bss_new_entry to the scan table */
+#ifdef CONFIG_WPA_SUPP
+                if (pmadapter->pscan_table[bss_idx].ies != NULL)
+                {
+                    os_mem_free(pmadapter->pscan_table[bss_idx].ies);
+                    pmadapter->pscan_table[bss_idx].ies = NULL;
+                }
+#endif
                 (void)__memcpy(pmadapter, &pmadapter->pscan_table[bss_idx], bss_new_entry,
                                sizeof(pmadapter->pscan_table[bss_idx]));
-                adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[bss_idx]);
+                adjust_pointers_to_internal_buffers(&pmadapter->pscan_table[bss_idx], bss_new_entry);
             }
         }
         else
         {
             /* Error parsing/interpreting the scan response, skipped */
             PRINTM(MERROR, "EXT_SCAN: wlan_interpret_bss_desc_with_ie returned error\n");
+#ifdef CONFIG_WPA_SUPP
+            if (bss_new_entry->ies != NULL)
+            {
+                os_mem_free(bss_new_entry->ies);
+                bss_new_entry->ies = NULL;
+            }
+#endif
         }
     }
 
@@ -2809,6 +3581,389 @@ mlan_status wlan_handle_event_ext_scan_report(IN mlan_private *pmpriv, IN t_u8 *
 }
 #endif /* CONFIG_EXT_SCAN_SUPPORT */
 
+/**
+ *  @brief This function prepares command of bg_scan_query.
+ *
+ *  @param pmpriv     A pointer to mlan_private structure
+ *  @param pcmd       A pointer to HostCmd_DS_COMMAND structure
+ *  @param pdata_buf  Void pointer cast of a wlan_scan_cmd_config struct used
+ *                    to set the fields/TLVs for the command sent to firmware
+ *
+ *  @return           MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_cmd_802_11_bg_scan_query(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND *pcmd, IN t_u16 cmd_action)
+{
+    HostCmd_DS_802_11_BG_SCAN_QUERY *bg_query = &pcmd->params.bg_scan_query;
+
+    ENTER();
+
+    pcmd->command = wlan_cpu_to_le16(HostCmd_CMD_802_11_BG_SCAN_QUERY);
+    pcmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_802_11_BG_SCAN_QUERY) + S_DS_GEN);
+
+    bg_query->flush = MTRUE;
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief Create a channel list for the driver to scan based on region info
+ *
+ *  Use the driver region/band information to construct a comprehensive list
+ *    of channels to scan.  This routine is used for any scan that is not
+ *    provided a specific channel list to scan.
+ *
+ *  @param pmpriv           A pointer to mlan_private structure
+ *  @param pbg_scan_in      pointer to scan configuration parameters
+ *  @param tlv_chan_list    A pointer to structure MrvlIEtypes_ChanListParamSet_t
+ *
+ *  @return                 channel number
+ */
+static t_u8 wlan_bgscan_create_channel_list(IN mlan_private *pmpriv,
+                                            IN const wlan_bgscan_cfg *pbg_scan_in,
+                                            MrvlIEtypes_ChanListParamSet_t *tlv_chan_list)
+{
+    mlan_adapter *pmadapter = pmpriv->adapter;
+    region_chan_t *pscan_region;
+    const chan_freq_power_t *cfp;
+    t_u32 region_idx;
+    t_u32 chan_idx = 0;
+    t_u32 next_chan;
+    t_u8 scan_type;
+    t_u8 radio_type;
+
+    ENTER();
+
+    for (region_idx = 0; region_idx < NELEMENTS(pmadapter->region_channel); region_idx++)
+    {
+        if (wlan_11d_is_enabled(pmpriv) && pmpriv->media_connected != MTRUE)
+        {
+            /* Scan all the supported chan for the first scan */
+            if (!pmadapter->universal_channel[region_idx].valid)
+                continue;
+            pscan_region = &pmadapter->universal_channel[region_idx];
+        }
+        else
+        {
+            if (!pmadapter->region_channel[region_idx].valid)
+                continue;
+            pscan_region = &pmadapter->region_channel[region_idx];
+        }
+
+        if (pbg_scan_in && !pbg_scan_in->chan_list[0].chan_number &&
+            pbg_scan_in->chan_list[0].radio_type & BAND_SPECIFIED)
+        {
+            radio_type = pbg_scan_in->chan_list[0].radio_type & ~BAND_SPECIFIED;
+            if (!radio_type && (pscan_region->band != BAND_B) && (pscan_region->band != BAND_G))
+                continue;
+            if (radio_type && (pscan_region->band != BAND_A))
+                continue;
+        }
+        if (!wlan_is_band_compatible(pmpriv->config_bands | pmadapter->adhoc_start_band, pscan_region->band))
+            continue;
+        for (next_chan = 0; next_chan < pscan_region->num_cfp; next_chan++, chan_idx++)
+        {
+            if (chan_idx >= WLAN_BG_SCAN_CHAN_MAX)
+                break;
+            /* Set the default scan type to ACTIVE SCAN type, will later be
+               changed to passive on a per channel basis if restricted by
+               regulatory requirements (11d or 11h) */
+            scan_type = MLAN_SCAN_TYPE_ACTIVE;
+            cfp       = pscan_region->pcfp + next_chan;
+            if (scan_type == MLAN_SCAN_TYPE_ACTIVE && wlan_11d_support_is_enabled(pmpriv))
+            {
+                scan_type = wlan_11d_get_scan_type(pmpriv, pscan_region->band, (t_u8)cfp->channel,
+                                                   &pmadapter->parsed_region_chan);
+            }
+            switch (pscan_region->band)
+            {
+#ifdef CONFIG_5GHz_SUPPORT
+                case BAND_A:
+                    tlv_chan_list->chan_scan_param[chan_idx].radio_type = HostCmd_SCAN_RADIO_TYPE_A;
+                    if (!wlan_11d_is_enabled(pmpriv))
+                    {
+                        /* 11D not available... play it safe on DFS channels */
+                        if (wlan_11h_radar_detect_required(pmpriv, (t_u8)cfp->channel))
+                            scan_type = MLAN_SCAN_TYPE_PASSIVE;
+                    }
+                    break;
+#endif
+                case BAND_B:
+                case BAND_G:
+                    if (wlan_bg_scan_type_is_passive(pmpriv, (t_u8)cfp->channel))
+                        scan_type = MLAN_SCAN_TYPE_PASSIVE;
+                default:
+                    tlv_chan_list->chan_scan_param[chan_idx].radio_type = HostCmd_SCAN_RADIO_TYPE_BG;
+                    break;
+            }
+
+            if (pbg_scan_in && pbg_scan_in->chan_list[0].scan_time)
+            {
+                tlv_chan_list->chan_scan_param[chan_idx].max_scan_time =
+                    wlan_cpu_to_le16((t_u16)pbg_scan_in->chan_list[0].scan_time);
+                tlv_chan_list->chan_scan_param[chan_idx].min_scan_time =
+                    wlan_cpu_to_le16((t_u16)pbg_scan_in->chan_list[0].scan_time);
+            }
+            else if (scan_type == MLAN_SCAN_TYPE_PASSIVE)
+            {
+                tlv_chan_list->chan_scan_param[chan_idx].max_scan_time = wlan_cpu_to_le16(pmadapter->passive_scan_time);
+                tlv_chan_list->chan_scan_param[chan_idx].min_scan_time = wlan_cpu_to_le16(pmadapter->passive_scan_time);
+            }
+            else
+            {
+                tlv_chan_list->chan_scan_param[chan_idx].max_scan_time =
+                    wlan_cpu_to_le16(pmadapter->specific_scan_time);
+                tlv_chan_list->chan_scan_param[chan_idx].min_scan_time =
+                    wlan_cpu_to_le16(pmadapter->specific_scan_time);
+            }
+
+            if (scan_type == MLAN_SCAN_TYPE_PASSIVE)
+            {
+                tlv_chan_list->chan_scan_param[chan_idx].chan_scan_mode.passive_scan = MTRUE;
+            }
+            else
+            {
+                tlv_chan_list->chan_scan_param[chan_idx].chan_scan_mode.passive_scan = MFALSE;
+            }
+
+            tlv_chan_list->chan_scan_param[chan_idx].chan_number                      = (t_u8)cfp->channel;
+            tlv_chan_list->chan_scan_param[chan_idx].chan_scan_mode.disable_chan_filt = MTRUE;
+        }
+    }
+
+    LEAVE();
+    return chan_idx;
+}
+/**
+ *  @brief This function prepares command of bg_scan_config
+ *
+ *  @param pmpriv     A pointer to mlan_private structure
+ *  @param pcmd       A pointer to HostCmd_DS_COMMAND structure
+ *  @param pdata_buf  Void pointer cast of a wlan_scan_cmd_config struct used
+ *                    to set the fields/TLVs for the command sent to firmware
+ *
+ *  @return           MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_cmd_bgscan_config(IN mlan_private *pmpriv,
+                                   IN HostCmd_DS_COMMAND *pcmd,
+                                   IN t_u16 cmd_action,
+                                   IN t_void *pdata_buf)
+{
+    mlan_adapter *pmadapter                                = pmpriv->adapter;
+    HostCmd_DS_802_11_BG_SCAN_CONFIG *bg_scan              = &pcmd->params.bg_scan_config;
+    wlan_bgscan_cfg *bg_scan_in                            = (wlan_bgscan_cfg *)pdata_buf;
+    t_u16 cmd_size                                         = 0;
+    MrvlIEtypes_NumProbes_t *pnum_probes_tlv               = MNULL;
+    MrvlIEtypes_BeaconLowRssiThreshold_t *rssi_tlv         = MNULL;
+    MrvlIEtypes_BeaconLowSnrThreshold_t *snr_tlv           = MNULL;
+    MrvlIEtypes_WildCardSsIdParamSet_t *pwildcard_ssid_tlv = MNULL;
+    MrvlIEtypes_ChanListParamSet_t *tlv_chan_list          = MNULL;
+    MrvlIEtypes_StartLater_t *tlv_start_later              = MNULL;
+    MrvlIEtypes_RepeatCount_t *tlv_repeat                  = MNULL;
+    t_u8 *tlv                                              = MNULL;
+    t_u16 num_probes                                       = 0;
+    t_u32 ssid_idx;
+    t_u32 ssid_len = 0;
+    t_u32 chan_idx;
+    t_u32 chan_num;
+    t_u8 radio_type;
+    t_u16 scan_dur;
+    t_u8 scan_type;
+
+    ENTER();
+
+    pcmd->command     = wlan_cpu_to_le16(HostCmd_CMD_802_11_BG_SCAN_CONFIG);
+    bg_scan->action   = wlan_cpu_to_le16(bg_scan_in->action);
+    bg_scan->enable   = bg_scan_in->enable;
+    bg_scan->bss_type = bg_scan_in->bss_type;
+    cmd_size          = sizeof(HostCmd_DS_802_11_BG_SCAN_CONFIG) + S_DS_GEN;
+    if (bg_scan_in->chan_per_scan)
+        bg_scan->chan_per_scan = bg_scan_in->chan_per_scan;
+    else
+        bg_scan->chan_per_scan = MRVDRV_MAX_CHANNELS_PER_SPECIFIC_SCAN;
+    if (bg_scan_in->scan_interval)
+        bg_scan->scan_interval = wlan_cpu_to_le32(bg_scan_in->scan_interval);
+    else
+        bg_scan->scan_interval = wlan_cpu_to_le32(DEFAULT_BGSCAN_INTERVAL);
+    bg_scan->report_condition = wlan_cpu_to_le32(bg_scan_in->report_condition);
+
+    if ((bg_scan_in->action == BG_SCAN_ACT_GET)
+        || (!bg_scan->enable))
+        goto done;
+
+    tlv        = (t_u8 *)bg_scan + sizeof(HostCmd_DS_802_11_BG_SCAN_CONFIG);
+    num_probes = (bg_scan_in->num_probes ? bg_scan_in->num_probes : pmadapter->scan_probes);
+    if (num_probes)
+    {
+        pnum_probes_tlv              = (MrvlIEtypes_NumProbes_t *)tlv;
+        pnum_probes_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_NUMPROBES);
+        pnum_probes_tlv->header.len  = wlan_cpu_to_le16(sizeof(pnum_probes_tlv->num_probes));
+        pnum_probes_tlv->num_probes  = wlan_cpu_to_le16((t_u16)num_probes);
+        tlv += sizeof(MrvlIEtypes_NumProbes_t);
+        cmd_size += sizeof(MrvlIEtypes_NumProbes_t);
+    }
+    if (bg_scan_in->rssi_threshold)
+    {
+        rssi_tlv              = (MrvlIEtypes_BeaconLowRssiThreshold_t *)tlv;
+        rssi_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_RSSI_LOW);
+        rssi_tlv->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        rssi_tlv->value     = bg_scan_in->rssi_threshold;
+        rssi_tlv->frequency = 0;
+        tlv += sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t);
+    }
+    if (bg_scan_in->snr_threshold)
+    {
+        snr_tlv              = (MrvlIEtypes_BeaconLowSnrThreshold_t *)tlv;
+        snr_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_SNR_LOW);
+        snr_tlv->header.len =
+            wlan_cpu_to_le16(sizeof(MrvlIEtypes_BeaconLowSnrThreshold_t) - sizeof(MrvlIEtypesHeader_t));
+        snr_tlv->value     = bg_scan_in->snr_threshold;
+        snr_tlv->frequency = 0;
+        tlv += sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t);
+        cmd_size += sizeof(MrvlIEtypes_BeaconLowRssiThreshold_t);
+    }
+    if (bg_scan_in->repeat_count)
+    {
+        tlv_repeat               = (MrvlIEtypes_RepeatCount_t *)tlv;
+        tlv_repeat->header.type  = wlan_cpu_to_le16(TLV_TYPE_REPEAT_COUNT);
+        tlv_repeat->header.len   = wlan_cpu_to_le16(sizeof(MrvlIEtypes_RepeatCount_t) - sizeof(MrvlIEtypesHeader_t));
+        tlv_repeat->repeat_count = wlan_cpu_to_le16(bg_scan_in->repeat_count);
+        tlv += sizeof(MrvlIEtypes_RepeatCount_t);
+        cmd_size += sizeof(MrvlIEtypes_RepeatCount_t);
+    }
+    for (ssid_idx = 0; ((ssid_idx < NELEMENTS(bg_scan_in->ssid_list)) &&
+                        (*bg_scan_in->ssid_list[ssid_idx].ssid || bg_scan_in->ssid_list[ssid_idx].max_len));
+         ssid_idx++)
+    {
+        ssid_len                            = wlan_strlen((t_s8 *)bg_scan_in->ssid_list[ssid_idx].ssid);
+        pwildcard_ssid_tlv                  = (MrvlIEtypes_WildCardSsIdParamSet_t *)tlv;
+        pwildcard_ssid_tlv->header.type     = wlan_cpu_to_le16(TLV_TYPE_WILDCARDSSID);
+        pwildcard_ssid_tlv->header.len      = (t_u16)(ssid_len + sizeof(pwildcard_ssid_tlv->max_ssid_length));
+        pwildcard_ssid_tlv->max_ssid_length = bg_scan_in->ssid_list[ssid_idx].max_len;
+
+        if (ssid_len != 0U)
+        {
+            (void)__memcpy(pmadapter, pwildcard_ssid_tlv->ssid, bg_scan_in->ssid_list[ssid_idx].ssid,
+                           MIN(MLAN_MAX_SSID_LENGTH, ssid_len));
+        }
+
+        tlv += sizeof(pwildcard_ssid_tlv->header) + pwildcard_ssid_tlv->header.len;
+        cmd_size += sizeof(pwildcard_ssid_tlv->header) + pwildcard_ssid_tlv->header.len;
+        pwildcard_ssid_tlv->header.len = wlan_cpu_to_le16(pwildcard_ssid_tlv->header.len);
+        PRINTM(MINFO, "Scan: ssid_list[%d]: %s, %d\n", ssid_idx, pwildcard_ssid_tlv->ssid,
+               pwildcard_ssid_tlv->max_ssid_length);
+    }
+    if (bg_scan_in->chan_list[0].chan_number)
+    {
+        tlv_chan_list = (MrvlIEtypes_ChanListParamSet_t *)tlv;
+        PRINTM(MINFO, "Scan: Using supplied channel list\n");
+        chan_num = 0;
+        for (chan_idx = 0; chan_idx < WLAN_BG_SCAN_CHAN_MAX && bg_scan_in->chan_list[chan_idx].chan_number; chan_idx++)
+        {
+            radio_type = bg_scan_in->chan_list[chan_idx].radio_type;
+            if (!wlan_is_band_compatible(pmpriv->config_bands | pmadapter->adhoc_start_band,
+                                         radio_type_to_band(radio_type)))
+                continue;
+            scan_type = bg_scan_in->chan_list[chan_idx].scan_type;
+            /* Prevent active scanning on a radar controlled channel */
+#ifdef CONFIG_5GHz_SUPPORT
+            if (radio_type == HostCmd_SCAN_RADIO_TYPE_A)
+            {
+                if (wlan_11h_radar_detect_required(pmpriv, bg_scan_in->chan_list[chan_idx].chan_number))
+                {
+                    scan_type = MLAN_SCAN_TYPE_PASSIVE;
+                }
+            }
+#endif
+            if (radio_type == HostCmd_SCAN_RADIO_TYPE_BG)
+            {
+                if (wlan_bg_scan_type_is_passive(pmpriv, bg_scan_in->chan_list[chan_idx].chan_number))
+                {
+                    scan_type = MLAN_SCAN_TYPE_PASSIVE;
+                }
+            }
+            tlv_chan_list->chan_scan_param[chan_num].chan_number = bg_scan_in->chan_list[chan_idx].chan_number;
+            tlv_chan_list->chan_scan_param[chan_num].radio_type  = bg_scan_in->chan_list[chan_idx].radio_type;
+
+            if (scan_type == MLAN_SCAN_TYPE_PASSIVE)
+            {
+                tlv_chan_list->chan_scan_param[chan_num].chan_scan_mode.passive_scan = MTRUE;
+            }
+            else
+            {
+                tlv_chan_list->chan_scan_param[chan_num].chan_scan_mode.passive_scan = MFALSE;
+            }
+            if (bg_scan_in->chan_list[chan_idx].scan_time)
+            {
+                scan_dur = (t_u16)bg_scan_in->chan_list[chan_idx].scan_time;
+            }
+            else
+            {
+                if (scan_type == MLAN_SCAN_TYPE_PASSIVE)
+                {
+                    scan_dur = pmadapter->passive_scan_time;
+                }
+                else
+                {
+                    scan_dur = pmadapter->specific_scan_time;
+                }
+            }
+            tlv_chan_list->chan_scan_param[chan_num].min_scan_time = wlan_cpu_to_le16(scan_dur);
+            tlv_chan_list->chan_scan_param[chan_num].max_scan_time = wlan_cpu_to_le16(scan_dur);
+            chan_num++;
+        }
+        tlv_chan_list->header.type = wlan_cpu_to_le16(TLV_TYPE_CHANLIST);
+        tlv_chan_list->header.len  = wlan_cpu_to_le16(sizeof(ChanScanParamSet_t) * chan_num);
+        tlv += sizeof(MrvlIEtypesHeader_t) + sizeof(ChanScanParamSet_t) * chan_num;
+        cmd_size += sizeof(MrvlIEtypesHeader_t) + sizeof(ChanScanParamSet_t) * chan_num;
+    }
+    else
+    {
+        tlv_chan_list              = (MrvlIEtypes_ChanListParamSet_t *)tlv;
+        chan_num                   = wlan_bgscan_create_channel_list(pmpriv, bg_scan_in, tlv_chan_list);
+        tlv_chan_list->header.type = wlan_cpu_to_le16(TLV_TYPE_CHANLIST);
+        tlv_chan_list->header.len  = wlan_cpu_to_le16(sizeof(ChanScanParamSet_t) * chan_num);
+        tlv += sizeof(MrvlIEtypesHeader_t) + sizeof(ChanScanParamSet_t) * chan_num;
+        cmd_size += sizeof(MrvlIEtypesHeader_t) + sizeof(ChanScanParamSet_t) * chan_num;
+    }
+    tlv_start_later              = (MrvlIEtypes_StartLater_t *)tlv;
+    tlv_start_later->header.type = wlan_cpu_to_le16(TLV_TYPE_STARTBGSCANLATER);
+    tlv_start_later->header.len  = wlan_cpu_to_le16(sizeof(MrvlIEtypes_StartLater_t) - sizeof(MrvlIEtypesHeader_t));
+    tlv_start_later->value       = 0;
+    tlv += sizeof(MrvlIEtypes_StartLater_t);
+    cmd_size += sizeof(MrvlIEtypes_StartLater_t);
+done:
+    pcmd->size = wlan_cpu_to_le16(cmd_size);
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+/**
+ *  @brief This function handles the command response of extended scan
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
+ */
+mlan_status wlan_ret_bgscan_config(IN mlan_private *pmpriv, IN HostCmd_DS_COMMAND *resp, IN mlan_ioctl_req *pioctl_buf)
+{
+    mlan_ds_scan *pscan                       = MNULL;
+    HostCmd_DS_802_11_BG_SCAN_CONFIG *bg_scan = &resp->params.bg_scan_config;
+    wlan_bgscan_cfg *bg_scan_out              = MNULL;
+
+    ENTER();
+    if (pioctl_buf)
+    {
+        pscan               = (mlan_ds_scan *)pioctl_buf->pbuf;
+        bg_scan_out         = (wlan_bgscan_cfg *)pscan->param.user_scan.scan_cfg_buf;
+        bg_scan_out->action = wlan_le16_to_cpu(bg_scan->action);
+    }
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
 
 /**
  *  @brief This function finds ssid in ssid list.

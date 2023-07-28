@@ -24,6 +24,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/kernels/padding.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 namespace {
@@ -165,6 +166,12 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
       micro_context->AllocateTempInputTensor(node, kFilterTensor);
   TF_LITE_ENSURE(context, filter != nullptr);
 
+  TF_LITE_ENSURE_MSG(
+      context,
+      input->type == filter->type ||
+          (input->type == kTfLiteInt16 && filter->type == kTfLiteInt8),
+      "Hybrid models are not supported on TFLite Micro.");
+
   // Get height and width of the output.
   const int width = SizeOfDimension(output, 2);
   const int height = SizeOfDimension(output, 1);
@@ -252,16 +259,18 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
   const OpData& data = *(static_cast<const OpData*>(node->user_data));
 
   TF_LITE_ENSURE_EQ(context, input->type, output->type);
-  TF_LITE_ENSURE_MSG(
-      context,
-      input->type == filter->type ||
-          (input->type == kTfLiteInt16 && filter->type == kTfLiteInt8),
-      "Hybrid models are not supported on TFLite Micro.");
 
   switch (input->type) {  // Already know in/out types are same.
     case kTfLiteFloat32: {
+      const auto& params =
+          *(reinterpret_cast<TfLiteConvParams*>(node->builtin_data));
+      ConvParams op_params = data.params;
+      CalculateActivationRange(params.activation,
+                               &op_params.float_activation_min,
+                               &op_params.float_activation_max);
+
       reference_ops::TransposeConv(
-          data.params, tflite::micro::GetTensorShape(input),
+          op_params, tflite::micro::GetTensorShape(input),
           tflite::micro::GetTensorData<float>(input),
           tflite::micro::GetTensorShape(filter),
           tflite::micro::GetTensorData<float>(filter),
@@ -336,7 +345,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 
 }  // namespace
 
-TfLiteRegistration Register_TRANSPOSE_CONV() {
+TfLiteRegistration_V1 Register_TRANSPOSE_CONV() {
   return tflite::micro::RegisterOp(Init, Prepare, Eval);
 }
 

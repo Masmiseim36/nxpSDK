@@ -13,6 +13,7 @@
 #include "attest.h"
 #include "q_useful_buf.h"
 #include "qcbor_util.h"
+#include "config_tfm.h"
 
 /**
  * \file attest_token_decode_common.c
@@ -270,7 +271,7 @@ attest_token_decode_get_iat_simple(struct attest_token_decode_context *me,
     list[SECURITY_LIFECYCLE_FLAG].label   = IAT_SECURITY_LIFECYCLE;
     list[PROFILE_DEFINITION_FLAG].label   = IAT_PROFILE_DEFINITION;
     list[VERIFICATION_SERVICE_FLAG].label = IAT_VERIFICATION_SERVICE;
-#ifdef ATTEST_TOKEN_PROFILE_ARM_CCA
+#if ATTEST_TOKEN_PROFILE_ARM_CCA
     list[PLAT_HASH_ALGO_ID].label         = IAT_PLATFORM_HASH_ALGO_ID;
     list[PLAT_CONFIG].label               = IAT_PLATFORM_CONFIG;
 #endif
@@ -376,7 +377,7 @@ attest_token_get_num_sw_components(struct attest_token_decode_context *me,
                                         QCBOR_TYPE_ARRAY,
                                         &item);
     if(return_value != ATTEST_TOKEN_ERR_SUCCESS) {
-#ifdef ATTEST_TOKEN_PROFILE_PSA_IOT_1 /* Other profiles mandates the SW comp*/
+#if ATTEST_TOKEN_PROFILE_PSA_IOT_1 /* Other profiles mandates the SW comp*/
         if(return_value == ATTEST_TOKEN_ERR_NOT_FOUND) {
             /* Now decide if it was intentionally left out. */
             return_value = qcbor_util_get_top_level_item_in_map(me->payload,

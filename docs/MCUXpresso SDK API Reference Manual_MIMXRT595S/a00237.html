@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DMIC: Digital Microphone</title>
+<title>MCUXpresso SDK API Reference Manual: CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,47 +101,32 @@ $(document).ready(function(){initNavTree('a00237.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">DMIC: Digital Microphone</div>  </div>
+<div class="title">CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Digital Microphone (DMIC) module. <br/>
-The DMIC driver is created to help the user more easily operate the DMIC module. This driver can be used to performed basic and advanced DMIC operations. The driver can be used to transfer data from DMIC to memory using DMA as well as in interrupt mode. The DMIC and DMA transfer in pingpong mode is preferred as DMIC is a streaming device. <br/>
- </p>
-<h1><a class="anchor" id="DMICFuncGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="DMICInitDeinit"></a>
-Initialization and deinitialization</h2>
-<p>This function group implements DMIC initialization and deinitialization API. <a class="el" href="a00017.html#ga9c6bce944abc7a1ab3fe991b214a45d3" title="Turns DMIC Clock on. ">DMIC_Init()</a> function Enables the clock to the DMIC register interface. DMIC_Dinit() function Disables the clock to the DMIC register interface.</p>
-<h2><a class="anchor" id="DMICConfiguration"></a>
-Configuration</h2>
-<p>This function group implements DMIC configration API. DMIC_ConfigIO()function configures the use of PDM (Pulse Density moulation) pins. <a class="el" href="a00017.html#ga1d879be7966325a36ac004513ce8c688" title="Set DMIC operating mode. ">DMIC_SetOperationMode()</a>function configures the mode of operation either in DMA or in interrupt. <a class="el" href="a00017.html#ga1bfcaed7509b4295cd60dfaac9586e6a" title="Configure DMIC channel. ">DMIC_ConfigChannel()</a> function configures the various property of a DMIC channel. <a class="el" href="a00017.html#gafaadf7842594e1aa1557b0321f677dc2" title="Configure Clock scaling. ">DMIC_Use2fs()</a>function configures the clock scaling used for PCM data output. <a class="el" href="a00017.html#ga9feb1c1487876380c080dc28a8335647" title="Enable a particualr channel. ">DMIC_EnableChannnel()</a> function enables a particualr DMIC channel. <a class="el" href="a00017.html#ga17af24956c1bde8a0c66345e3e0957c9" title="Configure fifo settings for DMIC channel. ">DMIC_FifoChannel()</a> function configures FIFO settings for a DMIC channel.</p>
-<h2><a class="anchor" id="DMICDataStatus"></a>
-DMIC Data and status</h2>
-<p>This function group implements the API to get data and status of DMIC FIFO. <a class="el" href="a00017.html#gad7ab9196cff9972a1c859dde2ca2df4a" title="Get FIFO status. ">DMIC_FifoGetStatus()</a> function gives the status of a DMIC FIFO. DMIC_ClearStatus() function clears the status of a DMIC FIFO. <a class="el" href="a00017.html#ga7ba039347e508039816670ae64678e4a" title="Get FIFO data. ">DMIC_FifoGetData()</a> function gets data from a DMIC FIFO.</p>
-<h2><a class="anchor" id="DMICInterrupt"></a>
-DMIC Interrupt Functions</h2>
-<p>DMIC_EnablebleIntCallback() enables the interrupt for the selected DMIC peripheral. <a class="el" href="a00017.html#gab0cc7b4e67381315fa1b7e81d4a7771c" title="Disable callback. ">DMIC_DisableIntCallback()</a> disables the interrupt for the selected DMIC peripheral.</p>
-<h2><a class="anchor" id="HWVADFunction"></a>
-DMIC HWVAD Functions</h2>
-<p>This function group implements the API for HWVAD. <a class="el" href="a00017.html#gae0b7e1f69c320b0a1ca0815cdb8344f9" title="Sets the gain value for the noise estimator. ">DMIC_SetGainNoiseEstHwvad()</a> Sets the gain value for the noise estimator. <a class="el" href="a00017.html#ga0666228b59392fd37c209fc2bc38c4ba" title="Sets the gain value for the signal estimator. ">DMIC_SetGainSignalEstHwvad()</a> Sets the gain value for the signal estimator. <a class="el" href="a00017.html#gad224cdf0525be5cc5342c440c9f6f5f3" title="Sets the hwvad filter cutoff frequency parameter. ">DMIC_SetFilterCtrlHwvad()</a> Sets the HWVAD filter cutoff frequency parameter. <a class="el" href="a00017.html#ga68409219a45a0f46f601a97f88fd672c" title="Sets the input gain of hwvad. ">DMIC_SetInputGainHwvad()</a> Sets the input gain of HWVAD. <a class="el" href="a00017.html#gad2837b74dbbcd557736ae4ac3be8db06" title="Clears hwvad internal interrupt flag. ">DMIC_CtrlClrIntrHwvad()</a> Clears HWVAD internal interrupt flag. <a class="el" href="a00017.html#ga144a8ee8ddc2f71d1ea731d3f7141724" title="Resets hwvad filters. ">DMIC_FilterResetHwvad()</a> Resets HWVAD filters. <a class="el" href="a00017.html#ga10ebe9447d9bc55f4ad3f0f45387f6f8" title="Gets the value from output of the filter z7. ">DMIC_GetNoiseEnvlpEst()</a> Gets the value from output of the filter z7.</p>
-<h2><a class="anchor" id="DMICHWVADInterrupt"></a>
-DMIC HWVAD Interrupt Functions</h2>
-<p><a class="el" href="a00017.html#gac31c9046eaf53062ffa0749aa53cc789" title="Enable hwvad callback. ">DMIC_HwvadEnableIntCallback()</a> enables the HWVAD interrupt for the selected DMIC peripheral. <a class="el" href="a00017.html#ga6d50d3f50203f8c86b3f56fbf6e99af3" title="Disable callback. ">DMIC_HwvadDisableIntCallback()</a> disables the HWVAD interrupt for the selected DMIC peripheral.</p>
-<h1><a class="anchor" id="DMICTpyUC"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="DMICDMAConfig"></a>
-DMIC DMA Configuration</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmic </p>
-<h2><a class="anchor" id="DMADMICInterrupt"></a>
-DMIC use case</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmic </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the Cryptographic Accelerator and Signal Processing Engine with RAM sharing (CASPER) module of MCUXpresso SDK devices. The CASPER peripheral provides acceleration of asymmetric cryptographic algorithms as well as optionally of certain signal processing algorithms. The cryptographic acceleration is normally used in conjunction with pure-hardware blocks for hashing and symmetric cryptography, thereby providing performance and energy efficiency for a range of cryptographic uses.</p>
+<p>Blocking synchronous APIs are provided for selected cryptographic algorithms using CASPER hardware. The driver interface intends to be easily integrated with generic software crypto libraries such as mbedTLS or wolfSSL. The CASPER operations are complete (and results are made availabe for further usage) when a function returns. When called, these functions do not return until an CASPER operation is complete. These functions use main CPU for simple polling loops to determine operation complete or error status and also for plaintext or ciphertext data movements. The driver functions are not re-entrant. These functions provide typical interface to upper layer or application software.</p>
+<h1><a class="anchor" id="CASPERInit"></a>
+CASPER Driver Initialization and deinitialization</h1>
+<p>CASPER Driver is initialized by calling the <a class="el" href="a00238.html#gaa1948fcf9c7301808a765341b4fa72a8" title="Enables clock and disables reset for CASPER peripheral. ">CASPER_Init()</a> function, it resets the CASPER module and enables it's clock. CASPER Driver is deinitialized by calling the <a class="el" href="a00238.html#ga44e39a60b2116a93d89fb2d06ec8c290" title="Disables clock for CASPER peripheral. ">CASPER_Deinit()</a> function, it disables CASPER module clock.</p>
+<h1><a class="anchor" id="CASPERRtos"></a>
+Comments about API usage in RTOS</h1>
+<p>CASPER operations provided by this driver are not re-entrant. Thus, application software shall ensure the CASPER module operation is not requested from different tasks or interrupt service routines while an operation is in progress.</p>
+<h1><a class="anchor" id="CASPERIsr"></a>
+Comments about API usage in interrupt handler</h1>
+<p>All APIs shall not be used from interrupt handler as global variables are used.</p>
+<h1><a class="anchor" id="CASPEREx"></a>
+CASPER Driver Examples</h1>
+<h2><a class="anchor" id="CASPERSimpleEx"></a>
+Simple examples</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/casper/ </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00018"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html">DMIC DMA Driver</a></td></tr>
+<tr class="memitem:a00238"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html">casper_driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00017"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html">DMIC Driver</a></td></tr>
+<tr class="memitem:a00239"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html">casper_driver_pkha</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

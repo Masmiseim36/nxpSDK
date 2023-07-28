@@ -6,7 +6,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -18,8 +18,6 @@
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
-
-#define NO_NSS_SUPPORT 0x3U
 
 /********************************************************
    Local Variables
@@ -220,14 +218,11 @@ static void wlan_fill_cap_info(mlan_private *priv, VHT_capa_t *vht_cap, t_u16 ba
     }
 
     vht_cap->vht_cap_info = usr_dot_11ac_dev_cap;
-#ifdef RW610
-    if (GET_VHTCAP_MAXMPDULEN(vht_cap->vht_cap_info) != 0U)
-        RESET_11ACMAXMPDULEN(vht_cap->vht_cap_info);
-#endif
 
     LEAVE();
 }
 
+#ifdef CONFIG_11AC
 /**
  *  @brief Set/get 11ac configuration
  *
@@ -447,6 +442,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
     LEAVE();
     return ret;
 }
+#endif
 
 #if 0
 /**

@@ -1,6 +1,6 @@
 var a00047 =
 [
-    [ "lcdif_dpi_config_t", "a00047.html#a00391", [
+    [ "lcdif_dpi_config_t", "a00047.html#a00396", [
       [ "panelWidth", "a00047.html#aa5adf5a17120f754b47b89615be1bb50", null ],
       [ "panelHeight", "a00047.html#acf772a144022f878d82cbd98fdbf9800", null ],
       [ "hsw", "a00047.html#a97ced1f245e83c03a3d645ceac02022b", null ],
@@ -12,18 +12,18 @@ var a00047 =
       [ "polarityFlags", "a00047.html#a66f577e75374fd4fc7c9cb45eafbb152", null ],
       [ "format", "a00047.html#a25d673529c7f4080663d83ca606b8da5", null ]
     ] ],
-    [ "lcdif_fb_config_t", "a00047.html#a00392", [
+    [ "lcdif_fb_config_t", "a00047.html#a00397", [
       [ "enable", "a00047.html#adcbb66c7ddb8cbbce6174696e30b2861", null ],
       [ "enableGamma", "a00047.html#a38a98b380b2cb0092b928819f6b04ef5", null ],
       [ "format", "a00047.html#ac82ac825a47c5e4ddacda22e8154971f", null ]
     ] ],
-    [ "lcdif_cursor_config_t", "a00047.html#a00389", [
+    [ "lcdif_cursor_config_t", "a00047.html#a00394", [
       [ "enable", "a00047.html#ae59aa88354a6032097fa47bcfe6cf700", null ],
       [ "format", "a00047.html#a5fb390a893539047f7cdcc9b53b8ac7b", null ],
       [ "hotspotOffsetX", "a00047.html#a8ca15952547b206b974cc907452e4770", null ],
       [ "hotspotOffsetY", "a00047.html#a4657f486d2b7035df685983154ba9785", null ]
     ] ],
-    [ "lcdif_dither_config_t", "a00047.html#a00390", [
+    [ "lcdif_dither_config_t", "a00047.html#a00395", [
       [ "enable", "a00047.html#aa8409dd2b05772d447c5682f8a0bfbf8", null ],
       [ "redSize", "a00047.html#aaacc076b69f1472ad7e80bdaaef1e9ce", null ],
       [ "greenSize", "a00047.html#a63a906dd0d687a960a7ec55d079d0574", null ],

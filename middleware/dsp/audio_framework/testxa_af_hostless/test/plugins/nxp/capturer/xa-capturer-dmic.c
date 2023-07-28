@@ -466,7 +466,8 @@ static inline void xa_hw_capturer_close(XACapturer *d)
     /* Disable DMA channels when closing DMIC device. */
     for (int i = 0; i < FSL_FEATURE_DMIC_CHANNEL_NUM; i++)
     {
-        DMIC_EnableChannelDma(DMIC0, (dmic_channel_t)(kDMIC_Channel0 + i), false);
+        DMA_DisableChannelInterrupts(DMA_CAPTURER, DMAREQ_DMIC_CH0 + i);
+        DMIC_TransferAbortReceiveDMA(DMIC0, &d->s_dmicDmaHandle[i]);
     }
 
 #ifdef HAVE_FREERTOS

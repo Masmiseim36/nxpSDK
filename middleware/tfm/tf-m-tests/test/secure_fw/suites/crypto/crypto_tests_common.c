@@ -2271,12 +2271,66 @@ void psa_persistent_key_test(psa_key_id_t key_id, struct test_result_t *ret)
 #define KEY_DERIV_RAW_MAX_PEER_LEN 100
 #define KEY_DERIV_RAW_OUTPUT_LEN   48
 
+/* Pair of ECC test keys that are generated using openssl with the following
+ * parameters:
+ *
+ * openssl ecparam -outform der -out test_prime256v1 -name prime256v1 -genkey
+ *
+ */
 /* An example of a 32 bytes / 256 bits ECDSA private key */
 static const uint8_t ecdsa_private_key[] = {
-    0x11, 0xb5, 0x73, 0x7c, 0xf9, 0xd9, 0x3f, 0x17,
-    0xc0, 0xcb, 0x1a, 0x84, 0x65, 0x5d, 0x39, 0x95,
-    0xa0, 0x28, 0x24, 0x09, 0x7e, 0xff, 0xa5, 0xed,
-    0xd8, 0xee, 0x26, 0x38, 0x1e, 0xb5, 0xd6, 0xc3};
+    0xED, 0x8F, 0xAA, 0x23, 0xE2, 0x8B, 0x1F, 0x51,
+    0x63, 0x4F, 0x8E, 0xC9, 0xDC, 0x24, 0x92, 0x0F,
+    0x3D, 0xA1, 0x7B, 0x47, 0x68, 0x38, 0xE3, 0x0D,
+    0x10, 0x4A, 0x6D, 0xA7, 0x2D, 0x48, 0xA4, 0x18
+};
+/* Corresponding public key in uncompressed form, i.e. 0x04 X Y, and
+ * encoded as per RFC 5480. This is obtained by running the following
+ * command:
+ *
+ *   openssl ec -in private_key.der -inform der -pubout -out public_key.der -outform der
+ *
+ * where the private_key.der contains the DER encoding of the private key contained in
+ * ecdsa_private_key above
+ */
+static const uint8_t ecdsa_public_key[] = {
+    0x30, 0x59, 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86,
+    0x48, 0xce, 0x3d, 0x02, 0x01, 0x06, 0x08, 0x2a,
+    0x86, 0x48, 0xce, 0x3d, 0x03, 0x01, 0x07, 0x03,
+    0x42, 0x00, 0x04, 0x41, 0xC6, 0xFC, 0xC5, 0xA4,
+    0xBB, 0x70, 0x45, 0xA7, 0xB2, 0x5E, 0x50, 0xB3,
+    0x2E, 0xD0, 0x2A, 0x8D, 0xA8, 0x8E, 0x1B, 0x34,
+    0xC2, 0x71, 0x57, 0x38, 0x5C, 0x45, 0xAB, 0xF2,
+    0x51, 0x7B, 0x17, 0x5A, 0xC5, 0x05, 0xA9, 0x9E,
+    0x4B, 0x7D, 0xDD, 0xD7, 0xBF, 0xBB, 0x45, 0x51,
+    0x92, 0x7D, 0x33, 0x33, 0x8B, 0x1B, 0x70, 0x5A,
+    0xFD, 0x2B, 0xF2, 0x7A, 0xA4, 0xBD, 0x37, 0x50,
+    0xED, 0x34, 0x9F
+};
+
+/* Associated encoded signature using the private key above on the reference
+ * input message, as described in RFC 5480:
+ *
+ *   message = "This is the message that I would like to sign"
+ *
+ * using PSA_ALG_DETERMINISTIC_ECDSA(PSA_ALG_SHA_256), i.e.
+ *
+ *   Ecdsa-Sig-Value  ::=  SEQUENCE  {
+ *        r     INTEGER,
+ *        s     INTEGER  }
+ */
+static const uint8_t reference_encoded_r_s[] = {
+    0x30, 0x45, 0x02, 0x20, 0x6b, 0xdc, 0xc6, 0xd5,
+    0xf5, 0xdc, 0xab, 0xc2, 0x52, 0xb6, 0xa0, 0xcd,
+    0x12, 0x9e, 0xfc, 0x3e, 0x86, 0x24, 0x7d, 0xf1,
+    0xbd, 0x7b, 0xe9, 0x76, 0xbd, 0xb5, 0x99, 0x82,
+    0x44, 0xd4, 0xa5, 0x0c, 0x02, 0x21, 0x00, 0xa6,
+    0x25, 0x7b, 0x3b, 0x2a, 0x2d, 0xea, 0xaa, 0x43,
+    0xbc, 0x3a, 0xc7, 0x89, 0xdc, 0x1b, 0x52, 0xe0,
+    0xd2, 0xb6, 0xbd, 0x8c, 0x5d, 0x5e, 0xf3, 0x32,
+    0xe7, 0x32, 0x65, 0xbd, 0x7b, 0xcb, 0x06,
+};
+
 /* Buffer to hold the peer key of the key agreement process */
 static uint8_t raw_agreement_peer_key[KEY_DERIV_RAW_MAX_PEER_LEN] = {0};
 
@@ -2609,7 +2663,65 @@ destroy_key:
 }
 
 #define SIGNATURE_BUFFER_SIZE \
-    (PSA_ECDSA_SIGNATURE_SIZE(PSA_VENDOR_ECC_MAX_CURVE_BITS))
+    (PSA_ECDSA_SIGNATURE_SIZE(PSA_BYTES_TO_BITS(sizeof(ecdsa_private_key))))
+
+/* This helper function parses a signature as specified in RFC 5480 into a pair
+ * (r,s) of contiguous bytes
+ *
+ * \param[in]  sig      Pointer to a buffer containing the encoded signature
+ * \param[in]  slen     Size in bytes of the encoded signature structure
+ * \param[out] r_s_pair Buffer containing the (r,s) pair extracted. It's caller
+ *                      responsibility to ensure the buffer is big enough to
+ *                      hold the parsed (r,s) pair.
+ *
+ * \return The size in bytes of the parsed signature, i.e. (r,s) pair
+ */
+static inline size_t parse_signature_from_rfc5480_encoding(const uint8_t *sig,
+                                                           size_t slen,
+                                                           uint8_t *r_s_pair)
+{
+    const uint8_t *sig_ptr = NULL;
+    /* Move r in place */
+    size_t r_len = sig[3];
+    if (r_len % 2) {
+        sig_ptr = &sig[5];
+        r_len--;
+    } else {
+        sig_ptr = &sig[4];
+    }
+    memcpy(&r_s_pair[0], sig_ptr, r_len);
+    /* Move s in place */
+    size_t s_len = sig_ptr[r_len + 1];
+    if (s_len % 2) {
+        sig_ptr = &sig_ptr[3+r_len];
+        s_len--;
+    } else {
+        sig_ptr = &sig_ptr[2+r_len];
+    }
+    memcpy(&r_s_pair[r_len], sig_ptr, s_len);
+    slen = s_len + r_len; /* Update the length of the signature we're passing */
+    return slen;
+}
+
+#define LEN_OFF (3) /* Offset for the Length field of the second SEQUENCE */
+#define VAL_OFF (3) /* Offset for the value field of the BIT STRING */
+
+/* This helper function gets a pointer to the bitstring associated to the publicKey
+ * as encoded per RFC 5280. This function assumes that the public key encoding is not
+ * bigger than 127 bytes (i.e. usually up until 384 bit curves)
+ *
+ * \param[in,out] p    Double pointer to a buffer containing the RFC 5280 of the ECDSA public key.
+ *                     On output, the pointer is updated to point to the start of the public key
+ *                     in BIT STRING form.
+ * \param[in]     size Pointer to a buffer containing the size of the public key extracted
+ *
+ */
+static inline void get_public_key_from_rfc5280_encoding(uint8_t **p, size_t *size)
+{
+    uint8_t *key_start = (*p) + (LEN_OFF + 1 + (*p)[LEN_OFF] + VAL_OFF);
+    *p = key_start;
+    *size = key_start[-2]-1; /* -2 from VAL_OFF to get the length, -1 to remove the ASN.1 padding byte count */
+}
 
 void psa_sign_verify_message_test(psa_algorithm_t alg,
                                   struct test_result_t *ret)
@@ -2622,10 +2734,29 @@ void psa_sign_verify_message_test(psa_algorithm_t alg,
         "This is the message that I would like to sign";
     uint8_t signature[SIGNATURE_BUFFER_SIZE] = {0};
     size_t signature_length = 0;
+    /* The expected format of the public key is uncompressed, i.e. 0x04 X Y */
+    uint8_t ecdsa_pub_key[
+        PSA_KEY_EXPORT_ECC_PUBLIC_KEY_MAX_SIZE(PSA_BYTES_TO_BITS(sizeof(ecdsa_private_key)))] = {0};
+    size_t pub_key_length = 0;
+    uint32_t comp_result = 0;
+    uint8_t hash[32] = {0}; /* Support only SHA-256 based signatures in the tests for simplicity */
+    size_t hash_length = 0;
+    uint8_t *p_key = (uint8_t *) ecdsa_public_key;
+    uint8_t reformatted_signature[64] = {0};
+    size_t public_key_size;
+    size_t parsed_signature_size = parse_signature_from_rfc5480_encoding(
+                                                                 reference_encoded_r_s,
+                                                                 sizeof(reference_encoded_r_s),
+                                                                 reformatted_signature);
+    /* Get the BIT STRING for the public key */
+    get_public_key_from_rfc5280_encoding(&p_key, &public_key_size);
+
+    /* Initialize to the passing value */
+    ret->val = TEST_PASSED;
 
     /* Set attributes and import key */
     psa_set_key_usage_flags(&input_key_attr,
-        PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE);
+        PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE | PSA_KEY_USAGE_EXPORT);
     psa_set_key_algorithm(&input_key_attr, alg);
     key_type = PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1);
     psa_set_key_type(&input_key_attr, key_type);
@@ -2635,6 +2766,26 @@ void psa_sign_verify_message_test(psa_algorithm_t alg,
     if (status != PSA_SUCCESS) {
         TEST_FAIL("Error importing the private key");
         return;
+    }
+
+    status = psa_export_public_key(key_id_local, ecdsa_pub_key,
+                                   sizeof(ecdsa_pub_key), &pub_key_length);
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Public key export failed!");
+        goto destroy_key;
+    }
+
+    if (pub_key_length !=
+        PSA_KEY_EXPORT_ECC_PUBLIC_KEY_MAX_SIZE(PSA_BYTES_TO_BITS(sizeof(ecdsa_private_key)))) {
+        TEST_FAIL("Unexpected length for the public key!");
+        goto destroy_key;
+    }
+
+    /* Check that exported key matches the reference key */
+    comp_result = memcmp(ecdsa_pub_key, p_key, pub_key_length);
+    if (comp_result != 0) {
+        TEST_FAIL("Exported ECDSA public key does not match the reference!");
+        goto destroy_key;
     }
 
     status = psa_sign_message(key_id_local, alg,
@@ -2653,6 +2804,18 @@ void psa_sign_verify_message_test(psa_algorithm_t alg,
         goto destroy_key;
     }
 
+    if (signature_length != parsed_signature_size) {
+        TEST_FAIL("Produced signature length does not match the reference!");
+        goto destroy_key;
+    }
+
+    /* Check that signature matches the reference provided */
+    comp_result = memcmp(signature, reformatted_signature, signature_length);
+    if (comp_result != 0) {
+        TEST_FAIL("Signature does not match the reference!");
+        goto destroy_key;
+    }
+
     status = psa_verify_message(key_id_local, alg,
                                 message, sizeof(message) - 1,
                                 signature, signature_length);
@@ -2661,10 +2824,189 @@ void psa_sign_verify_message_test(psa_algorithm_t alg,
         goto destroy_key;
     }
 
-    ret->val = TEST_PASSED;
-
 destroy_key:
+    psa_destroy_key(key_id_local);
+
+    if (ret->val == TEST_FAILED) {
+        return;
+    }
+
+    /* Continue with the dedicated verify hash flow */
+    /* Set attributes and import key */
+    psa_set_key_usage_flags(&input_key_attr, PSA_KEY_USAGE_VERIFY_HASH);
+    psa_set_key_algorithm(&input_key_attr, alg);
+    key_type = PSA_KEY_TYPE_ECC_PUBLIC_KEY(PSA_ECC_FAMILY_SECP_R1);
+    psa_set_key_type(&input_key_attr, key_type);
+
+    status = psa_import_key(&input_key_attr, p_key,
+                            public_key_size, &key_id_local);
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Error importing the public key");
+        return;
+    }
+
+    status = psa_hash_compute(PSA_ALG_GET_HASH(alg),
+                              message, sizeof(message) - 1,
+                              hash, sizeof(hash), &hash_length);
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Hashing step failed!");
+        goto destroy_public_key;
+    }
+
+    if (hash_length != 32) {
+        TEST_FAIL("Unexpected hash length in the hashing step!");
+        goto destroy_public_key;
+    }
+
+    status = psa_verify_hash(key_id_local, alg,
+                             hash, hash_length,
+                             signature, signature_length);
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Signature verification failed in the verify_hash!");
+        goto destroy_public_key;
+    }
+
+destroy_public_key:
     psa_destroy_key(key_id_local);
 
     return;
 }
+
+#if defined(TFM_CRYPTO_TEST_ALG_RSASSA_PSS_VERIFICATION)
+/* A random RSA key of length 2048 bits. PSA key format is implementation dependent
+ * and our underlying key management interface based on mbed TLS supports only DER
+ * format as described by relevant RFC3447. As we test only the verification path,
+ * the key below is only the (N,E) public part in DER format
+ * */
+static const uint8_t rsa_key_2048[] = {
+0x30, 0x82, 0x01, 0x22, 0x30, 0x0D, 0x06, 0x09, 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01,
+0x01, 0x05, 0x00, 0x03, 0x82, 0x01, 0x0F, 0x00, 0x30, 0x82, 0x01, 0x0A, 0x02, 0x82, 0x01, 0x01,
+0x00, 0xDA, 0x4E, 0x01, 0x18, 0x21, 0x6C, 0xA2, 0xCF, 0xEE, 0xD2, 0xD1, 0x8A, 0x55, 0xE5, 0x2B,
+0x43, 0x02, 0x0F, 0x89, 0xEC, 0xCA, 0xE9, 0x1A, 0x2F, 0x80, 0xCE, 0x7B, 0x42, 0xDD, 0xF9, 0xD2,
+0xF9, 0x7B, 0xA2, 0x17, 0x97, 0x76, 0x3F, 0xE2, 0x97, 0x95, 0x0B, 0xA7, 0x77, 0x21, 0x9D, 0x18,
+0x16, 0x1F, 0xC1, 0x1E, 0x1D, 0xF8, 0xDE, 0xDA, 0x18, 0x98, 0xE2, 0xF5, 0xB0, 0x3D, 0x71, 0xBB,
+0x63, 0x54, 0x36, 0x16, 0xCB, 0x03, 0x72, 0x27, 0xAF, 0x24, 0x66, 0xE9, 0x44, 0x1E, 0xDC, 0x17,
+0x56, 0x2E, 0x97, 0xA4, 0xA0, 0x52, 0xB0, 0x61, 0xEF, 0x9C, 0x10, 0x01, 0x2D, 0x5D, 0x12, 0x60,
+0xA8, 0xA3, 0xEE, 0xEF, 0x22, 0x49, 0xDE, 0xBA, 0xC1, 0x83, 0x6F, 0x0E, 0x38, 0x10, 0x0E, 0x56,
+0x63, 0x6D, 0x6C, 0x44, 0xD7, 0xB1, 0xA5, 0x15, 0xB6, 0x94, 0x1D, 0xAF, 0x5A, 0xE5, 0x1C, 0x10,
+0x8D, 0x05, 0x67, 0x3A, 0x60, 0xBD, 0xE7, 0xCB, 0x60, 0xE0, 0x6A, 0x84, 0x96, 0x3C, 0xDB, 0xA4,
+0x71, 0x93, 0x7C, 0xF4, 0x25, 0x15, 0x32, 0x41, 0x1F, 0x16, 0x72, 0xB3, 0x15, 0xFB, 0x76, 0xA2,
+0x9E, 0x77, 0x69, 0xA3, 0x34, 0x7D, 0x8A, 0x39, 0x38, 0xA8, 0xBA, 0x44, 0xAD, 0x0C, 0x3C, 0x61,
+0x5C, 0x7D, 0xC7, 0xDF, 0x25, 0xEC, 0x0F, 0xC4, 0x4E, 0x81, 0x73, 0xB6, 0xC1, 0x08, 0xE6, 0xB7,
+0xE7, 0xD6, 0xC8, 0x14, 0xCB, 0x6E, 0x4E, 0xA4, 0x1F, 0xD7, 0x29, 0x0D, 0x08, 0x46, 0xC7, 0x2C,
+0xC0, 0x8E, 0x42, 0x0F, 0x49, 0xA5, 0xA6, 0xB0, 0x0E, 0x5D, 0xEC, 0x7A, 0x4A, 0x4E, 0xAE, 0xFA,
+0x1B, 0x5F, 0x77, 0x9F, 0x4A, 0x86, 0x66, 0x47, 0x20, 0xBC, 0x69, 0xF3, 0xD9, 0x63, 0xC1, 0xF8,
+0x84, 0x99, 0x12, 0x67, 0x65, 0xE1, 0x40, 0xAC, 0x42, 0x93, 0x11, 0x97, 0xF3, 0xBB, 0x93, 0xB0,
+0x1B, 0x02, 0x03, 0x01, 0x00, 0x01,
+};
+
+#define SIGNATURE_OUTPUT_SIZE_RSA_2048 \
+    PSA_SIGN_OUTPUT_SIZE(PSA_KEY_TYPE_RSA_KEY_PAIR, 2048, PSA_ALG_RSA_PSS(PSA_ALG_SHA_256))
+
+/*
+ * Signature for the following message:
+ *     const uint8_t message[] = "This is the message that I would like to sign";
+ *
+ * This can be obtained by running psa_sign_message() as follows:
+ *     psa_sign_message(key_id, PSA_ALG_RSA_PSS(PSA_ALG_SHA256),
+ *                      message, sizeof(message) - 1,
+ *                      signature_pss_sha_256,  SIGNATURE_OUTPUT_SIZE_RSA_2048,
+ *                      &signature_length);
+ *
+ * where signature_pss_sha_256 contains the produced signature. The key_id refers here to
+ * the full RSA_KEY_PAIR, while for the verification path we only need to keep the public part.
+ *
+ */
+const uint8_t signature_pss_sha_256[] = {
+0x47, 0xB5, 0x85, 0x1D, 0xE2, 0xD8, 0xFC, 0xC2, 0x69, 0x22, 0x33, 0x9C, 0xB2, 0xBA, 0x69, 0x87,
+0xD1, 0x9C, 0x67, 0xEE, 0xE6, 0x48, 0x27, 0xD2, 0x07, 0xA3, 0x19, 0x2E, 0x43, 0xFD, 0xCE, 0xCA,
+0xE7, 0x63, 0xB4, 0xC0, 0x02, 0x4D, 0x61, 0x69, 0xAA, 0x4A, 0xF7, 0xB9, 0x80, 0xC3, 0x53, 0x78,
+0x5D, 0xC3, 0xA4, 0x0C, 0xC3, 0x67, 0x2F, 0xB7, 0xBD, 0x73, 0xF4, 0x58, 0x95, 0x16, 0x97, 0x45,
+0xA1, 0x4F, 0x3F, 0xB1, 0x44, 0x08, 0x57, 0x0A, 0x87, 0xDE, 0x3F, 0xF1, 0x3A, 0xC9, 0x24, 0xE6,
+0xA6, 0xEB, 0x22, 0xE9, 0xC9, 0x8F, 0x7E, 0x65, 0x30, 0x36, 0x35, 0x62, 0x06, 0xDF, 0xBE, 0x1D,
+0xA4, 0x1C, 0x42, 0x3D, 0xAB, 0x22, 0x01, 0xDD, 0x86, 0x3D, 0x81, 0x12, 0xF5, 0x5B, 0x16, 0xFD,
+0xF2, 0xFE, 0x7D, 0x90, 0x60, 0x3A, 0x70, 0xCB, 0xAB, 0xE5, 0x3F, 0xA5, 0x83, 0x42, 0xD5, 0x42,
+0x18, 0x00, 0x5E, 0xC1, 0x4F, 0x7E, 0x3A, 0xCD, 0x42, 0xA2, 0x16, 0x40, 0xCD, 0xE6, 0xC6, 0xBC,
+0xDD, 0xBA, 0x11, 0xA5, 0xA9, 0x31, 0xE1, 0x3F, 0xCB, 0x92, 0x3B, 0x5D, 0xE4, 0xB1, 0xD1, 0x3A,
+0x5F, 0xE4, 0xCB, 0x3B, 0x61, 0xD7, 0x83, 0xCB, 0x9A, 0x7B, 0xA7, 0x71, 0x60, 0x90, 0x13, 0xC0,
+0x27, 0x2D, 0xD4, 0xF4, 0x32, 0xC5, 0x80, 0xEA, 0x7E, 0xA7, 0xE8, 0x74, 0x97, 0x14, 0xC3, 0xCE,
+0x15, 0x84, 0x5E, 0x09, 0x63, 0x08, 0xDA, 0x19, 0xB5, 0x27, 0x9F, 0xEE, 0xE4, 0xCE, 0x08, 0x5B,
+0x9E, 0x95, 0xCA, 0xC8, 0xC1, 0x54, 0xEE, 0x69, 0xB8, 0x25, 0xB9, 0xE6, 0xCD, 0x1C, 0x4B, 0x4E,
+0xA2, 0x69, 0xC2, 0xE7, 0x91, 0xA7, 0xA6, 0x5C, 0x55, 0x6A, 0xAA, 0xE9, 0x91, 0x4F, 0x0D, 0x05,
+0x7E, 0x49, 0x19, 0xF4, 0xE9, 0xE5, 0xB4, 0x3E, 0x5C, 0x5E, 0xFB, 0x28, 0x23, 0xE7, 0x27, 0xAE,
+};
+
+/* A test case dedicated to RSASSA-PSA VERIFY operation */
+void psa_verify_rsassa_pss_test(struct test_result_t *ret)
+{
+    psa_status_t status = PSA_SUCCESS;
+    psa_key_id_t key_id = PSA_KEY_ID_NULL;
+    psa_key_attributes_t key_attr = PSA_KEY_ATTRIBUTES_INIT;
+    const psa_algorithm_t alg = PSA_ALG_RSA_PSS(PSA_ALG_SHA_256);
+    uint8_t hash[32] = {0};
+    size_t hash_length = 0;
+
+    const uint8_t message[] =
+        "This is the message that I would like to sign";
+
+    /* Set attributes and import key */
+    /* The verify_hash flag enables automatically verify_message as well */
+    psa_set_key_usage_flags(&key_attr, PSA_KEY_USAGE_VERIFY_HASH);
+    psa_set_key_algorithm(&key_attr, alg);
+    psa_set_key_type(&key_attr, PSA_KEY_TYPE_RSA_PUBLIC_KEY);
+
+    status = psa_import_key(&key_attr,
+                            (const uint8_t *)rsa_key_2048,
+                            sizeof(rsa_key_2048),
+                            &key_id);
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Error importing the private key");
+        return;
+    }
+
+    if (sizeof(signature_pss_sha_256) != SIGNATURE_OUTPUT_SIZE_RSA_2048) {
+        TEST_FAIL("Unexpected signature length");
+        goto destroy_key;
+    }
+
+    status = psa_verify_message(key_id, alg,
+                                message, sizeof(message) - 1,
+                                signature_pss_sha_256, sizeof(signature_pss_sha_256));
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Signature verification failed in the verify_message!");
+        goto destroy_key;
+    }
+
+    /* Try the same verification, but this time split the hash calculation in a
+     * separate API call. This is useful for those protocols that require to
+     * treat the hashing in a special way (i.e. special seeding), or need to do
+     * hashing in multipart. For simplicity here we just use single-part hashing
+     */
+    status = psa_hash_compute(PSA_ALG_GET_HASH(alg),
+                              message, sizeof(message) - 1,
+                              hash, sizeof(hash), &hash_length);
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Hashing step failed!");
+        goto destroy_key;
+    }
+
+    if (hash_length != 32) {
+        TEST_FAIL("Unexpected hash length in the hashing step!");
+        goto destroy_key;
+    }
+
+    status = psa_verify_hash(key_id, alg,
+                             hash, hash_length,
+                             signature_pss_sha_256, sizeof(signature_pss_sha_256));
+    if (status != PSA_SUCCESS) {
+        TEST_FAIL("Signature verification failed in the verify_hash!");
+        goto destroy_key;
+    }
+    ret->val = TEST_PASSED;
+
+destroy_key:
+    psa_destroy_key(key_id);
+
+    return;
+}
+#endif /* TFM_CRYPTO_TEST_ALG_RSASSA_PSS_VERIFICATION */

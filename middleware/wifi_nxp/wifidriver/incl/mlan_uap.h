@@ -5,7 +5,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -76,15 +76,9 @@ void wifi_uap_set_ecsa(void);
 
 int wifi_uap_ctrl_deauth(bool enable);
 
-void wifi_uap_set_hidden_ssid(const bool bcast_ssid_ctl);
+void wifi_uap_set_hidden_ssid(const t_u8 bcast_ssid_ctl);
 
 void wifi_uap_set_htcapinfo(const t_u16 ht_cap_info);
-
-int wifi_uap_enable_11d(void);
-
-int wifi_uap_set_domain_params(wifi_domain_param_t *dp);
-
-int wifi_uap_set_params(int channel);
 
 void wifi_uap_set_beacon_period(const t_u16 beacon_period);
 #endif /* _MLAN_UAP_H_ */

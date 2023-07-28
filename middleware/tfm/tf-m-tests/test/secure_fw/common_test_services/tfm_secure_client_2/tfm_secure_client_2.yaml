@@ -13,15 +13,6 @@
   "priority": "NORMAL",
   "entry_point": "tfm_secure_client_2_init",
   "stack_size": "0x300",
-  "secure_functions": [
-    {
-      "name": "TFM_SECURE_CLIENT_2_CALL",
-      "signal": "TFM_SECURE_CLIENT_2_CALL",
-      "non_secure_clients": false,
-      "version": 1,
-      "version_policy": "STRICT"
-    },
-  ],
   "services": [
     {
       "name": "TFM_SECURE_CLIENT_2",

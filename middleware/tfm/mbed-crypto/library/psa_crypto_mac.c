@@ -22,8 +22,9 @@
 
 #if defined(MBEDTLS_PSA_CRYPTO_C)
 
-#include <mbed_psa/crypto.h> //NXP
+#include <psa/crypto.h>
 #include "psa_crypto_core.h"
+#include "psa_crypto_cipher.h"
 #include "psa_crypto_mac.h"
 #include <mbedtls/md.h>
 

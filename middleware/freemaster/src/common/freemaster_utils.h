@@ -105,6 +105,15 @@ FMSTR_BOOL _FMSTR_RingBuffIsSpace(FMSTR_RING_BUFFER *ringBuff);
 /* Returns true, when any data in ring buffer */
 FMSTR_BOOL _FMSTR_RingBuffHasData(FMSTR_RING_BUFFER *ringBuff);
 
+/* Copy 8 bit variable to destination from source address */
+void FMSTR_MemCpySrcAligned_8(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+/* Copy 16 bit variable to destination from source address */
+void FMSTR_MemCpySrcAligned_16(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+/* Copy 32 bit variable to destination from source address */
+void FMSTR_MemCpySrcAligned_32(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+/* Copy 64 bit variable to destination from source address */
+void FMSTR_MemCpySrcAligned_64(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr);
+
 /******************************************************************************
  * Global variable declaration
  ******************************************************************************/

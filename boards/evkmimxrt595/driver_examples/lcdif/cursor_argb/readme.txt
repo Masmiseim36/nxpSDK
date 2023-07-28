@@ -6,10 +6,10 @@ is moving in the screen, the cursor alpha value changes during moving.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.32.1
-- Keil MDK  5.37
-- GCC ARM Embedded  10.3.1
-- MCUXpresso  11.7.0
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38.1
+- GCC ARM Embedded  12.2
+- MCUXpresso  11.8.0
 
 Hardware requirements
 =====================

@@ -147,7 +147,6 @@ to use functions from the PSA API is ``psa/initial_attestation.h``.
 
 The TF-M Initial Attestation Service source files are located in
 ``secure_fw/partitions/initial_attestation``.
-The CBOR library is located in ``lib/ext/qcbor`` folder.
 
 Service source files
 ====================
@@ -156,9 +155,12 @@ Service source files
       It can be used on 32-bit and 64-bit machines. It was designed to suite
       constrained devices with low memory usage and without dynamic memory
       allocation.
-      It is a fork of this external `QCBOR library <https://github.com/laurencelundblade/QCBOR>`__.
-    - ``lib/ext/qcbor/inc/qcbor.h``: Public API documentation of CBOR
-      library.
+      Its source code is fetched automatically during the build configuration
+      step from an external repository: `QCBOR library <https://github.com/laurencelundblade/QCBOR>`__.
+    - ``<qcbor_src>/inc/qcbor/qcbor_encode.h``: Public API documentation of
+      CBOR library (encoding).
+    - ``<qcbor_src>/inc/qcbor/qcbor_decode.h``: Public API documentation of
+      CBOR library (decoding).
 
 - COSE library:
     - ``lib/ext/t_cose``: This library is used to sign a CBOR token and create
@@ -180,9 +182,6 @@ Service source files
       asymmetric initial attestation key.
     - ``tfm_attest.c``: Implements the SPM abstraction layer, and bind the
       attestation service to the SPM implementation in TF-M project.
-    - ``tfm_attest_secure_api.c``: Implements the secure API layer to allow
-      other services in the secure domain to request functionalities
-      from the attestation service using the PSA API interface.
     - ``tfm_attest_req_mngr.c``: Includes the initialization entry of
       attestation service and handles attestation service requests in IPC
       model.
@@ -242,12 +241,7 @@ System integrators might need to port these interfaces to a custom secure
 partition manager implementation (SPM). Implementations in TF-M project can be
 found here:
 
--  ``interface/src/tfm_initial_attestation_func_api.c``: non-secure interface
-   implementation for library model
--  ``interface/src/tfm_initial_attestation_ipc_api.c``: non-secure interface
-   implementation for IPC model
--  ``secure_fw/partitions/initial_attestation/tfm_attestation_secure_api.c``:
-   secure interface implementation
+-  ``interface/src/tfm_attest_api.c``: interface implementation.
 
 Secure Partition Manager (SPM) interface
 ========================================
@@ -485,7 +479,7 @@ available by Crypto service:
   initial attestation key. The key identifier can be used as ``kid`` parameter
   in COSE header. Optional.
 
-.. note:
+.. note::
 
    Asymmetric initial attestation and symmetric initial attestation may share
    the same HAL APIs in future development.

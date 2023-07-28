@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright 2022 NXP
+* Copyright 2022-2023 NXP
 * Copyright (c) 2015-2019 Cadence Design Systems, Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
@@ -79,8 +79,6 @@ extern clk_t voice_seeker_cycles;
 #include "RdspStatusCodes.h"
 #include "RdspCycleCounter.h"
 
-#undef DSP_PRINTF
-#define DSP_PRINTF CM33_Print
 
 /*******************************************************************************
  * Tracing configuration
@@ -168,39 +166,39 @@ static XA_ERRORCODE VoiceSeeker_Execute(voice_seeker_t *d);
  ******************************************************************************/
 void DeInterleave(const int16_t *pDataInput, int16_t *pDataOutput, uint16_t FrameSize, uint16_t ChannelNumber);
 
-static void CM33_Print(const char* ptr, ...)
-{
-	//Create buffer with processed string
-	static char buf[256];
-	int message_length;
-	va_list args;
-	va_start(args, ptr);
-	message_length = vsprintf(buf, ptr, args);
-	va_end(args);
-
-	//Create srtm_message for sending string to CM33 side
-	srtm_message msg = {0};
-	msg.head.type = SRTM_MessageTypeNotification;
-	msg.head.majorVersion = SRTM_VERSION_MAJOR;
-	msg.head.minorVersion = SRTM_VERSION_MINOR;
-	msg.head.category = SRTM_MessageCategory_AUDIO;
-	msg.head.command  = SRTM_Print_String;
-
-	//Send string to CM33
-	int pos = 0;
-	for(int i = 0; i<message_length; i++)
-	{
-		msg.param[pos++] = buf[i];
-		if( ((pos+1)==SRTM_CMD_PARAMS_MAX) || ((i+1)==message_length) )
-		{
-			msg.param[pos] = '\0';
-			pos = 0;
-			xos_mutex_lock(&dsp.rpmsgMutex);
-			rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), 100);
-			xos_mutex_unlock(&dsp.rpmsgMutex);
-		}
-	}
-}
+//static void CM33_Print(const char* ptr, ...)
+//{
+//	//Create buffer with processed string
+//	static char buf[256];
+//	int message_length;
+//	va_list args;
+//	va_start(args, ptr);
+//	message_length = vsprintf(buf, ptr, args);
+//	va_end(args);
+//
+//	//Create srtm_message for sending string to CM33 side
+//	srtm_message msg = {0};
+//	msg.head.type = SRTM_MessageTypeNotification;
+//	msg.head.majorVersion = SRTM_VERSION_MAJOR;
+//	msg.head.minorVersion = SRTM_VERSION_MINOR;
+//	msg.head.category = SRTM_MessageCategory_AUDIO;
+//	msg.head.command  = SRTM_Print_String;
+//
+//	//Send string to CM33
+//	int pos = 0;
+//	for(int i = 0; i<message_length; i++)
+//	{
+//		msg.param[pos++] = buf[i];
+//		if( ((pos+1)==SRTM_CMD_PARAMS_MAX) || ((i+1)==message_length) )
+//		{
+//			msg.param[pos] = '\0';
+//			pos = 0;
+//			xos_mutex_lock(&dsp.rpmsgMutex);
+//			rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), 100);
+//			xos_mutex_unlock(&dsp.rpmsgMutex);
+//		}
+//	}
+//}
 
 static RdspStatus VoiceSeeker_Initialize(voice_seeker_t *d)
 {
@@ -215,7 +213,7 @@ static RdspStatus VoiceSeeker_Initialize(voice_seeker_t *d)
 
     if (vsl_constants.max_num_mics < NumberOfChannel)
     {
-        CM33_Print("Error VoiceSeeker is supporting only %d mics", vsl_constants.max_num_mics);
+        DSP_PRINTF("[DSP VoiceSeeker] Error VoiceSeeker is supporting only %d mics", vsl_constants.max_num_mics);
         return GENERAL_ERROR;
     }
 
@@ -305,7 +303,7 @@ static RdspStatus VoiceSeeker_Initialize(voice_seeker_t *d)
      */
 
     uint32_t heap_req_bytes = VoiceSeekerLight_GetRequiredHeapMemoryBytes(&vsl, &vsl_config);
-    CM33_Print("VoiceSeekerLight_GetRequiredHeapMemoryBytes: %i bytes\r\n", heap_req_bytes);
+    DSP_PRINTF("[DSP VoiceSeeker] VoiceSeekerLight_GetRequiredHeapMemoryBytes: %i bytes\r\n", heap_req_bytes);
 
     // Allocate needed memory
     void *heap_memory           = malloc(heap_req_bytes);
@@ -317,7 +315,7 @@ static RdspStatus VoiceSeeker_Initialize(voice_seeker_t *d)
      * VoiceSeekerLight creation
      */
     RdspStatus voiceseeker_status = VoiceSeekerLight_Create(&vsl, &vsl_config);
-    CM33_Print("VoiceSeekerLight_Create: voiceseeker_status = %d\r\n", voiceseeker_status);
+    DSP_PRINTF("[DSP VoiceSeeker] VoiceSeekerLight_Create: voiceseeker_status = %d\r\n", voiceseeker_status);
     if (voiceseeker_status != OK)
     {
         return voiceseeker_status;
@@ -333,7 +331,7 @@ static RdspStatus VoiceSeeker_Initialize(voice_seeker_t *d)
      */
     rdsp_voiceseekerlight_ver_struct_t vsl_version;
     VoiceSeekerLight_GetLibVersion(&vsl, &vsl_version.major, &vsl_version.minor, &vsl_version.patch);
-    CM33_Print("VoiceSeekerLight_GetLibVersion: v%i.%i.%i\n", vsl_version.major, vsl_version.minor, vsl_version.patch);
+    DSP_PRINTF("[DSP VoiceSeeker] VoiceSeekerLight_GetLibVersion: v%i.%i.%i\n", vsl_version.major, vsl_version.minor, vsl_version.patch);
 
     VoiceSeekerLight_GetConfig(&vsl, &vsl_config);
 
@@ -433,7 +431,7 @@ static XA_ERRORCODE VoiceSeeker_Execute(voice_seeker_t *d)
         voiceseeker_status = VoiceSeekerLight_Process(&vsl, mic_in, NULL, &vsl_out);
         if (voiceseeker_status != OK)
         {
-            CM33_Print("VoiceSeekerLight_Process: voiceseeker_status = %d\r\n", (int32_t)voiceseeker_status);
+            DSP_PRINTF("[DSP VoiceSeeker] VoiceSeekerLight_Process: voiceseeker_status = %d\r\n", (int32_t)voiceseeker_status);
             return AFE_VOICESEEKER_ERROR;
         }
 
@@ -460,7 +458,7 @@ static XA_ERRORCODE VoiceSeeker_Execute(voice_seeker_t *d)
     }
     else
     {
-    	CM33_Print("wrong config between VoiceSeeker input = %zd and out = %d samples.", framesize_in, framesize_out);
+        DSP_PRINTF("[DSP VoiceSeeker] wrong config between VoiceSeeker input = %zd and out = %d samples.", framesize_in, framesize_out);
     }
 
     /* ...save total number of consumed bytes */

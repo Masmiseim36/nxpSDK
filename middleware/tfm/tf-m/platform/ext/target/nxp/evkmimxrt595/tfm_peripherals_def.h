@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  * Copyright 2019-2020 NXP. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,6 +14,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/*
+ * Quantized default IRQ priority, the value is:
+ * (Number of configurable priority) / 4: (1UL << __NVIC_PRIO_BITS) / 4
+ */
+#define DEFAULT_IRQ_PRIORITY    (1UL << (__NVIC_PRIO_BITS - 2))
+
 #define CTIMER                  CTIMER2                     /* Timer 2 */
 #define CTIMER_CLK_FREQ         CLOCK_GetCtimerClkFreq(2U)
 #define CTIMER_CLK_ATTACH       kFRO_DIV1_to_CTIMER2            /* Use 16 MHz clock */

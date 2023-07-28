@@ -1,21 +1,27 @@
 var a00012 =
 [
-    [ "codec_i2c_config_t", "a00012.html#a00321", [
-      [ "codecI2CInstance", "a00012.html#afc9ec0baf7efc35817e3ecf2c8a58337", null ],
-      [ "codecI2CSourceClock", "a00012.html#a37cb8111dd268ac2496202faf07568b9", null ]
+    [ "crc_config_t", "a00012.html#a00324", [
+      [ "polynomial", "a00012.html#afbe53ea36b200e69cb7f693e6f0a11f1", null ],
+      [ "reverseIn", "a00012.html#aecb53a8e8a78e3273c6d3b2c874ab7f2", null ],
+      [ "complementIn", "a00012.html#a9982af011e3e1fc9756dcee96281ebda", null ],
+      [ "reverseOut", "a00012.html#ab34c2bedb6fc476f9cbe760b6d45a417", null ],
+      [ "complementOut", "a00012.html#a673b6508efa086da7b7bd537a876241e", null ],
+      [ "seed", "a00012.html#a88920b83ff1317f511c1e9f4916b3b30", null ]
     ] ],
-    [ "CODEC_I2C_MASTER_HANDLER_SIZE", "a00012.html#ga708be0fda3516367fe0461a5f054118c", null ],
-    [ "codec_reg_addr_t", "a00012.html#ga0efd6653dc35bf1c3ac3516b8580c560", [
-      [ "kCODEC_RegAddr8Bit", "a00012.html#gga0efd6653dc35bf1c3ac3516b8580c560a1ee21f0f2d15f0a1e3708aa041c67977", null ],
-      [ "kCODEC_RegAddr16Bit", "a00012.html#gga0efd6653dc35bf1c3ac3516b8580c560a6bb003f6339c896cab91d395e515431d", null ]
+    [ "FSL_CRC_DRIVER_VERSION", "a00012.html#gac70c03eacdde850267d7fe0d7dca9591", null ],
+    [ "CRC_DRIVER_USE_CRC16_CCITT_FALSE_AS_DEFAULT", "a00012.html#ga37d19c87e3adeb47db8f6967df0496e1", null ],
+    [ "crc_polynomial_t", "a00012.html#ga7daa8fa0df9f42a98afcf766a63d931d", [
+      [ "kCRC_Polynomial_CRC_CCITT", "a00012.html#gga7daa8fa0df9f42a98afcf766a63d931da9ef1c3d85d4f13199e7df63d170bf6f6", null ],
+      [ "kCRC_Polynomial_CRC_16", "a00012.html#gga7daa8fa0df9f42a98afcf766a63d931da4a13840f3031b3aed89f60ba37a34c8b", null ],
+      [ "kCRC_Polynomial_CRC_32", "a00012.html#gga7daa8fa0df9f42a98afcf766a63d931da12ca2ee766202eb962135c76c00b10aa", null ]
     ] ],
-    [ "codec_reg_width_t", "a00012.html#ga29f27d00fb6b1d4207c919daf85c99e4", [
-      [ "kCODEC_RegWidth8Bit", "a00012.html#gga29f27d00fb6b1d4207c919daf85c99e4a6924318365a3be4d1f806bbf822f24a7", null ],
-      [ "kCODEC_RegWidth16Bit", "a00012.html#gga29f27d00fb6b1d4207c919daf85c99e4adcf918639278d1d38a99f9b40030861a", null ],
-      [ "kCODEC_RegWidth32Bit", "a00012.html#gga29f27d00fb6b1d4207c919daf85c99e4a1135b4284f4e9e0d83113250763b955f", null ]
-    ] ],
-    [ "CODEC_I2C_Init", "a00012.html#gadf64ef142b3bbc5a2f9ba1b7e01e5356", null ],
-    [ "CODEC_I2C_Deinit", "a00012.html#ga2c33fdd5bd6fe377e53f92cbbb03223b", null ],
-    [ "CODEC_I2C_Send", "a00012.html#gaadd85b986313b7ee984cd57bc9b883b4", null ],
-    [ "CODEC_I2C_Receive", "a00012.html#gae0da3dcb4574fedde25b82432890e2ec", null ]
+    [ "CRC_Init", "a00012.html#ga7114311534a33b6688f35ceaaa3f7832", null ],
+    [ "CRC_Deinit", "a00012.html#ga7a4d725b011a98efb29a26bcca04c35b", null ],
+    [ "CRC_Reset", "a00012.html#ga3c2e6ecc571510470849dc078685d71f", null ],
+    [ "CRC_WriteSeed", "a00012.html#ga43edd3bec710cb1ca121bfcadbc9b6f7", null ],
+    [ "CRC_GetDefaultConfig", "a00012.html#gab681cd7c82fbafd927d6b22f23a81804", null ],
+    [ "CRC_GetConfig", "a00012.html#gac745b626d9c7bd9f3da7986374483389", null ],
+    [ "CRC_WriteData", "a00012.html#ga33f99b0cb581e677dbc009a695adf5d5", null ],
+    [ "CRC_Get32bitResult", "a00012.html#ga0c8ce306124e645b27798fad68f3ac4f", null ],
+    [ "CRC_Get16bitResult", "a00012.html#ga5ce766fd31166d3b0d2d7ba594dac0ce", null ]
 ];

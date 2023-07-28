@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -401,12 +401,12 @@
             <File>
               <FileName>lcdif_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lcdif_support.h</FilePath>
+              <FilePath>../lcdif_support.h</FilePath>
             </File>
             <File>
               <FileName>lcdif_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lcdif_support.c</FilePath>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -484,26 +484,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -522,6 +502,26 @@
               <FileName>fsl_lcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1182,7 +1182,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1215,12 +1215,12 @@
             <File>
               <FileName>lcdif_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lcdif_support.h</FilePath>
+              <FilePath>../lcdif_support.h</FilePath>
             </File>
             <File>
               <FileName>lcdif_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lcdif_support.c</FilePath>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -1298,26 +1298,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -1336,6 +1316,26 @@
               <FileName>fsl_lcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1996,7 +1996,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2029,12 +2029,12 @@
             <File>
               <FileName>lcdif_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lcdif_support.h</FilePath>
+              <FilePath>../lcdif_support.h</FilePath>
             </File>
             <File>
               <FileName>lcdif_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lcdif_support.c</FilePath>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2112,26 +2112,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -2150,6 +2130,26 @@
               <FileName>fsl_lcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -2810,7 +2810,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2843,12 +2843,12 @@
             <File>
               <FileName>lcdif_support.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../lcdif_support.h</FilePath>
+              <FilePath>../lcdif_support.h</FilePath>
             </File>
             <File>
               <FileName>lcdif_support.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../lcdif_support.c</FilePath>
+              <FilePath>../lcdif_support.c</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2926,26 +2926,6 @@
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</FilePath>
@@ -2964,6 +2944,26 @@
               <FileName>fsl_lcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>

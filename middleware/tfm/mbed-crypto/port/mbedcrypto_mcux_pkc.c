@@ -12,6 +12,11 @@
 #include <mcuxClPkc.h>
 #include <mcuxClEcc.h>
 #include <mcuxClMemory.h>
+#if defined(MBEDTLS_MCUX_USE_ELS)
+#include <mcuxClRsa.h>
+#include <mcuxClHash_Memory.h>
+#include <mcuxClRandom.h>
+#endif /* MBEDTLS_MCUX_USE_ELS */
 #include <fsl_pkc.h>
 #include <mbedtls/platform.h>
 #include <mbedtls/platform_util.h>
@@ -19,6 +24,69 @@
 #include <mbedtls/error.h>
 #include <mbedtls/ctr_drbg.h>
 #include <mcuxClSession.h>
+
+/* If RW610/RW61X is enabled, a few mappings are required from CL-EAR2 to exsiting CL #defines, 
+to support exisiting ALT implementation. The defines are mainly required due to renaming in CL EAR2*/
+#if defined(MBEDTLS_MCUX_USE_ELS) 
+#define MCUXCLECC_STATUS_POINTMULT_INVALID_PARAMS MCUXCLECC_STATUS_INVALID_PARAMS
+#define MCUXCLECC_STATUS_POINTMULT_RNG_ERROR MCUXCLECC_STATUS_RNG_ERROR
+#define MCUXCLECC_STATUS_POINTMULT_OK MCUXCLECC_STATUS_OK
+#define MCUXCLECC_STATUS_SIGN_INVALID_PARAMS MCUXCLECC_STATUS_INVALID_PARAMS
+#define MCUXCLECC_STATUS_SIGN_RNG_ERROR MCUXCLECC_STATUS_RNG_ERROR
+#define MCUXCLECC_STATUS_SIGN_OK MCUXCLECC_STATUS_OK
+#define MCUXCLECC_STATUS_VERIFY_OK MCUXCLECC_STATUS_OK
+
+
+/* Definition of maximum lengths of key for RSA in bits */
+#define MCUX_PKC_RSA_KEY_SIZE_MAX (4096u)
+
+/* Definition of maximum lengths of base point order n in bytes */
+#define MCUX_PKC_ECC_N_SIZE_MAX (256u / 8u) // only secp256r1 supported for now
+/* Definition of maximum lengths of prime modulus in bytes */
+#define MCUX_PKC_ECC_P_SIZE_MAX (256u / 8u) // only secp256r1 supported for now
+
+/* Macro determining maximum size of CPU workarea size for MCUX_PKC_ecdsa_sign/verify functions */
+#define MCUX_PKC_MAX(a, b) ((a) > (b) ? (a) : (b))
+
+#define MCUX_PKC_SIGN_BY_ALT_RSA_PLAIN_WACPU_SIZE_MAX                                        \
+    MCUX_PKC_MAX(MCUXCLRSA_SIGN_PLAIN_PSSENCODE_WACPU_SIZE(MCUX_PKC_RSA_KEY_SIZE_MAX), \
+                        MCUXCLRSA_SIGN_PLAIN_PKCS1V15ENCODE_WACPU_SIZE(MCUX_PKC_RSA_KEY_SIZE_MAX))
+#define MCUX_PKC_SIGN_BY_ALT_RSA_CRT_WACPU_SIZE_MAX                                        \
+    MCUX_PKC_MAX(MCUXCLRSA_SIGN_CRT_PSSENCODE_WACPU_SIZE(MCUX_PKC_RSA_KEY_SIZE_MAX), \
+                        MCUXCLRSA_SIGN_CRT_PKCS1V15ENCODE_WACPU_SIZE(MCUX_PKC_RSA_KEY_SIZE_MAX))
+#define MCUX_PKC_SIGN_BY_ALT_RSA_WACPU_SIZE_MAX                        \
+    MCUX_PKC_MAX(MCUX_PKC_SIGN_BY_ALT_RSA_PLAIN_WACPU_SIZE_MAX, \
+                        MCUX_PKC_SIGN_BY_ALT_RSA_CRT_WACPU_SIZE_MAX)
+#define MCUX_PKC_SIGN_BY_ALT_WACPU_SIZE_MAX                                                     \
+    MCUX_PKC_MAX(MCUX_PKC_MAX(MCUX_PKC_SIGN_BY_ALT_RSA_WACPU_SIZE_MAX,            \
+                                            MCUXCLECC_SIGN_WACPU_SIZE(MCUX_PKC_ECC_N_SIZE_MAX)), \
+                        MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX)
+
+/* Macro determining maximum size of CPU workarea size for MCUX_PKC verify */
+#define MCUX_PKC_VERIFY_BY_ALT_RSA_WACPU_SIZE_MAX                                        \
+    MCUX_PKC_MAX(MCUXCLRSA_VERIFY_PSSVERIFY_WACPU_SIZE(MCUX_PKC_RSA_KEY_SIZE_MAX), \
+                        MCUXCLRSA_VERIFY_PKCS1V15VERIFY_WACPU_SIZE)
+#define MCUX_PKC_VERIFY_BY_ALT_WACPU_SIZE_MAX                                                        \
+    MCUX_PKC_MAX(                                                                                     \
+        MCUX_PKC_MAX(MCUX_PKC_VERIFY_BY_ALT_RSA_WACPU_SIZE_MAX, MCUXCLECC_VERIFY_WACPU_SIZE), \
+        MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX)
+
+/* Macro determining maximum size of PKC workarea size for MCUX_PKC Signature calculation */
+#define MCUX_PKC_SIGN_BY_ALT_WAPKC_SIZE_MAX                                      \
+    MCUX_PKC_MAX(MCUXCLRSA_SIGN_CRT_WAPKC_SIZE(MCUX_PKC_RSA_KEY_SIZE_MAX), \
+                        MCUXCLECC_SIGN_WACPU_SIZE(MCUX_PKC_ECC_N_SIZE_MAX))
+
+/* Macro determining maximum size of PKC workarea size for MCUX_PKC verify */
+#define MCUX_PKC_VERIFY_BY_ALT_WAPKC_SIZE_MAX \
+    MCUX_PKC_MAX(MCUXCLRSA_VERIFY_WAPKC_SIZE(MCUX_PKC_RSA_KEY_SIZE_MAX), MCUXCLECC_VERIFY_WACPU_SIZE)
+
+#else
+#define MCUXCLRSA_VERIFY_NOVERIFY_WACPU_SIZE MCUXCLRSA_VERIFY_OPTIONNOVERIFY_WACPU_SIZE  
+#define MCUXCLRSA_VERIFY_WAPKC_SIZE MCUXCLRSA_VERIFY_OPTIONNOVERIFY_WAPKC_SIZE           
+#define MCUXCLRSA_SIGN_CRT_NOENCODE_2048_WACPU_SIZE MCUXCLRSA_SIGN_CRT_OPTIONNOENCODE_2048_WACPU_SIZE 
+#define MCUXCLRSA_SIGN_CRT_NOENCODE_WACPU_SIZE MCUXCLRSA_SIGN_CRT_OPTIONNOENCODE_WACPU_SIZE   
+#define MCUXCLRSA_SIGN_CRT_WAPKC_SIZE MCUXCLRSA_SIGN_CRT_OPTIONNOENCODE_WAPKC_SIZE   
+#endif /* MBEDTLS_MCUX_USE_ELS */ 
 
 /*!
  * @brief PKC initialization.
@@ -483,12 +551,38 @@ int mbedtls_ecdsa_sign( mbedtls_ecp_group *grp, mbedtls_mpi *r, mbedtls_mpi *s,
     
     /* Setup session */
     mcuxClSession_Descriptor_t session;
+ 
+#if defined(MBEDTLS_MCUX_USE_ELS) 
+    /* Buffer for the CPU workarea in memory. */
+    uint32_t cpuWaBuffer[MCUX_PKC_SIGN_BY_ALT_WACPU_SIZE_MAX / sizeof(uint32_t)];
+    uint32_t cpuWaSize = sizeof(cpuWaBuffer) / sizeof(uint32_t);
+    
+    /* PKC buffer and size */
+    uint8_t *pPkcRam = (uint8_t *) MCUXCLPKC_RAM_START_ADDRESS;
+    const uint32_t pkcWaSize = MCUX_PKC_SIGN_BY_ALT_WAPKC_SIZE_MAX;
+	 
+    /* Create session */
+    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(si_status, si_token, mcuxClSession_init(
+                /* mcuxClSession_Handle_t session:     */ &session,
+                /* uint32_t * const cpuWaBuffer:       */ cpuWaBuffer,
+                /* uint32_t cpuWaSize:                 */ cpuWaSize,
+                /* uint32_t * const pkcWaBuffer:       */ (uint32_t *) pPkcRam,
+                /* uint32_t pkcWaSize:                 */ pkcWaSize
+                ));
+
+    if((MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClSession_init) != si_token) || (MCUXCLSESSION_STATUS_OK != si_status))
+    {
+        return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
+    }   
+#else   
+
     const uint32_t wordSizePkcWa = MCUXCLECC_POINTMULT_WAPKC_SIZE(pByteLength, nByteLength);
     (void) mcuxClSession_init(&session,
                              NULL, /* CPU workarea size for point multiplication is zero */
                              MCUXCLECC_POINTMULT_WACPU_SIZE,
                              (uint32_t *) MCUXCLPKC_RAM_START_ADDRESS + 2,
                              wordSizePkcWa);
+#endif
 
     /* Set up domain parameters. */
     mcuxClEcc_DomainParam_t pDomainParams =
@@ -526,7 +620,23 @@ int mbedtls_ecdsa_sign( mbedtls_ecp_group *grp, mbedtls_mpi *r, mbedtls_mpi *s,
         .pSignature = pSignature,
         .optLen = mcuxClEcc_Sign_Param_optLen_Pack(blen)
     };
-    
+
+    /* The code is added as per documentation of CL usage, where it specifies following:
+    mcuxClEcc_Sign function uses DRBG and PRNG. Caller needs to check if DRBG and PRNG are ready.*/
+#if defined(MBEDTLS_MCUX_USE_ELS)    
+    /* Initialize the RNG context */
+    mcuxClRandom_Context_t rng_ctx = NULL;
+
+    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(randomInit_result, randomInit_token,
+                                     mcuxClRandom_init(&session, rng_ctx, mcuxClRandom_Mode_CSS_Drbg));
+    if ((MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClRandom_init) != randomInit_token) ||
+        (MCUXCLRANDOM_STATUS_OK != randomInit_result))
+    {
+        mbedtls_ecp_free_ecdsa(&pDomainParams, NULL, NULL, &paramSign);
+        return MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
+    }
+#endif /* MBEDTLS_MCUX_USE_ELS */
+        
     /* Call ECC sign. */
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retEccSign, tokenEccSign,mcuxClEcc_Sign(&session, &paramSign));
     if (MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClEcc_Sign) != tokenEccSign)
@@ -612,13 +722,37 @@ int mbedtls_ecdsa_verify( mbedtls_ecp_group *grp,
     
     /* Setup session */
     mcuxClSession_Descriptor_t session;
+    
+#if defined(MBEDTLS_MCUX_USE_ELS) 
+    /* Buffer for the CPU workarea in memory. */
+    uint32_t cpuWaBuffer[MCUX_PKC_VERIFY_BY_ALT_WACPU_SIZE_MAX / sizeof(uint32_t)];
+    uint32_t cpuWaSize = sizeof(cpuWaBuffer) / sizeof(uint32_t);
+    
+    /* PKC buffer and size */
+    uint8_t *pPkcRam = (uint8_t *) MCUXCLPKC_RAM_START_ADDRESS;
+    const uint32_t pkcWaSize = MCUX_PKC_VERIFY_BY_ALT_WAPKC_SIZE_MAX;
+
+    /* Create session */
+    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(si_status, si_token, mcuxClSession_init(
+                /* mcuxClSession_Handle_t session:     */ &session,
+                /* uint32_t * const cpuWaBuffer:       */ cpuWaBuffer,
+                /* uint32_t cpuWaSize:                 */ cpuWaSize,
+                /* uint32_t * const pkcWaBuffer:       */ (uint32_t *) pPkcRam,
+                /* uint32_t pkcWaSize:                 */ pkcWaSize
+                ));
+
+    if((MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClSession_init) != si_token) || (MCUXCLSESSION_STATUS_OK != si_status))
+    {
+        return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
+    }
+#else
     const uint32_t wordSizePkcWa = MCUXCLECC_POINTMULT_WAPKC_SIZE(pByteLength, nByteLength);
     (void) mcuxClSession_init(&session,
                              NULL, /* CPU workarea size for point multiplication is zero */
                              MCUXCLECC_POINTMULT_WACPU_SIZE,
                              (uint32_t *) MCUXCLPKC_RAM_START_ADDRESS + 2,
-                             wordSizePkcWa);
-
+                             wordSizePkcWa);  
+#endif    
 
     /* Set up domain parameters. */
     mcuxClEcc_DomainParam_t pDomainParams =
@@ -906,24 +1040,38 @@ int mbedtls_rsa_public( mbedtls_rsa_context *ctx,
     /* Get the byte-length of modulus n */
     const uint32_t nByteLength = ctx->MBEDTLS_PRIVATE(len);
 
-    /* CPU buffer */
-    uint32_t cpuWaBuffer[MCUXCLRSA_VERIFY_OPTIONNOVERIFY_WACPU_SIZE / sizeof(uint32_t)];
-
+#if defined(MBEDTLS_MCUX_USE_ELS) 
+    /* Buffer for the CPU workarea in memory. */
+    uint32_t cpuWaBuffer[MCUX_PKC_VERIFY_BY_ALT_WACPU_SIZE_MAX / sizeof(uint32_t)];
+    uint32_t cpuWaSize = sizeof(cpuWaBuffer) / sizeof(uint32_t);
+    
+    /* PKC buffer and size */
+    uint8_t *pPkcRam = (uint8_t *) MCUXCLPKC_RAM_START_ADDRESS;
+    const uint32_t pkcWaSize = MCUX_PKC_VERIFY_BY_ALT_WAPKC_SIZE_MAX;
+    const uint32_t pkcWaSizeWithOffset = pkcWaSize;  // No offset required with EAR2, so same pkcwaSize can be used.
+#else
+    /* Buffer for the CPU workarea in memory. */
+    uint32_t cpuWaBuffer[MCUXCLRSA_VERIFY_NOVERIFY_WACPU_SIZE / sizeof(uint32_t)];
+    
+    uint32_t cpuWaSize = MCUXCLRSA_VERIFY_OPTIONNOVERIFY_WACPU_SIZE / sizeof(uint32_t);
+    
     /* PKC buffer and size */
     uint8_t *pPkcRam = (uint8_t *) MCUXCLPKC_RAM_START_ADDRESS;
     const uint32_t pkcWaSize = MCUXCLPKC_ROUNDUP_SIZE(nByteLength /* modulus */
                                                    + nByteLength /* exponent */
-                                                   + nByteLength /* result buffer */);
+                                                   + nByteLength /* result buffer */); 
+    const uint32_t pkcWaSizeWithOffset = (pkcWaSize + MCUXCLRSA_VERIFY_WAPKC_SIZE(nByteLength * 8u)) / sizeof(uint32_t);
+#endif   /* MBEDTLS_MCUX_USE_ELS */
 
     mcuxClSession_Descriptor_t sessionDesc;
     mcuxClSession_Handle_t session = &sessionDesc;
-
+    
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(si_status, si_token, mcuxClSession_init(
                 /* mcuxClSession_Handle_t session:      */ session,
                 /* uint32_t * const cpuWaBuffer:       */ cpuWaBuffer,
-                /* uint32_t cpuWaSize:                 */ MCUXCLRSA_VERIFY_OPTIONNOVERIFY_WACPU_SIZE / sizeof(uint32_t),
+                /* uint32_t cpuWaSize:                 */ cpuWaSize,
                 /* uint32_t * const pkcWaBuffer:       */ (uint32_t *) pPkcRam,
-                /* uint32_t pkcWaSize:                 */ (pkcWaSize + MCUXCLRSA_VERIFY_OPTIONNOVERIFY_WAPKC_SIZE(nByteLength * 8u)) / sizeof(uint32_t)
+                /* uint32_t pkcWaSize:                 */ (pkcWaSizeWithOffset)
                 ));
 
     if((MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClSession_init) != si_token) || (MCUXCLSESSION_STATUS_OK != si_status))
@@ -1063,26 +1211,29 @@ int mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     const uint32_t nByteLength = ctx->MBEDTLS_PRIVATE(len);
     const uint32_t pqByteLength = (nByteLength+1) / 2u;
 
-    /* CPU buffer */
-    uint32_t cpuWaBuffer[MCUXCLRSA_SIGN_CRT_OPTIONNOENCODE_2048_WACPU_SIZE / sizeof(uint32_t)];
-
+    /* Buffer for the CPU workarea in memory. */
+    uint32_t cpuWaBuffer[MCUXCLRSA_SIGN_CRT_NOENCODE_2048_WACPU_SIZE / sizeof(uint32_t)];
+    
+    uint32_t cpuWaSize = MCUXCLRSA_SIGN_CRT_NOENCODE_WACPU_SIZE(nByteLength * 8u) / sizeof(uint32_t);
+    
     /* PKC buffer and size */
     uint8_t *pPkcRam = (uint8_t *) MCUXCLPKC_RAM_START_ADDRESS;
     const uint32_t pkcWaSize = MCUXCLPKC_ROUNDUP_SIZE((2u * pqByteLength) /* p and q (2 * 1/2 * nByteLength) */
                                                    + (pqByteLength)      /* q_inv */
                                                    + (2u * pqByteLength) /* dp and dq (2 * 1/2 * nByteLength) */
                                                    + (nByteLength)      /* e */
-                                                   + (nByteLength)      /* result buffer */);
+                                                   + (nByteLength)      /* result buffer */);  
+    const uint32_t pkcWaSize_temp = (pkcWaSize + MCUXCLRSA_VERIFY_WAPKC_SIZE(nByteLength * 8u)) / sizeof(uint32_t);
 
     mcuxClSession_Descriptor_t sessionDesc;
     mcuxClSession_Handle_t session = &sessionDesc;
-
+    
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(si_status, si_token, mcuxClSession_init(
                 /* mcuxClSession_Handle_t session:      */ session,
                 /* uint32_t * const cpuWaBuffer:       */ cpuWaBuffer,
-                /* uint32_t cpuWaSize:                 */ MCUXCLRSA_SIGN_CRT_OPTIONNOENCODE_WACPU_SIZE(nByteLength * 8u) / sizeof(uint32_t),
+                /* uint32_t cpuWaSize:                 */ cpuWaSize,
                 /* uint32_t * const pkcWaBuffer:       */ (uint32_t *) pPkcRam,
-                /* uint32_t pkcWaSize:                 */ (pkcWaSize + MCUXCLRSA_SIGN_CRT_OPTIONNOENCODE_WAPKC_SIZE(nByteLength * 8u)) / sizeof(uint32_t)
+                /* uint32_t pkcWaSize:                 */ pkcWaSize_temp
                 ));
 
     if((MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClSession_init) != si_token) || (MCUXCLSESSION_STATUS_OK != si_status))

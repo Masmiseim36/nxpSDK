@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+# Copyright (c) 2018-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -13,8 +13,6 @@
   "model": "IPC",
   "entry_point": "ipc_service_test_main",
   "stack_size": "0x0220",
-  "secure_functions": [
-  ],
   "services" : [
     {
       "name": "IPC_SERVICE_TEST_BASIC",

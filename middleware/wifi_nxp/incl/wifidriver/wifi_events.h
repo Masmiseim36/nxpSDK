@@ -1,7 +1,7 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2020, 2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -31,8 +31,12 @@ enum wifi_event
     WIFI_EVENT_UAP_LAST,
     /* All the uAP related events need to be above and STA related events
      * below */
+    /** Scan start event when scan is started */
+    WIFI_EVENT_SCAN_START,
     /** Scan Result */
     WIFI_EVENT_SCAN_RESULT,
+    /** Survey Result Get */
+    WIFI_EVENT_SURVEY_RESULT_GET,
     /** Get hardware spec */
     WIFI_EVENT_GET_HW_SPEC,
     /** Association */
@@ -49,6 +53,12 @@ enum wifi_event
     WIFI_EVENT_LINK_LOSS,
     /* WiFi RSSI Low Event */
     WIFI_EVENT_RSSI_LOW,
+#ifdef CONFIG_HOST_SLEEP
+    /* Host sleep activated */
+    WIFI_EVENT_HS_ACTIVATED,
+    /* Sleep confirm done */
+    WIFI_EVENT_SLEEP_CONFIRM_DONE,
+#endif
     /** Network station address configuration */
     WIFI_EVENT_NET_STA_ADDR_CONFIG,
     /** Network interface configuration */
@@ -100,17 +110,16 @@ enum wifi_event
     /** IPv6 address state change */
     WIFI_EVENT_NET_IPV6_CONFIG,
 #endif
-#ifdef CONFIG_WIFI_FW_DEBUG
-    /* WiFi FW Debug Info */
-    WIFI_EVENT_FW_DEBUG_INFO,
-#endif
+    /* Background Scan Report */
+    WIFI_EVENT_BG_SCAN_REPORT,
+    /* Background Scan Stop */
+    WIFI_EVENT_BG_SCAN_STOPPED,
     /* Event to indicate RX Management Frame */
     WIFI_EVENT_MGMT_FRAME,
-#ifdef IW61x
-    /*IMD3 Calibration events for IW61X */
-    WIFI_EVENT_IMD3_CAL_START,
-    WIFI_EVENT_IMD3_CAL_END,
-#endif
+    /* Event to indicate remain on channel started */
+    WIFI_EVENT_REMAIN_ON_CHANNEL,
+    /* Event to indicate Management tx status */
+    WIFI_EVENT_MGMT_TX_STATUS,
     /** Event to indicate end of Wi-Fi events */
     WIFI_EVENT_LAST,
     /* other events can be added after this, however this must

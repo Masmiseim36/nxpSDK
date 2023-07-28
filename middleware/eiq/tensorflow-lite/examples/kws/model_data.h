@@ -12,7 +12,7 @@
 // (with additional modification for alignment specification):
 // xxd -i ds_cnn_s.tflite > model_data.h
 
-#ifndef __XCC__
+#ifdef __arm__
 #include <cmsis_compiler.h>
 #else
 #define __ALIGNED(x) __attribute__((aligned(x)))
@@ -21,6 +21,8 @@
 #define MODEL_NAME "ds_cnn_s"
 #define MODEL_INPUT_MEAN -99.5f
 #define MODEL_INPUT_STD 127.5f
+
+constexpr int kTensorArenaSize = 256 * 1024;
 
 static const uint8_t model_data[] __ALIGNED(16) = {
   0x20, 0x00, 0x00, 0x00, 0x54, 0x46, 0x4c, 0x33, 0x00, 0x00, 0x00, 0x00,

@@ -179,16 +179,16 @@ static CK_RV initializeClientKeys( SSLContext_t * pxCtx,
  *
  * @return Zero on success.
  */
-static int32_t privateKeySigningCallback( void * pvContext,
-                                          mbedtls_md_type_t xMdAlg,
-                                          const unsigned char * pucHash,
-                                          size_t xHashLen,
-                                          unsigned char * pucSig,
-                                          size_t * pxSigLen,
-                                          int32_t ( * piRng )( void *,
-                                                               unsigned char *,
-                                                               size_t ),
-                                          void * pvRng );
+static int privateKeySigningCallback( void * pvContext,
+                                      mbedtls_md_type_t xMdAlg,
+                                      const unsigned char * pucHash,
+                                      size_t xHashLen,
+                                      unsigned char * pucSig,
+                                      size_t * pxSigLen,
+                                      int ( * piRng )( void *,
+                                                       unsigned char *,
+                                                       size_t ),
+                                      void * pvRng );
 
 /**
  * @brief Setup TLS by initializing contexts and setting configurations.
@@ -494,19 +494,19 @@ static CK_RV initializeClientKeys( SSLContext_t * pxCtx,
 
 /*-----------------------------------------------------------*/
 
-static int32_t privateKeySigningCallback( void * pvContext,
-                                          mbedtls_md_type_t xMdAlg,
-                                          const unsigned char * pucHash,
-                                          size_t xHashLen,
-                                          unsigned char * pucSig,
-                                          size_t * pxSigLen,
-                                          int32_t ( * piRng )( void *,
-                                                               unsigned char *,
-                                                               size_t ),
-                                          void * pvRng )
+static int privateKeySigningCallback( void * pvContext,
+                                      mbedtls_md_type_t xMdAlg,
+                                      const unsigned char * pucHash,
+                                      size_t xHashLen,
+                                      unsigned char * pucSig,
+                                      size_t * pxSigLen,
+                                      int ( * piRng )( void *,
+                                                       unsigned char *,
+                                                       size_t ),
+                                      void * pvRng )
 {
     CK_RV xResult = CKR_OK;
-    int32_t lFinalResult = 0;
+    int iFinalResult = 0;
     SSLContext_t * pxTLSContext = ( SSLContext_t * ) pvContext;
     CK_MECHANISM xMech = { 0 };
     CK_BYTE xToBeSigned[ 256 ];
@@ -582,9 +582,10 @@ static int32_t privateKeySigningCallback( void * pvContext,
     if( xResult != CKR_OK )
     {
         LogError( ( "Failed to sign message using PKCS #11 with error code %02X.", xResult ) );
+        iFinalResult = -1;
     }
 
-    return lFinalResult;
+    return iFinalResult;
 }
 
 

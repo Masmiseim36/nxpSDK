@@ -117,15 +117,17 @@ typedef u32_t mem_ptr_t;
 #include "cmsis_compiler.h"
 
 #ifdef LWIP_DEBUG
+#ifndef LWIP_PLATFORM_DIAG
 #include "fsl_debug_console.h"
 
 // non-fatal, print a message.
 #define LWIP_PLATFORM_DIAG(x) \
-    do                        \
-    {                         \
-        PRINTF x;             \
-        PRINTF("\r\n");       \
-    } while (0)
+  do                          \
+  {                           \
+    PRINTF x;                 \
+    PRINTF("\r\n");           \
+  } while (0)
+#endif /* LWIP_PLATFORM_DIAG */
 #else
 #define LWIP_PLATFORM_DIAG(x)
 #endif

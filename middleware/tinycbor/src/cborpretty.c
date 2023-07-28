@@ -33,6 +33,9 @@
 #include "compilersupport_p.h"
 #include "utf8_p.h"
 
+#ifdef __NEWLIB__
+#include <sys/types.h>
+#endif
 #include <inttypes.h>
 #include <string.h>
 

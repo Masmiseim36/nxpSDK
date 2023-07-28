@@ -26,11 +26,12 @@ limitations under the License.
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/xtensa/xtensa.h"
 #include "tensorflow/lite/micro/kernels/xtensa/xtensa_softmax.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 namespace {
 
-#if defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
+#if defined(HIFI4) || defined(HIFI5)
 TfLiteStatus EvalHifiInt8(const XtensaSoftmaxOpData* op_data,
                           const TfLiteEvalTensor* input,
                           TfLiteEvalTensor* output, TfLiteContext* context) {
@@ -55,7 +56,7 @@ TfLiteStatus EvalHifiInt8(const XtensaSoftmaxOpData* op_data,
   }
   return kTfLiteOk;
 }
-#endif  // defined(HIFI4) || defined (HIFI4_INTERNAL) || defined(HIFI5)
+#endif  // defined(HIFI4) || defined(HIFI5)
 
 TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
   const TfLiteEvalTensor* input = tflite::micro::GetEvalInput(context, node, 0);
@@ -67,7 +68,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 
   TFLITE_DCHECK(node->user_data != nullptr);
 
-#if defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
+#if defined(HIFI4) || defined(HIFI5)
   XtensaSoftmaxOpData op_data =
       *static_cast<XtensaSoftmaxOpData*>(node->user_data);
   SoftmaxParams params = op_data.params;
@@ -76,7 +77,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 #endif
 
   if (input->type == kTfLiteInt8 && output->type == kTfLiteInt8) {
-#if defined(HIFI4) || defined(HIFI4_INTERNAL) || defined(HIFI5)
+#if defined(HIFI4) || defined(HIFI5)
     return EvalHifiInt8(static_cast<XtensaSoftmaxOpData*>(node->user_data),
                         input, output, context);
 #elif defined(VISION_P6)
@@ -90,7 +91,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
         tflite::micro::GetTensorShape(output),
         tflite::micro::GetTensorData<int8_t>(output));
     return kTfLiteOk;
-#endif  // defined(HIFI4) || defined (HIFI4_INTERNAL) || defined(HIFI5)
+#endif  // defined(HIFI4) || defined(HIFI5)
   }
 
   if (input->type == kTfLiteInt16 && output->type == kTfLiteInt16) {
@@ -117,7 +118,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 
 }  // namespace
 
-TfLiteRegistration Register_SOFTMAX() {
+TfLiteRegistration_V1 Register_SOFTMAX() {
   return tflite::micro::RegisterOp(XtensaInitSoftmax, XtensaPrepareSoftmax,
                                    Eval);
 }

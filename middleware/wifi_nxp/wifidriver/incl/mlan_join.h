@@ -7,9 +7,9 @@
  *  implemented in mlan_join.c.  Process all start/join requests for
  *  both adhoc and infrastructure networks
  *
- *  Copyright 2008-2021 NXP
+ *  Copyright 2008-2021, 2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 

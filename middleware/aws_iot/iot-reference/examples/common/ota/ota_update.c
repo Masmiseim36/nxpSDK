@@ -73,15 +73,6 @@
 /*------------- Demo configurations -------------------------*/
 
 /**
- * @brief OTA Application firmware version numbers.
- * The version number is used for validation of a new OTA job and to
- * prevent roll back to an older firmware image version.
- */
-#define APP_VERSION_MAJOR                                0
-#define APP_VERSION_MINOR                                9
-#define APP_VERSION_BUILD                                3
-
-/**
  * @brief The maximum size of the file paths used in the demo.
  */
 #define otaexampleMAX_FILE_PATH_SIZE                     ( 260 )
@@ -684,8 +675,6 @@ static void prvProcessIncomingData( void * pxSubscriptionContext,
     {
         if( pPublishInfo->payloadLength <= OTA_DATA_BLOCK_SIZE )
         {
-            LogDebug( ( "Received OTA image block, size %d.\n\n", pPublishInfo->payloadLength ) );
-
             pData = prvOTAEventBufferGet();
 
             if( pData != NULL )
@@ -779,7 +768,8 @@ static BaseType_t prvMatchClientIdentifierInTopic( const char * pTopic,
                                                    size_t clientIdentifierLength )
 {
     BaseType_t isMatch = pdFALSE;
-    size_t idx, matchIdx = 0;
+    size_t idx;
+    size_t matchIdx = 0;
 
     for( idx = OTA_TOPIC_CLIENT_IDENTIFIER_START_IDX; idx < topicNameLength; idx++ )
     {
@@ -832,7 +822,7 @@ static void prvSubscribeCommandCallback( MQTTAgentCommandContext_t * pxCommandCo
                                                pxSubscribeArgs->pSubscribeInfo[ 0 ].topicFilterLength,
                                                prvProcessIncomingMessage,
                                                NULL,
-                                               pdTRUE );
+                                               pdFALSE );
         configASSERT( xResult == pdTRUE );
     }
 
@@ -862,6 +852,7 @@ static void prvUnSubscribeCommandCallback( MQTTAgentCommandContext_t * pxCommand
 }
 
 /*-----------------------------------------------------------*/
+
 
 static OtaMqttStatus_t prvMQTTSubscribe( const char * pTopicFilter,
                                          uint16_t topicFilterLength,
@@ -950,14 +941,16 @@ static OtaMqttStatus_t prvMQTTPublish( const char * const pacTopic,
     OtaMqttStatus_t otaRet = OtaMqttSuccess;
     BaseType_t result;
     MQTTStatus_t mqttStatus = MQTTBadParameter;
-    MQTTPublishInfo_t publishInfo = { 0 };
+    MQTTPublishInfo_t publishInfo = { MQTTQoS0 };
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTAgentCommandContext_t xCommandContext = { 0 };
     uint32_t ulNotifiedValue;
 
+    configASSERT( qos <= MQTTQoS2 );
+
     publishInfo.pTopicName = pacTopic;
     publishInfo.topicNameLength = topicLen;
-    publishInfo.qos = qos;
+    publishInfo.qos = ( MQTTQoS_t ) qos;
     publishInfo.pPayload = pMsg;
     publishInfo.payloadLength = msgSize;
 
@@ -1021,7 +1014,7 @@ static OtaMqttStatus_t prvMQTTUnsubscribe( const char * pTopicFilter,
     MQTTStatus_t mqttStatus;
     uint32_t ulNotifiedValue;
     MQTTAgentSubscribeArgs_t xSubscribeArgs = { 0 };
-    MQTTSubscribeInfo_t xSubscribeInfo = { 0 };
+    MQTTSubscribeInfo_t xSubscribeInfo = { MQTTQoS0 };
     BaseType_t result;
     MQTTAgentCommandInfo_t xCommandParams = { 0 };
     MQTTAgentCommandContext_t xCommandContext = { 0 };
@@ -1029,10 +1022,11 @@ static OtaMqttStatus_t prvMQTTUnsubscribe( const char * pTopicFilter,
 
     configASSERT( pTopicFilter != NULL );
     configASSERT( topicFilterLength > 0 );
+    configASSERT( ucQoS <= MQTTQoS2 );
 
     xSubscribeInfo.pTopicFilter = pTopicFilter;
     xSubscribeInfo.topicFilterLength = topicFilterLength;
-    xSubscribeInfo.qos = ucQoS;
+    xSubscribeInfo.qos = ( MQTTQoS_t ) ucQoS;
     xSubscribeArgs.pSubscribeInfo = &xSubscribeInfo;
     xSubscribeArgs.numSubscriptions = 1;
 
@@ -1120,6 +1114,33 @@ static void setOtaInterfaces( OtaInterfaces_t * pOtaInterfaces )
     pOtaInterfaces->pal.reset = xOtaPalResetDevice;
     pOtaInterfaces->pal.abort = xOtaPalAbort;
     pOtaInterfaces->pal.createFile = xOtaPalCreateFileForRx;
+}
+
+static void prvSuspendOTAUpdate( void )
+{
+    if( ( OTA_GetState() != OtaAgentStateSuspended ) && ( OTA_GetState() != OtaAgentStateStopped ) )
+    {
+        OTA_Suspend();
+
+        while( ( OTA_GetState() != OtaAgentStateSuspended ) &&
+               ( OTA_GetState() != OtaAgentStateStopped ) )
+        {
+            vTaskDelay( pdMS_TO_TICKS( otaexampleTASK_DELAY_MS ) );
+        }
+    }
+}
+
+static void prvResumeOTAUpdate( void )
+{
+    if( OTA_GetState() == OtaAgentStateSuspended )
+    {
+        OTA_Resume();
+
+        while( OTA_GetState() == OtaAgentStateSuspended )
+        {
+            vTaskDelay( pdMS_TO_TICKS( otaexampleTASK_DELAY_MS ) );
+        }
+    }
 }
 
 void vOTAUpdateTask( void * pvParam )
@@ -1249,7 +1270,13 @@ void vOTAUpdateTask( void * pvParam )
             if( xWaitForMQTTAgentState( MQTT_AGENT_STATE_DISCONNECTED,
                                         pdMS_TO_TICKS( otaexampleTASK_DELAY_MS ) ) == pdTRUE )
             {
+                /* Suspend ongoing OTA job if any until MQTT agent is reconnected. */
+                prvSuspendOTAUpdate();
+
                 ( void ) xWaitForMQTTAgentState( MQTT_AGENT_STATE_CONNECTED, portMAX_DELAY );
+
+                /* Resume OTA Update so that agent checks for any new jobs during a lost connection. */
+                prvResumeOTAUpdate();
             }
         }
     }

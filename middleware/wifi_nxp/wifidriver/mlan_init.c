@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides initialization for FW and HW
  *
- *  Copyright 2008-2021 NXP
+ *  Copyright 2008-2021, 2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -19,9 +19,7 @@ Change log:
 #include <wmerrno.h>
 #include <wm_os.h>
 #include "fsl_common.h"
-#ifndef RW610
 #include "sdmmc_config.h"
-#endif
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -57,8 +55,30 @@ SDK_ALIGN(uint8_t mp_regs_buffer[MAX_MP_REGS], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZ
  */
 mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
 {
+    int ret = -WM_FAIL;
     // fixme: this function will need during migration of legacy code.
+    t_u8 chan_2g_size = 14;
+#ifdef CONFIG_5GHz_SUPPORT
+    t_u8 chan_5g_size    = 31;
+#endif
+
+    t_u32 buf_size;
+
     pmadapter->pscan_table = BSS_List;
+    pmadapter->num_in_chan_stats = chan_2g_size;
+#ifdef CONFIG_5GHz_SUPPORT
+    pmadapter->num_in_chan_stats += chan_5g_size;
+#endif
+    buf_size = sizeof(ChanStatistics_t) * pmadapter->num_in_chan_stats;
+    ret      = pmadapter->callbacks.moal_malloc(pmadapter->pmoal_handle, buf_size, MLAN_MEM_DEF,
+                                           (t_u8 **)&pmadapter->pchan_stats);
+    if (ret != MLAN_STATUS_SUCCESS || !pmadapter->pchan_stats)
+    {
+        PRINTM(MERROR, "Failed to allocate channel statistics\n");
+        LEAVE();
+        return MLAN_STATUS_FAILURE;
+    }
+
        /* wmsdk: Use a statically allocated DMA aligned buffer */
 #if defined(SD8801)
     pmadapter->mp_regs = mp_regs_buffer;
@@ -113,7 +133,12 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->wep_key_curr_index = 0;
     priv->ewpa_query         = MFALSE;
     priv->adhoc_aes_enabled  = MFALSE;
-    priv->curr_pkt_filter    = HostCmd_ACT_MAC_RX_ON | HostCmd_ACT_MAC_TX_ON | HostCmd_ACT_MAC_ETHERNETII_ENABLE;
+    priv->curr_pkt_filter =
+#ifdef CONFIG_11AC
+        HostCmd_ACT_MAC_STATIC_DYNAMIC_BW_ENABLE |
+#endif
+        HostCmd_ACT_MAC_RTS_CTS_ENABLE | HostCmd_ACT_MAC_RX_ON | HostCmd_ACT_MAC_TX_ON |
+        HostCmd_ACT_MAC_ETHERNETII_ENABLE;
 
     (void)__memset(pmadapter, &priv->curr_bss_params, 0, sizeof(priv->curr_bss_params));
     priv->listen_interval = MLAN_DEFAULT_LISTEN_INTERVAL;
@@ -125,7 +150,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->num_drop_pkts = 0;
 
 
-    priv->tx_bf_cap    = 0;
+    priv->tx_bf_cap = 0;
     priv->wmm_required = MTRUE;
     priv->wmm_enabled  = MFALSE;
     priv->wmm_qosinfo  = 0;
@@ -136,7 +161,8 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->enable_host_11k = (t_u8)MFALSE;
 #endif
 #ifdef CONFIG_11K
-    priv->neighbor_rep_token = (t_u8)1U;
+    priv->neighbor_rep_token    = (t_u8)1U;
+    priv->rrm_mgmt_bitmap_index = -1;
 #endif
 #ifdef CONFIG_11V
     priv->bss_trans_query_token = (t_u8)1U;
@@ -158,6 +184,26 @@ mlan_status wlan_init_priv(pmlan_private priv)
         priv->port_ctrl_mode = MFALSE;
     }
     priv->port_open = MFALSE;
+#ifdef CONFIG_ROAMING
+    priv->roaming_enabled = MFALSE;
+#endif
+
+    priv->uap_bss_started = MFALSE;
+    priv->uap_host_based  = MFALSE;
+
+#ifdef CONFIG_WPA_SUPP
+    priv->default_scan_ies_len = 0;
+
+    priv->probe_req_index = -1;
+#ifdef CONFIG_WPA_SUPP_AP
+    priv->beacon_vendor_index = -1;
+    priv->beacon_index        = 0;
+    priv->proberesp_index     = 1;
+    priv->assocresp_index     = 2;
+    priv->beacon_wps_index    = 3;
+#endif
+#endif
+
     LEAVE();
     return ret;
 }
@@ -180,7 +226,6 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
      * priority.
      */
     pmadapter->mp_wr_bitmap = 0;
-#ifndef RW610
 #if defined(SD8801)
     pmadapter->curr_rd_port = 1;
     pmadapter->curr_wr_port = 1;
@@ -189,7 +234,6 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->curr_wr_port = 0;
 #endif
     pmadapter->mp_data_port_mask = DATA_PORT_MASK;
-#endif
 
     /* Scan type */
     pmadapter->scan_type = MLAN_SCAN_TYPE_ACTIVE;
@@ -204,12 +248,16 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
 
     pmadapter->ecsa_enable = MFALSE;
 
+    pmadapter->scan_chan_gap = 0;
+
     /* fixme: enable this later when required */
 #ifdef CONFIG_EXT_SCAN_SUPPORT
     pmadapter->ext_scan = 1;
 #endif
     pmadapter->scan_probes = DEFAULT_PROBES;
 
+
+    pmadapter->scan_chan_gap = 0;
 
     /* fixme: enable this later when required */
     pmadapter->multiple_dtim         = MRVDRV_DEFAULT_MULTIPLE_DTIM;
@@ -243,6 +291,7 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     wlan_11h_init(pmadapter);
 
     wlan_wmm_init(pmadapter);
+    wlan_init_wmm_param(pmadapter);
     pmadapter->null_pkt_interval = 0;
     pmadapter->fw_bands          = 0U;
     pmadapter->config_bands      = 0U;
@@ -289,7 +338,7 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
                                     priv->adapter->callbacks.moal_init_lock);
             }
 
-#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+#ifdef CONFIG_WMM
             /* wmm enhanced reuses 4 ac xmit queues */
             for (j = 0; j < MAX_AC_QUEUES; ++j)
             {
@@ -297,11 +346,18 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
                                                                  &priv->wmm.tid_tbl_ptr[j].ra_list.plock) !=
                     MLAN_STATUS_SUCCESS)
                     return MLAN_STATUS_FAILURE;
-#ifdef CONFIG_WMM_ENH_DEBUG
+#ifdef CONFIG_WMM_DEBUG
                 util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->wmm.hist_ra[j], MFALSE, MNULL);
 #endif
             }
 #endif
+
+            ret = (mlan_status)os_mutex_create(&priv->tx_ba_stream_tbl_lock, "Tx BA tbl lock", OS_MUTEX_INHERIT);
+            if (ret != MLAN_STATUS_SUCCESS)
+            {
+                wifi_e("Create Tx BA tbl sem failed");
+                return ret;
+            }
 
             util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->tx_ba_stream_tbl_ptr, MTRUE,
                                 pmadapter->callbacks.moal_init_lock);
@@ -311,6 +367,8 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
                              priv->wmm.ra_list_spinlock, pmadapter->callbacks.moal_init_lock);
             util_scalar_init((t_void *)pmadapter->pmoal_handle, &priv->wmm.highest_queued_prio, HIGH_PRIO_TID,
                              priv->wmm.ra_list_spinlock, pmadapter->callbacks.moal_init_lock);
+            util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->sta_list, MTRUE,
+                                pmadapter->callbacks.moal_init_lock);
         }
     }
 
@@ -357,5 +415,36 @@ mlan_status wlan_init_fw(IN pmlan_adapter pmadapter)
 done:
     LEAVE();
     return ret;
+}
+
+/**
+ *  @brief This function frees the structure of adapter
+ *
+ *  @param pmadapter      A pointer to mlan_adapter structure
+ *
+ *  @return             N/A
+ */
+t_void wlan_free_adapter(pmlan_adapter pmadapter)
+{
+    mlan_callbacks *pcb = (mlan_callbacks *)&pmadapter->callbacks;
+
+    ENTER();
+
+    if (!pmadapter)
+    {
+        PRINTM(MERROR, "The adapter is NULL\n");
+        LEAVE();
+        return;
+    }
+
+    if (pmadapter->pchan_stats)
+    {
+        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->pchan_stats);
+        pmadapter->pchan_stats = MNULL;
+    }
+
+
+    LEAVE();
+    return;
 }
 

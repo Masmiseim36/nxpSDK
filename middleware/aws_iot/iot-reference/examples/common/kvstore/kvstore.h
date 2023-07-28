@@ -77,8 +77,6 @@ typedef struct
     };
 } KVStoreDefaultEntry_t;
 
-typedef enum KVStoreKey KVStoreKey_t;
-
 /* Public function definitions */
 BaseType_t KVStore_init( void );
 

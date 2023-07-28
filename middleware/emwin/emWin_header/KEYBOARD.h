@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.28 - Graphical user interface for embedded applications **
+** emWin V6.32 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -65,9 +65,9 @@ Purpose     : KEYBOARD public header file (API)
 #define KEYBOARD_CI_KEY     0    // Color of key.
 #define KEYBOARD_CI_FKEY    1    // Color of function key, such as shift.
 #define KEYBOARD_CI_PRESSED 2    // Pressed color of a key.
-#define KEYBOARD_CI_BK      5    // Background color of widget.
 #define KEYBOARD_CI_CODE    3    // Text color of character on a key.
 #define KEYBOARD_CI_LONG    4    // Text color of long press character on a key.
+#define KEYBOARD_CI_BK      5    // Background color of widget.
 #define KEYBOARD_CI_MARK    6    // Color of shift-lock symbol.
 
 /*********************************************************************
@@ -280,6 +280,23 @@ void KEYBOARD_SetPeriod        (KEYBOARD_Handle hObj, unsigned Index, unsigned P
 void KEYBOARD_SetRadius        (KEYBOARD_Handle hObj, unsigned Radius);
 void KEYBOARD_SetSpace         (KEYBOARD_Handle hObj, unsigned Axis, unsigned Space);
 int  KEYBOARD_SetStreamedLayout(KEYBOARD_Handle hObj, const void * pVoid, U32 Size);
+
+/*********************************************************************
+*
+*       Managing default values
+*
+**********************************************************************
+*/
+GUI_COLOR KEYBOARD_GetDefaultColor    (unsigned Index);
+int       KEYBOARD_GetDefaultFrameSize(void);
+unsigned  KEYBOARD_GetDefaultPeriod   (unsigned Index);
+int       KEYBOARD_GetDefaultRadius   (void);
+int       KEYBOARD_GetDefaultSpace    (unsigned Axis);
+void      KEYBOARD_SetDefaultColor    (unsigned Index, GUI_COLOR Color);
+void      KEYBOARD_SetDefaultFrameSize(int FrameSize);
+void      KEYBOARD_SetDefaultPeriod   (unsigned Index, unsigned Period);
+void      KEYBOARD_SetDefaultRadius   (int Radius);
+void      KEYBOARD_SetDefaultSpace    (unsigned Axis, int Space);
 
 /*********************************************************************
 *

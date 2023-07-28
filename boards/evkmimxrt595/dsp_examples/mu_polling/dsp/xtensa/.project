@@ -208,6 +208,36 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_mu.c</locationURI>
     </link>
     <link>
+      <name>component/lists</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/lists/fsl_component_generic_list.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.h</locationURI>
+    </link>
+    <link>
+      <name>component/lists</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/lists/fsl_component_generic_list.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_iopctl.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_iopctl.h</locationURI>
+    </link>
+    <link>
       <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -246,36 +276,6 @@
       <name>drivers/fsl_common_dsp.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.h</locationURI>
-    </link>
-    <link>
-      <name>component/lists</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>component/lists/fsl_component_generic_list.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/components/lists/fsl_component_generic_list.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_iopctl.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_iopctl.h</locationURI>
     </link>
     <link>
       <name>drivers</name>

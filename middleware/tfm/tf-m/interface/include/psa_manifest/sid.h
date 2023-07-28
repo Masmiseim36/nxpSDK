@@ -44,32 +44,6 @@ extern "C" {
 #define TFM_FIRMWARE_UPDATE_SERVICE_VERSION                        (1U)
 #define TFM_FIRMWARE_UPDATE_SERVICE_HANDLE                         (0x40000104U)
 
-/******** TFM_SP_CORE_TEST ********/
-#define SPM_CORE_TEST_INIT_SUCCESS_SID                             (0x0000F020U)
-#define SPM_CORE_TEST_INIT_SUCCESS_VERSION                         (1U)
-#define SPM_CORE_TEST_DIRECT_RECURSION_SID                         (0x0000F021U)
-#define SPM_CORE_TEST_DIRECT_RECURSION_VERSION                     (1U)
-#define SPM_CORE_TEST_SS_TO_SS_SID                                 (0x0000F024U)
-#define SPM_CORE_TEST_SS_TO_SS_VERSION                             (1U)
-#define SPM_CORE_TEST_SS_TO_SS_BUFFER_SID                          (0x0000F025U)
-#define SPM_CORE_TEST_SS_TO_SS_BUFFER_VERSION                      (1U)
-#define SPM_CORE_TEST_OUTVEC_WRITE_SID                             (0x0000F026U)
-#define SPM_CORE_TEST_OUTVEC_WRITE_VERSION                         (1U)
-#define SPM_CORE_TEST_GET_CALLER_CLIENT_ID_SID                     (0x0000F027U)
-#define SPM_CORE_TEST_GET_CALLER_CLIENT_ID_VERSION                 (1U)
-#define SPM_CORE_TEST_NS_THREAD_SID                                (0x0000F028U)
-#define SPM_CORE_TEST_NS_THREAD_VERSION                            (1U)
-
-/******** TFM_SP_CORE_TEST_2 ********/
-#define SPM_CORE_TEST_2_SLAVE_SERVICE_SID                          (0x0000F040U)
-#define SPM_CORE_TEST_2_SLAVE_SERVICE_VERSION                      (1U)
-#define SPM_CORE_TEST_2_CHECK_CALLER_CLIENT_ID_SID                 (0x0000F041U)
-#define SPM_CORE_TEST_2_CHECK_CALLER_CLIENT_ID_VERSION             (1U)
-#define SPM_CORE_TEST_2_GET_EVERY_SECOND_BYTE_SID                  (0x0000F042U)
-#define SPM_CORE_TEST_2_GET_EVERY_SECOND_BYTE_VERSION              (1U)
-#define SPM_CORE_TEST_2_INVERT_SID                                 (0x0000F043U)
-#define SPM_CORE_TEST_2_INVERT_VERSION                             (1U)
-
 /******** TFM_SP_SECURE_TEST_PARTITION ********/
 #define TFM_SECURE_CLIENT_SRV_DUMMY_SID                            (0x0000F000U)
 #define TFM_SECURE_CLIENT_SRV_DUMMY_VERSION                        (1U)

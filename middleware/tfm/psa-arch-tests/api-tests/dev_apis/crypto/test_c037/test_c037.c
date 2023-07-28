@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,12 +28,15 @@ const client_test_t test_c037_crypto_list[] = {
 
 int32_t psa_cipher_finish_test(caller_security_t caller __UNUSED)
 {
+#if ((defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CBC_PKCS7) || defined(ARCH_TEST_CIPHER_MODE_CTR)))||\
+(defined(ARCH_TEST_CBC_NO_PADDING) && (defined(ARCH_TEST_DES_1KEY) || defined(ARCH_TEST_DES_2KEY) || defined(ARCH_TEST_DES_3KEY)))) //NXP
+
     int32_t                 num_checks = sizeof(check1)/sizeof(check1[0]);
     int32_t                 i, status;
     size_t                  get_update_output_length, get_finish_output_length;
     psa_cipher_operation_t  operation, invalid_operation;
     psa_key_attributes_t    attributes = PSA_KEY_ATTRIBUTES_INIT;
-    psa_key_handle_t        key_handle;
+    psa_key_id_t            key;
 
     if (num_checks == 0)
     {
@@ -63,19 +66,19 @@ int32_t psa_cipher_finish_test(caller_security_t caller __UNUSED)
 
         /* Import the key data into the key slot */
         status = val->crypto_function(VAL_CRYPTO_IMPORT_KEY, &attributes, check1[i].data,
-                                      check1[i].data_length, &key_handle);
+                                      check1[i].data_length, &key);
         TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(3));
 
         if (check1[i].usage_flags == PSA_KEY_USAGE_ENCRYPT)
         {
             /* Set the key for a multipart symmetric encryption operation */
-            status = val->crypto_function(VAL_CRYPTO_CIPHER_ENCRYPT_SETUP, &operation, key_handle,
+            status = val->crypto_function(VAL_CRYPTO_CIPHER_ENCRYPT_SETUP, &operation, key,
                                           check1[i].alg);
             TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(4));
         } else if (check1[i].usage_flags == PSA_KEY_USAGE_DECRYPT)
         {
             /* Set the key for a multipart symmetric decryption operation */
-            status = val->crypto_function(VAL_CRYPTO_CIPHER_DECRYPT_SETUP, &operation, key_handle,
+            status = val->crypto_function(VAL_CRYPTO_CIPHER_DECRYPT_SETUP, &operation, key,
                                           check1[i].alg);
             TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(5));
         }
@@ -105,13 +108,14 @@ int32_t psa_cipher_finish_test(caller_security_t caller __UNUSED)
             TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(9));
 
             /* Destroy the key */
-            status = val->crypto_function(VAL_CRYPTO_DESTROY_KEY, key_handle);
+            status = val->crypto_function(VAL_CRYPTO_DESTROY_KEY, key);
             TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(10));
             continue;
         }
 
         /* Check if the output length matches the expected length */
-        TEST_ASSERT_EQUAL(get_finish_output_length, check1[i].expected_output_length,
+        TEST_ASSERT_EQUAL(get_update_output_length + get_finish_output_length,
+                          check1[i].expected_output_length,
                           TEST_CHECKPOINT_NUM(11));
 
         /* Check if the output data matches the expected data */
@@ -135,15 +139,19 @@ int32_t psa_cipher_finish_test(caller_security_t caller __UNUSED)
         TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(15));
 
         /* Destroy the key */
-        status = val->crypto_function(VAL_CRYPTO_DESTROY_KEY, key_handle);
+        status = val->crypto_function(VAL_CRYPTO_DESTROY_KEY, key);
         TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(16));
 
         /* Reset the key attributes and check if psa_import_key fails */
         val->crypto_function(VAL_CRYPTO_RESET_KEY_ATTRIBUTES, &attributes);
         status = val->crypto_function(VAL_CRYPTO_IMPORT_KEY, &attributes, check1[i].data,
-                                      check1[i].data_length, &key_handle);
+                                      check1[i].data_length, &key);
         TEST_ASSERT_EQUAL(status, PSA_ERROR_NOT_SUPPORTED, TEST_CHECKPOINT_NUM(3));
     }
 
     return VAL_STATUS_SUCCESS;
+#else //NXP
+    val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
+    return RESULT_SKIP(VAL_STATUS_NO_TESTS);
+#endif //NXP
 }

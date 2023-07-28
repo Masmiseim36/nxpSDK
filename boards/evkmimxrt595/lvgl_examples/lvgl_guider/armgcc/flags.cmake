@@ -37,15 +37,14 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DFLEXIO_MCULCD_DATA_BUS_WIDTH=8 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DVG_COMMAND_CALL=1 \
     -DVG_TARGET_FAST_CLEAR=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSDK_OS_FREE_RTOS \
-    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -58,6 +57,7 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -72,14 +72,13 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DFLEXIO_MCULCD_DATA_BUS_WIDTH=8 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DVG_COMMAND_CALL=1 \
     -DVG_TARGET_FAST_CLEAR=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSDK_OS_FREE_RTOS \
-    -DMCUXPRESSO_SDK \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -92,17 +91,17 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -116,16 +115,16 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
-    -Wno-format \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -139,6 +138,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -mapcs \
     -fno-rtti \
     -fno-exceptions \
+    -Wno-format \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")

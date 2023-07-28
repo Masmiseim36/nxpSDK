@@ -1,7 +1,7 @@
 /*
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -63,7 +63,7 @@
 
 /* alignment value should be a power of 2 */
 #define __WM_ALIGN__(num, num_type, align) WM_MASK(num, (num_type)align - 1)
-#define WM_MASK(num, mask)                    ((num + mask) & ~(mask))
+#define WM_MASK(num, mask)                 ((num + mask) & ~(mask))
 
 NORETURN void wmpanic(void);
 
@@ -126,6 +126,66 @@ static inline unsigned int hex2bin(const uint8_t *ibuf, uint8_t *obuf, unsigned 
         }
     }
     return j + 1U;
+}
+
+/**
+ *    @brief isdigit for String.
+ *
+ *    @param x            Char string
+ *    @return             0 for non-digit.
+ *                        1 for digit
+ */
+static inline int ISDIGIT(char *x)
+{
+    unsigned int i;
+    for (i = 0; i < strlen(x); i++)
+        if (isdigit((unsigned char)x[i]) == 0)
+            return 0;
+    return 1;
+}
+
+/**
+ *  @brief      Hex to number
+ *
+ *  @param c    Hex value
+ *  @return     Integer value or -1
+ */
+static inline int HEX2NUM(char c)
+{
+    if (c >= '0' && c <= '9')
+        return c - '0';
+    if (c >= 'a' && c <= 'f')
+        return c - 'a' + 10;
+    if (c >= 'A' && c <= 'F')
+        return c - 'A' + 10;
+
+    return -1;
+}
+
+/**
+ *  @brief              Check hex string
+ *
+ *  @param hex          A pointer to hex string
+ *  @return             1 or 0
+ */
+static inline int ISHEXSTRING(void *hex)
+{
+    int i, a;
+    char *p = hex;
+    int len = strlen(p);
+    if (!strncasecmp("0x", p, 2))
+    {
+        p += 2;
+        len -= 2;
+    }
+    for (i = 0; i < len; i++)
+    {
+        a = HEX2NUM(*p);
+        if (a < 0)
+            return 0;
+        p++;
+    }
+    return 1;
 }
 
 /**

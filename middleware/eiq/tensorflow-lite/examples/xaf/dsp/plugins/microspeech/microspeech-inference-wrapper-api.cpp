@@ -22,7 +22,7 @@
 */
 
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/schema/schema_generated.h"
@@ -70,9 +70,6 @@ int  microspeech_inference_exec_postprocess(void *output_buffer, void *output_te
 #define CONSUMED_kFeatureSliceSize           (40)
 #define PRODUCED_INFERENCE                   (12)
 
-/* ...microspeech specific recognizer defined and used locally */
-static tflite::MicroErrorReporter microspeech_local_error_reporter;
-
 
 #define INIT_SPEC(inference_spec) \
 { \
@@ -98,7 +95,7 @@ int microspeech_inference_init_ops(void *op_resolver, void *addl_persist)
     micro_op_resolver->AddReshape();
     micro_op_resolver->AddSoftmax();
 
-    RecognizeCommands *recognizer = new (addl_persist) RecognizeCommands(&microspeech_local_error_reporter);
+    RecognizeCommands *recognizer = new (addl_persist) RecognizeCommands();
     (void)recognizer;
 
     return 0;

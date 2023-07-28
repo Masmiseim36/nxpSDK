@@ -12,9 +12,10 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include "config_tfm.h"
 #include "region.h"
 #include "region_defs.h"
-#include "spm_ipc.h"
+#include "spm.h"
 #include "load/interrupt_defs.h"
 #include "load/partition_defs.h"
 #include "load/service_defs.h"
@@ -74,7 +75,7 @@ const struct partition_tfm_sp_fwu_load_info_t tfm_sp_fwu_load
                                     | PARTITION_MODEL_PSA_ROT
                                     | PARTITION_PRI_NORMAL,
         .entry                      = ENTRY_TO_POSITION(tfm_fwu_entry),
-        .stack_size                 = 0x600,
+        .stack_size                 = FWU_STACK_SIZE,
         .heap_size                  = 0,
         .ndeps                      = TFM_SP_FWU_NDEPS,
         .nservices                  = TFM_SP_FWU_NSERVS,
@@ -105,8 +106,8 @@ const struct partition_tfm_sp_fwu_load_info_t tfm_sp_fwu_load
 #if TFM_LVL == 3
     .assets                         = {
         {
-            .mem.start              = PART_REGION_ADDR(PT_TFM_SP_FWU_PRIVATE, _DATA_START$$Base),
-            .mem.limit              = PART_REGION_ADDR(PT_TFM_SP_FWU_PRIVATE, _DATA_END$$Base),
+            .mem.start              = (uintptr_t)&REGION_NAME(Image$$, PT_TFM_SP_FWU_PRIVATE, _DATA_START$$Base),
+            .mem.limit              = (uintptr_t)&REGION_NAME(Image$$, PT_TFM_SP_FWU_PRIVATE, _DATA_END$$Base),
             .attr                   = ASSET_ATTR_READ_WRITE,
         },
     },

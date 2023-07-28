@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --import-cmse-lib-out="./debug/hello_world_s_CMSE_Lib.o"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out="./debug/hello_world_s_CMSE_Lib.o"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1107,7 +1107,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --import-cmse-lib-out="./flash_debug/hello_world_s_CMSE_Lib.o"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out="./flash_debug/hello_world_s_CMSE_Lib.o"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1846,7 +1846,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --import-cmse-lib-out="./release/hello_world_s_CMSE_Lib.o"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out="./release/hello_world_s_CMSE_Lib.o"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2585,7 +2585,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash_s.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --import-cmse-lib-out="./flash_release/hello_world_s_CMSE_Lib.o"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --import-cmse-lib-out="./flash_release/hello_world_s_CMSE_Lib.o"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>

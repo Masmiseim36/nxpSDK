@@ -71,7 +71,7 @@ int  microspeech_frontend_process(void *pIn, void *pOut);
 
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
 
-#include "tensorflow/lite/micro/micro_error_reporter.h"
+#include "tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h"
 
 #include "tensorflow/lite/micro/micro_interpreter.h"
 
@@ -93,7 +93,7 @@ namespace {
 
 int  microspeech_frontend_init()
 {
-    TfLiteStatus init_status = InitializeMicroFeatures(nullptr);
+    TfLiteStatus init_status = InitializeMicroFeatures();
 
     return init_status;
 }
@@ -105,7 +105,7 @@ int  microspeech_frontend_process(void *pIn, void *pOut)
     size_t num_samples_read;
 
     TfLiteStatus generate_status = GenerateMicroFeatures(
-            nullptr, (const int16_t* )pIn, kMaxAudioSampleSize, kFeatureSliceSize,
+            (const int16_t* )pIn, kMaxAudioSampleSize, kFeatureSliceSize,
             (int8_t*)pOut, &num_samples_read);
 
     return generate_status;

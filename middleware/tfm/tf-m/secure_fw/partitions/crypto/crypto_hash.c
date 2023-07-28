@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "config_tfm.h"
 #include "tfm_mbedcrypto_include.h"
 
 #include "tfm_crypto_api.h"
@@ -19,7 +20,7 @@
  */
 
 /*!@{*/
-#ifndef TFM_CRYPTO_HASH_MODULE_DISABLED
+#if CRYPTO_HASH_MODULE_ENABLED
 psa_status_t tfm_crypto_hash_interface(psa_invec in_vec[],
                                        psa_outvec out_vec[])
 {
@@ -30,7 +31,7 @@ psa_status_t tfm_crypto_hash_interface(psa_invec in_vec[],
     uint16_t sid = iov->function_id;
 
     if (sid == TFM_CRYPTO_HASH_COMPUTE_SID) {
-#ifdef CRYPTO_SINGLE_PART_FUNCS_DISABLED
+#if CRYPTO_SINGLE_PART_FUNCS_DISABLED
         return PSA_ERROR_NOT_SUPPORTED;
 #else
         const uint8_t *input = in_vec[1].base;
@@ -38,16 +39,17 @@ psa_status_t tfm_crypto_hash_interface(psa_invec in_vec[],
         uint8_t *hash = out_vec[0].base;
         size_t hash_size = out_vec[0].len;
 
-        /* Initialize hash_length to zero */
-        out_vec[0].len = 0;
-
-        return psa_hash_compute(iov->alg, input, input_length,
-                                hash, hash_size, &out_vec[0].len);
+        status = psa_hash_compute(iov->alg, input, input_length,
+                                  hash, hash_size, &out_vec[0].len);
+        if (status != PSA_SUCCESS) {
+            out_vec[0].len = 0;
+        }
+        return status;
 #endif
     }
 
     if (sid == TFM_CRYPTO_HASH_COMPARE_SID) {
-#ifdef CRYPTO_SINGLE_PART_FUNCS_DISABLED
+#if CRYPTO_SINGLE_PART_FUNCS_DISABLED
         return PSA_ERROR_NOT_SUPPORTED;
 #else
         const uint8_t *input = in_vec[1].base;
@@ -119,12 +121,12 @@ psa_status_t tfm_crypto_hash_interface(psa_invec in_vec[],
     {
         uint8_t *hash = out_vec[1].base;
         size_t hash_size = out_vec[1].len;
-        /* Initialise the output_length to zero */
-        out_vec[1].len = 0;
 
         status = psa_hash_finish(operation, hash, hash_size, &out_vec[1].len);
         if (status == PSA_SUCCESS) {
             goto release_operation_and_return;
+        } else {
+            out_vec[1].len = 0;
         }
     }
     break;
@@ -174,7 +176,7 @@ release_operation_and_return:
     (void)tfm_crypto_operation_release(p_handle);
     return status;
 }
-#else /* !TFM_CRYPTO_HASH_MODULE_DISABLED */
+#else /* CRYPTO_HASH_MODULE_ENABLED */
 psa_status_t tfm_crypto_hash_interface(psa_invec in_vec[],
                                        psa_outvec out_vec[])
 {
@@ -183,5 +185,5 @@ psa_status_t tfm_crypto_hash_interface(psa_invec in_vec[],
 
     return PSA_ERROR_NOT_SUPPORTED;
 }
-#endif /* !TFM_CRYPTO_HASH_MODULE_DISABLED */
+#endif /* CRYPTO_HASH_MODULE_ENABLED */
 /*!@}*/

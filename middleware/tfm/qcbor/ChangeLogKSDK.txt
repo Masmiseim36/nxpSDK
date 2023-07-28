@@ -1,0 +1,14 @@
+/*!
+@page middleware_log Middleware Change Log
+ 
+@section qcbor QCBOR for MCUXpresso SDK
+  The current version is based on QCBOR v1.2, released 2023-01-05 (92d3f89030baff4af7be8396c563e6c8ef263622) on https://github.com/laurencelundblade/QCBOR.git
+
+  - 1.2
+    - Ported QCBOR v1.2 to MCUXpresso SDK. Based on the 2023-01-05 snapshot (92d3f89030baff4af7be8396c563e6c8ef263622).
+
+  - 1.1
+    - Ported QCBOR v1.1 to MCUXpresso SDK. Based on the 2022-09-07 snapshot (b0e7033268e88c9f27146fa9a1415ef4c19ebaff).
+
+*/
+

@@ -29,6 +29,8 @@
 #ifndef PROFILE_M_MBEDTLS_CONFIG_H
 #define PROFILE_M_MBEDTLS_CONFIG_H
 
+#include "config_tfm.h"
+
 #if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_DEPRECATE)
 #define _CRT_SECURE_NO_DEPRECATE 1
 #endif
@@ -252,7 +254,7 @@
  * Note that this option is meant for internal use only and may be removed
  * without notice.
  */
-#define MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER
+#define MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER                    //NXP avoid compilation error
 
 /**
  * \def MBEDTLS_PSA_CRYPTO_SPM
@@ -617,12 +619,16 @@
 
 /* \} name SECTION: Customisation configuration options */
 
-#ifdef CRYPTO_NV_SEED
+#if CRYPTO_NV_SEED
 #include "tfm_mbedcrypto_config_extra_nv_seed.h"
 #endif /* CRYPTO_NV_SEED */
 
 #if !defined(CRYPTO_HW_ACCELERATOR) && defined(MBEDTLS_ENTROPY_NV_SEED)
 #include "mbedtls_entropy_nv_seed_config.h"
+#endif
+
+#ifdef CRYPTO_HW_ACCELERATOR
+#include "mbedtls_accelerator_config.h"
 #endif
 
 #endif /* PROFILE_M_MBEDTLS_CONFIG_H */

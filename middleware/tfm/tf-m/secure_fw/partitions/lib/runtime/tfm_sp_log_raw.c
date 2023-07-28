@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2020-2023, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -95,7 +95,7 @@ static int _tfm_hex_num_output(struct formatted_buffer_t *pb, uint32_t num,
     return count;
 }
 
-static int _tfm_sp_log_vprintf(const char *fmt, va_list ap)
+static int _tfm_sp_log_vprintf(const char *fmt, va_list ap)     //NXP to avoid error in Keil L6200E: Symbol vprintf multiply defined (by printfa.o and tfm_sp_log_raw.o).
 {
     int count = 0;
     struct formatted_buffer_t outputbuf;
@@ -162,13 +162,13 @@ static int _tfm_sp_log_vprintf(const char *fmt, va_list ap)
     return count;
 }
 
-int tfm_sp_log_printf(const char *fmt, ...)
+int tfm_sp_log_printf(const char *fmt, ...) //NXP was printf(), workaround Keil error
 {
     int count = 0;
     va_list ap;
 
     va_start(ap, fmt);
-    count = _tfm_sp_log_vprintf(fmt, ap);
+    count = _tfm_sp_log_vprintf(fmt, ap);   //NXP was vprintf(), workaround Keil error
     va_end(ap);
 
     return count;

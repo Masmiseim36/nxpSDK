@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2023, Arm Limited. All rights reserved.
 # Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
 # or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
 #
@@ -33,6 +33,21 @@ set(PLATFORM_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory(ext/target/${TFM_PLATFORM} target)
 
+#====================== CMSIS stack override interface ========================#
+
+# NS linker scripts using the default CMSIS style naming conventions, while the
+# secure and bl2 linker scripts remain untouched (region.h compatibility).
+# To be compatible with the untouched files (which using ARMCLANG naming style),
+# we have to override __INITIAL_SP and __STACK_LIMIT labels.
+
+set(CMSIS_OVERRIDE_HEADER "${CMAKE_CURRENT_LIST_DIR}/include/cmsis_override.h")
+add_library(cmsis_stack_override INTERFACE)
+target_compile_options(cmsis_stack_override
+    INTERFACE
+        "$<$<C_COMPILER_ID:GNU>:SHELL:-include ${CMSIS_OVERRIDE_HEADER}>"
+        "$<$<C_COMPILER_ID:IAR>:SHELL:--preinclude ${CMSIS_OVERRIDE_HEADER}>"
+)
+
 #========================= Platform Common interface ==========================#
 
 target_include_directories(platform_common_interface
@@ -59,7 +74,6 @@ target_sources(platform_s
         $<$<BOOL:${PLATFORM_DEFAULT_UART_STDOUT}>:${CMAKE_CURRENT_SOURCE_DIR}/ext/common/uart_stdout.c>
         $<$<BOOL:${TFM_SPM_LOG_RAW_ENABLED}>:ext/common/tfm_hal_spm_logdev_peripheral.c>
         $<$<BOOL:${TFM_EXCEPTION_INFO_DUMP}>:ext/common/exception_info.c>
-        ext/common/tfm_hal_memory_symbols.c
         $<$<BOOL:${PLATFORM_DEFAULT_ATTEST_HAL}>:ext/common/template/attest_hal.c>
         $<$<BOOL:${PLATFORM_DEFAULT_NV_COUNTERS}>:ext/common/template/nv_counters.c>
         $<$<BOOL:${PLATFORM_DEFAULT_ROTPK}>:ext/common/template/tfm_rotpk.c>
@@ -84,10 +98,12 @@ target_link_libraries(platform_s
         platform_common_interface
         platform_region_defs
         tfm_fih_headers
+        cmsis_stack_override
     PRIVATE
         psa_interface
         tfm_partition_defs
-        platform_crypto_keys
+        tfm_spm_defs # For tfm_spm_log.h
+        $<$<BOOL:${TFM_PARTITION_CRYPTO}>:platform_crypto_keys>
         $<$<BOOL:${PLATFORM_DEFAULT_ATTEST_HAL}>:tfm_sprt>
         $<$<BOOL:${TFM_PARTITION_CRYPTO}>:crypto_service_mbedcrypto>
         $<$<BOOL:${TFM_PARTITION_INITIAL_ATTESTATION}>:tfm_attestation_defs>
@@ -101,19 +117,17 @@ target_compile_definitions(platform_s
         $<$<BOOL:${OTP_NV_COUNTERS_RAM_EMULATION}>:OTP_NV_COUNTERS_RAM_EMULATION>
         $<$<BOOL:${TFM_EXCEPTION_INFO_DUMP}>:TFM_EXCEPTION_INFO_DUMP>
         $<$<OR:$<VERSION_GREATER:${TFM_ISOLATION_LEVEL},1>,$<STREQUAL:"${TEST_PSA_API}","IPC">>:CONFIG_TFM_ENABLE_MEMORY_PROTECT>
-        $<$<AND:$<BOOL:${TFM_PXN_ENABLE}>,$<STREQUAL:${TFM_SYSTEM_ARCHITECTURE},armv8.1-m.main>>:TFM_PXN_ENABLE>
+        $<$<BOOL:${TFM_PXN_ENABLE}>:TFM_PXN_ENABLE>
         $<$<STREQUAL:${CONFIG_TFM_FLOAT_ABI},hard>:CONFIG_TFM_FLOAT_ABI=2>
         $<$<STREQUAL:${CONFIG_TFM_FLOAT_ABI},soft>:CONFIG_TFM_FLOAT_ABI=0>
         $<$<BOOL:${CONFIG_TFM_LAZY_STACKING}>:CONFIG_TFM_LAZY_STACKING>
         $<$<BOOL:${CONFIG_TFM_ENABLE_CP10CP11}>:CONFIG_TFM_ENABLE_CP10CP11>
         $<$<BOOL:${PLATFORM_DEFAULT_CRYPTO_KEYS}>:PLATFORM_DEFAULT_CRYPTO_KEYS>
+        $<$<BOOL:${PLATFORM_DEFAULT_OTP}>:PLATFORM_DEFAULT_OTP>
     PRIVATE
         $<$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>:SYMMETRIC_INITIAL_ATTESTATION>
-        $<$<BOOL:${PLATFORM_DEFAULT_OTP}>:PLATFORM_DEFAULT_OTP>
         $<$<BOOL:${TFM_DUMMY_PROVISIONING}>:TFM_DUMMY_PROVISIONING>
-        $<$<BOOL:${ATTEST_INCLUDE_COSE_KEY_ID}>:ATTEST_INCLUDE_COSE_KEY_ID>
         $<$<BOOL:${PLATFORM_DEFAULT_NV_COUNTERS}>:PLATFORM_DEFAULT_NV_COUNTERS>
-        $<$<BOOL:${PLATFORM_DEFAULT_OTP}>:PLATFORM_DEFAULT_OTP>
         $<$<BOOL:${PLATFORM_DEFAULT_OTP_WRITEABLE}>:OTP_WRITEABLE>
 )
 
@@ -142,12 +156,15 @@ if(TFM_PARTITION_CRYPTO)
     target_include_directories(platform_crypto_keys
         PRIVATE
             $<$<BOOL:${PLATFORM_DEFAULT_CRYPTO_KEYS}>:${CMAKE_SOURCE_DIR}/interface/include/crypto_keys>
-            $<$<BOOL:${PLATFORM_DEFAULT_CRYPTO_KEYS}>:${CMAKE_BINARY_DIR}/generated/interface/include>
+            ${CMAKE_BINARY_DIR}/generated/interface/include
     )
 
     target_compile_definitions(platform_crypto_keys
         PRIVATE
             $<$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>:SYMMETRIC_INITIAL_ATTESTATION>
+            $<$<BOOL:${PLATFORM_DEFAULT_OTP}>:PLATFORM_DEFAULT_OTP>
+            $<$<BOOL:${TEST_S_ATTESTATION}>:TEST_S_ATTESTATION>
+            $<$<BOOL:${TEST_NS_ATTESTATION}>:TEST_NS_ATTESTATION>
     )
 
     target_compile_options(platform_crypto_keys
@@ -180,6 +197,7 @@ if(BL2)
         PUBLIC
             platform_common_interface
             platform_region_defs
+            cmsis_stack_override
         PRIVATE
             bl2_hal
             mcuboot_config
@@ -196,11 +214,14 @@ if(BL2)
             $<$<BOOL:${PLATFORM_DEFAULT_OTP}>:PLATFORM_DEFAULT_OTP>
             $<$<BOOL:${OTP_NV_COUNTERS_RAM_EMULATION}>:OTP_NV_COUNTERS_RAM_EMULATION>
             $<$<BOOL:${TFM_DUMMY_PROVISIONING}>:TFM_DUMMY_PROVISIONING>
-            $<$<BOOL:${ATTEST_INCLUDE_COSE_KEY_ID}>:ATTEST_INCLUDE_COSE_KEY_ID>
             $<$<BOOL:${PLATFORM_DEFAULT_NV_COUNTERS}>:PLATFORM_DEFAULT_NV_COUNTERS>
             $<$<BOOL:${PLATFORM_DEFAULT_OTP_WRITEABLE}>:OTP_WRITEABLE>
     )
 
+    target_compile_options(platform_bl2
+        PUBLIC
+            ${BL2_COMPILER_CP_FLAG}
+    )
 endif()
 
 #========================= Platform BL1_1 =====================================#
@@ -218,6 +239,7 @@ if(BL1 AND PLATFORM_DEFAULT_BL1)
         INTERFACE
             platform_region_defs
             platform_common_interface
+            cmsis_stack_override
     )
 
     target_compile_definitions(platform_bl1_interface
@@ -229,6 +251,7 @@ if(BL1 AND PLATFORM_DEFAULT_BL1)
             $<$<BOOL:${TFM_DUMMY_PROVISIONING}>:TFM_DUMMY_PROVISIONING>
             $<$<BOOL:${PLATFORM_DEFAULT_NV_COUNTERS}>:PLATFORM_DEFAULT_NV_COUNTERS>
             $<$<BOOL:${PLATFORM_DEFAULT_OTP_WRITEABLE}>:OTP_WRITEABLE>
+            $<$<BOOL:${TFM_BL1_MEMORY_MAPPED_FLASH}>:TFM_BL1_MEMORY_MAPPED_FLASH>
     )
 
     target_sources(platform_bl1
@@ -274,4 +297,14 @@ target_compile_definitions(platform_region_defs
         $<$<BOOL:${TFM_CODE_SHARING}>:CODE_SHARING>
         $<$<OR:$<CONFIG:Debug>,$<CONFIG:relwithdebinfo>>:ENABLE_HEAP>
         PLATFORM_NS_NV_COUNTERS=${TFM_NS_NV_COUNTER_AMOUNT}
+)
+
+target_include_directories(platform_region_defs
+    INTERFACE
+        ${CMAKE_CURRENT_LIST_DIR}/ext/common
+)
+
+target_link_libraries(platform_region_defs
+    INTERFACE
+        tfm_config
 )

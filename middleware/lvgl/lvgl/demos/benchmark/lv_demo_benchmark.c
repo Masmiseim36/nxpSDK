@@ -58,6 +58,10 @@ typedef struct {
     uint32_t time_sum_opa;
     uint32_t refr_cnt_normal;
     uint32_t refr_cnt_opa;
+    uint32_t idle_pct_normal;
+    uint32_t idle_pct_opa;
+    uint32_t idle_cnt_normal;
+    uint32_t idle_cnt_opa;
     uint32_t fps_normal;
     uint32_t fps_opa;
     uint8_t weight;
@@ -700,6 +704,8 @@ static void benchmark_init(void)
     lv_style_init(&style_common);
 
     lv_obj_update_layout(scr);
+
+    lv_timer_reset_idle();
 }
 
 
@@ -725,7 +731,8 @@ void lv_demo_benchmark_run_scene(int_fast16_t scene_no)
     scene_act = scene_no >> 1;
 
     if(scenes[scene_act].create_cb) {
-        lv_label_set_text_fmt(title, "%"LV_PRId32"/%d: %s%s", scene_act * 2 + (opa_mode ? 1 : 0), (int)(dimof(scenes) * 2) - 2,
+        lv_label_set_text_fmt(title, "%"LV_PRId32"/%"LV_PRId32": %s%s", scene_act * 2 + (opa_mode ? 1 : 0),
+                              (int32_t)(dimof(scenes) * 2) - 2,
                               scenes[scene_act].name, opa_mode ? " + opa" : "");
         lv_label_set_text(subtitle, "");
 
@@ -756,15 +763,35 @@ static void monitor_cb(lv_disp_drv_t * drv, uint32_t time, uint32_t px)
 {
     LV_UNUSED(drv);
     LV_UNUSED(px);
+
+    static uint8_t prev_idle = 0;
+    uint8_t idle = lv_timer_get_idle();
+
     if(opa_mode) {
         scenes[scene_act].refr_cnt_opa ++;
         scenes[scene_act].time_sum_opa += time;
+        /* Count the idle if both are true:
+         * the value is valid
+         * the value is different than previous one (except the first time)
+         */
+        if((idle != 0) && (idle != prev_idle || scenes[scene_act].idle_cnt_opa == 0)) {
+            scenes[scene_act].idle_pct_opa += idle;
+            scenes[scene_act].idle_cnt_opa ++;
+        }
     }
     else {
         scenes[scene_act].refr_cnt_normal ++;
         scenes[scene_act].time_sum_normal += time;
+        /* Count the idle if both are true:
+         * the value is valid
+         * the value is different than previous one (except the first time)
+         */
+        if((idle != 0) && (idle != prev_idle || scenes[scene_act].idle_cnt_normal == 0)) {
+            scenes[scene_act].idle_pct_normal += idle;
+            scenes[scene_act].idle_cnt_normal ++;
+        }
     }
-
+    prev_idle = idle;
     //    lv_obj_invalidate(lv_scr_act());
 }
 
@@ -777,6 +804,8 @@ static void generate_report(void)
     uint32_t fps_normal_sum = 0;
     uint32_t fps_opa_sum = 0;
     uint32_t i;
+    uint32_t cpu_load = 0;
+
     for(i = 0; scenes[i].create_cb; i++) {
         fps_normal_sum += scenes[i].fps_normal * scenes[i].weight;
         weight_normal_sum += scenes[i].weight;
@@ -807,7 +836,7 @@ static void generate_report(void)
     lv_obj_set_flex_flow(lv_scr_act(), LV_FLEX_FLOW_COLUMN);
 
     title = lv_label_create(lv_scr_act());
-    lv_label_set_text_fmt(title, "Weighted FPS: %"LV_PRIu32, fps_weighted);
+    lv_label_set_text_fmt(title, "Weighted: %"LV_PRIu32" FPS", fps_weighted);
 
     subtitle = lv_label_create(lv_scr_act());
     lv_label_set_text_fmt(subtitle, "Opa. speed: %"LV_PRIu32"%%", opa_speed_pct);
@@ -815,10 +844,11 @@ static void generate_report(void)
     lv_coord_t w = lv_obj_get_content_width(lv_scr_act());
     lv_obj_t * table = lv_table_create(lv_scr_act());
     //        lv_obj_clean_style_list(table, LV_PART_MAIN);
-    lv_table_set_col_cnt(table, 2);
+    lv_table_set_col_cnt(table, 3);
 
-    lv_table_set_col_width(table, 0, (w * 3) / 4 - 3);
-    lv_table_set_col_width(table, 1, w  / 4 - 3);
+    lv_table_set_col_width(table, 0, w / 2);
+    lv_table_set_col_width(table, 1, w  / 4);
+    lv_table_set_col_width(table, 2, w  / 4);
     lv_obj_set_width(table, lv_pct(100));
 
     //        static lv_style_t style_cell_slow;
@@ -849,7 +879,7 @@ static void generate_report(void)
            "LVGL v%d.%d.%d " LVGL_VERSION_INFO
            " Benchmark (in csv format)\r\n",
            LVGL_VERSION_MAJOR, LVGL_VERSION_MINOR, LVGL_VERSION_PATCH);
-    LV_LOG("Weighted FPS: %"LV_PRIu32"\r\n", fps_weighted);
+    LV_LOG("Weighted: %"LV_PRIu32" FPS\r\n", fps_weighted);
     LV_LOG("Opa. speed: %"LV_PRIu32"%%\r\n", opa_speed_pct);
 
     row++;
@@ -859,13 +889,17 @@ static void generate_report(void)
         if(scenes[i].fps_normal < 20 && scenes[i].weight >= 10) {
             lv_table_set_cell_value(table, row, 0, scenes[i].name);
 
-            lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32, scenes[i].fps_normal);
+            lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32" FPS", scenes[i].fps_normal);
             lv_table_set_cell_value(table, row, 1, buf);
 
             //                lv_table_set_cell_type(table, row, 0, 2);
             //                lv_table_set_cell_type(table, row, 1, 2);
 
-            //LV_LOG("%s,%s\r\n", scenes[i].name, buf);
+            cpu_load = 100;
+            if(scenes[i].idle_cnt_normal)
+                cpu_load -= scenes[i].idle_pct_normal / scenes[i].idle_cnt_normal;
+            lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32"%% CPU", cpu_load);
+            lv_table_set_cell_value(table, row, 2, buf);
 
             row++;
         }
@@ -874,14 +908,17 @@ static void generate_report(void)
             lv_snprintf(buf, sizeof(buf), "%s + opa", scenes[i].name);
             lv_table_set_cell_value(table, row, 0, buf);
 
-            //LV_LOG("%s,", buf);
-
-            lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32, scenes[i].fps_opa);
+            lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32" FPS", scenes[i].fps_opa);
             lv_table_set_cell_value(table, row, 1, buf);
 
             //                lv_table_set_cell_type(table, row, 0, 2);
             //                lv_table_set_cell_type(table, row, 1, 2);
-            //LV_LOG("%s\r\n", buf);
+
+            cpu_load = 100;
+            if(scenes[i].idle_cnt_opa)
+                cpu_load -= scenes[i].idle_pct_opa / scenes[i].idle_cnt_opa;
+            lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32"%% CPU", cpu_load);
+            lv_table_set_cell_value(table, row, 2, buf);
 
             row++;
         }
@@ -902,7 +939,7 @@ static void generate_report(void)
     for(i = 0; scenes[i].create_cb; i++) {
         lv_table_set_cell_value(table, row, 0, scenes[i].name);
 
-        lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32, scenes[i].fps_normal);
+        lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32" FPS", scenes[i].fps_normal);
         lv_table_set_cell_value(table, row, 1, buf);
 
         if(scenes[i].fps_normal < 10) {
@@ -914,16 +951,21 @@ static void generate_report(void)
             //                lv_table_set_cell_type(table, row, 1, 2);
         }
 
-        LV_LOG("%s,%s\r\n", scenes[i].name, buf);
+        cpu_load = 100;
+        if(scenes[i].idle_cnt_normal)
+            cpu_load -= scenes[i].idle_pct_normal / scenes[i].idle_cnt_normal;
+        lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32"%% CPU", cpu_load);
+        lv_table_set_cell_value(table, row, 2, buf);
+
+        LV_LOG("%s: %"LV_PRIu32" FPS, %"LV_PRIu32"%% CPU\r\n",
+               scenes[i].name, scenes[i].fps_normal, cpu_load);
 
         row++;
 
         lv_snprintf(buf, sizeof(buf), "%s + opa", scenes[i].name);
         lv_table_set_cell_value(table, row, 0, buf);
 
-        LV_LOG("%s,", buf);
-
-        lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32, scenes[i].fps_opa);
+        lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32" FPS", scenes[i].fps_opa);
         lv_table_set_cell_value(table, row, 1, buf);
 
 
@@ -936,7 +978,14 @@ static void generate_report(void)
             //                lv_table_set_cell_type(table, row, 1, 2);
         }
 
-        LV_LOG("%s\r\n", buf);
+        cpu_load = 100;
+        if(scenes[i].idle_cnt_opa)
+            cpu_load -= scenes[i].idle_pct_opa / scenes[i].idle_cnt_opa;
+        lv_snprintf(buf, sizeof(buf), "%"LV_PRIu32"%% CPU", cpu_load);
+        lv_table_set_cell_value(table, row, 2, buf);
+
+        LV_LOG("%s + opa: %"LV_PRIu32" FPS, %"LV_PRIu32"%% CPU\r\n",
+               scenes[i].name, scenes[i].fps_opa, cpu_load);
 
         row++;
     }
@@ -995,8 +1044,8 @@ static void scene_next_task_cb(lv_timer_t * timer)
     }
 
     if(scenes[scene_act].create_cb) {
-        lv_label_set_text_fmt(title, "%"LV_PRId32"/%d: %s%s", scene_act * 2 + (opa_mode ? 1 : 0),
-                              (int)(dimof(scenes) * 2) - 2,  scenes[scene_act].name, opa_mode ? " + opa" : "");
+        lv_label_set_text_fmt(title, "%"LV_PRId32"/%"LV_PRId32": %s%s", scene_act * 2 + (opa_mode ? 1 : 0),
+                              (int32_t)(dimof(scenes) * 2) - 2,  scenes[scene_act].name, opa_mode ? " + opa" : "");
         if(opa_mode) {
             lv_label_set_text_fmt(subtitle, "Result of \"%s\": %"LV_PRId32" FPS", scenes[scene_act].name,
                                   scenes[scene_act].fps_normal);

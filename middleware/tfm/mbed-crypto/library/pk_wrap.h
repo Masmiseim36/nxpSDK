@@ -28,7 +28,7 @@
 #include "mbedtls/pk.h"
 
 #if defined(MBEDTLS_PSA_CRYPTO_C)
-#include "mbed_psa/crypto.h"   //NXP
+#include "psa/crypto.h"
 #endif /* MBEDTLS_PSA_CRYPTO_C */
 
 struct mbedtls_pk_info_t

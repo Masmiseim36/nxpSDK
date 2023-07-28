@@ -23,6 +23,7 @@
 
 #include "Driver_USART.h"
 #include "board.h"
+#include "target_cfg.h"
 
 #ifndef ARG_UNUSED
 #define ARG_UNUSED(arg)  (void)arg
@@ -159,11 +160,11 @@ static uint32_t ARM_USARTx_GetRxCount(UARTx_Resources* uart_dev)
 }
 
 
-/* USART0 Driver wrapper functions */
-static UARTx_Resources USART0_DEV = {
-    .base = USART0,
+/* USART_BASE Driver wrapper functions */
+static UARTx_Resources USART_DEV = {
+    .base = USART_BASE,
 };
-static int32_t ARM_USART0_Initialize(ARM_USART_SignalEvent_t cb_event)
+static int32_t ARM_USART_Initialize(ARM_USART_SignalEvent_t cb_event)
 {
     ARG_UNUSED(cb_event);
 
@@ -176,34 +177,34 @@ static int32_t ARM_USART0_Initialize(ARM_USART_SignalEvent_t cb_event)
     *   usartConfig->enableTx = false;
     *   usartConfig->enableRx = false;
     */
-    USART_GetDefaultConfig(&USART0_DEV.config);
-    USART0_DEV.config.enableRx = true;
-    USART0_DEV.config.enableTx = true;
+    USART_GetDefaultConfig(&USART_DEV.config);
+    USART_DEV.config.enableRx = true;
+    USART_DEV.config.enableTx = true;
 
-    return ARM_USARTx_Initialize(&USART0_DEV);
+    return ARM_USARTx_Initialize(&USART_DEV);
 }
 
-static int32_t ARM_USART0_Uninitialize(void)
+static int32_t ARM_USART_Uninitialize(void)
 {
-    return ARM_USARTx_Deinitialize(&USART0_DEV);
+    return ARM_USARTx_Deinitialize(&USART_DEV);
 }
 
-static int32_t ARM_USART0_PowerControl(ARM_POWER_STATE state)
+static int32_t ARM_USART_PowerControl(ARM_POWER_STATE state)
 {
-    return ARM_USARTx_PowerControl(&USART0_DEV, state);
+    return ARM_USARTx_PowerControl(&USART_DEV, state);
 }
 
-static int32_t ARM_USART0_Send(const void *data, uint32_t num)
+static int32_t ARM_USART_Send(const void *data, uint32_t num)
 {
-    return ARM_USARTx_Send(&USART0_DEV, data, num);
+    return ARM_USARTx_Send(&USART_DEV, data, num);
 }
 
-static int32_t ARM_USART0_Receive(void *data, uint32_t num)
+static int32_t ARM_USART_Receive(void *data, uint32_t num)
 {
-    return ARM_USARTx_Receive(&USART0_DEV, data, num);
+    return ARM_USARTx_Receive(&USART_DEV, data, num);
 }
 
-static int32_t ARM_USART0_Transfer(const void *data_out, void *data_in,
+static int32_t ARM_USART_Transfer(const void *data_out, void *data_in,
                                    uint32_t num)
 {
     ARG_UNUSED(data_out);
@@ -213,53 +214,53 @@ static int32_t ARM_USART0_Transfer(const void *data_out, void *data_in,
     return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static uint32_t ARM_USART0_GetTxCount(void)
+static uint32_t ARM_USART_GetTxCount(void)
 {
-    return ARM_USARTx_GetTxCount(&USART0_DEV);
+    return ARM_USARTx_GetTxCount(&USART_DEV);
 }
 
-static uint32_t ARM_USART0_GetRxCount(void)
+static uint32_t ARM_USART_GetRxCount(void)
 {
-    return ARM_USARTx_GetRxCount(&USART0_DEV);
+    return ARM_USARTx_GetRxCount(&USART_DEV);
 }
 
-static int32_t ARM_USART0_Control(uint32_t control, uint32_t arg)
+static int32_t ARM_USART_Control(uint32_t control, uint32_t arg)
 {
-    return ARM_DRIVER_OK; //ARM_USARTx_Control(&USART0_DEV, control, arg);
+    return ARM_DRIVER_OK; //ARM_USARTx_Control(&USART_DEV, control, arg);
 }
 
-static ARM_USART_STATUS ARM_USART0_GetStatus(void)
+static ARM_USART_STATUS ARM_USART_GetStatus(void)
 {
     ARM_USART_STATUS status = {0, 0, 0, 0, 0, 0, 0, 0};
     return status;
 }
 
-static int32_t ARM_USART0_SetModemControl(ARM_USART_MODEM_CONTROL control)
+static int32_t ARM_USART_SetModemControl(ARM_USART_MODEM_CONTROL control)
 {
     ARG_UNUSED(control);
     return ARM_DRIVER_ERROR_UNSUPPORTED;
 }
 
-static ARM_USART_MODEM_STATUS ARM_USART0_GetModemStatus(void)
+static ARM_USART_MODEM_STATUS ARM_USART_GetModemStatus(void)
 {
     ARM_USART_MODEM_STATUS modem_status = {0, 0, 0, 0, 0};
     return modem_status;
 }
 
-extern ARM_DRIVER_USART Driver_USART0;
-ARM_DRIVER_USART Driver_USART0 = {
+extern ARM_DRIVER_USART Driver_USART;
+ARM_DRIVER_USART Driver_USART = {
     .GetVersion = ARM_USART_GetVersion,
     .GetCapabilities = ARM_USART_GetCapabilities,
-    .Initialize = ARM_USART0_Initialize,
-    .Uninitialize = ARM_USART0_Uninitialize,
-    .PowerControl = ARM_USART0_PowerControl,
-    .Send = ARM_USART0_Send,
-    .Receive = ARM_USART0_Receive,
-    .Transfer = ARM_USART0_Transfer,
-    .GetTxCount = ARM_USART0_GetTxCount,
-    .GetRxCount = ARM_USART0_GetRxCount,
-    .Control = ARM_USART0_Control,
-    .GetStatus = ARM_USART0_GetStatus,
-    .SetModemControl = ARM_USART0_SetModemControl,
-    .GetModemStatus = ARM_USART0_GetModemStatus
+    .Initialize = ARM_USART_Initialize,
+    .Uninitialize = ARM_USART_Uninitialize,
+    .PowerControl = ARM_USART_PowerControl,
+    .Send = ARM_USART_Send,
+    .Receive = ARM_USART_Receive,
+    .Transfer = ARM_USART_Transfer,
+    .GetTxCount = ARM_USART_GetTxCount,
+    .GetRxCount = ARM_USART_GetRxCount,
+    .Control = ARM_USART_Control,
+    .GetStatus = ARM_USART_GetStatus,
+    .SetModemControl = ARM_USART_SetModemControl,
+    .GetModemStatus = ARM_USART_GetModemStatus
 };

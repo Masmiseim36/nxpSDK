@@ -4,7 +4,7 @@
  *
  *  Copyright 2008-2021 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -16,6 +16,7 @@
 
 #define wscan_e(...) wmlog_e("wscan", ##__VA_ARGS__)
 #define wscan_w(...) wmlog_w("wscan", ##__VA_ARGS__)
+
 #ifdef CONFIG_WIFI_SCAN_DEBUG
 #define wscan_d(...) wmlog("wscan", ##__VA_ARGS__)
 #else

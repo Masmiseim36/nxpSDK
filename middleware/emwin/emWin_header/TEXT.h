@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.28 - Graphical user interface for embedded applications **
+** emWin V6.32 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -141,6 +141,8 @@ void                 TEXT_SetFrameColor(TEXT_Handle hObj, GUI_COLOR Color);
 void                 TEXT_SetTextOffset(TEXT_Handle hObj, int xPos, int yPos);
 int                  TEXT_SetUserData  (TEXT_Handle hObj, const void * pSrc, int NumBytes);
 void                 TEXT_SetWrapMode  (TEXT_Handle hObj, GUI_WRAPMODE WrapMode);
+
+int                  TEXT__SetDec      (TEXT_Handle hObj, I32 v, U8 Len, U8 Shift, U8 Signed, U8 Space, I32 Min, I32 Max);
 
 /*********************************************************************
 *

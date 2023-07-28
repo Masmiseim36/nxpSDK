@@ -4,9 +4,13 @@
 @section FreeRTOS kernel for MCUXpresso SDK.
 The current version is FreeRTOS kernel 10.4.3-LTS-Patch-2 Original package is available at <a href="https://github.com/FreeRTOS/FreeRTOS-Kernel">github.com/FreeRTOS/FreeRTOS-Kernel</a>.
 
+  - 10.5.1_rev0
+      - update amazon freertos version
+
   - 10.4.3_rev1
       - Apply CM33 security fix from 10.4.3-LTS-Patch-2. See rtos\freertos\freertos_kernel\History.txt
       - Apply CM33 security fix from 10.4.3-LTS-Patch-1. See rtos\freertos\freertos_kernel\History.txt
+
   - 10.4.3_rev0
       - update amazon freertos version.
 

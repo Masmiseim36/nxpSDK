@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2009-2022 Arm Limited
+; * Copyright (c) 2009-2023 Arm Limited
 ; * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
 ; * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
 ; *
@@ -24,6 +24,11 @@
 
 #include "region_defs.h"
 
+/* Include file with definitions for section alignments.
+ * Note: it should be included after region_defs.h to let platform define
+ * default values if needed. */
+#include "tfm_s_linker_alignments.h"
+
 MEMORY
 {
 #ifdef M_BOOT_FLASH_CONF_START             //NXP
@@ -32,14 +37,36 @@ MEMORY
 #endif
   FLASH    (rx)  : ORIGIN = S_CODE_START, LENGTH = S_CODE_SIZE
   RAM      (rwx) : ORIGIN = S_DATA_START, LENGTH = S_DATA_SIZE
-#if defined(S_CODE_SRAM_ALIAS_BASE)
-  CODE_RAM (rwx) : ORIGIN = S_CODE_SRAM_ALIAS_BASE, LENGTH = TOTAL_CODE_SRAM_SIZE
+#if defined(S_RAM_CODE_START)
+  CODE_RAM (rwx) : ORIGIN = S_RAM_CODE_START, LENGTH = S_RAM_CODE_SIZE
 #endif
 }
 
-#if !defined(TFM_PSA_API)
-__psp_stack_size__ = S_PSP_STACK_SIZE;
+#ifndef TFM_LINKER_VENEERS_START
+#define TFM_LINKER_VENEERS_START ALIGN(TFM_LINKER_VENEERS_ALIGNMENT)
 #endif
+
+#ifndef TFM_LINKER_VENEERS_END
+#define TFM_LINKER_VENEERS_END ALIGN(TFM_LINKER_VENEERS_ALIGNMENT)
+#endif
+
+#define VENEERS() \
+/* \
+ * Place the CMSE Veneers (containing the SG instruction) after the code, in \
+ * a separate at least 32 bytes aligned region so that the SAU can \
+ * programmed to just set this region as Non-Secure Callable. \
+ */ \
+.gnu.sgstubs TFM_LINKER_VENEERS_START : \
+{ \
+    *(.gnu.sgstubs*) \
+} > FLASH \
+/* GCC always places veneers at the end of .gnu.sgstubs section, so the only \
+ * way to align the end of .gnu.sgstubs section is to align start of the \
+ * next section */ \
+.sgstubs_end : TFM_LINKER_VENEERS_END \
+{ \
+} > FLASH
+
 __msp_stack_size__ = S_MSP_STACK_SIZE;
 
 /* Library configurations */
@@ -65,24 +92,17 @@ SECTIONS
     {
         __vectors_start__ = .;
         KEEP(*(.vectors))
+        . = ALIGN(4);
         __vectors_end__ = .;
     } > FLASH
 
-#ifdef CONFIG_TFM_USE_TRUSTZONE
+#if defined(S_CODE_VECTOR_TABLE_SIZE)
     ASSERT(. <= ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE, ".TFM_VECTORS section size overflow.")
     . = ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE;
-    /*
-     * Place the CMSE Veneers (containing the SG instruction) after the code, in
-     * a separate 32 bytes aligned region so that the SAU can programmed to just
-     * set this region as Non-Secure Callable.
-     */
-    .gnu.sgstubs ALIGN(32) : ALIGN(32)
-    {
-        *(.gnu.sgstubs*)
-        . = ALIGN(32);
-    } > FLASH
-    Image$$ER_VENEER$$Base = ADDR(.gnu.sgstubs);
-    Image$$VENEER_ALIGN$$Limit = ADDR(.gnu.sgstubs) + SIZEOF(.gnu.sgstubs);
+#endif
+
+#if defined(CONFIG_TFM_USE_TRUSTZONE) && !defined(TFM_LINKER_VENEERS_LOCATION_END)
+    VENEERS()
 #endif
 
     .copy.table : ALIGN(4)
@@ -92,29 +112,24 @@ SECTIONS
         /* Copy interrupt vectors from flash to RAM */
         LONG (__vectors_start__)                            /* From */
         LONG (__ram_vectors_start__)                        /* To   */
-        LONG (__vectors_end__ - __vectors_start__)          /* Size */
+        LONG ((__vectors_end__ - __vectors_start__) / 4)    /* Size */
 #endif
         LONG (LOADADDR(.TFM_DATA))
         LONG (ADDR(.TFM_DATA))
-        LONG (SIZEOF(.TFM_DATA))
+        LONG (SIZEOF(.TFM_DATA) / 4)
 
         LONG (LOADADDR(.TFM_PSA_ROT_LINKER_DATA))
         LONG (ADDR(.TFM_PSA_ROT_LINKER_DATA))
-        LONG (SIZEOF(.TFM_PSA_ROT_LINKER_DATA))
+        LONG (SIZEOF(.TFM_PSA_ROT_LINKER_DATA) / 4)
 
         LONG (LOADADDR(.TFM_APP_ROT_LINKER_DATA))
         LONG (ADDR(.TFM_APP_ROT_LINKER_DATA))
-        LONG (SIZEOF(.TFM_APP_ROT_LINKER_DATA))
+        LONG (SIZEOF(.TFM_APP_ROT_LINKER_DATA) / 4)
 
 #if defined (S_RAM_CODE_START)
-        LONG (LOADADDR(.TFM_RAM_CODE))
-        LONG (ADDR(.TFM_RAM_CODE))
-        LONG (SIZEOF(.TFM_RAM_CODE))
-#endif
-#if defined(S_CODE_SRAM_ALIAS_BASE)
         LONG (LOADADDR(.ER_CODE_SRAM))
         LONG (ADDR(.ER_CODE_SRAM))
-        LONG (SIZEOF(.ER_CODE_SRAM))
+        LONG (SIZEOF(.ER_CODE_SRAM) / 4)
 #endif
         __copy_table_end__ = .;
     } > FLASH
@@ -123,19 +138,15 @@ SECTIONS
     {
         __zero_table_start__ = .;
         LONG (ADDR(.TFM_BSS))
-        LONG (SIZEOF(.TFM_BSS))
-#if !defined(TFM_PSA_API)
-        LONG (ADDR(.TFM_SECURE_STACK))
-        LONG (SIZEOF(.TFM_SECURE_STACK))
-#endif /* !defined(TFM_PSA_API) */
+        LONG (SIZEOF(.TFM_BSS) / 4)
         LONG (ADDR(.TFM_PSA_ROT_LINKER_BSS))
-        LONG (SIZEOF(.TFM_PSA_ROT_LINKER_BSS))
+        LONG (SIZEOF(.TFM_PSA_ROT_LINKER_BSS) / 4)
 
         LONG (ADDR(.TFM_APP_ROT_LINKER_BSS))
-        LONG (SIZEOF(.TFM_APP_ROT_LINKER_BSS))
+        LONG (SIZEOF(.TFM_APP_ROT_LINKER_BSS) / 4)
 #if defined(CONFIG_TFM_PARTITION_META)
         LONG (ADDR(.TFM_SP_META_PTR))
-        LONG (SIZEOF(.TFM_SP_META_PTR))
+        LONG (SIZEOF(.TFM_SP_META_PTR) / 4)
 #endif
         __zero_table_end__ = .;
     } > FLASH
@@ -154,17 +165,17 @@ SECTIONS
     } > FLASH
     Image$$TFM_SP_LOAD_LIST$$RO$$Base = ADDR(.TFM_SP_LOAD_LIST);
     Image$$TFM_SP_LOAD_LIST$$RO$$Limit = ADDR(.TFM_SP_LOAD_LIST) + SIZEOF(.TFM_SP_LOAD_LIST);
-    . = ALIGN(32);
 
     /**** PSA RoT RO part (CODE + RODATA) start here */
+    . = ALIGN(TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT);
     Image$$TFM_PSA_CODE_START$$Base = .;
 
-    .TFM_PSA_ROT_LINKER : ALIGN(32)
+    .TFM_PSA_ROT_LINKER : ALIGN(TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT)
     {
         *tfm_psa_rot_partition*:*(.text*)
         *tfm_psa_rot_partition*:*(.rodata*)
         *(TFM_*_PSA-ROT_ATTR_FN)
-        . = ALIGN(32);
+        . = ALIGN(TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT);
     } > FLASH
 
     Image$$TFM_PSA_ROT_LINKER$$RO$$Base = ADDR(.TFM_PSA_ROT_LINKER);
@@ -178,7 +189,7 @@ SECTIONS
     /**** APPLICATION RoT RO part (CODE + RODATA) start here */
     Image$$TFM_APP_CODE_START$$Base = .;
 
-    .TFM_APP_ROT_LINKER : ALIGN(32)
+    .TFM_APP_ROT_LINKER : ALIGN(TFM_LINKER_APP_ROT_LINKER_CODE_ALIGNMENT)
     {
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
@@ -202,20 +213,7 @@ SECTIONS
         *intermedia_tfm_protected_storage.*(.rodata*)
         *load_info_tfm_protected_storage.*(.text*)
         *load_info_tfm_protected_storage.*(.rodata*)
-        *tfm_ps_secure_api.*(.text*)
-        *tfm_ps_secure_api.*(.rodata*)
-        *tfm_ps_secure_api.*(.text*)
-        *tfm_ps_secure_api.*(.rodata*)
         *(TFM_SP_PS_ATTR_FN)
-
-// #ifdef TEST_NS_CORE
-        *tfm_ss_core_test_2.*(.text*)
-        *tfm_ss_core_test_2.*(.rodata*)
-        *intermedia_tfm_ss_core_test_2.*(.text*)
-        *intermedia_tfm_ss_core_test_2.*(.rodata*)
-        *load_info_tfm_ss_core_test_2.*(.text*)
-        *load_info_tfm_ss_core_test_2.*(.rodata*)
-        *(TFM_SP_CORE_TEST_2_ATTR_FN)
 
 // #ifdef TFM_PARTITION_IPC_TEST
         *tfm_ipc_client_test.*(.text*)
@@ -250,7 +248,7 @@ SECTIONS
 
 // --------- NXP end --------------
         *(TFM_*_APP-ROT_ATTR_FN)
-        . = ALIGN(32);
+        . = ALIGN(TFM_LINKER_APP_ROT_LINKER_CODE_ALIGNMENT);
     } > FLASH
 
     Image$$TFM_APP_ROT_LINKER$$RO$$Base = ADDR(.TFM_APP_ROT_LINKER);
@@ -261,24 +259,24 @@ SECTIONS
     /**** APPLICATION RoT RO part (CODE + RODATA) end here */
     Image$$TFM_APP_CODE_END$$Base = .;
 
-#if defined(S_CODE_SRAM_ALIAS_BASE)
+#if defined(S_RAM_CODE_START)
+    /* Flash drivers code that gets copied from Flash */
     .ER_CODE_SRAM : ALIGN(4)
     {
-        *Driver_GFC100_EFlash.o(.text*)
-        *Driver_GFC100_EFlash.o(.rodata*)
-        *gfc100_eflash_drv.o(.text*)
-        *gfc100_eflash_drv.o(.rodata*)
-        *musca_b1_eflash_drv.o(.text*)
-        *musca_b1_eflash_drv.o(.rodata*)
+        *libflash_drivers*:*(.text*)
+        *libflash_drivers*:*(.rodata*)
+        KEEP(*(.ramfunc))
         . = ALIGN(4); /* This alignment is needed to make the section size 4 bytes aligned */
     } > CODE_RAM AT > FLASH
+
+    ASSERT(S_RAM_CODE_START % 4 == 0, "S_RAM_CODE_START must be divisible by 4")
+
     Image$$ER_CODE_SRAM$$RO$$Base = ADDR(.ER_CODE_SRAM);
     Image$$ER_CODE_SRAM$$RO$$Limit = ADDR(.ER_CODE_SRAM) + SIZEOF(.ER_CODE_SRAM);
     Image$$ER_CODE_SRAM$$Base = ADDR(.ER_CODE_SRAM);
     Image$$ER_CODE_SRAM$$Limit = ADDR(.ER_CODE_SRAM) + SIZEOF(.ER_CODE_SRAM);
 #endif
 
-#if TFM_LVL != 1
     .ARM.extab :
     {
         *(.ARM.extab* .gnu.linkonce.armextab.*)
@@ -290,8 +288,6 @@ SECTIONS
         *(.ARM.exidx* .gnu.linkonce.armexidx.*)
     } > FLASH
     __exidx_end = .;
-
-#endif /* TFM_LVL != 1 */
 
     .ER_TFM_CODE : ALIGN(4)
     {
@@ -326,7 +322,7 @@ SECTIONS
     /* The code sharing between bootloader and runtime requires to share the
      * global variables.
      */
-    .TFM_SHARED_SYMBOLS : ALIGN(32)
+    .TFM_SHARED_SYMBOLS : ALIGN(TFM_LINKER_SHARED_SYMBOLS_ALIGNMENT)
     {
         . += SHARED_SYMBOL_AREA_SIZE;
     } > RAM
@@ -336,45 +332,26 @@ SECTIONS
      * msp_stack is extended until the beginning of RAM, when shared_date
      * was read out by partitions
      */
-    .tfm_bl2_shared_data : ALIGN(32)
+    .tfm_bl2_shared_data : ALIGN(TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT)
     {
         . += BOOT_TFM_SHARED_DATA_SIZE;
     } > RAM
 
-    .msp_stack : ALIGN(32)
+    .msp_stack : ALIGN(TFM_LINKER_MSP_STACK_ALIGNMENT)
     {
-        . += __msp_stack_size__;
+        . += __msp_stack_size__ - 0x8;
     } > RAM
     Image$$ARM_LIB_STACK$$ZI$$Base = ADDR(.msp_stack);
     Image$$ARM_LIB_STACK$$ZI$$Limit = ADDR(.msp_stack) + SIZEOF(.msp_stack);
 
-# if !defined(TFM_PSA_API)
-    /* PSP is unprivileged in single-core topology */
-    .psp_stack : ALIGN(32)
-    {
-        . += (__psp_stack_size__ - 0x8); // reserve space for stack seal (8 bytes)
-    } > RAM
-    Image$$ER_INITIAL_PSP$$ZI$$Base = ADDR(.psp_stack);
-    Image$$ER_INITIAL_PSP$$ZI$$Limit = ADDR(.psp_stack) + SIZEOF(.psp_stack);
-
-    .psp_stack_seal_res :
+    .msp_stack_seal_res :
     {
         . += 0x8;
     } > RAM
-    Image$$ER_INITIAL_PSP_SEAL$$ZI$$Base = ADDR(.psp_stack_seal_res);
-    Image$$ER_INITIAL_PSP_SEAL$$ZI$$Limit = ADDR(.psp_stack_seal_res) + SIZEOF(.psp_stack_seal_res);
-# endif
+    __StackSeal = ADDR(.msp_stack_seal_res);
+
 #endif /* defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__) || \
         * defined(__ARM_ARCH_8_1M_MAIN__) */
-
-#if !defined(TFM_PSA_API)
-    .TFM_SECURE_STACK : ALIGN(128)
-    {
-        . += 0x2000;
-    } > RAM
-    Image$$TFM_SECURE_STACK$$ZI$$Base = ADDR(.TFM_SECURE_STACK);
-    Image$$TFM_SECURE_STACK$$ZI$$Limit = ADDR(.TFM_SECURE_STACK) + SIZEOF(.TFM_SECURE_STACK);
-#endif /* !defined(TFM_PSA_API) */
 
 #if defined(ENABLE_HEAP)
     __heap_size__ = S_HEAP_SIZE;
@@ -390,19 +367,20 @@ SECTIONS
 #endif
 
 #if defined(CONFIG_TFM_PARTITION_META)
-    .TFM_SP_META_PTR : ALIGN(32)
+    .TFM_SP_META_PTR : ALIGN(TFM_LINKER_SP_META_PTR_ALIGNMENT)
     {
         *(.bss.SP_META_PTR_SPRTL_INST)
+        . = ALIGN(TFM_LINKER_SP_META_PTR_ALIGNMENT);
     } > RAM
     Image$$TFM_SP_META_PTR$$ZI$$Base = ADDR(.TFM_SP_META_PTR);
     Image$$TFM_SP_META_PTR$$ZI$$Limit = ADDR(.TFM_SP_META_PTR) + SIZEOF(.TFM_SP_META_PTR);
 #endif
 
     /**** APPLICATION RoT DATA start here */
-    . = ALIGN(32);
+    . = ALIGN(TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT);
     Image$$TFM_APP_RW_STACK_START$$Base = .;
 
-    .TFM_APP_ROT_LINKER_DATA : ALIGN(32)
+    .TFM_APP_ROT_LINKER_DATA : ALIGN(TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT)
     {
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
@@ -416,15 +394,7 @@ SECTIONS
         *ps_nv_counters.*(.data*)
         *intermedia_tfm_protected_storage.*(.data*)
         *load_info_tfm_protected_storage.*(.data*)
-        *tfm_ps_secure_api.*(.data*)
-        *tfm_ps_secure_api.*(.data*)
         *(TFM_SP_PS_ATTR_RW)
-
-// #ifdef TEST_NS_CORE
-        *tfm_ss_core_test_2.*(.data*)
-        *intermedia_tfm_ss_core_test_2.*(.data*)
-        *load_info_tfm_ss_core_test_2.*(.data*)
-        *(TFM_SP_CORE_TEST_2_ATTR_RW)
 
 // #ifdef TFM_PARTITION_IPC_TEST
         *tfm_ipc_client_test.*(.data*)
@@ -448,12 +418,12 @@ SECTIONS
 
 // --------- NXP end --------------
         *(TFM_*_APP-ROT_ATTR_RW)
-        . = ALIGN(32);
+        . = ALIGN(4);
     } > RAM AT> FLASH
     Image$$TFM_APP_ROT_LINKER_DATA$$RW$$Base = ADDR(.TFM_APP_ROT_LINKER_DATA);
     Image$$TFM_APP_ROT_LINKER_DATA$$RW$$Limit = ADDR(.TFM_APP_ROT_LINKER_DATA) + SIZEOF(.TFM_APP_ROT_LINKER_DATA);
 
-    .TFM_APP_ROT_LINKER_BSS : ALIGN(32)
+    .TFM_APP_ROT_LINKER_BSS : ALIGN(4)
     {
         start_of_TFM_APP_ROT_LINKER = .;
 // --------- NXP --------------
@@ -478,20 +448,7 @@ SECTIONS
         *intermedia_tfm_protected_storage.*(COMMON)
         *load_info_tfm_protected_storage.*(.bss)
         *load_info_tfm_protected_storage.*(COMMON)
-        *tfm_ps_secure_api.*(.bss*)
-        *tfm_ps_secure_api.*(COMMON)
-        *tfm_ps_secure_api.*(.bss*)
-        *tfm_ps_secure_api.*(COMMON)
         *(TFM_SP_PS_ATTR_ZI)
-
-// #ifdef TEST_NS_CORE
-        *tfm_ss_core_test_2.*(.bss .bss.invert_buffer.0)
-        *tfm_ss_core_test_2.*(COMMON)
-        *intermedia_tfm_ss_core_test_2.*(.bss*)
-        *intermedia_tfm_ss_core_test_2.*(COMMON)
-        *load_info_tfm_ss_core_test_2.*(.bss)
-        *load_info_tfm_ss_core_test_2.*(COMMON)
-        *(TFM_SP_CORE_TEST_2_ATTR_ZI)
 
 // #ifdef TFM_PARTITION_IPC_TEST
         *tfm_ipc_client_test.*(.bss .bss.service_in_use)
@@ -527,7 +484,7 @@ SECTIONS
 // --------- NXP end --------------
         *(TFM_*_APP-ROT_ATTR_ZI)
         . += (. - start_of_TFM_APP_ROT_LINKER) ? 0 : 4;
-        . = ALIGN(32);
+        . = ALIGN(TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT);
     } > RAM AT> RAM
     Image$$TFM_APP_ROT_LINKER_DATA$$ZI$$Base = ADDR(.TFM_APP_ROT_LINKER_BSS);
     Image$$TFM_APP_ROT_LINKER_DATA$$ZI$$Limit = ADDR(.TFM_APP_ROT_LINKER_BSS) + SIZEOF(.TFM_APP_ROT_LINKER_BSS);
@@ -554,12 +511,12 @@ SECTIONS
      * msp_stack is extended until the beginning of RAM, when shared_date
      * was read out by partitions
      */
-    .tfm_bl2_shared_data : ALIGN(32)
+    .tfm_bl2_shared_data : ALIGN(TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT)
     {
         . += BOOT_TFM_SHARED_DATA_SIZE;
     } > RAM AT> RAM
 
-    .msp_stack : ALIGN(32)
+    .msp_stack : ALIGN(TFM_LINKER_MSP_STACK_ALIGNMENT)
     {
         . += __msp_stack_size__;
     } > RAM
@@ -572,23 +529,23 @@ SECTIONS
 
     Image$$TFM_PSA_RW_STACK_START$$Base = .;
 
-    .TFM_PSA_ROT_LINKER_DATA : ALIGN(32)
+    .TFM_PSA_ROT_LINKER_DATA : ALIGN(TFM_LINKER_PSA_ROT_LINKER_DATA_ALIGNMENT)
     {
         *tfm_psa_rot_partition*:*(.data*)
         *(TFM_*_PSA-ROT_ATTR_RW)
-        . = ALIGN(32);
+        . = ALIGN(4);
     } > RAM AT> FLASH
     Image$$TFM_PSA_ROT_LINKER_DATA$$RW$$Base = ADDR(.TFM_PSA_ROT_LINKER_DATA);
     Image$$TFM_PSA_ROT_LINKER_DATA$$RW$$Limit = ADDR(.TFM_PSA_ROT_LINKER_DATA) + SIZEOF(.TFM_PSA_ROT_LINKER_DATA);
 
-    .TFM_PSA_ROT_LINKER_BSS : ALIGN(32)
+    .TFM_PSA_ROT_LINKER_BSS : ALIGN(4)
     {
         start_of_TFM_PSA_ROT_LINKER = .;
         *tfm_psa_rot_partition*:*(.bss*)
         *tfm_psa_rot_partition*:*(COMMON)
         *(TFM_*_PSA-ROT_ATTR_ZI)
         . += (. - start_of_TFM_PSA_ROT_LINKER) ? 0 : 4;
-        . = ALIGN(32);
+        . = ALIGN(TFM_LINKER_PSA_ROT_LINKER_DATA_ALIGNMENT);
     } > RAM AT> RAM
     Image$$TFM_PSA_ROT_LINKER_DATA$$ZI$$Base = ADDR(.TFM_PSA_ROT_LINKER_BSS);
     Image$$TFM_PSA_ROT_LINKER_DATA$$ZI$$Limit = ADDR(.TFM_PSA_ROT_LINKER_BSS) + SIZEOF(.TFM_PSA_ROT_LINKER_BSS);
@@ -596,7 +553,7 @@ SECTIONS
     /**** PSA RoT DATA end here */
     Image$$TFM_PSA_RW_STACK_END$$Base = .;
 
-    .TFM_UNPRIV_CODE : ALIGN(32)
+    .TFM_UNPRIV_CODE : ALIGN(TFM_LINKER_UNPRIV_CODE_ALIGNMENT)
     {
         *(SFN)
         *(.text*)
@@ -621,13 +578,17 @@ SECTIONS
         *(.rodata*)
 
         KEEP(*(.eh_frame*))
-        . = ALIGN(32);
+        . = ALIGN(TFM_LINKER_UNPRIV_CODE_ALIGNMENT);
     } > FLASH
     Image$$TFM_UNPRIV_CODE$$RO$$Base = ADDR(.TFM_UNPRIV_CODE);
     Image$$TFM_UNPRIV_CODE$$RO$$Limit = ADDR(.TFM_UNPRIV_CODE) + SIZEOF(.TFM_UNPRIV_CODE);
 
+#if defined(CONFIG_TFM_USE_TRUSTZONE) && defined(TFM_LINKER_VENEERS_LOCATION_END)
+    VENEERS()
+#endif
+
 #ifdef RAM_VECTORS_SUPPORT
-    .ramVectors (NOLOAD) : ALIGN(256)
+    .ramVectors (NOLOAD) : ALIGN(TFM_LINKER_RAM_VECTORS_ALIGNMENT)
     {
         __ram_vectors_start__ = .;
         KEEP(*(.ram_vectors))
@@ -636,7 +597,7 @@ SECTIONS
     .TFM_DATA __ram_vectors_end__ : ALIGN(4)
 #else
 
-     .TFM_DATA : ALIGN(4)
+    .TFM_DATA : ALIGN(4)
 #endif
     {
         *(CodeQuickAccess)       /* CodeQuickAccess sections */ //NXP
@@ -706,12 +667,13 @@ SECTIONS
     Image$$ER_TFM_DATA$$Base = ADDR(.TFM_DATA);
     Image$$ER_TFM_DATA$$Limit = ADDR(.TFM_DATA) + SIZEOF(.TFM_DATA) + SIZEOF(.TFM_BSS);
 
-#if defined (S_RAM_CODE_START)
-    /* Code executed from RAM */
-    .TFM_RAM_CODE S_RAM_CODE_START :
-    {
-        KEEP(*(.ramfunc))
-    } > RAM AT> FLASH
+#if defined(CONFIG_TFM_USE_TRUSTZONE)
+    Image$$ER_VENEER$$Base = ADDR(.gnu.sgstubs);
+    Image$$VENEER_ALIGN$$Limit = ADDR(.sgstubs_end);
+
+#if defined(TFM_LINKER_VENEERS_SIZE)
+    ASSERT ((Image$$VENEER_ALIGN$$Limit - Image$$ER_VENEER$$Base) <= TFM_LINKER_VENEERS_SIZE, "Veneer region overflowed")
+#endif
 #endif
 
     Load$$LR$$LR_NS_PARTITION$$Base = NS_PARTITION_START;

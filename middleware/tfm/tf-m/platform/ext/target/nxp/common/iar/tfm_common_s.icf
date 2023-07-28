@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2023 Arm Limited. All rights reserved.
  * Copyright (c) 2020-2021 IAR Systems AB
  * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon company)
  * or an affiliate of Cypress Semiconductor Corporation. All rights reserved.
@@ -21,6 +21,11 @@
 
 #include "region_defs.h"
 
+/* Include file with definitions for section alignments.
+ * Note: it should be included after region_defs.h to let platform define
+ * default values if needed. */
+#include "tfm_s_linker_alignments.h"
+
 // --------- NXP --------------
 #ifdef M_BOOT_FLASH_CONF_START
 /* Flash configuration block(FCB) is used to configure the FlexSPI interface during the boot process. */
@@ -35,12 +40,12 @@ define block ER_VECTORS with size = S_CODE_VECTOR_TABLE_SIZE {
 #ifdef CONFIG_TFM_USE_TRUSTZONE
     /*
      * Place the CMSE Veneers (containing the SG instruction) in a separate
-     * 32 bytes aligned region so that the SAU can be programmed to
+     * at least 32 bytes aligned region so that the SAU can be programmed to
      * just set this region as Non-Secure Callable.
      */
-define block ER_VENEER with alignment = 0x20 {section Veneer$$CMSE};
+define block ER_VENEER with alignment = TFM_LINKER_VENEERS_ALIGNMENT {section Veneer$$CMSE};
 
-define block VENEER_ALIGN with alignment = 0x20, size = 0 { };
+define block VENEER_ALIGN with alignment = TFM_LINKER_VENEERS_ALIGNMENT, size = 0 { };
 #endif
 
 define block ER_TFM_CODE with fixed order, alignment = 8, maximum size = S_CODE_SIZE {
@@ -50,7 +55,7 @@ define block ER_TFM_CODE with fixed order, alignment = 8, maximum size = S_CODE_
        ro object *libtfm_spm*,
 };
 
-define block TFM_UNPRIV_CODE with alignment = 32 {
+define block TFM_UNPRIV_CODE with alignment = TFM_LINKER_UNPRIV_CODE_ALIGNMENT {
        section SFN,
        readonly
        };
@@ -72,9 +77,9 @@ define block TFM_SP_LOAD_LIST with alignment = 4 {
      * This empty, zero long execution region is here to mark the start address
      * of PSA RoT code.
      */
-define block TFM_PSA_CODE_START with alignment = 32, size = 0 { };
+define block TFM_PSA_CODE_START with alignment = TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT, size = 0 { };
 
-define block TFM_PSA_ROT_LINKER with alignment = 32 {
+define block TFM_PSA_ROT_LINKER with alignment = TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT {
        ro object *tfm_psa_rot_partition*,
        section TFM_*_PSA-ROT_ATTR_FN object *libplatform_s*,
        section TFM_*_PSA-ROT_ATTR_FN object *.o,
@@ -84,16 +89,16 @@ define block TFM_PSA_ROT_LINKER with alignment = 32 {
      * This empty, zero long execution region is here to mark the end address
      * of PSA RoT code.
      */
-define block TFM_PSA_CODE_END with alignment = 32, size = 0 { };
+define block TFM_PSA_CODE_END with alignment = TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT, size = 0 { };
 
     /**** APPLICATION RoT RO part (CODE + RODATA) start here */
     /*
      * This empty, zero long execution region is here to mark the start address
      * of APP RoT code.
      */
-define block TFM_APP_CODE_START with alignment = 32, size = 0 { };
+define block TFM_APP_CODE_START with alignment = TFM_LINKER_APP_ROT_LINKER_CODE_ALIGNMENT, size = 0 { };
 
-    define block TFM_APP_ROT_LINKER with alignment = 32 {
+    define block TFM_APP_ROT_LINKER with alignment = TFM_LINKER_APP_ROT_LINKER_CODE_ALIGNMENT {
         ro object *tfm_app_rot_partition*,
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
@@ -107,12 +112,6 @@ define block TFM_APP_CODE_START with alignment = 32, size = 0 { };
         ro object *ps_nv_counters.*,
         ro object *intermedia_tfm_protected_storage.*,
         ro object *load_info_tfm_protected_storage.*,
-        ro object *tfm_ps_secure_api.*,
-        ro object *tfm_ps_secure_api.*,
-// #ifdef TEST_NS_CORE
-        ro object *tfm_ss_core_test_2.*,
-        ro object *intermedia_tfm_ss_core_test_2.*,
-        ro object *load_info_tfm_ss_core_test_2.*,
 // #ifdef TFM_PARTITION_IPC_TEST
         ro object *tfm_ipc_client_test.*,
         ro object *intermedia_tfm_ipc_client_test.*,
@@ -134,58 +133,51 @@ define block TFM_APP_CODE_START with alignment = 32, size = 0 { };
      * This empty, zero long execution region is here to mark the end address
      * of APP RoT code.
      */
-define block TFM_APP_CODE_END with alignment = 32, size = 0 { };
+define block TFM_APP_CODE_END with alignment = TFM_LINKER_APP_ROT_LINKER_CODE_ALIGNMENT, size = 0 { };
 
-#if defined(S_CODE_SRAM_ALIAS_BASE)
-    /* eFlash driver code that gets copied from Flash to SRAM */
-initialize by copy {
-       ro object Driver_GFC100_EFlash.o,
-       ro object gfc100_eflash_drv.o,
-       ro object musca_b1_eflash_drv.o
-       };
+#if defined(S_RAM_CODE_START)
+    /* Flash drivers code that gets copied from Flash */
+    initialize by copy {
+        ro object *libflash_drivers*,
+    };
 
-define block ER_CODE_SRAM  with fixed order, alignment = 8 {
-       rw section .text,
-       rw section .rodata
-       };
+    define block ER_CODE_SRAM  with fixed order, alignment = 4, maximum size = S_RAM_CODE_SIZE {
+        rw section .text,
+        rw section .rodata,
+        rw section .textrw,               /* __ramfunc */
+    };
 
-place at address S_CODE_SRAM_ALIAS_BASE { block ER_CODE_SRAM };
+place at address S_RAM_CODE_START { block ER_CODE_SRAM };
 #endif
 
     /**** Base address of secure data area */
 define block TFM_SECURE_DATA_START with size = 0 { };
 
-#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__) || \
-    defined(__ARM_ARCH_8_1M_MAIN__)
+#if ((defined(__ARM8M_MAINLINE__) && (__CORE__ == __ARM8M_MAINLINE__)) || \
+     (defined(__ARM8M_BASELINE__) && (__CORE__ == __ARM8M_BASELINE__)) || \
+     (defined(__ARM8EM_MAINLINE__) && (__CORE__ == __ARM8EM_MAINLINE__)))
     /* Shared area between BL2 and runtime to exchange data */
-define block TFM_SHARED_DATA with alignment = 32, size = BOOT_TFM_SHARED_DATA_SIZE { };
-define block ARM_LIB_STACK with alignment = 32, size = S_MSP_STACK_SIZE { };
+define block TFM_SHARED_DATA with alignment = TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT, size = BOOT_TFM_SHARED_DATA_SIZE { };
+define block ARM_LIB_STACK with alignment = TFM_LINKER_MSP_STACK_ALIGNMENT, size = S_MSP_STACK_SIZE - 0x8 { };
 define overlay STACK_DATA {block TFM_SHARED_DATA};
 define overlay STACK_DATA {block ARM_LIB_STACK};
 
-# if !defined(TFM_PSA_API)
-    /* Reserve space for stack seal (8 bytes) */
-define block ER_INITIAL_PSP with alignment = 32, size = S_PSP_STACK_SIZE - 0x8 { };
-define block ER_INITIAL_PSP_SEAL with size = 0x8 { };
-# endif
-keep {block TFM_SHARED_DATA, block ARM_LIB_STACK};
-#endif /* defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__) || \
-        * defined(__ARM_ARCH_8_1M_MAIN__) */
+define block STACKSEAL with size = 0x8 { };
 
-#if !defined(TFM_PSA_API)
-define block TFM_SECURE_STACK   with size = 0x2000, alignment = 128 {};
-keep {block TFM_SECURE_STACK};
-#endif /* !defined(TFM_PSA_API) */
+keep {block TFM_SHARED_DATA, block ARM_LIB_STACK};
+#endif /* (defined(__ARM8M_MAINLINE__) && (__CORE__ == __ARM8M_MAINLINE__)) || \
+        * (defined(__ARM8M_BASELINE__) && (__CORE__ == __ARM8M_BASELINE__)) || \
+        * (defined(__ARM8EM_MAINLINE__) && (__CORE__ == __ARM8EM_MAINLINE__)) */
 
 #if defined(CONFIG_TFM_PARTITION_META)
-define block TFM_SP_META_PTR with alignment = 32 {
+define block TFM_SP_META_PTR with alignment = TFM_LINKER_SP_META_PTR_ALIGNMENT {
     zi section .bss.SP_META_PTR_SPRTL_INST
        };
 #endif
 
-define block TFM_APP_RW_STACK_START with alignment = 32, size = 0 { };
+define block TFM_APP_RW_STACK_START with alignment = TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT, size = 0 { };
 
-define block TFM_APP_ROT_LINKER_DATA with alignment = 32 {
+define block TFM_APP_ROT_LINKER_DATA with alignment = TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT {
        rw object *tfm_app_rot_partition*,
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
@@ -199,12 +191,6 @@ define block TFM_APP_ROT_LINKER_DATA with alignment = 32 {
         rw object *ps_nv_counters.*,
         rw object *intermedia_tfm_protected_storage.*,
         rw object *load_info_tfm_protected_storage.*,
-        rw object *tfm_ps_secure_api.*,
-        rw object *tfm_ps_secure_api.*,
-// #ifdef TEST_NS_CORE
-        rw object *tfm_ss_core_test_2.*,
-        rw object *intermedia_tfm_ss_core_test_2.*,
-        rw object *load_info_tfm_ss_core_test_2.*,
 // #ifdef TFM_PARTITION_IPC_TEST
         rw object *tfm_ipc_client_test.*,
         rw object *intermedia_tfm_ipc_client_test.*,
@@ -229,10 +215,11 @@ define block TFM_APP_ROT_LINKER_DATA with alignment = 32 {
      * This empty, zero long execution region is here to mark the end address
      * of APP RoT RW and Stack.
      */
-define block TFM_APP_RW_STACK_END with alignment = 32, size = 0 { };
+define block TFM_APP_RW_STACK_END with alignment = TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT, size = 0 { };
 
-#if defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_7M__) || \
-    defined(__ARM_ARCH_7EM__)
+#if ((defined(__ARM6M__) && (__CORE__ == __ARM6M__)) || \
+     (defined(__ARM7M__) && (__CORE__ == __ARM7M__)) || \
+     (defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)))
 #ifdef S_DATA_PRIV_START
     /**** Privileged data area base address specified by Armv6-M/v7-M platform */
 define block TFM_SECURE_PRIV_DATA_BOUNDARY with size = 0 { };
@@ -243,17 +230,18 @@ define block TFM_SECURE_PRIV_DATA_BOUNDARY with size = 0 { };
      * area on Armv6-M/v7-M platforms.
      */
     /* Shared area between BL2 and runtime to exchange data */
-define block TFM_SHARED_DATA with alignment = 32, size = BOOT_TFM_SHARED_DATA_SIZE { };
+define block TFM_SHARED_DATA with alignment = TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT, size = BOOT_TFM_SHARED_DATA_SIZE { };
 
     /* MSP */
-define block ARM_LIB_STACK with alignment = 32, size = S_MSP_STACK_SIZE { };
+define block ARM_LIB_STACK with alignment = TFM_LINKER_MSP_STACK_ALIGNMENT, size = S_MSP_STACK_SIZE { };
 
 define overlay STACK_DATA {block TFM_SHARED_DATA};
 define overlay STACK_DATA {block ARM_LIB_STACK};
 
 keep {block TFM_SHARED_DATA, block ARM_LIB_STACK};
-#endif /* defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_7M__) || \
-        * defined(__ARM_ARCH_7EM__) */
+#endif /* (defined(__ARM6M__) && (__CORE__ == __ARM6M__)) || \
+        * (defined(__ARM7M__) && (__CORE__ == __ARM7M__)) || \
+        * (defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)) */
 
 #if defined(ENABLE_HEAP)
     define block HEAP         with alignment = 8, size = S_HEAP_SIZE { };
@@ -286,9 +274,9 @@ keep {block ER_PART_RT_POOL, block ER_SERV_RT_POOL};
      * This empty, zero long execution region is here to mark the start address
      * of PSA RoT RW and Stack.
      */
-define block TFM_PSA_RW_STACK_START with alignment = 32, size = 0 { };
+define block TFM_PSA_RW_STACK_START with alignment = TFM_LINKER_PSA_ROT_LINKER_DATA_ALIGNMENT, size = 0 { };
 
-define block TFM_PSA_ROT_LINKER_DATA with alignment = 32 {
+define block TFM_PSA_ROT_LINKER_DATA with alignment = TFM_LINKER_PSA_ROT_LINKER_DATA_ALIGNMENT {
        rw object *tfm_psa_rot_partition*,
        section TFM_*_PSA-ROT_ATTR_RW object *.o,
        section TFM_*_PSA-ROT_ATTR_ZI object *.o,
@@ -299,17 +287,10 @@ define block TFM_PSA_ROT_LINKER_DATA with alignment = 32 {
      * This empty, zero long execution region is here to mark the end address
      * of PSA RoT RW and Stack.
      */
-define block TFM_PSA_RW_STACK_END with alignment = 32, size = 0x0 { };
+define block TFM_PSA_RW_STACK_END with alignment = TFM_LINKER_PSA_ROT_LINKER_DATA_ALIGNMENT, size = 0x0 { };
 
 #ifdef RAM_VECTORS_SUPPORT
-define block ER_RAM_VECTORS      with alignment = 256 { section .ramvec };
-#endif
-
-#if defined (S_RAM_CODE_START)
-define block TFM_RAM_CODE with alignment = 8 {
-       rw section .textrw,               /* __ramfunc */
-};
-place at address S_RAM_CODE_START      { block TFM_RAM_CODE };
+define block ER_RAM_VECTORS      with alignment = TFM_LINKER_RAM_VECTORS_ALIGNMENT { section .ramvec };
 #endif
 
     /* This empty, zero long execution region is here to mark the limit address
@@ -382,22 +363,15 @@ define block DATA with fixed order {
      * area on Armv8-M cores, while move the two areas to the beginning of
      * privileged data region on Armv6-M/v7-M cores.
      */
-#if defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__) || \
-    defined(__ARM_ARCH_8_1M_MAIN__)
+#if ((defined(__ARM8M_MAINLINE__) && (__CORE__ == __ARM8M_MAINLINE__)) || \
+     (defined(__ARM8M_BASELINE__) && (__CORE__ == __ARM8M_BASELINE__)) || \
+     (defined(__ARM8EM_MAINLINE__) && (__CORE__ == __ARM8EM_MAINLINE__)))
     /* Shared area between BL2 and runtime to exchange data */
     overlay STACK_DATA,
-# if !defined(TFM_PSA_API)
-    /* PSP is unprivileged in single-core topology */
-    block ER_INITIAL_PSP,
-    /* Define stack seal block for Library mode */
-    block ER_INITIAL_PSP_SEAL,
-# endif
-#endif /* defined(__ARM_ARCH_8M_MAIN__) || defined(__ARM_ARCH_8M_BASE__) || \
-        * defined(__ARM_ARCH_8_1M_MAIN__) */
-
-#if !defined(TFM_PSA_API)
-    block TFM_SECURE_STACK,
-#endif /* !defined(TFM_PSA_API) */
+    block STACKSEAL,
+#endif /* (defined(__ARM8M_MAINLINE__) && (__CORE__ == __ARM8M_MAINLINE__)) || \
+        * (defined(__ARM8M_BASELINE__) && (__CORE__ == __ARM8M_BASELINE__)) || \
+        * (defined(__ARM8EM_MAINLINE__) && (__CORE__ == __ARM8EM_MAINLINE__)) */
 
 #if defined(CONFIG_TFM_PARTITION_META)
     block TFM_SP_META_PTR,
@@ -418,8 +392,9 @@ define block DATA with fixed order {
      */
     block TFM_APP_RW_STACK_END,
 
-#if defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_7M__) || \
-    defined(__ARM_ARCH_7EM__)
+#if ((defined(__ARM6M__) && (__CORE__ == __ARM6M__)) || \
+     (defined(__ARM7M__) && (__CORE__ == __ARM7M__)) || \
+     (defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)))
 #ifdef S_DATA_PRIV_START
     /**** Privileged data area base address specified by Armv6-M/v7-M platform */
 };
@@ -433,8 +408,9 @@ define block PRIV_DATA with fixed order {
      */
     /* Shared area between BL2 and runtime to exchange data */
     overlay STACK_DATA,
-#endif /* defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_7M__) || \
-        * defined(__ARM_ARCH_7EM__) */
+#endif /* (defined(__ARM6M__) && (__CORE__ == __ARM6M__)) || \
+        * (defined(__ARM7M__) && (__CORE__ == __ARM7M__)) || \
+        * (defined(__ARM7EM__) && (__CORE__ == __ARM7EM__)) */
 
 #if defined(ENABLE_HEAP)
     block ARM_LIB_HEAP,
@@ -476,8 +452,9 @@ define block PRIV_DATA with fixed order {
 };
 
 place at address S_DATA_START          { block DATA };
-#if (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_7M__) || \
-     defined(__ARM_ARCH_7EM__)) && defined(S_DATA_PRIV_START)
+#if ((defined(__ARM6M__) && (__CORE__ == __ARM6M__)) || \
+     (defined(__ARM7M__) && (__CORE__ == __ARM7M__)) || \
+     (defined(__ARM7EM__) && (__CORE__ == __ARM7EM__))) && defined(S_DATA_PRIV_START)
 place at address S_DATA_PRIV_START     { block PRIV_DATA };
 #endif
 

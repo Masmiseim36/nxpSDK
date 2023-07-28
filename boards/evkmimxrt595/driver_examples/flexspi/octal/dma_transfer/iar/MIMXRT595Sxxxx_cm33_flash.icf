@@ -87,6 +87,8 @@ initialize by copy {
   readwrite,
   /* Place in RAM flash and performance dependent functions  */
   readonly object fsl_flexspi.o,
+  readonly object ABImemcpy.o,
+  readonly object ABImemset.o,
   readonly object fsl_flexspi_dma.o,
   readonly object fsl_dma.o,
   readonly object fsl_reset.o,

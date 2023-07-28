@@ -1,4 +1,4 @@
-Copyright (c) 2020, Arm Limited. All rights reserved.
+Copyright (c) 2020-2023, Arm Limited. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -34,16 +34,3 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 This enables machine processing of license information based on the SPDX
 License Identifiers that are here available: http://spdx.org/licenses/
-
-Other Projects
---------------
-
-This project contains code or pre-built binaries from other projects as listed
-below. The original license text is included in the source files in case of
-imported code.
-
-- The CMSIS source code and pre-built binaries are licensed under the
-  `Apache License`_ Version 2.0 license. The license text can be found in CMSIS
-  folder.
-
-.. _Apache License: http://www.apache.org/licenses/

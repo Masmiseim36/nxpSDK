@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.28 - Graphical user interface for embedded applications **
+** emWin V6.32 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -49,7 +49,7 @@ Purpose     : Configures emWins abilities, fonts etc.
 *
 *       Multi layer/display support
 */
-#define GUI_NUM_LAYERS            1    // Maximum number of available layers
+#define GUI_NUM_LAYERS            2    // Maximum number of available layers
 
 /*********************************************************************
 *

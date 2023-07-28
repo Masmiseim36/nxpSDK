@@ -27,6 +27,93 @@ Cadence HiFi 4 Neural Network (NN) Library
 Revision History
 ======================================================================
 
+Version 2.9.0 API 1.4: October 14, 2022
+
++ Intermediate Release of HiFi4 NN Library
++ Tested using RI.9 tools, xt-clang/xt-clang++ compiler
++ Adds support for depthwise-conv2d, matXvec and fully connected kernels for
+  sym8sxsym16s datatype
++ Adds support for new datatype for TFLM operator:
+  REQUANTIZE (asym16s to asym16s)
+  STRIDED_SLICE (int8)
++ Adds support for kernel-dimension greater than input-dimension for standard 
+  convolution quantized datatypes (TENA-3528)
++ Fixes unexpected behaviour for null bias data pointer for kernel
+  matmul_asym8sxasym8s_asym8s (TENA-3526)
++ Changes input_left_shift handling for returning error to clipping between -31 to +31
+  for sigmoid_asym8s, sigmoid_asym8 & tanh_asym8s kernels (TENA-3615)
++ Fine tunes relevant kernels for HiFi1-enhanced core (RI.9 HiFi1e) for 
+  cycles and code size
++ Removes membank conflict issues to improve performance for kernels
+  conv1d_std_8x8,conv1d_std_8x16, conv2d_std_sym8sxsym16s,
+  conv1d_std_f32xf32, conv1d_std_16x16, conv1d_std_asym8xasym8,
+  conv2d_std_sym8sxsym16s, matXvec_batch_8x8_32,
+  fully_connected_asym8xasym8_asym8
++ Optimizes performance for following kernels
+  quant8 compare kernels,
+  conv2d_point_sym8sxasym8s,
+  broadcast_4D (cases when one input is constant)
+
+Note
+> Processor Configuration must be built with SP-VFP option in order to compile 
+  floating point variants of the kernels.
+> The ANN test bench and the supporting libraries need support for C++11 standard. 
+  This is supported only with Xtensa C library. 
+
+Known issues
+> Compiler optimizations are disabled for ANN C++ source files
+> 3 failures seen in ANN testcases because  of differences in reference 
+  code implementations:
+    DEPTHWISE_CONV2D_FLOAT_LARGE_2_WEIGHTS_AS_INPUTS
+    LOCAL_RESPONSE_NORM_FLOAT_4
+    LOCAL_RESPONSE_NORM_FLOAT_4_RELAXED
+
+----------------------------------------------------------------------
+
+Version 2.8.0 API 1.3: August 11, 2022
+
++ Intermediate Release of HiFi4 NN Library
++ Tested using RI.6 tools, xt-clang/xt-clang++ compiler.
++ For HiFi1 core, the library has been tested using RI.8 tools,
+  xt-clang/xt-clang++ compiler.
++ Adds Single Step Rounding support for applicable SEANet kernels
++ Adds support for matmul, matXvec and fully connected kernels
+  for asym8s datatype.
++ Adds support for 4D broadcast for following TFLM operators:
+  ADD (asymmetric quantized int8 and int16)
+  SUB (asymmetric quantized int8 and int16)
+  MUL (asymmetric quantized int8)
+  SQUARED_DIFF (asymmetric quantized int8)
++ Adds support for new datatypes for quantize TFLM operator:
+  QUANTIZE (single precision float to asymmetric quantized int8, 
+            asymmetric quantized int8 to asymmetric quantized int8)
++ Increases support for axis dimensions upto 1024 from 127 in kernel
+  xa_nn_reduce_mean_4D_asym8s_asym8s
++ Fixes mismatch w.r.t to TFLM in kernel xa_nn_vec_hard_swish_asym8s_asym8s.
++ Fixes range of input, output shifts in element wise add/sub kernels from 
+  -31 to 31 to -31 to 0.
++ Fixes input_range_radius check in xa_nn_vec_tanh_asym8s_asym8s,
+  xa_nn_vec_sigmoid_asym8u_asym8u and xa_nn_vec_sigmoid_asym8s_asym8s.
++ Fixes input_zero_bias range in xa_nn_vec_leaky_relu_asym8s_asym8s to match
+  with TFLM Ref.
++ Modifies CNN,LSTM and GRU testbenches to give more detalied error descriptions.
+
+Note
+> Processor Configuration must be built with SP-VFP option in order to compile 
+  floating point variants of the kernels.
+> The ANN test bench and the supporting libraries need support for C++11 standard. 
+  This is supported only with Xtensa C library. 
+
+Known issues
+> Compiler optimizations are disabled for ANN C++ source files
+> 3 failures seen in ANN testcases because  of differences in reference 
+  code implementations:
+    DEPTHWISE_CONV2D_FLOAT_LARGE_2_WEIGHTS_AS_INPUTS
+    LOCAL_RESPONSE_NORM_FLOAT_4
+    LOCAL_RESPONSE_NORM_FLOAT_4_RELAXED
+
+----------------------------------------------------------------------
+
 Version 2.7.0 API 1.2: May 11, 2022
 
 + Intermediate Release of HiFi4 NN Library

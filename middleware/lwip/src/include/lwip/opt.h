@@ -2518,11 +2518,27 @@
 #endif
 
 /**
+ * LWIP_IPV6_RA_NUM_ROUTE_INFOS: Maximal count of route information options
+ * sent in router advertisements.
+ */
+#if !defined LWIP_IPV6_RA_NUM_ROUTE_INFOS || defined __DOXYGEN__
+#define LWIP_IPV6_RA_NUM_ROUTE_INFOS  0
+#endif
+
+/**
  * LWIP_IPV6_SEND_ROUTER_SOLICIT==1: Send router solicitation messages during
  * network startup.
  */
 #if !defined LWIP_IPV6_SEND_ROUTER_SOLICIT || defined __DOXYGEN__
 #define LWIP_IPV6_SEND_ROUTER_SOLICIT   LWIP_IPV6
+#endif
+
+/**
+ * LWIP_IPV6_SEND_ROUTER_ADVERTISE==1: Enable sending router advertisement capability.
+ * Sending must be the enabled for each desired netif by @ref nd6_enable_ra_send().
+ */
+#if !defined LWIP_IPV6_SEND_ROUTER_ADVERTISE || defined __DOXYGEN__
+#define LWIP_IPV6_SEND_ROUTER_ADVERTISE  0
 #endif
 
 /**
@@ -3568,6 +3584,13 @@
  */
 #if !defined DHCP6_DEBUG || defined __DOXYGEN__
 #define DHCP6_DEBUG                     LWIP_DBG_OFF
+#endif
+
+/**
+ * ND6_DEBUG: Enable debugging of neighbor discovery.
+ */
+#if !defined ND6_DEBUG || defined __DOXYGEN__
+#define ND6_DEBUG                     LWIP_DBG_OFF
 #endif
 /**
  * @}

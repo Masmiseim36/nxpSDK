@@ -30,13 +30,13 @@ var searchData=
   ['sdspi_5fcommand_5ft',['sdspi_command_t',['../a00049.html#gabe7f0d3ebe091cf05aee71c592509299',1,'fsl_sdmmc_spec.h']]],
   ['sdspi_5fdata_5fresponse_5ftoken_5ft',['sdspi_data_response_token_t',['../a00049.html#ga97b528059c21f9cf052ec560f50a7ac9',1,'fsl_sdmmc_spec.h']]],
   ['sdspi_5fdata_5ftoken_5ft',['sdspi_data_token_t',['../a00049.html#ga3e5f2e69f1c683ceb3eba53169dde587',1,'fsl_sdmmc_spec.h']]],
-  ['sema42_5fgate_5fstatus_5ft',['sema42_gate_status_t',['../a00263.html#ga84eaf8f6200932ad09d0a75ece6e463d',1,'fsl_sema42.h']]],
+  ['sema42_5fgate_5fstatus_5ft',['sema42_gate_status_t',['../a00265.html#ga84eaf8f6200932ad09d0a75ece6e463d',1,'fsl_sema42.h']]],
   ['serial_5fmanager_5fstatus_5ft',['serial_manager_status_t',['../a00062.html#gae9a330e1f3a81509399832c7b2c2872f',1,'fsl_component_serial_manager.h']]],
   ['serial_5fmanager_5ftype_5ft',['serial_manager_type_t',['../a00062.html#ga7799e0e52d9e9fe5bf5198f0a337331d',1,'fsl_component_serial_manager.h']]],
   ['serial_5fport_5fswo_5fprotocol_5ft',['serial_port_swo_protocol_t',['../a00063.html#gab72244db50e88efd6d079d157558932d',1,'fsl_component_serial_port_swo.h']]],
   ['serial_5fport_5ftype_5ft',['serial_port_type_t',['../a00062.html#ga103db7d7f3fc8234978efadef0fdaf80',1,'fsl_component_serial_manager.h']]],
-  ['serial_5fport_5fuart_5fparity_5fmode_5ft',['serial_port_uart_parity_mode_t',['../a00275.html#ga89a4bbed0c24cfe5e085194add680ccc',1,'fsl_component_serial_port_uart.h']]],
-  ['serial_5fport_5fuart_5fstop_5fbit_5fcount_5ft',['serial_port_uart_stop_bit_count_t',['../a00275.html#ga8bdf0213026f54fd54c21971e07f2d56',1,'fsl_component_serial_port_uart.h']]],
+  ['serial_5fport_5fuart_5fparity_5fmode_5ft',['serial_port_uart_parity_mode_t',['../a00279.html#ga89a4bbed0c24cfe5e085194add680ccc',1,'fsl_component_serial_port_uart.h']]],
+  ['serial_5fport_5fuart_5fstop_5fbit_5fcount_5ft',['serial_port_uart_stop_bit_count_t',['../a00279.html#ga8bdf0213026f54fd54c21971e07f2d56',1,'fsl_component_serial_port_uart.h']]],
   ['serial_5fport_5fusb_5fcdc_5fcontroller_5findex_5ft',['serial_port_usb_cdc_controller_index_t',['../a00064.html#ga0d579054cbf9827f77f7018cd6f84c29',1,'fsl_component_serial_port_usb.h']]],
   ['shell_5fstatus_5ft',['shell_status_t',['../a00065.html#ga16424f17c6492c580e65adf9a4e1ac61',1,'fsl_shell.h']]],
   ['spi_5fclock_5fphase_5ft',['spi_clock_phase_t',['../a00067.html#ga9ad313685ade497f5cbcb71c74a1b4dc',1,'fsl_spi.h']]],
@@ -48,7 +48,7 @@ var searchData=
   ['spi_5fssel_5ft',['spi_ssel_t',['../a00067.html#ga420a3d3f841957068648585b89fa66d1',1,'fsl_spi.h']]],
   ['spi_5ftxfifo_5fwatermark_5ft',['spi_txfifo_watermark_t',['../a00067.html#ga9a479127a2051ded7945115657adc162',1,'fsl_spi.h']]],
   ['spi_5fxfer_5foption_5ft',['spi_xfer_option_t',['../a00067.html#ga632c5d421df2f4ef489e8a56e8545408',1,'fsl_spi.h']]],
-  ['stereo_5fside_5ft',['stereo_side_t',['../a00017.html#ga7a3dc6044b3ff4ed64ba4a07ba06f3e7',1,'fsl_dmic.h']]],
-  ['sys_5fpll_5fmult_5ft',['sys_pll_mult_t',['../a00010.html#ga5acaab7441ec0bc0195568956c41087f',1,'fsl_clock.h']]],
-  ['sys_5fpll_5fsrc_5ft',['sys_pll_src_t',['../a00010.html#gac1cad619d7e50202c955c884c21e1d0a',1,'fsl_clock.h']]]
+  ['stereo_5fside_5ft',['stereo_side_t',['../a00016.html#ga7a3dc6044b3ff4ed64ba4a07ba06f3e7',1,'fsl_dmic.h']]],
+  ['sys_5fpll_5fmult_5ft',['sys_pll_mult_t',['../a00009.html#ga5acaab7441ec0bc0195568956c41087f',1,'fsl_clock.h']]],
+  ['sys_5fpll_5fsrc_5ft',['sys_pll_src_t',['../a00009.html#gac1cad619d7e50202c955c884c21e1d0a',1,'fsl_clock.h']]]
 ];

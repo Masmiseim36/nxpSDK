@@ -23,8 +23,8 @@ limitations under the License.
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/memory_helpers.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
 #include "tensorflow/lite/micro/micro_graph.h"
+#include "tensorflow/lite/micro/micro_log.h"
 #include "tensorflow/lite/micro/micro_resource_variable.h"
 #include "tensorflow/lite/schema/schema_generated.h"
 
@@ -94,7 +94,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 
 }  // namespace.
 
-TfLiteRegistration Register_ASSIGN_VARIABLE() {
+TfLiteRegistration_V1 Register_ASSIGN_VARIABLE() {
   return tflite::micro::RegisterOp(nullptr, Prepare, Eval);
 }
 

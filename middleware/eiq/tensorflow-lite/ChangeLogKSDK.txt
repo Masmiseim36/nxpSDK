@@ -1,7 +1,15 @@
 /*!
 @page middleware_log Middleware Change Log
 @section tensorflow_lite eIQ TensorFlow Lite for Microcontrollers library
-  Current version is 22-09-19
+  Current version is 23-03-23
+
+  - 22-03-23
+    - New Features
+      - Updated eIQ TensorFlow Lite for Microcontrollers library to version
+        from the 23rd of March 2023
+      - Updated third party library source codes:
+        - CMSIS-NN
+        - Xtensa NN library
 
   - 22-09-19
     - New Features

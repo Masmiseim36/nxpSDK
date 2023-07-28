@@ -14,11 +14,11 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_fusionf1</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/Inc</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/xos</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/audio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/lib</ListEntry>
@@ -42,9 +42,9 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/inc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>
@@ -65,14 +65,15 @@
               <ListEntry key="XA_DISABLE_EVENT" value="1"/>
               <ListEntry key="DEVICE_ID" value="VIT_IMXRT500"/>
               <ListEntry key="__RENAMING__" value=""/>
-              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
-              <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
-              <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
+              <ListEntry key="FSL_RTOS_XOS" value="1"/>
+              <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
+              <ListEntry key="NNLIB_V2" value=""/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
@@ -89,7 +90,15 @@
 -Wno-unused&#13;
 -Wno-missing-braces&#13;
 -fmessage-length=0&#13;
--std=gnu99</ListEntry></value>
+-std=gnu99&#13;
+-mno-mul16&#13;
+-mno-mul32&#13;
+-mno-div32&#13;
+-fsigned-char&#13;
+-mlongcalls&#13;
+-INLINE:requested&#13;
+-mlongcalls&#13;
+-fsigned-char</ListEntry></value>
           </StringListMapEntry>
         </StringListMapOptions>
         <SingleFlagMapOptions>
@@ -126,14 +135,13 @@
             <value inheritance="prepend" flag="-l">
               <ListEntry>m</ListEntry>
               <ListEntry>xos</ListEntry>
-              <ListEntry>xtutil</ListEntry>
             </value>
           </StringListMapEntry>
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
               <ListEntry>-Wl,--start-group&#13;
-${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_07_05.a&#13;
+${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_08_01.a&#13;
 ${xt_project_loc}/../../../../../../middleware/voice_seeker/RT595_FusionF1/lib/libvoiceseeker_no_aec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a&#13;

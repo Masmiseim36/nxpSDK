@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +34,10 @@ typedef struct {
     psa_status_t            expected_status;
 } test_data;
 
-#if defined(ARCH_TEST_RSA_1024) || defined(ARCH_TEST_RSA_OAEP) || defined(ARCH_TEST_RSA_PKCS1V15_CRYPT) || defined(ARCH_TEST_ECC_ASYMMETRIC_API_SUPPORT) //NXP
+#if ((defined(ARCH_TEST_RSA_1024) && (defined(ARCH_TEST_RSA_PKCS1V15_CRYPT) || defined(ARCH_TEST_SHA256)))||\
+(defined(ARCH_TEST_SHA256) && defined(ARCH_TEST_RSA_OAEP)) ||\
+(defined(ARCH_TEST_RSA_PKCS1V15_CRYPT) && (defined(ARCH_TEST_AES_128) || defined(ARCH_TEST_RSA_1024)))||\
+(defined(ARCH_TEST_ECDSA) && defined(ARCH_TEST_ECC_CURVE_SECP256R1))) //NXP
 
 static const test_data check1[] = {
 #ifdef ARCH_TEST_RSA_1024
@@ -43,7 +46,7 @@ static const test_data check1[] = {
     .test_desc              = "Test psa_asymmetric_encrypt - RSA PKCS1V15\n",
     .type                   = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
     .data                   = rsa_128_key_data,
-    .data_length            = 162,
+    .data_length            = 140,
     .usage_flags            = PSA_KEY_USAGE_ENCRYPT,
     .alg                    = PSA_ALG_RSA_PKCS1V15_CRYPT,
     .input                  = plaintext,
@@ -81,7 +84,7 @@ static const test_data check1[] = {
     .test_desc              = "Test psa_asymmetric_encrypt - RSA OAEP SHA256\n",
     .type                   = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
     .data                   = rsa_128_key_data,
-    .data_length            = 162,
+    .data_length            = 140,
     .usage_flags            = PSA_KEY_USAGE_ENCRYPT,
     .alg                    = PSA_ALG_RSA_OAEP(PSA_ALG_SHA_256),
     .input                  = plaintext,
@@ -98,7 +101,7 @@ static const test_data check1[] = {
     .test_desc              = "Test psa_asymmetric_encrypt - RSA OAEP SHA256 with label\n",
     .type                   = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
     .data                   = rsa_128_key_data,
-    .data_length            = 162,
+    .data_length            = 140,
     .usage_flags            = PSA_KEY_USAGE_ENCRYPT,
     .alg                    = PSA_ALG_RSA_OAEP(PSA_ALG_SHA_256),
     .input                  = plaintext,
@@ -172,7 +175,7 @@ static const test_data check1[] = {
     .test_desc              = "Test psa_asymmetric_encrypt - Invalid algorithm\n",
     .type                   = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
     .data                   = rsa_128_key_data,
-    .data_length            = 162,
+    .data_length            = 140,
     .usage_flags            = PSA_KEY_USAGE_ENCRYPT,
     .alg                    = PSA_ALG_SHA_256,
     .input                  = NULL,
@@ -212,7 +215,7 @@ static const test_data check1[] = {
     .test_desc              = "Test psa_asymmetric_encrypt - Invalid usage\n",
     .type                   = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
     .data                   = rsa_128_key_data,
-    .data_length            = 162,
+    .data_length            = 140,
     .usage_flags            = PSA_KEY_USAGE_DECRYPT,
     .alg                    = PSA_ALG_RSA_PKCS1V15_CRYPT,
     .input                  = NULL,
@@ -229,7 +232,7 @@ static const test_data check1[] = {
     .test_desc              = "Test psa_asymmetric_encrypt - RSA PKCS1V15 - Salt\n",
     .type                   = PSA_KEY_TYPE_RSA_PUBLIC_KEY,
     .data                   = rsa_128_key_data,
-    .data_length            = 162,
+    .data_length            = 140,
     .usage_flags            = PSA_KEY_USAGE_ENCRYPT,
     .alg                    = PSA_ALG_RSA_PKCS1V15_CRYPT,
     .input                  = NULL,
@@ -266,4 +269,7 @@ static const test_data check1[] = {
 #endif
 };
 
-#endif /*defined(ARCH_TEST_RSA_1024) || defined(ARCH_TEST_RSA_OAEP) || defined(ARCH_TEST_RSA_PKCS1V15_CRYPT) || defined(ARCH_TEST_ECC_ASYMMETRIC_API_SUPPORT)*/ //NXP
+#endif /* ((defined(ARCH_TEST_RSA_1024) && (defined(ARCH_TEST_RSA_PKCS1V15_CRYPT) || defined(ARCH_TEST_SHA256)))|| 
+(defined(ARCH_TEST_SHA256) && defined(ARCH_TEST_RSA_OAEP)) || 
+(defined(ARCH_TEST_RSA_PKCS1V15_CRYPT) && (defined(ARCH_TEST_AES_128) || defined(ARCH_TEST_RSA_1024)))|| 
+(defined(ARCH_TEST_ECDSA) && defined(ARCH_TEST_ECC_CURVE_SECP256R1)))*/ //NXP

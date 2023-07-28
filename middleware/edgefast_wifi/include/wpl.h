@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,6 +33,15 @@ typedef enum _wpl_ret
     WPLRET_TIMEOUT,
     WPLRET_BAD_PARAM,
 } wpl_ret_t;
+
+typedef enum _wpl_security
+{
+    /* Used when the user only knows SSID and password. This option should be used
+     * for WPA2 security and lower. */
+    WPL_SECURITY_WILDCARD,
+    /* Use WPA3 SAE security */
+    WPL_SECURITY_WPA3_SAE,
+} wpl_security_t;
 
 /**
  * @brief  Initialize Wi-Fi driver and WPL layer.
@@ -98,6 +107,20 @@ wpl_ret_t WPL_Stop_AP(void);
  * @return Pointer to buffer with scan results.
  */
 char *WPL_Scan(void);
+
+/**
+ * @brief  Create and save a new STA (Station) network profile.
+ *         This STA network profile can be used in future (WPL_RemoveNetwork / WPL_Join) calls based on its label.
+ *         WPL_AddNetwork should be called only after WPL_Start was successfully performed.
+ *
+ * @param  ssid Name of the STA network to be created.
+ * @param  password Password of the STA network to be created.
+ * @param  label Alias for the network to be added. A network may be referred by its label.
+ * @param  security Prefered security type. Refer to wpl_security_t for list of options.
+ *
+ * @return WPLRET_SUCCESS New STA network profile was successfully saved.
+ */
+wpl_ret_t WPL_AddNetworkWithSecurity(char *ssid, char *password, char *label, wpl_security_t security);
 
 /**
  * @brief  Create and save a new STA (Station) network profile.

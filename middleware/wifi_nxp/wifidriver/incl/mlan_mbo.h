@@ -7,7 +7,7 @@
  *
  *  Copyright 2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -36,6 +36,7 @@ extern const t_u8 mbo_oui[];
 
 t_u8 *wlan_add_mbo_oui(t_u8 *oui);
 t_u8 *wlan_add_mbo_oui_type(t_u8 *oui_type);
+t_u8 *wlan_add_mbo_attr_id(t_u8 *attr_id);
 t_u8 *wlan_add_mbo_cellular_cap(t_u8 *attrib);
 t_u8 *wlan_add_mbo_prefer_ch(t_u8 *attrib, t_u8 ch0, t_u8 pefer0, t_u8 ch1, t_u8 pefer1);
 void wlan_send_mgmt_wnm_notification(

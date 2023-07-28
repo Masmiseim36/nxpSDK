@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>3</fileVersion>
+  <fileVersion>4</fileVersion>
   <configuration>
     <name>flash_debug</name>
     <toolchain>
@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -98,7 +98,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -115,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -217,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -226,6 +226,11 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
+          <state>SSD1963_DATA_WITDH=8</state>
+          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>DBI_FLEXIO_USE_SMARTDMA=1</state>
+          <state>DEMO_PANEL=DEMO_PANEL_RM67162</state>
           <state>GRE_TARGET_OS_freertos</state>
           <state>GRE_TARGET_CPU_cortexm7</state>
           <state>GRE_FEATURE_VFS_RESOURCES</state>
@@ -233,17 +238,12 @@
           <state>SCANF_FLOAT_ENABLE=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=1</state>
-          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>SSD1963_DATA_WITDH=8</state>
-          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
-          <state>DBI_FLEXIO_USE_SMARTDMA=1</state>
-          <state>DEMO_PANEL=DEMO_PANEL_RM67162</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>CUSTOM_VGLITE_MEMORY_CONFIG=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CUSTOM_VGLITE_MEMORY_CONFIG=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -366,9 +366,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
@@ -390,10 +387,15 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../template</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
@@ -401,7 +403,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -523,7 +524,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -728,7 +729,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -1164,7 +1165,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>35</version>
+        <version>36</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1251,7 +1252,7 @@
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1268,7 +1269,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1291,7 +1292,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>32</version>
+          <version>33</version>
           <state>58</state>
         </option>
         <option>
@@ -1370,7 +1371,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>37</version>
+        <version>38</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1379,6 +1380,11 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
+          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
+          <state>SSD1963_DATA_WITDH=8</state>
+          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
+          <state>DBI_FLEXIO_USE_SMARTDMA=1</state>
+          <state>DEMO_PANEL=DEMO_PANEL_RM67162</state>
           <state>GRE_TARGET_OS_freertos</state>
           <state>GRE_TARGET_CPU_cortexm7</state>
           <state>GRE_FEATURE_VFS_RESOURCES</state>
@@ -1386,17 +1392,12 @@
           <state>SCANF_FLOAT_ENABLE=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=1</state>
-          <state>BOARD_ENABLE_PSRAM_CACHE=0</state>
-          <state>SSD1963_DATA_WITDH=8</state>
-          <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
-          <state>DBI_FLEXIO_USE_SMARTDMA=1</state>
-          <state>DEMO_PANEL=DEMO_PANEL_RM67162</state>
-          <state>SDK_OS_FREE_RTOS</state>
-          <state>CUSTOM_VGLITE_MEMORY_CONFIG=1</state>
+          <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CUSTOM_VGLITE_MEMORY_CONFIG=1</state>
+          <state>SDK_OS_FREE_RTOS</state>
           <state>VG_COMMAND_CALL=1</state>
           <state>VG_TARGET_FAST_CLEAR=0</state>
-          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1519,9 +1520,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ssd1963</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dbi</state>
@@ -1543,10 +1541,15 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include</state>
+          <state>$PROJ_DIR$/../../template</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
@@ -1554,7 +1557,6 @@
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1676,7 +1678,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>11</version>
+        <version>12</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1880,7 +1882,7 @@
     </settings>
     <settings>
       <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
+      <archiveVersion>2</archiveVersion>
       <data>
         <prebuild/>
         <postbuild/>
@@ -2370,154 +2372,7 @@
     </file>
   </group>
   <group>
-    <name>freertos</name>
-    <group>
-      <name>freertos-kernel</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
-      </file>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
-      </file>
-      <group>
-        <name>portable</name>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
-        </file>
-        <group>
-          <name>IAR</name>
-          <group>
-            <name>ARM_CM33_NTZ</name>
-            <group>
-              <name>non_secure</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
-              </file>
-            </group>
-          </group>
-        </group>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.c</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexio.c</name>
     </file>
@@ -2535,6 +2390,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_dma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</name>
@@ -2579,6 +2440,18 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_power.h</name>
     </file>
     <file>
@@ -2618,6 +2491,9 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma.h</name>
     </file>
     <file>
@@ -2625,9 +2501,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</name>
@@ -2764,6 +2637,135 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
+  </group>
+  <group>
+    <name>freertos</name>
+    <group>
+      <name>freertos-kernel</name>
+      <group>
+        <name>portable</name>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM33_NTZ</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacrocommon.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/heap_3.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/readme.txt</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/event_groups.c</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/croutine.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/deprecated_definitions.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/message_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_prototypes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/projdefs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stdint.readme</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/stream_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/stream_buffer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/timers.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>device</name>

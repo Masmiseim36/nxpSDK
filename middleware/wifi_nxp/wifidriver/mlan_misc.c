@@ -2,9 +2,9 @@
  *
  *  @brief  This file provides Miscellaneous functions for MLAN module
  *
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -83,6 +83,152 @@ t_void wlan_free_mlan_buffer(mlan_adapter *pmadapter, pmlan_buffer pmbuf)
 }
 
 
+/**
+ *  @brief This function will check if station list is empty
+ *
+ *  @param priv    A pointer to mlan_private
+ *
+ *  @return	   MFALSE/MTRUE
+ */
+t_u8 wlan_is_station_list_empty(mlan_private *priv)
+{
+    ENTER();
+    if (!(util_peek_list(priv->adapter->pmoal_handle, &priv->sta_list, priv->adapter->callbacks.moal_spin_lock,
+                         priv->adapter->callbacks.moal_spin_unlock)))
+    {
+        LEAVE();
+        return MTRUE;
+    }
+    LEAVE();
+    return MFALSE;
+}
+
+/**
+ *  @brief This function will return the pointer to station entry in station list
+ *  		table which matches the give mac address
+ *
+ *  @param priv    A pointer to mlan_private
+ *  @param mac     mac address to find in station list table
+ *
+ *  @return	   A pointer to structure sta_node
+ */
+sta_node *wlan_get_station_entry(mlan_private *priv, t_u8 *mac)
+{
+    sta_node *sta_ptr;
+
+    ENTER();
+
+    if (!mac)
+    {
+        LEAVE();
+        return MNULL;
+    }
+    if (!(sta_ptr = (sta_node *)util_peek_list(priv->adapter->pmoal_handle, &priv->sta_list,
+                                               priv->adapter->callbacks.moal_spin_lock,
+                                               priv->adapter->callbacks.moal_spin_unlock)))
+    {
+        LEAVE();
+        return MNULL;
+    }
+    while (sta_ptr != (sta_node *)&priv->sta_list)
+    {
+        if (!__memcmp(priv->adapter, sta_ptr->mac_addr, mac, MLAN_MAC_ADDR_LENGTH))
+        {
+            LEAVE();
+            return sta_ptr;
+        }
+        sta_ptr = sta_ptr->pnext;
+    }
+    LEAVE();
+    return MNULL;
+}
+
+/**
+ *  @brief This function will add a pointer to station entry in station list
+ *  		table with the give mac address, if it does not exist already
+ *
+ *  @param priv    A pointer to mlan_private
+ *  @param mac     mac address to find in station list table
+ *
+ *  @return	   A pointer to structure sta_node
+ */
+sta_node *wlan_add_station_entry(mlan_private *priv, t_u8 *mac)
+{
+    sta_node *sta_ptr       = MNULL;
+    mlan_adapter *pmadapter = priv->adapter;
+
+    ENTER();
+    pmadapter->callbacks.moal_spin_lock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
+
+    sta_ptr = wlan_get_station_entry(priv, mac);
+    if (sta_ptr)
+        goto done;
+    if (priv->adapter->callbacks.moal_malloc(priv->adapter->pmoal_handle, sizeof(sta_node), MLAN_MEM_DEF,
+                                             (t_u8 **)&sta_ptr))
+    {
+        PRINTM(MERROR, "Failed to allocate memory for station node\n");
+        LEAVE();
+        return MNULL;
+    }
+    (void)__memset(priv->adapter, sta_ptr, 0, sizeof(sta_node));
+    (void)__memcpy(priv->adapter, sta_ptr->mac_addr, mac, MLAN_MAC_ADDR_LENGTH);
+    util_enqueue_list_tail(priv->adapter->pmoal_handle, &priv->sta_list, (pmlan_linked_list)sta_ptr,
+                           priv->adapter->callbacks.moal_spin_lock, priv->adapter->callbacks.moal_spin_unlock);
+done:
+    pmadapter->callbacks.moal_spin_unlock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
+    LEAVE();
+    return sta_ptr;
+}
+
+/**
+ *  @brief This function will delete a station entry from station list
+ *
+ *
+ *  @param priv    A pointer to mlan_private
+ *  @param mac     station's mac address
+ *
+ *  @return	   N/A
+ */
+t_void wlan_delete_station_entry(mlan_private *priv, t_u8 *mac)
+{
+    sta_node *sta_ptr       = MNULL;
+    mlan_adapter *pmadapter = priv->adapter;
+    ENTER();
+    pmadapter->callbacks.moal_spin_lock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
+    if ((sta_ptr = wlan_get_station_entry(priv, mac)))
+    {
+        util_unlink_list(priv->adapter->pmoal_handle, &priv->sta_list, (pmlan_linked_list)sta_ptr,
+                         priv->adapter->callbacks.moal_spin_lock, priv->adapter->callbacks.moal_spin_unlock);
+        priv->adapter->callbacks.moal_mfree(priv->adapter->pmoal_handle, (t_u8 *)sta_ptr);
+    }
+    pmadapter->callbacks.moal_spin_unlock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
+    LEAVE();
+    return;
+}
+
+/**
+ *  @brief Clean up wapi station list
+ *
+ *  @param priv  Pointer to the mlan_private driver data struct
+ *
+ *  @return      N/A
+ */
+t_void wlan_delete_station_list(pmlan_private priv)
+{
+    sta_node *sta_ptr;
+
+    ENTER();
+    while ((sta_ptr = (sta_node *)util_dequeue_list(priv->adapter->pmoal_handle, &priv->sta_list,
+                                                    priv->adapter->callbacks.moal_spin_lock,
+                                                    priv->adapter->callbacks.moal_spin_unlock)))
+    {
+        priv->adapter->callbacks.moal_mfree(priv->adapter->pmoal_handle, (t_u8 *)sta_ptr);
+    }
+    LEAVE();
+    return;
+}
+
+
 
 /**
  *   @brief This function processes the 802.11 mgmt Frame
@@ -133,6 +279,45 @@ mlan_status wlan_process_802dot11_mgmt_pkt(IN mlan_private *priv, IN t_u8 *paylo
     return ret;
 }
 
+mlan_status wlan_bypass_802dot11_mgmt_pkt(void *data)
+{
+    RxPD *rxpd                        = (RxPD *)data;
+    wlan_mgmt_pkt *pmgmt_pkt_hdr      = NULL;
+    t_u16 sub_type                    = 0;
+    wlan_802_11_header *pieee_pkt_hdr = MNULL;
+    t_u8 category                     = 0;
+    mlan_private *priv                = mlan_adap->priv[0];
+    mlan_status ret                   = MLAN_STATUS_SUCCESS;
+
+    pmgmt_pkt_hdr = (wlan_mgmt_pkt *)((t_u8 *)rxpd + rxpd->rx_pkt_offset);
+    pieee_pkt_hdr = (wlan_802_11_header *)&pmgmt_pkt_hdr->wlan_header;
+    sub_type      = IEEE80211_GET_FC_MGMT_FRAME_SUBTYPE(pieee_pkt_hdr->frm_ctl);
+    category      = *((t_u8 *)pieee_pkt_hdr + sizeof(wlan_802_11_header));
+
+    if ((pmgmt_pkt_hdr->wlan_header.frm_ctl & IEEE80211_FC_MGMT_FRAME_TYPE_MASK) == 0)
+    {
+        if ((((1 << sub_type) & priv->mgmt_frame_passthru_mask) == 0) && (sub_type != SUBTYPE_ACTION))
+        {
+            PRINTM(MINFO, "Dropping mgmt frame for subtype %d.\n", sub_type);
+            LEAVE();
+            return ret;
+        }
+
+        if (sub_type == SUBTYPE_ACTION)
+        {
+            if (category == IEEE_MGMT_ACTION_CATEGORY_BLOCK_ACK)
+            {
+                PRINTM(MINFO, "Dropping mgmt frame for category %d.\n", category);
+                LEAVE();
+                return ret;
+            }
+        }
+    }
+
+    ret = MLAN_STATUS_FAILURE;
+    return ret;
+}
+
 
 /**
  *  @brief Add Extended Capabilities IE
@@ -162,15 +347,9 @@ void wlan_add_ext_capa_info_ie(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss
     }
 
 #ifdef CONFIG_11V
-    if (pbss_desc->pext_cap->ext_cap.BSS_Transition == true)
-    {
         pext_cap->ext_cap.BSS_Transition = 1;
-    }
-    else
-    {
-        pext_cap->ext_cap.BSS_Transition = 0;
-    }
 #endif
+
     *pptlv_out += sizeof(MrvlIETypes_ExtCap_t);
 
     LEAVE();
@@ -193,15 +372,8 @@ static mlan_status wlan_rate_ioctl_get_rate_index(IN pmlan_adapter pmadapter, IN
     ENTER();
 
     /* Send request to firmware */
-    if (is_sta_connected())
-    {
-        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_GET, 0, (t_void *)pioctl_req, MNULL);
-    }
-    else
-    {
-        ret = (mlan_status)wifi_uap_prepare_and_send_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_GET, 0,
-                                                         (t_void *)pioctl_req, NULL, MLAN_BSS_TYPE_UAP, NULL);
-    }
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_GET, 0, (t_void *)pioctl_req, MNULL);
+
     if (ret == MLAN_STATUS_SUCCESS)
     {
         ret = MLAN_STATUS_PENDING;
@@ -341,17 +513,9 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
            pmpriv->is_data_rate_auto, pmpriv->data_rate);
 
     /* Send request to firmware */
-    if (is_sta_connected())
-    {
-        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
-                               (t_void *)bitmap_rates);
-    }
-    else
-    {
-        ret = (mlan_status)wifi_uap_prepare_and_send_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_SET, 0,
-                                                         (t_void *)pioctl_req, (t_void *)bitmap_rates,
-                                                         MLAN_BSS_TYPE_UAP, NULL);
-    }
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
+                           (t_void *)bitmap_rates);
+
     if (ret == MLAN_STATUS_SUCCESS)
     {
         ret = MLAN_STATUS_PENDING;
@@ -424,6 +588,7 @@ mlan_status wlan_cmd_802_11_rf_antenna(IN pmlan_private pmpriv,
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
+
 
 
 #ifdef WLAN_LOW_POWER_ENABLE
@@ -518,3 +683,96 @@ mlan_status wlan_misc_get_tsf_info(pmlan_adapter pmadapter, pmlan_ioctl_req pioc
 }
 #endif /* CONFIG_WIFI_CLOCKSYNC */
 
+
+#ifdef CONFIG_RF_TEST_MODE
+/**
+ *  @brief RF Test Mode config
+ *
+ *  @param pmadapter   A pointer to mlan_adapter structure
+ *  @param pioctl_req  A pointer to ioctl request buffer
+ *
+ *  @return        MLAN_STATUS_PENDING --success, otherwise fail
+ */
+mlan_status wlan_misc_ioctl_rf_test_cfg(pmlan_adapter pmadapter, pmlan_ioctl_req pioctl_req)
+{
+    mlan_private *pmpriv    = MNULL;
+    mlan_ds_misc_cfg *pmisc = MNULL;
+    mlan_status ret         = MLAN_STATUS_FAILURE;
+    t_u16 cmd_action        = 0;
+
+    ENTER();
+
+    if (!pioctl_req)
+        goto done;
+
+    pmpriv = pmadapter->priv[pioctl_req->bss_index];
+    pmisc  = (mlan_ds_misc_cfg *)pioctl_req->pbuf;
+
+    switch (pmisc->sub_command)
+    {
+        case MLAN_OID_MISC_RF_TEST_GENERIC:
+            if (pioctl_req->action == MLAN_ACT_SET)
+                cmd_action = HostCmd_ACT_GEN_SET;
+            else
+                cmd_action = HostCmd_ACT_GEN_GET;
+            ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_MFG_COMMAND, cmd_action, 0, (t_void *)pioctl_req,
+                                   &(pmisc->param.mfg_generic_cfg));
+            break;
+        case MLAN_OID_MISC_RF_TEST_TX_CONT:
+            if (pioctl_req->action == MLAN_ACT_SET)
+                cmd_action = HostCmd_ACT_GEN_SET;
+            else
+            {
+                PRINTM(MERROR, "Unsupported cmd_action\n");
+                ret = MLAN_STATUS_FAILURE;
+                goto done;
+            }
+            ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_MFG_COMMAND, cmd_action, 0, (t_void *)pioctl_req,
+                                   &(pmisc->param.mfg_tx_cont));
+            break;
+        case MLAN_OID_MISC_RF_TEST_TX_FRAME:
+            if (pioctl_req->action == MLAN_ACT_SET)
+                cmd_action = HostCmd_ACT_GEN_SET;
+            else
+            {
+                PRINTM(MERROR, "Unsupported cmd_action\n");
+                ret = MLAN_STATUS_FAILURE;
+                goto done;
+            }
+            ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_MFG_COMMAND, cmd_action, 0, (t_void *)pioctl_req,
+                                   &(pmisc->param.mfg_tx_frame2));
+            break;
+        case MLAN_OID_MISC_RF_TEST_CONFIG_TRIGGER_FRAME:
+            if (pioctl_req->action == MLAN_ACT_SET)
+                cmd_action = HostCmd_ACT_GEN_SET;
+            else
+            {
+                PRINTM(MERROR, "Unsupported cmd_action\n");
+                ret = MLAN_STATUS_FAILURE;
+                goto done;
+            }
+            ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_MFG_COMMAND, cmd_action, 0, (t_void *)pioctl_req,
+                                   &(pmisc->param.mfg_tx_trigger_config));
+            break;
+
+        case MLAN_OID_MISC_RF_TEST_HE_POWER:
+            if (pioctl_req->action == MLAN_ACT_SET)
+                cmd_action = HostCmd_ACT_GEN_SET;
+            else
+            {
+                PRINTM(MERROR, "Unsupported cmd_action\n");
+                ret = MLAN_STATUS_FAILURE;
+                goto done;
+            }
+            ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_MFG_COMMAND, cmd_action, 0, (t_void *)pioctl_req,
+                                   &(pmisc->param.mfg_he_power));
+            break;
+    }
+
+    if (ret == MLAN_STATUS_SUCCESS)
+        ret = MLAN_STATUS_PENDING;
+done:
+    LEAVE();
+    return ret;
+}
+#endif

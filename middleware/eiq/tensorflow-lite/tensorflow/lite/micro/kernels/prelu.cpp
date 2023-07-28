@@ -23,6 +23,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/prelu.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 
@@ -67,7 +68,7 @@ TfLiteStatus PreluEval(TfLiteContext* context, TfLiteNode* node) {
   }
 }
 
-TfLiteRegistration Register_PRELU() {
+TfLiteRegistration_V1 Register_PRELU() {
   return tflite::micro::RegisterOp(PreluInit, PreluPrepare, PreluEval);
 }
 

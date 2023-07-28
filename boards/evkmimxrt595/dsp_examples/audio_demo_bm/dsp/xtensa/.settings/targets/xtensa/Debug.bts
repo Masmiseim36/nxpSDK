@@ -11,9 +11,9 @@
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
@@ -26,10 +26,10 @@
             <value flag="-D">
               <ListEntry key="DEBUG" value=""/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
-              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
-              <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
+              <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>

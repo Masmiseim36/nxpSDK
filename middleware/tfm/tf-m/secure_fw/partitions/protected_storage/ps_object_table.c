@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "cmsis_compiler.h"
+#include "config_tfm.h"
 #include "crypto/ps_crypto_interface.h"
 #include "nv_counters/ps_nv_counters.h"
 #include "psa/internal_trusted_storage.h"
@@ -60,7 +61,7 @@ struct ps_obj_table_t {
 
   uint8_t version;               /*!< PS object system version. */
 
-#ifndef PS_ROLLBACK_PROTECTION
+#if (!PS_ROLLBACK_PROTECTION)
   uint8_t swap_count;            /*!< Swap counter to distinguish 2 different
                                   *   object tables.
                                   */
@@ -71,7 +72,12 @@ struct ps_obj_table_t {
                                                              */
 };
 
+#ifdef PS_ENCRYPTION
+/* Even tho ps_table_key_label is read only it is left as non constant variable
+ * to ensure that it is protected as part of PS partition data.
+ */
 static uint8_t ps_table_key_label[] = "table_key_label";
+#endif
 
 /* Object table indexes */
 #define PS_OBJ_TABLE_IDX_0 0
@@ -148,7 +154,7 @@ static struct ps_obj_table_ctx_t ps_obj_table_ctx;
 #define PS_CRYPTO_ASSOCIATED_DATA(crypto) ((uint8_t *)crypto + \
                                             PS_NON_AUTH_OBJ_TABLE_SIZE)
 
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
 #define PS_OBJ_TABLE_AUTH_DATA_SIZE (PS_OBJ_TABLE_SIZE - \
                                      PS_NON_AUTH_OBJ_TABLE_SIZE)
 
@@ -203,7 +209,7 @@ struct ps_obj_table_init_ctx_t {
                                                              *   table X is
                                                              *   valid
                                                              */
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
     uint32_t nvc_1;        /*!< Non-volatile counter value 1 */
     uint32_t nvc_3;        /*!< Non-volatile counter value 3 */
 #endif /* PS_ROLLBACK_PROTECTION */
@@ -278,7 +284,7 @@ __STATIC_INLINE psa_status_t ps_object_table_fs_write_table(
 }
 
 #ifdef PS_ENCRYPTION
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
 /**
  * \brief Aligns all PS non-volatile counters.
  *
@@ -528,7 +534,7 @@ static psa_status_t ps_object_table_save_table(
 {
     psa_status_t err;
 
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
     uint32_t nvc_1 = 0;
 
     err = ps_increment_nv_counter(TFM_PS_NV_COUNTER_1);
@@ -561,7 +567,7 @@ static psa_status_t ps_object_table_save_table(
         return err;
     }
 
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
     /* Generate authentication tag from the current table content and PS
      * NV counter 1.
      */
@@ -584,7 +590,7 @@ static psa_status_t ps_object_table_save_table(
 
     err = ps_object_table_fs_write_table(obj_table);
 
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
     if (err != PSA_SUCCESS) {
         return err;
     }
@@ -631,7 +637,7 @@ __STATIC_INLINE void ps_object_table_validate_version(
 static psa_status_t ps_set_active_object_table(
                                 const struct ps_obj_table_init_ctx_t *init_ctx)
 {
-#ifndef PS_ROLLBACK_PROTECTION
+#if (!PS_ROLLBACK_PROTECTION)
     uint8_t table0_swap_count =
                              init_ctx->p_table[PS_OBJ_TABLE_IDX_0]->swap_count;
     uint8_t table1_swap_count =
@@ -671,7 +677,7 @@ static psa_status_t ps_set_active_object_table(
         return PSA_SUCCESS;
     }
 
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
     if (init_ctx->table_state[PS_OBJ_TABLE_IDX_1] ==
                                                     PS_OBJ_TABLE_NVC_1_VALID) {
         /* Table 0 is invalid, the active one is table 1 */
@@ -841,7 +847,7 @@ psa_status_t ps_object_table_init(uint8_t *obj_data)
     struct ps_obj_table_init_ctx_t init_ctx = {
         .p_table = {&ps_obj_table_ctx.obj_table, NULL},
         .table_state = {PS_OBJ_TABLE_VALID, PS_OBJ_TABLE_VALID},
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
         .nvc_1 = 0U,
         .nvc_3 = 0U,
 #endif /* PS_ROLLBACK_PROTECTION */
@@ -853,13 +859,18 @@ psa_status_t ps_object_table_init(uint8_t *obj_data)
     ps_object_table_fs_read_table(&init_ctx);
 
 #ifdef PS_ENCRYPTION
+    err = ps_crypto_init();
+    if (err != PSA_SUCCESS) {
+        return err;
+    }
+
     /* Set object table key */
     err = ps_crypto_setkey(ps_table_key_label, sizeof(ps_table_key_label));
     if (err != PSA_SUCCESS) {
         return err;
     }
 
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
     /* Authenticate table */
     err = ps_object_table_nvc_authenticate(&init_ctx);
     if (err != PSA_SUCCESS) {
@@ -891,7 +902,7 @@ psa_status_t ps_object_table_init(uint8_t *obj_data)
         return err;
     }
 
-#ifdef PS_ROLLBACK_PROTECTION
+#if PS_ROLLBACK_PROTECTION
     /* Align PS NV counters */
     err = ps_object_table_align_nv_counters(init_ctx.nvc_1);
     if (err != PSA_SUCCESS) {

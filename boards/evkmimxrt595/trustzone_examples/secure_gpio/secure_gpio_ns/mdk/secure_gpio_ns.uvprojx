@@ -426,7 +426,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_gpio_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -578,16 +578,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_iap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -692,11 +682,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1125,7 +1110,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_gpio_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1277,16 +1262,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_iap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1391,11 +1366,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1824,7 +1794,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_gpio_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1976,16 +1946,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_iap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -2090,11 +2050,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2523,7 +2478,7 @@
             <File>
               <FileName>veneer_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../secure_gpio_s/veneer_table.h</FilePath>
+              <FilePath>../veneer_table.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2675,16 +2630,6 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_iap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -2789,11 +2734,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

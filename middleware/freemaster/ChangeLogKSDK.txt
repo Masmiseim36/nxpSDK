@@ -47,4 +47,7 @@
     - Use of new Ethernet MDIO driver concept.
     - Support of ENET and NETC Ethernet modules in the fmstr_net example application.
 
+  - 3.0.7
+    - General update for SDK 2.14
+
 */

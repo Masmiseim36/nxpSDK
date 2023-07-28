@@ -7,14 +7,10 @@
 
 #include "tfm_secure_client_2_api.h"
 #include "psa/internal_trusted_storage.h"
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"                 //NXP to avoid file name conflicts between MbedTLS and TFM.
 
-#ifdef TFM_PSA_API
 #include "psa/service.h"
 #include "psa_manifest/tfm_secure_client_2.h"
-#else
-#include "psa/client.h"
-#endif
 
 #ifdef TFM_IPC_ISOLATION_3_RETRIEVE_APP_MEM
 /* Define the global variable for the TFM_SECURE_CLIENT_2_SID service. */
@@ -120,7 +116,6 @@ static psa_status_t secure_client_2_dispatch(int32_t id, const void *arg,
     }
 }
 
-#ifdef TFM_PSA_API
 #define SECURE_CLIENT_2_MAX_ARG_LEN 8U
 
 static psa_status_t tfm_secure_client_2_handle_msg(const psa_msg_t *msg)
@@ -170,26 +165,3 @@ psa_status_t tfm_secure_client_2_sfn(const psa_msg_t* msg)
 }
 
 #endif /* TFM_SP_SECURE_CLIENT_2_MODEL_IPC == 1 */
-
-#else /* TFM_PSA_API */
-psa_status_t tfm_secure_client_2_init(void)
-{
-    return PSA_SUCCESS;
-}
-
-psa_status_t tfm_secure_client_2_call(psa_invec *in_vec, size_t in_len,
-                                      psa_outvec *out_vec, size_t out_len)
-{
-    int32_t id;
-
-    (void)out_vec;
-
-    if (in_len != 2 || out_len != 0 || in_vec[0].len != sizeof(id)) {
-        return PSA_ERROR_PROGRAMMER_ERROR;
-    }
-
-    id = *((int32_t *)in_vec[0].base);
-
-    return secure_client_2_dispatch(id, in_vec[1].base, in_vec[1].len);
-}
-#endif /* TFM_PSA_API */

@@ -31,7 +31,8 @@ extern  uint32_t g_test_count;
 
 int32_t psa_aead_verify_test(caller_security_t caller __UNUSED)
 {
-    uint8_t  output[BUFFER_SIZE], tag[SIZE_128B]; //NXP
+#if ((defined(ARCH_TEST_CCM) || defined(ARCH_TEST_GCM)) && defined(ARCH_TEST_AES_128)) // NXP
+    uint8_t  output[BUFFER_SIZE]; //NXP
     int32_t               i, status;
     size_t                length, verify_length;
     int                   num_checks = sizeof(check1)/sizeof(check1[0]);
@@ -146,4 +147,8 @@ int32_t psa_aead_verify_test(caller_security_t caller __UNUSED)
     }
 
     return VAL_STATUS_SUCCESS;
+#else //NXP
+    val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
+    return RESULT_SKIP(VAL_STATUS_NO_TESTS);
+#endif //NXP
 }

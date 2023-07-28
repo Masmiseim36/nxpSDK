@@ -5,12 +5,13 @@
  *
  */
 
+#include "config_tfm.h"
 #include "tfm_plat_provisioning.h"
 
 #include "cmsis_compiler.h"
 #include "tfm_plat_otp.h"
 #include "tfm_attest_hal.h"
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"          //NXP to avoid file name conflicts between MbedTLS and TFM.
 #include "tfm_spm_log.h"
 
 #include <string.h>
@@ -28,7 +29,9 @@ __PACKED_STRUCT tfm_psa_rot_provisioning_data_t {
     uint8_t iak[32];
     uint32_t iak_len;
     uint32_t iak_type;
+#if ATTEST_INCLUDE_COSE_KEY_ID
     uint8_t iak_id[32];
+#endif /* ATTEST_INCLUDE_COSE_KEY_ID */
 
     uint8_t boot_seed[32];
     uint8_t implementation_id[32];
@@ -69,8 +72,10 @@ static const struct tfm_psa_rot_provisioning_data_t psa_rot_prov_data = {
     /* IAK type */
     PSA_ECC_FAMILY_SECP_R1,
 #endif /* SYMMETRIC_INITIAL_ATTESTATION */
+#if ATTEST_INCLUDE_COSE_KEY_ID
     /* IAK id */
     "kid@trustedfirmware.example",
+#endif /* ATTEST_INCLUDE_COSE_KEY_ID */
     /* boot seed */
     {
         0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7,
@@ -90,11 +95,11 @@ static const struct tfm_psa_rot_provisioning_data_t psa_rot_prov_data = {
     /* verification_service_url */
     "www.trustedfirmware.org",
     /* attestation_profile_definition */
-#if defined(ATTEST_TOKEN_PROFILE_PSA_IOT_1)
+#if ATTEST_TOKEN_PROFILE_PSA_IOT_1
     "PSA_IOT_PROFILE_1",
-#elif defined(ATTEST_TOKEN_PROFILE_PSA_2_0_0)
+#elif ATTEST_TOKEN_PROFILE_PSA_2_0_0
     "http://arm.com/psa/2.0.0",
-#elif defined(ATTEST_TOKEN_PROFILE_ARM_CCA)
+#elif ATTEST_TOKEN_PROFILE_ARM_CCA
     "http://arm.com/CCA-SSD/1.0.0",
 #else
 #ifdef TFM_PARTITION_INITIAL_ATTESTATION
@@ -195,7 +200,7 @@ enum tfm_plat_err_t provision_psa_rot(void)
         return err;
     }
 
-#ifdef ATTEST_INCLUDE_COSE_KEY_ID
+#if ATTEST_INCLUDE_COSE_KEY_ID
     err = tfm_plat_otp_write(PLAT_OTP_ID_IAK_ID,
                              sizeof(psa_rot_prov_data.iak_id),
                              psa_rot_prov_data.iak_id);

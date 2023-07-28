@@ -1,5 +1,8 @@
 /*
- * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2023, Arm Limited. All rights reserved.
+ * Copyright (c) 2022 Cypress Semiconductor Corporation (an Infineon
+ * company) or an affiliate of Cypress Semiconductor Corporation. All rights
+ * reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -11,6 +14,7 @@
 
 #include <stddef.h>
 #include <inttypes.h>
+#include "fih.h"
 #include "tfm_hal_device_header.h"
 #include "cmsis_compiler.h"
 
@@ -29,6 +33,43 @@
 
 #define XPSR_T32            0x01000000
 
+/* Define IRQ level */
+#if defined(__ARM_ARCH_8_1M_MAIN__) || defined(__ARM_ARCH_8M_MAIN__)
+#define SecureFault_IRQnLVL      (0)
+#define MemoryManagement_IRQnLVL (0)
+#define BusFault_IRQnLVL         (0)
+#define SVCall_IRQnLVL           (0)
+#elif defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7EM__)
+#define MemoryManagement_IRQnLVL (0)
+#define BusFault_IRQnLVL         (0)
+#define SVCall_IRQnLVL           (0)
+#elif defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__)
+#define SVCall_IRQnLVL           (0)
+#else
+#error "Unsupported ARM Architecture."
+#endif
+
+
+/* The lowest secure interrupt priority */
+#ifdef CONFIG_TFM_USE_TRUSTZONE
+/* IMPORTANT NOTE:
+ *
+ * Although the priority of the secure PendSV must be the lowest possible
+ * among other interrupts in the Secure state, it must be ensured that
+ * PendSV is not preempted nor masked by Non-Secure interrupts to ensure
+ * the integrity of the Secure operation.
+ * When AIRCR.PRIS is set, the Non-Secure execution can act on
+ * FAULTMASK_NS, PRIMASK_NS or BASEPRI_NS register to boost its priority
+ * number up to the value 0x80.
+ * For this reason, set the priority of the PendSV interrupt to the next
+ * priority level configurable on the platform, just below 0x80.
+ */
+#define PENDSV_PRIO_FOR_SCHED ((1 << (__NVIC_PRIO_BITS - 1)) - 1)
+#else
+/* If TZ is not in use, we have the full priority range available */
+#define PENDSV_PRIO_FOR_SCHED ((1 << __NVIC_PRIO_BITS) - 1)
+#endif
+
 /* State context defined by architecture */
 struct tfm_state_context_t {
     uint32_t    r0;
@@ -43,6 +84,8 @@ struct tfm_state_context_t {
 
 /* Context addition to state context */
 struct tfm_additional_context_t {
+    uint32_t    integ_sign;    /* Integrity signature */
+    uint32_t    reserved;      /* Reserved */
     uint32_t    callee[8];     /* R4-R11. NOT ORDERED!! */
 };
 
@@ -191,6 +234,31 @@ __STATIC_INLINE void __set_CONTROL_SPSEL(uint32_t SPSEL)
     __ISB();
 }
 
+
+/**
+ * \brief Whether in privileged level
+ *
+ * \retval true             If current execution runs in privileged level.
+ * \retval false            If current execution runs in unprivileged level.
+ */
+__STATIC_INLINE bool tfm_arch_is_priv(void)
+{
+    CONTROL_Type ctrl;
+
+    /* If in Handler mode */
+    if (__get_IPSR()) {
+        return true;
+    }
+
+    /* If in privileged Thread mode */
+    ctrl.w = __get_CONTROL();
+    if (!ctrl.b.nPRIV) {
+        return true;
+    }
+
+    return false;
+}
+
 #if (CONFIG_TFM_FLOAT_ABI >= 1) && CONFIG_TFM_LAZY_STACKING
 #define ARCH_FLUSH_FP_CONTEXT()  __asm volatile("vmov.f32  s0, s0 \n":::"memory")  //NXP added .f32 for IAR
 #else
@@ -199,6 +267,11 @@ __STATIC_INLINE void __set_CONTROL_SPSEL(uint32_t SPSEL)
 
 /* Set secure exceptions priority. */
 void tfm_arch_set_secure_exception_priorities(void);
+
+#ifdef TFM_FIH_PROFILE_ON
+/* Check secure exception priority */
+FIH_RET_TYPE(int32_t) tfm_arch_verify_secure_exception_priorities(void);
+#endif
 
 /* Configure various extensions. */
 void tfm_arch_config_extensions(void);

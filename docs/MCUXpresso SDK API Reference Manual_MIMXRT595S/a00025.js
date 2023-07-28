@@ -2,7 +2,7 @@ var a00025 =
 [
     [ "FlexIO DMA MCU Interface LCD Driver", "a00026.html", "a00026" ],
     [ "FlexIO SMARTDMA MCU Interface LCD Driver", "a00027.html", "a00027" ],
-    [ "FLEXIO_MCULCD_Type", "a00025.html#a00350", [
+    [ "FLEXIO_MCULCD_Type", "a00025.html#a00356", [
       [ "flexioBase", "a00025.html#abf2b6adbb0db513d52fcb5f40c02a2b1", null ],
       [ "busType", "a00025.html#a36a8730492f2b1f4e059db4e5419609c", null ],
       [ "dataPinStartIndex", "a00025.html#adb0e01a30225a21919c2889e69283ff6", null ],
@@ -17,20 +17,20 @@ var a00025 =
       [ "setRSPin", "a00025.html#a49c806eebd7c0a7f7bd19050d87f978a", null ],
       [ "setRDWRPin", "a00025.html#a528162f7f3a5eeca0a7533131ffd6792", null ]
     ] ],
-    [ "flexio_mculcd_config_t", "a00025.html#a00347", [
+    [ "flexio_mculcd_config_t", "a00025.html#a00353", [
       [ "enable", "a00025.html#aec7f75c47425865274cb6e3a59e375e5", null ],
       [ "enableInDoze", "a00025.html#a4979ef759a7da0411f944c8341bb5d29", null ],
       [ "enableInDebug", "a00025.html#a06d679c4a415fc922cdcb7d31aa7a227", null ],
       [ "enableFastAccess", "a00025.html#ac485f769dab33c787197bff31507bae7", null ],
       [ "baudRate_Bps", "a00025.html#a3a36a9832963afadadba0d2937d4c879", null ]
     ] ],
-    [ "flexio_mculcd_transfer_t", "a00025.html#a00349", [
+    [ "flexio_mculcd_transfer_t", "a00025.html#a00355", [
       [ "command", "a00025.html#aa447f012ca360d9b06b569879f0342c7", null ],
       [ "mode", "a00025.html#ac69465289fcc81b805c8ee84d4f5f526", null ],
       [ "dataAddrOrSameValue", "a00025.html#a8dc56304688ac3d2ecf1084316e06202", null ],
       [ "dataSize", "a00025.html#ac9fefa4bb4e9dbf94a8769d5dc6369f4", null ]
     ] ],
-    [ "flexio_mculcd_handle_t", "a00025.html#a00287", [
+    [ "flexio_mculcd_handle_t", "a00025.html#a00291", [
       [ "dataAddrOrSameValue", "a00025.html#afd6b5ba7856e4a60b09284d8648927f6", null ],
       [ "dataCount", "a00025.html#a96a7d3183ca79dc52ea96f1cf3cdaee1", null ],
       [ "remainingCount", "a00025.html#a84abb6b0e289e316142b979d5e937b26", null ],
@@ -43,9 +43,9 @@ var a00025 =
     [ "FLEXIO_MCULCD_DATA_BUS_WIDTH", "a00025.html#ga99d509e0e5dae07eefc11c826e91aa20", null ],
     [ "flexio_mculcd_pin_func_t", "a00025.html#ga488a641aac28ea18d6126851f5c6b181", null ],
     [ "flexio_mculcd_transfer_callback_t", "a00025.html#ga9c5e282fd6d1cae13dc533a106a3da23", [
-      [ "kStatus_FLEXIO_MCULCD_Idle", "a00025.html#gga05589fbab0657f08285ebdfe93f5ec9ea2dff5d93dfb65bc74ebfc97dd185517f", null ],
-      [ "kStatus_FLEXIO_MCULCD_Busy", "a00025.html#gga05589fbab0657f08285ebdfe93f5ec9ea04c11c9c91be5814653e720200470e62", null ],
-      [ "kStatus_FLEXIO_MCULCD_Error", "a00025.html#gga05589fbab0657f08285ebdfe93f5ec9eafa90a745e2b170d4e7b9e3b6d4ef7074", null ]
+      [ "kStatus_FLEXIO_MCULCD_Idle", "a00025.html#ggaaf105ae5beaca1dee30ae54530691fcea2dff5d93dfb65bc74ebfc97dd185517f", null ],
+      [ "kStatus_FLEXIO_MCULCD_Busy", "a00025.html#ggaaf105ae5beaca1dee30ae54530691fcea04c11c9c91be5814653e720200470e62", null ],
+      [ "kStatus_FLEXIO_MCULCD_Error", "a00025.html#ggaaf105ae5beaca1dee30ae54530691fceafa90a745e2b170d4e7b9e3b6d4ef7074", null ]
     ] ],
     [ "flexio_mculcd_pixel_format_t", "a00025.html#ga3721e99acc2b54f3b08411e5880c476f", [
       [ "kFLEXIO_MCULCD_RGB565", "a00025.html#gga3721e99acc2b54f3b08411e5880c476fa5dd7ef049e9e0b6653a98ba5fadd583d", null ],

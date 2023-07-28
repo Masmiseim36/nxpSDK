@@ -40,7 +40,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
     for (i = 0; i < num_checks; i++)
     {
         size_t                  challenge_size = check1[i].challenge_size; //NXP
-        
+
         val->print(PRINT_TEST, "[Check %d] ", g_test_count++);
         val->print(PRINT_TEST, check1[i].test_desc, 0);
 

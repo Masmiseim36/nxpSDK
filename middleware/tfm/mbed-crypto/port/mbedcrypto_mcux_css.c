@@ -8,7 +8,7 @@
 
 #include "mbedtls/build_info.h"
 
-#ifdef CSS
+#if defined(ELS) && MBEDTLS_MCUX_CSS
 #include <mcuxClCss.h>               /* Interface to the entire nxpClCss component */
 #include <mcuxClMemory.h>
 #include <fsl_css.h>
@@ -28,13 +28,13 @@ status_t mbecrypto_mcux_css_init(void)
     if(css_init_is_done == false)
     {
         /* Enable CSS and related clocks */
-        status = CSS_PowerDownWakeupInit(CSS);
+        status = CSS_PowerDownWakeupInit(ELS);
         if (status == kStatus_Success)
         {
             css_init_is_done = true;
         }
         /* Enable GDET interrupt, input event to ITRC */
-        CSS->CSS_INT_ENABLE |= CSS_INT_ENABLE_GDET_INT_EN_Msk;
+        ELS->ELS_INT_ENABLE |= CSS_INT_ENABLE_GDET_INT_EN_Msk;
     }
     else
     {
@@ -920,8 +920,7 @@ int mbedtls_sha256_update (mbedtls_sha256_context *ctx,
     return 0;
 }
 
-int mbedtls_sha256_finish (mbedtls_sha256_context *ctx,
-                               unsigned char output[32])
+int mbedtls_sha256_finish( mbedtls_sha256_context *ctx, unsigned char *output )
 {
     if(ctx == NULL || output == NULL)
     {
@@ -1178,4 +1177,4 @@ int mbedtls_internal_sha512_process(mbedtls_sha512_context *ctx,
 #endif /* MBEDTLS_MCUX_CSS_SHA512 && MBEDTLS_SHA512_ALT && MBEDTLS_SHA512_C */
 
 
-#endif /* CSS */
+#endif /* ELS && MBEDTLS_MCUX_CSS */

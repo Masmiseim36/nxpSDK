@@ -4,7 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -57,6 +57,9 @@ Change log:
 /** WMM information IE */
 static const t_u8 wmm_info_ie[] = {(t_u8)WMM_IE, 0x07, 0x00, 0x50, 0xf2, 0x02, 0x00, 0x01, 0x00};
 
+/** Type enumeration of WMM AC_QUEUES */
+typedef MLAN_PACK_START enum _wmm_ac_e { AC_BE, AC_BK, AC_VI, AC_VO } MLAN_PACK_END wmm_ac_e;
+
 
 /**
  * This table will be used to store the tid values based on ACs.
@@ -74,15 +77,6 @@ static t_u8 tos_to_tid[] = {
     0x07  /* 1 1 1 AC_VO */
 };
 
-/**
- * This table inverses the tos_to_tid operation to get a priority
- * which is in sequential order, and can be compared.
- * Use this to compare the priority of two different TIDs.
- */
-static t_u8 tos_to_tid_inv[] = {0x02, /* from tos_to_tid[2] = 0 */
-                                0x00, /* from tos_to_tid[0] = 1 */
-                                0x01, /* from tos_to_tid[1] = 2 */
-                                0x03, 0x04, 0x05, 0x06, 0x07};
 
 /**
  * This table will provide the tid value for given ac. This table does not
@@ -136,7 +130,6 @@ static void wlan_wmm_ac_debug_print(const IEEEtypes_WmmAcParameters_t *pac_param
 t_void wlan_clean_txrx(pmlan_private priv)
 {
     mlan_adapter *pmadapter = priv->adapter;
-    t_u8 i                  = 0;
 
     ENTER();
 
@@ -144,14 +137,11 @@ t_void wlan_clean_txrx(pmlan_private priv)
 
     (void)pmadapter->callbacks.moal_spin_lock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
     wlan_11n_deleteall_txbastream_tbl(priv);
-#if defined(CONFIG_WMM) && defined(CONFIG_WMM_ENH)
+#ifdef CONFIG_WMM
     wlan_ralist_del_all_enh(priv);
 #endif /* CONFIG_MLAN_WMSDK */
     (void)__memcpy(pmadapter, tos_to_tid, ac_to_tid, sizeof(tos_to_tid));
-    for (i = 0; i < MAX_NUM_TID; i++)
-    {
-        tos_to_tid_inv[tos_to_tid[i]] = (t_u8)i;
-    }
+
     priv->num_drop_pkts = 0;
     (void)pmadapter->callbacks.moal_spin_unlock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
 
@@ -180,6 +170,50 @@ void wlan_wmm_default_queue_priorities(pmlan_private priv)
 
 
 /**
+ *  @brief Initialize the WMM parameter.
+ *
+ *  @param pmadapter  Pointer to the mlan_adapter data structure
+ *
+ *  @return         N/A
+ */
+t_void wlan_init_wmm_param(pmlan_adapter pmadapter)
+{
+    /* Reuse the same structure of WmmAcParameters_t for configuration
+     * purpose here. the definition of acm bit is changed to ucm (user
+     * configuration mode) FW will take the setting of
+     * aifsn,ecw_max,ecw_min, tx_op_limit only when ucm is set to 1.
+     * othewise the default setting/behavoir in firmware will be used.
+     */
+    pmadapter->ac_params[AC_BE].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_BE].aci_aifsn.aci   = AC_BE;
+    pmadapter->ac_params[AC_BE].aci_aifsn.aifsn = 3;
+    pmadapter->ac_params[AC_BE].ecw.ecw_max     = 10;
+    pmadapter->ac_params[AC_BE].ecw.ecw_min     = 4;
+    pmadapter->ac_params[AC_BE].tx_op_limit     = 0;
+
+    pmadapter->ac_params[AC_BK].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_BK].aci_aifsn.aci   = AC_BK;
+    pmadapter->ac_params[AC_BK].aci_aifsn.aifsn = 7;
+    pmadapter->ac_params[AC_BK].ecw.ecw_max     = 10;
+    pmadapter->ac_params[AC_BK].ecw.ecw_min     = 4;
+    pmadapter->ac_params[AC_BK].tx_op_limit     = 0;
+
+    pmadapter->ac_params[AC_VI].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_VI].aci_aifsn.aci   = AC_VI;
+    pmadapter->ac_params[AC_VI].aci_aifsn.aifsn = 2;
+    pmadapter->ac_params[AC_VI].ecw.ecw_max     = 4;
+    pmadapter->ac_params[AC_VI].ecw.ecw_min     = 3;
+    pmadapter->ac_params[AC_VI].tx_op_limit     = 188;
+
+    pmadapter->ac_params[AC_VO].aci_aifsn.acm   = 0;
+    pmadapter->ac_params[AC_VO].aci_aifsn.aci   = AC_VO;
+    pmadapter->ac_params[AC_VO].aci_aifsn.aifsn = 2;
+    pmadapter->ac_params[AC_VO].ecw.ecw_max     = 3;
+    pmadapter->ac_params[AC_VO].ecw.ecw_min     = 2;
+    pmadapter->ac_params[AC_VO].tx_op_limit     = 102;
+}
+
+/**
  *  @brief Initialize the WMM state information and the WMM data path queues.
  *
  *  @param pmadapter  Pointer to the mlan_adapter data structure
@@ -200,17 +234,9 @@ t_void wlan_wmm_init(pmlan_adapter pmadapter)
         {
             for (i = 0; i < MAX_NUM_TID; ++i)
             {
-#if !defined(RW610)
-                priv->aggr_prio_tbl[i].amsdu = BA_STREAM_NOT_ALLOWED;
-#endif
-                    priv->aggr_prio_tbl[i].ampdu_ap = priv->aggr_prio_tbl[i].ampdu_user = tos_to_tid_inv[i];
                 priv->wmm.pkts_queued[i]              = 0;
                 priv->wmm.tid_tbl_ptr[i].ra_list_curr = MNULL;
             }
-
-            priv->aggr_prio_tbl[6].ampdu_ap = priv->aggr_prio_tbl[6].ampdu_user = BA_STREAM_NOT_ALLOWED;
-
-            priv->aggr_prio_tbl[7].ampdu_ap = priv->aggr_prio_tbl[7].ampdu_user = BA_STREAM_NOT_ALLOWED;
 
             priv->add_ba_param.timeout = MLAN_DEFAULT_BLOCK_ACK_TIMEOUT;
             if (priv->bss_type == MLAN_BSS_TYPE_STA)
@@ -233,7 +259,6 @@ t_void wlan_wmm_init(pmlan_adapter pmadapter)
 
     LEAVE();
 }
-
 
 /**
  *   @brief Get ralist node
@@ -336,9 +361,76 @@ t_u32 wlan_wmm_process_association_req(pmlan_private priv,
     return ret_len;
 }
 
+#ifdef CONFIG_WMM
+/**
+ *  @brief This function prepares the command of WMM_PARAM_CONFIG
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param cmd          A pointer to HostCmd_DS_COMMAND structure
+ *  @param cmd_action   cmd action.
+ *  @param pdata_buf    A pointer to data buffer
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_cmd_wmm_param_config(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u8 cmd_action, t_void *pdata_buf)
+{
+    wmm_ac_parameters_t *ac_params        = (wmm_ac_parameters_t *)pdata_buf;
+    HostCmd_DS_WMM_PARAM_CONFIG *pcmd_cfg = &cmd->params.param_config;
+    t_u8 i                                = 0;
 
-#ifdef CONFIG_WMM_ENH
-#ifdef CONFIG_WMM_ENH_DEBUG
+    ENTER();
+
+    cmd->command = wlan_cpu_to_le16(HostCmd_CMD_WMM_PARAM_CONFIG);
+    cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_WMM_PARAM_CONFIG) + S_DS_GEN);
+    cmd->result  = 0;
+
+    pcmd_cfg->action = cmd_action;
+    if (cmd_action == HostCmd_ACT_GEN_SET)
+    {
+        (void)__memcpy(pmpriv->adapter, pcmd_cfg->ac_params, ac_params, sizeof(wmm_ac_parameters_t) * MAX_AC_QUEUES);
+        for (i = 0; i < MAX_AC_QUEUES; i++)
+        {
+            pcmd_cfg->ac_params[i].tx_op_limit = wlan_cpu_to_le16(pcmd_cfg->ac_params[i].tx_op_limit);
+        }
+    }
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief This function handles the command response of WMM_PARAM_CONFIG
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_ret_wmm_param_config(pmlan_private pmpriv, const HostCmd_DS_COMMAND *resp, mlan_ioctl_req *pioctl_buf)
+{
+    mlan_ds_wmm_cfg *pwmm             = MNULL;
+    HostCmd_DS_WMM_PARAM_CONFIG *pcfg = (HostCmd_DS_WMM_PARAM_CONFIG *)&resp->params.param_config;
+    t_u8 i;
+
+    ENTER();
+
+    if (pioctl_buf)
+    {
+        pwmm = (mlan_ds_wmm_cfg *)pioctl_buf->pbuf;
+        for (i = 0; i < MAX_AC_QUEUES; i++)
+        {
+            pcfg->ac_params[i].tx_op_limit = wlan_le16_to_cpu(pcfg->ac_params[i].tx_op_limit);
+        }
+        (void)__memcpy(pmpriv->adapter, pwmm->param.ac_params, pcfg->ac_params,
+                       sizeof(wmm_ac_parameters_t) * MAX_AC_QUEUES);
+    }
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+#endif
+
+#ifdef CONFIG_WMM
+#ifdef CONFIG_WMM_DEBUG
 #define MAX_HISTORY_RA_LIST_NUM 32
 
 static raListTbl *wlan_ralist_get_history(mlan_private *priv, t_u8 *ra, t_u8 ac)
@@ -553,13 +645,19 @@ uint8_t *wifi_wmm_get_outbuf_enh(
     outbuf_t *buf = MNULL;
     t_u8 tx_pause;
 
-    buf = wifi_wmm_buf_get();
-    if (buf != MNULL)
-        goto SUCC;
-
     /* check tx_pause */
     tx_pause     = wifi_wmm_is_tx_pause(interface, queue, ra);
     *is_tx_pause = (tx_pause == MTRUE) ? true : false;
+
+    if (tx_pause == MTRUE)
+    {
+        *outbuf_len = 0;
+        return MNULL;
+    }
+
+    buf = wifi_wmm_buf_get();
+    if (buf != MNULL)
+        goto SUCC;
 
     /* loop tid_tbl to find buf to replace in wmm ralists */
     for (i = 0; i < MAX_AC_QUEUES; i++)
@@ -744,7 +842,7 @@ void wlan_ralist_pkts_free_enh(mlan_private *priv, raListTbl *ra_list, t_u8 ac)
 /* should be called inside wmm tid_tbl_ptr ra_list lock */
 static void wlan_ralist_free_enh(mlan_private *priv, raListTbl *ra_list, t_u8 ac)
 {
-#ifdef CONFIG_WMM_ENH_DEBUG
+#ifdef CONFIG_WMM_DEBUG
     wlan_ralist_restore_history(priv, ra_list, ac);
 #else
     priv->adapter->callbacks.moal_free_semaphore(priv->adapter->pmoal_handle, &ra_list->buf_head.plock);
@@ -818,7 +916,7 @@ int wlan_ralist_update_enh(mlan_private *priv, t_u8 *old_ra, t_u8 *new_ra)
     int i;
     int update_count   = 0;
     raListTbl *ra_list = MNULL;
-#ifdef CONFIG_WMM_ENH_DEBUG
+#ifdef CONFIG_WMM_DEBUG
     raListTbl *hist_ra_list = MNULL;
 #endif
 
@@ -842,7 +940,7 @@ int wlan_ralist_update_enh(mlan_private *priv, t_u8 *old_ra, t_u8 *new_ra)
 
         (void)__memcpy(priv->adapter, ra_list->ra, new_ra, MLAN_MAC_ADDR_LENGTH);
 
-#ifdef CONFIG_WMM_ENH_DEBUG
+#ifdef CONFIG_WMM_DEBUG
         hist_ra_list = wlan_ralist_alloc_enh(priv->adapter, old_ra);
         if (hist_ra_list != MNULL)
         {
@@ -979,4 +1077,4 @@ void wifi_wmm_drop_pause_replaced(const uint8_t interface)
     else if (interface == MLAN_BSS_TYPE_UAP)
         mlan_adap->priv[1]->driver_error_cnt.tx_wmm_pause_replaced++;
 }
-#endif /* CONFIG_WMM_ENH */
+#endif /* CONFIG_WMM */

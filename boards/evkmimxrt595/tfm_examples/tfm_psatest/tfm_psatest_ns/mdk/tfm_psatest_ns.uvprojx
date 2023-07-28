@@ -68,7 +68,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns.sct" -o "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, TF_M_PROFILE_MEDIUM, TFM_PSA_API, INITIAL_ATTESTATION, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, PS_ENCRYPTION, INITIAL_ATTESTATION, TF_M_PROFILE_LARGE, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,10 +365,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20040000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
+            <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../tfm_psatest_s/mdk/debug/tfm_psatest_s_CMSE_lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib ../../tfm_psatest_s/mdk/debug/tfm_psatest_s_CMSE_lib.o --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -379,9 +379,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT595S_cm33_ns.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/armclang/startup_MIMXRT595S_cm33_ns.S</FilePath>
+              <FileName>startup_evkmimxrt595.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/startup_evkmimxrt595.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -481,42 +481,162 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595</GroupName>
+          <GroupName>tf-m/config/profile</GroupName>
           <Files>
             <File>
-              <FileName>target_cfg.h</FileName>
+              <FileName>config_profile_large.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/target_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_peripherals_def.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/tfm_peripherals_def.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/config/profile/config_profile_large.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</GroupName>
+          <GroupName>tf-m/platform/include</GroupName>
           <Files>
             <File>
-              <FileName>platform_base_address.h</FileName>
+              <FileName>tfm_plat_crypto_keys.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_base_address.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_device_header.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_boot_seed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_device_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_ns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</FilePath>
+            </File>
+            <File>
+              <FileName>region.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/region.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/partition</GroupName>
+          <GroupName>tf-m/platform/ext/common</GroupName>
           <Files>
             <File>
-              <FileName>region_defs.h</FileName>
+              <FileName>uart_stdout.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/region_defs.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</FilePath>
             </File>
             <File>
-              <FileName>flash_layout.h</FileName>
+              <FileName>uart_stdout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/driver</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/flash_layout.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common</GroupName>
+          <Files>
+            <File>
+              <FileName>libc_dummy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/libc_dummy.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/CMSIS_Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/CMSIS_Driver/Driver_USART.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_definition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_irq.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_regs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
+          <Files>
+            <File>
+              <FileName>device_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_builtin_key_ids.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/psa_manifest</GroupName>
+          <Files>
+            <File>
+              <FileName>sid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest/sid.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -532,11 +652,6 @@
               <FileName>config_impl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_veneers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</FilePath>
             </File>
             <File>
               <FileName>tfm_crypto_defs.h</FileName>
@@ -564,11 +679,6 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
             </File>
             <File>
-              <FileName>psa_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
-            </File>
-            <File>
               <FileName>tfm_psa_call_pack.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
@@ -586,12 +696,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/include/psa_manifest</GroupName>
+          <GroupName>tf-m/interface/include/os_wrapper</GroupName>
           <Files>
             <File>
-              <FileName>sid.h</FileName>
+              <FileName>common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest/sid.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mutex.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/mutex.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/client.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_client_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_client_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
+            </File>
+            <File>
+              <FileName>framework_feature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
+            </File>
+            <File>
+              <FileName>initial_attestation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/initial_attestation.h</FilePath>
+            </File>
+            <File>
+              <FileName>internal_trusted_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/internal_trusted_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>lifecycle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/lifecycle.h</FilePath>
+            </File>
+            <File>
+              <FileName>protected_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/protected_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>service.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/service.h</FilePath>
+            </File>
+            <File>
+              <FileName>storage_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/storage_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/psa/tfm</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_arch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch_v8m.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/include</GroupName>
+          <Files>
+            <File>
+              <FileName>config_tfm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/config_tfm.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/config</GroupName>
+          <Files>
+            <File>
+              <FileName>config_base.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/config/config_base.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/partitions/crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>config_crypto_check.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/config_crypto_check.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/partitions/protected_storage</GroupName>
+          <Files>
+            <File>
+              <FileName>config_ps_check.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/config_ps_check.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/src/os_wrapper</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_ns_interface_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/os_wrapper/tfm_ns_interface_rtos.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -599,29 +884,29 @@
           <GroupName>tf-m/interface/src</GroupName>
           <Files>
             <File>
-              <FileName>tfm_crypto_ipc_api.c</FileName>
+              <FileName>tfm_crypto_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_crypto_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_crypto_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_initial_attestation_ipc_api.c</FileName>
+              <FileName>tfm_attest_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_initial_attestation_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_attest_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_its_ipc_api.c</FileName>
+              <FileName>tfm_its_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_its_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_its_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_ps_ipc_api.c</FileName>
+              <FileName>tfm_ps_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_ps_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_ps_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_platform_ipc_api.c</FileName>
+              <FileName>tfm_platform_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_platform_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_platform_api.c</FilePath>
             </File>
             <File>
               <FileName>tfm_psa_ns_api.c</FileName>
@@ -776,42 +1061,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe</GroupName>
+          <GroupName>api-tests/platform/targets/tgt_dev_apis_nxp/nspe</GroupName>
           <Files>
             <File>
               <FileName>pal_attestation_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_attestation_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</FilePath>
             </File>
             <File>
               <FileName>pal_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</FilePath>
             </File>
             <File>
               <FileName>pal_crypto_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_crypto_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</FilePath>
             </File>
             <File>
               <FileName>pal_driver_intf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_driver_intf.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</FilePath>
             </File>
             <File>
               <FileName>pal_storage_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_storage_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</FilePath>
             </File>
             <File>
               <FileName>target_database.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/target_database.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</FilePath>
             </File>
             <File>
               <FileName>target_database.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/target_database.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -897,71 +1182,6 @@
               <FileName>test_entry_a001.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001/test_entry_a001.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/t_cose/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>t_cose_sign1_sign.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_sign1_sign.h</FilePath>
-            </File>
-            <File>
-              <FileName>t_cose_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/qcbor/src</GroupName>
-          <Files>
-            <File>
-              <FileName>ieee754.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/ieee754.c</FilePath>
-            </File>
-            <File>
-              <FileName>ieee754.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/ieee754.h</FilePath>
-            </File>
-            <File>
-              <FileName>qcbor_decode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/qcbor_decode.c</FilePath>
-            </File>
-            <File>
-              <FileName>qcbor_encode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/qcbor_encode.c</FilePath>
-            </File>
-            <File>
-              <FileName>UsefulBuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/UsefulBuf.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/qcbor/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>qcbor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/qcbor.h</FilePath>
-            </File>
-            <File>
-              <FileName>q_useful_buf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/q_useful_buf.h</FilePath>
-            </File>
-            <File>
-              <FileName>UsefulBuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/UsefulBuf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1601,6 +1821,131 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c026</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c026.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_c026.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c026.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_c026.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c026.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_entry_c026.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c027</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c027.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_c027.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c027.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_c027.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c027.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_entry_c027.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c028</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c028.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_c028.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c028.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_c028.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c028.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_entry_c028.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c029</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c029.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_c029.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c029.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_c029.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c029.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_entry_c029.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c030</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c030.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_c030.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c030.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_c030.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c030.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_entry_c030.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>api-tests/dev_apis/crypto/test_c031</GroupName>
           <Files>
             <File>
@@ -1672,6 +2017,131 @@
               <FileName>test_entry_c033.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033/test_entry_c033.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c034</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c034.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_c034.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c034.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_c034.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c034.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_entry_c034.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c035</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c035.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_c035.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c035.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_c035.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c035.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_entry_c035.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c036</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c036.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_c036.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c036.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_c036.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c036.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_entry_c036.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c037</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c037.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_c037.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c037.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_c037.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c037.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_entry_c037.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c038</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c038.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_c038.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c038.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_c038.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c038.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_entry_c038.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1897,6 +2367,106 @@
               <FileName>test_entry_c047.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047/test_entry_c047.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c048</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c048.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_c048.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c048.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_c048.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c048.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_entry_c048.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c049</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c049.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_c049.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c049.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_c049.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c049.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_entry_c049.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c050</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_c050.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c050.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_c050.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_entry_c050.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c051</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c051.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_c051.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c051.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_c051.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c051.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_entry_c051.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2994,6 +3564,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -3007,16 +3587,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3051,246 +3621,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/include</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_plat_crypto_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_hal_device_header.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_boot_seed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_device_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>region.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/region.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/common</GroupName>
-          <Files>
-            <File>
-              <FileName>uart_stdout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart_stdout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/common/CMSIS_Driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/CMSIS_Driver/Driver_USART.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_definition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_irq.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_regs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
-          <Files>
-            <File>
-              <FileName>device_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_builtin_key_ids.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include/psa</GroupName>
-          <Files>
-            <File>
-              <FileName>client.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/client.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_client_struct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_client_struct.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_extra.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_extra.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_sizes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_sizes.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_struct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_struct.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_types.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_values.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_values.h</FilePath>
-            </File>
-            <File>
-              <FileName>error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
-            </File>
-            <File>
-              <FileName>framework_feature.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
-            </File>
-            <File>
-              <FileName>initial_attestation.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/initial_attestation.h</FilePath>
-            </File>
-            <File>
-              <FileName>internal_trusted_storage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/internal_trusted_storage.h</FilePath>
-            </File>
-            <File>
-              <FileName>lifecycle.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/lifecycle.h</FilePath>
-            </File>
-            <File>
-              <FileName>protected_storage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/protected_storage.h</FilePath>
-            </File>
-            <File>
-              <FileName>service.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/service.h</FilePath>
-            </File>
-            <File>
-              <FileName>storage_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/storage_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_compat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_compat.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/secure_fw/spm/include</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_arch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch_v8m.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m-tests/app</GroupName>
           <Files>
             <File>
@@ -3318,11 +3648,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_log.h</FilePath>
             </File>
-            <File>
-              <FileName>tfm_ns_interface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_ns_interface.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -3344,11 +3669,6 @@
           <GroupName>tf-m-tests/ns_interface/os_wrapper</GroupName>
           <Files>
             <File>
-              <FileName>common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/common.h</FilePath>
-            </File>
-            <File>
               <FileName>delay.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/delay.h</FilePath>
@@ -3357,11 +3677,6 @@
               <FileName>msg_queue.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/msg_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>mutex.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/mutex.h</FilePath>
             </File>
             <File>
               <FileName>semaphore.h</FileName>
@@ -3456,6 +3771,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>config_tfm_target.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/config_tfm_target.h</FilePath>
+            </File>
+            <File>
+              <FileName>target_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/target_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_peripherals_def.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/tfm_peripherals_def.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>platform_base_address.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_base_address.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/partition</GroupName>
+          <Files>
+            <File>
+              <FileName>region_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/region_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_layout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/flash_layout.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS/RTOS2/Include</GroupName>
           <Files>
             <File>
@@ -3467,6 +3827,91 @@
               <FileName>cmsis_os2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/RTOS2/Include/cmsis_os2.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/lib/ext/t_cose/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>t_cose_sign1_sign.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_sign1_sign.h</FilePath>
+            </File>
+            <File>
+              <FileName>t_cose_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>qcbor/src</GroupName>
+          <Files>
+            <File>
+              <FileName>ieee754.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/ieee754.c</FilePath>
+            </File>
+            <File>
+              <FileName>ieee754.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/ieee754.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/qcbor_decode.c</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_encode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/qcbor_encode.c</FilePath>
+            </File>
+            <File>
+              <FileName>UsefulBuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/UsefulBuf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>qcbor/inc/qcbor</GroupName>
+          <Files>
+            <File>
+              <FileName>qcbor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_decode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_decode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_encode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_encode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_spiffy_decode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_spiffy_decode.h</FilePath>
+            </File>
+            <File>
+              <FileName>UsefulBuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/UsefulBuf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3502,11 +3947,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3577,7 +4017,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns.sct" -o "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition" -I"$P/../../../../../../middleware/tfm/tf-m/platform/ext/common" "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns.sct" -o "$P/../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -3841,9 +4281,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, TF_M_PROFILE_MEDIUM, TFM_PSA_API, INITIAL_ATTESTATION, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, OS_DYNAMIC_MEM_SIZE=7168, PSA_API_TEST_NS=1, MCUXPRESSO_SDK, TFM_LVL=2, PROJECT_CONFIG_HEADER_FILE='\"config_profile_large.h\"', CONFIG_TFM_FLOAT_ABI=2, CONFIG_TFM_ENABLE_CP10CP11, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, CONFIG_TFM_USE_TRUSTZONE, ATTEST_TOKEN_PROFILE_PSA_IOT_1, PLATFORM_DEFAULT_CRYPTO_KEYS, PS_ENCRYPTION, INITIAL_ATTESTATION, TF_M_PROFILE_LARGE, CRYPTO, INTERNAL_TRUSTED_STORAGE, ITS_TEST, PROTECTED_STORAGE, PS_TEST, SERIAL_PORT_TYPE_UART=1, TARGET_CONFIG_HEADER_FILE='\"config_tfm_target.h\"', QCBOR_DISABLE_FLOAT_HW_USE, USEFULBUF_DISABLE_ALL_FLOAT, QCBOR_DISABLE_PREFERRED_FLOAT</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT595S;..;../../../../../../middleware/tfm/tf-m/config/profile;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/config;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/crypto;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe;../../../../../../middleware/tfm/psa-arch-tests/api-tests/val;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/initial_attestation;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/common;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c017;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c018;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c019;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c020;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c021;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c022;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c023;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c024;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c025;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c032;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c039;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c040;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c041;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c042;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c043;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c044;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c045;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c046;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c052;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c053;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c054;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c055;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c056;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c057;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c058;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c059;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c060;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c061;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/internal_trusted_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s001;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s002;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s003;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s004;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s005;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s006;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s007;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s008;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s009;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s010;../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/protected_storage;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s011;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s012;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s013;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s014;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s015;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s016;../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/storage/test_s017;../../../../../../devices/MIMXRT595S/drivers;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include;../../../../../../CMSIS/RTOS2/Include;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/qcbor/src;../../../../../../middleware/tfm/qcbor/inc;../../../../../../middleware/tfm/qcbor/inc/qcbor;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3874,10 +4314,10 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20040000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
+            <ScatterFile>../../../../../../middleware/tfm/tf-m/platform/ext/common/armclang/tfm_common_ns_pre.sct</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../tfm_psatest_s/mdk/release/tfm_psatest_s_CMSE_lib.o ../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib --remove --entry=Reset_Handler</Misc>
+            <Misc>../../../../../../CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib ../../tfm_psatest_s/mdk/release/tfm_psatest_s_CMSE_lib.o --remove --entry=Reset_Handler --diag_suppress 6314</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3888,9 +4328,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT595S_cm33_ns.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/armclang/startup_MIMXRT595S_cm33_ns.S</FilePath>
+              <FileName>startup_evkmimxrt595.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/startup_evkmimxrt595.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3990,42 +4430,162 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595</GroupName>
+          <GroupName>tf-m/config/profile</GroupName>
           <Files>
             <File>
-              <FileName>target_cfg.h</FileName>
+              <FileName>config_profile_large.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/target_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_peripherals_def.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/tfm_peripherals_def.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/config/profile/config_profile_large.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</GroupName>
+          <GroupName>tf-m/platform/include</GroupName>
           <Files>
             <File>
-              <FileName>platform_base_address.h</FileName>
+              <FileName>tfm_plat_crypto_keys.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_base_address.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_device_header.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_boot_seed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_device_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_ns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</FilePath>
+            </File>
+            <File>
+              <FileName>region.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/region.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_test.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/partition</GroupName>
+          <GroupName>tf-m/platform/ext/common</GroupName>
           <Files>
             <File>
-              <FileName>region_defs.h</FileName>
+              <FileName>uart_stdout.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/region_defs.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</FilePath>
             </File>
             <File>
-              <FileName>flash_layout.h</FileName>
+              <FileName>uart_stdout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/driver</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/flash_layout.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_Common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common</GroupName>
+          <Files>
+            <File>
+              <FileName>libc_dummy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/libc_dummy.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/CMSIS_Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>Driver_USART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/CMSIS_Driver/Driver_USART.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_definition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_irq.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_regs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
+          <Files>
+            <File>
+              <FileName>device_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_builtin_key_ids.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/psa_manifest</GroupName>
+          <Files>
+            <File>
+              <FileName>sid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest/sid.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4041,11 +4601,6 @@
               <FileName>config_impl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_veneers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</FilePath>
             </File>
             <File>
               <FileName>tfm_crypto_defs.h</FileName>
@@ -4073,11 +4628,6 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
             </File>
             <File>
-              <FileName>psa_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
-            </File>
-            <File>
               <FileName>tfm_psa_call_pack.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
@@ -4095,12 +4645,187 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/include/psa_manifest</GroupName>
+          <GroupName>tf-m/interface/include/os_wrapper</GroupName>
           <Files>
             <File>
-              <FileName>sid.h</FileName>
+              <FileName>common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest/sid.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mutex.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/mutex.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/client.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_client_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_client_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
+            </File>
+            <File>
+              <FileName>framework_feature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
+            </File>
+            <File>
+              <FileName>initial_attestation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/initial_attestation.h</FilePath>
+            </File>
+            <File>
+              <FileName>internal_trusted_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/internal_trusted_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>lifecycle.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/lifecycle.h</FilePath>
+            </File>
+            <File>
+              <FileName>protected_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/protected_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>service.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/service.h</FilePath>
+            </File>
+            <File>
+              <FileName>storage_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/storage_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/include/psa/tfm</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/tfm/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_arch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch_v8m.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/include</GroupName>
+          <Files>
+            <File>
+              <FileName>config_tfm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/config_tfm.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/config</GroupName>
+          <Files>
+            <File>
+              <FileName>config_base.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/config/config_base.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/partitions/crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>config_crypto_check.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/config_crypto_check.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/partitions/protected_storage</GroupName>
+          <Files>
+            <File>
+              <FileName>config_ps_check.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/config_ps_check.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/interface/src/os_wrapper</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_ns_interface_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/os_wrapper/tfm_ns_interface_rtos.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4108,29 +4833,29 @@
           <GroupName>tf-m/interface/src</GroupName>
           <Files>
             <File>
-              <FileName>tfm_crypto_ipc_api.c</FileName>
+              <FileName>tfm_crypto_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_crypto_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_crypto_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_initial_attestation_ipc_api.c</FileName>
+              <FileName>tfm_attest_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_initial_attestation_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_attest_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_its_ipc_api.c</FileName>
+              <FileName>tfm_its_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_its_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_its_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_ps_ipc_api.c</FileName>
+              <FileName>tfm_ps_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_ps_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_ps_api.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_platform_ipc_api.c</FileName>
+              <FileName>tfm_platform_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_platform_ipc_api.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_platform_api.c</FilePath>
             </File>
             <File>
               <FileName>tfm_psa_ns_api.c</FileName>
@@ -4285,42 +5010,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe</GroupName>
+          <GroupName>api-tests/platform/targets/tgt_dev_apis_nxp/nspe</GroupName>
           <Files>
             <File>
               <FileName>pal_attestation_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_attestation_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_attestation_config.h</FilePath>
             </File>
             <File>
               <FileName>pal_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_config.h</FilePath>
             </File>
             <File>
               <FileName>pal_crypto_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_crypto_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_crypto_config.h</FilePath>
             </File>
             <File>
               <FileName>pal_driver_intf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_driver_intf.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c</FilePath>
             </File>
             <File>
               <FileName>pal_storage_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/pal_storage_config.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/pal_storage_config.h</FilePath>
             </File>
             <File>
               <FileName>target_database.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/target_database.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.h</FilePath>
             </File>
             <File>
               <FileName>target_database.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_tfm_nxp/nspe/target_database.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4406,71 +5131,6 @@
               <FileName>test_entry_a001.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/initial_attestation/test_a001/test_entry_a001.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/t_cose/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>t_cose_sign1_sign.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_sign1_sign.h</FilePath>
-            </File>
-            <File>
-              <FileName>t_cose_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/qcbor/src</GroupName>
-          <Files>
-            <File>
-              <FileName>ieee754.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/ieee754.c</FilePath>
-            </File>
-            <File>
-              <FileName>ieee754.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/ieee754.h</FilePath>
-            </File>
-            <File>
-              <FileName>qcbor_decode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/qcbor_decode.c</FilePath>
-            </File>
-            <File>
-              <FileName>qcbor_encode.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/qcbor_encode.c</FilePath>
-            </File>
-            <File>
-              <FileName>UsefulBuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/UsefulBuf.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/qcbor/inc</GroupName>
-          <Files>
-            <File>
-              <FileName>qcbor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/qcbor.h</FilePath>
-            </File>
-            <File>
-              <FileName>q_useful_buf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/q_useful_buf.h</FilePath>
-            </File>
-            <File>
-              <FileName>UsefulBuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/UsefulBuf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5110,6 +5770,131 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c026</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c026.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_c026.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c026.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_c026.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c026.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_entry_c026.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c027</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c027.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_c027.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c027.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_c027.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c027.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_entry_c027.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c028</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c028.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_c028.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c028.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_c028.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c028.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_entry_c028.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c029</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c029.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_c029.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c029.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_c029.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c029.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_entry_c029.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c030</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c030.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_c030.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c030.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_c030.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c030.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_entry_c030.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>api-tests/dev_apis/crypto/test_c031</GroupName>
           <Files>
             <File>
@@ -5181,6 +5966,131 @@
               <FileName>test_entry_c033.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033/test_entry_c033.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c034</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c034.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_c034.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c034.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_c034.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c034.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_entry_c034.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c035</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c035.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_c035.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c035.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_c035.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c035.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_entry_c035.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c036</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c036.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_c036.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c036.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_c036.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c036.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_entry_c036.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c037</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c037.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_c037.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c037.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_c037.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c037.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_entry_c037.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c038</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c038.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_c038.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c038.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_c038.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c038.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_entry_c038.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5406,6 +6316,106 @@
               <FileName>test_entry_c047.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047/test_entry_c047.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c048</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c048.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_c048.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c048.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_c048.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c048.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_entry_c048.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c049</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c049.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_c049.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c049.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_c049.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c049.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_entry_c049.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c050</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_c050.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c050.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_c050.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_entry_c050.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>api-tests/dev_apis/crypto/test_c051</GroupName>
+          <Files>
+            <File>
+              <FileName>test_c051.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_c051.c</FilePath>
+            </File>
+            <File>
+              <FileName>test_c051.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_c051.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>test_entry_c051.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_entry_c051.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6503,6 +7513,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -6516,16 +7536,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6560,246 +7570,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/include</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_plat_crypto_keys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_hal_device_header.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_boot_seed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_device_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>region.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/region.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_plat_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/common</GroupName>
-          <Files>
-            <File>
-              <FileName>uart_stdout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart_stdout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</FilePath>
-            </File>
-            <File>
-              <FileName>Driver_Common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/common/CMSIS_Driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_USART.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/CMSIS_Driver/Driver_USART.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_definition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_irq.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_regs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
-          <Files>
-            <File>
-              <FileName>device_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include/crypto_keys</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_builtin_key_ids.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/crypto_keys/tfm_builtin_key_ids.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include/psa</GroupName>
-          <Files>
-            <File>
-              <FileName>client.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/client.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_client_struct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_client_struct.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_extra.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_extra.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_sizes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_sizes.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_struct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_struct.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_types.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_values.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_values.h</FilePath>
-            </File>
-            <File>
-              <FileName>error.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
-            </File>
-            <File>
-              <FileName>framework_feature.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
-            </File>
-            <File>
-              <FileName>initial_attestation.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/initial_attestation.h</FilePath>
-            </File>
-            <File>
-              <FileName>internal_trusted_storage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/internal_trusted_storage.h</FilePath>
-            </File>
-            <File>
-              <FileName>lifecycle.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/lifecycle.h</FilePath>
-            </File>
-            <File>
-              <FileName>protected_storage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/protected_storage.h</FilePath>
-            </File>
-            <File>
-              <FileName>service.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/service.h</FilePath>
-            </File>
-            <File>
-              <FileName>storage_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/storage_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>crypto_compat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_compat.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/secure_fw/spm/include</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_arch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch_v8m.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m-tests/app</GroupName>
           <Files>
             <File>
@@ -6827,11 +7597,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_log.h</FilePath>
             </File>
-            <File>
-              <FileName>tfm_ns_interface.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/app/tfm_ns_interface.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -6853,11 +7618,6 @@
           <GroupName>tf-m-tests/ns_interface/os_wrapper</GroupName>
           <Files>
             <File>
-              <FileName>common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/common.h</FilePath>
-            </File>
-            <File>
               <FileName>delay.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/delay.h</FilePath>
@@ -6866,11 +7626,6 @@
               <FileName>msg_queue.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/msg_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>mutex.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/mutex.h</FilePath>
             </File>
             <File>
               <FileName>semaphore.h</FileName>
@@ -6965,6 +7720,51 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>config_tfm_target.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/config_tfm_target.h</FilePath>
+            </File>
+            <File>
+              <FileName>target_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/target_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_peripherals_def.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/tfm_peripherals_def.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>platform_base_address.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_base_address.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/evkmimxrt595/partition</GroupName>
+          <Files>
+            <File>
+              <FileName>region_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/region_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_layout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition/flash_layout.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS/RTOS2/Include</GroupName>
           <Files>
             <File>
@@ -6976,6 +7776,91 @@
               <FileName>cmsis_os2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/RTOS2/Include/cmsis_os2.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/lib/ext/t_cose/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>t_cose_sign1_sign.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_sign1_sign.h</FilePath>
+            </File>
+            <File>
+              <FileName>t_cose_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc/t_cose_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>qcbor/src</GroupName>
+          <Files>
+            <File>
+              <FileName>ieee754.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/ieee754.c</FilePath>
+            </File>
+            <File>
+              <FileName>ieee754.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/ieee754.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_decode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/qcbor_decode.c</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_encode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/qcbor_encode.c</FilePath>
+            </File>
+            <File>
+              <FileName>UsefulBuf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/src/UsefulBuf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>qcbor/inc/qcbor</GroupName>
+          <Files>
+            <File>
+              <FileName>qcbor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_decode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_decode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_encode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_encode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_private.h</FilePath>
+            </File>
+            <File>
+              <FileName>qcbor_spiffy_decode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/qcbor_spiffy_decode.h</FilePath>
+            </File>
+            <File>
+              <FileName>UsefulBuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/qcbor/inc/qcbor/UsefulBuf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7011,11 +7896,6 @@
               <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

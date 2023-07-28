@@ -43,7 +43,11 @@ void tfm_plat_test_secure_timer_start(void)
     ctimer_match_config_t matchConfig;
     ctimer_config_t config;
 
+#if defined(CPU_LPC55S36JBD100)
     /* Use 12 MHz clock for some of the Ctimer */
+    CLOCK_SetClkDiv(kCLOCK_DivCtimer2Clk, 0u, false);
+    CLOCK_SetClkDiv(kCLOCK_DivCtimer2Clk, 1u, true);
+#endif
     CLOCK_AttachClk(CTIMER_CLK_ATTACH);
 
     CTIMER_GetDefaultConfig(&config);

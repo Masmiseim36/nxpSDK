@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../components/video/display/dc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -544,26 +544,6 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -582,6 +562,26 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -649,6 +649,11 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma.h</FilePath>
@@ -662,11 +667,6 @@
               <FileName>fsl_smartdma_prv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux_connections.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_dsi.h</FileName>
@@ -1389,6 +1389,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -1524,6 +1534,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -1547,6 +1567,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -2041,9 +2066,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../components/video/display/dc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2077,7 +2102,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2253,26 +2278,6 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -2291,6 +2296,26 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -2358,6 +2383,11 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma.h</FilePath>
@@ -2371,11 +2401,6 @@
               <FileName>fsl_smartdma_prv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux_connections.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_dsi.h</FileName>
@@ -3098,6 +3123,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -3233,6 +3268,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -3256,6 +3301,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -3750,9 +3800,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../components/video/display/dc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3786,7 +3836,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3962,26 +4012,6 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -4000,6 +4030,26 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -4067,6 +4117,11 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma.h</FilePath>
@@ -4080,11 +4135,6 @@
               <FileName>fsl_smartdma_prv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux_connections.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_dsi.h</FileName>
@@ -4807,6 +4857,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -4942,6 +5002,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -4965,6 +5035,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>
@@ -5459,9 +5534,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../common;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../components/video/display/dc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5495,7 +5570,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -5671,26 +5746,6 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common_arm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -5709,6 +5764,26 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -5776,6 +5851,11 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux_connections.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma.h</FilePath>
@@ -5789,11 +5869,6 @@
               <FileName>fsl_smartdma_prv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_inputmux_connections.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_dsi.h</FileName>
@@ -6516,6 +6591,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/MESSAGEBOX.h</FilePath>
             </File>
             <File>
+              <FileName>MOVIE.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE.h</FilePath>
+            </File>
+            <File>
+              <FileName>MOVIE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MOVIE_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
@@ -6651,6 +6736,16 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/TEXT_Private.h</FilePath>
             </File>
             <File>
+              <FileName>TICKER.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER.h</FilePath>
+            </File>
+            <File>
+              <FileName>TICKER_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/TICKER_Private.h</FilePath>
+            </File>
+            <File>
               <FileName>TREEVIEW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/TREEVIEW.h</FilePath>
@@ -6674,6 +6769,11 @@
               <FileName>WIDGET.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET.h</FilePath>
+            </File>
+            <File>
+              <FileName>WIDGET_ID.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/WIDGET_ID.h</FilePath>
             </File>
             <File>
               <FileName>WINDOW_Private.h</FileName>

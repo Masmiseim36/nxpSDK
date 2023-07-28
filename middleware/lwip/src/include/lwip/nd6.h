@@ -81,6 +81,15 @@ void nd6_adjust_mld_membership(struct netif *netif, s8_t addr_idx, u8_t new_stat
 #endif /* LWIP_IPV6_MLD */
 void nd6_restart_netif(struct netif *netif);
 
+#if LWIP_IPV6_SEND_ROUTER_ADVERTISE
+void nd6_enable_ra_send(struct netif *netif, s8_t ipv6_add_idx, u16_t router_lifetime);
+#if LWIP_IPV6_RA_NUM_ROUTE_INFOS > 0
+int nd6_ra_rio_add(struct netif *netif, const ip6_addr_t *prefix, u8_t prefix_len, u16_t lifetime);
+int nd6_ra_rio_remove(struct netif *netif, const ip6_addr_t *prefix, u8_t prefix_len);
+void nd6_ra_rio_remove_all(struct netif *netif);
+#endif /* LWIP_IPV6_RA_NUM_ROUTE_INFOS > 0 */
+#endif /* LWIP_IPV6_SEND_ROUTER_ADVERTISE */
+
 #ifdef __cplusplus
 }
 #endif

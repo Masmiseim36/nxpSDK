@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.13.0</span>
+   &#160;<span id="projectnumber">Rev 2.14.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -140,9 +140,9 @@ Shell Operation</h2>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00439"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00439">shell_command_t</a></td></tr>
-<tr class="memdesc:a00439"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="a00065.html#a00439">More...</a><br/></td></tr>
-<tr class="separator:a00439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00444"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#a00444">shell_command_t</a></td></tr>
+<tr class="memdesc:a00444"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="a00065.html#a00444">More...</a><br/></td></tr>
+<tr class="separator:a00444"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -219,10 +219,10 @@ Shell functional operation</h2></td></tr>
 <tr class="memitem:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a> (<a class="el" href="a00065.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00062.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, char *prompt)</td></tr>
 <tr class="memdesc:ga7961e946400cd244c315cfbbd36ae5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the shell module.  <a href="#ga7961e946400cd244c315cfbbd36ae5d1">More...</a><br/></td></tr>
 <tr class="separator:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a> (<a class="el" href="a00065.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00065.html#a00439">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memitem:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a> (<a class="el" href="a00065.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00065.html#a00444">shell_command_t</a> *shellCommand)</td></tr>
 <tr class="memdesc:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the shell command.  <a href="#gab5f85f3ba2cc7dd58bc85076c19c5177">More...</a><br/></td></tr>
 <tr class="separator:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53355638d856258b0bcb76e308803dab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga53355638d856258b0bcb76e308803dab">SHELL_UnregisterCommand</a> (<a class="el" href="a00065.html#a00439">shell_command_t</a> *shellCommand)</td></tr>
+<tr class="memitem:ga53355638d856258b0bcb76e308803dab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga53355638d856258b0bcb76e308803dab">SHELL_UnregisterCommand</a> (<a class="el" href="a00065.html#a00444">shell_command_t</a> *shellCommand)</td></tr>
 <tr class="memdesc:ga53355638d856258b0bcb76e308803dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the shell command.  <a href="#ga53355638d856258b0bcb76e308803dab">More...</a><br/></td></tr>
 <tr class="separator:ga53355638d856258b0bcb76e308803dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00065.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html#ga9f182608b5a6107757be5bb8a90ad74c">SHELL_Write</a> (<a class="el" href="a00065.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
@@ -251,7 +251,7 @@ Shell functional operation</h2></td></tr>
 <tr class="separator:ga4eeb17b16773359c132f1d40478938ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00439" id="a00439"></a>
+<a name="a00444" id="a00444"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -406,7 +406,7 @@ list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <b>Value:</b><div class="fragment"><div class="line">(160U + <a class="code" href="a00065.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a> * <a class="code" href="a00065.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + <a class="code" href="a00065.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + SERIAL_MANAGER_READ_HANDLE_SIZE + <a class="code" href="a00062.html#gac278be51c3508495c1be1a4cff566f3f">\</a></div>
 <div class="line"><a class="code" href="a00062.html#gac278be51c3508495c1be1a4cff566f3f">     SERIAL_MANAGER_WRITE_HANDLE_SIZE</a>)</div>
 <div class="ttc" id="a00065_html_ga4362aa35752c9abf77387a237faaaea5"><div class="ttname"><a href="a00065.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a></div><div class="ttdeci">#define SHELL_HISTORY_COUNT</div><div class="ttdoc">Macro to set maximum count of history commands. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:43</div></div>
-<div class="ttc" id="a00062_html_gac278be51c3508495c1be1a4cff566f3f"><div class="ttname"><a href="a00062.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a></div><div class="ttdeci">#define SERIAL_MANAGER_WRITE_HANDLE_SIZE</div><div class="ttdoc">Set serial manager write handle size. </div><div class="ttdef"><b>Definition:</b> fsl_component_serial_manager.h:123</div></div>
+<div class="ttc" id="a00062_html_gac278be51c3508495c1be1a4cff566f3f"><div class="ttname"><a href="a00062.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a></div><div class="ttdeci">#define SERIAL_MANAGER_WRITE_HANDLE_SIZE</div><div class="ttdoc">Set serial manager write handle size. </div><div class="ttdef"><b>Definition:</b> fsl_component_serial_manager.h:124</div></div>
 <div class="ttc" id="a00065_html_gaf98219b0fb886040896b83966903a135"><div class="ttname"><a href="a00065.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a></div><div class="ttdeci">#define SHELL_BUFFER_SIZE</div><div class="ttdoc">Macro to set console buffer size. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:35</div></div>
 </div><!-- fragment --><p>It is the sum of the SHELL_HISTORY_COUNT * SHELL_BUFFER_SIZE + SHELL_BUFFER_SIZE + SERIAL_MANAGER_READ_HANDLE_SIZE + SERIAL_MANAGER_WRITE_HANDLE_SIZE </p>
 
@@ -514,7 +514,7 @@ list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <div class="line">    shell_command_t g_shellCommand##command = {                         \</div>
 <div class="line">        (#command), (descriptor), (callback), (paramCount), {0},        \</div>
 <div class="line">    }</div>
-</div><!-- fragment --><p>This macro is used to define the shell command structure <a class="el" href="a00065.html#a00439" title="User command data configuration structure. ">shell_command_t</a>. And then uses the macro SHELL_COMMAND to get the command structure pointer. The macro should not be used in any function.</p>
+</div><!-- fragment --><p>This macro is used to define the shell command structure <a class="el" href="a00065.html#a00444" title="User command data configuration structure. ">shell_command_t</a>. And then uses the macro SHELL_COMMAND to get the command structure pointer. The macro should not be used in any function.</p>
 <p>This is a example, </p>
 <div class="fragment"><div class="line">* <a class="code" href="a00065.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
 <div class="line">* <a class="code" href="a00065.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00065.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
@@ -664,7 +664,7 @@ list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00439">shell_command_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00444">shell_command_t</a> *&#160;</td>
           <td class="paramname"><em>shellCommand</em>&#160;</td>
         </tr>
         <tr>
@@ -702,7 +702,7 @@ list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
         <tr>
           <td class="memname"><a class="el" href="a00065.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_UnregisterCommand </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00065.html#a00439">shell_command_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00065.html#a00444">shell_command_t</a> *&#160;</td>
           <td class="paramname"><em>shellCommand</em></td><td>)</td>
           <td></td>
         </tr>

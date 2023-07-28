@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -27,9 +27,6 @@
 #endif
 #ifdef TEST_S_PLATFORM
 #include "platform_s_tests.h"
-#endif
-#ifdef TEST_S_AUDIT
-#include "audit_s_tests.h"
 #endif
 #ifdef TEST_S_IPC
 #include "ipc_s_tests.h"
@@ -83,11 +80,6 @@ static struct test_suite_t test_suites[] = {
 #ifdef TEST_S_PLATFORM
     /* Secure platform service test cases */
     {&register_testsuite_s_platform_interface, 0, 0, 0},
-#endif
-
-#ifdef TEST_S_AUDIT
-    /* Secure Audit Logging test cases */
-    {&register_testsuite_s_audit_interface, 0, 0, 0},
 #endif
 
 #ifdef TEST_S_FWU

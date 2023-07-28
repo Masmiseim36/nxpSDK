@@ -1,7 +1,9 @@
 var a00244 =
 [
-    [ "SPI CMSIS driver", "a00245.html", null ],
-    [ "SPI DMA Driver", "a00068.html", "a00068" ],
-    [ "SPI Driver", "a00067.html", "a00067" ],
-    [ "SPI FreeRTOS driver", "a00069.html", "a00069" ]
+    [ "I2C CMSIS Driver", "a00246.html", null ],
+    [ "I2C DMA Driver", "a00036.html", "a00036" ],
+    [ "I2C Driver", "a00245.html", "a00245" ],
+    [ "I2C FreeRTOS Driver", "a00037.html", "a00037" ],
+    [ "I2C Master Driver", "a00035.html", "a00035" ],
+    [ "I2C Slave Driver", "a00038.html", "a00038" ]
 ];

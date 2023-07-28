@@ -46,23 +46,26 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -include ${ProjDirPath}/../app_config.h \
     -DDEBUG \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
-    -DUSE_RTOS=1 \
     -DXIP_IMAGE \
     -DXIP_EXTERNAL_FLASH \
-    -DSDK_OS_FREE_RTOS \
+    -DUSE_RTOS=1 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDIO_ENABLED \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
+    -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DLWIP_DNS=1 \
+    -DLWIP_NETIF_HOSTNAME=1 \
+    -DLWIP_NETIF_STATUS_CALLBACK=1 \
+    -DLWIP_IGMP=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
-    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -82,22 +85,25 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -include ${ProjDirPath}/../app_config.h \
     -DNDEBUG \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
-    -DUSE_RTOS=1 \
     -DXIP_IMAGE \
     -DXIP_EXTERNAL_FLASH \
-    -DSDK_OS_FREE_RTOS \
+    -DUSE_RTOS=1 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDIO_ENABLED \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
+    -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DLWIP_DNS=1 \
+    -DLWIP_NETIF_HOSTNAME=1 \
+    -DLWIP_NETIF_STATUS_CALLBACK=1 \
+    -DLWIP_IGMP=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
-    -DMCUXPRESSO_SDK \
     -Os \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -118,23 +124,26 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -include ${ProjDirPath}/../app_config.h \
     -DDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
-    -DUSE_RTOS=1 \
     -DXIP_IMAGE \
     -DXIP_EXTERNAL_FLASH \
-    -DSDK_OS_FREE_RTOS \
+    -DUSE_RTOS=1 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDIO_ENABLED \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
+    -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DLWIP_DNS=1 \
+    -DLWIP_NETIF_HOSTNAME=1 \
+    -DLWIP_NETIF_STATUS_CALLBACK=1 \
+    -DLWIP_IGMP=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
-    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -155,22 +164,25 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -include ${ProjDirPath}/../app_config.h \
     -DNDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
-    -DUSE_RTOS=1 \
     -DXIP_IMAGE \
     -DXIP_EXTERNAL_FLASH \
-    -DSDK_OS_FREE_RTOS \
+    -DUSE_RTOS=1 \
+    -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DMCUXPRESSO_SDK \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDIO_ENABLED \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
+    -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DLWIP_DNS=1 \
+    -DLWIP_NETIF_HOSTNAME=1 \
+    -DLWIP_NETIF_STATUS_CALLBACK=1 \
+    -DLWIP_IGMP=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
-    -DMCUXPRESSO_SDK \
     -Os \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -189,8 +201,8 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
     -DDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -212,8 +224,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -234,8 +246,8 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -257,8 +269,8 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \

@@ -1,7 +1,7 @@
 /*
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -64,10 +64,8 @@
 #define os_dprintf(...)
 #endif
 
-#define is_isr_context() ((SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) > 0U) //(xPortIsInsideInterrupt())
+bool is_isr_context(void);
 
-/* System clock frequency. */
-extern uint32_t SystemCoreClock;
 /* the OS timer register is loaded with CNTMAX */
 #define CNTMAX                 ((SystemCoreClock / configTICK_RATE_HZ) - 1UL)
 #define CPU_CLOCK_TICKSPERUSEC (SystemCoreClock / 1000000U)
@@ -1057,13 +1055,23 @@ void _os_delay(int cnt);
  */
 #define os_get_runtime_stats(__buff__) vTaskGetRunTimeStats(__buff__)
 
+/**
+ * \def os_get_task_list(__buff__)
+ *
+ * Get ASCII formatted task list
+ *
+ * Please ensure that your buffer is big enough for the formatted data to
+ * fit. Failing to do this may cause memory data corruption.
+ */
+
+#define os_get_task_list(__buff__) vTaskList(__buff__)
+
 /** Disables all interrupts at NVIC level */
 void os_disable_all_interrupts(void);
 
 /** Enable all interrupts at NVIC lebel */
 void os_enable_all_interrupts(void);
 
-#if defined(RW610)
 /* Init value for rand generator seed */
 extern uint32_t wm_rand_seed;
 
@@ -1104,5 +1112,7 @@ static inline uint32_t os_rand_range(uint32_t low, uint32_t high)
     }
     return (low + os_rand() % (high - low));
 }
-#endif
+
+void os_dump_threadinfo(char *name);
+
 #endif /* ! _WM_OS_H_ */

@@ -8,6 +8,32 @@
   The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
   change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
 
+  - 2.2.0_rev9
+    - New features:
+      - Ported lwIP 2.2.0.dev (2023-01-03, branch: master, SHA-1: 3fe8d2fc43a9b69f7ed28c63d44a7744f9c0def9) to MCUXpresso SDK.
+      - Applied patch to allow sending IPv6 router advertisement. Improved to allow selection of interface and router life time 
+        and to allow sending route information options.
+      - src/apps/lwiperf: Support for reverse test (client receives, server sends). Requires iperf version 2.1.0 or newer.
+    - Bug fixes:
+      - src/apps/httpsrv: Fixed operation with LWIP_IPV6 enabled. Server can be also accessed using both IPv4 and IPv6 at the same
+        time if compiled with both LWIP_IPV4=1 and LWIP_IPV6=1.
+        Note the type of the field struct httpsrv_param_struct.address has changed from struct sockaddr to struct sockaddr_storage.
+
+  - 2.2.0_rev8
+    - New features:
+      - src/apps/lwiperf: Added new parameter "buffer_len" to functions lwiperf_start_tcp_client() and lwiperf_start_udp_client()
+        to configure TCP/UDP packet size.
+      - src/apps/lwiperf: Added new parameter "tos" to functions lwiperf_start_tcp_client() to configure TCP packet priority.
+      - NETC adaptation layer: Not forcing the RX/TX buffers placement in non-cacheable memory.
+        Requires the symbol FSL_ETH_ENABLE_CACHE_CONTROL to be defined on project level if the memory region,
+        where the buffers are placed by a linker, has cache enabled.
+    - Bug fixes:
+      - src/apps/httpsrv: Added missing includes.
+      - src/apps/lwiperf: Fixed TCP client to send settings at the beginning of each 128 KB block like the PC iperf 2.0.x application does.
+      - src/apps/lwiperf: Fixed validation of TCP received data (with LWIPERF_CHECK_RX_DATA enabled, works with iperf 2.0.x).
+      - src/apps/lwiperf: Fixed lwiperf_list_remove() to clear references to the removed item.
+    - src/apps/lwiperf: Program does not assert when buffer cannot be cloned in UDP test, only "can't clone buffer" message is printed.
+
   - 2.2.0_rev7
     - New features:
       - Ported lwIP 2.2.0.dev (2022-05-09, branch: master, SHA-1: 239918ccc173cb2c2a62f41a40fd893f57faf1d6) to MCUXpresso SDK.

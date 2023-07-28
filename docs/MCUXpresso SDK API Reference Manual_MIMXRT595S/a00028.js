@@ -1,6 +1,6 @@
 var a00028 =
 [
-    [ "FLEXIO_SPI_Type", "a00028.html#a00355", [
+    [ "FLEXIO_SPI_Type", "a00028.html#a00361", [
       [ "flexioBase", "a00028.html#a6f884e3d820db0fa2c2974d9e8feaca1", null ],
       [ "SDOPinIndex", "a00028.html#a5df20f69be0906774c5b3d9c06821868", null ],
       [ "SDIPinIndex", "a00028.html#a176d632a86bd48ee20db504ddb5ace5d", null ],
@@ -9,7 +9,7 @@ var a00028 =
       [ "shifterIndex", "a00028.html#ad2ab114592f4a5982720447f8cd9e90d", null ],
       [ "timerIndex", "a00028.html#a952204114daf59aeeb9437af1abc6eef", null ]
     ] ],
-    [ "flexio_spi_master_config_t", "a00028.html#a00352", [
+    [ "flexio_spi_master_config_t", "a00028.html#a00358", [
       [ "enableMaster", "a00028.html#abfa7b62cfa5ecc303b203c9206e8511b", null ],
       [ "enableInDoze", "a00028.html#ace1bcfad14f01d682d72126fe8977379", null ],
       [ "enableInDebug", "a00028.html#ae25034f9e6018e4fb4688ed8867c6b18", null ],
@@ -18,7 +18,7 @@ var a00028 =
       [ "phase", "a00028.html#a76cac3e67183266b66cf25a29c2669bf", null ],
       [ "dataMode", "a00028.html#a1ed3e04044edd43a3ab1658b83cc7a70", null ]
     ] ],
-    [ "flexio_spi_slave_config_t", "a00028.html#a00353", [
+    [ "flexio_spi_slave_config_t", "a00028.html#a00359", [
       [ "enableSlave", "a00028.html#a5fcf34758ddd907b1860679305858de1", null ],
       [ "enableInDoze", "a00028.html#ab13e01169ca99c72157d7e927e9c7d6f", null ],
       [ "enableInDebug", "a00028.html#af4180104efb170139a0e4ab731e38361", null ],
@@ -26,13 +26,13 @@ var a00028 =
       [ "phase", "a00028.html#a5ba29aaf41caf774f7077f1e8fe64404", null ],
       [ "dataMode", "a00028.html#a5b7c853f42ed1b2e53e07034daf3d26f", null ]
     ] ],
-    [ "flexio_spi_transfer_t", "a00028.html#a00354", [
+    [ "flexio_spi_transfer_t", "a00028.html#a00360", [
       [ "txData", "a00028.html#adce5c034b8842ec6a9d3c3d2f12f2b72", null ],
       [ "rxData", "a00028.html#a5a1a761e9cc6c90947ad55b701324258", null ],
       [ "dataSize", "a00028.html#a5e76062efe44914a5bbb2f4fc3ca3aac", null ],
       [ "flags", "a00028.html#a890b496be606905d29d43abedf7e753b", null ]
     ] ],
-    [ "flexio_spi_master_handle_t", "a00028.html#a00289", [
+    [ "flexio_spi_master_handle_t", "a00028.html#a00293", [
       [ "txData", "a00028.html#a9a8bad99d5d80699be0d248092ac8d80", null ],
       [ "rxData", "a00028.html#a6f04ebbd2ad671dd6657be16c26bd1e6", null ],
       [ "transferSize", "a00028.html#aee24e8b68706ac6bb69c501295b8f289", null ],
@@ -51,10 +51,10 @@ var a00028 =
     [ "flexio_spi_slave_handle_t", "a00028.html#ga1950678efd37cb3665e303e094cec428", null ],
     [ "flexio_spi_master_transfer_callback_t", "a00028.html#ga9c8b509b90588dea1921de0bdb3cfec8", null ],
     [ "flexio_spi_slave_transfer_callback_t", "a00028.html#gad2accadc980b51b0d65e41d122abe261", [
-      [ "kStatus_FLEXIO_SPI_Busy", "a00028.html#gga16af7b253440dadd46a80a4b9fddba4da9fd2c82e84cdc65b4c2d7c3d335bc4e1", null ],
-      [ "kStatus_FLEXIO_SPI_Idle", "a00028.html#gga16af7b253440dadd46a80a4b9fddba4da69ccc78c05f6f6ed17f4d48e20323ec8", null ],
-      [ "kStatus_FLEXIO_SPI_Error", "a00028.html#gga16af7b253440dadd46a80a4b9fddba4da4ae19baeae73d05d2dcf34dc4c54c6c4", null ],
-      [ "kStatus_FLEXIO_SPI_Timeout", "a00028.html#gga16af7b253440dadd46a80a4b9fddba4dae001cfaa37d2b750cd88808cbc3d7522", null ]
+      [ "kStatus_FLEXIO_SPI_Busy", "a00028.html#gga80155586fa275b28773c9b203f52cabaa9fd2c82e84cdc65b4c2d7c3d335bc4e1", null ],
+      [ "kStatus_FLEXIO_SPI_Idle", "a00028.html#gga80155586fa275b28773c9b203f52cabaa69ccc78c05f6f6ed17f4d48e20323ec8", null ],
+      [ "kStatus_FLEXIO_SPI_Error", "a00028.html#gga80155586fa275b28773c9b203f52cabaa4ae19baeae73d05d2dcf34dc4c54c6c4", null ],
+      [ "kStatus_FLEXIO_SPI_Timeout", "a00028.html#gga80155586fa275b28773c9b203f52cabaae001cfaa37d2b750cd88808cbc3d7522", null ]
     ] ],
     [ "flexio_spi_clock_phase_t", "a00028.html#gac059394d6eabe169d3a1ee8a8b6f7edd", [
       [ "kFLEXIO_SPI_ClockPhaseFirstEdge", "a00028.html#ggac059394d6eabe169d3a1ee8a8b6f7eddad07a920661cea5317982da4405bfd9e1", null ],

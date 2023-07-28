@@ -8,6 +8,8 @@
 #ifndef _SDMMC_CONFIG_H_
 #define _SDMMC_CONFIG_H_
 
+#include "fsl_common.h"
+
 #ifdef SD_ENABLED
 #include "fsl_sd.h"
 #endif
@@ -25,12 +27,21 @@
  * Definitions
  ******************************************************************************/
 /* @brief host basic configuration */
+#if defined(USDHC0)
+#define BOARD_SDMMC_SD_HOST_BASEADDR   USDHC0
+#define BOARD_SDMMC_SD_HOST_IRQ        USDHC0_IRQn
+#define BOARD_SDMMC_MMC_HOST_BASEADDR  USDHC0
+#define BOARD_SDMMC_MMC_HOST_IRQ       USDHC0_IRQn
+#define BOARD_SDMMC_SDIO_HOST_BASEADDR USDHC0
+#define BOARD_SDMMC_SDIO_HOST_IRQ      USDHC0_IRQn
+#elif defined(USDHC1)
 #define BOARD_SDMMC_SD_HOST_BASEADDR   USDHC1
 #define BOARD_SDMMC_SD_HOST_IRQ        USDHC1_IRQn
 #define BOARD_SDMMC_MMC_HOST_BASEADDR  USDHC1
 #define BOARD_SDMMC_MMC_HOST_IRQ       USDHC1_IRQn
 #define BOARD_SDMMC_SDIO_HOST_BASEADDR USDHC1
 #define BOARD_SDMMC_SDIO_HOST_IRQ      USDHC1_IRQn
+#endif
 /* @brief card detect configuration */
 #define BOARD_SDMMC_SD_CD_GPIO_BASE        GPIO2
 #define BOARD_SDMMC_SD_CD_GPIO_PIN         28u

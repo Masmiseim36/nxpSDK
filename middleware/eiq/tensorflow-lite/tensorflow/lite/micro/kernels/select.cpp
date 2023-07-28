@@ -21,6 +21,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/internal/tensor_ctypes.h"
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/micro/kernels/kernel_util.h"
+#include "tensorflow/lite/micro/micro_log.h"
 
 namespace tflite {
 
@@ -188,7 +189,7 @@ TfLiteStatus SelectEval(TfLiteContext* context, TfLiteNode* node) {
 //
 // 1. Either the same shape (in which case the select is elementwise), or
 // 2. Broadcastable shapes between 'condition', 'x' and 'y'.
-TfLiteRegistration Register_SELECT_V2() {
+TfLiteRegistration_V1 Register_SELECT_V2() {
   return tflite::micro::RegisterOp(tflite::SelectInit, tflite::SelectPrepare,
                                    tflite::SelectEval);
 }

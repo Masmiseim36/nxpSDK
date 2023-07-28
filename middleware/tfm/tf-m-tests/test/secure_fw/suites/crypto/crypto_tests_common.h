@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"             //NXP to avoid file name conflicts between MbedTLS and TFM.
 #include "test_framework_helpers.h"
 #include "crypto_tests_check_config.h"
 
@@ -299,6 +299,14 @@ void psa_cipher_rfc7539_test(struct test_result_t *ret);
  */
 void psa_aead_rfc7539_test(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CHACHA20_POLY1305 */
+
+/**
+ * \brief Tests the RSASSA-PSS signature verification as
+ *        described in RFC8017
+ *
+ * \param[out] ret Test result
+ */
+void psa_verify_rsassa_pss_test(struct test_result_t *ret);
 
 #ifdef __cplusplus
 }

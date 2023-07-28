@@ -1,7 +1,7 @@
 /*
- *  Copyright 2008-2022 NXP
+ *  Copyright 2008-2023 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
@@ -23,6 +23,8 @@
 #include <string.h>
 
 #include <lwip/opt.h>
+#include <lwip/sys.h>
+#include <lwip/tcpip.h>
 #include <lwip/sockets.h>
 #include <lwip/netdb.h>
 #include <lwip/stats.h>
@@ -30,10 +32,15 @@
 #include <lwip/ip.h>
 #include <lwip/inet_chksum.h>
 #include <lwip/pbuf.h>
+#include <lwip/api.h>
 #include <netif/etharp.h>
 
 #include <wm_os.h>
 #include <wmtypes.h>
+
+#ifndef LWIP_TCPIP_CORE_LOCKING
+#error "LWIP TCP/IP Core Locking is not enabled"
+#endif
 
 #if CONFIG_IPV6 && !LWIP_IPV6
 #error "CONFIG_IPV6 is enabled, but LWIP_IPV6 is not, enable it from lwipopts.h"
@@ -53,6 +60,12 @@
 
 #if (!defined(LWIP_NETIF_EXT_STATUS_CALLBACK) || (LWIP_NETIF_EXT_STATUS_CALLBACK == 0))
 #error "Define LWIP_NETIF_EXT_STATUS_CALLBACK as 1 in lwipopts.h"
+#endif
+
+#ifdef CONFIG_WPA_SUPP
+#if (!defined(LWIP_NUM_NETIF_CLIENT_DATA) || (LWIP_NUM_NETIF_CLIENT_DATA < 2))
+#error "Define LWIP_NUM_NETIF_CLIENT_DATA atleast 2 in lwipopts.h"
+#endif
 #endif
 
 /*
@@ -243,6 +256,38 @@ int net_wlan_init(void);
  */
 int net_wlan_deinit(void);
 
+/** Get STA interface netif structure pointer
+ *
+ * \rerurn A pointer to STA interface netif structure
+ *
+ */
+struct netif *net_get_sta_interface(void);
+
+/** Get uAP interface netif structure pointer
+ *
+ * \rerurn A pointer to uAP interface netif structure
+ *
+ */
+struct netif *net_get_uap_interface(void);
+
+/** Get interface name for given netif
+ *
+ * \param[out] pif_name Buffer to store interface name
+ * \param[in] iface Interface to get the name
+ *
+ * \return WM_SUCCESS on success
+ * \return -WM_FAIL otherwise
+ *
+ */
+int net_get_if_name_netif(char *pif_name, struct netif *iface);
+
+/** Get client data index for storing private data in * netif.
+ *
+ * \return allocated client data index, -1 if error or
+ *         not supported.
+ */
+int net_alloc_client_data_id();
+
 /** Get station interface handle
  *
  * Some APIs require the interface handle to be passed to them. The handle can
@@ -294,6 +339,17 @@ void net_interface_down(void *intrfc_handle);
  * \return void
  */
 void net_interface_dhcp_stop(void *intrfc_handle);
+
+/** Cleanup DHCP client on given interface
+ *
+ * Cleanup the DHCP client on given interface state. Use net_get_sta_handle(),
+ * net_get_uap_handle() to get interface handle.
+ *
+ * \param[in] intrfc_handle interface handle
+ *
+ * \return void
+ */
+void net_interface_dhcp_cleanup(void *intrfc_handle);
 
 /** Configure IP address for interface
  *
@@ -454,9 +510,12 @@ void net_ipv6stack_init(struct netif *netif);
 void net_stat(void);
 
 
+#ifndef CONFIG_WPA_SUPP
 void rx_mgmt_register_callback(int (*rx_mgmt_cb_fn)(const enum wlan_bss_type bss_type,
                                                     const wifi_mgmt_frame_t *frame,
                                                     const size_t len));
 
 void rx_mgmt_deregister_callback(void);
+#endif
+
 #endif /* _WM_NET_H_ */

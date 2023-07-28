@@ -58,7 +58,7 @@ static wm8962_config_t wm8962Config = {
         .sampleRate = kWM8962_AudioSampleRate16KHz,
         .bitWidth   = kWM8962_AudioBitWidth16bit
     },
-    .masterSlave  = true,
+    .masterSlave  = false,
 };
 #else
 static wm8960_config_t wm8960Config = {
@@ -82,7 +82,7 @@ static wm8960_config_t wm8960Config = {
         .sampleRate   = kWM8960_AudioSampleRate16KHz,
         .bitWidth     = kWM8960_AudioBitWidth16bit,
     },
-    .master_slave = true,
+    .master_slave = false,
 };
 #endif
 
@@ -343,7 +343,7 @@ static void init(void)
     SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_MonoRight, kSAI_Channel0Mask);
     saiConfig.syncMode = kSAI_ModeSync;
     saiConfig.bitClock.bclkPolarity = kSAI_PolarityActiveLow;
-    saiConfig.masterSlave = kSAI_Slave;
+    saiConfig.masterSlave = kSAI_Master;
     SAI_TransferRxSetConfigEDMA(DEMO_SAI, &s_micHandle, &saiConfig);
 
     /* set bit clock divider */

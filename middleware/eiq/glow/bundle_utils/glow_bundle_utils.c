@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 
+
 // Dynamic memory allocation of aligned memory.
 void* alignedAlloc(align_t alignment, size_t size) {
   size_t alloc_size;

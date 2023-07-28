@@ -4,7 +4,7 @@
  *
  *  Copyright 2021-2022 NXP
  *
- *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
+ *  SPDX-License-Identifier: BSD-3-Clause
  *
  */
 #ifndef _FIMRWARE_DNLD_H_

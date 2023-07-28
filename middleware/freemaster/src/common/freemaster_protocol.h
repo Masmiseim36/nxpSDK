@@ -87,6 +87,7 @@
 #define FMSTR_STC_INSTERR       0x94U /* Bad instance index (e.g. recorder) */
 #define FMSTR_STC_INVOPCODE     0x95U /* Invalid operation code (e.g. recorder) */
 #define FMSTR_STC_EINSTANCE     0x96U /* Invalid instance number (e.g. recorder) */
+#define FMSTR_STC_INVCONF       0x97U /* Invalid configuration */
 #define FMSTR_STC_DEBUGTX_TEST  0xA9U /* Artificial +@W test frame sent when DEBUG_TX is enabled */
 
 /******************************************************************************

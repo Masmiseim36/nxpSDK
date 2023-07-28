@@ -1,4 +1,4 @@
-/* Copyright 2020 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2023 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -55,8 +55,7 @@ struct RecordedAllocation {
 class RecordingMicroAllocator : public MicroAllocator {
  public:
   static RecordingMicroAllocator* Create(uint8_t* tensor_arena,
-                                         size_t arena_size,
-                                         ErrorReporter* error_reporter);
+                                         size_t arena_size);
 
   // Returns the fixed amount of memory overhead of RecordingMicroAllocator.
   static size_t GetDefaultTailUsage();
@@ -78,8 +77,9 @@ class RecordingMicroAllocator : public MicroAllocator {
       const Model* model, SubgraphAllocations* subgraph_allocations) override;
   TfLiteStatus AllocateTfLiteEvalTensors(
       const Model* model, SubgraphAllocations* subgraph_allocations) override;
-  TfLiteStatus AllocateVariables(const SubGraph* subgraph,
-                                 TfLiteEvalTensor* eval_tensors) override;
+  TfLiteStatus AllocateVariables(
+      const SubGraph* subgraph, TfLiteEvalTensor* eval_tensors,
+      const int32_t* offline_planner_offsets) override;
   // TODO(b/162311891): Once all kernels have been updated to the new API drop
   // this method. It is only used to record TfLiteTensor persistent allocations.
   TfLiteTensor* AllocatePersistentTfLiteTensorInternal() override;
@@ -95,8 +95,7 @@ class RecordingMicroAllocator : public MicroAllocator {
 
  private:
   RecordingMicroAllocator(RecordingSingleArenaBufferAllocator* memory_allocator,
-                          MicroMemoryPlanner* memory_planner,
-                          ErrorReporter* error_reporter);
+                          MicroMemoryPlanner* memory_planner);
 
   void PrintRecordedAllocation(RecordedAllocationType allocation_type,
                                const char* allocation_name,

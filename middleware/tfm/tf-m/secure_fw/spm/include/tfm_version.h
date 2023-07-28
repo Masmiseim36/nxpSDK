@@ -11,13 +11,13 @@
 /*
  * Defines for TFM version.
  */
-#define TFM_VERSION        1.6.0
-
-#define VERSION_STRING     ""
+#define TFM_VERSION        1.7.0
+#define TFM_VERSION_FULL   1.7.0
 
 #define VERSTR(x)          #x
 #define VERCON(x)          VERSTR(x)
 
-#define VERSION_FULLSTR    VERCON(TFM_VERSION)""VERSION_STRING
+#define VERSION_STR        VERCON(TFM_VERSION)
+#define VERSION_FULLSTR    VERCON(TFM_VERSION_FULL)
 
 #endif /* __TFM_VERSION_H__ */

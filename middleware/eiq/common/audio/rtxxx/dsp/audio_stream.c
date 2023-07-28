@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2022 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -133,28 +133,6 @@ void AUDIO_Init(void)
 
     /* DSP_INT0_SEL18 = DMA1 */
     INPUTMUX_AttachSignal(INPUTMUX, 18U, kINPUTMUX_Dmac1ToDspInterrupt);
-
-    /* Attach AUDIO PLL clock to FLEXCOMM1 (I2S1) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM1);
-    /* Attach AUDIO PLL clock to FLEXCOMM3 (I2S3) */
-    CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM3);
-
-    /* Attach AUDIO PLL clock to MCLK */
-    CLOCK_AttachClk(kAUDIO_PLL_to_MCLK_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivMclkClk, 1);
-    SYSCTL1->MCLKPINDIR = SYSCTL1_MCLKPINDIR_MCLKPINDIR_MASK;
-    /* DMIC source from audio pll, divider 8, 24.576 MHz / 8 = 3.072 MHz */
-#ifdef MIMXRT685S_dsp_SERIES
-    CLOCK_AttachClk(kAUDIO_PLL_to_DMIC_CLK);
-#else
-    CLOCK_AttachClk(kAUDIO_PLL_to_DMIC);
-#endif
-    CLOCK_SetClkDiv(kCLOCK_DivDmicClk, 8);
-
-    /* Set shared signal set 0: SCK, WS from Flexcomm1 */
-    SYSCTL1->SHAREDCTRLSET[0] = SYSCTL1_SHAREDCTRLSET_SHAREDSCKSEL(1) | SYSCTL1_SHAREDCTRLSET_SHAREDWSSEL(1);
-    /* Set flexcomm3 SCK, WS from shared signal set 0 */
-    SYSCTL1->FCCTRLSEL[3] = SYSCTL1_FCCTRLSEL_SCKINSEL(1) | SYSCTL1_FCCTRLSEL_WSINSEL(1);
 
     /* Map DMA IRQ handler to INPUTMUX selection DSP_INT0_SEL18
      * EXTINT19 = DSP INT 23 */

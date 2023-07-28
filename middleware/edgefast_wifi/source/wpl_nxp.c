@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2022 NXP
+ * Copyright 2020-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -579,12 +579,12 @@ char *WPL_Scan(void)
     return NULL;
 }
 
-wpl_ret_t WPL_AddNetwork(char *ssid, char *password, char *label)
+wpl_ret_t WPL_AddNetworkWithSecurity(char *ssid, char *password, char *label, wpl_security_t security)
 {
     wpl_ret_t status = WPLRET_SUCCESS;
     int ret;
     struct wlan_network sta_network;
-    enum wlan_security_type security = WLAN_SECURITY_NONE;
+    memset(&sta_network, 0, sizeof(struct wlan_network));
 
     if (s_wplState != WPL_STARTED)
     {
@@ -609,31 +609,48 @@ wpl_ret_t WPL_AddNetwork(char *ssid, char *password, char *label)
 
     if (status == WPLRET_SUCCESS)
     {
-        if (strlen(password) == 0)
+        size_t password_len = strlen(password);
+
+        if (password_len == 0)
         {
-            security = WLAN_SECURITY_NONE;
+            sta_network.security.type = WLAN_SECURITY_NONE;
         }
-        else if ((strlen(password) >= WPL_WIFI_PASSWORD_MIN_LEN) && (strlen(password) <= WPL_WIFI_PASSWORD_LENGTH))
+        else if ((password_len >= WPL_WIFI_PASSWORD_MIN_LEN) && (password_len <= WPL_WIFI_PASSWORD_LENGTH))
         {
-            security = WLAN_SECURITY_WILDCARD;
+            switch (security)
+            {
+                case WPL_SECURITY_WILDCARD:
+                    sta_network.security.type = WLAN_SECURITY_WILDCARD;
+                    sta_network.security.mfpc = true;
+                    sta_network.security.mfpr = true;
+                    sta_network.security.password_len = password_len;
+                    strncpy(sta_network.security.password, password, password_len);
+                    sta_network.security.psk_len = password_len;
+                    strncpy(sta_network.security.psk, password, password_len);
+                    break;
+                case WPL_SECURITY_WPA3_SAE:
+                    sta_network.security.type = WLAN_SECURITY_WPA3_SAE;
+                    sta_network.security.mfpc = true;
+                    sta_network.security.mfpr = true;
+                    sta_network.security.password_len = strlen(password);
+                    strncpy(sta_network.security.password, password, strlen(password));
+                    break;
+                default:
+                    PRINTF("[!] Unimplemented security type (%d)\r\n", security);
+                    status = WPLRET_BAD_PARAM;
+                    break;
+            }
         }
         else
         {
             status = WPLRET_BAD_PARAM;
         }
     }
-
-    if (status == WPLRET_SUCCESS)
-    {
-        memset(&sta_network, 0, sizeof(struct wlan_network));
-        strcpy(sta_network.name, label);
-        memcpy(sta_network.ssid, (const char *)ssid, strlen(ssid));
-        sta_network.ip.ipv4.addr_type = ADDR_TYPE_DHCP;
-        sta_network.ssid_specific     = 1;
-        sta_network.security.type     = security;
-        sta_network.security.psk_len  = strlen(password);
-        strncpy(sta_network.security.psk, password, strlen(password));
-    }
+    
+    strcpy(sta_network.name, label);
+    strcpy(sta_network.ssid, ssid);
+    sta_network.ip.ipv4.addr_type = ADDR_TYPE_DHCP;
+    sta_network.ssid_specific     = 1;
 
     if (status == WPLRET_SUCCESS)
     {
@@ -645,6 +662,11 @@ wpl_ret_t WPL_AddNetwork(char *ssid, char *password, char *label)
     }
 
     return status;
+}
+
+wpl_ret_t WPL_AddNetwork(char *ssid, char *password, char *label)
+{
+    return WPL_AddNetworkWithSecurity(ssid, password, label, WPL_SECURITY_WILDCARD);
 }
 
 wpl_ret_t WPL_RemoveNetwork(char *label)

@@ -5,12 +5,9 @@
  *
  */
 
-#include "cmsis.h"
 #include "psa_manifest/sid.h"
 #include "psa/client.h"
 #include "test_framework.h"
-#include "tfm_peripherals_def.h"
-#include "tfm_plat_test.h"
 #include "irq_test.h"
 
 #ifdef TEST_NS_SLIH_IRQ

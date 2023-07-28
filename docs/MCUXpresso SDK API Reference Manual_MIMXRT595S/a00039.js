@@ -1,11 +1,10 @@
 var a00039 =
 [
-    [ "i2s_config_t", "a00039.html#a00376", [
+    [ "i2s_config_t", "a00039.html#a00381", [
       [ "masterSlave", "a00039.html#aafc62e3f728b969836765543c64e51cc", null ],
       [ "mode", "a00039.html#a0cad4b688fbf5a86c693ecdf38fae82d", null ],
       [ "rightLow", "a00039.html#af91414d28248e4e84925e32ebb21be1f", null ],
       [ "leftJust", "a00039.html#a1bd30d4ba4204ceff694883e65b0f658", null ],
-      [ "pdmData", "a00039.html#a8efa96b199acf938b960f7d869a74224", null ],
       [ "sckPol", "a00039.html#a06daafd9d6be910c620dc34b27f09cf1", null ],
       [ "wsPol", "a00039.html#a7ef75e30977450dee75c44174e932069", null ],
       [ "divider", "a00039.html#a124c2290d1b6a65c1ed7b9862c5751e0", null ],
@@ -17,11 +16,11 @@ var a00039 =
       [ "txEmptyZero", "a00039.html#a4af539301a365a0fd0870aa2f10f8a8b", null ],
       [ "pack48", "a00039.html#a05e651099ce845bcba1144d2f3e8b6ca", null ]
     ] ],
-    [ "i2s_transfer_t", "a00039.html#a00377", [
+    [ "i2s_transfer_t", "a00039.html#a00382", [
       [ "data", "a00039.html#aaf5f1c23ca46a1e0d8eff1ae7264f94c", null ],
       [ "dataSize", "a00039.html#a62b40fb1c17cac3cb35ab66564e75f9c", null ]
     ] ],
-    [ "i2s_handle_t", "a00039.html#a00299", [
+    [ "i2s_handle_t", "a00039.html#a00303", [
       [ "state", "a00039.html#a384e361c28bbc396ee461d0d0a5e6628", null ],
       [ "completionCallback", "a00039.html#a95bd70e36257e8fe9406d759d0ceb433", null ],
       [ "userData", "a00039.html#a06376f0e14c8243247b13ee278933182", null ],
@@ -79,8 +78,6 @@ var a00039 =
     [ "I2S_TransferGetCount", "a00039.html#ga14ef749f4300fe7b1fd38277f0ef167f", null ],
     [ "I2S_TransferGetErrorCount", "a00039.html#gae3d210a830859e93103931b4baf83586", null ],
     [ "I2S_Enable", "a00039.html#gac109aadc23d6f31e6f8420fa3f4018fd", null ],
-    [ "I2S_EnableSecondaryChannel", "a00039.html#gaaafe5120f26fc467a96aad194f783530", null ],
-    [ "I2S_DisableSecondaryChannel", "a00039.html#ga605944b5c7cca125fbd7fdeb2b969f2e", null ],
     [ "I2S_Disable", "a00039.html#ga4b393781ae83a07d4d3e99972429cfa1", null ],
     [ "I2S_EnableInterrupts", "a00039.html#ga435263725c056eccaa82eb1947e162aa", null ],
     [ "I2S_DisableInterrupts", "a00039.html#gaa6f8ed52f3cd5c63b3a3716a70c77223", null ],

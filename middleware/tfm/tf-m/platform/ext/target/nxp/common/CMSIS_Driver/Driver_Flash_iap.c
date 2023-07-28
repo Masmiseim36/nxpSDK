@@ -162,8 +162,8 @@ static ARM_FLASH_CAPABILITIES ARM_Flash_GetCapabilities(void)
 
 #if defined(FLASH_NEED_RESET) && FLASH_NEED_RESET
 AT_QUICKACCESS_SECTION_CODE(static status_t BOARD_FlexspiInit(uint32_t instance,
-                                                       flexspi_nor_config_t *config,
-                                                       serial_nor_config_option_t *option))
+                                                              flexspi_nor_config_t *config,
+                                                              serial_nor_config_option_t *option))
 {
     /* Reset external flash */
     GPIO->CLR[2] = 1 << 12;
@@ -172,27 +172,27 @@ AT_QUICKACCESS_SECTION_CODE(static status_t BOARD_FlexspiInit(uint32_t instance,
     GPIO->SET[2] = 1 << 12;
 
     /* Clear FLEXSPI NOR flash configure context */
-    SYSCTL0->FLEXSPI_BOOTROM_SCRATCH0 = 0;
+    FLEXSPI_FLASH_CTX = 0;
 
     status_t status = IAP_FlexspiNorAutoConfig(instance, config, option);
 
-    if ((CACHE64->CCR & CACHE64_CTRL_CCR_ENCACHE_MASK) != 0)
+    if ((CACHE_BASE->CCR & CACHE64_CTRL_CCR_ENCACHE_MASK) != 0)
     {
         /* Invalidate all lines in both ways and initiate the cache command. */
-        CACHE64->CCR |= CACHE64_CTRL_CCR_INVW0_MASK | CACHE64_CTRL_CCR_INVW1_MASK | CACHE64_CTRL_CCR_GO_MASK;
+        CACHE_BASE->CCR |= CACHE64_CTRL_CCR_INVW0_MASK | CACHE64_CTRL_CCR_INVW1_MASK | CACHE64_CTRL_CCR_GO_MASK;
 
         /* Wait until the cache command completes. */
-        while ((CACHE64->CCR & CACHE64_CTRL_CCR_GO_MASK) != 0x00U)
+        while ((CACHE_BASE->CCR & CACHE64_CTRL_CCR_GO_MASK) != 0x00U)
         {
         }
 
         /* As a precaution clear the bits to avoid inadvertently re-running this command. */
-        CACHE64->CCR &= ~(CACHE64_CTRL_CCR_INVW0_MASK | CACHE64_CTRL_CCR_INVW1_MASK);
+        CACHE_BASE->CCR &= ~(CACHE64_CTRL_CCR_INVW0_MASK | CACHE64_CTRL_CCR_INVW1_MASK);
     }
 
     return status;
 }
-#endif
+#endif /*FLASH_NEED_RESET */
 
 static bool flash_init_is_done = false;
 static int32_t ARM_Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)

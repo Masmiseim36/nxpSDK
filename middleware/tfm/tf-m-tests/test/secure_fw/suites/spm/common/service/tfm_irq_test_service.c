@@ -5,6 +5,7 @@
  *
  */
 
+#include "cmsis_compiler.h"
 #include "spm_test_defs.h"
 #include "tfm_irq_test_service.h"
 #include "tfm_plat_test.h"
@@ -58,7 +59,10 @@ void flih_test_case_1(const psa_msg_t *msg, psa_signal_t timer_irq_signal)
 
     tfm_plat_test_secure_timer_start();
 
-    while (flih_timer_triggered < 10);
+    while (flih_timer_triggered < 10) {
+        __WFI();
+    }
+
     tfm_plat_test_secure_timer_stop();
 
     psa_irq_disable(timer_irq_signal);

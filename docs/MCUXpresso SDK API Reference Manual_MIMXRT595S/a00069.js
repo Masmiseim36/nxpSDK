@@ -1,6 +1,6 @@
 var a00069 =
 [
-    [ "spi_rtos_handle_t", "a00069.html#a00448", [
+    [ "spi_rtos_handle_t", "a00069.html#a00455", [
       [ "base", "a00069.html#ad3f15e078040cf1bd904907745e27eb6", null ],
       [ "drv_handle", "a00069.html#ac3e2ad7cc73261936c0a737dc1be7393", null ],
       [ "mutex", "a00069.html#ad99230209eba3551c5ee0d0375b5e0c8", null ],

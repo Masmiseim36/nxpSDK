@@ -1,0 +1,42 @@
+/**
+@page middleware_log Middleware Change Log
+
+@section LVGL LVGL for KSDK
+
+  - 8.3.5_rev1
+    - Integrate LVGL 8.3.5 to SDK.
+	
+  - 8.3.2_rev1
+    - Integrate LVGL 8.3.2 to SDK.
+
+  - 8.3.0_rev1
+    - Integrate LVGL 8.3.0 to SDK.
+
+  - 8.2.0_rev1
+    - Integrate LVGL 8.2.0 to SDK.
+
+  - 8.0.2_rev1
+    - Integrate LVGL 8.0.2 to SDK.
+
+  - 7.10.1_rev1
+
+    - Integrate LVGL 7.10.1 to SDK.
+    - Added PXP, VGLite hardware acceleration.
+
+  - 7.4.0_rev1
+    - Integrate LVGL 7.4.0 to SDK.
+
+  - 7.0.0_rev1
+
+    - Integrate LVGL 7.0.0 to SDK.
+    - Added PXP hardware acceleration initial version.
+
+  - 6.1.1_rev1
+
+    - Integrate LVGL 6.1.1 to SDK.
+
+  - 5.3_rev1
+
+    - Integrate LVGL 5.3 to SDK.
+
+*/

@@ -281,7 +281,7 @@ t_cose_crypto_pub_key_verify(int32_t               cose_algorithm_id,
 
 
 #ifdef T_COSE_USE_PSA_CRYPTO
-#include "psa/crypto.h"
+#include "psa/tfm/crypto.h"            //NXP to avoid file name conflicts between MbedTLS and TFM.
 
 #elif T_COSE_USE_OPENSSL_CRYPTO
 #include "openssl/sha.h"

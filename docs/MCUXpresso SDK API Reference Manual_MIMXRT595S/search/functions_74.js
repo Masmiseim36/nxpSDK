@@ -26,9 +26,5 @@ var searchData=
   ['tfa9896_5fsetvolume',['TFA9896_SetVolume',['../a00070.html#gacef00900900e5116da5a757eef9c93d2',1,'fsl_tfa9896.h']]],
   ['tfa9896_5fwaitcalibratedone',['TFA9896_WaitCalibrateDone',['../a00070.html#gac98973939384a0104617ca4cc4fec834',1,'fsl_tfa9896.h']]],
   ['tfa9896_5fwrite_5ffilterbank',['TFA9896_Write_FilterBank',['../a00070.html#ga33e3ad7bdbd1dbbaf7d3d7878b3c55a7',1,'fsl_tfa9896.h']]],
-  ['tfa9896_5fwriteregister',['TFA9896_WriteRegister',['../a00070.html#ga19d1b9b300a733a4633c71a315108416',1,'fsl_tfa9896.h']]],
-  ['trng_5fdeinit',['TRNG_Deinit',['../a00071.html#gacdcc7542e374e611c888008a227b878c',1,'fsl_trng.h']]],
-  ['trng_5fgetdefaultconfig',['TRNG_GetDefaultConfig',['../a00071.html#ga3f90793dd83a0ac2249fdcb8fa762c6a',1,'fsl_trng.h']]],
-  ['trng_5fgetrandomdata',['TRNG_GetRandomData',['../a00071.html#gaac12716aedb0b05e8be3e96433c8ad56',1,'fsl_trng.h']]],
-  ['trng_5finit',['TRNG_Init',['../a00071.html#gaefef4539a93045832f10d28f094d26ea',1,'fsl_trng.h']]]
+  ['tfa9896_5fwriteregister',['TFA9896_WriteRegister',['../a00070.html#ga19d1b9b300a733a4633c71a315108416',1,'fsl_tfa9896.h']]]
 ];

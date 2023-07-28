@@ -24,12 +24,11 @@ limitations under the License.
 #include "tensorflow/lite/kernels/internal/tensor_ctypes.h"
 #include "tensorflow/lite/kernels/internal/types.h"
 #include "tensorflow/lite/micro/micro_context.h"
-#include "tensorflow/lite/micro/micro_error_reporter.h"
 
 namespace tflite {
 namespace micro {
 
-TfLiteRegistration RegisterOp(
+TfLiteRegistration_V1 RegisterOp(
     void* (*init)(TfLiteContext* context, const char* buffer, size_t length),
     TfLiteStatus (*prepare)(TfLiteContext* context, TfLiteNode* node),
     TfLiteStatus (*invoke)(TfLiteContext* context, TfLiteNode* node),
@@ -132,6 +131,14 @@ TfLiteStatus CopySubgraphOutputsToOpOutputs(TfLiteContext* context,
                                             MicroGraph* graph_info,
                                             int subgraph_idx);
 
+// If tensor is INT4, make a new TfLiteEvalTensor with data unpacked into
+// a scratch buffer. The returned tensor will have the kTfLiteInt8 type.
+// Assume scratch buffer is previously requested in Prepare, and
+// scratch_buffer_index can be used to retrieve that buffer.
+// If the tensor is not INT4, a shallow copy is returned.
+TfLiteEvalTensor MakeUnpackedInt4Tensor(TfLiteContext* context,
+                                        int scratch_buffer_index,
+                                        const TfLiteEvalTensor* tensor);
 }  // namespace micro
 }  // namespace tflite
 

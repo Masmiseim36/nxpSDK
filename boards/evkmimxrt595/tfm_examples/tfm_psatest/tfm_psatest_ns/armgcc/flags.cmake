@@ -32,20 +32,10 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DTFM_LVL=2 \
-    -DITS_MAX_ASSET_SIZE=512 \
-    -DPS_MAX_ASSET_SIZE=512 \
     -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DPSA_API_TEST_NS=1 \
-    -DTF_M_PROFILE_MEDIUM \
-    -DTFM_PSA_API \
-    -DINITIAL_ATTESTATION \
-    -DCRYPTO \
-    -DINTERNAL_TRUSTED_STORAGE \
-    -DITS_TEST \
-    -DPROTECTED_STORAGE \
-    -DPS_TEST \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
+    -DTFM_LVL=2 \
     -DCONFIG_TFM_FLOAT_ABI=2 \
     -DCONFIG_TFM_ENABLE_CP10CP11 \
     -DCONFIG_TFM_LAZY_STACKING \
@@ -54,14 +44,25 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCONFIG_TFM_USE_TRUSTZONE \
     -DATTEST_TOKEN_PROFILE_PSA_IOT_1 \
     -DPLATFORM_DEFAULT_CRYPTO_KEYS \
-    -DMCUXPRESSO_SDK \
-    -O1 \
+    -DPS_ENCRYPTION \
+    -DINITIAL_ATTESTATION \
+    -DTF_M_PROFILE_LARGE \
+    -DCRYPTO \
+    -DINTERNAL_TRUSTED_STORAGE \
+    -DITS_TEST \
+    -DPROTECTED_STORAGE \
+    -DPS_TEST \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DQCBOR_DISABLE_FLOAT_HW_USE \
+    -DUSEFULBUF_DISABLE_ALL_FLOAT \
+    -DQCBOR_DISABLE_PREFERRED_FLOAT \
     -g \
     -O0 \
+    -Os \
     -Wno-unused-variable \
     -Wno-unused-but-set-variable \
     -Wno-return-type \
-    -fno-expensive-optimizations \
+    -Wno-maybe-uninitialized \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -83,20 +84,10 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DTFM_LVL=2 \
-    -DITS_MAX_ASSET_SIZE=512 \
-    -DPS_MAX_ASSET_SIZE=512 \
     -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DPSA_API_TEST_NS=1 \
-    -DTF_M_PROFILE_MEDIUM \
-    -DTFM_PSA_API \
-    -DINITIAL_ATTESTATION \
-    -DCRYPTO \
-    -DINTERNAL_TRUSTED_STORAGE \
-    -DITS_TEST \
-    -DPROTECTED_STORAGE \
-    -DPS_TEST \
-    -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
+    -DTFM_LVL=2 \
     -DCONFIG_TFM_FLOAT_ABI=2 \
     -DCONFIG_TFM_ENABLE_CP10CP11 \
     -DCONFIG_TFM_LAZY_STACKING \
@@ -105,12 +96,23 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCONFIG_TFM_USE_TRUSTZONE \
     -DATTEST_TOKEN_PROFILE_PSA_IOT_1 \
     -DPLATFORM_DEFAULT_CRYPTO_KEYS \
-    -DMCUXPRESSO_SDK \
+    -DPS_ENCRYPTION \
+    -DINITIAL_ATTESTATION \
+    -DTF_M_PROFILE_LARGE \
+    -DCRYPTO \
+    -DINTERNAL_TRUSTED_STORAGE \
+    -DITS_TEST \
+    -DPROTECTED_STORAGE \
+    -DPS_TEST \
+    -DSERIAL_PORT_TYPE_UART=1 \
+    -DQCBOR_DISABLE_FLOAT_HW_USE \
+    -DUSEFULBUF_DISABLE_ALL_FLOAT \
+    -DQCBOR_DISABLE_PREFERRED_FLOAT \
     -Os \
     -Wno-unused-variable \
     -Wno-unused-but-set-variable \
     -Wno-return-type \
-    -fno-expensive-optimizations \
+    -Wno-maybe-uninitialized \
     -mcpu=cortex-m33 \
     -Wall \
     -mthumb \
@@ -129,8 +131,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
 SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
     -DDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -152,8 +154,8 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
-    -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
+    -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -174,6 +176,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -g \
+    -Wl,--no-warn-rwx-segment \
     -mcpu=cortex-m33 \
     -Wall \
     -fno-common \
@@ -196,10 +199,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns_pre.ld -static \
+    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
+    -Wl,--no-warn-rwx-segment \
     -mcpu=cortex-m33 \
     -Wall \
     -fno-common \
@@ -222,5 +226,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_ns_pre.ld -static \
+    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld -static \
 ")

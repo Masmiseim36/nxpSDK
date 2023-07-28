@@ -8,5 +8,6 @@
 /***********  WARNING: This is an auto-generated file. Do not edit!  ***********/
 
 #include <stdint.h>
+#include "config_tfm.h"
 
 uint8_t tfm_sp_ipc_client_test_stack[0x0300] __attribute__((aligned(8)));

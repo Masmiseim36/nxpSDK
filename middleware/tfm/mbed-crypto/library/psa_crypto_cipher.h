@@ -1,5 +1,5 @@
 /*
- *  PSA cipher driver entry points
+ *  PSA cipher driver entry points and associated auxiliary functions
  */
 /*
  *  Copyright The Mbed TLS Contributors
@@ -22,7 +22,7 @@
 #define PSA_CRYPTO_CIPHER_H
 
 #include <mbedtls/cipher.h>
-#include <mbed_psa/crypto.h> //NXP
+#include <psa/crypto.h>
 
 /** Get Mbed TLS cipher information given the cipher algorithm PSA identifier
  *  as well as the PSA type and size of the key to be used with the cipher

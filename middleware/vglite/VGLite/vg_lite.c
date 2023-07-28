@@ -480,7 +480,7 @@ static vg_lite_feature_database_t VGFeatureInfos[] = {
         0X1, /* gcFEATURE_BIT_VG_RADIAL_GRADIENT */
         0x1, /* gcFEATURE_BIT_VG_LINEAR_GRADIENT_EXT */
         0x1, /* gcFEATURE_BIT_VG_DITHER */
-        0x1, /* gcFEATURE_BIT_VG_COLOR_KEY */
+        0x0, /* gcFEATURE_BIT_VG_COLOR_KEY */
     },
     /* vg355 */
     {
@@ -495,7 +495,7 @@ static vg_lite_feature_database_t VGFeatureInfos[] = {
         0X1, /* gcFEATURE_BIT_VG_RADIAL_GRADIENT */
         0x1, /* gcFEATURE_BIT_VG_LINEAR_GRADIENT_EXT */
         0x1, /* gcFEATURE_BIT_VG_DITHER */
-        0x1, /* gcFEATURE_BIT_VG_COLOR_KEY */
+        0x0, /* gcFEATURE_BIT_VG_COLOR_KEY */
     },
     /* vg355 */
     {
@@ -8328,7 +8328,7 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
     vg_lite_matrix_t * matrix = matrix1;
     uint32_t pattern_tile = 0;
     uint32_t transparency_mode = 0;
-    int32_t src_align_width,dst_align_width;
+    int32_t dst_align_width;
     uint32_t mul, div, align;
 
 #if defined(VG_DRIVER_SINGLE_THREAD)
@@ -8490,9 +8490,7 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
     }
 #endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
-    get_format_bytes(source->format, &mul, &div, &align);
-    src_align_width = source->stride * div / mul;
-    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, src_align_width, source->height, matrix));
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, source->width, source->height, matrix));
 
     if(!ctx->premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
         if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
@@ -8512,7 +8510,7 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
 
     VG_LITE_RETURN_ERROR(push_state(ctx, 0x0A2B, source->stride | tiled_source));
     VG_LITE_RETURN_ERROR(push_state(ctx, 0x0A2D, 0));
-    VG_LITE_RETURN_ERROR(push_state(ctx, 0x0A2F, src_align_width | (source->height << 16)));
+    VG_LITE_RETURN_ERROR(push_state(ctx, 0x0A2F, source->width | (source->height << 16)));
 
     /* Work on path states. */
     matrix = matrix0;
@@ -8713,7 +8711,7 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
 
     vglitemDUMP_BUFFER("image", source->address, source->memory, 0, (source->stride)*(source->height));
 #if DUMP_IMAGE
-    dump_img(source->memory, src_align_width, source->height, source->format);
+    dump_img(source->memory, source->width, source->height, source->format);
 #endif
 
 #if !defined(VG_DRIVER_SINGLE_THREAD)

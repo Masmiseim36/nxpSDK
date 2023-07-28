@@ -1,10 +1,8 @@
 /*
-* Copyright 2020-2022 NXP
-*
-* NXP Confidential. This software is owned or controlled by NXP and may only
-* be used strictly in accordance with the applicable license terms found in
-* file LICENSE.txt
-*/
+ * Copyright 2020-2023 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 
 /****************************************************************************************/
@@ -62,37 +60,37 @@
 // see VIT.h for further information on VIT configurations
 #ifdef PLATFORM_RT1040
     #include "PL_platformTypes_CortexM.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define MODEL_LOCATION              VIT_MODEL_IN_SLOW_MEM
     #define DEVICE_ID                   VIT_IMXRT1040
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif PLATFORM_RT1060
     #include "PL_platformTypes_CortexM.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define MODEL_LOCATION              VIT_MODEL_IN_SLOW_MEM
     #define DEVICE_ID                   VIT_IMXRT1060
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined PLATFORM_RT1170
     #include "PL_platformTypes_CortexM.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define MODEL_LOCATION              VIT_MODEL_IN_SLOW_MEM
     #define DEVICE_ID                   VIT_IMXRT1170
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined  PLATFORM_RT600
     #include "PL_platformTypes_HIFI4_FUSIONF1.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_RAM
+    #define MODEL_LOCATION              VIT_MODEL_IN_SLOW_MEM
     #define DEVICE_ID                   VIT_IMXRT600
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined  PLATFORM_RT500
     #include "PL_platformTypes_HIFI4_FUSIONF1.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_RAM
+    #define MODEL_LOCATION              VIT_MODEL_IN_SLOW_MEM
     #define DEVICE_ID                   VIT_IMXRT500
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined  PLATFORM_WINDOWS
     #include "PL_platformTypes_windows.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define MODEL_LOCATION              VIT_MODEL_IN_SLOW_MEM
     #define DEVICE_ID                   VIT_IMXRT500   //Dummy
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #elif defined  PLATFORM_LINUX
     #include "PL_platformTypes_linux.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define MODEL_LOCATION              VIT_MODEL_IN_SLOW_MEM
     #define DEVICE_ID                   VIT_IMXRT500   //Dummy
     #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
 #else

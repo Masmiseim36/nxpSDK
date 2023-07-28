@@ -42,37 +42,19 @@ target_sources(tfm_app_rot_partition_ps
 # The generated sources
 target_sources(tfm_app_rot_partition_ps
     PRIVATE
-        $<$<BOOL:${TFM_PSA_API}>:
-            ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/protected_storage/auto_generated/intermedia_tfm_protected_storage.c>
+        ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/protected_storage/auto_generated/intermedia_tfm_protected_storage.c
 )
 target_sources(tfm_partitions
     INTERFACE
-        $<$<BOOL:${TFM_PSA_API}>:
-            ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/protected_storage/auto_generated/load_info_tfm_protected_storage.c>
+        ${CMAKE_BINARY_DIR}/generated/secure_fw/partitions/protected_storage/auto_generated/load_info_tfm_protected_storage.c
 )
 
 target_link_libraries(tfm_app_rot_partition_ps
     PRIVATE
         secure_fw
         platform_s
+        tfm_config
         tfm_sprt
-)
-
-############################ Secure API ########################################
-
-target_sources(tfm_sprt
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/tfm_ps_secure_api.c
-)
-
-# The veneers give warnings about not being properly declared so they get hidden
-# to not overshadow _real_ warnings.
-set_source_files_properties(tfm_ps_secure_api.c
-    PROPERTIES
-        COMPILE_FLAGS
-            $<$<C_COMPILER_ID:ARMClang>:-Wno-implicit-function-declaration>
-            $<$<C_COMPILER_ID:GNU>:-Wno-implicit-function-declaration>
-            $<$<C_COMPILER_ID:IAR>:>
 )
 
 ############################ Partition Defs ####################################

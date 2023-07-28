@@ -20,15 +20,6 @@
       "permission": "READ-WRITE"
     }
   ],
-  "secure_functions": [
-    {
-      "name": "TFM_SECURE_CLIENT_SFN_RUN_TESTS",
-      "signal": "TFM_SECURE_CLIENT_SERVICE_SFN_RUN_TESTS",
-      "non_secure_clients": true,
-      "version": 1,
-      "version_policy": "STRICT"
-    },
-  ],
   "services": [
     {
       "name": "TFM_SECURE_CLIENT_SRV_DUMMY",

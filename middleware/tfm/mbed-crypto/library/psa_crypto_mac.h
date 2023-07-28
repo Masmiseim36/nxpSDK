@@ -21,7 +21,7 @@
 #ifndef PSA_CRYPTO_MAC_H
 #define PSA_CRYPTO_MAC_H
 
-#include <mbed_psa/crypto.h> //NXP
+#include <psa/crypto.h>
 
 /** Calculate the MAC (message authentication code) of a message using Mbed TLS.
  *
